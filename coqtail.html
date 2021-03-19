@@ -1,0 +1,54 @@
+<h1>Installing coqtail in nvim with vim-plug</h1>
+
+<p>coqtail is a <a href="https://coq.inria.fr/user-interfaces.html">user interface</a> for the coq proof assistant that can be used with the vim/nvim editor. Coqtail is available as a vim plugin.</p>
+
+<p>It is probably a good idea to use a plugin manager while installing installing vim plugins. Especially when you are using multiple plugins.</p>
+
+<p>There are many plugin managers available for vim. I use <a href="https://github.com/junegunn/vim-plug">vim-plug</a>, which as they say, is a 'minimalistic vim plugin manager'.</p>
+
+<p>I prefer to use nvim when I need to work with coqtail. First check if the current version of coqtail is supported in the version of nvim that you have.</p>
+
+<p>We can install vim-plug to work with nvim using:</p>
+
+<pre><code>sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+</code></pre>
+
+<p>Now ask nvim to use vim-plug by editing the file at <code>/home/famubu/.config/nvim/init.vim</code> and adding the following.</p>
+
+<pre><code>" Plugins will be downloaded under the specified directory.
+call plug#begin('~/.config/nvim/plugged')
+
+" Make sure you use single quotes
+Plug 'whonore/Coqtail'
+
+" Initialize plugin system
+call plug#end()
+</code></pre>
+
+<p>Afterwards, start nvim and <a href="https://www.linode.com/docs/guides/how-to-install-neovim-and-plugins-with-vim-plug/">do</a></p>
+
+<pre><code>:PlugInstall
+</code></pre>
+
+<p>to install the plugins that we mention.</p>
+
+<p>and run </p>
+
+<pre><code>:UpdateRemotePlugins
+</code></pre>
+
+<p>to make sure that the plugin is <a href="https://neovim.io/doc/user/remote_plugin.html">loaded automatically</a> when required.</p>
+
+<p>This command needs to be run every time a plugin is installed, updated or deleted.</p>
+
+<p>And now you should be good to go. :-)</p>
+
+<h3>References</h3>
+
+<ul>
+<li><a href="https://coq.inria.fr/user-interfaces.html">https://coq.inria.fr/user-interfaces.html</a></li>
+<li><a href="https://github.com/junegunn/vim-plug">https://github.com/junegunn/vim-plug</a></li>
+<li><a href="https://www.linode.com/docs/guides/how-to-install-neovim-and-plugins-with-vim-plug/">https://www.linode.com/docs/guides/how-to-install-neovim-and-plugins-with-vim-plug/</a></li>
+<li><a href="https://neovim.io/doc/user/remote_plugin.html">https://neovim.io/doc/user/remote_plugin.html</a></li>
+</ul>

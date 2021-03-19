@@ -10,37 +10,29 @@ I prefer to use nvim when I need to work with coqtail. First check if the curren
 
 We can install vim-plug to work with nvim using:
 
-```
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-```
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 Now ask nvim to use vim-plug by editing the file at `/home/famubu/.config/nvim/init.vim` and adding the following.
 
-```
-" Plugins will be downloaded under the specified directory.
-call plug#begin('~/.config/nvim/plugged')
+    " Plugins will be downloaded under the specified directory.
+    call plug#begin('~/.config/nvim/plugged')
 
-" Make sure you use single quotes
-Plug 'whonore/Coqtail'
+    " Make sure you use single quotes
+    Plug 'whonore/Coqtail'
 
-" Initialize plugin system
-call plug#end()
-```
+    " Initialize plugin system
+    call plug#end()
 
 Afterwards, start nvim and [do][3]
 
-```
-:PlugInstall
-```
+    :PlugInstall
 
 to install the plugins that we mention.
 
 and run 
 
-```
-:UpdateRemotePlugins
-```
+    :UpdateRemotePlugins
 
 to make sure that the plugin is [loaded automatically][4] when required.
 
@@ -49,7 +41,12 @@ This command needs to be run every time a plugin is installed, updated or delete
 And now you should be good to go. :-)
 
 
-### References:
+### References
+ - [https://coq.inria.fr/user-interfaces.html](https://coq.inria.fr/user-interfaces.html)
+ - [https://github.com/junegunn/vim-plug](https://github.com/junegunn/vim-plug)
+ - [https://www.linode.com/docs/guides/how-to-install-neovim-and-plugins-with-vim-plug/](https://www.linode.com/docs/guides/how-to-install-neovim-and-plugins-with-vim-plug/)
+ - [https://neovim.io/doc/user/remote_plugin.html](https://neovim.io/doc/user/remote_plugin.html)
+
 
 [1]: https://coq.inria.fr/user-interfaces.html
 [2]: https://github.com/junegunn/vim-plug
