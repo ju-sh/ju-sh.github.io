@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Theory of computation</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Theory of computation</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="general">General</h2>
+<ul>
+<li>Kleene's theorem: establishes equivalence between FA and regular
+languages</li>
+<li>Regular languages: aka rational languages</li>
+</ul>
+<ul>
+<li>A 2-stack DPDA is as powerful as a deterministic TM. <a
+href="https://stackoverflow.com/questions/62083942/can-a-pda-with-two-stacks-accept-re-language">²</a></li>
+<li><code>aⁿcbⁿ</code> is a CFL but not regular.</li>
+<li><code>aⁿbⁿcⁿ</code> is neither a CFL nor a regular language.</li>
+<li><a
+href="https://en.wikipedia.org/wiki/Decider_(Turing_machine)">Total
+Turing machine</a>: A TM that <em>always</em> halts.
+<ul>
+<li>ie, for any input.</li>
+<li>Represents a total function that finishes.</li>
+</ul></li>
+</ul>
+<h2 id="turing-machine">Turing machine</h2>
+<p>One-tape turing machine is a 7-tuple:</p>
+<p>M = (Q, Γ, b, Σ, δ, q₀, F)</p>
+<ul>
+<li>Q: set of states</li>
+<li>Γ: Tape alphabet.
+<ul>
+<li>The set of symbols that can show up in the tape</li>
+</ul></li>
+<li>b: blank symbol.
+<ul>
+<li>b∈Γ</li>
+</ul></li>
+<li>Σ: input alphabet
+<ul>
+<li>Σ ⊆ (Γ \ {b})</li>
+</ul></li>
+<li>δ: transition function
+<ul>
+<li>δ:</li>
+</ul></li>
+<li>q₀: initial state</li>
+<li>F: set of final states</li>
+</ul>
+<h2 id="dpda-vs-npda">DPDA vs NPDA</h2>
+<p>Unlike in the case of finite automata, DPDA are NPDA are not
+equivalent.</p>
+<p>For example, <code>wwᴿ</code> can be accepted by a NPDA but no DPDA
+can handle it.</p>
+<p>∵ the time to switch from the 'w-mode' to the 'wᴿ-mode' cannot be
+figured out deterministically since there is no delimiter. The
+possiblity always has to be explored.</p>
+<p><code>wcwᴿ</code> can be handled by DPDA if <code>c ∉ w</code>.</p>
+<h2 id="halting-problem">Halting problem</h2>
+<p>Problem: For a specific input, will the Turing machine halt (ie,
+finish computing and give a result)?</p>
+<p>For a given word and a Turing machine, there is no way to definitely
+tell whether the Turing machine will aceept that word (ie, halt) or
+not.</p>
+<p>From Sipser:</p>
+<blockquote>
+<p>recognizers are more powerful than deciders</p>
+</blockquote>
+<h2 id="universal-turing-machine">Universal Turing machine</h2>
+<p>A TM capable of simulating any TM.</p>
+<h2 id="pumping-lemma-for-regular-languages">Pumping lemma for regular
+languages</h2>
+<ul>
+<li>Can be used to show that a language is not regular.</li>
+<li>Can't be used to show that a language is regular.</li>
+</ul>
+<p>The lemma:</p>
+<ul>
+<li><code>L</code>: the language</li>
+<li><code>s</code>: a string of <code>L</code></li>
+</ul>
+<p>∃n∈ℕ such that for any <code>s ∈ L</code>:</p>
+<ul>
+<li>|s| ≥ n</li>
+<li>s = xyz
+<ul>
+<li>|y| &gt; 0</li>
+<li>|xy| ≤ n</li>
+</ul></li>
+</ul>
+<p>Then,</p>
+<pre><code>∀i≥0, xyⁱz ∈ L
+</code></pre>
+<p>if <code>L</code> is regular.</p>
+<p>Proof (informal):</p>
+<p>Let</p>
+<ul>
+<li><code>M</code> be the DFA accepting string of <code>L</code></li>
+<li><code>n</code> be the number of states of <code>M</code></li>
+<li><code>s ∈ L</code> such that <code>|s| ≥ n</code></li>
+</ul>
+<p>From: <a
+href="https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Pumping.html">https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Pumping.html</a></p>
+<h2 id="context-free-languages">Context free languages</h2>
+<p>An example CFL: <code>aⁿbⁿ</code> where n≥0.</p>
+<p>CFG:</p>
+<pre><code>S -&gt; aSb | ε
+</code></pre>
+<p>if only n&gt;0 is allowed, the grammar could be like:</p>
+<pre><code>S -&gt; aSb | ab
+</code></pre>
+<p>—</p>
+<p>If <code>w ∈ {a,b}</code>,</p>
+<p><code>wcwᴿ</code> is a CFL:</p>
+<pre><code>S -&gt; aSa | bSb | c
+</code></pre>
+<p>but <code>wcw</code> is not a CFL.</p>
+<p>∵ the stack can only be popped in last-in-first-out order.
+<code>wcw</code> requires FIFO order.</p>
+<p>—</p>
+<p><code>aⁿbⁿcᵐ</code> where n≥0, m≥0 is a D-CFL.</p>
+<pre><code>S = IE
+I = aIb | ε
+E = cE | ε
+</code></pre>
+<h2 id="masters-theorem">Master's theorem</h2>
+<p>Expressed as a recurrence relation.</p>
+<p>A task of size <code>n</code> can be divided into <code>k</code>
+sub-tasks each of size <code>n/b</code>.</p>
+<p>The results of these sub-tasks are then combined in
+<code>𝑂(nᵈ)</code> time to get the final result.</p>
+<pre><code>T(n) = k.T(n/b) + 𝑂(nᵈ)
+</code></pre>
+<h2 id="properties-of-languages">Properties of languages</h2>
+<p>From <a
+href="https://www.geeksforgeeks.org/closure-properties-table-in-toc/">here</a>:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>RL</th>
+<th>DCFL</th>
+<th>NCFL</th>
+<th>CSL</th>
+<th>RL</th>
+<th>REL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Union</td>
+<td>Y</td>
+<td>N</td>
+<td>Y</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Complement</td>
+<td>Y<a
+href="https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Regular.html">⁶</a></td>
+<td>N</td>
+<td>N</td>
+<td>Y</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Intersection</td>
+<td>Y</td>
+<td>N ?</td>
+<td>N ?</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Concatentation</td>
+<td>Y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Kleene star</td>
+<td>Y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="star-free-languages">Star free languages</h2>
+<p>Reference: <a
+href="https://www.irif.fr/~jep/PDF/MPRI/MPRI.pdf">https://www.irif.fr/~jep/PDF/MPRI/MPRI.pdf</a></p>
+<p>Given:</p>
+<ul>
+<li>Σ: finite alphabet</li>
+</ul>
+<p>then set L of star-free languges within Σ* is the smallest set such
+that:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>∅ ∈ L</td>
+<td>Includes empty language</td>
+</tr>
+<tr class="even">
+<td>{ε} ∈ L</td>
+<td>Includes language with only empty word</td>
+</tr>
+<tr class="odd">
+<td>(a ∈ Σ) -&gt; {a} ∈ L</td>
+<td>ie, a uni-symbol word language</td>
+</tr>
+</tbody>
+</table>
+<p>and is closed under</p>
+<ul>
+<li>finite union</li>
+<li>finite product/concatentation</li>
+<li>complementation (this one is unlike normal regex)</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>Σ* is star free.
+<ul>
+<li>Σ* = ∅ᶜ</li>
+</ul></li>
+</ul>
+<p>Doubts:</p>
+<ul>
+<li>Star free languages over Σ ⊆ languages over Σ</li>
+</ul>
+<p>I guess this type in coq can represent star-free languages over
+Σ:</p>
+<pre class="coq"><code>Inductive t (Σ: Type): Type :=
+| Nul: t Σ
+| Nil: t Σ
+| Char: Σ -&gt; t Σ
+| Cat: t Σ -&gt; t Σ -&gt; t Σ
+| Alt: t Σ -&gt; t Σ -&gt; t Σ
+| Cmp: t Σ -&gt; t Σ.
+</code></pre>
+<p>Kamp's theorem: LTL properties are equivalent to star-free
+languages</p>
+<table>
+<thead>
+<tr class="header">
+<th>LTL</th>
+<th>Star-free</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¬p</td>
+<td>pᶜ</td>
+</tr>
+<tr class="even">
+<td>p ∨ q</td>
+<td>p + q</td>
+</tr>
+<tr class="odd">
+<td>X p</td>
+<td>true; p</td>
+</tr>
+<tr class="even">
+<td>p U q</td>
+<td>p*;q</td>
+</tr>
+</tbody>
+</table>
+<p><code>a*</code> is star free for any finite alphabet. <code>a*</code>
+being same as <code>(Σ* \ a*)</code></p>
+<p><a
+href="https://cs.stackexchange.com/questions/10768/star-free-language-vs-regular-language">https://cs.stackexchange.com/questions/10768/star-free-language-vs-regular-language</a></p>
+<pre><code>Σ* = ∅ᶜ
+
+a* = (Σ* (Σ \ a) Σ*)ᶜ
+   = (∅ᶜ (Σ \ a) ∅ᶜ)ᶜ
+</code></pre>
+<p>—</p>
+<p>LTL:</p>
+<pre><code>p := prop
+   | ¬p
+   | p ∨ p
+   | X p
+   | p U p
+
+
+G p = p U ⊥
+</code></pre>
+</div>
+</body>
+</html>

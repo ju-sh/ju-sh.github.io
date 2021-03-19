@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Coq tactics</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Coq tactics</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="list">List</h2>
+<ul>
+<li>Tactics
+<ul class="task-list">
+<li><input type="checkbox" disabled="" /><code>intro</code></li>
+<li><input type="checkbox" disabled="" /><code>intros</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>revert</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>clear</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>exfalso</code></li>
+<li><input type="checkbox" disabled="" checked="" /><code>shelve</code>
+/ <code>Unshelve</code></li>
+<li><input type="checkbox" disabled="" /><code>unshelve</code></li>
+<li><input type="checkbox" disabled="" /><code>congruence</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>discriminate</code></li>
+<li><input type="checkbox" disabled="" /><code>destruct</code></li>
+<li><input type="checkbox" disabled="" /><code>constructor</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>induction</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>cut</code></li>
+<li><input type="checkbox" disabled="" /><code>fold</code></li>
+<li><input type="checkbox" disabled="" /><code>unfold</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>set</code></li>
+<li><input type="checkbox" disabled="" /><code>rewrite</code></li>
+<li><input type="checkbox" disabled="" /><code>simpl</code></li>
+<li><input type="checkbox" disabled="" /><code>cbn</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>exists</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>reflexivity</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>injection</code></li>
+<li><input type="checkbox" disabled="" /><code>inversion</code></li>
+<li><input type="checkbox" disabled="" /><code>apply</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>split</code></li>
+<li><input type="checkbox" disabled="" /><code>case</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>elim</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>assumption</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>symmetry</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>pose</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>enough</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>assert</code></li>
+<li><input type="checkbox" disabled="" /><code>specialize</code></li>
+<li><input type="checkbox" disabled="" /><code>generalize</code></li>
+<li><input type="checkbox" disabled="" /><code>subst</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>replace</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>remember</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>exact</code></li>
+<li><input type="checkbox" disabled="" /><code>refine</code></li>
+<li><input type="checkbox" disabled="" checked="" /><code>left</code> /
+<code>right</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>contradiction</code></li>
+<li><input type="checkbox" disabled="" /><code>trivial</code></li>
+<li><input type="checkbox" disabled="" /><code>auto</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>f_equal</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>give_up</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>transitivity~</code></li>
+<li><input type="checkbox" disabled=""
+checked="" /><code>rename~</code></li>
+<li><input type="checkbox" disabled="" /><code>change</code></li>
+</ul></li>
+<li>Relatively advanced tactics:
+<ul class="task-list">
+<li><input type="checkbox" disabled="" /><code>ring</code></li>
+<li><input type="checkbox" disabled="" /><code>field</code></li>
+<li><input type="checkbox" disabled="" /><code>lia</code></li>
+<li><input type="checkbox" disabled="" /><code>lra</code></li>
+</ul></li>
+<li>Same tactics with 'e-prefix' is same as their counterparts except
+that they can handle existential variables as well (ie, holes).
+<ul class="task-list">
+<li><input type="checkbox" disabled="" /><code>eauto</code></li>
+<li><input type="checkbox" disabled="" /><code>epose</code></li>
+</ul></li>
+</ul>
+<p>Tacticals:</p>
+<ul>
+<li><code>repeat</code></li>
+</ul>
+<h2 id="exact"><span class="done DONE">DONE</span>
+<code>exact</code></h2>
+<p>Provide a value of the goal type.</p>
+<p>Say that goal type matches type of provided value exactly.</p>
+<pre class="coq"><code>Goal
+  nat.
+Proof.
+  exact 1.
+Qed.
+</code></pre>
+<h2 id="assert"><span class="done DONE">DONE</span>
+<code>assert</code></h2>
+<p>State and prove a theorem in the middle of another proof.</p>
+<p>Once this theorem is proved, it is added to the context as a
+hypothesis.</p>
+<pre class="coq"><code>Goal                                   
+  2 * 3 = 3 + 3.                       
+Proof.                                 
+  assert (forall n:nat, 2 * n = n + n).
+  - intros.                            
+    ring.
+  - exact (H 3).
+Qed.                                   
+</code></pre>
+<p>Here's another example:</p>
+<pre class="coq"><code>Goal                 
+  forall n:nat,      
+    n + 0 = n.       
+Proof.               
+  intro n.           
+  assert (n+0 = 0+n).
+  - simpl.
+    induction n.
+    + reflexivity.
+    + simpl.
+      rewrite IHn.
+      reflexivity.
+  - rewrite H.
+    reflexivity.     
+Qed.                 
+</code></pre>
+<h2 id="enough"><span class="done DONE">DONE</span>
+<code>enough</code></h2>
+<p>Almost same as <code>assert</code> tactic, except that the assertion
+needs to be proved only after it is used.</p>
+<pre class="coq"><code>Require Import Arith. (* For [ring] on nat *) 
+
+Goal                                          
+  2 * 3 = 3 + 3.                              
+Proof.                                        
+  enough (forall n:nat, 2 * n = n + n).       
+  - apply (H 3).                              
+  - intro n.                                  
+    ring.                                     
+Qed.                                          
+</code></pre>
+<h2 id="f_equal"><span class="done DONE">DONE</span>
+<code>f_equal</code></h2>
+<p>If same constructor shows on both sides of a goal (not hypothesis.
+Use injection?? for that?).</p>
+<pre class="coq"><code>Goal                                 
+  forall n m:nat, n = m -&gt; S n = S m.
+Proof.                               
+  intros.                            
+  f_equal.
+Qed.
+</code></pre>
+<h2 id="revert"><span class="done DONE">DONE</span>
+<code>revert</code></h2>
+<p>Moves a hypothesis to goal.</p>
+<p>Sort of like the reverse of <code>intro</code>.</p>
+<pre class="coq"><code>Goal
+  forall n:nat, n + 0 = n.
+Proof.
+  intro n.
+  revert n.
+</code></pre>
+<p>Resembles <code>generalize</code>, which is more powerful. <a
+href="https://stackoverflow.com/questions/38067228/whats-the-difference-between-revert-and-generalize-tactics-in-coq">⁵</a></p>
+<h2 id="reflexivity"><span class="done DONE">DONE</span>
+<code>reflexivity</code></h2>
+<p>A simple tactic.</p>
+<p>Broadly speaking, <code>reflexivity</code> solves the goal if it is
+of the form <code>t = u</code> after verifying that <code>t</code> and
+<code>u</code> are <a
+href="https://coq.inria.fr/refman/proofs/writing-proofs/equality.html#term-definitional-equality">definitively
+equal</a>; otherwise fails.</p>
+<pre class="coq"><code>Lemma bar : forall (a : nat), a = a.
+Proof.
+  intros.
+  (* a = a *)
+
+  reflexivity.
+  (* All goals completed *)
+</code></pre>
+<p><code>reflexivity</code> implicitly has the effect of
+<code>simpl</code> as well.</p>
+<h2 id="symmetry"><span class="done DONE">DONE</span>
+<code>symmetry</code></h2>
+<p>Change a goal of the form <code>a = b</code> to
+<code>b = a</code>.</p>
+<pre class="coq"><code>Lemma bar : forall (a b : nat), a + b = b + a.
+Proof.
+  intros.
+  (* a + b = b + a *)
+
+  symmetry.
+  (* b + a = a + b *)
+</code></pre>
+<h2 id="induction"><span class="done DONE">DONE</span>
+<code>induction</code></h2>
+<p>Perform induction over a term of an inductive type. Generates two
+sub-goals:</p>
+<ul>
+<li>base case</li>
+<li>inductive case</li>
+</ul>
+<p>For example, for <code>nat</code>,</p>
+<pre class="coq"><code>Goal            
+  forall n:nat, 
+    n + 0 = n.  
+Proof.          
+  intro n.      
+  induction n.
+  - reflexivity.
+  - simpl.      
+    rewrite IHn.
+    reflexivity.
+Qed.
+</code></pre>
+<h2 id="discriminate"><span class="done DONE">DONE</span> <a
+href="https://coq.inria.fr/refman/proofs/writing-proofs/reasoning-inductives.html#coq:tacn.discriminate"><code>discriminate</code></a></h2>
+<p>If a proof goal has an associated hypothesis which is an impossible
+(ie, <code>False:Prop</code>) structural equality of the form
+<code>term1 = term2</code> like one among</p>
+<pre class="coq"><code>S O = O
+S (S O) = O
+S O = S (S (S O)) 
+</code></pre>
+<p>then, <code>discriminate</code> can prove that goal.</p>
+<p>If goal is in the <code>term₁ &lt;&gt; term₂</code> form, using
+<code>discriminate</code> has the same effect as
+<code>intro H. discriminate H.</code>. Helps avoid introducing a new
+name in such a case.</p>
+<p>Example:</p>
+<pre class="coq"><code>Goal             
+  forall n:nat,  
+   S n &lt;&gt; O.     
+Proof.           
+  intros a H.    
+  (* [a&lt;&gt;b] is actually [a=b -&gt; False]. That&#39;s why. *)
+
+  discriminate H.
+Qed.             
+
+
+Goal             
+  forall n:nat,  
+   S n &lt;&gt; O.     
+Proof.           
+  discriminate.  
+Qed.
+
+
+Goal
+  true = false -&gt; False.
+Proof.
+  discriminate.
+Qed.
+</code></pre>
+<h2 id="elim"><span class="done DONE">DONE</span> <a
+href="https://coq.inria.fr/refman/proofs/writing-proofs/reasoning-inductives.html#coq:tacn.elim"><code>elim</code></a></h2>
+<p>Something like an older, more basic version of
+<code>induction</code>. Coq docs recommends using <code>induction</code>
+instead.</p>
+<p>Unlike <code>induction</code>, <code>elim</code> doesn't modify the
+<a
+href="https://coq.inria.fr/refman/proofs/writing-proofs/proof-mode.html#term-local-context">local
+context</a>. We got to do it ourselves.</p>
+<pre class="coq"><code>Goal              
+  forall n:nat,   
+    n + 0 = n.    
+Proof.            
+  intro n.        
+  elim n.         
+  - reflexivity.  
+  - intros n1 IHn.
+    simpl.
+    rewrite IHn.  
+    reflexivity.  
+Qed.              
+</code></pre>
+<h2 id="assumption"><span class="done DONE">DONE</span>
+<code>assumption</code></h2>
+<p>Roughly put, <code>assumption</code> can be used if the goal is same
+as one of the hypotheses in the current context.</p>
+<pre class="coq"><code>Goal                    
+  forall p:Prop, p -&gt; p.
+Proof.                  
+  intros p H.           
+  assumption.
+Qed.
+</code></pre>
+<h2 id="exists"><span class="done DONE">DONE</span>
+<code>exists</code></h2>
+<p>When the goal involves a ∃, provide a term of that type to solve that
+goal.</p>
+<pre class="coq"><code>Goal                
+  exists n, 0+n = 0.
+Proof.              
+  exists 0.         
+  reflexivity.
+Qed.
+</code></pre>
+<h2 id="left-right"><span class="done DONE">DONE</span>
+<code>left</code> / <code>right</code></h2>
+<p>Applicable when the goal consists two parts and only one of them
+needs to be proved to prove the whole thing.</p>
+<p><code>left</code> proceeds with the first one, while
+<code>right</code> is used to go with the other.</p>
+<ul>
+<li><code>left</code> ≡ <code>constructor 1</code></li>
+<li><code>right</code> ≡ <code>constructor 2</code></li>
+</ul>
+<p>An example with <code>left</code> and <code>Prop</code>:</p>
+<pre class="coq"><code>Goal                                   
+  forall p:Prop, (2&lt;3) \/ (3&lt;2).       
+Proof.                                 
+  left.
+  constructor.
+Qed.                                   
+</code></pre>
+<p>Another example, with <code>right</code> and
+<code>sumbool</code>:</p>
+<pre class="coq"><code>Goal                            
+  {2&gt;3} + {2&lt;=3}.
+Proof.                          
+  right.                        
+  auto.                         
+Qed.                            
+</code></pre>
+<h2 id="injection"><span class="done DONE">DONE</span>
+<code>injection</code></h2>
+<p>Takes advantage of the fact that the constructors in Coq are
+injective.</p>
+<p>For example, if we got an assumption saying</p>
+<pre><code>constr a = constr b~
+</code></pre>
+<p>where <code>constr</code> is a constructor of some type, then
+<code>injection</code> can figure out that</p>
+<pre><code>a = b
+</code></pre>
+<p>would be true as well.</p>
+<pre class="coq"><code>Goal                                 
+  forall a b:nat, S a = S b -&gt; a = b.
+Proof.
+  intros.                            
+  injection H.                       
+  intro IHh.                         
+  exact IHh.
+Qed.                                 
+</code></pre>
+<h2 id="clear"><span class="done DONE">DONE</span>
+<code>clear</code></h2>
+<p>Remove a hypothesis from the local context.</p>
+<p>Eg:</p>
+<p>With</p>
+<pre class="coq"><code>Goal                           
+ forall n:nat, n &gt; 0 -&gt; n &gt;= 0.
+Proof.                         
+  intros n H.                  
+</code></pre>
+<p>where goal would be</p>
+<pre><code>1 subgoal
+
+n : nat
+H : n &gt; 0
+
+========================= (1 / 1)
+
+n &gt;= 0
+</code></pre>
+<p>Use <code>clear H.</code> and the goal will change to:</p>
+<pre><code>1 subgoal
+
+n : nat
+
+========================= (1 / 1)
+
+n &gt;= 0
+</code></pre>
+<h2 id="set"><span class="done DONE">DONE</span> <code>set</code></h2>
+<p>Give a name to a term in the conclusion of the goal and add it to the
+local context.</p>
+<pre class="coq"><code>Require Import Nat.
+
+Goal                       
+  forall n:nat,            
+    match (Nat.even n) with
+    | true =&gt; 1            
+    | false =&gt; 0           
+    end &gt;= 0.              
+Proof.                     
+  intro n.                 
+</code></pre>
+<p>and the goal would be:</p>
+<pre><code>1 subgoal
+
+n : nat
+
+========================= (1 / 1)
+
+(if even n then 1 else 0) &gt;= 0
+</code></pre>
+<p>But do</p>
+<pre class="coq"><code>set (ie:= Nat.even n).   
+</code></pre>
+<p>then the goal would become</p>
+<pre><code>1 subgoal
+
+n : nat
+ie := even n : bool
+
+========================= (1 / 1)
+
+(if ie then 1 else 0) &gt;= 0
+</code></pre>
+<p>Useful in cases where we need a term to do case analysis on.</p>
+<p>In the example, we can do <code>destruct ie</code> which wouldn't
+have been possible before the <code>set</code> usage.</p>
+<h2 id="cut"><span class="done DONE">DONE</span> <code>cut</code></h2>
+<p>Provide an extra hypothesis, prove the goal and then prove that the
+hypothesis is indeed correct.</p>
+<p>a la 'cut-rule'.</p>
+<p>Probably better to make a separate theorem and use it instead of
+trying <code>cut</code>. Always good to be able to reuse proofs that
+have already been made. And reusage is possible only if they have
+names.</p>
+<p>Example:</p>
+<pre class="coq"><code>Require Nat.                   
+
+Goal                           
+  forall a b c:nat,            
+    b = 0 -&gt; a + b + c = a + c.
+Proof.                         
+  intros a b c.                
+  intro Hb0.                   
+  cut (a + b + c = a + c).      
+  - auto.                      
+  - rewrite Hb0.               
+    rewrite &lt;- Plus.plus_assoc.
+    reflexivity.
+Qed.
+</code></pre>
+<p>We knew that a + b + c was a + c since b is zero. So we stated and
+used it to prove the original goal via <code>cut</code> tactic.
+Afterwards, we prove that this extra hypothesis that we used to prove
+the goal is also sound.</p>
+<p>So, cut generates two sub-goals.</p>
+<ul>
+<li>original goal</li>
+<li>extra hypothesis</li>
+</ul>
+<h2 id="replace"><span class="done DONE">DONE</span>
+<code>replace</code></h2>
+<p>Replace a term with another term.</p>
+<p>Generates two sub-goals and involves the following steps:</p>
+<ul>
+<li>prove the goal with the replacement.</li>
+<li>prove that the replaced term and its replacement are
+equivalent.</li>
+</ul>
+<pre class="coq"><code>Goal                             
+  forall n:nat,                  
+    n + 0 = n.                   
+Proof.                           
+  intro n.                       
+  replace (n+0) with (0+n).      
+  - reflexivity.                 
+  - simpl.                       
+    induction n; try reflexivity.
+    + simpl.                     
+      rewrite &lt;- IHn.
+      reflexivity.               
+Qed.
+</code></pre>
+<p>Here, we first considered <code>0 + n</code> same as the
+<code>n + 0</code> to prove the goal. Then we showed that both
+<code>0 + n</code> and <code>n + 0</code> are equivalent.</p>
+<h2 id="remember"><span class="done DONE">DONE</span>
+<code>remember</code></h2>
+<p>Give a name to an expression that you might need to use later on and
+add it to the set of hypotheses.</p>
+<pre class="coq"><code>Goal                                    
+  forall n m:nat, n + n + m = m + n + n.
+Proof.                                  
+  intros n m.                           
+(*                                      
+1 subgoal                               
+
+n, m : nat                              
+
+========================= (1 / 1)       
+
+n + n + m = m + n + n                   
+*)                                      
+  remember (n+n) as n2.                 
+(*                                      
+1 subgoal                               
+
+n, m, n2 : nat                          
+Heqn2 : n2 = n + n                      
+
+========================= (1 / 1)       
+
+n2 + m = m + n + n                      
+*)
+</code></pre>
+<p>To given an explicit name to the hypothesis generated by
+<code>remember</code>, we could've done:</p>
+<pre><code>remember (n+n) as n2 eqn:H.
+</code></pre>
+<p>Apparently, can't be used if the term appears in the goal. Once got
+this error: <code>Conclusion depends on the bodies of Heqp</code> (where
+<code>Heqp</code> would've been the new hypothesis).</p>
+<h2 id="split"><span class="done DONE">DONE</span>
+<code>split</code></h2>
+<p>Can be used when the type has only one constructor.</p>
+<p>Types like <code>/\</code> (ie, <code>and</code>) or
+<code>Streams.ForAll</code>.</p>
+<pre class="coq"><code>Goal
+  forall p q:Prop, p = True -&gt; q = True -&gt; p /\ q.
+Proof.
+  intros p q Hp Hq.
+(*
+1 subgoal                                                     
+
+p, q : Prop                                                   
+Hp : p = True                                                 
+Hq : q = True                                                 
+
+========================= (1 / 1)                             
+
+p /\ q                                                        
+*)                                                            
+  split.                                                      
+(*                                                            
+2 subgoals                                                    
+
+p, q : Prop                                                   
+Hp : p = True                                                 
+Hq : q = True                                                 
+
+========================= (1 / 2)                             
+
+p                                                             
+
+========================= (2 / 2)                             
+
+q                                                             
+*)                                                            
+Print and.                                                    
+(*                                                            
+Inductive and (A B : Prop) : Prop :=  conj : A -&gt; B -&gt; A /\ B.
+*)
+Qed.
+</code></pre>
+<p>Another example:</p>
+<pre class="coq"><code>
+</code></pre>
+<h2 id="pose"><span class="done DONE">DONE</span> <code>pose</code></h2>
+<p>Add a definition to the list of hypotheses.</p>
+<pre class="coq"><code>Goal                              
+  forall n:nat, n+0=n.            
+Proof.                            
+  intros n.                       
+(*
+1 subgoal
+
+n : nat
+
+========================= (1 / 1)
+
+n + 0 = n
+*)
+  pose 3.                         
+(*
+1 subgoal
+
+n : nat
+n0 := 3 : nat
+
+========================= (1 / 1)
+
+n + 0 = n
+*)
+</code></pre>
+<h2 id="contradiction"><span class="done DONE">DONE</span>
+<code>contradiction</code></h2>
+<p>Sees if <code>False</code> can be derived from the list of
+hypotheses.</p>
+<pre class="coq"><code>Goal
+  forall p q:Prop, p /\ ~p -&gt; q.
+Proof.
+  intros p q [Hp Hnp].
+  unfold not in Hnp.
+(*                                 
+1 subgoal
+
+p, q : Prop
+Hp : p                             
+Hnp : p -&gt; False                   
+
+========================= (1 / 1)  
+
+q                                  
+*)
+  contradiction.                   
+(*
+0 subgoals
+
+All goals completed.
+*)
+Qed.                               
+</code></pre>
+<h2 id="exfalso"><span class="done DONE">DONE</span>
+<code>exfalso</code></h2>
+<p>Implements the "ex falso quodlibet" logical principle.</p>
+<p>ie, if <code>False</code> is provable, any proposition can be
+proved.</p>
+<blockquote>
+<p>an elimination of False is performed on the current goal, and the
+user is then required to prove that False is indeed provable in the
+current context.</p>
+</blockquote>
+<pre class="coq"><code>Goal
+  forall p q:Prop, p /\ ~p -&gt; q.
+Proof.                             
+  intros p q [Hp Hnp].             
+(*                                 
+1 subgoal
+
+p, q : Prop
+Hp : p
+Hnp : ~ p
+
+========================= (1 / 1)
+
+q
+*)
+  exfalso.                         
+(*
+1 subgoal
+
+p, q : Prop
+Hp : p
+Hnp : ~ p
+
+========================= (1 / 1)
+
+False
+*)
+  apply (Hnp Hp).
+Qed.
+</code></pre>
+<p>Here, upon applying <code>exfalso</code>, goal became
+<code>False</code> and now we have to derive <code>False</code> from the
+available hypotheses to complete the proof.</p>
+<p>At least in this case, it's sort of similar to
+<code>constradiction</code> tactic.</p>
+<h2 id="shelve-and-unshelve"><span class="done DONE">DONE</span>
+<code>shelve</code> and <code>Unshelve</code></h2>
+<p><code>shelve</code> can be used to Postpone current goal and proceed
+with the next goal.</p>
+<p><code>Unshelve</code> can be used to bring the shelved goal back.</p>
+<pre class="coq"><code>Goal
+  forall n:nat, n = 0 \/ n &lt;&gt; 0.
+Proof.
+  intros n.
+  induction n.
+(*
+2 subgoals
+
+
+========================= (1 / 2) 
+
+0 = 0 \/ 0 &lt;&gt; 0                   
+
+========================= (2 / 2) 
+
+S n = 0 \/ S n &lt;&gt; 0               
+*)                                
+  shelve.                         
+(*                                
+1 subgoal                         
+1 shelved                         
+
+n : nat                           
+IHn : n = 0 \/ n &lt;&gt; 0             
+
+========================= (1 / 1) 
+
+S n = 0 \/ S n &lt;&gt; 0               
+*)                                
+right; auto.                      
+Unshelve.                         
+left; auto.                       
+</code></pre>
+<p>If we try to end a proof when there are shelved goals remaining, we
+would get an error like this:</p>
+<pre><code>The proof has remaining shelved goals [remaining-shelved-goals,
+tactics]
+
+Some unresolved existential variables remain
+</code></pre>
+<p><strong>CAUTION</strong>: <code>Unshelve</code> and
+<code>unshelve</code> are different tactics.</p>
+<h2 id="give_up"><span class="done DONE">DONE</span>
+<code>give_up</code></h2>
+<p>'Give up' the goals which are currently in focus.</p>
+<p>Given up goals cannot be brought back later and hence the proof
+cannot be ended.</p>
+<pre class="coq"><code>Goal                    
+  forall n:nat, n+0 = n.
+Proof.                  
+  intro n; induction n. 
+  - auto.               
+  - give_up.            
+(*
+0 subgoals
+1 admitted
+
+All goals completed.
+*)
+</code></pre>
+<h2 id="transitivity"><span class="done DONE">DONE</span>
+<code>transitivity</code></h2>
+<p>When we have</p>
+<pre><code>H1: a = b
+H2: b = c
+</code></pre>
+<p>we can use the common term via <code>transitivity</code> tactic to
+find equality between the other two terms.</p>
+<p>Example:</p>
+<pre class="coq"><code>Goal forall a b c: nat,
+  a = b -&gt; b = c -&gt; a = c.
+Proof.
+  intros a b c H1 H2.
+(*
+1 subgoal
+
+A : Type
+a, b, c : nat
+H1 : a = b
+H2 : b = c
+
+========================= (1 / 1)
+
+a = c
+*)
+
+  transitivity b.
+(*
+2 subgoals
+
+A : Type
+a, b, c : nat
+H1 : a = b
+H2 : b = c
+
+========================= (1 / 2)
+
+a = b
+
+========================= (2 / 2)
+
+b = c
+*)
+  all: assumption.
+Qed.
+</code></pre>
+<h2 id="rename"><span class="done DONE">DONE</span>
+<code>rename</code></h2>
+<p>Change name of a variable.</p>
+<pre class="coq"><code>Goal forall a: nat,
+  a = 0.
+Proof.
+  intro a.
+  rename a into x.
+</code></pre>
+<h2 id="inversion"><span class="todo TODO">TODO</span> <a
+href="https://coq.inria.fr/refman/proofs/writing-proofs/reasoning-inductives.html#coq:tacn.inversion"><code>inversion</code></a></h2>
+<p>Among other things, can be used to prove that something which cannot
+be derived from the constructors of a type cannot be proven.</p>
+<p>For example:</p>
+<pre class="coq"><code>Inductive fooDenote : list nat -&gt; Type := 
+| FooDenote: fooDenote nil.               
+
+Goal                              
+  (* [fooDenote nil] is the only possible type.
+     So any another fooDenote is not derivable *)
+  fooDenote (cons 3 nil) -&gt; False.
+Proof.                            
+  intros H.                       
+  inversion H.
+Qed.
+</code></pre>
+<p>Inversion is done on a hypothesis.</p>
+<p>—</p>
+<p>Special usage: <code>inversion n</code> where the nat refers to the
+nth hypothesis from the last.</p>
+<h2 id="refine"><span class="todo TODO">TODO</span>
+<code>refine</code></h2>
+<p>Allows to leave holes in the proof that we can fill in later one by
+one.</p>
+<p>Generates as many subgoals as the number of holes.</p>
+<p>Quite helpful to allow us to focus on one thing at a time.</p>
+<h2 id="constructor"><span class="todo TODO">TODO</span>
+<code>constructor</code></h2>
+<p>Apply constructor once to break down the value.</p>
+<p>For example, applying</p>
+<pre class="coq"><code>Goal          
+  1 &lt;= 3.     
+Proof.        
+  constructor.
+  constructor.
+  constructor.
+Qed.
+</code></pre>
+<h2 id="move"><span class="todo TODO">TODO</span> <code>move</code></h2>
+<p>Change the order of hyotheses in the context.</p>
+<pre class="coq"><code>Goal                                                   
+  forall n:nat, 0 + n = n -&gt;  n + 0 = n -&gt; S n = n + 1.
+Proof.                                                 
+  intros n H1 H2.                                      
+  move H1 after H2.                                    
+</code></pre>
+<h2 id="apply"><span class="todo TODO">TODO</span>
+<code>apply</code></h2>
+<p>Attempts to match current goal with conclusion of argument.</p>
+<h2 id="case"><span class="todo TODO">TODO</span> <code>case</code></h2>
+<p>An older, more basic version of <code>destruct</code>. Coq docs
+suggest using <code>destruct</code> instead.</p>
+<p>Unlike <code>destruct</code>, <code>case</code> cannot modify local
+context (just like the relation between <code>elim</code> and
+<code>induction</code>).</p>
+<h2 id="destruct"><span class="todo TODO">TODO</span>
+<code>destruct</code></h2>
+<p>For case analysis.</p>
+<p>Some use cases:</p>
+<ul>
+<li>usable kind of like induction without the induction hypothesis being
+available.</li>
+<li>bring the <code>exists</code> to the assumptions side</li>
+</ul>
+<h2 id="congruence"><span class="todo TODO">TODO</span> <a
+href="https://coq.inria.fr/refman/proofs/automatic-tactics/logic.html#coq:tacn.congruence"><code>congruence</code></a></h2>
+<p>Some level of automation.</p>
+<h2 id="intros"><span class="todo TODO">TODO</span> intros</h2>
+<p>A special use:</p>
+<ul>
+<li>intros until &lt;nat&gt;</li>
+</ul>
+<h2 id="lia"><span class="todo TODO">TODO</span> <code>lia</code></h2>
+<p>For inequalities.</p>
+<p>Stands for 'linear integer arithmetic' ??</p>
+<p>There was a sort of related tactic named <code>omega</code>, but this
+has now been removed from coq default installation.</p>
+<p>Needs <code>Require Import Lia.</code></p>
+<h2 id="lra"><span class="todo TODO">TODO</span> <code>lra</code></h2>
+<ul>
+<li>Like <code>lia</code> but for real number domain.</li>
+<li>Needs <code>Require Import Lra.</code></li>
+</ul>
+<h2 id="tacticals">Tacticals</h2>
+<p><a
+href="https://coq.inria.fr/refman/proof-engine/ltac.html">https://coq.inria.fr/refman/proof-engine/ltac.html</a></p>
+<h3 id="all"><span class="todo TODO">TODO</span> <code>all:</code></h3>
+<p>Apply a tactic to all remaining goals</p>
+<h3 id="repeat"><span class="done DONE">DONE</span>
+<code>repeat</code></h3>
+<p>Repeatedly apply a tactic to goal till end of proof or a failure.</p>
+<pre class="coq"><code>Goal          
+  1 &lt;= 4.     
+Proof.        
+  constructor.
+  constructor.
+  constructor.
+  constructor.
+Qed.          
+</code></pre>
+<p>With <code>repeat</code>:</p>
+<pre class="coq"><code>Goal          
+  1 &lt;= 4.     
+Proof.        
+  repeat constructor.
+Qed.          
+</code></pre>
+<h3 id="first"><span class="todo TODO">TODO</span>
+<code>first</code></h3>
+<p>Use the first tactic to succeed from among a list of tactics.</p>
+<p>first [ left | right ]</p>
+<h2 id="ltac1">Ltac1</h2>
+<h3 id="redefining-a-tactic">Redefining a tactic</h3>
+<p>A tactic that has already been defined can be redefined using
+<code>::=</code>.</p>
+<pre class="coq"><code>Ltac left ::= right.                                                │~
+(* Redefine [left] to mean the same as [right] *)
+</code></pre>
+<h3 id="misc">Misc</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Backtracking (OR)</td>
+<td><code>left + right</code></td>
+</tr>
+<tr class="even">
+<td>Branching</td>
+<td><code>left │ right</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="ltac2">Ltac2</h2>
+<p>Ltac2 has an ML-style type system.</p>
+<ul>
+<li>Refer to hypothesis <code>H</code>: <code>&amp;H</code></li>
+<li>Refer to gallina constructor named <code>Hi</code>:
+<code>$Hi</code></li>
+<li>Use ltac1: <code>ltac1:(idtac)</code> <a
+href="https://coq.inria.fr/refman/proof-engine/ltac2.html#quotations">ʳ</a></li>
+<li>Kind of like ltac1's <code>idtac</code> for ltac2:
+<code>()</code></li>
+</ul>
+<h2 id="doubts">Doubts</h2>
+<ul>
+<li>How to restart only current sub-goal?</li>
+<li>How to shelve only current sub-goal?</li>
+</ul>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://coq.inria.fr/refman/coq-tacindex.html">Coq tactic
+index</a></li>
+<li><a
+href="https://coq.inria.fr/files/coq-itp-2015/CoqSurvivalKit.pdf">Coq
+survival kit</a></li>
+</ul>
+</div>
+</body>
+</html>

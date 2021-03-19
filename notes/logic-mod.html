@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Logic</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Logic</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h1 id="l11">L11</h1>
+<p>Γ ⊢ α means we can derive α from Γ.</p>
+<p>Proofs are made relative to a <em>proof system</em>.</p>
+<p>A Hilbert style proof system consists of:</p>
+<ul>
+<li>Axioms: set of formulas</li>
+<li>Inference rules: set of rules. Relations between from premises to
+conclusions.</li>
+</ul>
+<p>Usually only axiom schemas and inference rule schemas are mentioned.
+Substitute as needed.</p>
+<h2 id="the-notion-of-proof">The notion of proof</h2>
+<h1 id="l15">L15</h1>
+<ul>
+<li>Γ ⊢ α: α is derivable from Γ.</li>
+<li>Γ ⊨ α: α is provable from Γ.
+<ul>
+<li>Γ ⊨ α means α is indeed a logical consequence of Γ</li>
+</ul></li>
+<li>Soundness: Γ ⊢ α means Γ ⊨ α
+<ul>
+<li>If derivable, it is correct.</li>
+</ul></li>
+<li>Completeness: Γ ⊨ α means Γ ⊢ α
+<ul>
+<li>If correct, it is derivable.</li>
+</ul></li>
+</ul>
+<p>To show soundness, all we got to do is prove that</p>
+<ul>
+<li>all axioms are valid</li>
+<li>all inference rules preserve validity.</li>
+</ul>
+<dl>
+<dt>Consistency</dt>
+<dd>
+<p>A set of formulas is consistent if there is no formula α such that Γ
+⊢ α and Γ ⊢ ¬α.</p>
+<ul>
+<li>ie, no contradictions.</li>
+</ul>
+</dd>
+</dl>
+<p>Proof of completeness is same as having proof that every consistent
+set of formulas is SAT.</p>
+<h2 id="hilbert-system">Hilbert system</h2>
+<p>Only one inference rule: Modus ponens.</p>
+<pre><code>(p → q), p ⊢ q
+</code></pre>
+<h1 id="hilberts-hotel">Hilbert's hotel</h1>
+<p><a
+href="https://en.wikipedia.org/wiki/Hilbert%27s_paradox_of_the_Grand_Hotel">https://en.wikipedia.org/wiki/Hilbert%27s_paradox_of_the_Grand_Hotel</a></p>
+</div>
+</body>
+</html>

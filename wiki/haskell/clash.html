@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cλash</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Cλash</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="general">General</h2>
+<ul>
+<li>Name of function to be made top entity: <code>topEntity</code></li>
+<li><code>Domain</code>: synthesis domain
+<ul>
+<li>techmap, I guess</li>
+<li><code>System</code>: Useful for simulation</li>
+</ul></li>
+<li>Convert to VHDL: <code>clash --vhdl MAC.hs</code></li>
+<li><code>Signal</code> values represent synchronous values. ie, values
+that change with respect to a clock.
+<ul>
+<li>Functions without signals are purely combinatorial.</li>
+</ul></li>
+<li>Combinational circuits: (recursive) functions</li>
+<li>Sequential circuits: composition of functions together with a finite
+state machine like a Mealy machine.</li>
+<li>Clock, Reset, Enable signals are implicit by default when using
+<code>HiddenClockResetEnable</code>.
+<ul>
+<li>These signals can be exposed with functions like
+<code>exposeClockResetEnable</code>.</li>
+</ul></li>
+</ul>
+<h2 id="nfdatax"><code>NFDataX</code></h2>
+<p>To be synthesizable, data type needs to be an instance of <a
+href="https://hackage.haskell.org/package/clash-prelude-1.6.6/docs/Clash-XException.html#t:NFDataX"><code>NFDataX</code></a>,
+a typeclass defined in clash-prelude.</p>
+<p>It's like <a
+href="https://hackage.haskell.org/package/deepseq-1.5.0.0/docs/Control-DeepSeq.html#g:1"><code>NFData</code></a>.
+<code>NFData</code> says that the type has a normal form (ie, is fully
+evaluatable and doesn't diverge). (I guess NF stands for 'normal
+form').</p>
+<p>This makes the evaluation eager?</p>
+<p><code>NFDataX</code> is <code>NFData</code> with support for
+undefined values.</p>
+<h2 id="simulating-a-mealy-machine">Simulating a Mealy machine</h2>
+<p>(cf: from <a
+href="https://essay.utwente.nl/59482/1/scriptie_C_Baaij.pdf">here</a>)</p>
+<pre><code>            +---------------+
+Input  ---&gt;-|               |------&gt; Output
+            | Combinational |
+            |    logic      |
+        +---|               |---+
+        |   +---------------+   |
+Current ^                       V   Next
+ state  |   +---------------+   |  state
+        |   |               |   |
+        +-&lt;-|     Memory    |-&lt;-+
+            |    elements   |
+            +---------------+
+</code></pre>
+<p>–</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Function to run a mealy machine</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>run _ _ []                    <span class="ot">=</span> []   <span class="co">-- no input means no output</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>run func state (input<span class="op">:</span>inputs) <span class="ot">=</span> output<span class="op">:</span> outputs</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  (output, state′) <span class="ot">=</span> func input state</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  outputs <span class="ot">=</span> run func state′ inputs</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Transition function for a mealy machine</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ot">func ::</span> <span class="dt">InputSignals</span> → <span class="dt">State</span> a → (<span class="dt">OutputSignals</span>, <span class="dt">State</span> a)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>func input state <span class="ot">=</span> (output, state′)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span></span></code></pre></div>
+<p>–</p>
+<p>Type:</p>
+<pre><code>mealy
+  :: (KnownDomain dom,
+      GHC.Classes.IP (Clash.Signal.HiddenClockName dom) (Clock dom),
+      GHC.Classes.IP (Clash.Signal.HiddenEnableName dom) (Enable dom),
+      GHC.Classes.IP (Clash.Signal.HiddenResetName dom) (Reset dom),
+      NFDataX s) =&gt;
+     (s -&gt; i -&gt; (s, o)) -&gt; s -&gt; Signal dom i -&gt; Signal dom o
+
+
+Transition function of the mealy machine:
+  (s        -- ^ current state
+-&gt; i        -- ^ next input
+-&gt; (s, o))  -- ^ next state, next output (produced /during/ the transition)
+
+
+   s             -- ^ initial state of mealy machine
+-&gt; Signal dom i  -- ^ input signal
+-&gt; Signal dom o  -- ^ output signal
+</code></pre>
+<h2 id="types">Types</h2>
+<p>From <code>base</code> itself:</p>
+<ul>
+<li>Int8, Int16, Int32, Int64</li>
+<li>Word8, Word16, Word32, Word64</li>
+</ul>
+<p>From <code>clash-prelude</code>:</p>
+<ul>
+<li>Bit</li>
+<li>Signed, Unsigned</li>
+</ul>
+<h2 id="assign-names-to-signals">Assign names to signals</h2>
+<p>à la ports in VHDL, I guess.</p>
+<p>Use <code>:::</code>. An example: <a
+href="https://github.com/clash-lang/clash-compiler/pull/2584/files">https://github.com/clash-lang/clash-compiler/pull/2584/files</a></p>
+<h2 id="misc">Misc</h2>
+<ul>
+<li>DDR signals: <a
+href="https://hackage.haskell.org/package/clash-prelude-1.6.6/docs/Clash-Explicit-DDR.html">https://hackage.haskell.org/package/clash-prelude-1.6.6/docs/Clash-Explicit-DDR.html</a>
+<ul>
+<li>Special signals. Looks like they are made such that they are updated
+twice in a cycle when compared to normal <code>Signal</code> type.</li>
+</ul></li>
+<li><a href="https://github.com/standardsemiconductor/lion">Lion</a>: A
+RISC-V CPU?? made with Clash</li>
+</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Linear Temporal Logic (LTL)</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Linear Temporal Logic (LTL)</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<p>Original LTL is a two-valued logic.</p>
+<pre><code>𝔹₂ = {⊤, ⊥}
+</code></pre>
+<h3 id="operators">Operators</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Operator</th>
+<th>Description</th>
+<th>Unicode</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>U</td>
+<td>strong until</td>
+<td>U</td>
+</tr>
+<tr class="even">
+<td>W</td>
+<td>weak until</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>X</td>
+<td>next</td>
+<td>○ / ◯</td>
+</tr>
+<tr class="even">
+<td>G</td>
+<td>always (ie, global)</td>
+<td>□</td>
+</tr>
+<tr class="odd">
+<td>F</td>
+<td>finally (ie, eventually)</td>
+<td>◇</td>
+</tr>
+<tr class="even">
+<td>R</td>
+<td>weak release(like PSL fusion)</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>M</td>
+<td>strong release</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>G p = ⊥ U p</li>
+<li>F p = ⊤ U p</li>
+</ul>
+<ul>
+<li>□(◇ p): p occurs infinitely often, but needn't be consecutive
+occurrences
+<ul>
+<li>□(◇ p) ⊂ □(□ p) = □ p</li>
+</ul></li>
+<li>◇(□ p): after some point, p will always be true.</li>
+</ul>
+<p>PSL equivalents:</p>
+<table>
+<thead>
+<tr class="header">
+<th>LTL</th>
+<th>PSL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X</td>
+<td>next</td>
+</tr>
+<tr class="even">
+<td>X!</td>
+<td>next!</td>
+</tr>
+<tr class="odd">
+<td>F</td>
+<td>eventually!</td>
+</tr>
+<tr class="even">
+<td>G</td>
+<td>always</td>
+</tr>
+<tr class="odd">
+<td>U</td>
+<td>until!</td>
+</tr>
+<tr class="even">
+<td>W</td>
+<td>until</td>
+</tr>
+</tbody>
+</table>
+<h3 id="syntax">Syntax</h3>
+<pre><code>φ = true
+  | p
+  | ¬φ
+  | φ ∨ φ
+  | φ U φ
+  | X φ
+</code></pre>
+<p>Sort of like the following inductive type in Coq:</p>
+<pre class="coq"><code>Inductive ltl : Set :=
+| true : ltl
+| p : Prop -&gt; ltl
+| ¬ : ltl -&gt; ltl
+| ∨ : ltl -&gt; ltl -&gt; ltl
+| U : ltl -&gt; ltl -&gt; ltl
+| X : ltl -&gt; ltl.
+</code></pre>
+<p>Some properties:</p>
+<ul>
+<li>¬(□p) = ◇(¬p)</li>
+<li>◇p = true U p</li>
+<li>□p = ¬(true U ¬p)</li>
+</ul>
+<h2 id="ltl3">LTL3</h2>
+<p>Three-valued logic:</p>
+<pre><code>𝔹₃ = {⊤, ⊥, ?}
+</code></pre>
+<h2 id="usual-notations">Usual notations</h2>
+<ul>
+<li>AP: propositional variables</li>
+</ul>
+<h2 id="paper">Paper</h2>
+<pre><code>[u ⊨ φ] = ⊤ if ∀σ ∈ Σ*, uσ ⊨ φ
+        | ⊥ if ∀σ ∈ Σ*, uσ ⊭ φ
+        | ? otherwise
+</code></pre>
+<ul>
+<li>L(φ): set of languages modeling φ</li>
+<li>φ ≡ ψ: L(φ) = L(ψ)</li>
+</ul>
+<h3 id="non-deterministic-büchi-automaton-nba">Non-deterministic Büchi
+automaton (NBA)</h3>
+<p>Operates on infinite words <code>Σ^ω</code>.</p>
+<p>A = (Σ, Q, Q₀, δ, F)</p>
+<p>where:</p>
+<ul>
+<li><code>Σ</code>: a finite alphabet</li>
+<li><code>Q</code>: finite non-empty set of states</li>
+<li><code>Q₀ ⊆ Q</code>: set of initial states</li>
+<li><code>δ: Q ⨯ Σ → 2^Q</code> : transition function</li>
+<li><code>F ⊆ Q</code>: set of accepting states</li>
+</ul>
+<h3 id="nfa">NFA</h3>
+<p>Exactly same as the Büchi automaton, but operates on finite words
+(<code>Σ*</code>).</p>
+<h2 id="ctl"><span class="todo TODO">TODO</span> CTL</h2>
+<p>Computation Tree Logic</p>
+<p>There are properties which can be expressed in CTL but not in LTL,
+and vice versa. But all properties expressible either in LTL or in CTL
+can be expressed in CTL*.</p>
+<p>LTL + path quantifiers</p>
+<p>path quantifiers are:</p>
+<ul>
+<li>A: quantify over all possible paths</li>
+<li>E: there is <em>some</em> path</li>
+</ul>
+<h2 id="psl"><span class="todo TODO">TODO</span> PSL</h2>
+<h3 id="section">1</h3>
+<p>{a;d}</p>
+<table>
+<tbody>
+</tbody>
+</table>
+<p>next<sub>e</sub>[2:4](b)) until c</p>
+<p>[(here a) /\ (X (here d))] -&gt;</p>
+<pre class="coq"><code>Definition spSeq (a b:A) : Stream A -&gt; Prop :=
+ λs. here a /\ X (here b).
+
+Notation &quot; a &#39;;&#39; b &quot; := (spSeq a b) (at level 50, left associative).
+</code></pre>
+<pre class="coq"><code>Definition singleImplies (p q: sP A) : sP A :=
+  λs. ¬p \/ ∀t
+</code></pre>
+<p>[here a /\ X (here d)] -&gt; U c</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Auto-build latex documents</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Auto-build latex documents</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+<div id="description">
+A short description about latexmk and arara.
+</div>
+
+<div id="content-container">
+<hr />
+<p>I have a tex file (<code>input.tex</code>) which I need to apply with
+6 commands to get the proper pdf output that I need. Here are those
+commands:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pdflatex</span> <span class="at">-shell-escape</span> input.tex</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bibtex</span> input.aux</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pdflatex</span> <span class="at">--shell-escape</span> input.tex</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">pdflatex</span> <span class="at">--shell-escape</span> input.tex</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">makeglossaries</span> input</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">pdflatex</span> <span class="at">-shell-escape</span> input.tex</span></code></pre></div>
+<p>That's a lot of commands to run. Could write a shell script for that.
+But then you got to manage a shell script for each tex file. That sounds
+like some extra work.</p>
+<p>Found two tools that help avoid the extra work: latexmk and
+arara.</p>
+<p>(Came across both for the first time while reading <a
+href="https://www.dickimaw-books.com/people/nicola-talbot.html">Dr.
+Nicola L. C. Talbot's</a> <a
+href="https://www.dickimaw-books.com/latex/thesis/">Using LaTeX to Write
+a PhD Thesis</a> which I found quite helpful.)</p>
+<p>In my case,</p>
+<ul>
+<li><code>-shell-escape</code> is needed in <code>pdflatex</code>
+commands for <code>minted</code> environments.</li>
+<li><code>bibtex</code> for managing cross-references.</li>
+<li><code>makeglossaries</code> for handling glossary entries.</li>
+</ul>
+<h2 id="latexmk">latexmk</h2>
+<p><a href="https://ctan.org/pkg/latexmk?lang=en">latexmk</a> means
+complete automation. We needn't do anything. Needn't even give any hints
+to let the tool know which all commands need be run.
+<code>latexmk</code> will figure out the dependencies and act
+accordingly by making use of information available in log files.</p>
+<p>We can use configure files to change the default behaviour of
+<code>latexmk</code> by making a <code>latexmkrc</code> or
+<code>.latexmkrc</code> file whose contents essentially seem to be Perl.
+This is because <code>latexmk</code> is written in Perl (and hence needs
+a system with Perl installed to run).</p>
+<p>In my case, default configuration would suffice. All that needs to be
+done is</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">latexmk</span> <span class="at">-shell-escape</span> input.tex</span></code></pre></div>
+<p>That's it. Down to a single command from 6 different ones!</p>
+<p><code>latexmk</code>, like <code>make</code>, can also figure out
+when the build is upto date so that it won't run the commands if the
+source files haven't changed after the last build.</p>
+<p><code>latexmk</code> <em>might</em> run more commands than needed
+sometimes, as mentioned by the creator of <code>latexmk</code> <a
+href="https://www.personal.psu.edu/~jcc8/index.html">himself</a> in <a
+href="https://tex.stackexchange.com/a/249243/145424">this post</a>. But
+that doesn't affect the output. And that's probably a small price to pay
+for the kind of automation <code>latexmk</code> offers.</p>
+<h2 id="arara">arara</h2>
+<p>Unlike latexmk, arara doesn't do 'full' automation. It does as the
+user tells it to do.</p>
+<p>In my case, I need to put the following 'magic comments' at the
+beginning of the input tex file (even before the preamble):</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode latex"><code class="sourceCode latex"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">% arara: pdflatex: { shell: yes}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">% arara: bibtex</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">% arara: pdflatex: { shell: yes}</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">% arara: pdflatex: { shell: yes}</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">% arara: makeglossaries</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">% arara: pdflatex: { shell: yes}</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">% Now the &#39;real&#39; source</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">\documentclass</span>{<span class="ex">report</span>}</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">minted</span>} </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<p>and then we can use</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arara</span> input.tex</span></code></pre></div>
+<p>and we get a description of what happened as output:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">__</span> _ _ __ __ _ _ __ __ _</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a> <span class="ex">/</span> _<span class="kw">`</span> <span class="kw">|</span> <span class="st">&#39;__/ _` | &#39;</span><span class="ex">__/</span> _<span class="kw">`</span> <span class="kw">|</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="kw">(</span><span class="ex">_</span><span class="kw">|</span> <span class="kw">|</span> <span class="kw">|</span> <span class="kw">|</span> <span class="kw">(</span><span class="ex">_</span><span class="kw">|</span> <span class="kw">|</span> <span class="kw">|</span> <span class="kw">|</span> <span class="kw">(</span><span class="ex">_</span><span class="kw">|</span> <span class="kw">|</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a> <span class="ex">\__,_</span><span class="kw">|</span><span class="ex">_</span><span class="kw">|</span>  <span class="ex">\__,_</span><span class="kw">|</span><span class="ex">_</span><span class="kw">|</span>  <span class="ex">\__,_</span><span class="kw">|</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Processing</span> <span class="st">&#39;input.tex&#39;</span> <span class="er">(</span><span class="ex">size:</span> 45.2 kB, last modified:</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ex">12/23/2021</span> 21:58:14<span class="kw">)</span><span class="ex">,</span> please wait.</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">PDFLaTeX</span><span class="kw">)</span> <span class="ex">PDFLaTeX</span> engine .............................. SUCCESS</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">BibTeX</span><span class="kw">)</span> <span class="ex">The</span> BibTeX reference management software ....... SUCCESS</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">PDFLaTeX</span><span class="kw">)</span> <span class="ex">PDFLaTeX</span> engine .............................. SUCCESS</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">PDFLaTeX</span><span class="kw">)</span> <span class="ex">PDFLaTeX</span> engine .............................. SUCCESS</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">MakeGlossaries</span><span class="kw">)</span> <span class="ex">The</span> MakeGlossaries software ............ SUCCESS</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">PDFLaTeX</span><span class="kw">)</span> <span class="ex">PDFLaTeX</span> engine .............................. SUCCESS</span></code></pre></div>
+<p>We inform <code>arara</code> about the commands that need be run by
+means of comments placed within the source tex file and
+<code>arara</code> does that. Nothing more, nothing less. User has
+complete control over the commands being done. <code>arara</code> does
+no guesswork.</p>
+<p>In this example, I only needed rules which are available in
+<code>arara</code> by default (stuff like <code>pdflatex</code>,
+<code>makeglossaries</code> in the 'magic comments' are the rule names
+for <code>arara</code>). We can also make our own rules as needed. See
+<a
+href="https://www.dickimaw-books.com/latex/thesis/html/arara.html">here</a>
+for an example.</p>
+<p><code>arara</code> uses JVM (Java Virtual Machine) and needs Java
+runtime environment installed to run.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://ctan.asis.ai/support/latexmk/latexmk.txt">latexmk
+manual</a></li>
+<li><a
+href="http://mirrors.ctan.org/support/arara/doc/arara-manual.pdf">arara
+manual</a></li>
+<li><a href="https://www.dickimaw-books.com/latex/thesis/"><a
+href="https://www.dickimaw-books.com/latex/thesis/">https://www.dickimaw-books.com/latex/thesis/</a></a></li>
+<li><a
+href="https://tex.stackexchange.com/questions/598818/how-can-i-enable-shell-escape/598824#598824"><a
+href="https://tex.stackexchange.com/questions/598818/how-can-i-enable-shell-escape/598824#598824">https://tex.stackexchange.com/questions/598818/how-can-i-enable-shell-escape/598824#598824</a></a></li>
+<li><a href="https://github.com/islandoftex/arara"><a
+href="https://github.com/islandoftex/arara">https://github.com/islandoftex/arara</a></a></li>
+</ul>
+<p>—-</p>
+<ul>
+<li>06-Jan-2021: Updated to include arara output.</li>
+</ul>
+</div>
+</body>
+</html>

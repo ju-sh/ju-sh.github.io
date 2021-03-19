@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Haskell</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Haskell</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="predefined-types">Predefined types</h2>
+<ul>
+<li><code>Int</code> vs <code>Integer</code>:
+<ul>
+<li><code>Int</code>: fixed precision</li>
+<li><code>Integer</code>: arbitrary precision</li>
+</ul></li>
+<li><code>Word</code>: 'an unsigned integral type, with the same size as
+Int' - Haskell language report 2010 <a
+href="https://stackoverflow.com/questions/12432154/int-vs-word-in-common-use">ˡ</a></li>
+</ul>
+<h2 id="bounds-of-a-int">Bounds of a <code>Int</code></h2>
+<p>Bounds can be seen for instances of <code>Bounded</code> type
+class:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span><span class="ot"> minBound ::</span> <span class="dt">Int</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">-</span><span class="dv">9223372036854775808</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Int</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dv">9223372036854775807</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Bool</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span><span class="ot"> minBound ::</span> <span class="dt">Bool</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Word</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="dv">18446744073709551615</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Float</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>interactive<span class="op">&gt;:</span><span class="dv">5</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">No</span> <span class="kw">instance</span> for (<span class="dt">Bounded</span> <span class="dt">Float</span>) arising from a use <span class="kw">of</span> ‘maxBound’</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">In</span> the expression<span class="op">:</span><span class="ot"> maxBound ::</span> <span class="dt">Float</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      <span class="dt">In</span> an equation for ‘it’<span class="op">:</span> it <span class="ot">= maxBound ::</span> <span class="dt">Float</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Integer</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>interactive<span class="op">&gt;:</span><span class="dv">6</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">No</span> <span class="kw">instance</span> for (<span class="dt">Bounded</span> <span class="dt">Integer</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        arising from a use <span class="kw">of</span> ‘maxBound’</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">In</span> the expression<span class="op">:</span><span class="ot"> maxBound ::</span> <span class="dt">Integer</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>      <span class="dt">In</span> an equation for ‘it’<span class="op">:</span> it <span class="ot">= maxBound ::</span> <span class="dt">Integer</span></span></code></pre></div>
+<p>Beyonds bounds, value will wrap around:</p>
+<pre><code>λ&gt; (maxBound :: Int) + 1
+-9223372036854775808
+</code></pre>
+<h2 id="symbols">Symbols</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td><code>&lt;$&gt;</code></td>
+<td><code>fmap</code></td>
+<td><code>Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</code></td>
+</tr>
+<tr class="even">
+<td><code>&lt;*&gt;</code></td>
+<td>(apply)</td>
+<td><code>Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b</code></td>
+</tr>
+<tr class="odd">
+<td><code>&gt;&gt;=</code></td>
+<td>(bind)</td>
+<td><code>Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b</code></td>
+</tr>
+<tr class="even">
+<td><code>&lt;│&gt;</code></td>
+<td>(alternative)</td>
+<td><code>Alternative f =&gt; f a -&gt; f a -&gt; f b</code></td>
+</tr>
+<tr class="odd">
+<td><code>&lt;*</code></td>
+<td></td>
+<td><code>Applicative f =&gt; f a -&gt; f b -&gt; f a</code></td>
+</tr>
+<tr class="even">
+<td><code>*&gt;</code></td>
+<td></td>
+<td><code>Applicative f =&gt; f a -&gt; f b -&gt; f b</code></td>
+</tr>
+<tr class="odd">
+<td><code>&gt;&gt;</code></td>
+<td>??</td>
+<td><code>Monad m =&gt; m a -&gt; m b -&gt; m b</code></td>
+</tr>
+<tr class="even">
+<td><code>&gt;&lt;</code></td>
+<td>??</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>&lt;&gt;</code></td>
+<td>??</td>
+<td><code>Semigroup a =&gt; a -&gt; a -&gt; a</code></td>
+</tr>
+<tr class="even">
+<td><code>.</code></td>
+<td>(compose)</td>
+<td><code>(b -&gt; c) -&gt; (a -&gt; b) -&gt; (a -&gt; c)</code></td>
+</tr>
+<tr class="odd">
+<td><code>$</code></td>
+<td></td>
+<td><code>(a -&gt; b) -&gt; a -&gt; b</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="section"><code>(&gt;&gt;)</code></h3>
+<p><code>a &gt;&gt; b</code> is similar to <code>a &gt;&gt;= b</code>
+except that the value produced from <code>a</code> is ignored. <a
+href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-62--62-">ᵈ</a></p>
+<p>Kind of like:</p>
+<table>
+<thead>
+<tr class="header">
+<th><code>a &gt;&gt;= b</code></th>
+<th><code>a &gt;&gt; b</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>do</td>
+<td>do</td>
+</tr>
+<tr class="even">
+<td>  x &lt;- a</td>
+<td>  a</td>
+</tr>
+<tr class="odd">
+<td>  b</td>
+<td>  b</td>
+</tr>
+</tbody>
+</table>
+<p>Similar to <code>*&gt;</code> as evident from type.</p>
+<h3 id="section-1"><code>(&lt;&gt;)</code></h3>
+<p>Associative operator associated with a semigroup <a
+href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Semigroup.html#v:sconcat">ᵈ</a>
+<a
+href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#g:9">ᵈ</a>.
+<a
+href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--62-">ᵈ</a></p>
+<p>In the case of list:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> [<span class="dv">1</span>,<span class="dv">2</span>] <span class="op">&lt;&gt;</span> [<span class="dv">3</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]</span></code></pre></div>
+<p>because list is an instance of <code>Semigroup</code>:</p>
+<pre><code>λ&gt; :i []
+type [] :: * -&gt; *
+data [] a = [] | a : [a]
+    -- Defined in `GHC.Types&#39;
+instance Alternative [] -- Defined in `GHC.Base&#39;
+instance Applicative [] -- Defined in `GHC.Base&#39;
+instance Eq a =&gt; Eq [a] -- Defined in `GHC.Classes&#39;
+instance Functor [] -- Defined in `GHC.Base&#39;
+instance Monad [] -- Defined in `GHC.Base&#39;
+instance Monoid [a] -- Defined in `GHC.Base&#39;
+instance Ord a =&gt; Ord [a] -- Defined in `GHC.Classes&#39;
+instance Semigroup [a] -- Defined in `GHC.Base&#39;
+instance Show a =&gt; Show [a] -- Defined in `GHC.Show&#39;
+instance Foldable [] -- Defined in `Data.Foldable&#39;
+instance Read a =&gt; Read [a] -- Defined in `GHC.Read&#39;
+instance MonadFail [] -- Defined in `Control.Monad.Fail&#39;
+instance Traversable [] -- Defined in `Data.Traversable&#39;
+</code></pre>
+<h2 id="ghci">ghci</h2>
+<p><a
+href="http://dev.stephendiehl.com/hask/">http://dev.stephendiehl.com/hask/</a></p>
+<p>For interactive haskell REPL.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Short</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>:reload</td>
+<td>:r</td>
+<td>Code reload</td>
+</tr>
+<tr class="even">
+<td>:type</td>
+<td>:t</td>
+<td>Type inspection</td>
+</tr>
+<tr class="odd">
+<td>:kind</td>
+<td>:k</td>
+<td>Kind inspection</td>
+</tr>
+<tr class="even">
+<td>:info</td>
+<td>:i</td>
+<td>Information (can show definiton with constructors)</td>
+</tr>
+<tr class="odd">
+<td>:print</td>
+<td>:p</td>
+<td>Print the expression</td>
+</tr>
+<tr class="even">
+<td>:edit</td>
+<td>:e</td>
+<td>Load file in system editor</td>
+</tr>
+<tr class="odd">
+<td>:load</td>
+<td>:l</td>
+<td>Set the active Main module in the REPL</td>
+</tr>
+<tr class="even">
+<td>:module</td>
+<td>:m</td>
+<td>Add modules to imports</td>
+</tr>
+<tr class="odd">
+<td>:add</td>
+<td>:ad</td>
+<td>Load a file into the REPL namespace</td>
+</tr>
+<tr class="even">
+<td>:instances</td>
+<td>:in</td>
+<td>Show instances of a typeclass</td>
+</tr>
+<tr class="odd">
+<td>:browse</td>
+<td>:bro</td>
+<td>Browse all available symbols in the REPL namespace</td>
+</tr>
+</tbody>
+</table>
+<h2 id="third-party-stuff">Third party stuff</h2>
+<h3 id="parsec">Parsec</h3>
+<ul>
+<li><code>&lt;?&gt;</code>: <code>parser &lt;?&gt; err_msg</code>
+<ul>
+<li><code>err_msg</code> shown when parsing with <code>parser</code>
+fails</li>
+</ul></li>
+</ul>
+<h3 id="containers">Containers</h3>
+<p><code>Seq</code> (as in list) type from <code>Data.Sequence</code> of
+<a
+href="https://hackage.haskell.org/package/containers-0.7/docs/Data-Sequence.html#v:-62--60-">'containers'</a>
+package.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><code>&lt;│</code></td>
+<td>Add element to left end of a seq</td>
+<td><code>a -&gt; Seq a -&gt; Seq a</code></td>
+</tr>
+<tr class="even">
+<td><code>│&gt;</code></td>
+<td>Add element to right end of a seq</td>
+<td><code>a -&gt; Seq a -&gt; Seq a</code></td>
+</tr>
+<tr class="odd">
+<td><code>&gt;&lt;</code></td>
+<td>Concatenate two sequnces</td>
+<td><code>Seq a -&gt; Seq a -&gt; Seq a</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="tools">Tools</h2>
+<ul>
+<li>ormolu: automatic code formatter</li>
+</ul>
+</div>
+</body>
+</html>

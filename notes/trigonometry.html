@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Trigonometry</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Trigonometry</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<pre><code>+
+|\
+| \
+|  \
+|   \
+|    \
+|     \
+|ﬢ   θ \
++-------+
+</code></pre>
+<h2 id="definitions">Definitions</h2>
+<ul>
+<li><p>sine: sinθ = opposite / hypotenuse</p></li>
+<li><p>cosine: cosθ = adjacent / hypotenuse</p></li>
+<li><p>tangent: tanθ = opposite / adjacent</p></li>
+<li><p>cosec: cosecθ = 1/sinθ</p></li>
+<li><p>sec: secθ = 1/cosθ</p></li>
+<li><p>cotangent: cotθ = 1/tanθ</p></li>
+<li><p>arcsin = sin⁻¹</p></li>
+</ul>
+<h2 id="few-values">Few values</h2>
+<pre><code>| Radian | Degree | sin  | cos  | tan  |
+|--------+--------+------+------+------|
+| 0      |      0 | 0    | 1    | 0    |
+| π/6    |     30 | 1/2  | √3/2 | 1/√3 |
+| π/4    |     45 | 1/√2 | 1/√2 | 1    |
+| π/3    |     60 | √3/2 | 1/2  | √3   |
+| π/2    |     90 | 1    | 0    | ∞    |
+</code></pre>
+<h2 id="squared">Squared</h2>
+<p>From <a
+href="https://en.wikipedia.org/wiki/List_of_trigonometric_identities">Wikipedia</a>:</p>
+<pre><code>|        | sin         | cos         | tan         | cosec         | sec         | cot         |
+|--------+-------------+-------------+-------------+---------------+-------------+-------------|
+|        |             |             |             |               |             |             |
+|        |             |             |    tan²θ    |      1        |  sec²θ - 1  |     1       |
+| sin    | sin²θ       | 1 - cos²θ   | ─────────── | ───────────   | ─────────── | ─────────── |
+|        |             |             | 1 + tan²θ   |    sin²θ      |    sec²θ    | 1 + cot²θ   |
+|--------+-------------+-------------+-------------+---------------+-------------+-------------|
+|        |             |             |             |               |             |             |
+|        |             |             |    1        | cosec²θ - 1   |     1       |    cot²θ    |
+| cos    | 1 - sin²θ   | cos²θ       | ─────────── | ───────────   | ─────────── | ─────────── |
+|        |             |             | 1 + tan²θ   |   cosec²θ     |    sec²θ    | 1 + cot²θ   |
+|        |             |             |             |               |             |             |
+|--------+-------------+-------------+-------------+---------------+-------------+-------------|
+|        |             |             |             |               |             |             |
+|        |   sin²θ     | 1 - cos²θ   |             |      1        |             |    1        |
+| tan    | ─────────── | ─────────── | tan²θ       | ───────────── | sec²θ - 1   | ─────────── |
+|        | 1 - sin²θ   |    cos²θ    |             |  cosec²θ - 1  |             | cot²θ       |
+|        |             |             |             |               |             |             |
+|--------+-------------+-------------+-------------+---------------+-------------+-------------|
+|        |             |             |             |               |             |             |
+|        |    1        |     1       |             | 1 + tan²θ     | sec²θ       |             |
+| cosec  | ───────     | ─────────── | tan²θ       | ───────────   | ─────────-  | 1 + cot²θ   |
+|        |  sin²θ      |  1 - cos²θ  |             |    tan²θ      | sec²θ - 1   |             |
+|        |             |             |             |               |             |             |
+|--------+-------------+-------------+-------------+---------------+-------------+-------------|
+|        |             |             |             |               |             |             |
+|        |    1        |    1        |             |   cosec²θ     |             | 1 + cot²θ   |
+| sec    | ──────────  | ────────    | 1 + tan²θ   | ───────────   | sec²θ       | ──────────  |
+|        | 1 - sin²θ   |  cos²θ      |             | cosec²θ - 1   |             |    cot²θ    |
+|        |             |             |             |               |             |             |
+|--------+-------------+-------------+-------------+---------------+-------------+-------------|
+|        |             |             |             |               |             |             |
+|        | 1 - sin²θ   |  cos²θ      |   1         |               |    1        |             |
+| cot    | ──────────  | ──────────  | ──────      | cosec²θ - 1   | ───────     | cot²θ       |
+|        | sin²θ       | 1 - cos²θ   |  tanθ       |               |  sec²θ      |             |
+|        |             |             |             |               |             |             |
+</code></pre>
+<h2 id="reflections">Reflections</h2>
+<pre><code>| Function | -θ      | π/2 - θ | π - θ  | 3π/4 - θ |
+|----------+---------+---------+--------+----------|
+| sinθ     | -sinθ   | cosθ    | sinθ   | -cosθ    |
+|----------+---------+---------+--------+----------|
+| cosθ     | cosθ    | sinθ    | -cosθ  | -sinθ    |
+|----------+---------+---------+--------+----------|
+| tanθ     | -tanθ   | cotθ    | -tanθ  | cotθ     |
+|----------+---------+---------+--------+----------|
+| cosecθ   | -cosecθ | secθ    | cosecθ | -secθ    |
+|----------+---------+---------+--------+----------|
+| secθ     | secθ    | cosecθ  | -secθ  | -cosecθ  |
+|----------+---------+---------+--------+----------|
+| cotθ     | -cotθ   | tanθ    | -cotθ  | tanθ     |
+</code></pre>
+<h2 id="periodicity">Periodicity</h2>
+<p>Functions with period <code>2π</code>:</p>
+<pre><code>| Function | θ ± (π/2) | +π      |
+|----------+-----------+---------|
+| sin      | ± cosθ    | -sinθ   |
+| cos      | ∓ sinθ    | -cosθ   |
+| cosec    | ± secθ    | -cosecθ |
+| sec      | ∓ cosecθ  | -secθ   |
+</code></pre>
+<p>Functions with period <code>π</code>:</p>
+<pre><code>| Function | θ ± (π/4) | +(π/2) |
+|----------+-----------+--------|
+|          | tanθ ± 1  |        |
+| tan      | ───────── | ─cotθ  |
+|          | 1 ∓ tanθ  |        |
+|----------+-----------+--------|
+|          | cotθ ∓ 1  |        |
+| cot      | ───────── | ─tanθ  |
+|          | 1 ± cotθ  |        |
+</code></pre>
+<h2 id="angle-sum">Angle sum</h2>
+<pre><code>| sin(A±B)        | sinA.cosB ± cosA.sinB       |
+|-----------------+-----------------------------|
+| cos(A±B)        | cosA.cosB ∓ sinA.sinB       |
+|-----------------+-----------------------------|
+|                 | tanA ± tanB                 |
+| tan(A±B)        | ────────────────            |
+|                 | 1 ∓ tanA.tanB               |
+|-----------------+-----------------------------|
+|                 | secA.secB.cosecA.cosecB     |
+| cosec(A±B)      | ──────────────────────────  |
+|                 | secA.cosecB ± cosecA.secB   |
+|-----------------+-----------------------------|
+|                 | secA.secB.cosecA.cosecB     |
+| sec(A±B)        | ──────────────────────────  |
+|                 | cosecA.cosecB ∓ secA.secB   |
+|-----------------+-----------------------------|
+|                 | cotA.cotB ∓ 1               |
+| cot(A±B)        | ─────────────               |
+|                 | cotB ∓ cotA                 |
+|-----------------+-----------------------------|
+|                 |      ⎛                    ⎞ |
+| sin⁻¹x ± sin⁻¹y | sin⁻¹⎜x√(1-y²) ± y√(1-x²) ⎟ |
+|                 |      ⎝                    ⎠ |
+|-----------------+-----------------------------|
+|                 |      ⎛                    ⎞ |
+| cos⁻¹x ± cos⁻¹y | cos⁻¹⎜xy ∓ √[(1-x²)(1-y²)]⎟ |
+|                 |      ⎝                    ⎠ |
+|-----------------+-----------------------------|
+|                 |      ⎛  x ± y  ⎞            |
+| tan⁻¹x ± tan⁻¹y | tan⁻¹⎜─────────⎟            |
+|                 |      ⎝  1 ∓ xy ⎠            |
+|-----------------+-----------------------------|
+|                 |      ⎛  xy ∓ 1 ⎞            |
+| cot⁻¹x ± cot⁻¹y | cot⁻¹⎜─────────⎟            |
+|                 |      ⎝  y ± x  ⎠            |
+</code></pre>
+<h2 id="double-angle">Double angle</h2>
+<pre><code>|         |               |                    |   2.tanθ     |              |
+| sin2θ   | 2.sinθ.cosθ   | (sinθ + cosθ)² ─ 1 | ──────────── |              |
+|         |               |                    | 1 + tan²θ    |              |
+|---------+---------------+--------------------+--------------+--------------|
+|         |               |                    |              | 1 - tan²θ    |
+| cos2θ   | cos²θ - sin²θ | 2.cos²θ - 1        | 1 - 2.sin²θ  | ──────────── |
+|         |               |                    |              | 1 + tan²θ    |
+|---------+---------------+--------------------+--------------+--------------|
+|         |    2.tanθ     |                    |              |              |
+| tan2θ   | ───────────── |                    |              |              |
+|         |  1 - tan²θ    |                    |              |              |
+|---------+---------------+--------------------+--------------+--------------|
+|         | secθ.cosecθ   | 1 + tan²θ          |              |              |
+| cosec2θ | ───────────── | ─────────          |              |              |
+|         |      2        |   2.tanθ           |              |              |
+|---------+---------------+--------------------+--------------+--------------|
+|         |     sec²θ     | 1 + tan²θ          |              |              |
+| sec2θ   | ───────────── | ─────────          |              |              |
+|         | 2 - sec²θ     | 1 - tan²θ          |              |              |
+|---------+---------------+--------------------+--------------+--------------|
+|         |   cot²θ - 1   |  1 - tan²θ         |              |              |
+| cot2θ   | ───────────── | ───────────        |              |              |
+|         |    2.cotθ     |   2.tanθ           |              |              |
+</code></pre>
+<h2 id="triple-angle">Triple angle</h2>
+<pre><code>|         |                 |           ⎛ π     ⎞    ⎛ π     ⎞ |
+| sin3θ   | 3.sinθ - 4sin³θ | 4.sinθ.sin⎜─── - θ⎟.sin⎜─── + θ⎟ |
+|         |                 |           ⎝ 3     ⎠    ⎝ 3     ⎠ |
+|---------+-----------------+----------------------------------|
+|         |                 |           ⎛ π     ⎞    ⎛ π     ⎞ |
+| cos3θ   | 4cos³θ - 3.cosθ | 4.cosθ.cos⎜─── - θ⎟.cos⎜─── + θ⎟ |
+|         |                 |           ⎝ 3     ⎠    ⎝ 3     ⎠ |
+|---------+-----------------+----------------------------------|
+|         | 3.tanθ - tan³θ  |         ⎛ π     ⎞    ⎛ π     ⎞   |
+| tan3θ   | ─────────────── | tanθ.tan⎜─── - θ⎟.tan⎜─── + θ⎟   |
+|         |  1 - 3.tan²θ    |         ⎝ 3     ⎠    ⎝ 3     ⎠   |
+|---------+-----------------+----------------------------------|
+|         |     cosec³θ     |                                  |
+| cosec3θ | ─────────────   |                                  |
+|         | 3.cosec²θ - 4   |                                  |
+|---------+-----------------+----------------------------------|
+|         |     sec³θ       |                                  |
+| sec3θ   | ─────────────   |                                  |
+|         | 4 - 3.sec²θ     |                                  |
+|---------+-----------------+----------------------------------|
+|         | 3.cotθ - cot³θ  |                                  |
+| cot3θ   | ──────────────  |                                  |
+|         |  1 - 3.cot²θ    |                                  |
+</code></pre>
+<h2 id="small-angle-approximation">Small angle approximation</h2>
+<p>From <a
+href="https://en.wikipedia.org/wiki/Small-angle_approximation">Wikipedia</a>:</p>
+<pre><code>sinθ ≈ θ
+</code></pre>
+</div>
+</body>
+</html>

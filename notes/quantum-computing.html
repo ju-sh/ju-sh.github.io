@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Quantum computing</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Quantum computing</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="some-math">Some math</h2>
+<h3 id="magnitude-of-a-complex-number">Magnitude of a complex
+number</h3>
+<pre><code>|a + ib| = √(a² + b²)
+</code></pre>
+<p>Eg:</p>
+<pre><code>|2 + 4i| = √(4 + 16) = 5
+</code></pre>
+<h2 id="quantum-mechanics">Quantum mechanics</h2>
+<ul>
+<li>Inherently probabilistic</li>
+<li>Parameters cannot be measured without disturbing the system</li>
+<li>Neither particles nor waves though has properties of particle and
+wave</li>
+</ul>
+<h2 id="double-slit-experiment">Double-slit experiment</h2>
+<pre><code>    │       │             │
+    │       │             │
+    │       │ slit 1      │ 
+    │                     │
+    │       │             │
+    │       │             │
+src                       │
+    │       │             │
+    │       │             │
+    │                     │
+    │       │ slit 2      │
+    │       │             │
+    │       │             │
+ Screen1  Screen2     Detector   
+</code></pre>
+<h2 id="superposition-principle">Superposition principle</h2>
+<p>If a system can be in any of a set of k states, it can also be in any
+<u>linear</u> superposition of the k states.</p>
+<pre><code>α₀|0⟩ + α₁|1⟩ + ...  + αₖ₋₁|k-1⟩
+</code></pre>
+<p>where</p>
+<pre><code>αᵢ∈ ℂ     // probability amplitude
+</code></pre>
+<p>and</p>
+<pre><code>k-1
+ ∑  |αᵢ|² = 1   // DOUBT: What&#39;s the need for absolute here? It&#39;s already squared, right?
+i=0
+</code></pre>
+<p>ie, the system is in state i with probability αᵢ.</p>
+<h3 id="examples">Examples</h3>
+<p>Example 1:</p>
+<p>Number of states = k = 3</p>
+<pre><code>(1/√3) |0⟩ + (i/√3) |1⟩ + (1/√3) |2⟩
+
+ 2
+ ∑  |αᵢ|² = (1/3) + (1/3) + (1/3) = 1     ✓
+i=0
+</code></pre>
+<p>Example 2:</p>
+<p>Number of states = k = 3</p>
+<pre><code>(1/2) |0⟩ - (1/2) |1⟩ + ((1/2) + (i/2)) |2⟩
+
+ 2
+ ∑  |αᵢ|² = (1/4) + (1/4) + ((1/4 + 1/4)) = 1     ✓
+i=0
+</code></pre>
+<h3 id="measurement-axioms">Measurement axioms</h3>
+<h2 id="geometrical-representation-of-a-quantum-system">Geometrical
+representation of a quantum system</h2>
+<p>As vectors (or as matrices).</p>
+<pre><code>|ψ⟩ = α₀|0⟩ + α₁|1⟩ + ...  + αₖ₋₁|k-1⟩
+</code></pre>
+<p>Could be written as</p>
+<pre><code>⎡  α₀  ⎤
+⎢  α₁  ⎥
+⎢  ..  ⎥
+⎢  ..  ⎥
+⎣ αₖ₋₁ ⎦
+</code></pre>
+<p>which will be a unit vector (because magnitude would be 1).</p>
+<p>(The usual vector notation with little arrows on top is known as the
+<strong><strong>Dirac notation</strong></strong>.)</p>
+<h2 id="qubits">Qubits</h2>
+<p>Systems with just 2 levels.</p>
+<p>ie, a k-level system with k=2.</p>
+<p>Like a Hydrogen atom with 2 energy states.</p>
+<pre><code>+---------------+ |1⟩
+|               |
+|   +---+       |
+|   |   |       |
+|   | █ |       |
+|   |   |       |
+|   +---+ |0⟩   |
+|               |
++---------------+
+
+A representation of an atom with 2 energy states.
+
+The █ is the atom&#39;s nucleus.
+
+An example system:
+
+(1/√2) |0⟩ + ((1/2) + (i/2)) |1⟩
+</code></pre>
+<p>Qubit is like</p>
+<pre><code>|ψ⟩ = α₀ |0⟩ + α₁ |1⟩
+
+
+        |1⟩
+
+        ^                
+        |                
+     α₁ |┄┄┄┄┄┄┄. |ψ⟩     
+        |      /┆        
+        |     / ┆        
+        |    /  ┆        
+        |   /   ┆        
+        |  /    ┆        
+        | /     ┆        
+        |/θ     ┆        
+        +------------&gt; |0⟩
+               α₀
+
+</code></pre>
+<p>Probabilities:</p>
+<ul>
+<li>next state is |0⟩ = |α₀|² = cos²θ</li>
+<li>next state is |1⟩ = |α₁|² = sin²θ</li>
+</ul>
+<h2 id="measurement-in-arbitrary-basis">Measurement in arbitrary
+basis</h2>
+<pre><code>        |1⟩        |u&#39;⟩      
+         │        /      
+         │       / 
+         │      /  
+         │     /    
+         │    /      
+         │   /      .... |ψ⟩ = α₀ |0⟩ + α₁ |1⟩
+         │  /    ....  
+         │ /  ....      
+         │/....  θ       
+         +────────────&gt; |0⟩
+          \
+           \
+            \           θ&#39;
+             \
+              \
+               \
+                \
+                 \ |u⟩
+
+(the dotted line is meant to be a straight line ☻ )
+
+ - θ = ∠ between |ψ⟩ and |0⟩
+ - θ&#39; = ∠ between |ψ⟩ and |u⟩
+</code></pre>
+<table>
+<tbody>
+<tr class="odd">
+<td>u⟩ and</td>
+<td>u'⟩ are the arbitrary basis.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<tbody>
+<tr class="odd">
+<td>ψ⟩ can also be written as:</td>
+</tr>
+</tbody>
+</table>
+<pre><code>|ψ⟩ = cos²θ&#39; |u⟩ + sin²θ&#39;
+</code></pre>
+<h2 id="hadamard-basis">Hadamard basis</h2>
+<p>A special basis.</p>
+<p>Consists of |+⟩ and |-⟩.</p>
+<pre><code>|+⟩ = (1/√2) |0⟩ + (1/√2) |1⟩
+|-⟩ = (1/√2) |0⟩ - (1/√2) |1⟩
+</code></pre>
+<h2 id="general">General</h2>
+<ul>
+<li>Population inversion<a
+href="https://en.wikipedia.org/wiki/Population_inversion">ʷ</a>: Most
+entities in the system are in higher/excited state.</li>
+</ul>
+<h2 id="doubts">Doubts</h2>
+<ul>
+<li>Amplitude can also be a complex number. Not just positive or
+negative.</li>
+<li>Graph in complex number space</li>
+</ul>
+</div>
+</body>
+</html>

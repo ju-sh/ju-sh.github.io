@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Property Specification Language (PSL)</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Property Specification Language (PSL)</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<ul>
+<li><p>SERE: Sequential Extended Regular Expression</p></li>
+<li><p>PSL ⊃ LTL ⊂ FOL</p></li>
+<li><p>booleans, sequences, properties</p></li>
+</ul>
+<h2 id="properties-fl">Properties (FL)</h2>
+<blockquote>
+<p>FL Properties describe single or multi-cycle behavior built from
+Boolean expressions, sequential expressions, and subordinate
+properties.</p>
+</blockquote>
+<h1 id="ops">Ops</h1>
+<p>p: property, s:sequence, b:boolean</p>
+<ul>
+<li><p>b: b -&gt; p</p></li>
+<li><p>!b: b -&gt; p</p></li>
+<li><p>&amp;&amp;: p -&gt; p</p></li>
+<li><p>(p): p -&gt; p</p></li>
+<li><p>abort: p -&gt; b -&gt; p</p></li>
+<li><p>&lt;-&gt;: b -&gt; b -&gt; p</p></li>
+<li><p>s: s -&gt; p</p></li>
+<li><p>s!: s -&gt; p</p></li>
+<li><p>|-&gt; : s -&gt; p -&gt; p</p></li>
+<li><p>‖: b -&gt; p -&gt; p</p></li>
+<li><p>-&gt; : b -&gt; p -&gt; p</p></li>
+<li><p>|=&gt; : s -&gt; p -&gt; p</p></li>
+<li><p>always: p -&gt; p</p></li>
+<li><p>never: s -&gt; p</p></li>
+<li><p>eventually!: s -&gt; p</p></li>
+<li><p>until/_/!: p -&gt; b -&gt; p</p></li>
+<li><p>before/_/!: b -&gt; b -&gt; p</p></li>
+<li><p>next: p -&gt; p</p></li>
+<li><p>next<sub>event</sub>: b -&gt; p -&gt; p</p></li>
+<li><p>next<sub>a</sub>/e: nat -&gt; nat -&gt; p -&gt; p</p></li>
+</ul>
+<p>We could make bool as a function type: Stream A -&gt; bool</p>
+<ul>
+<li>never: s -&gt; p ??</li>
+</ul>
+<p>No need of separate strong operators for <code>next</code> ops as
+there is always a next event in streams. Data never runs out.</p>
+<h1 id="old">Old</h1>
+<h2 id="fusion">Fusion (<code>:</code>)</h2>
+<pre><code>a:b
+
+
+        +---+   +---+   +---+   +---+   +---+   +---+  
+        |   |   |   |   |   |   |   |   |   |   |   |  
+clk ----+   +---+   +---+   +---+   +---+   +---+   +--
+
+
+        +-------------------+                          
+        |                   |                          
+ a  ----+                   +--------------------------
+
+
+                    +-------------------+              
+                    |                   |              
+ b  ----------------+                   +--------------
+
+</code></pre>
+<h2 id="concatenation">Concatenation (<code>;</code>)</h2>
+<pre><code>a;b
+
+
+        +---+   +---+   +---+   +---+   +---+   +---+  
+        |   |   |   |   |   |   |   |   |   |   |   |  
+clk ----+   +---+   +---+   +---+   +---+   +---+   +--
+
+
+        +-----------+                                  
+        |           |                                  
+ a  ----+           +----------------------------------
+
+
+                    +-------------------+              
+                    |                   |              
+ b  ----------------+                   +--------------
+
+</code></pre>
+<h2 id="alternative">Alternative (<code>|</code>)</h2>
+<pre><code>a|b
+
+        +---+   +---+   +---+   +---+   +---+   +---+  
+        |   |   |   |   |   |   |   |   |   |   |   |  
+clk ----+   +---+   +---+   +---+   +---+   +---+   +--
+
+
+        +-----------+      +----------------+          
+        |           |      |                |          
+ a  ----+           +------+                +----------
+
+
+                    +------+        +------------------
+                    |      |        |                  
+ b  ----------------+      +--------+                  
+</code></pre>
+<h2 id="consecutive-repetition">Consecutive repetition
+(<code>[*]</code>)</h2>
+<p>Many flavours:</p>
+<pre><code>| A[*n]             | A exactly n times                   |
+| A[*n:m]           | A n to m times                      |
+| A[*0:n]           | A at most n times                   |
+| A[*n:inf]         | A at least n times                  |
+| A[*0:inf] or A[*] | A any number (including 0) of times |
+| A[+]              | A at least once                     |
+</code></pre>
+<h2 id="non-consecutive-repetition">Non-consecutive repetition
+(<code>[=]</code>)</h2>
+<p>Many flavours:</p>
+<ul>
+<li>A[=n]: A exactly n times anywhere in path</li>
+</ul>
+<h2 id="goto-repetition--">Goto repetition (<code>[-&gt;]</code>)</h2>
+<p>The boolean expression should hold in the last cycle.</p>
+<h2 id="references">References</h2>
+<ul>
+<li>IEEE Standard for Property Specification Language (PSL) - IEEE Std
+1850-2010</li>
+</ul>
+</div>
+</body>
+</html>

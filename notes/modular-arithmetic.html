@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Modular arithmetic</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Modular arithmetic</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="congruence">Congruence</h2>
+<pre><code>a ≡ b (mod m)
+
+if
+
+(a - b) mod m is zero
+
+∀a,b ∈ ℤ and m ∈ ℤ⁺
+</code></pre>
+<p>From <em>Discrete mathematics and its applications</em>:</p>
+<blockquote>
+<p>If <code>a</code> and <code>b</code> are integers and <code>m</code>
+is a positive integer, then <code>a</code> is congruent to
+<code>b modulo m</code> if <code>m</code> divides <code>a-b</code>.</p>
+</blockquote>
+<p>Then,</p>
+<ul>
+<li><code>a ≡ b (mod m)</code> is a <strong>congruence</strong></li>
+<li><code>m</code> is its <strong>modulus</strong></li>
+</ul>
+<p>Eg:</p>
+<ul>
+<li>17 ≡ 5 (mod 6)
+<ul>
+<li>∵ 17-5 = 12, and (12 mod 6) is zero.</li>
+</ul></li>
+<li>24 ≢ 14 (mod 6)
+<ul>
+<li>∵ 24-14 = 10, and (10 mod 6) is 4 ≠ 0.</li>
+</ul></li>
+</ul>
+<h3 id="congruence-class">Congruence class</h3>
+<p>Set of all integers which are congruent to <code>a (mod m)</code>
+constitutes the congruence class of a modulo m.</p>
+<h2 id="a-mod-m-vs-a-mod-b"><code>a (mod m)</code> vs
+<code>a mod b</code></h2>
+<p>a ≡ b (mod m) and a mod m = b are not the same.</p>
+<ul>
+<li>a ≡ b (mod m): a relation on ℤ</li>
+<li>a mod m = b: a function. Arithmetic modulo m.</li>
+</ul>
+<p>a mod b is the reminder when a is divided by b.<br />
+Like <code>a % b</code> in C.</p>
+<p>But there is a link between the two 'mod's:</p>
+<blockquote>
+<p>a ≡ b (mod m)</p>
+<p>iff</p>
+<p>a mod m = b mod m</p>
+<p>where a, b ∈ ℤ and m ∈ ℤ⁺ (a positive integer)</p>
+</blockquote>
+<p>Eg:</p>
+<pre><code>19 ≡ 3 (mod 4)
+
+then
+
+19 mod 4  =  3 mod 4
+       3  =  3        ✓
+</code></pre>
+<h2 id="bézouts-theorem">Bézout's theorem</h2>
+<p>aka Bézout's identity</p>
+<blockquote>
+<p>If a, b ∈ ℤ⁺ then ∃s, t ∈ ℤ such that gcd(a, b) = sa + tb</p>
+</blockquote>
+<p>where s and t are known as <strong>Bézout's
+coefficients</strong>.</p>
+<p>ie, gcd(a, b) can be expressed as a linear combination with integer
+coefficients for a and b.</p>
+<p>Eg:</p>
+<pre><code>gcd(6, 14) = 2
+(-2 * 6) + (1 * 14) = 2
+</code></pre>
+<h2 id="solving-congruences">Solving congruences</h2>
+<h3 id="chinese-reminder-theorem">Chinese Reminder Theorem</h3>
+<p>Usable when the moduli of the system of linear congruences are
+pairwise relatively prime.</p>
+<p>From <em>Discrete mathematics and its applications</em>:</p>
+<blockquote>
+<p>When the moduli of a system of linear congruences are pairwise
+relatively prime, there is a unique solution of the system modulo the
+product of the moduli.</p>
+</blockquote>
+<p>Eg:</p>
+<pre><code>x ≡ 2 (mod 3)
+x ≡ 3 (mod 5)
+x ≡ 2 (mod 7)
+
+Biggest one is 7:
+
+ 2: ✗ ∵  2(mod 5) is 2 ≠ 3
+ 9: ✗ ∵  9(mod 2) is 1 ≠ 2
+16: ✗ ∵ 16(mod 5) is 1 ≠ 3
+23: ✓
+</code></pre>
+<p>—</p>
+<p>M = 3 * 5 * 7 = 105</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>mᵢ</th>
+<th>Mᵢ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>3</td>
+<td>35</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>5</td>
+<td>21</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>7</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+<p>Same solution with <strong>Back-substitution method</strong>:</p>
+<h2 id="properties">Properties</h2>
+<ul>
+<li><p><code>a ≡ b (mod m)</code> means <code>(a - b) mod m</code> is
+zero.</p></li>
+<li><p><code>a ≡ b (mod m)</code> means
+<code>∃k ∈ ℤ, a = km + b</code></p></li>
+<li><p><code>a ≡ b (mod m)</code> iff
+<code>a mod m  =  b mod m</code></p></li>
+<li><p>If <code>a ≡ b (mod m)</code> and <code>c ≡ d (mod m)</code>,
+then</p>
+<ul>
+<li><code>a+c ≡ b+d (mod m)</code></li>
+<li><code>ac ≡ bd (mod m)</code></li>
+</ul></li>
+<li><p><code>(a+b) mod m = ((a mod m) + (b mod m)) mod m</code> (Note
+that this is the function mod!)</p></li>
+<li><p><code>(ab) mod m = ((a mod m) * (b mod m)) mod m</code> (Note
+that this is the function mod!)</p></li>
+<li><p>ℤₘ with modular addition constitutes a commutative group (ie, an
+Abelian group).</p></li>
+</ul>
+<p>Informally speaking,</p>
+<pre><code>a⁻¹ ≡ b (mod m) is same as 
+0   ≡ (b-a) (mod m)
+
+but a coprime condition is involved??
+</code></pre>
+<p>But, beware: Modular fraction arithmetic is valid only for fractions
+with denominator coprime to the modulus.</p>
+<h2 id="common-notations">Common notations</h2>
+<ul>
+<li><code>a | b</code> means <code>a</code> divides <code>b</code>. ie,
+<code>a mod b</code> is zero.</li>
+<li>a +ₘ b = (a + b) mod (m)</li>
+<li>ℤₘ = [0, m) ie, all non-negative integers less than m.</li>
+</ul>
+<h2 id="example-usages">Example usages</h2>
+<h3 id="section"><span class="done DONE">DONE</span> 7<sup>(2015)</sup>
+% 48 <a
+href="https://davidaltizio.web.illinois.edu/ModularArithmetic.pdf">¹</a></h3>
+<pre><code>49         ≡    1  mod 48
+7²         ≡    1  mod 48
+(7²)¹⁰⁰⁷   ≡    1  mod 48
+7.(7²)¹⁰⁰⁷ ≡ (7.1) mod 48
+7²⁰¹⁵      ≡    7  mod 48
+</code></pre>
+<p>So the remainder is 7.</p>
+<h3 id="last-2-digits-of-17¹⁹⁸-¹"><span class="todo TODO">TODO</span>
+Last 2 digits of 17¹⁹⁸ <a
+href="https://davidaltizio.web.illinois.edu/ModularArithmetic.pdf">¹</a></h3>
+<p>289 ≡ -11 (mod 100) 17² ≡ -11 (mod 100)</p>
+<p>(17²)⁹⁹ ≡ -11 (mod 100)</p>
+<h2 id="references">References</h2>
+<ul>
+<li>Chapter 4, <em>Discrete mathematics and its applications</em> (7e) -
+Kenneth H. Rosen</li>
+</ul>
+</div>
+</body>
+</html>

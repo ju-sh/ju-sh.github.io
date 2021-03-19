@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>APL</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">APL</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<ul>
+<li>monadic: unary</li>
+<li>dyadic: binary</li>
+</ul>
+<p>Remarks:</p>
+<ul>
+<li>Understanding the concept of ranks is <em>very</em> important in
+using APL.</li>
+<li>Array is (more?) to APL as table is to lua.</li>
+<li>APL evaluates expressions from right to left</li>
+<li><code>*</code> is exponentiation. Multiplication is
+<code>×</code></li>
+</ul>
+<h2 id="general">General</h2>
+<ul>
+<li>Comment: ⍝</li>
+<li>Indexing starts from index origin (<code>IO</code>)</li>
+</ul>
+<h2 id="operators">Operators</h2>
+<h3 id="reshape-ρ">Reshape (ρ )</h3>
+<p><a
+href="https://aplwiki.com/wiki/Reshape">https://aplwiki.com/wiki/Reshape</a></p>
+<p>Reshape an array.</p>
+<pre class="apl"><code>&gt; 2 4 ρ ⍳ 8
+1 2 3 4
+5 6 7 8
+
+&gt; 3 2 ρ ⍳ 6
+1 2
+3 4
+5 6
+
+&gt; ⍝ Looks like truncation happens if shape doesn&#39;t fit
+&gt; 3 2 ρ ⍳ 8
+1 2
+3 4
+5 6
+</code></pre>
+<h3 id="index-generator">Index generator (⍳)</h3>
+<p><a
+href="https://aplwiki.com/wiki/Index_Generator">https://aplwiki.com/wiki/Index_Generator</a></p>
+<pre class="apl"><code>&gt; ⍳ 9
+1 2 3 4 5 6 7 8 9
+
+&gt; ⍝ Set index origin so that ⍳ starts from 0
+&gt; ⎕IO ← 0
+&gt; ⍳ 9
+0 1 2 3 4 5 6 7 8
+</code></pre>
+<h3 id="reverse">Reverse (⊖)</h3>
+<pre><code>&gt; ⊖ ⍳ 5
+5 4 3 2 1
+
+&gt; ⍝ Rows got reversed
+&gt; ⊖ 3 2 ρ ⍳ 6
+5 6
+3 4
+1 2
+</code></pre>
+<h3 id="transpose">Transpose (⍉)</h3>
+<pre><code>&gt; ⍝ Columns got reversed
+&gt; ⍉ 2 3 ρ ⍳ 6
+1 4
+2 5
+3 6
+</code></pre>
+<h3 id="rotate-around-vertical-axis">Rotate around vertical axis
+(⌽)</h3>
+<pre><code>&gt; ⍝ Columns got reversed
+&gt; ⌽ 3 3 ρ ⍳ 9
+3 2 1
+6 5 4
+9 8 7
+</code></pre>
+<h3 id="drop">Drop (↓)</h3>
+<p>Drop first n elements of an array.</p>
+<pre class="apl"><code>&gt; 1 ↓ 1 2 3 4 5 6 7
+2 3 4 5 6 7
+
+&gt; 2 ↓ 1 2 3 4 5 6 7
+3 4 5 6 7
+</code></pre>
+<h3 id="take">Take (↑)</h3>
+<p>Take first n elements of an array.</p>
+<pre class="apl"><code>&gt; 2 ↑ 1 2 3 4 5 6 7
+1 2
+
+&gt; 4 ↑ 1 2 3 4 5 6 7
+1 2 3 4
+</code></pre>
+<h3 id="replicate">Replicate (/)</h3>
+<ul>
+<li>Duplication.</li>
+<li>A dyadic operator.</li>
+</ul>
+<pre class="apl"><code>&gt; 2 / 3 4 5
+3 3 4 4 5 5
+
+&gt; 1 / 3 4 5
+3 4 5
+
+&gt; 3 / 3 4 5
+3 3 3 4 4 4 5 5 5
+
+&gt; 2 / (3 4 5) (6 7)
+3 4 5  3 4 5  6 7  6 7
+</code></pre>
+<h2 id="more">More</h2>
+<ul>
+<li>≢ (monadic): tally. Number of major cells in an array. Like len() of
+python</li>
+<li>≡ (monadic): depth. ie, maximum level of (array) nesting
+<ul>
+<li>Depth and rank aren't same</li>
+</ul></li>
+<li>⍤: rank</li>
+<li>⊢: ??</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<pre class="apl"><code>&gt; n ← 5 6 7
+&gt; n + 2
+7 8 9
+
+&gt; +/n
+18
+
+&gt; -/n
+&gt; ⍝ 5 - (6 - 7)
+6
+
+&gt; ×/n
+210
+
+&gt; */n
+&gt; ⍝ Because * is exponentiation
+&gt; ⍝ 5^(6^7) is quite a large number (a 195667-digit number)
+∞
+</code></pre>
+<h2 id="emacs">emacs</h2>
+<p>emacs: gnu-apl mode</p>
+<ul>
+<li><a
+href="https://github.com/lokedhs/gnu-apl-mode">https://github.com/lokedhs/gnu-apl-mode</a></li>
+<li>Activate with <code>M-x gnu-apl-mode</code></li>
+<li>Shift to APL symbol keyboard by holding super key (ie, 'windows
+key')
+<ul>
+<li>There are other ways like the APL-Z input method.</li>
+</ul></li>
+</ul>
+<h2 id="keyboard">Keyboard</h2>
+<p>Default keyboard is like (from <a
+href="https://www.dyalog.com/uploads/documents/MasteringDyalogAPL.pdf">here</a>):</p>
+<pre><code>╔════╦════╦════╦════╦════╦════╦════╦════╦════╦════╦════╦════╦════╦═════════╗
+║ ~  ║ !⌶ ║ @⍫ ║ #⍒ ║ $⍋ ║ %⌽ ║ ^⍉ ║ &amp;⊖ ║ *⍟ ║ (⍱ ║ )⍲ ║ _! ║ +⌹ ║         ║
+║ `◊ ║ 1¨ ║ 2¯ ║ 3&lt; ║ 4≤ ║ 5= ║ 6≥ ║ 7&gt; ║ 8≠ ║ 9∨ ║ 0∧ ║ -× ║ =÷ ║ BACKSP  ║
+╠════╩══╦═╩══╦═╩══╦═╩══╦═╩══╦═╩══╦═╩══╦═╩══╦═╩══╦═╩══╦═╩══╦═╩══╦═╩══╦══════╣
+║       ║ Q  ║ W⍹ ║ E⋸ ║ R  ║ T⍨ ║ Y¥ ║ U  ║ I⍸ ║ O⍥ ║ P⍣ ║ {⍞ ║ }⍬ ║  |⊣  ║
+║  TAB  ║ q? ║ w⍵ ║ e∈ ║ r⍴ ║ t∼ ║ y↑ ║ u↓ ║ i⍳ ║ o○ ║ p⋆ ║ [← ║ ]→ ║  \⊢  ║
+╠═══════╩═╦══╩═╦══╩═╦══╩═╦══╩═╦══╩═╦══╩═╦══╩═╦══╩═╦══╩═╦══╩═╦══╩═╦══╩══════╣
+║ (CAPS   ║ A⍶ ║ S  ║ D  ║ F  ║ G  ║ H⍙ ║ J⍤ ║ K  ║ L⌷ ║ :≡ ║ &quot;≢ ║         ║
+║  LOCK)  ║ a⍺ ║ s⌈ ║ d⌊ ║ f_ ║ g∇ ║ h∆ ║ j∘ ║ k&#39; ║ l⎕ ║ ;⍎ ║ &#39;⍕ ║ RETURN  ║
+╠═════════╩═══╦╩═══╦╩═══╦╩═══╦╩═══╦╩═══╦╩═══╦╩═══╦╩═══╦╩═══╦╩═══╦╩═════════╣
+║             ║ Z  ║ Xχ ║ C¢ ║ V  ║ B£ ║ N  ║ M  ║ &lt;⍪ ║ &gt;⍙ ║ ?⍠ ║          ║
+║  SHIFT      ║ z⊂ ║ x⊃ ║ c∩ ║ v∪ ║ b⊥ ║ n⊤ ║ m| ║ ,⍝ ║ .⍀ ║ /⌿ ║  SHIFT   ║
+╚═════════════╩════╩════╩════╩════╩════╩════╩════╩════╩════╩════╩══════════╝
+</code></pre>
+<p>(Depending on the font used, this may look different on different
+devices.)</p>
+<h2 id="vim">vim</h2>
+<p>vim-apl: <a
+href="https://github.com/zoomlogo/vim-apl">https://github.com/zoomlogo/vim-apl</a></p>
+<p>Backtick is the prefix key by default:</p>
+<ul>
+<li><code>`i</code> gives <code>ι</code></li>
+<li><code>`$</code> gives <code>⍋</code></li>
+<li><code>`r</code> gives <code>ρ</code></li>
+</ul>
+<h2 id="gnuapl">gnuapl</h2>
+<p>REPL:</p>
+<ul>
+<li>Exit repl: <code>)OFF</code></li>
+<li>Run like: apl -s -f &lt;file-name.apl&gt;</li>
+</ul>
+<h2 id="even-more">Even more</h2>
+<ul>
+<li>Game of life with apl: <a
+href="https://www.youtube.com/watch?v=a9xAKttWgP4">https://www.youtube.com/watch?v=a9xAKttWgP4</a></li>
+<li>ANN with apl: <a
+href="https://www.youtube.com/playlist?list=PLgTqamKi1MS3p-O0QAgjv5vt4NY5OgpiM">https://www.youtube.com/playlist?list=PLgTqamKi1MS3p-O0QAgjv5vt4NY5OgpiM</a></li>
+</ul>
+</div>
+</body>
+</html>

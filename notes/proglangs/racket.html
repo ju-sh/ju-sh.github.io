@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Racket</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Racket</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<p>Quite similar to lisp.</p>
+<p>An advantage of s-expr:</p>
+<ul>
+<li><code>(+ 1 2 3 4 5 6)</code> is clearer than
+<code>1+2+3+4+5+6</code></li>
+</ul>
+<h2 id="general-tips">General tips</h2>
+<ul>
+<li>Comment: semicolon</li>
+<li>Can use any kind of these brackets with the same effect.
+<ul>
+<li>[] or {} or ()</li>
+<li>Use wisely to improve readability</li>
+</ul></li>
+</ul>
+<h2 id="examples">Examples</h2>
+<pre class="racket"><code>; Factorial of whole numbers
+(define (fact n)  
+  (if (&lt;= n 0)
+      1
+      (* n {fact [- n 1]})))
+</code></pre>
+<h2 id="let-expressions"><code>let</code> expressions</h2>
+<p><code>let</code> for 'subcomputation':</p>
+<p>Syntax:</p>
+<p>let &lt;list of binding&gt; &lt;expr&gt;</p>
+<pre class="racket"><code>(define foobar
+  (let* ([foo 10]
+         [bar 20])
+    (* foo bar)))
+</code></pre>
+<p>(define (fact n) (if (&lt;= n 0) 1 (let* [foo (fact (- n 1))])</p>
+<p>let* use =&gt; no recursion???</p>
+<h2 id="eval"><code>eval</code></h2>
+<p>eval:</p>
+<ul>
+<li>the interpreter itself</li>
+<li>scheme can be its own metalanguage</li>
+</ul>
+<p>we can e</p>
+<pre class="racket"><code>; assuming fact is function doing factorial
+(define foo &#39;(fact 5))
+(eval foo)
+; 120
+</code></pre>
+<h2 id="bindings-not-assignments">Bindings not assignments</h2>
+<p>We can't redefine an identifer.</p>
+<pre><code>(define pi 3.14)
+(define pi (/ 22 7))
+module: identifier already defined
+</code></pre>
+<p>∵ it's immutable.</p>
+<p>They're bindings not value assignments.</p>
+<h2 id="modulus-operation">Modulus operation</h2>
+<pre class="racket"><code>&gt; (quotient/remainder 17 2)
+8
+1
+
+&gt; (quotient 17 2)
+8
+
+&gt; (remainder 17 2)
+1
+</code></pre>
+<h2 id="boolean-values">Boolean values</h2>
+<ul>
+<li>True: <code>#t</code></li>
+<li>False: <code>#f</code></li>
+</ul>
+<pre class="racket"><code>; pair? checks if its argument is a pair
+&gt; (pair? &#39;())
+#f
+&gt; (pair? (cons 2 3))
+#t
+</code></pre>
+<h2 id="lists">Lists</h2>
+<pre class="racket"><code>(list 1 2 3)
+; is same as
+&#39;(1 2 3)
+</code></pre>
+<p>The single quote sort of asks the interpreter to stop evaluating from
+that point.</p>
+<ul>
+<li>Constructor: <code>list</code></li>
+<li>head: <code>car</code></li>
+<li>tail: <code>cdr</code></li>
+<li>Empty list: <code>null</code> or <code>'()</code></li>
+</ul>
+<pre class="racket"><code>&gt; (list -1 2.3 &quot;hi&quot;)
+&#39;(-1 2.3 &quot;hi&quot;)
+
+&gt; (car &#39;(1 2 3 4 5))
+1
+
+&gt; (cdr &#39;(1 2 3 4 5))
+&#39;(2 3 4 5)
+</code></pre>
+<p><code>car</code> and <code>cdr</code> for elisp is similar:</p>
+<ul>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/eintr/car-_0026-cdr.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/car-_0026-cdr.html</a></li>
+</ul>
+<h2 id="pairs">Pairs</h2>
+<p>See <a
+href="https://docs.racket-lang.org/reference/pairs.html">https://docs.racket-lang.org/reference/pairs.html</a>.</p>
+<ul>
+<li><p>Tuples.</p></li>
+<li><p>Immutable</p></li>
+<li><p>Constructor: <code>cons</code></p></li>
+<li><p>1st: <code>car</code></p></li>
+<li><p>2nd element: <code>cdr</code></p></li>
+</ul>
+<pre class="racket"><code>&gt; (cons 1 2)
+&#39;(1 . 2)
+
+&gt; &#39;(1 . 2)
+&#39;(1 . 2)
+
+&gt; &#39;(1 . 2 . 3)
+&#39;(2 1 3)
+
+&gt; (car &#39;(1 . 2))
+1
+
+&gt; (cdr &#39;(1 . 2))
+2
+</code></pre>
+<p>Etymology of <code>car</code> and <code>cdr</code> (for pairs and
+lists) in the lisp world is historical.</p>
+<ul>
+<li><a
+href="https://en.wikipedia.org/wiki/CAR_and_CDR">https://en.wikipedia.org/wiki/CAR_and_CDR</a></li>
+<li><a
+href="https://www.math.utah.edu/docs/info/emacs-lisp-intro_8.html">https://www.math.utah.edu/docs/info/emacs-lisp-intro_8.html</a></li>
+</ul>
+<h2 id="loops">Loops</h2>
+<p>See <a
+href="https://docs.racket-lang.org/guide/for.html">https://docs.racket-lang.org/guide/for.html</a></p>
+<pre class="racket"><code>(for ([i 3])
+  (display i))
+
+; Above is syntactic sugar for
+
+(for ([i (in-range 0 3)])
+  (display i))
+
+; because in-range&#39;s first argument defaults to 0
+</code></pre>
+<h2 id="drracket">drracket</h2>
+<ul>
+<li>run: C-r</li>
+</ul>
+<h2 id="info">Info</h2>
+<ul>
+<li>Scheme is a dialect of lisp.</li>
+<li>Scheme is standardized as an IEEE standard.</li>
+<li>R5RS is a scheme standard.
+<ul>
+<li>RnRS: Revisedⁿ Report on algorithmic standard Scheme</li>
+</ul></li>
+<li>Racket is descended from scheme</li>
+<li>Emacs mode: <a href="https://racket-mode.com/">racket-mode</a>
+<ul>
+<li>C-c C-c: Load buffer</li>
+<li><a href="https://wikemacs.org/wiki/Paredit-mode">paredit mode</a>
+could be useful.</li>
+</ul></li>
+</ul>
+</div>
+</body>
+</html>

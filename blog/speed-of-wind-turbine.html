@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Finding speed of a wind turbine</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Finding speed of a wind turbine</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+<div id="description">
+About an attempt to find the speed at which a wind turbine is rotating..
+</div>
+
+<div id="content-container">
+<hr />
+<h2 id="background-story">Background story</h2>
+<p>Our college is presently situated in a big sparsely populated campus
+with a <em>lot</em> of greenery spotted by a few wind turbines
+(3-bladed, horizontal axis).</p>
+<p>All of us are curious about these wind turbines towering over the
+campus, but most of us don't know a lot about them. For instance, I
+always wondered if we could climb on to the top of the wind mill and how
+one would do the repair work if it gets faulty.</p>
+<p>Still don't have answers to those, but today I found out something
+else thanks to a friend, a Physics student who loves his domain enough
+to actually apply it to things around him (haven't come across many like
+that).</p>
+<p>It was a time of the day when it was quite windy. One of those 'peak
+wind' times.</p>
+<p>We were just standing enjoying the wind flying past us. That was when
+my friend thought of finding the speed of the wind turbine closest to us
+which we could see quite clearly.</p>
+<p><!-- friend: Harikrishnan --></p>
+<h2 id="method">Method</h2>
+<p>My friend realized that to find the speed of the blade, we
+needed:</p>
+<ul>
+<li>Length of a blade</li>
+<li>Time taken by a blade to finish one complete rotation (360°)</li>
+</ul>
+<p>He was observant enough to notice that the length of a blade was
+almost same as half the height of the tower. This meant that we just
+needed to have estimate of the height of the tower to estimate the blade
+length.</p>
+<p>My friend figured that the tower was as tall as the combined height
+of 50 men of 6 feet each. ie, 50 * 6 = 300 feet. (A very rough estimate,
+but we could always improve it once we got familiar with the way to
+calculate the blade speed.)</p>
+<p>This meant that the blade length was 300/2 = 150 feet = 150 * 0.3 =
+45m</p>
+<p>As for the time taken by a blade to finish a rotation, my friend used
+a stopwatch. Came to about 4 seconds.</p>
+<h3 id="calculations">Calculations</h3>
+<p>These were the equations that were needed:</p>
+<ul>
+<li>Angular velocity = <code>ω = dθ/dt</code> (unit: s⁻¹)</li>
+<li>Linear velocity = <code>v = rω</code></li>
+</ul>
+<p>We already had the input values:</p>
+<ul>
+<li><code>dθ = 2π rad</code> (one full rotation)</li>
+<li><code>dt = 4s</code></li>
+<li><code>r = 45m</code></li>
+</ul>
+<p>and just substituted them in the equations.</p>
+<p>Angular velocity of the blade:</p>
+<pre><code>ω = dθ/dt
+  = (2π rad)/(4 s)
+  = π/2 s⁻¹
+</code></pre>
+<p>Linear velocity of the tip of the blade:</p>
+<pre><code>v = rω
+  = (45 m) / (π/2 s⁻¹)
+  = (45π/2) m.s⁻¹
+  = 45 * 3.14 / 2
+  = 70.65 m.s⁻¹ (approx)
+  = 70.65 * (18/5)
+  = 254.34 km.h⁻¹
+</code></pre>
+<p>More than <strong>250 km.h⁻¹</strong>! That's a lot.. (either that or
+we messed up in one of our estimations 😅).</p>
+<p>Note that this is the speed of the <em>tip</em> of the blade.</p>
+<h2 id="about-radian">About radian</h2>
+<p>Radian (rad) is the SI unit for measuring angles.</p>
+<p>One thing that I had forgotten (from whatever I learned during my
+school days) was that a value in radian is dimensionless.</p>
+<p>Let's see why.</p>
+<p>1 radian is defined as:</p>
+<pre class="eqn"><code>1 rad = l/r
+</code></pre>
+<p>where:</p>
+<ul>
+<li><code>l</code> is the length of the arc subtending the angle in a
+circle</li>
+<li><code>r</code> is the radius of the circle</li>
+</ul>
+<p>Since both <code>l</code> and <code>r</code> are of the same unit
+(lengths), radian is a dimension-less value (ie, does not have a
+unit).</p>
+<p>Relation with degree (another unit for measuring angles) ::
+<code>2π rad = 1 deg</code></p>
+<h2 id="more-about-wind-turbines">More about wind turbines</h2>
+<p>Our brief fixation with wind turbines today piqued my interest and I
+did some searching online to learn and recall some stuff about them.</p>
+<p>Here's some of it.</p>
+<h3 id="parts-of-a-wind-turbine">Parts of a wind turbine</h3>
+<ul>
+<li><strong>Foundation</strong>: Base on which the wind turbine sits on.
+Being a slender structure exposed to the elements, needs to be quite
+sturdy.</li>
+<li><strong>Tower</strong>: Sort of 'hoists' up blades so that it can be
+at a higher altitude where it will be more windy.</li>
+<li><strong>Blades</strong>: 'Catches' the wind. Can vary between
+different types of wind mills.</li>
+<li><strong>Nacelle</strong>: The part bulging out of the part where all
+blades meet (the 'eye' of the turbine). Houses gears and breaking
+mechanisms among other things.</li>
+</ul>
+<pre class="ascii"><code>   |
+   | ------------&gt; blade
+   |
+   ▪ ------------&gt; nacelle
+  /┃\
+ / ┃ \
+/  ┃  \    
+   ┃    
+   ┃ ------------&gt; tower
+   ┃    
+ ▩▩▩▩▩  ---------&gt; foundation
+</code></pre>
+<h2 id="types-of-wind-turbines">Types of wind turbines</h2>
+<p>Wind turbines may broadly be classified into:</p>
+<ul>
+<li>Horizontal axis wind turbines</li>
+<li>Vertical axis wind turbines</li>
+</ul>
+<p>The kind of wind turbines most people must have come across is
+horizontal axis.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Horizontal axis</th>
+<th>Vertical axis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Needs to realign to face the wind</td>
+<td>No need of realignment</td>
+</tr>
+<tr class="even">
+<td>All blades mounted on same side of tower</td>
+<td>All blades needn't be on same side of tower</td>
+</tr>
+</tbody>
+</table>
+<h2 id="wind-mills-vs-wind-turbines">Wind mills vs wind turbines</h2>
+<p>I used to think that both were same. But it appears that it isn't
+so.</p>
+<p>Wind mills are more.. well, one could say 'ancient' (still used
+though). In the sense that they simply convert the kinetic energy of the
+wind to some mechanical work. They can work only when there is
+sufficient wind.</p>
+<p>Wind turbines are something that evolved out of the wind mills of
+old. They use the kinetic energy of the wind to produce electricity
+which may then be stored and used as required.</p>
+<p>Here's a table comparing the two:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Wind mill</th>
+<th>Wind turbine</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kinetic energy → mechanical work</td>
+<td>Kinetic energy → Stored electricity</td>
+</tr>
+<tr class="even">
+<td>Energy only when wind is available</td>
+<td>Energy even when wind is unavailable</td>
+</tr>
+<tr class="odd">
+<td>Older technology</td>
+<td>More modern</td>
+</tr>
+<tr class="even">
+<td>Simpler</td>
+<td>More complex</td>
+</tr>
+</tbody>
+</table>
+<h2 id="can-a-wind-turbine-be-stopped">Can a wind turbine be
+stopped?</h2>
+<p>Had that question for quite a while. Found out recently that the
+answer is yes.</p>
+<p>A 'braking mechanism' (housed in the nacelle) is part of wind
+turbines so that they can be stopped when needed. For example, to
+prevent damage when the wind speed is too high or for maintenance
+work.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a
+href="https://www.energy.gov/eere/wind/how-do-wind-turbines-work">How do
+wind turbines work</a></li>
+<li><a
+href="https://en.wikipedia.org/wiki/Wind_turbine_design">Wikipedia: Wind
+turbine design</a></li>
+<li><a
+href="https://science.howstuffworks.com/windmill-vs-wind-turbine.htm">Windmill
+vs wind turbine</a></li>
+<li><a
+href="https://en.wikipedia.org/wiki/Nacelle_(wind_turbine)">Wikipedia:
+Nacelle (wind turbine)</a></li>
+</ul>
+<p>(Thanks to Harikrishnan, the friend that I mention in this post.)</p>
+<p>(From this blog post onwards, I've started using org files to write
+the content instead of markdown. 🙂)</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>GHC extensions</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">GHC extensions</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<p>Haskell98 and Haskell2010 are standards.</p>
+<p>But GHC provides <a
+href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/table.html">many
+extensions</a>.</p>
+<p>Extensions can be enabled with:</p>
+<ul>
+<li><code>:set -XBinaryLiterals</code> (in ghci)</li>
+<li><code>{-# LANGUAGE BinaryLiterals #-}</code> (in code)</li>
+</ul>
+<h2 id="emptycase"><span class="done DONE">DONE</span>
+<code>EmptyCase</code></h2>
+<p>Allow to pattern match with <code>case</code> on a type without
+constructors.</p>
+<p>Eg:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Void</span> <span class="ot">=</span> <span class="dt">Void</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ot">f ::</span> <span class="dt">Void</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>f x <span class="ot">=</span> <span class="kw">case</span> x <span class="kw">of</span> { }</span></code></pre></div>
+<h2 id="derivelift"><span class="done DONE">DONE</span>
+<code>DeriveLift</code></h2>
+<ul>
+<li>For TemplateHaskell.</li>
+<li>Allow automatic derivation of <code>Lift</code> class for types via
+<code>deriving</code> clause</li>
+</ul>
+<h2 id="explicitforall"><span class="todo TODO">TODO</span>
+<code>ExplicitForAll</code></h2>
+<p>Implied by: ScopedTypeVariables, LiberalTypeSynonyms, RankNTypes,
+ExistentialQuantification</p>
+<p>Even without this extension, there is a <code>forall</code> by
+default.</p>
+<p>For example, <code>foo :: a -&gt; a</code> really means
+<code>foo :: forall a. (a -&gt; a)</code> (but the latter makes scoped
+type variables via <code>ScopedTypeVariables</code> possible).</p>
+<p><code>ExplicitForAll</code> can give more control over this implicit
+quantification.</p>
+<h2 id="scopedtypevariables"><span class="todo TODO">TODO</span>
+<code>ScopedTypeVariables</code></h2>
+<p>Allows free variables (introduced with a <code>forall</code>)
+occuring in the type to be 're-used' in type annotations in the body of
+a definition.</p>
+<p>Example from Haskell wiki:</p>
+<pre><code>{-# LANGUAGE ScopedTypeVariables #-}
+
+f :: forall a. [a] -&gt; [a]
+f xs = ys ++ ys
+     where
+       ys :: [a]  -- This `a` is same the one in type of `f&#39;
+       ys = reverse xs
+</code></pre>
+<p>See: <a
+href="https://wiki.haskell.org/Scoped_type_variables">https://wiki.haskell.org/Scoped_type_variables</a></p>
+<p>Apparently can help avoid <a
+href="https://wiki.haskell.org/Monomorphism_restriction">monomorphism
+restriction</a>.</p>
+<h2 id="unicodesyntax"><span class="done DONE">DONE</span>
+<code>UnicodeSyntax</code></h2>
+<p>Allows using unicode symbols in place of certain character
+sequences.</p>
+<p>Like:</p>
+<ul>
+<li><code>∀</code> instead of <code>forall</code></li>
+<li><code>→</code> instead of <code>-&gt;</code></li>
+</ul>
+<h2 id="standalonederiving"><span class="done DONE">DONE</span>
+<code>StandaloneDeriving</code></h2>
+<p>Allow a shorter form of instance definition of a type class for an
+type that has already been defined.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Foo</span> a <span class="ot">=</span> <span class="dt">Bar</span> a <span class="op">|</span> <span class="dt">Baz</span> <span class="dt">String</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">deriving</span> <span class="kw">instance</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> <span class="dt">Eq</span> (<span class="dt">Foo</span> a)</span></code></pre></div>
+<p>For types for which haskell can make the derivation by itself.
+Otherwise we would have to write the instance definition ourselves.</p>
+<p>Standalone deriving is similar to having a <code>deriving</code>
+clause made as part of a type's definition, but not exactly same.</p>
+<ul>
+<li>Unlike <code>deriving</code> clause, standalone deriving needn't be
+in same module as type definition.</li>
+</ul>
+<h2 id="magichash"><span class="done DONE">DONE</span>
+<code>MagicHash</code></h2>
+<p>Allow definition (and use?) of identifiers with a <code>#</code> at
+its end.</p>
+<p>Like: <code>Word#</code></p>
+<p>Variables with <code>#</code> in end are usually used by
+internals.</p>
+<p>For example, types with <code>#</code> at its end are <a
+href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/primitives.html#glasgow-unboxed">unboxed
+types</a> by convention (not a requirement though).</p>
+<h2 id="binaryliterals"><span class="done DONE">DONE</span>
+<code>BinaryLiterals</code></h2>
+<p>Allows use of binary notation to represent integers.</p>
+<pre><code>$ ghci
+GHCi, version 9.4.8: https://www.haskell.org/ghc/  :? for help
+
+λ&gt; {-# LANGUAGE BinaryLiterals #-}
+λ&gt; 0b101
+5
+
+λ&gt; 0b1001010101011
+4779
+
+λ&gt; 0b2031
+&lt;interactive&gt;:4:2: error: Variable not in scope: b2031
+</code></pre>
+<p>(Couldn't get this working in ghci v8.8.4 for some reason. Though <a
+href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/binary_literals.html">docs</a>
+say it is available since v7.10.1)</p>
+<p>Note that octal and hexadecimal notations are supported without any
+extensions:</p>
+<pre><code>λ&gt; 0x2e
+46
+
+λ&gt; 0o70
+56
+</code></pre>
+<p>Also see: <a
+href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/binary_literals.html">link</a></p>
+<h2 id="multiwayif"><span class="todo TODO">TODO</span> <a
+href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/multiway_if.html"><code>MultiWayIf</code></a></h2>
+<p>Use guards syntax of pattern matching in <code>if</code>
+statements.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HoTTest</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">HoTTest</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h1 id="jul-2022">04-Jul-2022</h1>
+<p>CCC: Cartesian Closed Category handwaving in a proof: an
+argument/proof which is not rigorous. affine proof tree</p>
+<h2 id="stlc">STLC</h2>
+<ul>
+<li>Natural deduction <code>P</code> means <code>P</code> holds.</li>
+<li>STLC: <code>p:P</code> means <code>p</code> is a
+proof/witness/inhabitant of <code>P</code>.</li>
+</ul>
+<ul>
+<li>STLC is like propositional logic.</li>
+<li>Dependent types =&gt; like predicate logic (aka First-order
+logic).</li>
+</ul>
+<p>:Theorem: Lambek 1985 :: There is an interpretation of STLC into
+sets. ie, there is an equivalence between STLCs and CCCs.</p>
+<p>:Theorem: Howard 1969 :: Proof trees of ND have a 1-to-1
+correspondence with STLC.</p>
+<p>β-reduction:</p>
+<p>Γ,x:P ⊢ q:Q Γ ⊢ p:P</p>
+<hr />
+<p>Γ ⊢ (λx.q)p = q[p/x]:Q</p>
+<p>Γ ⊢ λx.f x = f:P → Q</p>
+<h1 id="more">More</h1>
+<h1 id="worksheets">Worksheets</h1>
+<h2 id="july-2022">1: 04-July-2022</h2>
+<h3 id="q1">Q1</h3>
+<p>(Difficulty: *)</p>
+<p>State the introduction and elimination rules for</p>
+<ol>
+<li>×-types</li>
+<li>→-types</li>
+<li>∏-types</li>
+</ol>
+<pre><code>1)
+
+⨯ᵢ
+
+Γ ⊢ a:A       Γ ⊢ b:B
+─────────────────────
+    Γ ⊢ (a,b):A⨯B
+
+
+
+⨯ₑl                    ⨯ₑr
+
+  Γ ⊢ ab:A⨯B            Γ ⊢ ab:A⨯B
+──────────────        ──────────────     
+ Γ ⊢ (pr₁ab):A           Γ ⊢ (pr₂ab):B
+</code></pre>
+<pre><code>
+
+2)
+
+→ᵢ                           →ₑ                                                    
+
+Γ ⊢ a:A       Γ ⊢ b:B          Γ ⊢ a:A      Γ ⊢ f:A→B                                                    
+─────────────────────        ──────────────────────────                                                    
+  Γ ⊢ (λx:A)b : A→B                  Γ ⊢ (f a) : B                                                    
+</code></pre>
+<pre><code>
+
+3)
+
+Πᵢ
+
+      Γ, x:A ⊢ b:B(x)                   Γ ⊢ b:B        
+────────────────────────────    
+ Γ ⊢ (λx:A).b : Π(x:A).B(x)
+</code></pre>
+<h3 id="q2">Q2</h3>
+<p>Fill in this proof tree:</p>
+<pre><code>──────────────       ──────────────
+a:A, b:B ⊢ a:A       ??????????????
+───────────────────────────────────
+      ????????  ⊢ ????? : A⨯B
+───────────────────────────────────
+   a:A ⊢ λ(b:B).(a,b) : ???????
+───────────────────────────────────
+⊢ λ(a:A).λ(b:B).(a,b) : A → B → A×B
+</code></pre>
+<p>Answer:</p>
+<pre><code>──────────────       ──────────────
+a:A, b:B ⊢ a:A       a:A, b:B ⊢ b:B
+───────────────────────────────────
+      a:A, b:B  ⊢ (a,b) : A⨯B
+───────────────────────────────────
+   a:A ⊢ λ(b:B).(a,b) : B → A⨯B
+───────────────────────────────────
+⊢ λ(a:A).λ(b:B).(a,b) : A → B → A×B
+</code></pre>
+<h1 id="exercises">Exercises</h1>
+<h2 id="july-2022-1">06-July-2022</h2>
+<p><a
+href="https://github.com/martinescardo/HoTTEST-Summer-School/blob/main/Agda/Exercises/01-Exercises.lagda.md">https://github.com/martinescardo/HoTTEST-Summer-School/blob/main/Agda/Exercises/01-Exercises.lagda.md</a></p>
+<h1 id="agda-emacs-keys">Agda emacs keys</h1>
+<p><a
+href="https://agda.readthedocs.io/en/v2.6.2.2/tools/emacs-mode.html">https://agda.readthedocs.io/en/v2.6.2.2/tools/emacs-mode.html</a></p>
+<table>
+<thead>
+<tr class="header">
+<th>Key</th>
+<th>Description</th>
+<th>elisp function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>C-c C-l</td>
+<td>Type check. Agda 'loads' buffer</td>
+<td>agda2-load</td>
+</tr>
+<tr class="even">
+<td>C-c C-c</td>
+<td>Case split</td>
+<td>agda2-make-case</td>
+</tr>
+<tr class="odd">
+<td>C-c C-f</td>
+<td>Next hole/goal</td>
+<td>agda2-next-goal</td>
+</tr>
+<tr class="even">
+<td>C-c C-b</td>
+<td>Previous hole/goal</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>C-c C-r</td>
+<td>Refine goal</td>
+<td>agda2-refine</td>
+</tr>
+<tr class="even">
+<td>C-c C-SPC</td>
+<td>Fill hole</td>
+<td>agda2-give</td>
+</tr>
+<tr class="odd">
+<td>C-c C-a</td>
+<td>Attempt to auto resolve a hole</td>
+<td>agda2-auto-maybe-all</td>
+</tr>
+<tr class="even">
+<td>C-c C-,</td>
+<td>Show goal and context</td>
+<td>agda2-goal-and-context</td>
+</tr>
+<tr class="odd">
+<td>C-c C-=</td>
+<td>Show constraints</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>C-c C-s</td>
+<td>Solve constraints</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>C-c C-x C-h</td>
+<td>Hide/show hidden arguments</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>C-c C-x C-i</td>
+<td>Hide/show irrelevant arguments</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>C-c C-x C-q</td>
+<td>Kill agda</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>C-c C-x C-r</td>
+<td>Restart agda</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>M-,</td>
+<td>Go to a module's file (a la hyperlink)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="tex-for-unicode">TeX for unicode</h1>
+<p><a
+href="https://github.com/agda/agda/blob/master/doc/user-manual/unicode-symbols-sphinx.tex.txt">https://github.com/agda/agda/blob/master/doc/user-manual/unicode-symbols-sphinx.tex.txt</a></p>
+<pre><code>| Symbol               | TeX |   | Symbol            | TeX |
+|----------------------+-----+   +-------------------+-----|
+| ~\to~ or ~\-&gt;~       | →   |   | ~\parallel~       | ∥   |
+| ~^&lt;char&gt;~            | Sup |   | ~\wedge~          | ∧   |
+| ~_&lt;char&gt;~            | Sub |   | ~\vee~            | ∨   |
+| ~\neg                | ¬   |   | ~\cap~            | ∩   |
+| ~\pm                 | ±   |   | ~\cup~            | ∪   |
+| ~\cdot~              | ·   |   | ~\int~            | ∫   |
+| ~\times~             | ×   |   | ~\therefore~      | ∴   |
+| ~\Gamma~             | Γ   |   | ~\dblcolon~       | ∷   |
+| ~\Delta~             | Δ   |   | ~\dotminus~       | ∸   |
+| ~\Theta~             | Θ   |   | ~\sim~            | ∼   |
+| ~\Lambda~            | Λ   |   | ~\simeq~          | ≃   |
+| ~\Xi~                | Ξ   |   | ~\cong~           | ≅   |
+| ~\Pi~                | Π   |   | ~\approx~         | ≈   |
+| ~\Sigma~             | Σ   |   | ~\doteq~          | ≐   |
+| ~\Upsilon~           | Υ   |   | ~\coloneqq~       | ≔   |
+| ~\Phi~               | Φ   |   | ~\eqq~            | ≟   |
+| ~\Psi~               | Ψ   |   | ~\neq~            | ≠   |
+| ~\Omega~             | Ω   |   | ~\equiv~          | ≡   |
+| ~\alpha~             | α   |   | ~\not\equiv~      | ≢   |
+| ~\beta~              | β   |   | ~\le~             | ≤   |
+| ~\gamma~             | γ   |   | ~\ge~             | ≥   |
+| ~\delta~             | δ   |   | ~\nless~          | ≮   |
+| ~\epsilon~           | ε   |   | ~\ngtr~           | ≯   |
+| ~\zeta~              | ζ   |   | ~\nleq~           | ≰   |
+| ~\eta~               | η   |   | ~\ngeq~           | ≱   |
+| ~\theta~             | θ   |   | ~\prec~           | ≺   |
+| ~\iota~              | ι   |   | ~\preceq~         | ≼   |
+| ~\kappa~             | κ   |   | ~\subset~         | ⊂   |
+| ~\lambda~            | λ   |   | ~\not\subset~     | ⊄   |
+| ~\mu~                | μ   |   | ~\supset~         | ⊃   |
+| ~\nu~                | ν   |   | ~\subseteq~       | ⊆   |
+| ~\xi~                | ξ   |   | ~\uplus~          | ⊎   |
+| ~\pi~                | π   |   | ~\sqsubseteq~     | ⊑   |
+| ~\rho~               | ρ   |   | ~\sqcap~          | ⊓   |
+| ~\varsigma~          | ς   |   | ~\sqcup~          | ⊔   |
+| ~\sigma~             | σ   |   | ~\oplus~          | ⊕   |
+| ~\tau~               | τ   |   | ~\vdash~          | ⊢   |
+| ~\upsilon~           | υ   |   | ~\top~            | ⊤   |
+| ~\varphi~            | φ   |   | ~\bot~            | ⊥   |
+| ~\chi~               | χ   |   | ~\bigwedge~       | ⋀   |
+| ~\psi~               | ψ   |   | ~\bigcap~         | ⋂   |
+| ~\omega~             | ω   |   | ~\bigcup~         | ⋃   |
+| ~\vartheta~          | ϑ   |   | ~\vdots~          | ⋮   |
+| ~\aleph~             | ℵ   |   | ~\cdots~          | ⋯   |
+| ~\leftarrow~         | ←   |   | ~\iddots~         | ⋰   |
+| ~\rightarrow~        | →   |   | ~\lfloor~         | ⌊   |
+| ~\leftrightarrow~    | ↔   |   | ~\rfloor~         | ⌋   |
+| ~\twoheadrightarrow~ | ↠   |   | ~\lceil~          | ⌈   |
+| ~\mapsto~            | ↦   |   | ~\rceil~          | ⌉   |
+| ~\mapsto~            | ↦   |   | ~\langle~         | 〈  |
+| ~\restriction~       | ↾   |   | ~\rangle~         | 〉  |
+| ~\Leftarrow~         | ⇐   |   | ~\Return~         | ⏎   |
+| ~\Rightarrow~        | ⇒   |   | ~\Box~            | □   |
+| ~\Leftrightarrow~    | ⇔   |   | ~\triangleleft~   | ◅   |
+| ~\forall~            | ∀   |   | ~\spadesuit~      | ♠   |
+| ~\exists~            | ∃   |   | ~\flat~           | ♭   |
+| ~\ne                 | ∃   |   | ~\sharp~          | ♯   |
+| ~\emptyset~          | ∅   |   | ~\checkmark~      | ✓   |
+| ~\in~                | ∈   |   | ~\llbracket~      | ⟦   |
+| ~\not\in~            | ∉   |   | ~\rrbracket~      | ⟧   |
+| ~\ni~                | ∋   |   | ~\langle~         | ⟨   |
+| ~\not\ni~            | ∌   |   | ~\rangle~         | 〉  |
+| ~\sum~               | ∑   |   | ~\longrightarrow~ | % ⟶ |
+| ~\circ~              | ∘   |   | ~\llparenthesis~  | ⦇   |
+| ~\bullet~            | ∙   |   | ~\rrparenthesis~  | ⦈   |
+| ~\infty~             | ∞   |   | ~\setminus~       | ⧵   |
+| ~\mid~               | ∣   |   | ~\bigcup~         | ⋃   |
+
+| ~\bN~ | ℕ |
+</code></pre>
+<h1 id="references">References</h1>
+<ul>
+<li><a
+href="https://martinescardo.github.io/HoTTEST-Summer-School/">Agda
+lecture notes</a> (Martin Escardo)</li>
+<li><a href="https://github.com/EgbertRijke/HoTT-Intro">Introduction to
+Homotopy Type Theory</a> - Egbert Rijke</li>
+<li><a
+href="https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/HoTT-UF-Agda.html">Introduction
+to Univalent Foundations of Mathematics with Agda</a> - Martín
+Escardó</li>
+<li>Proofs and Types by Girard</li>
+<li><a
+href="https://leanprover.github.io/logic_and_proof">https://leanprover.github.io/logic_and_proof</a></li>
+</ul>
+</div>
+</body>
+</html>

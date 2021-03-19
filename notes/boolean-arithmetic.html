@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Boolean arithmetic</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Boolean arithmetic</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="boolean">Boolean</h2>
+<p>Named after George Boole.</p>
+<h2 id="boolean-algebra-properties">Boolean algebra properties</h2>
+<h3 id="associativity">Associativity</h3>
+<ul>
+<li>a + (b+c) = (a+b) + c</li>
+<li>a(bc) = (ab)c</li>
+</ul>
+<h3 id="absorption">Absorption</h3>
+<ul>
+<li>a + ab = a</li>
+<li>a(a + b) = a</li>
+</ul>
+<h3 id="de-morgans-laws">de Morgan's laws</h3>
+<ul>
+<li>(ab)' = a' + b'</li>
+<li>(a+b)' = a'b'</li>
+</ul>
+<h3 id="identity">Identity</h3>
+<ul>
+<li>a + 0 = a</li>
+<li>a.1 = a</li>
+</ul>
+<h3 id="commutativity">Commutativity</h3>
+<ul>
+<li>a.b = b.a</li>
+<li>a + b = b + a</li>
+</ul>
+<h3 id="distributivity">Distributivity</h3>
+<ul>
+<li>a(b + c) = ab + ac</li>
+<li>a + bc = (a + b).(a + c)</li>
+</ul>
+<h3 id="idempotency">Idempotency</h3>
+<ul>
+<li>a.a = a</li>
+<li>a + a = a</li>
+</ul>
+<h3 id="involution">Involution</h3>
+<p>aka 'double negation'.</p>
+<ul>
+<li>(a')' = a</li>
+</ul>
+<h2 id="operations">Operations</h2>
+<ul>
+<li>NOT: aka inverter</li>
+</ul>
+<h3 id="and">AND</h3>
+<table>
+<thead>
+<tr class="header">
+<th>a</th>
+<th>b</th>
+<th>y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="or">OR</h3>
+<table>
+<thead>
+<tr class="header">
+<th>a</th>
+<th>b</th>
+<th>y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="xor">XOR</h3>
+<p>Exclusive OR.</p>
+<p>True only when inputs doesn't have the same value.</p>
+<table>
+<thead>
+<tr class="header">
+<th>a</th>
+<th>b</th>
+<th>y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="nand">NAND</h3>
+<p>Inverted AND</p>
+<table>
+<thead>
+<tr class="header">
+<th>a</th>
+<th>b</th>
+<th>y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="nor">NOR</h3>
+<p>Inverted OR</p>
+<table>
+<thead>
+<tr class="header">
+<th>a</th>
+<th>b</th>
+<th>y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="xnor">XNOR</h3>
+<p>Inverted XOR.</p>
+<p>ie, True when both inputs are the same.</p>
+<table>
+<thead>
+<tr class="header">
+<th>a</th>
+<th>b</th>
+<th>y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="universal-gates">Universal gates</h2>
+<ul>
+<li>Can be used to realize any other gate.</li>
+<li>NAND, NOR</li>
+</ul>
+<p>NAND</p>
+<ul>
+<li>NOT: (A.A)' → 1 NAND gate</li>
+<li>AND: (AB)'' → 2 NAND gates</li>
+<li>OR: (A+B)'' = (A'B')' → 3 NAND gates</li>
+</ul>
+<p>NOR</p>
+<ul>
+<li>NOT: (A+A)' → 1 NOR gate</li>
+<li>AND: (AB)'' = (A'+B')' → 3 NOR gates</li>
+<li>OR: (A+B)'' → 2 NOR gates</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><em>Switching Theory and Finite Automata (Third edition)</em> by Zvi
+Kohavi, Niraj K. Jha</li>
+<li>[<a
+href="https://www.mi.mun.ca/users/cchaulk/misc/boolean.html">https://www.mi.mun.ca/users/cchaulk/misc/boolean.html</a>](<a
+href="https://www.mi.mun.ca/users/cchaulk/misc/boolean.htm">https://www.mi.mun.ca/users/cchaulk/misc/boolean.htm</a>)</li>
+</ul>
+</div>
+</body>
+</html>

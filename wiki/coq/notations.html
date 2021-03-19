@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Coq: Notations</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Coq: Notations</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="info">Info</h2>
+<ul>
+<li>If defined within a section, notation is usable only within that
+section</li>
+<li>Notations in <a
+href="https://coq.inria.fr/refman/language/coq-library.html#init-notations">here</a>
+are reserved and cannot be changed.
+<ul>
+<li>Eg: <code>_ /\ _</code>, <code>_ || _</code></li>
+</ul></li>
+<li>Default precedence level of a pattern is 0.</li>
+</ul>
+<h2 id="local-attribute"><code>local</code> attribute</h2>
+<p>If <a
+href="https://coq.inria.fr/refman/language/core/modules.html#coq:attr.local"><code>local</code></a>
+<a
+href="https://coq.inria.fr/refman/language/core/basic.html#term-attribute">attribute</a>
+is used, notation is available only within the same module.</p>
+<pre class="coq"><code>Module FooMod.
+  #[local] Notation &quot;⊥&quot; := false.
+
+  Check ⊥.  (* ⊥ : bool *)
+End FooMod.
+
+Import FooMod.
+Compute ⊥.
+(* Syntax Error: Lexer: Undefined token *)
+</code></pre>
+<h2 id="reserved-notation"><a
+href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#coq:cmd.Reserved-Notation"><code>Reserved Notation</code></a></h2>
+<p>Same notations may have different meaning in different contexts. But
+they must all have the same precedence and associativity.</p>
+<p>We can 'reserve' notations to ensure that.</p>
+<p><code>Reserved Infix</code> is the same thing except that the
+notation is infix.</p>
+<h2 id="syntax-modifier"><a
+href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#grammar-token-syntax_modifier">Syntax
+modifier</a></h2>
+<ul>
+<li><code>x name</code>: 'parse <code>x</code> as a single
+identifier'</li>
+<li><code>x at level 10</code>: x is parsed as a term at level 10, but
+is actually to be a name</li>
+<li>at level</li>
+<li>in custom &lt;custom-entry-name&gt;</li>
+<li>ident</li>
+<li>constr</li>
+<li>binder</li>
+</ul>
+<p>Other:</p>
+<ul>
+<li><code>p pattern</code>: p is a pattern. Like the kind used in
+pattern matching.</li>
+</ul>
+<h2 id="custom-entries">Custom entries</h2>
+<p><code>constr</code>: the predefined grammar entry. As in the default
+interpretation.</p>
+<ul>
+<li>ie, the main grammar.</li>
+</ul>
+<p>We can make our own grammar entries via
+<code>Custom Entry</code>.</p>
+<ul>
+<li>Print grammar of the custom entry:
+<code>Print Custom Grammar &lt;custom-entry-name&gt;</code></li>
+<li>Print grammar of <code>constr</code>:
+<code>Print Grammar constr</code></li>
+</ul>
+<h2 id="precedence">Precedence</h2>
+<p>Lower the precedence level, higher the precedence.</p>
+<ul>
+<li>Highest precedence: 0</li>
+<li>Least precedence: 100 (for user)</li>
+<li>Least precedence: 200 (for coq)</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<p><a
+href="https://coq.inria.fr/doc/V8.19.0/refman/user-extensions/syntax-extensions.html#notations-with-recursive-patterns">Documentation</a>
+mentions this example of having left-associative tuples:</p>
+<pre class="coq"><code>Notation &quot;( x , y , .. , z )&quot; := (pair .. (pair x y) .. z) (at level 0).
+
+Set Printing Parentheses.
+Check (1,2,3).
+(* ((1, 2), 3) : (nat * nat) * nat *)
+</code></pre>
+<p>We can have a right-associative version like:</p>
+<pre class="coq"><code>Notation &quot;( x , .. , y , z )&quot; := (pair x .. (pair y z) .. ) (at level 0).
+
+Set Printing Parentheses.
+Check (1,2,3).
+(* (1, (2, 3)) : nat * (nat * nat) *)
+</code></pre>
+<p>Thanks to <a
+href="https://coq.zulipchat.com/#narrow/stream/423352-Coq-Notation-system">https://coq.zulipchat.com/#narrow/stream/423352-Coq-Notation-system</a></p>
+<h2 id="todo">Todo</h2>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />Tactic notation</li>
+<li><input type="checkbox" disabled="" />Number notation: can be used to
+change how numbers are parsed</li>
+<li><input type="checkbox" disabled="" />String notation: can be used to
+change how strings are parsed</li>
+</ul>
+</div>
+</body>
+</html>

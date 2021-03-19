@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>A taste of the PVS theorem prover</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">A taste of the PVS theorem prover</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+<div id="description">
+First encounter with PVS theorem prover.
+</div>
+
+<div id="content-container">
+<p>I had attended the <a href="https://fm.csl.sri.com/SSFT22/">Eleventh
+Summer School on Formal Techniques</a> (SSFT 2022) online.</p>
+<p>During this event, I first got to use the PVS theorem prover. Had
+heard a lot about it before the SSFT, but had never used it. Have come
+across a mention of the <code>grind</code> proof strategy of PVS more
+than a couple of times.</p>
+<p>This blog post is a description of the first proof that I did with
+PVS, along with some stuff that I found out while doing it.</p>
+<p>Mistakes, if any, are my own and corrections are welcome.</p>
+<p>(I originally wrote this blog post right after the SSFT back in 2022,
+but didn't finish writing all I wished to. Was worried of errors in what
+I had written, so refrained from putting it up online.</p>
+<p>But hey, better to make it public and let others correct me than to
+keep this to myself, right? 🙂)</p>
+<p>By the way, registration for this year's SSFT is open at the moment.
+It was a great experience for me even though I joined online. If
+possible, do join physically!</p>
+<hr />
+<p>PVS, which stands for Prototype Verification System, is an
+interactive theorem prover.</p>
+<p>Proofs are constructed with guidance from the user. A batch mode is
+available to re-run pre-existing proofs, though.</p>
+<p>The logic used by PVS is based on <a
+href="https://en.wikipedia.org/wiki/Sequent_calculus">sequent
+calculus</a>.</p>
+<p>Proofs in PVS seem to be in the 'backward-reasoning' style. We go
+from the goal to the assumptions. A top-down approach.</p>
+<p>Users can define custom procedures, known as <em>strategies</em>
+(analogous to tactics in coq), to construct proofs for automating the
+theorem proving process.</p>
+<p>PVS is implemented mainly in common lisp and requires a common-lisp
+runtime to work.</p>
+<p>Emacs or vscode can be used as front-ends to interact with the pvs
+system. I used emacs.</p>
+<p>Let me show one of the first proofs that we did in PVS. Quite an
+amusing one too.</p>
+<h2 id="a-simple-proof-in-pvs">A simple proof in PVS</h2>
+<p>One of the proofs that we did during the summer school was inspired
+by the lyrics of the song <a
+href="https://en.wikipedia.org/wiki/Everybody_Loves_My_Baby">'Everybody
+loves my baby'</a> which went like:</p>
+<blockquote>
+<p>Everybody loves my baby<br />
+But my baby don't love nobody but me.</p>
+</blockquote>
+<p>There are two conditions:</p>
+<ul>
+<li>Everyone loves my baby.</li>
+<li>My baby loves only me.</li>
+</ul>
+<p>So we could formulate them as:</p>
+<ul>
+<li><code>∀p, loves(p, baby)</code></li>
+<li><code>∀p, loves(baby, p) → (p = me)</code></li>
+</ul>
+<p>where <code>loves(a, b)</code> means <code>a</code> loves
+<code>b</code>, but not necessarily <code>b</code> loves
+<code>a</code>.</p>
+<p>With these assumptions, it is possible to prove that 'me' and 'my
+baby' are the same person!</p>
+<table>
+<thead>
+<tr class="header">
+<th>No</th>
+<th>Statement</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><code>∀p, loves(p, baby)</code></td>
+<td>Assumption</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><code>∀p, loves(baby, p) → (p = me)</code></td>
+<td>Assumption</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><code>loves(baby, baby)</code></td>
+<td>1 with <code>p=baby</code></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><code>loves(baby, baby) → (baby = me)</code></td>
+<td>2 with <code>p=baby</code></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><code>baby = me</code></td>
+<td>Modus ponens with 4 and 3</td>
+</tr>
+</tbody>
+</table>
+<p>But of course, 'me' and 'my baby' can't have been same person. We
+were able to derive this due to an incomplete way of framing the
+assumptions.</p>
+<p>Look at <code>∀p, loves(baby, p) → (p = me)</code>. The baby may love
+themselves, which gives <code>loves(baby, baby)</code>, but that doesn't
+mean <code>baby = me</code>.</p>
+<p>This is an example of an attempt to prove a theorem exposing a bug in
+the specification.</p>
+<p>Anway, let's try doing the proof with these assumptions itself.
+Writing this down as a PVS specification file (a file with
+<code>.pvs</code> extension),</p>
+<pre class="pvs"><code>mybaby: THEORY
+BEGIN
+  % &#39;person&#39; is an inhabited Type
+  % The &#39;+&#39; means that there is at least one term of the type &#39;person&#39;
+  person: TYPE+
+
+  % &#39;me&#39; and &#39;mybaby&#39; are people
+  % ie, they are values of the type &#39;person&#39;
+  me, mybaby: person
+
+  % A few variables of type &#39;person&#39;
+  x, y, z: VAR person
+
+  % A predicate accepting two values of type &#39;person&#39;
+  loves(x, y): boolean
+
+  % Everyone loves my baby
+  everybodyLovesMyBaby: AXIOM
+    forall x: loves(x, mybaby)
+
+  % If my baby loves somebody, that is me
+  mybabyLovesOnlyMe: AXIOM
+    loves(mybaby, x) IMPLIES x = me
+
+  % We this, we can prove that mybaby and me are same!
+  mybabyIsMe: LEMMA
+    mybaby = me
+END mybaby
+</code></pre>
+<p>(Anything that follows a <code>%</code> in a line is a comment till
+the end of that line.)</p>
+<p>First, we got to type check this file.</p>
+<p>In the emacs interface, we can do <code>C-c C-t</code> for that
+(<code>C</code> is Ctrl key).</p>
+<p>If the file type checked successfully, we would get a message
+like</p>
+<pre><code>mybaby typechecked in 0.01s: No TCCs generated; 1 msg
+</code></pre>
+<p>TCC means Type-Correctness Conditions. They are obligations generated
+by the type checker 'which must be discharged before the corresponding
+theory is considered type correct'<a
+href="https://pvs.csl.sri.com/doc/pvs-system-guide.pdf">¹⁰</a>. The
+example that we considering is quite simple and doesn't have any
+TCCs.</p>
+<p>Now position the cursor over a part of the theorem to be proven,
+which in our case is <code>mybabyIsMe</code> and do
+<code>C-c p</code>.</p>
+<p><code>mybabyIsMe</code> spans two lines in our source file, placing
+the cursor at any point in those two lines seems to be okay, even on
+white space as long as it is on one of those two lines.</p>
+<p>On starting the proof, we would get</p>
+<pre><code>mybabyIsMe :
+
+  |-------
+{1}   mybaby = me
+
+Rule?
+</code></pre>
+<p>This is a sequent (have mentioned a little about sequents in PVS as
+part of the addendum of this blog post).</p>
+<p>The <code>Rule?</code> is the prompt asking for our next input to
+guide the proof.</p>
+<p>Here are some handy keyboard shortcuts that can be used to retrive
+commands from usage history:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Shortcut</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>M-p</code></td>
+<td>Last command</td>
+</tr>
+<tr class="even">
+<td><code>M-n</code></td>
+<td>Next command</td>
+</tr>
+<tr class="odd">
+<td><code>M-s</code></td>
+<td>Auto-complete from history</td>
+</tr>
+</tbody>
+</table>
+<p>Back to our proof, in</p>
+<pre><code>  |-------
+{1}   mybaby = me
+</code></pre>
+<p>the part above the line are the assumptions (which at this point is
+nothing) and that below the line is the current goal that needs to be
+proved.</p>
+<p>Time to bring in our <code>everybodyLovesMyBaby</code> axiom. Type
+the following into the prompt:</p>
+<pre><code>(lemma &quot;everybodyLovesMyBaby&quot;)
+</code></pre>
+<p>and the sequent becomes:</p>
+<pre><code>{-1}  FORALL (x): loves(x, mybaby)
+  |-------
+[1]   mybaby = me
+</code></pre>
+<p>Let's instantiate this using <code>mybaby</code></p>
+<pre><code>(inst - &quot;mybaby&quot;)
+</code></pre>
+<p>and we infer that the baby loves himself.</p>
+<pre><code>{-1}  loves(mybaby, mybaby)
+  |-------
+[1]   mybaby = me
+</code></pre>
+<p>Bringing <code>mybabyLovesOnlyMe</code> as well into the picture,</p>
+<pre><code>(lemma &quot;mybabyLovesOnlyMe&quot;)
+</code></pre>
+<p>and the sequent changes to</p>
+<pre><code>{-1}  FORALL (x: person): loves(mybaby, x) IMPLIES x = me
+[-2]  loves(mybaby, mybaby)
+  |-------
+[1]   mybaby = me
+</code></pre>
+<p>Now we got <code>loves(mybaby, mybaby)</code> and
+<code>FORALL (x: person):
+loves(mybaby, x) IMPLIES x = me</code>. So we can sort of follow the
+implication</p>
+<pre><code>(forward-chain -)
+</code></pre>
+<p>and the proof is done.</p>
+<pre><code>Forward chaining on -,
+Q.E.D.
+</code></pre>
+<p>A transcript of the last proven proof can be shown with <code>M-x
+show-last-proof</code>.</p>
+<p>For the proof that we just did, it shows as:</p>
+<pre><code>mybabyIsMe :
+
+  |-------
+{1}   mybaby = me
+
+Applying everybodyLovesMyBaby  then
+Instantiating the top quantifier in - with the terms:
+ mybaby, and then
+Applying mybabyLovesOnlyMe
+ this simplifies to:
+mybabyIsMe :
+
+{-1}  FORALL (x: person): loves(mybaby, x) IMPLIES x = me
+{-2}  loves(mybaby, mybaby)
+  |-------
+[1]   mybaby = me
+
+Forward chaining on -,
+ This completes the proof of mybabyIsMe.
+
+Q.E.D.
+</code></pre>
+<p>Once a proof is complete, it would be saved in a <code>.prf</code>
+file. This is the proof script that records the steps that we took in
+the course of proving the theorem. The proof can be rerun and verified
+if needed using this.<a
+href="https://hal.inria.fr/hal-01673517/document">¹⁸</a> This file is
+not meant to be edited by users and is best left alone so that only PVS
+itself handles it.</p>
+<p><code>.prf</code> file associated with the proof that we just did
+looks something like this:</p>
+<pre><code>(mybaby
+ (mybabyIsMe 0
+  (mybabyIsMe-1 nil 1823146151
+   (&quot;&quot; (lemma &quot;everybodyLovesMyBaby&quot;)
+    ((&quot;&quot; (inst - &quot;mybaby&quot;)
+      ((&quot;&quot; (lemma &quot;mybabyLovesOnlyMe&quot;) ((&quot;&quot; (forward-chain -) nil nil))
+        nil))
+      nil))
+    nil)
+   ((person nonempty-type-decl nil mybaby nil)
+    (mybaby const-decl &quot;person&quot; mybaby nil)
+    (mybabyLovesOnlyMe formula-decl nil mybaby nil)
+    (everybodyLovesMyBaby formula-decl nil mybaby nil))
+   shostak)))
+</code></pre>
+<p>I think <code>shostak</code> here refers to the name of a decision
+procedure brought about by the work of R. E. Shostak.</p>
+<p>Tried to find the file format of the <code>.prf</code> files, but
+couldn't find it. It being a internal format and thereby being
+susceptible to frequent changes may be a reason. Found a <a
+href="https://pvs.csl.sri.com/doc/ProofLite-4.2.pdf">2007 document</a>
+that mentions it though.</p>
+<h2 id="proof-tree">Proof tree</h2>
+<p>The goal of a PVS proof is to construct a tree where the leaf nodes
+are trivially true (ie, <code>TRUE</code>).</p>
+<p>In the case of the 'my baby loves only me' example, the tree looks
+like</p>
+<pre><code>   ∀p, loves(p, baby)       ∀p, loves(baby, p) → (p = me)
+  -------------------     ---------------------------------
+   loves(baby, baby)       loves(baby, baby) → (baby = me)
+-------------------------------------------------------------
+                      baby = me
+</code></pre>
+<p>We can think of the proof tree growing from the root
+(<code>baby = me</code>) to the leaves.</p>
+<pre><code>⊢ ∀p: loves(p, baby)           ⊢ ∀p: loves(baby, p) → (p = me)         
+  |                              |                                            
+  |                              |                                            
+  +-- ⊢ loves(baby, baby)        +-- ⊢ loves(baby, baby) → (baby = me)      
+        |                              |
+        |                              |
+        +------------------------------+
+                      |
+                      |
+                      +-- ⊢ baby = me
+</code></pre>
+<p>The proof starts off as a sequent without antecedents with just the
+theorem to be proved as consequent.</p>
+<p>From the <a
+href="https://pvs.csl.sri.com/doc/pvs-prover-guide.pdf">PVS prover
+guide</a>:</p>
+<blockquote>
+<p>'At any time in a PVS proof, attention is focused on some sequent
+that is a leaf node in the current proof tree'.</p>
+</blockquote>
+<h2 id="editing-proof">Editing proof</h2>
+<p>A proof which has already been completed can be edited in a 'proof
+buffer'.</p>
+<p>Position cursor on the theorem whose proof needs to be edited and do
+<code>M-x edit-proof</code>.</p>
+<p>For our 'my baby loves only me' proof, the (unedited) proof is:</p>
+<pre><code>;;; Proof mybabyIsMe-1 for formula mybaby.mybabyIsMe
+(&quot;&quot;
+ (lemma &quot;everybodyLovesMyBaby&quot;)
+ (inst - &quot;mybaby&quot;)
+ (lemma &quot;mybabyLovesOnlyMe&quot;)
+ (forward-chain -))
+</code></pre>
+<p>Looks pretty much like lisp, doesn't it? Probably because it
+<em>is</em> lisp.</p>
+<p>After editing, the new proof can be attached to the same or different
+formula with <code>M-x install-proof</code>.</p>
+<p>(Haven't properly figured this one yet, really. But this is roughly
+how it is.)</p>
+<h2 id="pvs-interface">PVS interface</h2>
+<p>The default PVS interface is just emacs with some customizations.
+There are commands and key-bindings for some PVS-specific things, but
+other than that it's just emacs.</p>
+<p>This also means that if you already have emacs set up, that
+configuration would also be loaded (provided there are no conflicts with
+those of pvs, I guess). For instance, I had evil-mode set up and could
+use it in the emacs launched by pvs as well.</p>
+<p>Here are a few default key-bindings/commands:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Description</th>
+<th>Command</th>
+<th>Key binding</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Start proof</td>
+<td><code>M-x pr</code></td>
+<td><code>C-c p</code></td>
+</tr>
+<tr class="even">
+<td>Type check</td>
+<td><code>M-x typecheck</code></td>
+<td><code>C-c C-t</code></td>
+</tr>
+<tr class="odd">
+<td>Show TCCs</td>
+<td><code>M-x show-tccs</code></td>
+<td><code>C-c C-q s</code></td>
+</tr>
+<tr class="even">
+<td>Quit</td>
+<td><code>M-x exit-pvs</code></td>
+<td><code>C-x C-c</code></td>
+</tr>
+<tr class="odd">
+<td>Suspend PVS</td>
+<td><code>M-x suspend-pvs</code></td>
+<td><code>C-x C-z</code></td>
+</tr>
+</tbody>
+</table>
+<p>We can change these key-bindings if we needed as it's just emacs,
+which is well known for its customizability.</p>
+<p>Still, emacs can take time to get used to (although it is very well
+worth the time), and a <a
+href="https://github.com/nasa/vscode-pvs">plugin</a> (made by some folks
+at NASA) to use VSCode editor as the interface to PVS is also
+available.</p>
+<p>Lot of people at NASA seem to use PVS. They have published a large
+PVS library named the <a
+href="https://shemesh.larc.nasa.gov/fm/pvs/PVS-library/">NASA PVS
+library</a>.</p>
+<h2 id="pvs-back-end">PVS 'back-end'</h2>
+<p>In the PVS website, two 'flavours' of PVS can be seen. One with <a
+href="http://www.sbcl.org/">SBCL</a> and the other with Allegro.</p>
+<p>PVS needs an implementation of common lisp to work and SBCL and
+Allegro are two such implementations.</p>
+<p>(SBCL stands for Steel Bank Common Lisp. A reference to
+Carnegie-Mellon University, the place from where SBCL originated. Andrew
+Carnegie was involved in the steel industry and Andrew Mellon was a
+banker.<a
+href="https://en.wikipedia.org/wiki/Steel_Bank_Common_Lisp">³</a>)</p>
+<p>One of the differences between SBCL and Allegro is that SBCL is free
+software whereas Allegro is a commercial implementation and comes with
+some restrictions although non-commerical use seems okay.</p>
+<p>Another difference is that PVS operates faster when used with Allegro
+when compared to SBCL. Probably a reason why the <a
+href="https://pvs.csl.sri.com/downloads.html">PVS website</a> recommends
+Allegro.</p>
+<p>I first tried to run the example mentioned in this blog post using
+PVS-SBCL, but it had some bug that prevented the proof from getting
+completed (the '<code>(forward-chain -)</code>' wouldn't go through).
+But PVS-Allegro had no problem with it.</p>
+<p>Maybe the Allegro version gets more priority in the PVS development
+process.</p>
+<p>Anyway, now I use the Allegro version. Still would've liked to try
+SBCL version when it gets fixed though.</p>
+<h2 id="fun-fact">Fun fact</h2>
+<p>The 2015 Hollywood film Martian shows PVS running on a computer on
+multiple occasions. Shankar had mentioned this during his session and I
+later found out <a
+href="https://shemesh.larc.nasa.gov/fm/pvs/TheMartian/">a web-page</a>
+that talks about it:</p>
+<p>As evinced by the NASA PVS library, PVS enjoys some popularity at
+NASA. Yet PVS is not a tool meant to be used in space. But it can help
+in making sure that the stuff being sent to space would work as it is
+meant to be by verifying their designs.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://pvs.csl.sri.com/doc/pvs-system-guide.pdf">PVS
+System Guide (v7.1)</a></li>
+<li><a href="https://pvs.csl.sri.com/doc/pvs-prover-guide.pdf">PVS
+Prover Guide (v7.1)</a></li>
+<li><a href="https://www.cs.umd.edu/~mvz/handouts/wift-tutorial.pdf">A
+Tutorial Introduction to PVS</a></li>
+<li><em>PVS: A Prototype Verification System</em> (1992) - S. Owre, J.
+M. Rushby, N. Shankar</li>
+</ul>
+<ul>
+<li><a href="https://hal.inria.fr/hal-01673517/document"><em>Proof
+certificates in PVS</em></a> - Gilbert, Frédéric (International
+Conference on Interactive Theorem Proving. Springer, Cham, 2017)</li>
+<li><a
+href="https://shemesh.larc.nasa.gov/fm/pvs/LASER2011/Strategies/Lecture-a4.pdf">Slides
+discussing PVS rules and strategies</a></li>
+<li>Cyrluk, D., Rajan, S., Shankar, N. and Srivas, M.K.,
+<strong>1994</strong>, September. <em>Effective theorem proving for
+hardware verification</em>. In International Conference on Theorem
+Provers in Circuit Design (pp. 203-222). Springer, Berlin,
+Heidelberg.</li>
+</ul>
+<h2 id="addendum-sequents">Addendum: Sequents</h2>
+<p>Proof goals are <a
+href="https://en.wikipedia.org/wiki/Sequent">sequents</a> (a la
+Gentzen's <a
+href="https://en.wikipedia.org/wiki/Sequent_calculus">sequent
+calculus</a>).</p>
+<p>Sequents are 'conditional tautologies'. Could think of them as
+formulas which are true only if some conditions are satisfied.</p>
+<p>Sequents are usually represented like</p>
+<pre><code> A₁, A₂, ..., Aₙ
+-----------------
+ B₁, B₂, ..., Bₘ
+</code></pre>
+<p>or equivalently, like</p>
+<pre><code>A₁, A₂, ..., Aₙ ⊢ B₁, B₂, ..., Bₘ
+</code></pre>
+<p>This means that if all the Aᵢ-s are true, then at least one of the
+Bᵢ-s must be true.</p>
+<pre><code>A₁ ∧ A₂ ∧ ... ∧ Aₙ ⊢ B₁ ∨ B₂ ∨ ... ∨ Bₘ
+</code></pre>
+<p>The Aᵢ-s are the antecedents and the Bᵢ-s are the consequents.</p>
+<p>Both groups may simply be thought as formulas.</p>
+<pre><code>                                    ⎫
+                    ⎫               ⎮
+ A₁, A₂, ..., Aₙ    ⎬ antecedents   ⎮
+                    ⎭               ⎮
+-----------------                   ⎬ sequent
+                    ⎫               ⎮
+ B₁, B₂, ..., Bₘ    ⎬ consequents   ⎮
+                    ⎭               ⎮
+                                    ⎭
+</code></pre>
+<p>A sequent without antecedents is always true. For example,
+<code>⊢ M</code> is always true (sort of an unconditional
+tautology).</p>
+<p>In PVS, a sequent looks like <a
+href="https://pvs.csl.sri.com/doc/pvs-prover-guide.pdf">¹¹</a></p>
+<pre><code>{-1}  A1  
+{-2}  A2  
+      .   
+      .   
+[-n]  An  
+  |-------
+{1}   B1  
+[2]   B2  
+      .   
+      .   
+{-m}  Bm  
+</code></pre>
+<p>The antecedents (with negative numbering) appear above the line
+whereas the consequents (with positive numbers) show up under the
+line.</p>
+<p>The numbers are used to name the forumlas.</p>
+<p>Newly introduced formulas have their number enclosed within curly
+braces. And those formulas which were there in a parent goal itself have
+their number surrounded by square brackets.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Compilers</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Compilers</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="first-and-follow-sets">FIRST and FOLLOW sets</h2>
+<p>Can aid both top-down and bottom-up parsers.</p>
+<h3 id="first">FIRST</h3>
+<ul>
+<li>If <code>x</code> is a terminal, FIRST(x) = {x}.</li>
+<li>If X is a non-terminal where X = Y₁Y₂…Yₖ for k ≥ 1,
+<ul>
+<li>FIRST(X) = FIRST(X) ∪ a if a ∈ FIRST(Yᵢ) for the first Yᵢ where ε ∉
+FIRST(Yᵢ).</li>
+<li>If ∀i, ε ∈ FIRST(Yᵢ) then FIRST(X) = FIRST(X) ∪ ε</li>
+</ul></li>
+<li>If <code>X → ε</code> is a production, ε ∈ FIRST(X).</li>
+</ul>
+<h3 id="follow">FOLLOW</h3>
+<ul>
+<li>If S is the start symbol, $ ∈ FOLLOW(S).</li>
+<li>If <code>A → αBβ</code>, then ∀x ∈ (FIRST(β) - {ε}), x ∈
+FOLLOW(B).</li>
+<li>If <code>A → αB</code>, then everything in FOLLOW(A) is in
+FOLLOW(B).</li>
+<li>If <code>A → αBβ</code> and <code>ε ∈ FIRST(β)</code>, then
+everything in FOLLOW(A) is in FOLLOW(B).</li>
+</ul>
+<h3 id="parsing-table-construction">Parsing table construction</h3>
+<pre><code>foreach production A → α in the grammar; do
+  foreach terminal x in FIRST(α), add T[A, x] = A → α
+  if ε ∈ FIRST(α), then
+    foreach terminal y in FOLLOW(A), add T[A, y] = A → α
+    if ε ∈ FIRST(α) and $ ∈ FOLLOW(A), add T[A, $] = A → α
+</code></pre>
+<h3 id="examples">Examples</h3>
+<h4 id="eg1">Eg1</h4>
+<pre><code>E  → T E&#39;
+E&#39; → + T E&#39; | ε
+T  → F T&#39;
+T&#39; → * F T&#39; | ε
+F  → ( E ) | id
+</code></pre>
+<p>where <code>id</code> is a terminal.</p>
+<p>FIRST set:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>FIRST set</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>E</td>
+<td>F(T) = { (, id }</td>
+</tr>
+<tr class="even">
+<td>E'</td>
+<td>{ +, ε }</td>
+</tr>
+<tr class="odd">
+<td>T</td>
+<td>F(F) = { (, id }</td>
+</tr>
+<tr class="even">
+<td>T'</td>
+<td>{ *, ε }</td>
+</tr>
+<tr class="odd">
+<td>F</td>
+<td>{ (, id }</td>
+</tr>
+</tbody>
+</table>
+<p>FOLLOW set:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>FOLLOW set</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>E</td>
+<td>{ $, ) }</td>
+<td>Starting symbol</td>
+</tr>
+<tr class="even">
+<td>E'</td>
+<td>{ $, ) }</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>T</td>
+<td>{ +, $, ) }</td>
+<td>FIRST(E')</td>
+</tr>
+<tr class="even">
+<td>T'</td>
+<td>{ +, $, ) }</td>
+<td>FOLLOW(T)</td>
+</tr>
+<tr class="odd">
+<td>F</td>
+<td>{ *, +, $, ) }</td>
+<td>FIRST(T') ∪ FOLLOW(T)</td>
+</tr>
+</tbody>
+</table>
+<p>Parsing table:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>id</th>
+<th>+</th>
+<th>*</th>
+<th>(</th>
+<th>)</th>
+<th>$</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>E</td>
+<td>E → T E'</td>
+<td></td>
+<td></td>
+<td>E → T E'</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>E'</td>
+<td></td>
+<td>E' → + T E'</td>
+<td></td>
+<td></td>
+<td>E' → ε</td>
+<td>E' → ε</td>
+</tr>
+<tr class="odd">
+<td>T</td>
+<td>T → F T'</td>
+<td></td>
+<td></td>
+<td>T → F T'</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>T'</td>
+<td></td>
+<td>T' → ε</td>
+<td>T' → * F T'</td>
+<td></td>
+<td>T' → ε</td>
+<td>T' → ε</td>
+</tr>
+<tr class="odd">
+<td>F</td>
+<td>F → id</td>
+<td></td>
+<td></td>
+<td>F → ( E )</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>E → T E'
+<ul>
+<li>FIRST(T) = {(, id}</li>
+</ul></li>
+<li>E' → + T E'
+<ul>
+<li>FIRST(+) = { + }</li>
+</ul></li>
+<li>E' → ε
+<ul>
+<li>FOLLOW(E') = {$, )}</li>
+</ul></li>
+<li>T → F T'
+<ul>
+<li>FIRST(F) = {(, id}</li>
+</ul></li>
+<li>T' → * F T'
+<ul>
+<li>FIRST(*) = { * }</li>
+</ul></li>
+<li>T' → ε
+<ul>
+<li>FOLLOW(T') = {+, $, )}</li>
+</ul></li>
+<li>F → ( E )
+<ul>
+<li>FIRST( ( ) = { ( }</li>
+</ul></li>
+<li>F → id
+<ul>
+<li>FIRST(id) = { id }</li>
+</ul></li>
+</ul>
+<h4 id="eg2">Eg2</h4>
+<pre><code>S -&gt; ( L ) | a
+L -&gt; L , S | S
+</code></pre>
+<p>This grammar is left-recursive. We need to remove it before we can
+find FIRST set.</p>
+<pre><code>S  → ( L ) | a
+L  → L , S | S
+L  → SL&#39;
+L&#39; → ,L | ε
+</code></pre>
+<p>A -&gt; Aα | b</p>
+<p>A -&gt; bA' A' -&gt; αA | ε</p>
+<p>FIRST set:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>FIRST set</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>S</td>
+<td>{(}</td>
+</tr>
+<tr class="even">
+<td>L</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="top-down-parsing">Top-down parsing</h2>
+<p>Can be thought of as finding a left-most derivation for a
+sentence.</p>
+<p>Example: LL(k)</p>
+<p>For example, for the grammar</p>
+<pre><code>E → T E&#39;
+E&#39;→ + T E&#39; | ε
+T → F T&#39;
+T&#39;→ * F T&#39; | ε
+F → ( E ) | id
+</code></pre>
+<p>parse tree for an input string <code>id + id * id</code> could be
+built like</p>
+<pre><code>E
+
+ E
+/ \
+T E&#39;
+
+
+   E
+ /    \
+ T      E&#39;
+ |     
+/ \
+F  T&#39;
+
+
+
+   E
+ /    \
+ T      E&#39;
+ |     
+/ \
+F  T&#39;
+|  
+id 
+
+
+   E
+ /    \
+ T      E&#39;
+ |     
+/ \
+F  T&#39;
+|  |
+id ε
+
+
+
+   E
+ /    \
+ T      E&#39;
+ |      |
+/ \     + T E&#39;
+F  T&#39;     
+|  |
+id ε
+
+
+   E
+ /    \
+ T      E&#39;
+ |      |
+/ \     + T      E&#39;
+F  T&#39;     |      |
+|  |      F T&#39;   ε
+id ε
+
+
+
+
+   E
+ /    \
+ T      E&#39;
+ |      |
+/ \     + T      E&#39;
+F  T&#39;     |      |
+|  |      F T&#39;   ε
+id ε      |
+          id
+
+
+
+   E
+ /    \
+ T      E&#39;
+ |      |
+/ \     + T                 E&#39;
+F  T&#39;     |                 |
+|  |      F    T&#39;           ε
+id ε      |    |
+          id   * F T&#39;
+
+
+   E
+ /    \
+ T      E&#39;
+ |      |
+/ \     + T                E&#39;
+F  T&#39;     |                |
+|  |      F    T&#39;          ε
+id ε      |    |
+          id   * F   T&#39;
+             |   |
+                 id  ε
+
+</code></pre>
+<h3 id="recursive-descent-parsing">Recursive descent parsing</h3>
+<ul>
+<li>Every symbol may be thought of as functions.</li>
+<li>May need backtracking.</li>
+<li>Left recursive grammars mean infinite loop.
+<ul>
+<li>Same non-terminal's procedure would be called again and again,
+without consuming any input.</li>
+</ul></li>
+</ul>
+<h3 id="predictive-parsing">Predictive parsing</h3>
+<ul>
+<li>A special case of recursive descent parsing.</li>
+<li>No backtracking.</li>
+<li>Appropriate production chosen by looking ahead a fixed number of
+symbols.
+<ul>
+<li>LL(k) parsing. k is number of lookahead symbols.</li>
+<li>LL means 'Left-to-right (scanning), Left-most derivation'.</li>
+<li>Usually just one symbol =&gt; LL(1) parsing</li>
+</ul></li>
+</ul>
+<h2 id="bottom-up-parsing">Bottom-up parsing</h2>
+<p>Examples:</p>
+<ul>
+<li>Shift-reduce parser
+<ul>
+<li>LR(k)</li>
+<li>An ambiguous grammar cannot be parsed by an LR parser</li>
+</ul></li>
+<li>Operator precedence parser</li>
+</ul>
+<p>For example, for the grammar</p>
+<pre><code>E → E + T | T
+T → T * F | F
+F → ( E ) | id
+</code></pre>
+<p>parse tree for an input string <code>id * id</code> could be built
+like</p>
+<pre><code>id * id                 F * id
+                        |
+                       id
+
+
+
+ T * id                 T * F
+ |                      |   |
+ F                      F  id
+ |                      |
+id                     id
+
+
+
+
+   T                      E
+   |                      |
+ /   \                    T
+ T * F                    |
+ |   |                  /   \
+ F  id                  T * F
+ |                      |   |
+id                      F  id
+                        |
+                       id
+
+</code></pre>
+<p>Bottom-parsing may be thought as a process of 'reducing' input
+sentence to the start symbol of the grammar.</p>
+<p>Goal of bottom parsing is to do a derivation in reverse.</p>
+<p>For the example that we just saw:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Right sentential</th>
+<th>Handle</th>
+<th>Reducing prodn</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>id₁ * id₂</td>
+<td>id₁</td>
+<td>F → id</td>
+</tr>
+<tr class="even">
+<td>F * id₂</td>
+<td>F</td>
+<td>T → F</td>
+</tr>
+<tr class="odd">
+<td>T * id₂</td>
+<td>id₂</td>
+<td>F → id</td>
+</tr>
+<tr class="even">
+<td>T * F</td>
+<td>T * F</td>
+<td>T → T * F</td>
+</tr>
+<tr class="odd">
+<td>T</td>
+<td>T</td>
+<td>E → T</td>
+</tr>
+</tbody>
+</table>
+<h3 id="shift-reduce-parsing">Shift reduce parsing</h3>
+<ul>
+<li>Stack holds grammar symbols.</li>
+<li>Rest of the input in an input buffer.</li>
+<li>Top of the stack is a handle =&gt; reduce!</li>
+</ul>
+<p>Stack has start symbol of grammar and input buffer empty =&gt;
+parsing success.</p>
+<p>Shift means pushing to stack.</p>
+<p>For our usual example grammar:</p>
+<pre><code>E → E + T | T
+T → T * F | F
+F → ( E ) | id
+</code></pre>
+<p>and input <code>id₁ * id₂</code>,</p>
+<table>
+<thead>
+<tr class="header">
+<th>Stack</th>
+<th>input</th>
+<th>action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>$</td>
+<td>id₁ * id₂$</td>
+<td>shift</td>
+</tr>
+<tr class="even">
+<td><span
+class="math inline"><em>i</em><em>d</em>₁| * <em>i</em><em>d</em>₂</span></td>
+<td>reduce by F → id</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span
+class="math inline"><em>F</em>| * <em>i</em><em>d</em>₂</span></td>
+<td>reduce by T → F</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span
+class="math inline"><em>T</em>| * <em>i</em><em>d</em>₂</span></td>
+<td>shift</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span
+class="math inline"><em>T</em> * |<em>i</em><em>d</em>₂</span></td>
+<td>shift</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>$T * id₂</td>
+<td>$</td>
+<td>shift</td>
+</tr>
+<tr class="odd">
+<td>$T * id₂</td>
+<td>$</td>
+<td>reduce by F → id</td>
+</tr>
+<tr class="even">
+<td>$T * F</td>
+<td>$</td>
+<td>reduce by T → T * F</td>
+</tr>
+<tr class="odd">
+<td>$T</td>
+<td>$</td>
+<td>reduce by E → T</td>
+</tr>
+<tr class="even">
+<td>$E</td>
+<td>$</td>
+<td>accept input</td>
+</tr>
+</tbody>
+</table>
+<h4 id="conflicts-in-shift-reduce-parsing">Conflicts in shift-reduce
+parsing</h4>
+<ul>
+<li>shift-reduce conflict: not sure whether to shift or reduce</li>
+<li>reduce-reduce conflict: not sure which production should be used for
+reducing</li>
+</ul>
+<h3 id="lr-parsing">LR parsing</h3>
+<ul>
+<li>Stands for Left-to-right, Right-most derivation.
+<ul>
+<li>Left-to-right scanning of input.</li>
+<li>Constructs a right-most derivation in reverse.</li>
+</ul></li>
+</ul>
+<p>LR parsers</p>
+<ul>
+<li>table driven.</li>
+<li>usually made with parser generators.</li>
+</ul>
+<p>Usually, LR parser means LR(1) parser.</p>
+<p>LR parsers maybe classified into:</p>
+<ul>
+<li>Simple LR (SLR)</li>
+<li>Lookahead LR (LALR)</li>
+<li>Canonical LR (CLR)</li>
+</ul>
+<p>Parsing power and complexity: SLR &lt; LALR &lt; CLR</p>
+<p>For most practical purposes, LALR would suffice.</p>
+<h2 id="shift-reduce-parsing-1">Shift-reduce parsing</h2>
+<ul>
+<li>Form of bottom-up parsing.</li>
+<li><strong>Handle</strong>: something that can be reduced to LHS of a
+production.</li>
+</ul>
+<h2 id="conflicts-in-shift-reduce-parsing-1">Conflicts in shift-reduce
+parsing</h2>
+<ul>
+<li>Conflicts may arise while doing shift-reduce parsing (which is a
+bottom-up parsing mechanism).</li>
+</ul>
+<p>From purple dragon book:</p>
+<blockquote>
+<p>The key decisions during bottom-up parsing are about when to reduce
+and about what production to apply, as the parse proceeds.</p>
+</blockquote>
+<h2 id="reduce">Reduce</h2>
+<p>Convert the RHS of a production to its LHS.</p>
+<p>From the Purple dragon book:</p>
+<blockquote>
+<p>At each reduction step, a specific substring matching the body of a
+production is replaced by the nonterminal at the head of that
+production.</p>
+</blockquote>
+<p>For example, if production is:</p>
+<pre><code>S -&gt; ab
+</code></pre>
+<p>and input is at:</p>
+<pre><code>ab
+  ↑
+</code></pre>
+<p>where ab has already matched, we can reduce and make the
+<code>ab</code> into an <code>S</code>. ie, we decide that we go with
+this production.</p>
+<h2 id="shift">Shift</h2>
+<p>Delay the decision a bit more. Let's see more of the input before
+deciding. Leave options open.</p>
+<p>Suppose there is this production:</p>
+<pre><code>S -&gt; ab
+</code></pre>
+<p>and input is at</p>
+<pre><code>a b
+ ↑
+</code></pre>
+<p>at this point there is no production is complete, we need to accept
+more input. In such a case, the current input character is 'shifted'
+in.</p>
+<h2 id="shift-reduce-conflict">Shift-reduce conflict</h2>
+<p>Parser isn't sure whether it should shift or reduce.</p>
+<p>Suppose we have the following productions:</p>
+<pre><code>S -&gt; a
+S -&gt; ab
+</code></pre>
+<p>and input is at</p>
+<pre><code>a b
+ ↑
+</code></pre>
+<p>Here <code>S-&gt;a</code> could be used for a reduce. But
+<code>S-&gt;ab</code> could be used for a shift as well. Hence a
+conflict arises.</p>
+<p>Consider a more realistic example:</p>
+<pre><code>stmt := if expr then stmt
+      | if expr then stmt else expr
+</code></pre>
+<p>When the parsing is at this stage:</p>
+<pre><code>Stack: if expr then stmt
+Input: else ...
+</code></pre>
+<p>there is a shift-reduce conflict.</p>
+<p>Shifting could be done with production 2 and reduce with production
+1.</p>
+<h2 id="reduce-reduce-conflict">Reduce-reduce conflict</h2>
+<p>There is more than one production which can be used to do a
+reduce.</p>
+<p>Suppose we have the following productions:</p>
+<pre><code>S -&gt; a
+E -&gt; a
+</code></pre>
+<p>and input is at</p>
+<pre><code>a
+ ↑
+</code></pre>
+<p>Here either of the productions can be used to do a reduce. Parser is
+not sure how to proceed. Hence the conflict.</p>
+<h2 id="why-no-shift-shift-conflict">Why no shift-shift conflict?</h2>
+<p>Because either way shifting of the same character is done.</p>
+<h2 id="lr-parsing-1">LR parsing</h2>
+<ul>
+<li>Table driven.</li>
+<li>A shift-reduce parsing method</li>
+<li>SLR &lt; LALR &lt; CLR</li>
+<li>Yacc is a LR parser generator</li>
+<li>Parser usually generated with a parser generator.
+<ul>
+<li>Still, it is helpful to know how it works.</li>
+</ul></li>
+<li>LALR is the most common LR parser. Why? :DBT:</li>
+<li>Multiple entries in parsing table =&gt; conflict</li>
+<li>LR parsing is bottom up parsing</li>
+</ul>
+<p>Reason for the name:</p>
+<ul>
+<li>LR(k): k is the number of look-ahead characters
+<ul>
+<li>k not mention =&gt; k=1</li>
+<li>only k={0,1} 'are of practical interest'. Why? :DBT:</li>
+</ul></li>
+<li>L: left-to-right scanning of input</li>
+<li>R: right-most derivation</li>
+</ul>
+<blockquote>
+<p>An ambigous grammar can never be LR.</p>
+</blockquote>
+<h2 id="symbol-table">Symbol table</h2>
+<p>Used to keep track of variables and their values. Symbol table
+needn't be in binary executable. Can be included if we want to debug
+later.</p>
+<p>Python has a module to examine its symbol table: <a
+href="https://docs.python.org/3/library/symtable.html">https://docs.python.org/3/library/symtable.html</a></p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> symtable</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> symtable.symtable(<span class="st">&quot;def foo(): pass&quot;</span>, <span class="st">&quot;string&quot;</span>, <span class="st">&quot;exec&quot;</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">list</span>(table.get_identifiers()))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># [&#39;foo&#39;]</span></span></code></pre></div>
+<h2 id="ambiguous-cfgs">Ambiguous CFGs</h2>
+<p>A grammar that can produce more than one parse tree.</p>
+<p>For example, the following CFG is ambiguous:</p>
+<pre><code>E := E + E
+   | E * E
+   | id
+</code></pre>
+<p>because the string <code>id + id * id</code> allows for two different
+left-most derivations in this CFG:</p>
+<pre><code>E  + E                     E
+id + E                     |
+id + E  * E                +
+id + id * E                |
+id + id * id         +----------+
+                     |          |
+                     E          E
+                     |          |
+                     id         *
+                                |
+                            +-------+
+                            |       |
+                            E       E
+                            |       |
+                           id      id
+</code></pre>
+<p>and</p>
+<pre><code>E       * E                E
+E  + E  * E                |
+id + E  * E                *
+id + id * E                |
+id + id * id         +----------+
+                     |          |
+                     E          E
+                     |          |
+                     +          id
+                     |      
+                 +-------+  
+                 |       |  
+                 E       E  
+                 |       |  
+                id      id     
+</code></pre>
+<p>(Ambiguity only on top-down parsing? Of course not.)</p>
+<p>This grammar can be made unambiguous by adding a few extra
+productions (sort of restricts the entry-point of parsing):</p>
+<pre><code>E := E + P | P
+P := P * Q | Q
+Q := id
+</code></pre>
+<p>—</p>
+<p><strong>Not every ambiguous CFG has an unambiguous
+equivalent.</strong> Such grammars are said to be <a
+href="https://en.wikipedia.org/wiki/Ambiguous_grammar#Inherently_ambiguous_languages">inherently
+ambiguous</a>.</p>
+<p>—</p>
+<p>No algorithm exists that can tell if a grammar is ambiguous or not.
+<a
+href="https://stackoverflow.com/questions/70111495/how-to-check-if-this-grammar-is-ambiguous-or-not">ˢᵒ</a>
+Also, there's no algorithm that can give unambiguous counterpart of an
+ambiguous grammar. Both of these are undecidable problems. <a
+href="https://stackoverflow.com/questions/51926496/can-all-ambiguous-grammars-be-converted-to-unambiguous-grammars">ˢᵒ</a></p>
+<h2 id="terms">Terms</h2>
+<h3 id="nullable-non-terminal">Nullable non-terminal</h3>
+<p>A non-terminal is nullable if it can become ε. Even if the derivation
+is long.</p>
+<h3 id="chomsky-normal-form-cnf">Chomsky Normal Form (CNF)</h3>
+<p>A grammar is in CNF if every rule is of one of the following
+forms:</p>
+<pre><code>A → BC
+A → a
+</code></pre>
+<p>Every grammar in CNF is context free (ie, CNF ⊂ CFG)</p>
+<h3 id="greibach-normal-form-gnf">Greibach Normal Form (GNF)</h3>
+<ul>
+<li>Grammar where all production rules' RHS starts with a terminal
+character, optionally followed by one or more non-terminals.</li>
+<li>Doesn't have left recursions.</li>
+</ul>
+<h3 id="left-recursion">Left recursion</h3>
+<ul>
+<li>RHS of a non-terminal (even if via derivation) starts with the same
+non-terminal.</li>
+<li>Top-down parsers can't handle left-recursion.</li>
+<li><em>Immediate left recursion</em>: No need derivation. The given
+production itself is left-recursive.</li>
+</ul>
+<h4 id="eliminating-left-recursion">Eliminating left recursion</h4>
+<pre><code>A → Aα | β
+</code></pre>
+<p>can be made into</p>
+<pre><code>A  → βA&#39;
+A&#39; ⇒ αA&#39; | ε
+</code></pre>
+<p>Or if there are multiple productions for the non-terminal,</p>
+<pre><code>A  → Aα₁ | Aα₂ | ... | Aαₘ | β₁ | β₂ | ... | βₙ
+</code></pre>
+<p>can become</p>
+<pre><code>A  → β₁A&#39; | β₂A&#39; | ... | βₙA&#39; 
+A&#39; ⇒ α₁A&#39; | α₂A&#39; | ... | αₘA&#39; | ε
+</code></pre>
+<h3 id="left-factoring">Left factoring</h3>
+<p>Making a grammar suitable for predictive, or top-down parsing.</p>
+<p>If two productions of a non-terminal has the same prefix, parser
+cannot choose between them till enough of the input (ie, more than the
+prefix common to the two productions) has been seen.</p>
+<pre><code>A -&gt; αβ₁
+A -&gt; αβ₂
+</code></pre>
+<p>We can fix this by making the prefix a non-terminal:</p>
+<pre><code>A  -&gt; αA&#39;
+A&#39; -&gt; β₁ | β₂
+</code></pre>
+<h3 id="single-production">Single production</h3>
+<p>A production rule whose body consists solely of a single
+non-terminal. Like: <code>A → B</code></p>
+<h3 id="ε-production">ε-production</h3>
+<p>A production rule whose RHS (or body) is ε. Like:
+<code>A → ε</code></p>
+<h3 id="ε-free-grammar">ε-free grammar</h3>
+<p>A grammar without any ε-productions.</p>
+<h3 id="cyk-algorithm">CYK algorithm</h3>
+<ul>
+<li>Cocke–Younger–Kasami algorithm.</li>
+<li>An algorithm to parse context free grammars.</li>
+<li>𝑂(n³) time complexity, where n is length of input string.</li>
+</ul>
+<h3 id="derivations">Derivations</h3>
+<p>For a grammar</p>
+<pre><code>E := E + E
+   | E * E
+   | - E
+   | ( E )
+   | id
+</code></pre>
+<p><code>E =&gt; -E</code> means <code>E</code> derives
+<code>-E</code>.</p>
+<p>And the sequence of replacements</p>
+<pre><code>E =&gt; -E =&gt; -(E) =&gt; -(id)
+</code></pre>
+<p>is a derivation of -(id) from E.</p>
+<ul>
+<li><code>A =&gt; A'</code> means A derives A' in one step</li>
+<li><code>A =&gt;* A</code>' means A derives A' in zero or more
+steps</li>
+<li><code>A =&gt;+ A</code>' means A derives A' in one or more
+steps</li>
+</ul>
+<p>For a grammar G with start symbol S, if S =&gt;* α, we say that α is
+a <em>sentential form</em> of G. Sentential form may contain terminals
+and non-terminals. May even be empty.</p>
+<p>A <em>sentence</em> of G is a sentential form without
+non-terminals.</p>
+<p><em>Language</em> generated by a grammar is the set of its
+sentences.</p>
+<p>Two grammars are equivalent if the languages generated by them are
+the same.</p>
+<h4 id="left-most-derivation">Left-most derivation</h4>
+<p>Left-most non-terminal in the sentential (ie, sentential form) is
+chosen as the next non-terminal to be replaced (always).</p>
+<p>E =&gt;* -(id+id)</p>
+<p>E -E -(E) -(E + E) -(id + E) -(id + id)</p>
+<p>If S =&gt;* α by left-most derivation, we can say that α is a
+<em>left-sentential</em> form of G.</p>
+<h4 id="right-most-derivation">Right-most derivation</h4>
+<p>Right-most non-terminal in the sentential (ie, sentential form) is
+chosen as the next non-terminal to be replaced (always).</p>
+<p>E =&gt;* -(id+id)</p>
+<p>E -E -(E) -(E + E) -(E + id) -(id + id)</p>
+<p>If S =&gt;* α by right-most derivation, we can say that α is a
+<em>right-sentential form</em> of G.</p>
+<p>Right-most derivations are also known as <em>canonical
+derivations</em>. (WHY??)</p>
+<h3 id="parse-tree">Parse tree</h3>
+<p>E =&gt;* -(id+id)</p>
+<pre><code>   E
+   |
++--+--+
+|     |
+-     E
+   +--+--+
+   |  |  |
+   (  E  )
+      |
+   +--+--+
+   |  |  |
+   E  +  E
+   |     |
+  id    id
+</code></pre>
+<p>Parse tree is same for left-most and right-most derivations.</p>
+<h3 id="ambiguous-grammars">Ambiguous grammars</h3>
+<p>A grammar capable of producing more than one parse tree for the same
+sentence. ie, more than one left-most derivation or more than one
+right-most derivation for the same sentence.</p>
+<p>For the grammar</p>
+<pre><code>E := E + E
+   | E * E
+   | ( E )
+   | id
+</code></pre>
+<p><code>id + id * id</code> can have two parse trees.</p>
+<p>Left-most derivation:</p>
+<ul>
+<li><code>E</code> =&gt; <code>E + E</code> =&gt; <code>id + E</code>
+=&gt; <code>id + E * E</code> =&gt; <code>id + id * E</code> =&gt;
+<code>id + id * id</code></li>
+<li><code>E</code> =&gt; <code>E * E</code> =&gt; <code>E + E * E</code>
+=&gt; <code>id + E * E</code> =&gt; <code>id + id * E</code> =&gt;
+<code>id + id * id</code></li>
+</ul>
+<p>Right-most derivation:</p>
+<ul>
+<li><code>E</code> =&gt; <code>E + E</code> =&gt; <code>E + E * E</code>
+=&gt; <code>E + E * id</code> =&gt; <code>id + id * id</code></li>
+<li><code>E</code> =&gt; <code>E * E</code> =&gt; <code>E * id</code>
+=&gt; <code>E + E * id</code> =&gt; <code>E + id * id</code> =&gt;
+<code>id + id * id</code></li>
+</ul>
+<h2 id="grammars">Grammars</h2>
+<h3 id="ambiguity">Ambiguity</h3>
+<ul>
+<li>Every string of the grammar must have only one derivation.</li>
+<li>Either the grammar itself should be unambiguous, or there should be
+something else done to mitigate the grammar's ambiguity.
+<ul>
+<li>Like precedence levels??</li>
+</ul></li>
+</ul>
+<h2 id="example-cfgs">Example CFGs</h2>
+<ul>
+<li><p>CFG generating balanced parentheses:
+<code>S := ( S ) S | ε</code></p></li>
+<li><p>Palindromes where Σ={a,b}:
+<code>S := 0S0 | 1S1 | 0 | 1 | ε</code></p></li>
+<li><p>Even number zeros and odd number of 1s:</p></li>
+</ul>
+<p>:TODO:</p>
+<pre><code>2 zeros: Z -&gt; 001 | 010 | 100
+1 one:   O -&gt; 1
+
+This is actually a regular language...
+</code></pre>
+<p><a
+href="https://cs.stackexchange.com/questions/110821/context-free-grammar-for-language-with-even-number-of-0s-and-1s">https://cs.stackexchange.com/questions/110821/context-free-grammar-for-language-with-even-number-of-0s-and-1s</a></p>
+<h2 id="dbts">Dbts</h2>
+<ul>
+<li>Why right-most derivation parsers not common?</li>
+<li>Is there a parser that can parse an ambiguous grammar?
+<ul>
+<li>Non-determinism =&gt; ambiguity not a problem.</li>
+</ul></li>
+<li>What if <code>A → Aα | ε</code> in left recursion elimination?</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><em>Compilers: Principles, techniques and tools, 2nd edition</em> -
+Alfred V. Aho, Monica S. Lam, Ravi Sethi, Jeffrey D. Ullman</li>
+<li><em>Modern compiler implementation in ML</em> - Andrew W. Appel</li>
+</ul>
+</div>
+</body>
+</html>

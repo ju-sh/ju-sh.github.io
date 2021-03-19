@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Fun with λ calculus</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Fun with λ calculus</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="constructors">Constructors</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Description</th>
+<th>Constructor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Variable</td>
+<td>Var</td>
+</tr>
+<tr class="even">
+<td>Application</td>
+<td>App</td>
+</tr>
+<tr class="odd">
+<td>Abstraction / Lambda</td>
+<td>Abs</td>
+</tr>
+</tbody>
+</table>
+<h2 id="boolean">Boolean</h2>
+<p>Takes two values. The one to be given for true and false
+respectively.</p>
+<p>First value is for true, second is for false.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>tru</td>
+<td>λt. λf. t</td>
+</tr>
+<tr class="even">
+<td>fls</td>
+<td>λt. λf. f</td>
+</tr>
+</tbody>
+</table>
+<p>I suppose we could also have written it like:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>tru</td>
+<td>λf. λt. t</td>
+</tr>
+<tr class="even">
+<td>fls</td>
+<td>λf. λt. f</td>
+</tr>
+</tbody>
+</table>
+<p>but then the order of arguments should be reversed as well.</p>
+<p>—</p>
+<pre><code>{- Represents the boolean true value -}
+-- Basically like the fst function of tuple.
+-- Accepts two values and returns the first value in the pair
+tru = λt. λf. t
+
+{- Represents the boolean false value -}
+-- Like snd function of tuple.
+-- Accepts two values and returns the second value in the pair
+fls = λt. λf. f
+</code></pre>
+<h2 id="constants">Constants</h2>
+<p>Representable as identity functions..</p>
+<pre><code>λx. c
+</code></pre>
+<p>ie, the value of the 'argument' <code>x</code> is simply ignored.</p>
+<h2 id="natural-numbers">Natural numbers</h2>
+<p>There are many ways. Like Church encoding and Scott encoding.</p>
+<p>Church encoding:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>λs. λz. z</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>λs. λz. s (s z)</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>λs. λz. s (s (s z))</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>λs. λz. s (s (s (s z)))</td>
+</tr>
+</tbody>
+</table>
+<p>Addition:</p>
+<pre><code>add =
+λm n s z.
+  m s (n s z)
+</code></pre>
+<p>Example:</p>
+<pre><code>  add (λs z. s s z) (λs z. s s s z)
+= λs z. (λs z. s s z) s [(λs z. s s s z) s z]
+= λs z. (λs z. s s z) s [s s s z]
+= λs z. s s s s s z
+</code></pre>
+<p>Increment:</p>
+<pre><code>incr = λn s z. n s (s z)
+</code></pre>
+<p>—</p>
+<pre class="ulc"><code>C₀ = λs. λz. z         -- 0
+C₁ = λs. λz. s z       -- S 0 = 1
+C₂ = λs. λz. s (s z)   -- S (S 0) = 2
+
+-- System F type for C could be:
+-- ∀X. (X -&gt; X) -&gt; X -&gt; X
+--     |      |    |    |
+--     ----↓---    ↓    ↓
+--         s       z    result
+</code></pre>
+<p>ie, the encoding for each natural number takes two values as
+arguments:</p>
+<ul>
+<li>s: represents successor function</li>
+<li>z: represents zero</li>
+</ul>
+<p>which obviously can be thought of as constructors of ℕ.</p>
+<p>I suppose we could say that their types are sort of like:</p>
+<ul>
+<li>s: ℕ → ℕ</li>
+<li>z: ℕ</li>
+</ul>
+<p>The outermost lambda gets applied first.</p>
+<h2 id="if-statement"><code>if</code> statement</h2>
+<p>Could be made like</p>
+<pre><code>λc. λt. λe. c t e
+
+ - c: condition
+ - t: true case
+ - e: else case
+</code></pre>
+<p>Here, the <code>c</code> is like a boolean.</p>
+<p>As an aside, the <code>λc. λt. λe. c t e</code> here is constructed
+like</p>
+<p>Lambda</p>
+<p>—</p>
+<pre class="utlc"><code>{- Represents something like a condition check?? -}
+if cond then else
+ = test λc. λt. λe. c t e
+
+-- An example
+test λl. λm. λn. l m n
+
+test tru v w
+ ↓
+(λm. λn. (tru m n)) v w
+ ↓
+(λn. (tru v n)) w
+ ↓
+(tru v w)
+ ↓↓
+(λt. λf. t) v w
+ ↓
+(λf. v) w
+ ↓
+v
+--
+</code></pre>
+<p>Logical operations</p>
+<pre class="ulc"><code>{- logical or -}
+or = λa. λb. a tru b
+
+{-
+| a   | b   | or a b            |
+|-----+-----+-------------------|
+| tru | tru | tru tru tru = tru |
+| tru | fls | tru tru fls = tru |
+| fls | tru | fls tru tru = tru |
+| fls | fls | fls tru fls = fls |
+-}
+</code></pre>
+<pre class="ulc" data-EX-5=".2.1:"><code>{- logical and -}
+and = λa. λb. a b fls
+
+{-
+| a   | b   | and a b           |
+|-----+-----+-------------------|
+| tru | tru | tru tru fls = tru |
+| tru | fls | tru fls fls = fls |
+| fls | tru | fls tru fls = fls |
+| fls | fls | fls fls fls = fls |
+-}
+</code></pre>
+<pre class="ulc" data-EX-5=".2.1:"><code>{- logical not -}
+and = λa. a fls tru
+
+{-
+| a   | not a             |
+|-----+-------------------|
+| tru | tru fls tru = fls |
+| fls | fls fls tru = tru |
+-}
+</code></pre>
+<h2 id="pairs-2-tuple">Pairs (2-tuple)</h2>
+<pre><code>pair = λf. λs. λb. b f s
+fst = λp. p tru
+snd = λp. p fls
+</code></pre>
+<p>ie, for example,</p>
+<pre><code>pair 1 2
+= λb. b 1 2
+
+fst (pair 1 2)
+= (pair 1 2) tru
+= (λb. b 1 2) tru
+= tru 1 2
+= (λt. λf. t) 1 2
+= 1
+</code></pre>
+<h2 id="semantics">Semantics</h2>
+<p>Syntax says how the terms can be made. Se qualifiedmantics specifies
+how the terms are <em>evaluated</em>.</p>
+<h2 id="conventions">Conventions</h2>
+<p>As used in TAPL.</p>
+<ul>
+<li>Application is left associative
+<ul>
+<li>Eg: <code>s t u</code> is same as <code>(s t) u</code>.</li>
+</ul></li>
+<li>Bodies of abstractions extend as far right as possible.
+<ul>
+<li>Eg: <code>λx. λy. x y x</code> is same as
+<code>λx. (λy. ((x y) x))</code></li>
+<li>I suppose because of this we could say 'application has more
+precedence than abstraction'. :GUESS:</li>
+</ul></li>
+</ul>
+</div>
+</body>
+</html>

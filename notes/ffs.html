@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Flip-flops and registers</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Flip-flops and registers</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<ul>
+<li>Date created: ??-May-2021</li>
+</ul>
+<hr />
+<h2 id="types-of-flip-flops">Types of flip-flops</h2>
+<h3 id="sr">SR</h3>
+<p>‘S’ and ‘R’ stands for ‘Set’ and ‘Reset’ respectively.</p>
+<pre><code>S   R   Qₙ  Qₙ₊₁  
+----------------  
+0   0   0    0    (no change)
+0   0   1    1    (no change)
+0   1   0    0    (reset)
+0   1   1    0    (reset)
+1   0   0    1    (set)
+1   0   1    1    (set)
+1   1   x    ?    (not allowed)</code></pre>
+<h3 id="jk">JK</h3>
+<p>The J and K in the name of the flip-flop doesn’t have an expansion
+and was apparently chosen randomly (except that they are adjacent
+letters in the English alphabet).</p>
+<pre><code>J   K   Qₙ  Qₙ₊₁  
+----------------  
+0   0   0    0    (no change)
+0   0   1    1    (no change)
+0   1   0    0    (reset)
+0   1   1    0    (reset)
+1   0   0    1    (set)
+1   0   1    1    (set)
+1   1   0    1    (toggle)
+1   1   1    0    (toggle)</code></pre>
+<h3 id="t">T</h3>
+<p>T stands for ‘toggle’.</p>
+<pre><code>T   Qₙ  Qₙ₊₁  
+------------  
+0   0    0    (no change)
+0   1    1    (no change)
+1   0    1    (toggle)
+1   1    0    (toggle)</code></pre>
+<p>T flip-flop can be implemented by applying same signal to J and K
+inputs of a JK flip-flop.</p>
+<pre><code>            --------
+            |      |
+T -&gt;-----&gt;--|J   Q |---&gt;
+      |     |      |
+      v     |      |
+      |     |      |
+      ---&gt;--|K   Q&#39;|---&gt;
+            |      |
+            --------</code></pre>
+<h3 id="d">D</h3>
+<p>D stands for ‘delay’.</p>
+<pre><code>D   Qₙ  Qₙ₊₁  
+------------  
+0   0    0    (no change)
+0   1    1    (no change)
+1   0    1    (toggle)
+1   1    0    (toggle)</code></pre>
+<p>D flip-flop can be implemented with a JK flip-flop by applying the
+input signal at J and its complement at K.</p>
+<pre><code>             --------
+             |      |
+D -&gt;-----&gt;---|J   Q |---&gt;
+      |      |      |
+      v      |      |
+   -------   |      |
+   | NOT |   |      |
+   -------   |      |
+      |      |      |
+      v      |      |
+      ---&gt;---|K   Q&#39;|---&gt;
+             |      |
+             --------</code></pre>
+<h2 id="registers">Registers</h2>
+<p>Consists of a set of flip-flops.</p>
+<h3 id="shift-registers">Shift registers</h3>
+<p>Consists of a number of (cascaded) flip-flops that share a clock
+signal.</p>
+<p>Output of a flip-flop is connected to the input of another
+flip-flop.</p>
+<p>Data access could be of one of the following:</p>
+<ul>
+<li>Serial-in parallel-out (SIPO)</li>
+<li>Parallel-in serial-out (PISO)</li>
+</ul>
+<h3 id="ring-counters">Ring Counters</h3>
+<p>Output of last flip-flop connected input of the first, making a
+circular (or ‘ring’) counter.</p>
+<p>aka:</p>
+<ul>
+<li>straight ring counter</li>
+<li>one-hot counter</li>
+</ul>
+<h4 id="disadvantages">Disadvantages</h4>
+<ul>
+<li>Needs to ‘inject’ a first state</li>
+<li>Lesser code density (ie, lesser number of states (n states))</li>
+</ul>
+<p>A 4-bit (straight, ie not twisted) ring counter.</p>
+<pre><code> State | Q0 | Q1 | Q2 | Q3
+-------|----|----|----|----
+   0   | 1  | 0  | 0  | 0  
+   1   | 0  | 1  | 0  | 0  
+   2   | 0  | 0  | 1  | 0  
+   3   | 0  | 0  | 0  | 1  
+   0   | 1  | 0  | 0  | 0  </code></pre>
+<h3 id="johnson-counter">Johnson counter</h3>
+<p>Complement of output of last flip-flop is connected to the input of
+the first flip-flop.</p>
+<h4 id="advantages">Advantages</h4>
+<ul>
+<li>No need to ‘inject’ first state</li>
+<li>Higher code density (ie, more number of states)</li>
+<li>Hamming distance between any two adjacent states = 1</li>
+</ul>
+<p>aka:</p>
+<ul>
+<li>‘Twisted ring counter’.</li>
+<li>Switch-tail ring counter</li>
+<li>Walking ring counter</li>
+<li>Mobius counter</li>
+</ul>
+<p>4 bit Johnson counter</p>
+<pre><code> State | Q0 | Q1 | Q2 | Q3
+-------|----|----|----|----
+   0   | 0  | 0  | 0  | 0  
+   1   | 1  | 0  | 0  | 0  
+   2   | 1  | 1  | 0  | 0  
+   3   | 1  | 1  | 1  | 0  
+   4   | 1  | 1  | 1  | 1  
+   5   | 0  | 1  | 1  | 1  
+   6   | 0  | 0  | 1  | 1  
+   7   | 0  | 0  | 0  | 1  
+   0   | 0  | 0  | 0  | 0  </code></pre>
+<h2 id="edge-triggered-flip-flops">Edge triggered flip-flops</h2>
+<ul>
+<li><strong>Positive edge triggered flip-flops</strong> change state
+during a 0 → 1 transition of the clock (ie, rising edge of the
+clock).</li>
+<li><strong>Negative edge triggered flip-flops</strong> change state
+during a 1 → 0 transition of the clock (ie, falling edge of the
+clock).</li>
+</ul>
+<h2 id="todo">Todo</h2>
+<ul>
+<li>Latch</li>
+<li>Flip-flop</li>
+<li>Setup time</li>
+<li>Hold time</li>
+<li>Recovery time</li>
+<li>Removal time</li>
+<li>Aperture</li>
+<li>Propagation delay</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><em>Switching Theory and Finite Automata (Third edition)</em> by Zvi
+Kohavi, Niraj K. Jha</li>
+<li><a
+href="https://en.wikipedia.org/wiki/Flip-flop_(electronics)">https://en.wikipedia.org/wiki/Flip-flop_(electronics)</a></li>
+</ul>
+</div>
+</body>
+</html>

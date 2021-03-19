@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Template-Coq: Obtaining constructors of a type</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Template-Coq: Obtaining constructors of a type</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+<div id="description">
+A description of what I did when I first tried to obtain the
+constructors of a Coq Inductive type using Template-Coq but without
+using TemplateMonad.
+</div>
+
+<div id="content-container">
+<p>Quite a crude way. There got to be better and elegant ways. This post
+is sort of a note to my future self.</p>
+<p><code>TemplateMonad</code> seems to be the right way to do this, but
+in this post it is not used. Maybe it'll help appreciate the utility of
+<code>TemplateMonad</code>.</p>
+<p>Versions of software used:</p>
+<ul>
+<li>Coq: 8.12.2</li>
+<li>MetaCoq: 1.0~beta1+8.12</li>
+</ul>
+<hr />
+<p>I had an example inductive type:</p>
+<pre class="coq"><code>Inductive C :=
+| r : C
+| g : nat -&gt; C
+| b : bool -&gt; nat -&gt; C.
+</code></pre>
+<p>And I needed to find a way to extract the constructors of this type
+as an AST (abstract syntax tree).</p>
+<p>Template-Coq, which is part of the <a
+href="https://github.com/MetaCoq/metacoq/">MetaCoq</a> project, allows
+us to do this.</p>
+<p>So the aim is to get a result like</p>
+<pre class="coq"><code>[(&quot;r&quot;, astof(C));
+ (&quot;g&quot;, astof(nat -&gt; C));
+ (&quot;b&quot;, astof(nat -&gt; C))]
+</code></pre>
+<p>Template-Coq can do:</p>
+<ul>
+<li>Quoting: concrete syntax → Reified syntax</li>
+<li>Unquoting: Reified syntax → concrete syntax</li>
+</ul>
+<p>We're gonna need the quoting part.</p>
+<p>Let's start. First, we 'quote' <code>C</code> recursively (the
+non-recursive quoting doesn't give as much level of detail) and store
+its AST form in <code>qC</code>:</p>
+<pre class="coq"><code>From MetaCoq.Template Require Import utils All.
+Require Import List String.
+Import ListNotations MonadNotation.
+
+MetaCoq Quote Recursively Definition qC := C.
+</code></pre>
+<p><code>qC</code> looks like</p>
+<pre class="coq"><code>([(MPfile [&quot;myfilename&quot;], &quot;C&quot;,
+  InductiveDecl
+    {|
+    ind_finite := Finite;   (* Recursivity kind: Inductive. Not co-inductive *)
+    ind_npars := 0;         (* No parameters *)
+    ind_params := [];       (* No parameters *)
+    ind_bodies := [{|
+                   ind_name := &quot;C&quot;;
+                   ind_type := tSort
+                                 (Universe.from_kernel_repr
+                                    (Level.lSet, false) []);
+                   ind_kelim := InType;
+                   ind_ctors := [(&quot;r&quot;, tRel 0, 0);
+                                (&quot;g&quot;,
+                                tProd nAnon
+                                  (tInd
+                                     {|
+                                     inductive_mind := (
+                                                 MPfile
+                                                 [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;],
+                                                 &quot;nat&quot;);
+                                     inductive_ind := 0 |} []) 
+                                  (tRel 1), 1);
+                                (&quot;b&quot;,
+                                tProd nAnon
+                                  (tInd
+                                     {|
+                                     inductive_mind := (
+                                                 MPfile
+                                                 [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;],
+                                                 &quot;bool&quot;);
+                                     inductive_ind := 0 |} [])
+                                  (tProd nAnon
+                                     (tInd
+                                        {|
+                                        inductive_mind := (
+                                                 MPfile
+                                                 [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;],
+                                                 &quot;nat&quot;);
+                                        inductive_ind := 0 |} []) 
+                                     (tRel 2)), 2)];
+                   ind_projs := [] |}];
+    ind_universes := Monomorphic_ctx
+                       (LevelSetProp.of_list [], ConstraintSet.empty);
+    ind_variance := None |});
+ (MPfile [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;], &quot;bool&quot;,
+ InductiveDecl
+   {|
+   ind_finite := Finite;
+   ind_npars := 0;
+   ind_params := [];
+   ind_bodies := [{|
+                  ind_name := &quot;bool&quot;;
+                  ind_type := tSort
+                                (Universe.from_kernel_repr
+                                   (Level.lSet, false) []);
+                  ind_kelim := InType;
+                  ind_ctors := [(&quot;true&quot;, tRel 0, 0); (&quot;false&quot;, tRel 0, 0)];
+                  ind_projs := [] |}];
+   ind_universes := Monomorphic_ctx
+                      (LevelSetProp.of_list [], ConstraintSet.empty);
+   ind_variance := None |});
+ (MPfile [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;], &quot;nat&quot;,
+ InductiveDecl
+   {|
+   ind_finite := Finite;
+   ind_npars := 0;
+   ind_params := [];
+   ind_bodies := [{|
+                  ind_name := &quot;nat&quot;;
+                  ind_type := tSort
+                                (Universe.from_kernel_repr
+                                   (Level.lSet, false) []);
+                  ind_kelim := InType;
+                  ind_ctors := [(&quot;O&quot;, tRel 0, 0);
+                               (&quot;S&quot;, tProd nAnon (tRel 0) (tRel 1), 1)];
+                  ind_projs := [] |}];
+   ind_universes := Monomorphic_ctx
+                      (LevelSetProp.of_list [], ConstraintSet.empty);
+   ind_variance := None |})],
+tInd {| inductive_mind := (MPfile [&quot;myfilename&quot;], &quot;C&quot;); inductive_ind := 0 |} [])
+     : program
+</code></pre>
+<p>where <code>"myfilename"</code> is the name of the source file.</p>
+<p>Quite verbose, yes, but it's the AST of the Coq source, after
+all.</p>
+<p>This quoted term that we got is of type <code>program</code> which is
+defined like</p>
+<pre class="coq"><code>(* metacoq/template-coq/theories/Environment.v *)
+Definition program : Type := global_env * term.
+</code></pre>
+<p>So here, the <code>global_env</code> term is (skipping most parts of
+as it has already been mentioned):</p>
+<pre class="coq"><code>[(MPfile [&quot;myfilename&quot;], &quot;C&quot;,
+  InductiveDecl
+    {|
+    ind_finite := Finite;
+    ind_npars := 0;
+    ind_params := [];
+    ind_bodies := [{|
+    ...
+    ...
+                   ind_projs := [] |}];
+    ind_universes := Monomorphic_ctx
+                       (LevelSetProp.of_list [], ConstraintSet.empty);
+    ind_variance := None |});
+ (MPfile [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;], &quot;bool&quot;,
+ InductiveDecl
+   {|
+   ind_finite := Finite;
+   ind_npars := 0;
+   ind_params := [];
+   ind_bodies := [{|
+                  ind_name := &quot;bool&quot;;
+                  ind_type := tSort
+                                (Universe.from_kernel_repr
+                                   (Level.lSet, false) []);
+                  ind_kelim := InType;
+                  ind_ctors := [(&quot;true&quot;, tRel 0, 0); (&quot;false&quot;, tRel 0, 0)];
+                  ind_projs := [] |}];
+   ind_universes := Monomorphic_ctx
+                      (LevelSetProp.of_list [], ConstraintSet.empty);
+   ind_variance := None |});
+ (MPfile [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;], &quot;nat&quot;,
+ InductiveDecl
+   ...
+   ...
+    ind_variance := None |})].
+</code></pre>
+<p>and the <code>term</code> term is:</p>
+<pre class="coq"><code>= tInd
+         {|
+         inductive_mind := (MPfile [&quot;myfilename&quot;], &quot;C&quot;);
+         inductive_ind := 0 |} []
+     : term
+</code></pre>
+<p>The constructors seem to be in the <code>global_env</code> term.</p>
+<p>Let's get the <code>global_env</code> term from the
+<code>program</code> value:</p>
+<pre class="coq"><code>Definition aux1 (p : program) : global_env := fst p.
+Compute aux1 qC.
+</code></pre>
+<p>Within the <code>global_env</code> term, the constructors appears to
+be in the <code>ind_bodies</code> field of the
+<code>inductiveDecl</code> record.</p>
+<p><code>global_env</code> is defined like:</p>
+<pre class="coq"><code>(* metacoq/template-coq/theories/Environment.v *)
+Definition global_env : Type := list (kername * global_decl).
+</code></pre>
+<p>We need the first value in this list.</p>
+<p>Could use <code>List.hd</code> for that, but since
+<code>List.hd</code> is defined like</p>
+<pre class="coq"><code>(* theories/Lists/List.v *)
+Definition hd (A : Type) (default:A) (l:list A) :=
+  match l with
+  | [] =&gt; default
+  | x :: _ =&gt; x
+  end.
+</code></pre>
+<p>in a way that requires a default value, we need a default
+<code>(kername * global_decl)</code> value (the 'quest' to find default
+values is included at the end of this post as an addendum).</p>
+<pre class="coq"><code>Definition default_global_decl : global_decl :=
+  ConstantDecl (Build_constant_body
+    (tVar &quot;&quot;%string)
+    None
+    (Monomorphic_ctx
+      (LevelSet.Mkt []%list, ConstraintSet.Mkt []%list))).
+
+Definition default_kername : kername :=
+  (MPfile []%list, &quot;&quot;%string).
+
+Definition default_kg : (kername * global_decl) :=
+  (default_kername, default_global_decl).
+</code></pre>
+<p>Okay, now that we have got a default
+<code>(kername * global_decl)</code> as <code>default_kg</code>, let's
+get the first <code>(kername * global_decl)</code>.</p>
+<pre class="coq"><code>Definition aux2 (g : global_env) : (kername * global_decl) :=
+  List.hd default_kg g.
+
+Compute aux2 (aux1 qC).
+(*
+= (MPfile [&quot;myfilename&quot;], &quot;C&quot;,
+       InductiveDecl
+         {|
+         ind_finite := Finite;
+         ind_npars := 0;
+         ind_params := [];
+         ind_bodies := [{|
+                        ind_name := &quot;C&quot;;
+                        ind_type := tSort
+                                      {|
+                                      Universe.t_set := {|
+                                                 UnivExprSet.this := [UnivExpr.npe
+                                                 (NoPropLevel.lSet, false)];
+                                                 UnivExprSet.is_ok := UnivExprSet.Raw.singleton_ok
+                                                 (UnivExpr.npe
+                                                 (NoPropLevel.lSet, false)) |};
+                                      Universe.t_ne := eq_refl |};
+                        ind_kelim := InType;
+                        ind_ctors := [(&quot;r&quot;, tRel 0, 0);
+            ...
+            ...
+                        ];
+                        ind_projs := [] |}];
+         ind_universes := Monomorphic_ctx
+                            ({|
+                             LevelSet.this := [];
+                             LevelSet.is_ok := LevelSet.Raw.empty_ok |},
+                            {|
+                            ConstraintSet.this := [];
+                            ConstraintSet.is_ok := ConstraintSet.Raw.empty_ok |});
+         ind_variance := None |})
+     : kername × global_decl
+*)
+</code></pre>
+<p><code>kername</code> is defined like</p>
+<pre class="coq"><code>(* template-coq/theories/BasicAst.v *)
+Definition kername : Set := modpath × ident.
+</code></pre>
+<p>So the <code>(kername * global_decl)</code> is actually
+<code>(modpath * ident) * global_decl</code> which may also be written
+like <code>modpath * ident * global_decl</code> as coq tuples associate
+to the left such that <code>(1, 2, 3)</code> and
+<code>((1, 2), 3)</code> are same.</p>
+<pre class="coq"><code>Check (1,2,3).
+(* (1, 2, 3) : (nat × nat) × nat *)
+
+Check ((1,2),3).
+(* (1, 2, 3) : (nat × nat) × nat *)
+</code></pre>
+<p>In the output of <code>aux2 (aux1 qC)</code>,</p>
+<ul>
+<li><code>MPfile ["three"]</code> is the <code>modpath</code></li>
+<li><code>"C"</code> is the <code>ident</code></li>
+<li>The remaining <code>InductiveDecl</code> is the
+<code>global_decl~</code></li>
+</ul>
+<p>The constructors are in the <code>global_decl</code> part.</p>
+<p>Making a function <code>aux3</code> to get the
+<code>global_decl</code>,</p>
+<pre class="coq"><code>Definition aux3 (kg : kername * global_decl) : global_decl := snd kg.
+Compute aux3 (aux2 (aux1 qC)).
+(*
+= InductiveDecl
+         {|
+         ind_finite := Finite;
+         ind_npars := 0;
+         ind_params := [];
+         ind_bodies := [{|
+                        ind_name := &quot;C&quot;;
+                        ind_type := tSort
+                                      {|
+                                      Universe.t_set := {|
+                                                 UnivExprSet.this := [UnivExpr.npe
+                                                 (NoPropLevel.lSet, false)];
+                                                 UnivExprSet.is_ok := UnivExprSet.Raw.singleton_ok
+                                                 (UnivExpr.npe
+                                                 (NoPropLevel.lSet, false)) |};
+                                      Universe.t_ne := eq_refl |};
+                        ind_kelim := InType;
+                        ind_ctors := [(&quot;r&quot;, tRel 0, 0);
+                                     (&quot;g&quot;,
+                                     tProd nAnon
+                                       (tInd
+                                          {|
+                                          inductive_mind := (
+                                                 MPfile
+                                                 [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;],
+                                                 &quot;nat&quot;);
+                                          inductive_ind := 0 |} []) 
+                                       (tRel 1), 1);
+                                     (&quot;b&quot;,
+                                     tProd nAnon
+                                       (tInd
+                                          {|
+                                          inductive_mind := (
+                                                 MPfile
+                                                 [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;],
+                                                 &quot;bool&quot;);
+                                          inductive_ind := 0 |} [])
+                                       (tProd nAnon
+                                          (tInd
+                                             {|
+                                             inductive_mind := (
+                                                 MPfile
+                                                 [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;],
+                                                 &quot;nat&quot;);
+                                             inductive_ind := 0 |} [])
+                                          (tRel 2)), 2)];
+                        ind_projs := [] |}];
+         ind_universes := Monomorphic_ctx
+                            ({|
+                             LevelSet.this := [];
+                             LevelSet.is_ok := LevelSet.Raw.empty_ok |},
+                            {|
+                            ConstraintSet.this := [];
+                            ConstraintSet.is_ok := ConstraintSet.Raw.empty_ok |});
+         ind_variance := None |}
+     : global_decl
+*)
+</code></pre>
+<p>The constructors are inside the <code>ind_bodies</code> field of the
+<code>mutual_inductive_body</code> argument to
+<code>InductiveDecl</code>. <code>ind_bodies</code> has a
+<code>list one_inductive_body</code>.</p>
+<pre class="coq"><code>Definition aux4 (g : global_decl) : list one_inductive_body := 
+  match g with
+  | ConstantDecl _ =&gt; []%list
+  | InductiveDecl mib =&gt; mib.(ind_bodies) (* TODO Map *)
+  end.
+
+Compute aux4 (aux3 (aux2 (aux1 qC))).
+(*
+= [{|
+        ind_name := &quot;C&quot;;
+        ind_type := tSort
+                      {|
+                      Universe.t_set := {|
+                                        UnivExprSet.this := [UnivExpr.npe
+                                                 (NoPropLevel.lSet, false)];
+                                        UnivExprSet.is_ok := UnivExprSet.Raw.singleton_ok
+                                                 (UnivExpr.npe
+                                                 (NoPropLevel.lSet, false)) |};
+                      Universe.t_ne := eq_refl |};
+        ind_kelim := InType;
+        ind_ctors := [(&quot;r&quot;, tRel 0, 0);
+                     (&quot;g&quot;,
+                     tProd nAnon
+                       (tInd
+                          {|
+                          inductive_mind := (MPfile
+                                               [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;],
+                                            &quot;nat&quot;);
+                          inductive_ind := 0 |} []) 
+                       (tRel 1), 1);
+                     (&quot;b&quot;,
+                     tProd nAnon
+                       (tInd
+                          {|
+                          inductive_mind := (MPfile
+                                               [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;],
+                                            &quot;bool&quot;);
+                          inductive_ind := 0 |} [])
+                       (tProd nAnon
+                          (tInd
+                             {|
+                             inductive_mind := (MPfile
+                                                 [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;],
+                                               &quot;nat&quot;);
+                             inductive_ind := 0 |} []) 
+                          (tRel 2)), 2)];
+        ind_projs := [] |}]
+     : list one_inductive_body
+*)
+</code></pre>
+<p>Now we are quite close to constructors, which are inside the
+<code>ind_ctors</code> field of the <code>one_inductive_body</code>
+values.</p>
+<pre class="coq"><code>Definition aux5 (oibs : list one_inductive_body)
+  : list (list (ident * term * nat)) :=
+  map (fun o:one_inductive_body =&gt; o.(ind_ctors)) oibs.
+
+Compute aux5 (aux4 (aux3 (aux2 (aux1 qC)))). (* CONSTRUCTORS! *)
+(*
+= [[(&quot;r&quot;, tRel 0, 0);
+        (&quot;g&quot;,
+        tProd nAnon
+          (tInd
+             {|
+             inductive_mind := (MPfile [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;], &quot;nat&quot;);
+             inductive_ind := 0 |} []) (tRel 1), 1);
+        (&quot;b&quot;,
+        tProd nAnon
+          (tInd
+             {|
+             inductive_mind := (MPfile [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;], &quot;bool&quot;);
+             inductive_ind := 0 |} [])
+          (tProd nAnon
+             (tInd
+                {|
+                inductive_mind := (MPfile [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;],
+                                  &quot;nat&quot;);
+                inductive_ind := 0 |} []) (tRel 2)), 2)]]
+     : list (list ((ident × term) × nat))
+*)
+</code></pre>
+<p>Piecing all the '<code>aux</code>' functions together:</p>
+<pre class="coq"><code>Definition aux (p : program) : list (list (ident * term * nat)) :=
+  let genv := fst p in
+  let kgd := List.hd default_kg genv in
+  let gd := snd kgd in
+  let oibs :=
+    match gd with
+    | ConstantDecl _ =&gt; []%list
+    | InductiveDecl mib =&gt; mib.(ind_bodies)
+    end in
+  map (fun o:one_inductive_body =&gt; o.(ind_ctors)) oibs.
+
+Compute aux qC.
+(*
+= [[(&quot;r&quot;, tRel 0, 0);
+        (&quot;g&quot;,
+        tProd nAnon
+          (tInd
+             {|
+             inductive_mind := (MPfile [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;], &quot;nat&quot;);
+             inductive_ind := 0 |} []) (tRel 1), 1);
+        (&quot;b&quot;,
+        tProd nAnon
+          (tInd
+             {|
+             inductive_mind := (MPfile [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;], &quot;bool&quot;);
+             inductive_ind := 0 |} [])
+          (tProd nAnon
+             (tInd
+                {|
+                inductive_mind := (MPfile [&quot;Datatypes&quot;; &quot;Init&quot;; &quot;Coq&quot;],
+                                  &quot;nat&quot;);
+                inductive_ind := 0 |} []) (tRel 2)), 2)]]
+     : list (list ((ident × term) × nat))
+*)
+</code></pre>
+<p>Which is what we were after.</p>
+<p>(Just for fun's sake, let me try <a
+href="https://github.com/jwiegley/coq-haskell/blob/a6baf6e2f53e53ee91bbfc8904b718ef90bf5c6b/src/Prelude.v#L21">this</a>
+notation here.</p>
+<pre class="coq"><code>Notation &quot;f $ x&quot; := (f x)
+  (at level 60, right associativity, only parsing).
+
+Definition aux&#39; (p : program) : list (list (ident * term * nat)) :=
+  let gd := snd $ List.hd default_kg $ (fst p) in
+  map (fun o:one_inductive_body =&gt; o.(ind_ctors)) 
+    match gd with
+    | ConstantDecl _ =&gt; []%list
+    | InductiveDecl mib =&gt; mib.(ind_bodies)
+    end.
+
+Compute aux&#39; qC.
+</code></pre>
+<p>But I had been <a
+href="https://coq.gitlab.io/zulip-archive/stream/237977-Coq-users/topic/.E2.9C.94.20Is.20there.20a.20way.20to.20avoid.20too.20many.20parenthesis.3F.html">warned</a>
+that this can cause scope inference to break.</p>
+<p>Okay, side-mission over.)</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a
+href="https://metacoq.github.io/">https://metacoq.github.io/</a></li>
+<li><a
+href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/examples/add_constructor.v"><a
+href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/examples/add_constructor.v">https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/examples/add_constructor.v</a></a></li>
+<li><a
+href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/Environment.v"><a
+href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/Environment.v">https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/Environment.v</a></a></li>
+<li><a
+href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/BasicAst.v"><a
+href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/BasicAst.v">https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/BasicAst.v</a></a></li>
+<li><a href="https://hal.inria.fr/hal-02167423">The MetaCoq Project</a>
+paper</li>
+</ul>
+<h2 id="addendum-dummydefault-values">Addendum: Dummy/default
+values</h2>
+<p>For use with <code>List.hd</code> which requires a default value.</p>
+<p>Being unfamiliar with the Template-Coq types when I used it for the
+first time, I found it helpful to write them down.</p>
+<p>Still not sure if this was necessary, but as of writing this post, I
+don't know of any other way.</p>
+<h3 id="ident"><code>ident</code></h3>
+<p><code>ident</code> is same as <code>string</code> and represents an
+identifier.</p>
+<pre class="coq"><code>(* template-coq/theories/BasicAst.v *)
+Definition ident : Set := string.
+</code></pre>
+<h3 id="modpath"><code>modpath</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>(* template-coq/theories/BasicAst.v *)
+Inductive modpath : Set :=
+| MPfile  (dp : dirpath)
+| MPbound (dp : dirpath) (id : ident) (i : nat)
+| MPdot   (mp : modpath) (id : ident).
+</code></pre>
+<p>Let's go with the simplest constructor, <code>MPfile</code>.</p>
+<p>Using a dummy <code>dirpath</code> value,</p>
+<pre class="coq"><code>Check MPfile []%list : modpath.
+(*
+MPfile [] : modpath
+     : modpath
+*)
+</code></pre>
+<h3 id="kername"><code>kername</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>(* template-coq/theories/BasicAst.v *)
+Definition kername : Set := modpath × ident.
+</code></pre>
+<p>Using dummy <code>modpath</code> and <code>ident</code> values (where
+<code>ident</code> is same as <code>string</code>),</p>
+<pre class="coq"><code>Check (MPfile []%list, &quot;&quot;%string) : kername.
+(*
+(MPfile [], &quot;&quot;) : kername
+     : kername
+*)
+</code></pre>
+<h3 id="dirpath"><code>dirpath</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>(* template-coq/theories/BasicAst.v *)
+Definition dirpath : Set := list ident.
+</code></pre>
+<p>which means it is basically <code>list string</code>.</p>
+<p>A list! Easy. An empty list would do.</p>
+<pre class="coq"><code>Check []%list : dirpath.
+(*
+[] : dirpath
+     : dirpath
+*)
+</code></pre>
+<h3 id="global_decl"><code>global_decl</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>Inductive global_decl : Type :=
+  (* Represents declaration of constants, I guess *)
+  | ConstantDecl : constant_body -&gt; global_decl
+
+  (* Represents declaration of inductive types, probably *)
+  | InductiveDecl : mutual_inductive_body -&gt; global_decl.
+</code></pre>
+<p>Simplest constructor is <code>ConstantDecl</code>, let's go with
+that.</p>
+<p>Using a dummy <code>constant_body</code> value,</p>
+<pre class="coq"><code>Check ConstantDecl (Build_constant_body (tVar &quot;&quot;%string) None
+  (Monomorphic_ctx ((LevelSet.Mkt []%list), (ConstraintSet.Mkt []%list)) : universes_decl)) : global_decl.
+(*
+ConstantDecl
+  {|
+  cst_type := tVar &quot;&quot;;
+  cst_body := None;
+  cst_universes := Monomorphic_ctx
+                     ({|
+                      LevelSet.this := [];
+                      LevelSet.is_ok := LevelSet.Raw.empty_ok |},
+                     {|
+                     ConstraintSet.this := [];
+                     ConstraintSet.is_ok := ConstraintSet.Raw.empty_ok |})
+                   :
+                   universes_decl |}
+:
+global_decl
+     : global_decl
+*)
+</code></pre>
+<h3 id="constant_body"><code>constant_body</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>Record constant_body : Type := Build_constant_body {
+  cst_type : term;
+  cst_body : option term;
+  cst_universes : universes_decl
+}.
+</code></pre>
+<p>Simplest <code>option</code> value is, of course,
+<code>None</code>.</p>
+<p>Using dummy <code>universe_decl</code> and <code>terms</code> values
+with this,</p>
+<pre class="coq"><code>Check Build_constant_body (tVar &quot;&quot;%string) None
+  (Monomorphic_ctx ((LevelSet.Mkt []%list), (ConstraintSet.Mkt []%list)) : universes_decl) : constant_body.
+(*
+{|
+cst_type := tVar &quot;&quot;;
+cst_body := None;
+cst_universes := Monomorphic_ctx
+                   ({|
+                    LevelSet.this := [];
+                    LevelSet.is_ok := LevelSet.Raw.empty_ok |},
+                   {|
+                   ConstraintSet.this := [];
+                   ConstraintSet.is_ok := ConstraintSet.Raw.empty_ok |})
+                 :
+                 universes_decl |}
+:
+constant_body
+     : constant_body
+*)
+</code></pre>
+<h3 id="term"><code>term</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>Inductive term : Type :=
+    tRel : nat -&gt; term
+  | tVar : ident -&gt; term
+  | tEvar : nat -&gt; list term -&gt; term
+  | tSort : Universe.t -&gt; term
+  | tCast : term -&gt; cast_kind -&gt; term -&gt; term
+  | tProd : name -&gt; term -&gt; term -&gt; term
+  | tLambda : name -&gt; term -&gt; term -&gt; term
+  | tLetIn : name -&gt; term -&gt; term -&gt; term -&gt; term
+  | tApp : term -&gt; list term -&gt; term
+  | tConst : kername -&gt; Instance.t -&gt; term
+  | tInd : inductive -&gt; Instance.t -&gt; term
+  | tConstruct : inductive -&gt; nat -&gt; Instance.t -&gt; term
+  | tCase : inductive × nat -&gt; term -&gt; term -&gt; list (nat × term) -&gt; term
+  | tProj : projection -&gt; term -&gt; term
+  | tFix : mfixpoint term -&gt; nat -&gt; term
+  | tCoFix : mfixpoint term -&gt; nat -&gt; term
+
+Arguments tRel _%nat_scope
+Arguments tEvar _%nat_scope _%list_scope
+Arguments tApp _ _%list_scope
+Arguments tConstruct _ _%nat_scope
+Arguments tCase _ _ _ _%list_scope
+Arguments tFix _ _%nat_scope
+Arguments tCoFix _ _%nat_scope
+</code></pre>
+<p><code>tVar</code> seems simple enough.</p>
+<pre class="coq"><code>Check (tVar &quot;&quot;%string) : term.
+(*
+tVar &quot;&quot; : term
+     : term
+*)
+</code></pre>
+<h3 id="universes_decl"><code>universes_decl</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>Inductive universes_decl : Type :=
+    Monomorphic_ctx : ContextSet.t -&gt; universes_decl
+  | Polymorphic_ctx : AUContext.t -&gt; universes_decl
+</code></pre>
+<p>Let's go with <code>Monomorphic_ctx</code> (because monomorphic got
+to be simpler than polymorphic, right?). Using a dummy
+<code>ContextSet.t</code> value,</p>
+<pre class="coq"><code>Check Monomorphic_ctx ((LevelSet.Mkt []%list), (ConstraintSet.Mkt []%list)) : universes_decl.
+(*
+Monomorphic_ctx
+  ({| LevelSet.this := []; LevelSet.is_ok := LevelSet.Raw.empty_ok |},
+  {|
+  ConstraintSet.this := [];
+  ConstraintSet.is_ok := ConstraintSet.Raw.empty_ok |})
+:
+universes_decl
+     : universes_decl
+*)
+</code></pre>
+<h3 id="contextset.t"><code>ContextSet.t</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>
+ContextSet.t = LevelSet.t × ConstraintSet.t
+     : Type
+</code></pre>
+<p>Using dummy <code>LevelSet.t</code> and <code>ConstraintSet.t</code>
+values,</p>
+<pre class="coq"><code>Check ((LevelSet.Mkt []%list), (ConstraintSet.Mkt []%list)) : ContextSet.t.
+(*
+({| LevelSet.this := []; LevelSet.is_ok := LevelSet.Raw.empty_ok |},
+{|
+ConstraintSet.this := [];
+ConstraintSet.is_ok := ConstraintSet.Raw.empty_ok |})
+:
+ContextSet.t
+     : ContextSet.t
+*)
+</code></pre>
+<pre class="coq"><code></code></pre>
+<h3 id="levelset.t"><code>LevelSet.t</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>LevelSet.t = LevelSet.t_
+     : Type
+</code></pre>
+<p>Using a dummy <code>LevelSet.t_</code> value,</p>
+<pre class="coq"><code>Check LevelSet.Mkt []%list : LevelSet.t.
+(*
+{| LevelSet.this := []; LevelSet.is_ok := LevelSet.Raw.empty_ok |}
+:
+LevelSet.t
+     : LevelSet.t
+*)
+</code></pre>
+<h3 id="levelset.t_"><code>LevelSet.t_</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>Record t_ : Type := Mkt {
+  this : LevelSet.Raw.t;
+  is_ok : LevelSet.Raw.Ok this
+}.
+
+Arguments LevelSet.Mkt _ {is_ok}.
+</code></pre>
+<p><code>is_ok</code> is implicit. Using a random
+<code>LevelSet.Raw.t</code>,</p>
+<pre class="coq"><code>Check LevelSet.Mkt []%list : LevelSet.t_.
+(*
+{| LevelSet.this := []; LevelSet.is_ok := LevelSet.Raw.empty_ok |}
+:
+LevelSet.t_
+     : LevelSet.t_
+*)
+</code></pre>
+<h3 id="levelset.raw.t"><code>LevelSet.Raw.t</code></h3>
+<pre class="coq"><code>LevelSet.Raw.t = list LevelSet.Raw.elt
+     : Type
+</code></pre>
+<p>A list. So we can stop here with a simple <code>[]%list</code>.</p>
+<pre class="coq"><code>Check []%list : LevelSet.Raw.t.
+(*
+[] : LevelSet.Raw.t
+     : LevelSet.Raw.t
+*)
+</code></pre>
+<h3 id="constraintset.t"><code>ConstraintSet.t</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>ConstraintSet.t = ConstraintSet.t_
+     : Type
+</code></pre>
+<p>Using dummy <code>ConstraintSet.t_</code> value,</p>
+<pre class="coq"><code>Check ConstraintSet.Mkt []%list : ConstraintSet.t.
+(*
+{|
+ConstraintSet.this := [];
+ConstraintSet.is_ok := ConstraintSet.Raw.empty_ok |}
+:
+ConstraintSet.t
+     : ConstraintSet.t
+*)
+</code></pre>
+<h3 id="constraintset.t_"><code>ConstraintSet.t_</code></h3>
+<pre class="coq"><code>Record t_ : Type := Mkt {
+  this : ConstraintSet.Raw.t;
+  is_ok : ConstraintSet.Raw.Ok this
+}.
+
+Arguments ConstraintSet.Mkt _ {is_ok}
+</code></pre>
+<p><code>is_ok</code> is implicit. Using a dummy
+<code>ConstraintSet.Raw.t</code>,</p>
+<pre class="coq"><code>Check ConstraintSet.Mkt []%list : ConstraintSet.t_.
+(*
+{|
+ConstraintSet.this := [];
+ConstraintSet.is_ok := ConstraintSet.Raw.empty_ok |}
+:
+ConstraintSet.t_
+     : ConstraintSet.t_
+*)
+</code></pre>
+<h3 id="constraintset.raw.t"><code>ConstraintSet.Raw.t</code></h3>
+<pre class="coq"><code>ConstraintSet.Raw.t = list ConstraintSet.Raw.elt
+     : Type
+</code></pre>
+<p>A list!</p>
+<pre class="coq"><code>Check []%list : ConstraintSet.Raw.t.
+(*
+[] : ConstraintSet.Raw.t
+     : ConstraintSet.Raw.t
+*)
+</code></pre>
+<h3 id="recursivity_kind"><code>recursivity_kind</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>Inductive recursivity_kind : Set :=
+    Finite : recursivity_kind
+  | CoFinite : recursivity_kind
+  | BiFinite : recursivity_kind
+</code></pre>
+<p>Going with <code>Finite</code>.</p>
+<pre class="coq"><code>Check Finite : recursivity_kind.
+(*
+Finite : recursivity_kind
+     : recursivity_kind
+*)
+</code></pre>
+<h3 id="mutual_inductive_body"><code>mutual_inductive_body</code></h3>
+<pre class="coq"><code>Record mutual_inductive_body : Type := Build_mutual_inductive_body
+  { ind_finite : recursivity_kind;
+    ind_npars : nat;
+    ind_params : context;
+    ind_bodies : list one_inductive_body;
+    ind_universes : universes_decl;
+    ind_variance : option (list Variance.t) }
+
+Arguments Build_mutual_inductive_body _ _%nat_scope _ _%list_scope
+</code></pre>
+<p>Using dummy values,</p>
+<pre class="coq"><code>Compute Build_mutual_inductive_body Finite 0 []%list []%list
+(Monomorphic_ctx (LevelSet.Mkt []%list, ConstraintSet.Mkt []%list)) None.
+(*
+= {|
+       ind_finite := Finite;
+       ind_npars := 0;
+       ind_params := [];
+       ind_bodies := [];
+       ind_universes := Monomorphic_ctx
+                          ({|
+                           LevelSet.this := [];
+                           LevelSet.is_ok := LevelSet.Raw.empty_ok |},
+                          {|
+                          ConstraintSet.this := [];
+                          ConstraintSet.is_ok := ConstraintSet.Raw.empty_ok |});
+       ind_variance := None |}
+     : mutual_inductive_body
+*)
+</code></pre>
+<h3 id="context"><code>context</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>context = list context_decl
+     : Type
+</code></pre>
+<p>List. Empty list would do.</p>
+<pre class="coq"><code>Check []%list : context.
+(*
+[] : context
+     : context
+*)
+</code></pre>
+<h3 id="sort_family"><code>sort_family</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>Inductive sort_family : Set :=
+    InProp : sort_family | InSet : sort_family | InType : sort_family
+</code></pre>
+<p>Any of the three would do. Let's go with <code>InProp</code>.</p>
+<pre class="coq"><code>Check InProp : sort_family.
+(*
+InProp : sort_family
+     : sort_family
+*)
+</code></pre>
+<h3 id="one_inductive_body"><code>one_inductive_body</code></h3>
+<p>Definition:</p>
+<pre class="coq"><code>Record one_inductive_body : Type := Build_one_inductive_body
+  { ind_name : ident;
+    ind_type : term;
+    ind_kelim : sort_family;
+    ind_ctors : list ((ident × term) × nat);
+    ind_projs : list (ident × term) }
+
+Arguments Build_one_inductive_body _ _ _ (_ _)%list_scope
+</code></pre>
+<p>Using dummy <code>ident</code>, <code>term</code> and
+<code>sort_family</code> values,</p>
+<pre class="coq"><code>Check Build_one_inductive_body &quot;None&quot;%string (tVar &quot;None&quot;%string) InProp []%list []%list.
+(*
+{|
+ind_name := &quot;None&quot;;
+ind_type := tVar &quot;None&quot;;
+ind_kelim := InProp;
+ind_ctors := [];
+ind_projs := [] |}
+     : one_inductive_body
+*)
+</code></pre>
+<p>(This blog post was originally completed by 07 January 2022.)</p>
+</div>
+</body>
+</html>

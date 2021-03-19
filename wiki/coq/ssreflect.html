@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ssreflect</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">ssreflect</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<p>Part of coq stdlib. No need of mathcomp</p>
+<h2 id="general">General</h2>
+<ul>
+<li><code>do n! tac</code> apply the tactic <code>tac</code>,
+<code>n</code> times.</li>
+</ul>
+<h3 id="multipliers">Multipliers</h3>
+<table>
+<tbody>
+<tr class="odd">
+<td><code>n!</code></td>
+<td>Exactly n times</td>
+</tr>
+<tr class="even">
+<td><code>n?</code></td>
+<td>Upto n times</td>
+</tr>
+<tr class="odd">
+<td><code>!</code></td>
+<td>As many times as possible and at least once</td>
+</tr>
+<tr class="even">
+<td><code>?</code></td>
+<td>As many times as possible (can even be zero times)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ssrfun">ssrfun</h2>
+<p><a
+href="https://coq.inria.fr/doc/V8.18.0/stdlib/Coq.ssr.ssrfun.html">https://coq.inria.fr/doc/V8.18.0/stdlib/Coq.ssr.ssrfun.html</a></p>
+<ul>
+<li><code>left_id</code>, <code>right_id</code></li>
+<li><code>left_zero</code>, <code>right_zero</code></li>
+<li><code>idempotent</code></li>
+<li><code>commutative</code></li>
+<li><code>left_commutative</code>, <code>right_commutative</code></li>
+<li><code>left_distributive</code>, <code>right_distributive</code></li>
+<li><code>associative</code></li>
+<li><code>injective</code>: ∀x y, f x = f y -&gt; x = y</li>
+<li><code>left_injective</code>, <code>right_injective</code></li>
+<li><code>left_inverse</code>, <code>right_inverse</code></li>
+<li><code>involutive</code></li>
+<li><code>interchange</code></li>
+</ul>
+<h2 id="ssrbool">ssrbool</h2>
+<ul>
+<li><code>xpredT</code>: Notation for identity function for
+<code>true</code>
+<ul>
+<li>As in a predicate that's always true.</li>
+</ul></li>
+<li><code>a \in P</code>: P is a predicate and <code>P a</code>
+holds.</li>
+<li><code>a \notin P</code>: opposite of <code>a \in P</code></li>
+<li><code>predD P Q</code>: elements which are satisfied by
+<code>P</code> but not by <code>Q</code>
+<ul>
+<li>As in <code>P \ Q</code>, like set difference.</li>
+<li>Underlying function is <code>xpredD</code>.</li>
+<li>Mathcomp syntax: <code>[predD P &amp; Q]</code></li>
+</ul></li>
+</ul>
+<h2 id="clear-switchᵈ">Clear switch<a
+href="https://coq.inria.fr/doc/V8.19.0/refman/proof-engine/ssreflect-proof-language.html#clear-switch">ᵈ</a></h2>
+<p>Introduction with curly braces means at the end of that tactic, the
+introduced variable will disappear from the set of hypotheses.</p>
+<h2 id="rewrite">rewrite</h2>
+<p>Probably the most useful tactic.</p>
+<h2 id="some-reflecting-examples">Some 'reflecting' examples</h2>
+<ul>
+<li><code>case/exists_inP</code> is same as
+<code>move/exists_inP =&gt; x; case: x</code></li>
+</ul>
+<h3 id="andp"><code>andP</code></h3>
+<pre class="coq"><code>Require Import ssreflect ssrbool.
+
+Goal
+  True -&gt; true &amp;&amp; true.
+Proof.
+  move =&gt; H.
+(*
+1 subgoal
+
+H : True
+
+========================= (1 / 1)
+
+true &amp;&amp; true
+*)
+  apply/andP.
+(*
+1 subgoal
+
+H : True
+
+========================= (1 / 1)
+
+true /\ true
+*)
+</code></pre>
+<h3 id="exists_inp-move"><code>exists_inP</code>
+(<code>move</code>)</h3>
+<p>One with mathcomp:</p>
+<pre><code>Check exists_inP.
+(*
+exists_inP
+     : reflect (exists2 x : ?T, ?D x &amp; ?P x) [exists (x | ?D x), ?P x]
+where
+?T : [ |- finType]
+?D : [ |- pred ?T]
+?P : [ |- pred ?T]
+*)
+
+Goal forall (x:&#39;I_3) (P1 P2: &#39;I_3 -&gt; bool),
+  [exists (x | P2 x), P1 x] -&gt; True.
+Proof.
+  move =&gt; x P1 P2.
+(*
+1 subgoal
+
+x : &#39;I_3
+P1, P2 : &#39;I_3 -&gt; bool
+
+========================= (1 / 1)
+
+[exists (x0 | P2 x0), P1 x0] -&gt; True
+*)
+  move/exists_inP.
+(*
+1 subgoal
+
+x : &#39;I_3
+P1, P2 : &#39;I_3 -&gt; bool
+
+========================= (1 / 1)
+
+(exists2 x0 : fintype_ordinal__canonical__fintype_Finite 3, P2 x0 &amp; P1 x0) -&gt;
+True
+*)
+</code></pre>
+<h3 id="exists_inp-case"><code>exists_inP</code>
+(<code>case</code>)</h3>
+<pre><code>[exists (dst | true), accept eps dst l] -&gt; s :: l \in nilp (T:=A)
+</code></pre>
+<pre><code>case/exists_inP.
+</code></pre>
+<pre><code>forall x : unit, true -&gt; accept eps x l -&gt; s :: l \in nilp (T:=A)
+</code></pre>
+</div>
+</body>
+</html>

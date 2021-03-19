@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Remove OEM apps (Redmi 7)</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Remove OEM apps (Redmi 7)</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+<div id="description">
+An experience of removing unwanted OEM apps from a Redmi 7 phone without
+root access.
+</div>
+
+<div id="content-container">
+<hr />
+<p>I got hold of a Redmi 7 phone with MIUI 11 running on Android 9
+recently and noticed the presence of a lot of apps that its user didn't
+need, like 'ShareMe' and 'Google Duo'. These OEM apps cannot be
+uninstalled the way other apps may be removed.</p>
+<p>Then I came across Pavel Selivanov's <a
+href="https://selivan.github.io/2020/02/25/removing-bloatware-from-xiaomi-miui-android.html">post
+about removing unwanted miui apps</a> which I found very helpful (and I
+would urge you to check it out). The following is a description of what
+I did after reading Pavel's post.</p>
+<h2 id="android-sdk-platform-tools">Android SDK Platform-Tools</h2>
+<p>Go <a
+href="https://developer.android.com/studio/releases/platform-tools">here</a>
+and download the SDK tool package for your OS. I used Linux but choose
+as per your platform.</p>
+<p>For our purposes, we need <a
+href="https://developer.android.com/studio/command-line/adb">adb</a>
+(Android Debug Bridge), a tool that can be used to execute commands on
+an Android device.</p>
+<p>Windows users will need to install USB drivers as well.</p>
+<h2 id="prepare-the-phone">Prepare the phone</h2>
+<h3 id="enable-developer-options">Enable Developer options</h3>
+<p>Go to <code>Settings &gt; About phone</code>.</p>
+<p>Keep tapping on <code>MIUI version</code> till a message says
+<code>'You are now a developer'</code>.</p>
+<p>Now we can access developer options.</p>
+<h3 id="enable-usb-debugging">Enable USB debugging</h3>
+<p>Go to
+<code>Settings &gt; Additional settings &gt; Developer options</code>.</p>
+<p>Under <code>DEBUGGING</code> section, enable the
+<code>USB debugging</code> option.</p>
+<p>A confirmation pop-up will appear. Tap OK.</p>
+<h2 id="removing-unnecessary-apps">Removing unnecessary apps</h2>
+<h3 id="connect-to-pc">Connect to PC</h3>
+<p>After connecting phone to the computer via USB, open a terminal (or
+command prompt), navigate to the directory where platform-tools have
+been extracted. Then run,</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">adb</span> devices</span></code></pre></div>
+<p>A daemon would start now (if it wasn't running already).</p>
+<p>Your device may be listed now as 'Unauthorized'.</p>
+<p>Accept the connection on your phone.</p>
+<p>Re-run <code>adb devices</code> and your device would now appear as
+'trusted'.</p>
+<p>Drop to the shell with</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">adb</span> shell</span></code></pre></div>
+<h3 id="finding-apk-name">Finding apk name</h3>
+<p>We can use <a
+href="https://developer.android.com/studio/command-line/adb#pm"><code>pm</code>
+tool</a> (package manager) to uninstall apps from inside adb shell.</p>
+<p>To change the status of an app in phone, you need to know its apk
+name.</p>
+<p>Go to <code>Settings &gt; Manage apps</code>.</p>
+<p>Select the app you wish to uninstall and click on the info icon on
+the top right corner.</p>
+<p>The package name is displayed under APK name.</p>
+<h3 id="disabling-an-app">Disabling an app</h3>
+<p>Before uninstalling an app, you can try disabling it and use the
+phone to check if everything works fine without the app.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pm</span> disable-user <span class="op">&lt;</span>apk_name<span class="op">&gt;</span></span></code></pre></div>
+<p>This way, if something goes wrong due to the unavailability of that
+app, you can just re-enable it with</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pm</span> enable <span class="op">&lt;</span>apk_name<span class="op">&gt;</span></span></code></pre></div>
+<p>If the system doesn't miss the app, you can uninstall it.</p>
+<h3 id="uninstalling-an-app">Uninstalling an app</h3>
+<p>Uninstall an app with</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pm</span> uninstall <span class="at">--user</span> 0 <span class="op">&lt;</span>apk_name<span class="op">&gt;</span></span></code></pre></div>
+<p>where <code>&lt;app_name&gt;</code> is the app that you need
+uninstalled.</p>
+<p>0 is the user id for root.</p>
+<h2 id="script">Script</h2>
+<p>You could use a script like the one below to uninstall or disable
+packages.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Packages to uninstall</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="va">uninstall</span><span class="op">=</span><span class="va">(</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add or delete as needed</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Xiaomi</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.xiaomi.glgm&quot;</span>                                 <span class="co"># Games?</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.xiaomi.mipicks&quot;</span>                              <span class="co"># Mi App manager</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.xiaomi.midrop&quot;</span>                               <span class="co"># ShareMe</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.xiaomi.payment&quot;</span>                              <span class="co"># </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.mi.globalbrowser&quot;</span>                            <span class="co"># Mi browser</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.mipay.wallet.in&quot;</span>                             <span class="co"># India only [[</span><span class="al">WARNING</span><span class="co">]]</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># MIUI</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.miui.msa.global&quot;</span>                             <span class="co"># MIUI System Ads</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.miui.bugreport&quot;</span>                              <span class="co"># Bug report</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.miui.miservice&quot;</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.miui.android.fashiongallery&quot;</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.miui.weather&quot;</span>2                               <span class="co"># Weather</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.miui.cloudservice&quot;</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.miui.videoplayer&quot;</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.miui.player&quot;</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.miui.cloudbackup&quot;</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.miui.compass&quot;</span>                                <span class="co"># Compass</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Google</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.google.music&quot;</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.google.videos&quot;</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.google.ar.lens&quot;</span>                              <span class="co"># Google Lens</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Android</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.google.android.youtube&quot;</span>                      <span class="co"># YouTube</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.google.android.apps.photos&quot;</span>                  <span class="co"># Google photos</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.google.android.videos&quot;</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.google.android.music&quot;</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.google.android.apps.tachyon&quot;</span>                 <span class="co"># Google Duo</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.google.android.apps.googlequicksearchbox&quot;</span>    <span class="co"># Google search</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.google.android.apps.wellbeing&quot;</span>               <span class="co"># Digital Wellbeing</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Default Facebook</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.facebook.services&quot;</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.facebook.system&quot;</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.facebook.appmanager&quot;</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Others</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.opera.branding&quot;</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="va">)</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Packages to disable</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="va">disable</span><span class="op">=</span><span class="va">(</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add or delete as needed</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.android.calendar&quot;</span>                            <span class="co"># Calendar</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.android.providers.downloads.ui&quot;</span>              <span class="co"># Downloads</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.android.thememanager&quot;</span>                        <span class="co"># Themes</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;com.xiaomi.account&quot;</span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="va">)</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="va">${uninstall</span><span class="op">[@]</span><span class="va">}</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>    <span class="co">#pm uninstall --user 0 $i  # uncomment as needed</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="va">$i</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="va">${disable</span><span class="op">[@]</span><span class="va">}</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>    <span class="co">#pm disable-user $i  # uncomment as needed</span></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="va">$i</span></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<h2 id="disable-developer-options">Disable Developer options</h2>
+<p>Once you are done, disable USB Debugging at
+<code>Settings &gt; Additional settings &gt; Developer options</code> if
+you no longer need it.</p>
+<h2 id="caution">Caution</h2>
+<p>Uninstalling some apps can cause problems for your phone.</p>
+<p>For example, people have shared <a
+href="https://gist.github.com/Biswa96/81fe477079fa5279f7cfd7b98d5519c7">here</a>
+that uninstalling apps like 'MIUI Gallery'
+(<code>com.miui.gallery</code>) and 'Xiaomi Find Device'
+(<code>com.xiaomi.finddevice</code>) can result in soft-bricking the
+phone.</p>
+<h2 id="see-more">See more</h2>
+<ul>
+<li><a
+href="https://selivan.github.io/2020/02/25/removing-bloatware-from-xiaomi-miui-android.html">https://selivan.github.io/2020/02/25/removing-bloatware-from-xiaomi-miui-android.html</a></li>
+<li><a
+href="https://developer.android.com/studio/releases/platform-tools">https://developer.android.com/studio/releases/platform-tools</a></li>
+<li><a
+href="https://developer.android.com/studio/command-line/adb">https://developer.android.com/studio/command-line/adb</a></li>
+<li><a
+href="https://developer.android.com/studio/command-line/adb#pm">https://developer.android.com/studio/command-line/adb#pm</a></li>
+<li><a
+href="https://gist.github.com/Biswa96/81fe477079fa5279f7cfd7b98d5519c7">https://gist.github.com/Biswa96/81fe477079fa5279f7cfd7b98d5519c7</a></li>
+</ul>
+</div>
+</body>
+</html>

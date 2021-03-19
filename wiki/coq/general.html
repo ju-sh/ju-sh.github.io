@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>General stuff</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">General stuff</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="vernaculars-like-theorem-lemma-etc">Vernaculars like
+<code>Theorem</code>, <code>lemma</code>, etc</h2>
+<p>All of the following<a
+href="https://coq.inria.fr/refman/language/core/definitions.html#coq:cmd.Theorem">¹</a>
+can be used interchangably:</p>
+<ul>
+<li><code>Theorem</code></li>
+<li><code>Lemma</code></li>
+<li><code>Fact</code></li>
+<li><code>Corollary</code></li>
+<li><code>Remark</code></li>
+<li><code>Proposition</code></li>
+<li><code>Property</code></li>
+</ul>
+<p>All of these are same as far as coq is concerned but judicious use
+can improve readability.</p>
+<h2 id="variant-vs-inductive"><code>Variant</code> vs
+<code>Inductive</code></h2>
+<p>From the <a
+href="https://coq.inria.fr/refman/language/core/variants.html">manual</a>:</p>
+<blockquote>
+<p>The <code>Variant</code> command is similar to the
+<code>Inductive</code> command, except that it disallows recursive
+definition of types (for instance, lists cannot be defined using
+<code>Variant</code>). No induction scheme is generated for this
+variant, unless the <code>Nonrecursive Elimination Schemes</code> flag
+is on.</p>
+</blockquote>
+<p><code>Variant</code> is same as <code>Inductive</code> except
+that:</p>
+<ul>
+<li>inductive hypothesis is not generated</li>
+<li>Recursive types not possible</li>
+</ul>
+<p>Example:</p>
+<pre><code>Variant mbool : Type := mtrue | mfalse.
+(* mbool is defined *)
+
+Inductive mbool : Type := mtrue | mfalse.
+(*
+mbool is defined
+mbool_rect is defined
+mbool_ind is defined
+mbool_rec is defined
+mbool_sind is defined
+*)
+
+Variant mlist (A:Type) : Type :=
+| mnil: mlist A
+| mcons: A -&gt; mlist A -&gt; mlist A.
+(*
+Error:
+Types declared with the keyword Variant cannot be recursive. Recursive types are defined with the Inductive and CoInductive command.
+*)
+</code></pre>
+<p><code>Nonrecursive Elimination Schemes</code> flag can be set to
+allow induction principles generated for variants (and records) as
+well.</p>
+<pre class="coq"><code>Set Nonrecursive Elimination Schemes.
+
+Variant mbool : Type := mtrue | mfalse.
+(*
+mbool is defined
+mbool_rect is defined
+mbool_ind is defined
+mbool_rec is defined
+mbool_sind is defined
+*)
+</code></pre>
+<p>See <a
+href="https://coq.zulipchat.com/#narrow/stream/237977-Coq-users/topic/Variant.20vs.20Inductive">here</a>
+for a discussion on <code>Variant</code> and <code>Inductive</code>.</p>
+<h2 id="record-syntax-in-inductive-type-definition">'Record syntax' in
+inductive type definition</h2>
+<p>This is possible:</p>
+<pre class="coq"><code>Inductive foo :=  go {_a:nat}.                
+Print foo.                                    
+(* Inductive foo : Set :=  go : nat -&gt; foo. *)
+
+Inductive foo2 :=  go {_a:nat; _b:nat}.                 
+Print foo2.                                             
+(* Inductive foo2 : Set :=  go : nat -&gt; nat -&gt; foo2.  *)
+</code></pre>
+<h2 id="case-analysis-a-list-into-3-parts">Case analysis a list into 3
+parts</h2>
+<pre class="coq"><code>Goal forall (A:Type) (l : list A),
+  match l with
+  | [] =&gt; 0
+  | [a] =&gt; 1
+  | _ =&gt; 2
+  end = length l.
+Proof.
+  move =&gt; A [|a[|l&#39;]].
+(*
+3 subgoals
+
+A : Type
+
+========================= (1 / 3)
+
+0 = length []
+
+========================= (2 / 3)
+
+1 = length [a]
+
+========================= (3 / 3)
+
+forall l : list A, 2 = length (a :: l&#39; :: l)
+*)
+</code></pre>
+<p>–</p>
+<p>Or the non-ssreflect way:</p>
+<pre class="coq"><code>Goal forall (A:Type) (l : list A),
+  match l with
+  | [] =&gt; 0
+  | [a] =&gt; 1
+  | _ =&gt; 2
+  end = length l.
+Proof.
+  intros A l.
+  destruct l as [|a [|l&#39;]].
+(*
+3 subgoals
+
+A : Type
+
+========================= (1 / 3)
+
+0 = length []
+
+========================= (2 / 3)
+
+1 = length [a]
+
+========================= (3 / 3)
+
+2 = length (a :: l&#39; :: l)
+*)
+</code></pre>
+<h2 id="sprop"><code>SProp</code></h2>
+<p>Strict Prop</p>
+<ul>
+<li>Proof irrelevant propositions</li>
+<li>aka strict propositions</li>
+<li>ie, all values of this type are interconvertible</li>
+<li>All proofs of an SProp are equivalent.</li>
+</ul>
+<pre class="coq"><code>Goal                                      
+  forall (A:SProp) (P: A -&gt; Prop) (x y:A),
+    P x -&gt; P y.                           
+Proof.                                    
+  intros.                                 
+(*                                        
+1 subgoal                                 
+
+A : SProp                                 
+P : A -&gt; Prop                             
+x, y : A                                  
+H : P x
+
+========================= (1 / 1)
+
+P y
+*)
+  exact H.                                
+  (* ∵ [x] and [y] are equivalent proofs of the same [SProp]: [A] *)
+Qed.
+</code></pre>
+<p><a
+href="https://coq.inria.fr/refman/addendum/sprop.html#basic-constructs">https://coq.inria.fr/refman/addendum/sprop.html#basic-constructs</a></p>
+<h2 id="a-prop-vs-type-thing">A <code>Prop</code> vs <code>Type</code>
+thing</h2>
+<p><a
+href="https://stackoverflow.com/questions/40289890/coq-cant-discriminate-between-constructors-for-dependently-typed-inductive-prop">https://stackoverflow.com/questions/40289890/coq-cant-discriminate-between-constructors-for-dependently-typed-inductive-prop</a></p>
+<h2 id="tactic-notation">Tactic Notation</h2>
+<p>Notations at the tactic level.</p>
+<p>See <a
+href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#coq:cmd.Tactic-Notation">https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#coq:cmd.Tactic-Notation</a></p>
+<h2 id="coercions">Coercions</h2>
+<p>(Implicit) Coercions in Coq are merely for better convenience, it
+doesn't add any extra power. <a
+href="https://coq.inria.fr/doc/v8.18/refman/addendum/implicit-coercions.html">https://coq.inria.fr/doc/v8.18/refman/addendum/implicit-coercions.html</a></p>
+<ul>
+<li>Show all coercion paths: <code>Print Graph</code></li>
+</ul>
+<h3 id="in-record-types"><code>:&gt;</code> in record types</h3>
+<p>Have an implicit corecion from the record type to a particular field
+of that record.</p>
+<p>For example <a
+href="https://github.com/coq-community/reglang/blob/master/theories/nfa.v">ˡ</a>:</p>
+<pre class="coq"><code>Record nfa : Type := {
+   nfa_state :&gt; finType
+ ; nfa_s : { set nfa_state }
+ ; nfa_fin : { set nfa_state }
+ ; nfa_trans : nfa_state -&gt; char -&gt; nfa_state -&gt; bool
+}.
+</code></pre>
+<p>Now we can have a value of type <code>nfa</code> and it can be
+implicitly converted to the value of its <code>nfa_state</code> field if
+needed.</p>
+<h3 id="a-caveat">A caveat</h3>
+<p>If we have a coercion like <code>a2b: A &gt;-&gt; B</code>,</p>
+<ul>
+<li><code>b:B = a:A</code> is okay
+<ul>
+<li>Becomes <code>b = a2b a</code> ✓</li>
+</ul></li>
+<li><code>a:A = b:B</code> isn't</li>
+</ul>
+<p>Apparently, coercion search happens only in the RHS.</p>
+<h2 id="coqdoc">coqdoc</h2>
+<p><a
+href="https://coq.inria.fr/refman/using/tools/coqdoc.html">https://coq.inria.fr/refman/using/tools/coqdoc.html</a></p>
+<h3 id="verbatim">Verbatim</h3>
+<p>Code block example:</p>
+<pre><code>&lt;&lt;&lt;
+Definition incr (n: nat): nat := S n.
+&gt;&gt;&gt;
+</code></pre>
+<p>Inline example:
+<code>&lt;&lt; fst &gt;&gt; will give first element of a tuple</code></p>
+<p><code>&gt;&gt;</code> (and <code>&gt;&gt;</code> ??) can't show up in
+the verbatim text if we use the inline version.</p>
+<h3 id="hidingunhiding">Hiding/unhiding</h3>
+<pre><code>(* begin hide *)
+&lt;hidden code&gt;
+(* end hide *)
+</code></pre>
+<p>Show some code when it's part of a hidden chunk:</p>
+<pre><code>(* begin show *)
+&lt;hidden code&gt;
+(* end show *)
+</code></pre>
+<h3 id="not-sure">Not sure</h3>
+<ul>
+<li>Escape <code>[</code> and <code>]</code> by surrounding it with a
+pair of <code>#</code>
+<ul>
+<li>Eg: <code>a list #[# a; b #]#</code></li>
+</ul></li>
+</ul>
+<h2 id="lists-list_prod-vs-combine">Lists: <code>list_prod</code> vs
+<code>combine</code></h2>
+<pre class="coq"><code>(* Like cross-product. Length of output is product of lengths of inputs *)
+Compute list_prod [1; 2] [3;4;5].                 
+(*                                                
+= [(1, 3); (1, 4); (1, 5); (2, 3); (2, 4); (2, 5)]
+     : seq.seq (nat * nat)                        
+*)                                                
+
+(* Length of output is min of length of inputs *) 
+Compute combine [1; 2] [3;4;5].                   
+(*                                                
+= [(1, 3); (2, 4)]                                
+     : seq.seq (nat * nat)                        
+*)
+</code></pre>
+<h2 id="tips">Tips</h2>
+<h3 id="clear-implicits"><code>clear implicits</code></h3>
+<p>Instead of first declaring a type argument implicit in a bunch of
+constructors as in:</p>
+<pre class="coq"><code>Inductive instr (A:Type) : Type :=
+| Binop: instr A -&gt; instr A -&gt; instr A
+| Unop: instr A -&gt; instr A
+| Const: A -&gt; instr A.
+Arguments Binop {A}.
+Arguments Unop {A}.
+Arguments Const {A}.
+</code></pre>
+<p>we could just do:</p>
+<pre class="coq"><code>Inductive instr {A:Type} : Type :=
+| Binop: instr -&gt; instr -&gt; instr
+| Unop: instr -&gt; instr
+| Const: A -&gt; instr.
+
+Check instr.
+(*
+instr
+     : Type
+where
+?A : [ |- Type]
+*)
+
+Arguments instr : clear implicits.
+
+Check instr.
+(* instr : Type -&gt; Type *)
+</code></pre>
+<p>Got the idea from <a
+href="https://github.com/mit-plv/koika/blob/9a4771cc7275b1835097a40cb964ecd06b765361/coq/Vect.v#L7">here</a>.</p>
+<hr />
+<p>A <em>similar</em> effect (not same) can be attained using the <a
+href="https://coq.inria.fr/refman/language/core/inductive.html#coq:flag.Uniform-Inductive-Parameters"><code>Uniform Inductive Parameters</code></a>
+flag.</p>
+<pre class="coq"><code>Set Uniform Inductive Parameters.
+
+Inductive instr (A:Type) : Type :=
+| Binop: instr -&gt; instr -&gt; instr
+| Unop: instr -&gt; instr
+| Const: A -&gt; instr.
+
+Check instr.
+(* instr : Type -&gt; Type *)
+
+Check Const.
+(*
+Const
+     : forall A : Type, A -&gt; instr A
+*)
+</code></pre>
+<h3 id="mutually-inductive-types">Mutually inductive types</h3>
+<p>Once got parameters got to be the same for all types in a mutually
+inductive setup. (ltamer)</p>
+<p>Using <code>Variable</code> inside <code>Section</code> made it
+work.</p>
+<p>This got error:</p>
+<pre class="coq"><code>Inductive term {V:type-&gt;Type} {res:type} : Type :=
+| Halt: V res -&gt; term
+| Bind: forall t:type,
+    primop t       (* operation *)
+ -&gt; (V t -&gt; term)  (* next thing to do *)
+ -&gt; term
+| App:             (* Invoke a continuation *)
+    V (Cont t)     (* Next thing. Why can&#39;t it just be [Cont t]? *)
+ -&gt; V t            (* Value to throw at the continuation *)
+ -&gt; term
+with primop {V:type-&gt;Type} : type -&gt; Type :=
+| Var: forall {t:type}, V t -&gt; primop t
+| Tru: primop Bool
+| Fls: primop Bool
+| Pair: forall {t1 t2:type},
+    V t1 -&gt; V t2 -&gt; primop (Prod t1 t2)
+| Fst: forall {t1 t2:type}, Var (Prod t1 t2) -&gt; primop t1
+| Snd: forall {t1 t2:type}, Var (Prod t1 t2) -&gt; primop t2.
+</code></pre>
+<p>This worked fine:</p>
+<pre class="coq"><code>Section Foo.
+
+Variable V:type-&gt;Type.
+Variable res:type.
+
+Inductive term : Type :=
+| Halt: V res -&gt; term
+| Bind: forall t:type,
+    primop t       (* operation *)
+ -&gt; (V t -&gt; term)  (* next thing to do *)
+ -&gt; term
+| App: forall t:type, (* Invoke a continuation *)
+    V (Cont t)     (* Next thing. Why can&#39;t it just be [Cont t]? *)
+ -&gt; V t            (* Value to throw at the continuation *)
+ -&gt; term
+with primop : type -&gt; Type :=
+| Var: forall {t:type}, V t -&gt; primop t
+| Tru: primop Bool
+| Fls: primop Bool
+| Pair: forall {t1 t2:type},
+    V t1 -&gt; V t2 -&gt; primop (Prod t1 t2)
+| Fst: forall {t1 t2:type}, V (Prod t1 t2) -&gt; primop t1
+| Snd: forall {t1 t2:type}, V (Prod t1 t2) -&gt; primop t2.
+
+End Foo.
+</code></pre>
+<h3 id="explicit-type-annotation-advantage">Explicit type annotation
+advantage?</h3>
+<p>Could it be that having explicit type annotations can help reduce
+time to perform type checks?</p>
+<p>Found this <a
+href="https://math-comp.github.io/htmldoc/mathcomp.field.finfield.html">here</a>:</p>
+<blockquote>
+<p>The apparently redundant type annotation reduces checking time by
+30%.</p>
+</blockquote>
+<h3 id="succeed-⁹"><code>Succeed</code> <a
+href="https://coq.inria.fr/refman/proof-engine/vernacular-commands.html#coq:cmd.Succeed">⁹</a></h3>
+<p>Similar to <code>Fail</code>. Checks if the command succeeds and
+<em>reverts its effects</em>.</p>
+<p>'Useful for writing tests.'</p>
+<pre class="coq"><code>Succeed Compute S 3.
+(*
+= 4
+     : nat
+
+The command has succeeded and its effects have been reverted.
+*)
+
+Succeed Set Implicit Arguments.
+(* The command has succeeded and its effects have been reverted. *)
+
+Succeed Set Printing Notations.
+(*
+Set this option from the IDE menu instead
+
+The command has succeeded and its effects have been reverted.
+*)
+</code></pre>
+<h2 id="settings">Settings</h2>
+<ul>
+<li>Show explicit precedence via parentheses:
+<code>Set Printing Parentheses</code></li>
+<li>Temporarily disable notation printing:
+<code>Unset Printing Notations</code></li>
+</ul>
+<h3 id="debug">Debug</h3>
+<p><code>Test Debug</code> shows the list of options related to
+debugging<a
+href="https://coq.inria.fr/refman/proof-engine/vernacular-commands.html#coq:opt.Debug">⁷</a>:</p>
+<pre class="coq"><code>Test Debug.
+(*
+Debug: -all,-backtrace,-vernacinterp,-unification,-tactic-unification,-proof-using,-native-compiler,-misc,-ho-unification,-congruence,-RAKAM,-Cbv
+*)
+RAKAM: Refolding Algebraic Krivine Abstract Machine [[8][⁸]]
+
+</code></pre>
+<h3 id="printing-projections">Printing Projections</h3>
+<p>Changes the way record projections are printed.</p>
+<pre><code>Record egrec := BuildEgRec {
+  num: nat
+; flag: bool
+}.
+
+Example r := BuildEgRec 3 true.
+Check num r.
+(* num r : nat *)
+
+Set Printing Projections.
+
+Check num r.
+(* r.(num) : nat *)
+</code></pre>
+<p><a
+href="https://coq.inria.fr/refman/language/core/records.html#coq:flag.Printing-Projections">https://coq.inria.fr/refman/language/core/records.html#coq:flag.Printing-Projections</a></p>
+<h3 id="primitive-projections"><span class="todo TODO">TODO</span>
+Primitive Projections</h3>
+<p><a
+href="https://coq.inria.fr/refman/language/core/records.html#coq:flag.Primitive-Projections">https://coq.inria.fr/refman/language/core/records.html#coq:flag.Primitive-Projections</a></p>
+<h2 id="third-party-libraries">Third party libraries</h2>
+<ul>
+<li>mathcomp 2.0:
+<ul>
+<li>uses hierarchy builder.</li>
+<li>not completely compatible with older versions.</li>
+</ul></li>
+<li><a
+href="https://github.com/coq-community/coq-ext-lib">coq-ext-lib</a>
+<ul>
+<li>hlist</li>
+</ul></li>
+</ul>
+<h3 id="better-stdlib">Better 'stdlib'</h3>
+<p>Efforts have been made to augment Coq's stdlib. <a
+href="https://coq.discourse.group/t/standard-library-of-the-future/1357">ʳ</a>.</p>
+<ul>
+<li><a href="https://gitlab.mpi-sws.org/iris/stdpp">stdpp</a>
+(std++)</li>
+<li><a href="https://github.com/coq/stdlib2">stdlib2</a> (looks bit
+inactive)
+<ul>
+<li>Seems to use mathcomp under the hood.</li>
+</ul></li>
+</ul>
+<p>mathcomp has got a lot of stuff as well.</p>
+<h3 id="more-packages">More packages</h3>
+<ul>
+<li>paramcoq:
+<ul>
+<li><a
+href="https://github.com/coq-community/paramcoq">https://github.com/coq-community/paramcoq</a></li>
+<li>Provides <code>Parametricity</code> vernacular command.</li>
+</ul></li>
+<li><a href="https://github.com/coq-community/trocq">trocq</a></li>
+</ul>
+<h3 id="pretty-output">Pretty output</h3>
+<ul>
+<li><a
+href="https://github.com/coq-community/coqdocjs">CoqdocJS</a></li>
+<li><a
+href="https://github.com/cpitclaudel/alectryon ">Alectryon</a></li>
+</ul>
+<h2 id="general">General</h2>
+<ul>
+<li>Find location of the <code>.vo</code> file corresponding to an
+importable library: <code>Locate Library &lt;name&gt;</code> <a
+href="https://coq.inria.fr/doc/v8.12/refman/proof-engine/vernacular-commands.html#coq:cmd.locate-library">ʳ</a></li>
+<li><code>exists2</code>: there exists an <code>x</code> which satisfies
+2 predicates <code>P</code> and <code>Q</code>
+<ul>
+<li>Eg: <code>exists2 (x:A), (P x) &amp; )Q x)</code></li>
+</ul></li>
+<li>Notations defined within a section are not available outside of that
+section.</li>
+</ul>
+<h2 id="misc">Misc</h2>
+<ul>
+<li>'It is dangerous to add Axioms to Coq: if you add one that's
+inconsistent, then it leads to the ability to prove False. While that's
+a convenient way to get a lot of things proved, it's unsound; the proofs
+are useless.' <a
+href="https://softwarefoundations.cis.upenn.edu/vfa-current/Decide.html#ScratchPad2.prove_with_max_axiom">ʳ</a></li>
+</ul>
+<h3 id="recommended-project-directory-structure"><a
+href="https://github.com/coq-community/manifesto/wiki/Recommended-Project-Structure">Recommended
+project directory structure</a></h3>
+<pre><code>.
+├── .github
+│   └── workflows
+│       ├── action-foo.yml
+│       └── action-bar.yml
+├── CHANGELOG.md
+├── LICENSE
+├── Makefile
+├── Makefile.coq.local
+├── README.md
+├── _CoqProject
+├── coq-project-name.opam
+├── dune-project
+├── meta.yml
+└── theories
+    ├── dune
+    ├── foo.v
+    └── bar.v
+</code></pre>
+<p>As per this convention, many of the files are meant to be
+autogenerated based on the information made available in the
+<code>meta.yml</code> file.</p>
+<h2 id="package-equations">Package: Equations</h2>
+<h3 id="general-1">General</h3>
+<ul>
+<li>Apparently, each case must have same number of arguments.</li>
+<li>Looks like arguments in <code>Context</code> doesn't agree with
+<code>equations</code>.</li>
+</ul>
+<h3 id="errors">Errors</h3>
+<ol>
+<li><p>'cannot find covering'</p>
+<p>Try <code>Set Equations Debug.</code> and see.</p>
+<p>Will show where it went off track.</p></li>
+</ol>
+<h2 id="package-coqeal">Package: CoqEAL</h2>
+<h3 id="general-2">General</h3>
+<ul>
+<li><code>hrel</code>: heterogeneous relation</li>
+<li><code>computable_scope</code> with key <code>C</code>.</li>
+</ul>
+<h3 id="refines"><code>refines</code></h3>
+<pre><code>refines: (A -&gt; B -&gt; Type) -&gt; A -&gt; B -&gt; Type
+         |              |
+         +--------------+
+            |
+        refinement relation
+</code></pre>
+<p>From <a
+href="https://github.com/ejgallego/ssrbit/blob/master/refinement/bits.v">here</a>:</p>
+<p>Refinement relation:</p>
+<pre><code>(* Type of refinement relations *)
+R: SpecT -&gt; ImplT -&gt; Type
+</code></pre>
+<p>Transport lemma:</p>
+<pre><code>R_op: refines refinement_relation Spec Impl
+</code></pre>
+<p>Example:</p>
+<pre class="coq"><code>Definition tup2seq (n:nat)
+  : n.-tuple bool -&gt; seq bool -&gt; Type :=
+  fun btup bseq =&gt; tval btup = bseq.
+</code></pre>
+<p>(Pseudo-) examples:</p>
+<ul>
+<li><code>n.-tuple -&gt; Vector.t n -&gt; Type</code></li>
+</ul>
+<h3 id="refinement-relation-for-seqmx-in-coqeal">Refinement relation for
+<code>seqmx</code> in CoqEAL</h3>
+<p><code>Rseqmx</code>: <a
+href="https://github.com/coq-community/coqeal/blob/1.1.3/refinements/seqmx.v#L298">https://github.com/coq-community/coqeal/blob/1.1.3/refinements/seqmx.v#L298</a></p>
+<h3 id="r-s-hrel"><code>R ==&gt; S</code> (hrel)</h3>
+<p>Notation for <code>hrespectful R S</code>.</p>
+<p>From rel<sub>scope</sub>.</p>
+<pre><code>R: A -&gt; B -&gt; Type
+S: C -&gt; D -&gt; Type
+f: A -&gt; C
+g: B -&gt; D
+
+is
+
+R ==&gt; S
+
+which in turn is
+
+hrespectful R S: (A-&gt;C) -&gt; (B-&gt;D) -&gt; Type :=
+
+fun f g =&gt; forall (a:A) (b:B),
+  R a b -&gt; S (f a) (g b)
+</code></pre>
+</div>
+</body>
+</html>

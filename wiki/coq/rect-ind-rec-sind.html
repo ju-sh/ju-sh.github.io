@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Ind-s and Rec-s of types</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title"><code>Ind</code>-s and <code>Rec</code>-s of
+types</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<p>When we define an inductive type in Coq, a few things other than the
+type and its constructors get defined.</p>
+<pre class="coq"><code>Inductive type := Ttype.
+
+(* type is defined *)
+(* type_rect is defined *)
+(* type_ind is defined *)
+(* type_rec is defined *)
+(* type_sind is defined *)
+</code></pre>
+<p>These are the induction principle of the type tailored to Prop, Set,
+Type and SProp.</p>
+<p>For example, in the case of <code>nat</code>:</p>
+<pre><code>Check nat_ind.
+(*
+nat_ind
+     : forall P : nat -&gt; Prop,
+       P 0 -&gt;
+       (forall n : nat, P n -&gt; P (S n)) -&gt; forall n : nat, P n
+*)
+
+Check nat_rec.
+(*
+nat_rec
+     : forall P : nat -&gt; Set,
+       P 0 -&gt;
+       (forall n : nat, P n -&gt; P (S n)) -&gt; forall n : nat, P n
+*)
+
+Check nat_rect.
+(*
+nat_rect
+     : forall P : nat -&gt; Type,
+       P 0 -&gt;
+       (forall n : nat, P n -&gt; P (S n)) -&gt; forall n : nat, P n
+*)
+
+Check nat_sind.
+(*
+nat_sind
+     : forall P : nat -&gt; SProp,
+       P 0 -&gt;
+       (forall n : nat, P n -&gt; P (S n)) -&gt; forall n : nat, P n
+*)
+</code></pre>
+<p>I wonder why they needed separate lemmas for Set and Type..</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type used</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ind</code></td>
+<td><code>Prop</code></td>
+</tr>
+<tr class="even">
+<td><code>rect</code></td>
+<td><code>Type</code></td>
+</tr>
+<tr class="odd">
+<td><code>rec</code></td>
+<td><code>Set</code></td>
+</tr>
+<tr class="even">
+<td><code>sind</code></td>
+<td><code>SProp</code></td>
+</tr>
+</tbody>
+</table>
+<p>For example, what <code>nat_ind</code> says is this:</p>
+<pre><code>nat_ind
+     : forall P : nat -&gt; Prop,
+       P 0 -&gt;
+       (forall n : nat, P n -&gt; P (S n)) -&gt; forall n : nat, P n
+</code></pre>
+<p>If a proposition <code>P</code> holds over <code>0</code> (which is
+the base case for <code>nat</code>), and if know that <code>P</code>
+holds for <code>n+1</code> if it holds for any <code>n</code>, then
+<code>P</code> is true for all <code>nat</code>.</p>
+<p>And in the case of <code>list</code>:</p>
+<pre><code>list_ind
+     : forall (A : Type) (P : list A -&gt; Prop),
+       P nil -&gt;
+       (forall (a : A) (l : list A), P l -&gt; P (a :: l)%list) -&gt;
+       forall l : list A, P l
+</code></pre>
+<p><code>list_ind</code> is indicative of the fact that</p>
+<p>If:</p>
+<ul>
+<li><code>P</code> holds for empty list</li>
+<li><code>P</code> holds for x::l provided <code>P</code> holds for a
+list <code>l</code></li>
+</ul>
+<p>then:</p>
+<ul>
+<li><code>P</code> holds for every list</li>
+</ul>
+<p>By the way, the <code>ind</code>-s and <code>rec</code>-s won't get
+defined when we make a coinductive type. Because they are potentially
+infinite.</p>
+<pre><code>CoInductive t A :=
+| CNil: t A
+| CCons: A -&gt; t A -&gt; t A.
+
+(* t is defined *)
+</code></pre>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://coq.inria.fr/tutorial/2-induction"><a
+href="https://coq.inria.fr/tutorial/2-induction">https://coq.inria.fr/tutorial/2-induction</a></a>
+<ul>
+<li>This is an old tutorial. So <code>sind</code> is not mentioned.</li>
+</ul></li>
+</ul>
+</div>
+</body>
+</html>

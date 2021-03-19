@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Installing coq using opam (Ubuntu and FreeBSD)</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Installing coq using opam (Ubuntu and FreeBSD)</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+<div id="description">
+An experience installing coq via opam for Ubuntu and FreeBSD.
+</div>
+
+<div id="content-container">
+<hr />
+<p><a href="https://opam.ocaml.org/">opam</a> is a 'source-based package
+manager for OCaml'.</p>
+<h2 id="ubuntu">Ubuntu</h2>
+<p>This is just what worked for me on an Ubuntu 18.04 computer.</p>
+<p>I just followed some docs and installed coq (8.12.0) using opam.</p>
+<h3 id="opam">opam</h3>
+<p>An official release of opam is available in a <a
+href="https://opam.ocaml.org/doc/Install.html#Ubuntu">ppa</a>. We can
+use that.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> add-apt-repository ppa:avsm/ppa</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install opam</span></code></pre></div>
+<h3 id="set-up-an-opam-environment">Set up an opam environment</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">opam</span> init</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">opam</span> switch create coq 4.10.0+flambda  <span class="co"># (twice?)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">opam</span> install num ocamlfind lablgtk3-sourceview3</span></code></pre></div>
+<h3 id="coq">Coq</h3>
+<p>Download the version of coq that you would like to have.</p>
+<p>Now let's compile coq. Might take a while.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./configure</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> make install</span></code></pre></div>
+<h3 id="versions-of-software-involved">Versions of software
+involved</h3>
+<ul>
+<li>Coq: 8.12.0</li>
+<li>opam: 2.0.4</li>
+<li>Ubuntu 18.04</li>
+</ul>
+<h2 id="freebsd">FreeBSD</h2>
+<p>What worked for FreeBSD system (FreeBSD 12.2-RELEASE-p4).</p>
+<h3 id="opam-1">opam</h3>
+<p>Use the version from the FreeBSD Ports Collection.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /usr/ports/devel/ocaml-opam</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> make install clean</span></code></pre></div>
+<h3 id="build-and-install-coq">Build and install coq</h3>
+<p>Once opam has been installed initialize it with</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">opam</span> init</span></code></pre></div>
+<p>Now install `opam-depext` to figure out what more packages are needed
+to build coq.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">opam</span> install opam-depext</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="va">$(</span><span class="ex">opam</span> env<span class="va">)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">opam-depext</span> coq</span></code></pre></div>
+<p>Install any more packages if needed.</p>
+<p>Now, 'pin' the coq version to the version you need (to avoid auto
+upgradation of the package so that potential future trouble due to
+version mismatch may be avoided) and install it.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">opam</span> pin add coq 8.13.1</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="va">$(</span><span class="ex">opam</span> env<span class="va">)</span></span></code></pre></div>
+<h3 id="versions-of-software-involved-1">Versions of software
+involved</h3>
+<ul>
+<li>Coq: 8.13.1</li>
+<li>opam: 2.0.8</li>
+<li>FreeBSD 12.2-RELEASE-p4</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a
+href="https://coq.inria.fr/opam-using.html">https://coq.inria.fr/opam-using.html</a></li>
+<li><a
+href="https://coq.inria.fr/user-interfaces.html">https://coq.inria.fr/user-interfaces.html</a></li>
+<li><a
+href="https://opam.ocaml.org/doc/Install.html">https://opam.ocaml.org/doc/Install.html</a></li>
+<li><a
+href="https://github.com/ProofGeneral/PG#installing-proof-general">https://github.com/ProofGeneral/PG#installing-proof-general</a></li>
+<li><a
+href="https://github.com/cpitclaudel/company-coq">https://github.com/cpitclaudel/company-coq</a></li>
+</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>popl23-plmw</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="imagining-the-reader">Imagining the reader</h2>
+<p>Talk by Benjamin Pierce.</p>
+<ul>
+<li>Paper's presentation should be such that a first year PhD student
+must be able to understand it.</li>
+<li>Abstract is like an advertisement of the paper.</li>
+</ul>
+<p>Before a presentation:</p>
+<ul>
+<li>Read out your work aloud to yourself.
+<ul>
+<li>Gives you a different perspective than reading.</li>
+</ul></li>
+<li>Find friends to read out to.</li>
+<li>Ask related people. Including 'competition'.</li>
+</ul>
+<p>Iterate. Have many passes.</p>
+<blockquote>
+<p>Good writing is rewriting.</p>
+</blockquote>
+<blockquote>
+<p>Most writers polish draft after draft.</p>
+<ul>
+<li>Steven Pinker</li>
+</ul>
+</blockquote>
+<p>From <em>Strunk and White, Elements of style</em>:</p>
+<blockquote>
+<p>Vigorous writing is concise. <strong>A sentence should contain no
+unnecessary words, a paragraph no unnecessary sentences</strong>, for
+the same reason that a drawing should contain no unnecessary lines and a
+machine no unnecessary parts. This requires not that the writer make all
+his sentences short or that he avoid all details and treat his subjects
+in outline, <strong>but that every word tell</strong>.</p>
+</blockquote>
+<p>Every word has to be there for a reason. Compress to remove
+unnecessary words.</p>
+<p>An example:</p>
+<pre><code>In this section, we describe some
+of the highlights of the research
+area. We discuss some of the most
+significant, elegant and useful
+algorithms, and some corresponding
+lower bound results.
+</code></pre>
+<p>This is part of an example from '<em>Handout on unnecessary
+prose</em> - Leslie Lamport, in <em>Mathematical writing</em>.<a
+href="https://homepages.inf.ed.ac.uk/wadler/papers/tarragona-2014/plmw-tarragona-2014.pdf">¹</a>
+<a
+href="https://jmlr.csail.mit.edu/reviewing-papers/knuth_mathematical_writing.pdf">²</a></p>
+<p>But the following is from it though:</p>
+<blockquote>
+<p>Leslie was once told: "<strong>Judge an artist not by the quality of
+what is framed and hanging on the walls, but by the quality of what's in
+the wastebasket.</strong>" Similarly, Leslie thinks that we should be
+judged on the "best thing that we have done that we decided not to
+publish."</p>
+</blockquote>
+<p>Learn from other writers:</p>
+<blockquote>
+<p>All great writers imitate (learn from) other great writers.</p>
+</blockquote>
+<p>About tools like grammarly:</p>
+<ul>
+<li>Don't let them be a clutch.</li>
+<li>You should be the one to make the decisions.</li>
+<li>The tool should just be double checking.</li>
+</ul>
+<p>Resources:</p>
+<ul>
+<li><em>Mathematical writing</em> - Donald Knuth, Tracy Larrabee, Paul
+M. Roberts</li>
+</ul>
+<h2 id="session-types">Session types</h2>
+<p>Peter Thiemann</p>
+<ul>
+<li><p>Type systems for protocols.</p></li>
+<li><p>Communication safety like type safety.</p></li>
+<li><p>π-calculus</p></li>
+<li><p>Binary session types =&gt; 2 actors</p></li>
+</ul>
+<p>&amp;: External choice xor symbol: Internal choice ?: input !: output
+S: recurse</p>
+<p>client and server types are duals of each other.</p>
+<ul>
+<li>Linear type: single use values
+<ul>
+<li>Values that can't be reused</li>
+<li>Like linear logic in that sense, I guess.</li>
+</ul></li>
+</ul>
+<h2 id="panel">Panel</h2>
+<ul>
+<li>Why PhD?</li>
+</ul>
+<p>Choosing problem:</p>
+<ul>
+<li>Intersection of own interests + general interest of community</li>
+<li>First advisor, then branched out via collaborations.</li>
+</ul>
+<p>Which is better? Find a problem and figure out a way to solve it? Or
+find a solution and find a problem for it? Any thoughts?</p>
+<blockquote>
+<p>Grad school is what <em>you</em> make of it.</p>
+</blockquote>
+<p>you choose your own path. <strong>Take initiative.</strong></p>
+<p>Amount of time available for research will only go down. Make good
+use of PhD time. And you become less young as time goes on.</p>
+<h2 id="how-not-to-give-a-great-research-talk">How not to give a great
+research talk</h2>
+<p>What to do:</p>
+<ul>
+<li>No need of outline slides
+<ul>
+<li>∵ it's like a forward reference.</li>
+</ul></li>
+<li>No need to explan <em>all</em> details.
+<ul>
+<li>Choose important aspects only.</li>
+</ul></li>
+<li>Explain what you did.
+<ul>
+<li>But not <em>everything</em> you did.</li>
+</ul></li>
+<li>Use examples.</li>
+<li>Same beamer theme is tiresome.
+<ul>
+<li>Try having a unique theme.</li>
+</ul></li>
+<li>Get timing right.
+<ul>
+<li>Skipping visible slides isn't great.</li>
+</ul></li>
+<li>Make the last slide the takeaway message instead of 'Thank you'.
+<ul>
+<li>This is the slide that should stay visible during Q&amp;A. Let the
+message sink in.</li>
+</ul></li>
+</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Synthesis of digital systems</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Synthesis of digital systems</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="high-level-synthesis">High level synthesis:</h2>
+<p>Input:</p>
+<ul>
+<li>Behavioural HDL processes. All of which needs to be run concurrently
+<ul>
+<li>Only functionality is modeled here.</li>
+</ul></li>
+<li>Clock period</li>
+<li>Component library (the components that are availble to be used, I
+guess)
+<ul>
+<li>Components of different area, delay, power dissipation, number of
+ports, etc.</li>
+<li>ALUs, memory, adders, multipliers, comparators, etc.</li>
+</ul></li>
+<li>Constraints
+<ul>
+<li>Resource, delays, power, etc (which may also depend on the budget
+allocated to the design)</li>
+</ul></li>
+</ul>
+<p>Output:</p>
+<ul>
+<li>FSM (controller)</li>
+<li>datapath</li>
+</ul>
+<p>Example: The behavioural model</p>
+<p>y &lt;= (A+B) * C - (D+E)/F;</p>
+<p>which is implictly</p>
+<p>y &lt;= [(A+B) * C] - [(D+E)/F];</p>
+<p>and becomes</p>
+<p>Clock0:</p>
+<ul>
+<li>t1 &lt;= A+B</li>
+<li>t2 &lt;= D+E</li>
+</ul>
+<p>Clock1:</p>
+<ul>
+<li>t3 &lt;= t1*C</li>
+<li>t4 &lt;= t2/F</li>
+</ul>
+<p>Clock2:</p>
+<ul>
+<li>y &lt;= t3-t4</li>
+</ul>
+<h2 id="scheduling">Scheduling</h2>
+<ul>
+<li>Leads to the FSM part.</li>
+<li>Maps operations to specific clock cycles.</li>
+</ul>
+<pre><code>|   │   |   │     ┆      |   │   |   │            
+|   │   |   │     ┆     ┄|┄┄┄│┄┄┄│┄┄┄│┄┄ Clk0     
+└─┬─┘   └─┬─┘     ┆      └─┬─┘   └─┬─┘                 
+  +       +       ┆        +       +                 
+  |       │       ┆     ┄┄┄|┄┄┄┄┄┄┄│┄┄┄┄ Clk1        
+  └───┬───┘       ┆        └───┬───┘            
+      +           ┆            +                 
+      │                 ┄┄┄┄┄┄┄|┄┄┄┄┄┄┄┄ Clk2    
+
+where the &#39;+&#39; denotes operations.
+</code></pre>
+<p>Function unit binding:</p>
+<ul>
+<li>Operations are mapped to appropriate FUs from the resource
+library.</li>
+<li>The kind of FUs chosen determines the interconnections and hence the
+data path.</li>
+</ul>
+<p>Register allocation:</p>
+<ul>
+<li>Assigning values (temporary variables) to registers.</li>
+<li>Values that would be used in a future clock cycle.
+<ul>
+<li>'variables persisting across clock boundaries implies register'</li>
+</ul></li>
+</ul>
+<h2 id="fsm-encoding">FSM encoding</h2>
+<ul>
+<li>aka 'State encoding' aka 'State assignment'.</li>
+<li>State assignment. ie, making states.
+<ul>
+<li>Assign unique codes to symbolic states of FSM.</li>
+</ul></li>
+<li>Encoding is needed to have an implementation.</li>
+<li>Number of states = minimum number of bits (ie, D-FFs) in state
+register of FSM.</li>
+<li>State table is constructed.</li>
+<li>State table is converted to truth table.</li>
+<li>Truth table =&gt; logic for output and next state .</li>
+<li>Logic minimization can be done using truth table.</li>
+</ul>
+<pre><code> Current state
++--------------+
+|              |        
+|              ^        
+|              |        
+|   +------------------------+
+|   |    State register      |
+|   +------------------------+
+|              |
+v              ^   Next state
+|              |
+|   +------------------------+
+|   | Next state and output  |
+|   |    output logic        |------&gt; Output 
+|   +------------------------+
+|           |        |
+|           ^        ^
+|           |        |
++-----------+        |
+                    Input
+</code></pre>
+<p>Mealy machine notation: <code>condition/action</code></p>
+<h1 id="abbreviations">Abbreviations</h1>
+<ul>
+<li>FU: Functional unit</li>
+</ul>
+</div>
+</body>
+</html>

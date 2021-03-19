@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Graph theory</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Graph theory</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<p>Some terms used in graph theory.</p>
+<p>(Thanks to Ganesh sir for introducing and/or reminding me about a lot
+of this.)</p>
+<hr />
+<h1 id="graph">Graph</h1>
+<ul>
+<li>Consists of 2 sets:
+<ul>
+<li>set of nodes/vertices</li>
+<li>set of edges</li>
+</ul></li>
+</ul>
+<h1 id="tour">Tour</h1>
+<ul>
+<li>A closed trail.</li>
+<li>A path consisting of all vertices in the graph.</li>
+<li>ie, a walk with no repeating</li>
+</ul>
+<h1 id="euler-cycle">Euler cycle</h1>
+<ul>
+<li>Cycle where no edges are repeated.</li>
+<li>aka Eulerian circuit</li>
+<li>aka Eulerian trail</li>
+</ul>
+<h1 id="hamiltonian-cycle">Hamiltonian cycle</h1>
+<ul>
+<li>Cycle where no edges are repeated.</li>
+</ul>
+<h1 id="mixed-graph">Mixed graph</h1>
+<p>Graph containing a mix of directed and undirected edges.</p>
+<h1 id="hypergraph">Hypergraph</h1>
+<p>A graph with <strong><strong>hyperedges</strong></strong>. ie, an
+edge which is connects more than just two vertices.</p>
+<h1 id="undirected-graph">Undirected graph</h1>
+<h2 id="simple-graph">Simple graph</h2>
+<p>Graph satisfying the following conditions:</p>
+<ul>
+<li>no loops (edge incident only on one vertex).</li>
+<li>no more than one edge between the same pair of vertices.</li>
+</ul>
+<h2 id="multi-graph">Multi graph</h2>
+<p>A non-simple graph.</p>
+<p>ie, has a loop or parallel edges.</p>
+<h2 id="adjacent-vertices">Adjacent vertices</h2>
+<p>Vertices linked by an edge.</p>
+<h2 id="walk">Walk</h2>
+<ul>
+<li>An alternating sequence of vertices and edges, which joins a
+sequence of vertices.</li>
+<li>aka chain</li>
+<li>open walk :: starting and ending vertices are different</li>
+<li>closed walk :: same starting and ending vertex</li>
+</ul>
+<h2 id="trail">Trail</h2>
+<p>A walk with distinct edges.</p>
+<h2 id="path">Path</h2>
+<p>A walk with distinct vertices.</p>
+<h2 id="cycle">Cycle</h2>
+<ul>
+<li>A closed walk with distinct vertices.</li>
+<li>aka circuit??</li>
+</ul>
+<h2 id="connected-graph">Connected graph</h2>
+<p>All vertices linked together by edges. "All vertex pairs are joined
+by a path". There exists a path between every pair of nodes.</p>
+<p>Need not be a complete graph.</p>
+<h2 id="induced-subgraph">Induced subgraph</h2>
+<p>A type subgraphs.</p>
+<h2 id="line-graph">Line graph</h2>
+<h2 id="acyclic-graph-forest">Acyclic graph (Forest)</h2>
+<p>Graph without any cycles.</p>
+<h2 id="tree">Tree</h2>
+<p>Just a connected acyclic graph.</p>
+<h2 id="rooted-tree">Rooted tree</h2>
+<p>Tree with a distinguished root vertex.</p>
+<h2 id="nodes">Nodes</h2>
+<p>Vertices of a tree.</p>
+<h2 id="leaves">Leaves</h2>
+<p>Nodes of a tree when they are adjacent to only one vertex and are not
+root.</p>
+<h1 id="directed-graphs">Directed graphs</h1>
+<h2 id="head-and-tail-of-an-edge">Head and tail of an edge</h2>
+<dl>
+<dt>Head</dt>
+<dd>
+Vertex from which the edge starts.
+</dd>
+<dt>Tail</dt>
+<dd>
+Vertex at which the edge ends.
+</dd>
+</dl>
+<h2 id="successor-and-predecessor-vertices-in-a-dag">Successor and
+predecessor vertices in a DAG</h2>
+<p>If there is a path from a vertex A to another vertex B,</p>
+<ul>
+<li>B is a <strong>successor</strong> of A</li>
+<li>A is a <strong>predecessor</strong> of B</li>
+<li>B is <strong>reachable</strong> from A</li>
+</ul>
+<p><strong>Direct successor/predecessor</strong> means the vertices are
+directly connected. ie, there vertices are directly linked by a single
+edge. The vertices are then said to be <strong>adjacent</strong>.</p>
+<h2 id="indegree-of-a-vertex">Indegree of a vertex</h2>
+<p>Number of edges for which the vertex is the head.</p>
+<h2 id="outdegree-of-a-vertex">Outdegree of a vertex</h2>
+<p>Number of edges for which the vertex is the tail.</p>
+<h2 id="walk-1">Walk</h2>
+<p>An alternating sequence of vertices and edges with the same
+direction.</p>
+<h2 id="directed-acyclic-graph-dag">Directed acyclic graph (DAG)</h2>
+<p>Represents a partial ordering.</p>
+<h2 id="polar-dag">Polar DAG</h2>
+<p>A DAG with two distinguished vertices: a source and a sink.</p>
+<h3 id="source">Source</h3>
+<p>All vertices are reachable from the source vertex of the graph.</p>
+<h3 id="sink">Sink</h3>
+<p>Sink vertex is reachable from all vertices of the graph.</p>
+<h2 id="incidence-matrix">Incidence matrix</h2>
+<p>Rows = vertices Columns = edges</p>
+<h2 id="adjacency-matrix">Adjacency matrix</h2>
+<p>Rows = vertices Columns = vertices</p>
+<h1 id="perfect-graphs">Perfect graphs</h1>
+<h2 id="clique-of-a-graph">Clique of a graph</h2>
+<p>A complete subgraph.</p>
+<h2 id="maximum-clique-of-a-graph">Maximum clique of a graph</h2>
+<p>Largest possible clique of a graph.</p>
+<h2 id="clique-number-of-a-graph">Clique number of a graph</h2>
+<p>Cardinality (ie, number of vertices) of the maximum clique of the
+graph.</p>
+<h1 id="orientation">Orientation</h1>
+<p>Orientation of an undirected graph is an assignment of exactly one
+direction to all edges of that graph.</p>
+<h1 id="graphs-with-names">Graphs with names</h1>
+<ul>
+<li>Steiner tree</li>
+</ul>
+<h2 id="petersen-graph">Petersen graph</h2>
+<ul>
+<li>Undirected</li>
+<li>10 nodes</li>
+</ul>
+<h1 id="planar-graph">Planar graph</h1>
+<p>Graph that can be drawn in 2D with no two edges crossing each
+other.</p>
+<p>Examples:</p>
+<ul>
+<li>Petersen graph</li>
+<li>k4</li>
+<li>graph representation of a 3D cube</li>
+</ul>
+<p>k4 (complete graph with 4 nodes) is planar (biggest planar complete
+graph??).</p>
+<pre><code>               +---------+
+N----N         |         |
+|\  /|         N----N    |
+| \/ |         |   /|    |
+| /\ |    ≡    |  / |    |
+|/  \|         | /  |    |
+N----N         |/   |    |
+               N----N----+
+</code></pre>
+<p>A cube can be made into a planar graph.</p>
+<pre><code>N-----------N
+|\         /|
+| \       / |
+|  N-----N  |
+|  |     |  |
+|  |     |  |
+|  N-----N  |
+| /       \ |
+|/         \|
+N-----------N
+</code></pre>
+<h2 id="eulers-formula-for-planar-graphs">Euler's formula for planar
+graphs</h2>
+<p><span class="spurious-link" target="Ref"><em>l3</em></span></p>
+<pre><code>|F| - |E| + |V| = 2
+</code></pre>
+<h1 id="minor-of-a-graph">Minor of a graph</h1>
+<p>Graph that can be formed by deleting some edges, vertices and
+'merging' some vertices if needed.</p>
+<p>For example<a
+href="https://en.wikipedia.org/wiki/Graph_minor">²</a>:</p>
+<pre><code>    B       
+    |       
+D---Z---E   
+    |       
+    C       
+</code></pre>
+<p>is a minor of</p>
+<pre><code>    B
+   /|
+  / |
+ /  |
+D---X---Y---E---F
+        |  /
+        | /
+        |/
+        C
+</code></pre>
+<p>formed by</p>
+<ul>
+<li>deleting X-Y edge, and merging X and Y (ie, contracting the vertices
+X and Y)</li>
+<li>deleting node F</li>
+<li>deleting CE, BD</li>
+</ul>
+<h1 id="diameter-of-a-graph">Diameter of a graph</h1>
+<p>Length of largest possible path within graph.</p>
+<h1 id="interesting-bits">Interesting bits</h1>
+<ul>
+<li>An octahedron can be made into a planar graph.</li>
+</ul>
+<h1 id="more">More</h1>
+<ul>
+<li>Topological sort</li>
+<li>Bipartite graph
+<ul>
+<li></li>
+<li>Every edge will one end point in A and other in B</li>
+</ul></li>
+<li>Split graph</li>
+<li>Chordal graph
+<ul>
+<li>Every induced cycle is a triangle.</li>
+</ul></li>
+<li>Independent set</li>
+<li>Spanning tree</li>
+<li>Mixed multi-graph</li>
+<li>Radius and diameter of a digraph??</li>
+<li>Eccentricity of a graph</li>
+<li>oriented diameter</li>
+<li>2 edge connected graph: remove an edge and the graph is still
+connected</li>
+<li>Strongly connected: path between any pair of vertices</li>
+<li>'Bridge' in a graph: remove a bridge in a connected graph and the
+graph becomes disconnected.</li>
+</ul>
+<h1 id="references">References</h1>
+<ul>
+<li><em>Introduction to algorithms</em> - Thomas H. Cormen, Charles E.
+Leiserson, Ronald L. Rivest, Clifford Stein</li>
+<li><em>Synthesis and optimization of digital circuits</em> - Giovanni
+De Micheli</li>
+<li><a href="https://en.wikipedia.org/wiki/Glossary_of_graph_theory"><a
+href="https://en.wikipedia.org/wiki/Glossary_of_graph_theory">https://en.wikipedia.org/wiki/Glossary_of_graph_theory</a></a></li>
+</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Rust</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Rust</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="general">General</h2>
+<ul>
+<li>Default integer type: <code>i32</code></li>
+<li>Ownership
+<ul>
+<li>Each resource can have only one owner at a time.</li>
+<li>References are variables which can access data without owning
+it.</li>
+</ul></li>
+<li>Destructuring: Looks like pattern matching
+<ul>
+<li><a
+href="https://doc.rust-lang.org/rust-by-example/flow_control/match/destructuring/destructure_tuple.html">https://doc.rust-lang.org/rust-by-example/flow_control/match/destructuring/destructure_tuple.html</a></li>
+</ul></li>
+</ul>
+<h2 id="references">References</h2>
+<p><a
+href="https://doc.rust-lang.org/rust-by-example/flow_control/match/destructuring/destructure_pointers.html">https://doc.rust-lang.org/rust-by-example/flow_control/match/destructuring/destructure_pointers.html</a></p>
+<ul>
+<li>Syntax is similar to pointers in C.</li>
+<li>Create a reference to <code>x</code>: <code>&amp;x</code></li>
+<li>Dereference a reference <code>rf</code>: <code>*rf</code></li>
+</ul>
+<h2 id="printing">Printing</h2>
+<p>See:</p>
+<ul>
+<li><a
+href="https://doc.rust-lang.org/std/fmt/">https://doc.rust-lang.org/std/fmt/</a></li>
+<li><a
+href="https://doc.rust-lang.org/rust-by-example/hello/print.html">https://doc.rust-lang.org/rust-by-example/hello/print.html</a></li>
+</ul>
+<hr />
+<p><a
+href="https://doc.rust-lang.org/std/fmt/#formatting-traits">Formatting
+traits</a>:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><code>{:b}</code></td>
+<td>binary</td>
+</tr>
+<tr class="even">
+<td><code>{:o}</code></td>
+<td>octal</td>
+</tr>
+<tr class="odd">
+<td><code>{:x}</code></td>
+<td>hexadecimal (lowercase)</td>
+</tr>
+<tr class="even">
+<td><code>{:X}</code></td>
+<td>hexadecimal (uppercase)</td>
+</tr>
+<tr class="odd">
+<td><code>{:?}</code></td>
+<td>for debugging</td>
+</tr>
+<tr class="even">
+<td><code>{}</code></td>
+<td>user friendly</td>
+</tr>
+</tbody>
+</table>
+<h2 id="copy-semantics">Copy semantics</h2>
+<ul>
+<li>All stack allocated values have copy semantics.</li>
+<li>Types with copy semantics have <code>Copy</code> traits.
+<ul>
+<li><code>Copy</code> and <code>Clone</code> traits are similar but have
+different purposes.</li>
+<li><a
+href="https://doc.rust-lang.org/std/marker/trait.Copy.html#whats-the-difference-between-copy-and-clone">https://doc.rust-lang.org/std/marker/trait.Copy.html#whats-the-difference-between-copy-and-clone</a></li>
+</ul></li>
+</ul>
+<h2 id="move-semantics">Move semantics</h2>
+<p><a
+href="https://doc.rust-lang.org/rust-by-example/scope/move.html">https://doc.rust-lang.org/rust-by-example/scope/move.html</a></p>
+<ul>
+<li>Types with copy semantics have <code>Drop</code> trait (to drop
+ownership)
+<ul>
+<li>To prevent accidental use, <code>Drop::drop()</code> can't be called
+manually.</li>
+<li><a
+href="https://doc.rust-lang.org/std/ops/trait.Drop.html#you-cannot-call-dropdrop-yourself">https://doc.rust-lang.org/std/ops/trait.Drop.html#you-cannot-call-dropdrop-yourself</a></li>
+</ul></li>
+</ul>
+<h3 id="example-box">Example: <code>Box</code></h3>
+<p><code>Box</code> has move semantics by default.</p>
+<p>This works:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode rust"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> foo () <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> x <span class="op">=</span> <span class="dt">Box</span><span class="pp">::</span>new(<span class="dv">5</span>)<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="pp">println!</span>(<span class="st">&quot;x is: {}&quot;</span><span class="op">,</span> x)<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  foo()<span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">$ rustc hello.rs &amp;&amp; ./hello</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">x is: 5</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span></code></pre></div>
+<p>This works too:</p>
+<pre><code>fn foo (x: Box&lt;i32&gt;) {
+  println!(&quot;x is: {}&quot;, x);
+}
+
+fn main() {
+  let x = Box::new(5);
+  foo(x);
+  //println!(&quot;x is: {}&quot;, x);
+}
+</code></pre>
+<p>But this doesn't:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode rust"><code class="sourceCode rust"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> foo (x<span class="op">:</span> <span class="dt">Box</span><span class="op">&lt;</span><span class="dt">i32</span><span class="op">&gt;</span>) <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="pp">println!</span>(<span class="st">&quot;x is: {}&quot;</span><span class="op">,</span> x)<span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> x <span class="op">=</span> <span class="dt">Box</span><span class="pp">::</span>new(<span class="dv">5</span>)<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// ownership of x &#39;moves&#39; to foo. main no longer owns x</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  foo(x)<span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// main is trying to use something it doesn&#39;t own. Error!</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="pp">println!</span>(<span class="st">&quot;x is: {}&quot;</span><span class="op">,</span> x)<span class="op">;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Error is:</p>
+<pre><code>error[E0382]: borrow of moved value: `x`
+ --&gt; hello.rs:9:24
+  |
+7 |   let x = Box::new(5);
+  |       - move occurs because `x` has type `Box&lt;i32&gt;`, which does not implement the `Copy` trait
+8 |   foo(x);
+  |       - value moved here
+9 |   println!(&quot;x is: {}&quot;, x);
+  |                        ^ value borrowed here after move
+  |
+note: consider changing this parameter type in function `foo` to borrow instead if owning the value isn&#39;t necessary
+ --&gt; hello.rs:2:12
+  |
+2 | fn foo (x: Box&lt;i32&gt;) {
+  |    ---     ^^^^^^^^ this parameter takes ownership of the value
+  |    |
+  |    in this function
+  = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider cloning the value if the performance cost is acceptable
+  |
+8 |   foo(x.clone());
+  |        ++++++++
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0382`.
+</code></pre>
+<h2 id="cargo">cargo</h2>
+<p><a
+href="http://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/cargo/guide/creating-a-new-project.html">http://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/cargo/guide/creating-a-new-project.html</a></p>
+<pre><code># --bin for binary program (--lib for library)
+# initializes a git repo by default. Disabling with --vcs none
+cargo new &lt;proj_name&gt;  --bin --vcs none
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Group on natural numbers</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Group on natural numbers</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+<div id="description">
+About finding a group on the set of natural numbers.
+</div>
+
+<div id="content-container">
+<p>Errors are my own. Please do tell me if you find any.</p>
+<hr />
+<p>I had been developing an interest in the mathematical aspects of
+computer science and tried exploring a bit of the basics of group
+theory.</p>
+<p>Still don't know too many applications where groups would be
+interesting to someone who is not a mathematician, but I read that group
+theory is highly useful in many fields.</p>
+<p>This includes:</p>
+<ul>
+<li>Physics: eg: <a
+href="https://en.wikipedia.org/wiki/Standard_Model">Standard Model of
+particle physics</a>)</li>
+<li>Chemistry: eg: Symmetry of molecules</li>
+<li>Computer science: Category theory textbooks mention a lot of group
+theory stuff.</li>
+</ul>
+<p>Found this on <a
+href="https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Group_Theory/Group_Theory_and_its_Application_to_Chemistry">a
+webpage related to chemistry</a>:</p>
+<blockquote>
+<p>Group theory is the mathematical application of symmetry to an object
+to obtain knowledge of its physical properties.</p>
+</blockquote>
+<p>Talking about symmetry, was quite intrigued to find that the possible
+moves of a Rubik's cube can be represented using group theory concepts
+(<a href="https://en.wikipedia.org/wiki/Rubik%27s_Cube_group">Rubik's
+Cube group</a>).</p>
+<hr />
+<p>Anyway, a few days ago, I was wondering if it was possible to have a
+group defined over the set of natural numbers.</p>
+<p>Where <code>0 ∉ ℕ</code>. ie, ℕ₁.</p>
+<p>Couldn't find any. So I asked one of my friends who is a mathematics
+student.</p>
+<p>Randomly tried a few basic operations like addition, multiplication,
+maximum element etc.</p>
+<p>But in each case, either the identity or the inverse would be
+missing.</p>
+<h2 id="definition-of-a-group">Definition of a group</h2>
+<p>Of course, my friend knew the exact definition of groups, but I keep
+forgetting it and had to look it up again.</p>
+<p>Informally speaking, a group is a set <code>G</code> together with a
+binary operation <code>*</code> (commonly called multiplication, but
+needn't be the multiplication operation) that accepts two element of
+<code>A</code> to give an element of <code>A</code> (ie, maintains
+closure) which satisfies the following three conditions (known as
+<em>group axioms</em>):</p>
+<ul>
+<li>Associativity: <code>*</code> is an associative operation
+<ul>
+<li><code>∀(x y z:G), x * (y * z) = (x * y) * z</code></li>
+</ul></li>
+<li>Identity: There exists an element <code>e ∈ G</code> such that
+applying <code>*</code> on <code>e</code> and any value
+<code>n ∈ G</code> would result in <code>n</code> itself.
+<ul>
+<li><code>∃(e:G), ∀(x:G), x * e = e * x = x</code></li>
+<li>There can be only one identity element for the whole group.</li>
+</ul></li>
+<li>Inverses: For each element <code>n ∈ G</code>, there exists an
+element <code>v ∈ G</code> such that applying <code>*</code> on
+<code>v</code> and <code>n</code> would result in the identity element
+<code>e</code>.
+<ul>
+<li><code>∀(x:G), ∃(v:G), x * v = v * x = e</code></li>
+<li>Unlike the case of the identity element, the inverses for different
+elements of <code>G</code> can be different.</li>
+</ul></li>
+</ul>
+<p>Such a set is usually written as <code>(G, *)</code>. And the name of
+its set is often used to refer to the group itself.</p>
+<p>After having recalled the definition, we set out on our quest to find
+a group on ℕ.</p>
+<h2 id="an-indirect-way">An 'indirect' way</h2>
+<p>When we came upon <a
+href="https://math.stackexchange.com/questions/2805173/looking-for-operations-by-which-the-set-of-natural-numbers-becomes-a-group">this
+post</a> on math stackexchange, we found out that though we can't have a
+group on ℕ relying on a function operating with ℕ alone, there are other
+ways.</p>
+<p>Just got to find a bijection between ℕ and a set on which a group can
+be defined.</p>
+<p>The set of integers, with the following, constitutes a group:</p>
+<ul>
+<li>binary operation: addition</li>
+<li>identity element: 0</li>
+<li>inverse element given by: <code>λx. (-x)</code></li>
+</ul>
+<p>This group may be denoted with <code>(ℤ, +, 0, -)</code>.</p>
+<p>If the binary operation <code>*</code>, internally made use of
+functions that can go from <code>ℕ</code> to <code>ℤ</code> and then
+back to <code>ℕ</code> from <code>ℤ</code>, then we can make a group out
+of <code>ℕ</code> as well!</p>
+<p>Let's use a bijection between <code>ℕ</code> and <code>ℤ</code> for
+the group on <code>ℕ</code> that we are making.</p>
+<p>Inorder to have the group, we need three things:</p>
+<ul>
+<li>Binary operation</li>
+<li>Identity element</li>
+<li>Inverse elements</li>
+</ul>
+<h3 id="binary-operation">Binary operation</h3>
+<p>To help make the binary operation (<code>*</code>), let's first make
+a function <code>f:ℕ → ℤ</code>:</p>
+<pre><code>       ⎧ 
+       ⎮   0, if x = 1
+       ⎮ 
+f(x) = ⎨   k, if x = 2k
+       ⎮ 
+       ⎮  -k, if x = 2k+1
+       ⎩ 
+</code></pre>
+<p>(This function reminds one of the <a
+href="https://en.wikipedia.org/wiki/Hilbert&#39;s_paradox_of_the_Grand_Hotel">Hilbert's
+hotel problem</a>.)</p>
+<p>So the values returned by <code>f(x)</code> would be like:</p>
+<pre><code>| x    | 1 | 2 |  3 | 4 |  5 | 6 |  7 |
+|------+---+---+----+---+----+---+----|
+| f(x) | 0 | 1 | -1 | 2 | -2 | 3 | -3 |
+</code></pre>
+<p>And the inverse of this function, <code>f⁻¹:ℕ → ℕ</code>, would
+be:</p>
+<pre><code>         ⎧ 
+         ⎮        1, if x = 0
+         ⎮ 
+f⁻¹(x) = ⎨   2k + 1, if x = -k
+         ⎮ 
+         ⎮       2k, if x = k
+         ⎩ 
+</code></pre>
+<pre><code>| x      | -3 | -2 | -1 | 0 | 1 | 2 | 3 |
+|--------+----+----+----+---+---+---+---|
+| f⁻¹(x) |  7 |  5 |  3 | 1 | 2 | 4 | 6 |
+</code></pre>
+<p>Let the binary operation <code>*</code> be defined as:</p>
+<pre><code>* : ℕ → ℕ → ℕ
+x * y = f⁻¹[f(x) + f(y)]
+</code></pre>
+<p>The <code>f⁻¹ . f</code> would be like <code>(ℕ → ℤ → ℕ)</code> and
+results in a value in <code>ℕ</code> itself.</p>
+<p>Each of the two <code>f</code> usage generates a <code>ℤ</code> value
+given a <code>ℕ</code>. Then <code>f⁻¹</code>, which produces a
+<code>ℕ</code> out of a <code>ℤ</code>, is applied on the sum of the two
+values made with <code>f</code>.</p>
+<p>The operation <code>*</code> is still <code>ℕ → ℕ</code>, though
+internally <code>ℤ</code> is involved.</p>
+<p>Integer addition is associative. And since <code>f</code> (and
+<code>f⁻¹</code>) uses just integer addition, <code>*</code> is
+associative as well.</p>
+<p><code>*</code> takes <code>ℕ</code> values and returns a
+<code>ℕ</code> value. So closure property is satisfied too.</p>
+<p>And as an additional perk of the operation <code>*</code> involving
+only integer addition, <code>*</code> is also commutative.</p>
+<p>Now we need an identity element and a way to find inverse
+elements.</p>
+<h3 id="identity-element">identity element</h3>
+<p>Let <code>e</code> be the identity element. Then,</p>
+<pre><code>∀x ∈ G,
+  x * e  =  e * x  = x
+</code></pre>
+<p>Since <code>*</code> is commutative, let's stick with just</p>
+<pre><code>∀x ∈ G,
+  x * e  = x
+</code></pre>
+<p>and</p>
+<pre><code>    x * e             =  x
+=&gt;  f⁻¹[f(x) + f(e)]  =  x
+=&gt;  f(x) + f(e)       =  f(x)
+=&gt;  f(e)              =  0
+=&gt;  e                 =  f⁻¹(0)
+=&gt;  e                 =  1
+</code></pre>
+<p>Okay, we got our identity as <code>e = 1</code>.</p>
+<p>Let's give it a try for <code>x = 5</code>.</p>
+<pre><code>   x * e
+=  5 * 1
+=  f⁻¹[f(5) + f(1)]
+=  f⁻¹(-2 + 0)
+=  f⁻¹(-2)
+=  5
+</code></pre>
+<p>Right, we got <code>5</code> itself. Sounds okay.</p>
+<p>Now it's the turn inverses.</p>
+<h3 id="inverse-elements">Inverse elements</h3>
+<p>Identity <code>e</code> is <code>1</code>.</p>
+<p>Let <code>v</code> denote the inverse element.</p>
+<p>Then,</p>
+<pre><code>∀x ∈ G,
+  x * v  =  e
+</code></pre>
+<p>which in our case is like</p>
+<pre><code>∀x ∈ G,
+  x * v  =  1
+</code></pre>
+<p>Using the definition of <code>*</code>,</p>
+<pre><code>    x * v             =  1
+=&gt;  f⁻¹[f(x) + f(v)]  =  1
+=&gt;  f(x) + f(v)       =  f(1)
+=&gt;  f(x) + f(v)       =  0
+=&gt;  f(v)              =  -f(x)
+=&gt;  v                 =  f⁻¹[-f(x)]
+</code></pre>
+<p>We got three cases to take care of:</p>
+<ul>
+<li>x = 1</li>
+<li>x = 2k</li>
+<li>x = 2k+1</li>
+</ul>
+<p>If x = 1,</p>
+<pre><code>=&gt;  v  =  f⁻¹[-f(1)]
+=&gt;  v  =  f⁻¹[0]
+=&gt;  v  =  1
+</code></pre>
+<p>and if x = 2k (ie, an even value),</p>
+<pre><code>=&gt;  v  =  f⁻¹[-f(2k)]
+=&gt;  v  =  f⁻¹[-k]
+=&gt;  v  =  2k+1
+</code></pre>
+<p>Finally, if x = 2k+1 (ie, an odd value),</p>
+<pre><code>=&gt;  v  =  f⁻¹[-f(2k+1)]
+=&gt;  v  =  f⁻¹[-(-k)]
+=&gt;  v  =  f⁻¹[k]
+=&gt;  v  =  2k
+</code></pre>
+<p>So, the function to find the inverse can be expressed as:</p>
+<p><code>inv: ℕ → ℕ</code> is like:</p>
+<pre><code>         ⎧
+         ⎮       1, if x = 1
+         ⎮    
+inv(x) = ⎨  2k + 1, if x = 2k
+         ⎮    
+         ⎮      2k, if x = 2k+1
+         ⎩
+
+</code></pre>
+<pre><code>| x      | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|--------+---+---+---+---+---+---+---|
+| f⁻¹(x) | 1 | 3 | 2 | 5 | 4 | 7 | 6 |
+</code></pre>
+<p>Let's see if the inverse elements are fine.</p>
+<p>With x=5, inverse element should be 4. So <code>5 * v</code> should
+gives the identity element <code>1</code>.</p>
+<pre><code>  5 * 4
+= f⁻¹[f(5) + f(4)]
+= f⁻¹[-2 + 2]
+= f⁻¹[0]
+= 1
+</code></pre>
+<p>Likewise, inverse element of 2 should be 3.</p>
+<pre><code>  2 * 3
+= f⁻¹[f(2) + f(3)]
+= f⁻¹[1 + (-1)]
+= f⁻¹[0]
+= 1
+</code></pre>
+<p>And <code>1</code> should be its own inverse element.</p>
+<pre><code>  1 * 1
+= f⁻¹[f(1) + f(1)]
+= f⁻¹[0 + 0]
+= f⁻¹[0]
+= 1
+</code></pre>
+<p>Well, it looks okay!</p>
+<h3 id="the-ℕ-group">The <code>ℕ</code> group</h3>
+<p>And that's it!</p>
+<p>We now have the operation, identity and inverses to make up a group
+on <code>ℕ</code>.</p>
+<pre><code>(ℕ, *, 1, inv)
+</code></pre>
+<p>As suggested <a
+href="https://math.stackexchange.com/questions/2805173/looking-for-operations-by-which-the-set-of-natural-numbers-becomes-a-group">here</a>,
+other bijections between <code>ℕ</code> and a set on which a group can
+be defined would work as well to make a group on <code>ℕ</code>.</p>
+<p>(Not yet sure if <em>any</em> such bijection would be okay.)</p>
+<p><strong>Acknowledgements</strong>: Thanks to Aditya, the friend that
+I had mentioned, who helped me understand the stuff mentioned in this
+blog post.</p>
+<p><!-- Aditya Das --></p>
+<h2 id="references">References</h2>
+<ul>
+<li><em>Contemporary abstract algebra</em> (7e) - Joseph A. Gallian</li>
+<li><a
+href="https://math.stackexchange.com/questions/2805173/looking-for-operations-by-which-the-set-of-natural-numbers-becomes-a-group"><a
+href="https://math.stackexchange.com/questions/2805173/looking-for-operations-by-which-the-set-of-natural-numbers-becomes-a-group">https://math.stackexchange.com/questions/2805173/looking-for-operations-by-which-the-set-of-natural-numbers-becomes-a-group</a></a></li>
+<li><a
+href="https://math.stackexchange.com/questions/190315/representing-a-countable-field-by-bbb-n-transport-of-algebraic-structure/190326#190326"><a
+href="https://math.stackexchange.com/questions/190315/representing-a-countable-field-by-bbb-n-transport-of-algebraic-structure/190326#190326">https://math.stackexchange.com/questions/190315/representing-a-countable-field-by-bbb-n-transport-of-algebraic-structure/190326#190326</a></a></li>
+</ul>
+<h2 id="addendum">Addendum</h2>
+<h3 id="random-initial-attempts-to-find-group-on-ℕ">Random initial
+attempts to find group on ℕ</h3>
+<p>Had made a few random, trivial and futile attempts to find a group on
+ℕ at first.</p>
+<p>Here are some of them.</p>
+<p>Assuming that <code>0 ∈ ℕ</code>.</p>
+<p>(<code>ℕ</code>, <code>+</code>):</p>
+<ul>
+<li>closure ✓
+<ul>
+<li><code>∀(x y z:ℕ), x + y = z</code></li>
+</ul></li>
+<li>associative ✓
+<ul>
+<li><code>∀(x y z:ℕ), x + (y + z) = (x + y) + x</code></li>
+</ul></li>
+<li><code>e = 0</code> can be identity element.
+<ul>
+<li><code>∀n:ℕ, n + 0 = 0 + n = n</code></li>
+</ul></li>
+<li>no inverse (with <code>e = 0</code>)
+<ul>
+<li><code>∄v:ℕ, ∀n:ℕ, n + v = v + n = 0</code></li>
+<li>Eg: <code>4 ∈ ℕ</code>, but <code>4 + v = 0</code> means
+<code>v = -4 ∉ ℕ</code></li>
+</ul></li>
+</ul>
+<p>(<code>ℕ</code>, <code>*</code>):</p>
+<ul>
+<li>closure ✓
+<ul>
+<li><code>∀(x y z:ℕ), x * y = z</code></li>
+</ul></li>
+<li>associative ✓
+<ul>
+<li><code>∀(x y:ℕ), x * (y * z) = (x * y) * x</code></li>
+</ul></li>
+<li><code>e = 1</code> can be identity element.
+<ul>
+<li><code>∀n:ℕ, n * 1 = 1 * n = n</code></li>
+</ul></li>
+<li>no inverse (with <code>e = 1</code>)
+<ul>
+<li><code>∄v:ℕ, ∀n:ℕ, n * v = v * n = 1</code></li>
+<li>Eg: <code>4 ∈ ℕ</code>, but <code>4 * v = 1</code> means
+<code>v = 1/4 ∉ ℕ</code>. Would've been okay if the set was
+<code>ℝ</code> instead of <code>ℕ</code>.</li>
+</ul></li>
+</ul>
+<p>(<code>ℕ</code>, <code>max</code>):</p>
+<ul>
+<li>closure ✓
+<ul>
+<li><code>∀(x y z:ℕ), max(x, y) = z</code></li>
+</ul></li>
+<li>associative ✓
+<ul>
+<li><code>∀(x y z:ℕ), max(x, max(y, z)) = max(max(x, y), z)</code></li>
+</ul></li>
+<li><code>e = 0</code> can be identity element.
+<ul>
+<li><code>∀n:ℕ, max(n, 0) = max(0, n) = n</code></li>
+</ul></li>
+<li>no inverse (with <code>e = 0</code>)
+<ul>
+<li><code>∄v:ℕ, ∀n:ℕ, max(n, v) = max(v, n) = 0</code></li>
+<li>Eg: <code>4 ∈ ℕ</code>, but <code>max(4, v) = 0</code> means
+<code>v ≥ 4</code> which is not <code>0</code></li>
+</ul></li>
+</ul>
+<p>(<code>ℕ</code>, <code>min</code>):</p>
+<ul>
+<li>closure ✓
+<ul>
+<li><code>∀(x y z:ℕ), min(x, y) = z</code></li>
+</ul></li>
+<li>associative ✓
+<ul>
+<li><code>∀(x y z:ℕ), min(x, min(y, z)) = min(min(x, y), z)</code></li>
+</ul></li>
+<li>can't have an identity element
+<ul>
+<li><code>∄e:ℕ, ∀n:ℕ, min(n, e) = min(e, n) = n</code></li>
+<li>Eg: <code>4 ∈ ℕ</code>, but <code>min(4, e) = 4</code> means
+<code>e ≤ 4</code>, but then again <code>e</code> would've have to be
+different for other <code>n ∈ ℕ</code>.</li>
+</ul></li>
+</ul>
+<h3 id="zero-is-neither-positive-nor-negative">Zero is neither positive
+nor negative</h3>
+<p>Sort of a proof for zero being a number that is neither a positive
+nor negative.</p>
+<p>(At some point my friend and I ended up talking about this. Wanted to
+write it down somewhere. 😃)</p>
+<p>Let's do case analysis.</p>
+<p>There are two possibilities that we need to consider:</p>
+<ul>
+<li>zero being positive</li>
+<li>zero being negative</li>
+</ul>
+<p>Assume that <code>0</code> is positive, then any negative number
+multiplied by <code>0</code> should result in a negative number.</p>
+<p>But</p>
+<pre><code>0 * -5 = 0
+</code></pre>
+<p>and as per our assumption at this point, <code>0</code> is positive.
+So we got a positive value when a negative number should've showed
+up.</p>
+<p>That's a contradiction.</p>
+<p>So, <code>0</code> can't have been positive.</p>
+<p>Now, let's consider the other case.</p>
+<p>Assume that <code>0</code> is negative, then any negative number
+multiplied by <code>0</code> should result in a positive number.</p>
+<p>But</p>
+<pre><code>0 * -5 = 0
+</code></pre>
+<p>and as per our assumption at this point, <code>0</code> is negative.
+So we got a negative value when a positive value was expected.</p>
+<p>That's another contradiction.</p>
+<p>Then, <code>0</code> can't have been negative either.</p>
+<p>So, <code>0</code> is neither positive nor negative.</p>
+<pre><code>∎
+</code></pre>
+</div>
+</body>
+</html>

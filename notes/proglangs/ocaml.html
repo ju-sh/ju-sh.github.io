@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>OCaml</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">OCaml</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="general">General</h2>
+<ul>
+<li><p>Character constants: <code>'a'</code></p></li>
+<li><p>List concatenation: <code>l1 @ l2</code></p></li>
+<li><p>String concatenation: <code>str1 ^ str2</code> or
+<code>String.cat str1 str2</code></p></li>
+<li><p>Anonymous function: <code>fun x y -&gt; x + y</code></p></li>
+<li><p><code>@@</code>: comparable to <code>$</code> in haskell. First
+evaluates RHS then applies LHS to it. <a
+href="https://stackoverflow.com/questions/33394656/is-there-an-ocaml-operator-and-what-does-it-mean">ʳ</a></p></li>
+<li><p>'<code>Module.(e)</code> is equivalent to
+<code>let open Module in e</code>' <a
+href="https://stackoverflow.com/questions/30493644/ocaml-operator">ʳ</a></p>
+<ul>
+<li>Open a module temporarily for an expression.</li>
+</ul></li>
+<li><p>Check installed modules: <code>ocamlfind list</code></p></li>
+<li><p>Function arguments are eagerly evaluated.</p></li>
+<li><p>Variables are made with <code>let</code>.</p></li>
+<li><p>Recursive functions are made with <code>let rec</code>.</p></li>
+<li><p><code>ocamlfmt</code>: an automatic code reformatter for
+ocaml</p></li>
+<li><p>Useful: <a
+href="https://doc.sherlocode.com/">https://doc.sherlocode.com/</a></p>
+<ul>
+<li>Like hoogle (haskell)</li>
+</ul></li>
+</ul>
+<h2 id="operator"><code>(|&gt;)</code> operator</h2>
+<p>It's like a reversed apply. <a
+href="https://stackoverflow.com/questions/30493644/ocaml-operator">ʳ</a></p>
+<p>Function can be made to appear on RHS and its argument in LHS.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(|&gt;);;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>- : &#39;a -&gt; (&#39;a -&gt; &#39;b) -&gt; &#39;b = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fl">0.0</span> |&gt; <span class="dt">sin</span>;;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">float</span> = <span class="dv">0</span>.</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dt">sin</span> <span class="fl">0.0</span>;;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">float</span> = <span class="dv">0</span>.</span></code></pre></div>
+<p>Useful to make a 'pipeline' where the value flows from the left to
+the right. As in:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> simple_process s =</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  Str.split Owl_nlp_utils.regexp_split s</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  |&gt; <span class="dt">List</span>.filter (<span class="kw">fun</span> x -&gt; <span class="dt">String</span>.length x &gt; <span class="dv">1</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  |&gt; <span class="dt">String</span>.concat <span class="st">&quot; &quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  |&gt; <span class="dt">String</span>.lowercase_ascii</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  |&gt; <span class="dt">Bytes</span>.of_string</span></code></pre></div>
+<p>(forgot from where I got this snippet..)</p>
+<h2 id="empty-type">Empty type</h2>
+<p>We can make 'empty types'. ie, types without even a single
+constructor. <a
+href="https://cs3110.github.io/textbook/chapters/adv/curry-howard.html">¹</a></p>
+<p>Like:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> empty = |</span></code></pre></div>
+<p>Lack of constructors means it's impossible to construct a value of
+type <code>empty</code>.</p>
+<h2 id="explicit-subtyping-info-in-type-variables">Explicit subtyping
+info in type variables</h2>
+<p>Via <strong>variance annotations</strong>.</p>
+<ul>
+<li>Covariant: <code>+'a</code></li>
+<li>Contravariant: <code>-'a</code></li>
+</ul>
+<p>By default, type variables are covariant.</p>
+<p>ocaml infers them, but the explicit notation can be helpful in the
+'interface' of modules (ocaml analogue of structures).</p>
+<p>References:</p>
+<ul>
+<li><a
+href="https://blog.janestreet.com/a-and-a/">https://blog.janestreet.com/a-and-a/</a></li>
+</ul>
+<h2 id="reference-variables">Reference (variables)</h2>
+<p>Mutable values.</p>
+<pre><code># incr;;
+- : int ref -&gt; unit = &lt;fun&gt;
+
+# let r = ref 0;;
+val r : int ref = {contents = 0}
+
+# !r;;
+- : int = 0
+
+# incr r;;
+- : unit = ()
+
+# !r;;
+- : int = 1
+</code></pre>
+<h2 id="record-types">Record types</h2>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> person = {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    name: <span class="dt">string</span>;</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    age: <span class="dt">int</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="mutable-keyword-in-ocaml"><code>mutable</code> keyword in
+ocaml</h2>
+<p>Modifiable values. ie, non-pure.</p>
+<p><code>mutable</code> is not part of the type. Just property of the
+variable.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> point = {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    x: <span class="dt">int</span>;</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">mutable</span> y: <span class="dt">int</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a># <span class="kw">let</span> p = {x=<span class="dv">3</span>; y=<span class="dv">4</span>};;</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> p : point = {x = <span class="dv">3</span>; y = <span class="dv">4</span>}</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a># p.x &lt;- <span class="dv">10</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>Error: The record field x is <span class="dt">not</span> <span class="kw">mutable</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a># p.y &lt;- <span class="dv">10</span>;;</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">unit</span> = ()</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a># p</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>- : point = {x = <span class="dv">3</span>; y = <span class="dv">10</span>}</span></code></pre></div>
+<p>References:</p>
+<ul>
+<li><a
+href="https://caml.inria.fr/pub/docs/fpcl/fpcl-07.pdf">https://caml.inria.fr/pub/docs/fpcl/fpcl-07.pdf</a></li>
+<li><a
+href="https://www.cs.cornell.edu/courses/cs3110/2018sp/l/14-mutable/notes.html">https://www.cs.cornell.edu/courses/cs3110/2018sp/l/14-mutable/notes.html</a></li>
+<li><a
+href="https://cs3110.github.io/textbook/chapters/mut/mutable_fields.html">https://cs3110.github.io/textbook/chapters/mut/mutable_fields.html</a></li>
+</ul>
+<h2 id="tilde-in-arguments">Tilde in arguments</h2>
+<p>They are <strong>labelled arguments</strong>.</p>
+<p><a
+href="https://ocaml.org/docs/labels">https://ocaml.org/docs/labels</a></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">rec</span> range ~first:a ~last:b =</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> a &gt; b <span class="kw">then</span> []</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">else</span> a :: range ~first:(a+<span class="dv">1</span>) ~last:b</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a># range</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>- : first:<span class="dt">int</span> -&gt; last:<span class="dt">int</span> -&gt; <span class="dt">int</span> <span class="dt">list</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">(* Show the argument labels! *)</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a># range <span class="dv">3</span> <span class="dv">5</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> <span class="dt">list</span> = [<span class="dv">3</span>; <span class="dv">4</span>; <span class="dv">5</span>]</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">(* Now argument order can be changed *)</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a># range ~last:<span class="dv">10</span> ~first:<span class="dv">3</span>;;</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> <span class="dt">list</span> = [<span class="dv">3</span>; <span class="dv">4</span>; <span class="dv">5</span>; <span class="dv">6</span>; <span class="dv">7</span>; <span class="dv">8</span>; <span class="dv">9</span>; <span class="dv">10</span>]</span></code></pre></div>
+<h2 id="multi-line-strings">Multi-line strings</h2>
+<p>Use within <code>{|</code> and <code>|}</code>.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a># {| hello</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   world</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>   |};;</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> = <span class="st">&quot; hello</span><span class="ch">\n</span><span class="st">   world</span><span class="ch">\n</span><span class="st">   &quot;</span></span></code></pre></div>
+<h2 id="pattern-matching">pattern matching</h2>
+<p>See: <a
+href="https://v2.ocaml.org/manual/patterns.html">https://v2.ocaml.org/manual/patterns.html</a></p>
+<p>Can use <code>function</code> to pattern match without actually
+naming variables:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">(* Given two lists, check if their concatenation is nil *)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> is2Nil = <span class="kw">function</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  | [], [] -&gt; <span class="kw">true</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  | _, _ -&gt; <span class="kw">false</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">(* is2Nil : &#39;a list * &#39;b list -&gt; bool *)</span></span></code></pre></div>
+<p>Or can use <code>match</code> as in Coq:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> is2Nil a b = </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">match</span> a, b <span class="kw">with</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  | [], [] -&gt; <span class="kw">true</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  | _, _ -&gt; <span class="kw">false</span></span></code></pre></div>
+<h2 id="sml-vs-ocaml">sml vs ocaml</h2>
+<p>Analogues:</p>
+<table>
+<thead>
+<tr class="header">
+<th>sml</th>
+<th>ocaml</th>
+<th>comment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>structure</td>
+<td>module</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>signature</td>
+<td>module type</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>fn</td>
+<td>fun</td>
+<td>Anonymous functions</td>
+</tr>
+<tr class="even">
+<td>f o g</td>
+<td>?</td>
+<td>Function composition</td>
+</tr>
+<tr class="odd">
+<td>case</td>
+<td>match</td>
+<td>Pattern matching</td>
+</tr>
+</tbody>
+</table>
+<p>Apparently, ocaml doesn't have a built-in <code>compose</code>
+function.</p>
+<p>—</p>
+<p>List elements are separated with <code>;</code> in ocaml and
+<code>,</code> in sml</p>
+<p>sml:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode sml"><code class="sourceCode sml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Standard ML <span class="kw">of</span> New Jersey (<span class="dv">64</span>-bit) v110<span class="fl">.95</span> [built: Sat Feb <span class="dv">05</span> <span class="dv">19</span>:<span class="dv">22</span>:<span class="dv">43</span> <span class="dv">2022</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>];;</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> it = [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>] : <span class="dt">int</span> <span class="dt">list</span></span></code></pre></div>
+<p>OCaml:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>OCaml version <span class="fl">4.14</span>.<span class="dv">1</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Enter #help;; <span class="kw">for</span> help.</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>];;</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>- : (<span class="dt">int</span> * <span class="dt">int</span> * <span class="dt">int</span>) <span class="dt">list</span> = [(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)]</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>];;</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> <span class="dt">list</span> = [<span class="dv">1</span>; <span class="dv">2</span>; <span class="dv">3</span>]</span></code></pre></div>
+<h2 id="imperative-features">Imperative features</h2>
+<p>From <a
+href="https://ocaml.org/docs/objects">https://ocaml.org/docs/objects</a>:</p>
+<blockquote>
+<p>OCaml is an object-oriented, imperative, functional programming
+language. It mixes all these paradigms and lets you use the most
+appropriate (or most familiar) programming paradigm for the task at
+hand.</p>
+</blockquote>
+<p>(Haskell is 'purer' than OCaml in the sense that there is lesser
+chance of side-effects.)</p>
+<h3 id="oop-object-oriented-programming">OOP (Object-oriented
+programming)</h3>
+<p>ocaml supports OOP-style classes: <a
+href="https://ocaml.org/docs/objects">https://ocaml.org/docs/objects</a></p>
+<ul>
+<li>Access method <code>foo</code> of an object <code>obj</code> with
+<code>obj#foo</code></li>
+<li><code>new</code> keyword is used to make a new object of a class
+<ul>
+<li>Eg: <code>new LTerm_widget.hbox</code></li>
+</ul></li>
+</ul>
+<h3 id="loops">Loops</h3>
+<p><a
+href="https://ocaml.org/docs/if-statements-and-loops">https://ocaml.org/docs/if-statements-and-loops</a></p>
+<ul>
+<li>Both <code>for</code> and <code>while</code> loops available.</li>
+<li>Can't break out of loop early: No <code>break</code>,
+<code>continue</code></li>
+</ul>
+<h2 id="tools">Tools</h2>
+<h3 id="ocamlformat">ocamlformat</h3>
+<p>An automatic code formatter.</p>
+<p>dune integration (needs setup in dune-project):</p>
+<ul>
+<li><p>Dry run: <code>dune build @fmt</code></p></li>
+<li><p>Apply: <code>dune promote</code></p></li>
+<li><p><a
+href="https://dune.readthedocs.io/en/stable/howto/formatting.html">https://dune.readthedocs.io/en/stable/howto/formatting.html</a></p></li>
+<li><p>Ignore all warnings: dune &lt;command&gt; –profile release</p>
+<ul>
+<li>By default, warnings are treated like errors</li>
+<li><a
+href="https://discuss.ocaml.org/t/disable-make-all-warnings-errors/11658">https://discuss.ocaml.org/t/disable-make-all-warnings-errors/11658</a></li>
+</ul></li>
+</ul>
+<h3 id="dune">dune</h3>
+<pre><code>dune init proj &lt;proj-name&gt;
+dune build
+dune exec
+</code></pre>
+<p>References: <a
+href="https://ocaml.org/docs/up-and-running">https://ocaml.org/docs/up-and-running</a></p>
+<h3 id="opam">opam</h3>
+<p>opam switches are comparable to python's venvs: <a
+href="https://ocaml.org/docs/opam-switch-introduction">https://ocaml.org/docs/opam-switch-introduction</a></p>
+<ul>
+<li><p>Show switches available to be installed: opam switch
+list-available</p></li>
+<li><p>Activate: <code>eval $(opam env)</code></p></li>
+<li><p>Create new switch:
+<code>opam switch create &lt;switch-name&gt;</code></p></li>
+<li><p>Delete a switch:
+<code>opam switch remove &lt;switch-name&gt;</code></p></li>
+<li><p>List switches: <code>opam switch</code></p></li>
+<li><p>Go to a switch:
+<code>opam switch &lt;switch-name&gt;</code></p></li>
+<li><p>Install a package:
+<code>opam install &lt;package-name&gt;</code></p></li>
+<li><p>Remove a package:
+<code>opam remove &lt;package-name&gt;</code></p></li>
+</ul>
+<p>Many useful packages are available only after adding this repo: opam
+repo add coq-released <a
+href="https://coq.inria.fr/opam/released">https://coq.inria.fr/opam/released</a></p>
+<p>Reference: <a
+href="https://opam.ocaml.org/doc/Usage.html">https://opam.ocaml.org/doc/Usage.html</a></p>
+<h3 id="tuareg-mode-of-emacs">tuareg mode of emacs</h3>
+<p>Can work with utop.</p>
+<ul>
+<li><code>M-x run-ocaml</code>: start tuareg (is an alias for
+<code>tuareg-run-ocaml</code>)</li>
+<li><code>C-c C-s</code>: Start utop</li>
+<li><code>C-x C-e</code> / <code>C-c C-e</code>: Feed block of current
+line (or selection) to utop</li>
+<li><code>C-c C-t</code>: Show type of value under cursor</li>
+</ul>
+<p><a
+href="https://ocamlpro.github.io/ocaml-cheat-sheets/tuareg-mode.pdf">https://ocamlpro.github.io/ocaml-cheat-sheets/tuareg-mode.pdf</a></p>
+<h3 id="utop">utop</h3>
+<ul>
+<li>Next completion: M-right</li>
+<li>Previous completion: M-left</li>
+<li>Select completion: M-Tab</li>
+</ul>
+<p><a
+href="https://www.systutorials.com/utop-key-bindings-key-shortcuts/">https://www.systutorials.com/utop-key-bindings-key-shortcuts/</a></p>
+<h2 id="misc">Misc</h2>
+<h3 id="packages">Packages</h3>
+<ul>
+<li>ocamlc: bytecode compiler</li>
+<li>ocamlopt: native code compiler</li>
+<li>merlin: ocaml code completion for text editors</li>
+<li>utop: like an enhanced ocaml REPL</li>
+<li>ocamlfind: ??</li>
+<li>js<sub>ofocaml</sub>: make web stuff from ocaml
+<ul>
+<li>effectively allows running ocaml equivalent code as javascript</li>
+</ul></li>
+</ul>
+<p>Jane Street libraries:</p>
+<ul>
+<li>base: a ocaml stdlib (minimal, lightweight, stable API, no
+dependencies)</li>
+<li>core: much more than base</li>
+<li>core<sub>kernel</sub>: more than base, less than core</li>
+<li>hardcaml: hardware designs with ocaml</li>
+</ul>
+<p>Historical:</p>
+<ul>
+<li>oasis: an old build tool that was used before dune came along</li>
+<li>jbuilder: earlier name of dune</li>
+</ul>
+<h3 id="ppx">ppx</h3>
+<p>Preprocessors. Change the program before giving it to compiler.
+Similar to C macros.</p>
+<p>Links:</p>
+<ul>
+<li><a
+href="https://ocaml.org/docs/metaprogramming">https://ocaml.org/docs/metaprogramming</a></li>
+<li><a
+href="https://github.com/ocaml-ppx/ppxlib/blob/main/examples/simple-extension-rewriter">https://github.com/ocaml-ppx/ppxlib/blob/main/examples/simple-extension-rewriter</a></li>
+<li><a
+href="http://ocamlverse.net/content/metaprogramming.html">http://ocamlverse.net/content/metaprogramming.html</a></li>
+</ul>
+<h3 id="deriving-_"><code>[@@deriving _]</code></h3>
+<ul>
+<li>To provide functionality similiar to automatic typeclass derivation
+in haskell.</li>
+<li>Needs third-party libraries.
+<ul>
+<li><a
+href="https://github.com/ocaml-ppx/ppxlib">https://github.com/ocaml-ppx/ppxlib</a></li>
+<li><a
+href="https://github.com/ocaml-ppx/ppx_deriving">https://github.com/ocaml-ppx/ppx_deriving</a>
+(old)</li>
+</ul></li>
+</ul>
+<h3 id="loading-base-jane-street">Loading base (Jane Street)</h3>
+<p>base is a package from janestreet.</p>
+<pre><code># #use &quot;topfind&quot;;;
+# #require &quot;base&quot;;;
+# open Base;;
+</code></pre>
+<p>base &lt; core<sub>kernel</sub> &lt; core</p>
+<p>The extra <code>#</code> are needed.</p>
+<h2 id="doubts">Doubts</h2>
+<ul>
+<li>Use of <code>.mli</code> files</li>
+<li>Camlp4 and Camlp5: for writing (complex?) parsers</li>
+</ul>
+<h2 id="infix-operator-as-prefix">Infix operator as prefix</h2>
+<p>Enclose the operator within parenthesis.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>utop # <span class="dt">List</span>.map (<span class="kw">fun</span> s -&gt; <span class="st">&quot;prefix &quot;</span> ^ s) l;;</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> <span class="dt">list</span> = [<span class="st">&quot;prefix hi&quot;</span>; <span class="st">&quot;prefix hello&quot;</span>]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>utop # <span class="dt">List</span>.map ((^) <span class="st">&quot;prefix &quot;</span>) l;;</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> <span class="dt">list</span> = [<span class="st">&quot;prefix hi&quot;</span>; <span class="st">&quot;prefix hello&quot;</span>]</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>utop # <span class="dt">List</span>.map (<span class="dt">String</span>.cat <span class="st">&quot;prefix &quot;</span>) l;;</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> <span class="dt">list</span> = [<span class="st">&quot;prefix hi&quot;</span>; <span class="st">&quot;prefix hello&quot;</span>]</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>utop # (^) ;;</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> -&gt; <span class="dt">string</span> -&gt; <span class="dt">string</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>utop # (^) <span class="st">&quot;a&quot;</span>;;</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> -&gt; <span class="dt">string</span> = &lt;<span class="kw">fun</span>&gt;</span></code></pre></div>
+<h2 id="making-an-infix-operatorfunction">Making an infix
+operator/function</h2>
+<p>Just put the name consisting of special characters and enclose it
+within parenthesis, I guess. <a
+href="https://stackoverflow.com/questions/38147841/how-to-define-an-infix-not-symbolic-aka-not-an-operator-function-in-ocaml">https://stackoverflow.com/questions/38147841/how-to-define-an-infix-not-symbolic-aka-not-an-operator-function-in-ocaml</a></p>
+<pre><code>utop # let (+-) x y = x + y;;
+val ( +- ) : int -&gt; int -&gt; int = &lt;fun&gt;
+
+utop # 3 +- 4;;
+- : int = 7
+
+utop # let (a) x y = x + y;;
+Error: Syntax error
+</code></pre>
+<h2 id="if-without-else"><code>if</code> without <code>else</code></h2>
+<p>This is possible if the <code>then</code> part value is of type
+<code>unit</code>.</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> x -&gt; <span class="kw">if</span> x&lt;<span class="dv">3</span> <span class="kw">then</span> () ;;</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> -&gt; <span class="dt">unit</span> = &lt;<span class="kw">fun</span>&gt;</span></code></pre></div>
+<p>Otherwise, it would give error:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a># <span class="kw">fun</span> x -&gt; <span class="kw">if</span> x&lt;<span class="dv">3</span> <span class="kw">then</span> <span class="st">&quot;hi&quot;</span> ;;</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Error: This expression has <span class="kw">type</span> <span class="dt">string</span> but an expression was expected <span class="kw">of</span> <span class="kw">type</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>         <span class="dt">unit</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>       because it is <span class="kw">in</span> the result <span class="kw">of</span> a conditional <span class="kw">with</span> no <span class="kw">else</span> branch</span></code></pre></div>
+<p>Links:</p>
+<ul>
+<li><a
+href="https://v2.ocaml.org/manual/expr.html#sss:expr-conditional">https://v2.ocaml.org/manual/expr.html#sss:expr-conditional</a></li>
+<li><a
+href="https://stackoverflow.com/questions/19338709/ocaml-is-it-possible-to-creat-single-if-without-else">https://stackoverflow.com/questions/19338709/ocaml-is-it-possible-to-creat-single-if-without-else</a></li>
+</ul>
+<h2 id="odoc">odoc</h2>
+<p><a
+href="https://ocaml.github.io/odoc/">https://ocaml.github.io/odoc/</a></p>
+<ul>
+<li><p>Meant to supercede an older tool?: ocamldoc</p>
+<ul>
+<li><a
+href="https://v2.ocaml.org/manual/ocamldoc.html">https://v2.ocaml.org/manual/ocamldoc.html</a></li>
+</ul></li>
+<li><p>Cross referencing possible</p></li>
+<li><p>Use comments in the <code>(** ‥ *)</code> format.</p></li>
+<li><p>Module docstring: First odoc comment</p></li>
+<li><p>Type, exception docstrings: odoc comment right before definition
+(normal comments can be there in between though)</p></li>
+<li><p>Constructor docstring: On same line</p></li>
+<li><p>Function docstring: before and after function definition</p></li>
+<li><p>Stop odoc mode with a 'stop comment': <code>(**/**)</code></p>
+<ul>
+<li>Another stop comment will re-enable odoc</li>
+</ul></li>
+<li><p>Inlince code: <code>[hello]</code></p></li>
+</ul>
+<p>List: ul, ol</p>
+<h3 id="string-formatting">String formatting</h3>
+<ul>
+<li>{b hello}: bold</li>
+<li>{i hello}: italic</li>
+<li>{e hello}: emphasize</li>
+</ul>
+<p>Alignment:</p>
+<ul>
+<li>{L hello}: left</li>
+<li>{C hello}: centre</li>
+<li>{R hello}: right</li>
+</ul>
+</div>
+</body>
+</html>

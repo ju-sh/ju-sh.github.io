@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Setting up Debian</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Setting up Debian</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+<div id="description">
+About setting up debian on a laptop computer.
+</div>
+
+<div id="content-container">
+<p>I had been using Ubuntu as the primary Linux distro on my computer
+for a long time.</p>
+<p>A lot of my friends are Debian users and I figured I would make
+debian the primary distro on my new laptop.</p>
+<p>This blog post is a description of some of the stuff that I did while
+installing and configuring debian.</p>
+<p>Used the latest stable release: Debian 11 (Bullseye).</p>
+<hr />
+<p>Initially tried using the installer that doesn't come with a desktop
+environment (to use hlwm as window manager). But got stuck after
+installing the base system when using the installer without a desktop
+environment (DE), as we need internet to download other packages and the
+only internet connection that I could access has a captive portal where
+I got to enter my username and password. And the DE-less installer comes
+without any web browser; including those usable from the terminal like
+lynx, elinks, links and w3m.</p>
+<p>Tried to do some acrobatics with wget and curl to get around that,
+but couldn't make that work (if anyone knows how we can make it work,
+please tell me 😃) as my internet access point's captive portal had some
+kind of an access token that kept changing.</p>
+<p>So finally gave up and used the installer (non-free as I needed the
+drivers) with xfce instead.</p>
+<h2 id="partitioning">Partitioning</h2>
+<p>Had used <code>fdisk</code> to partition the harddisk beforehand
+using a live ISO.</p>
+<p>The computer had 8GB of RAM.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Mount point</th>
+<th>Size</th>
+<th>File system</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>/boot/efi</code></td>
+<td>300MB</td>
+<td>efi</td>
+<td>EFI</td>
+</tr>
+<tr class="even">
+<td><code>/boot</code></td>
+<td>1.5GB</td>
+<td>ext4</td>
+<td>GRUB and Kernel</td>
+</tr>
+<tr class="odd">
+<td><code>/swap</code></td>
+<td>8GB</td>
+<td>swap</td>
+<td>Swap</td>
+</tr>
+<tr class="even">
+<td><code>/</code></td>
+<td>47%</td>
+<td>ext4</td>
+<td>Root</td>
+</tr>
+<tr class="odd">
+<td><code>/home</code></td>
+<td>53%</td>
+<td>ext4</td>
+<td>Home</td>
+</tr>
+</tbody>
+</table>
+<p><!--total secondary storage capacity: 159.7GB--></p>
+<p>See <a
+href="https://askubuntu.com/questions/1313154/how-to-know-the-proper-amount-of-needed-disk-space-for-efi-partition">here</a>
+about a discussion as to a good size for <code>/boot/efi</code>.</p>
+<p><a
+href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/installation_guide/s2-diskpartrecommend-x86">Red
+Hat's recommended partitioning</a> scheme may also be worth checking
+out. (As for me, I didn't use <a
+href="https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)">LVM</a>.)</p>
+<h2 id="configuring">Configuring</h2>
+<h3 id="adjust-apt-sources-list">Adjust apt sources list</h3>
+<p><code>apt</code>, the package manager that debian uses, has a list of
+repos from where it will fetch packages at
+<code>/etc/apt/sources.list</code>.</p>
+<p>I didn't have internet connection while installing the OS, so needed
+to edit this file manually to make it:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">deb</span> http://deb.debian.org/debian/ bullseye main</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">deb-src</span> http://deb.debian.org/debian/ bullseye main</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">deb</span> http://deb.debian.org/debian/ bullseye-updates main</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">deb-src</span> http://deb.debian.org/debian/ bullseye-updates main</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">deb</span> http://security.debian.org/debian-security bullseye-security main</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">deb-src</span> http://security.debian.org/debian-security bullseye-security main</span></code></pre></div>
+<p>Bascally, just got rid of the <code>cd-image</code> lines that were
+inserted there at the time of installation.</p>
+<p>Do an <code>sudo apt update</code> afterwards.</p>
+<h3 id="adjust-path">Adjust <code>$PATH</code></h3>
+<p>By default, <code>$PATH</code> won't include directories like
+<code>/usr/sbin/</code> where many useful executables (like
+<code>useradd</code>, <code>visudo</code>, etc) are located.</p>
+<p>So, modify <code>$PATH</code> at <code>~/.profile</code> to add:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">PATH</span><span class="op">=</span><span class="st">&quot;/sbin:/usr/sbin:</span><span class="va">$PATH</span><span class="st">&quot;</span></span></code></pre></div>
+<h3 id="add-a-user-to-sudo-group">Add a user to sudo group</h3>
+<p>By default, debian will set up two users: root and a non-root
+user.</p>
+<p>The non-root user won't be able to use sudo. We got to add it to the
+<code>sudo</code> group.</p>
+<p>We can view the list of groups to which a user belongs to using the
+<code>groups</code> command.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">groups</span> <span class="op">&lt;</span>user-name<span class="op">&gt;</span></span></code></pre></div>
+<p>To add a user to the <code>sudo</code> group, we can do (as super
+user) <a
+href="https://askubuntu.com/questions/7477/how-can-i-add-a-user-as-a-new-sudoer-using-the-command-line">¹²</a></p>
+<p><del>sudo useradd &lt;user-name&gt; sudo</del></p>
+<pre><code>adduser &lt;user-name&gt; sudo
+</code></pre>
+<p>Verify that it worked by using the <code>groups</code> command.</p>
+<h3 id="stop-beeping">Stop beeping</h3>
+<p>For my computer, the internal speaker would make a loud beeping noise
+whenever triggering the auto-completion in the shell (bash) doesn't
+result in a match.. A rather loud (and somewhat annoying) beeping
+sound.</p>
+<p>Found that a lot of people just disable the <code>pcspkr</code>
+kernel module to prevent the speaker being active. I too did that using
+<a
+href="https://wiki.archlinux.org/title/PC_speaker#Globally">¹</a>:</p>
+<pre><code>rmmod pcspkr
+</code></pre>
+<p>We can blacklist this kernel module so that we don't have to keep
+running the above command each time we turn on the computer. This can be
+done by making a file <code>/etc/modprobe.d/nobeep.conf</code> with the
+following in it:</p>
+<pre><code>blacklist pcspkr
+</code></pre>
+<h3 id="remove-custom-theme-in-grub">Remove custom theme in grub</h3>
+<p>There is a good-looking background image in the grub menu by default
+in an installation of debian with xfce (any installer other than the
+standard one without a DE, I guess).</p>
+<p>But I preferred a minimalistic setup without custom backgrounds and
+wished to remove it.</p>
+<p>To remove the custom theme we can use <a
+href="https://askubuntu.com/questions/160244/how-can-i-reset-my-grub-background-to-default">²</a>:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chmod <span class="at">-x</span> /etc/grub.d/05_debian_theme</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> update-initramfs <span class="at">-u</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> update-grub</span></code></pre></div>
+<h3 id="lightdm">lightdm</h3>
+<p>I had got lightdm as display manager. I made a couple of changes to
+how it looks like.</p>
+<h4 id="prefill-user-name">Prefill user name</h4>
+<p>lightdm doesn't pre-fill the username field by default (for better
+security and privacy, I guess), but I preferred to have it.</p>
+<p>We can change the default setting by uncommenting the following line
+in <code>/etc/lightdm/lightdm.conf</code> <a
+href="https://askubuntu.com/questions/59199/can-i-set-a-default-user-in-lightdm">³</a>:</p>
+<pre><code>greeter-hide-users=false
+</code></pre>
+<h4 id="change-background">Change background</h4>
+<p>Background was a nice artwork with the debian logo. But I preferred a
+solid colour.</p>
+<p>For this we can edit the file at
+<code>/etc/lightdm/lightdm-gtk-greeter.conf</code> and add the hex-value
+of the desired colour for <code>background</code> value under the
+<code>[greeter]</code> section.</p>
+<pre><code>[greeter]
+background=#444444
+</code></pre>
+<p>Not exactly sure why there's 'gtk' in the file name. Maybe <a
+href="https://wiki.archlinux.org/title/LightDM">this link</a> can help
+to figure that out. lightdm uses the gtk-greeter by default.</p>
+<h3 id="set-date">Set date</h3>
+<p>Date was wrong since the debian installer couldn't connect to
+internet during the installation. Fixed that with something like</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span> <span class="at">-s</span> <span class="st">&quot;2021-12-05 15:30:10&quot;</span></span></code></pre></div>
+<p>But that doesn't change the hardware clock that can be obtained with
+<code>hwclock</code> command. We can change the hardware clock to be
+same as the system clock with <a
+href="https://unix.stackexchange.com/a/151554">⁵</a>:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &#39;Copy&#39; system clock to hardware clock</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">hwclock</span> <span class="at">--systohc</span></span></code></pre></div>
+<p>(Fun fact: Set system clock to be same as hardware clock, ie 'copy'
+hardware clock to system clock, with
+<code>hwclock --hctosys</code>).</p>
+<p><!--The post in the last link seems to suggest that the roles of the ~--systohc~ and ~--hctosys~ are the other way around. But I found it this way.--></p>
+<p>If needed, we can set the time zone like <a
+href="https://askubuntu.com/questions/323131/setting-timezone-from-terminal">¹³</a>:</p>
+<pre><code>sudo timedatectl set-timezone &lt;Continent&gt;/&lt;City&gt;
+</code></pre>
+<h3 id="setting-the-font-size-right">Setting the font size right</h3>
+<p>The font size was very small. Not just the font size, the entire
+display. Even the command line in BIOS!</p>
+<p>This may be a problem with HiDPI displays. <a
+href="https://wiki.archlinux.org/title/HiDPI">⁶</a></p>
+<p>I could increase the size of the text in the terminal by placing the
+following in the <code>/.Xresources</code> file <a
+href="https://askubuntu.com/questions/161652/how-to-change-the-default-font-size-of-xterm">⁷</a>:</p>
+<pre><code>xterm*faceName: Monospace
+xterm*faceSize: 14
+</code></pre>
+<h2 id="thats-it">That's it!</h2>
+<p>With these changes, I got my debian to look the way I wanted it to
+be. It's been a few months and I am happy with the configuration.😊</p>
+<p>(Almost all of this blog post was originally written in December
+2021.)</p>
+<p>(Also, thanks to my friend Kevin for his advice regarding the
+partition scheme to use.)</p>
+<hr />
+<p>Edits (2022 Feb 23):</p>
+<ul>
+<li>Use exact size for <code>/boot/efi/</code>, <code>/boot</code> and
+<code>/swap</code> in the table.</li>
+<li>correct sizes of <code>/</code> and <code>/home</code> and added Red
+Hat recommended partitioning scheme link.</li>
+<li>correct command to add user to 'sudo' group</li>
+<li>Add several links.</li>
+</ul>
+</div>
+</body>
+</html>

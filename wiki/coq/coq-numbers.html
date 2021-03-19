@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Numbers in Coq</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Numbers in Coq</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="overview">Overview</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Module</th>
+<th>Notation scope, key</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>nat</code></td>
+<td><a
+href="https://coq.inria.fr/library/Coq.Init.Nat.html"><code>Nat</code></a></td>
+<td><code>nat</code></td>
+</tr>
+<tr class="even">
+<td><code>positive</code></td>
+<td>ZArith</td>
+<td><code>positive_scope</code>, <code>positive</code></td>
+</tr>
+<tr class="odd">
+<td><code>N</code></td>
+<td>ZArith</td>
+<td><code>N</code></td>
+</tr>
+<tr class="even">
+<td><code>Z</code></td>
+<td>ZArith</td>
+<td><code>Z</code></td>
+</tr>
+<tr class="odd">
+<td><code>R</code></td>
+<td><a
+href="https://coq.inria.fr/stdlib/Coq.Reals.Reals.html"><code>Reals</code></a></td>
+<td><code>R</code></td>
+</tr>
+<tr class="even">
+<td><code>Q</code></td>
+<td><a
+href="https://coq.inria.fr/stdlib/Coq.Reals.Reals.html"><code>QArith</code></a></td>
+<td><code>Q</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="nat"><code>nat</code></h2>
+<p><a href="https://en.wikipedia.org/wiki/Giuseppe_Peano">Peano</a>
+numbers.</p>
+<pre class="coq"><code>Print nat.
+(*
+Inductive nat : Set :=
+| O : nat
+| S : nat -&gt; nat.
+*)
+</code></pre>
+<h2 id="positive"><code>positive</code></h2>
+<ul>
+<li>Only positive integers in a binary form.</li>
+<li>That means zero is not included.</li>
+</ul>
+<pre class="coq"><code>Require Import ZArith.
+Print positive.
+(*
+Inductive positive : Set :=
+| xI : positive -&gt; positive
+| xO : positive -&gt; positive
+| xH : positive.
+*)
+</code></pre>
+<ul>
+<li><code>xI</code>: insert 1 as LSB</li>
+<li><code>xO</code>: insert 0 as LSB</li>
+<li><code>xH</code>: 1</li>
+</ul>
+<pre class="coq"><code>Compute xH.
+(*
+= 1%positive
+     : positive
+*)
+
+Compute xO xH.
+(*
+= 2%positive
+     : positive
+*)
+
+Compute xI xH.
+(*
+= 3%positive
+     : positive
+*)
+</code></pre>
+<p>We can sort of think of this as the number in binary with the bits in
+the reverse order.</p>
+<p>For example, consider <code>10%positive</code>, which is
+<code>xO (xI (xO xH))</code>.</p>
+<pre><code>xO (xI (xO xH)).
+ |   |   |  |
+ v   v   v  v
+ 0   1   0  1
+
+which is
+
+1010₂ = 10₁₀
+</code></pre>
+<p>All have to end with <code>xH</code>.</p>
+<p>Because if <code>xO</code> was allowed as the end, a lone
+<code>xO</code> would mean zero, which isn't part of
+<code>positive</code>.</p>
+<pre class="coq"><code>Compute xO (xI (xO xO)).
+(*
+The term &quot;xO&quot; has type &quot;positive -&gt; positive&quot;
+while it is expected to have type &quot;positive&quot;.
+*)
+</code></pre>
+<h2 id="n"><code>N</code></h2>
+<p>Natural numbers in a more 'concise form' than the <code>nat</code>
+type.</p>
+<pre class="coq"><code>Require Import ZArith.
+Print N.
+(*
+Inductive N : Set :=
+| N0 : N
+| Npos : positive -&gt; N.
+*)
+</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>Constructor</th>
+<th>Meaning</th>
+<th><code>nat</code> analogue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>N0</code></td>
+<td>zero</td>
+<td><code>O</code></td>
+</tr>
+<tr class="even">
+<td><code>Npos</code></td>
+<td>positive numbers</td>
+<td><code>S</code></td>
+</tr>
+</tbody>
+</table>
+<pre class="coq"><code>Compute N0.
+(*
+= 0%N
+     : N
+*)
+
+Compute Npos 1%positive.
+(*
+= 1%N
+     : N
+*)
+
+Compute Npos 45%positive.
+(*
+= 45%N
+     : N
+*)
+</code></pre>
+<p>So basically, <code>N</code> is <code>positive</code> along with
+zero.</p>
+<h2 id="z"><code>Z</code></h2>
+<pre class="coq"><code>Require Import ZArith.
+Print Z.
+(*
+Inductive Z : Set :=
+| Z0 : Z
+| Zpos : positive -&gt; Z
+| Zneg : positive -&gt; Z.
+*)
+</code></pre>
+<p><code>Z</code> is like <code>N</code> but with an extra constructor
+to represent negative numbers.</p>
+<pre class="coq"><code>Compute Z0.
+(*
+= 0%Z
+     : Z
+*)
+Compute Zpos 8%positive.
+(*
+= 8%Z
+     : Z
+*)
+Compute Zneg 53%positive.
+(*
+= (-53)%Z
+     : Z
+*)
+</code></pre>
+<h2 id="q"><code>Q</code></h2>
+<p>Rational numbers</p>
+<pre class="coq"><code>Require Import QArith.
+Print Q.
+(*
+Record Q : Set := Qmake {
+   Qnum : Z;
+   Qden : positive
+}.
+*)
+</code></pre>
+<p>Rational numbers are numbers which can be represented in p/q form.
+<code>Qnum</code> and <code>Qden</code> corresponds to <code>p</code>
+(numerator) and <code>q</code> (denominator) respectively.</p>
+<pre class="coq"><code>Require Import ZArith.
+Require Import QArith.
+
+Compute Qmake 2 3.
+(*
+= 2 # 3
+     : Q
+*)
+</code></pre>
+<p>Note that we can't make infinity out of <code>Q</code>'s
+<code>Qmake</code> since <code>Qden</code> has to be a value of type
+<code>positive</code>, which cannot be zero.</p>
+<pre class="coq"><code>Compute Qmake 1 0.
+(*
+Cannot interpret this number as a value of type positive
+*)
+</code></pre>
+<p>Some operations:</p>
+<pre class="coq"><code>Definition a:Q := Qmake 10 5.
+Definition b:Q := Qmake 5 10.
+Compute a*b.
+(*
+= 50 # 50
+     : Q
+*)
+</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Qred: Q -&gt; Q</code></td>
+<td>Reduce fraction</td>
+</tr>
+<tr class="even">
+<td><code>Qopp: Q -&gt; Q</code></td>
+<td>Negate fraction</td>
+</tr>
+<tr class="odd">
+<td><code>Qinv: Q -&gt; Q</code></td>
+<td>Inverse of fraction</td>
+</tr>
+<tr class="even">
+<td><code>Qplus: Q -&gt; Q -&gt; Q</code></td>
+<td>Add fractions</td>
+</tr>
+<tr class="odd">
+<td><code>Qplus': Q -&gt; Q -&gt; Q</code></td>
+<td>Add and reduce</td>
+</tr>
+<tr class="even">
+<td><code>Qminus: Q -&gt; Q -&gt; Q</code></td>
+<td>Subtract fractions</td>
+</tr>
+<tr class="odd">
+<td><code>Qminus': Q -&gt; Q -&gt; Q</code></td>
+<td>Subtract and reduce</td>
+</tr>
+<tr class="even">
+<td><code>Qmult: Q -&gt; Q -&gt; Q</code></td>
+<td>Multiply fractions</td>
+</tr>
+<tr class="odd">
+<td><code>Qmult': Q -&gt; Q -&gt; Q</code></td>
+<td>Multiply and reduce</td>
+</tr>
+<tr class="even">
+<td><code>Qle: Q -&gt; Q -&gt; Prop</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>Qdiv: Q -&gt; Q -&gt; Q</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>Qlt: Q -&gt; Q -&gt; Prop</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>Qeq: Q -&gt; Q -&gt; Prop</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>Qden: Q -&gt; positive</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>Qnum: Q -&gt; Z</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>Qle_bool: Q -&gt; Q -&gt; bool</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>Qpower: Q -&gt; Z -&gt; Q</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>Qpower_positive: Q -&gt; positive -&gt; Q</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>Qeq_bool: Q -&gt; Q -&gt; bool</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="r"><code>R</code></h2>
+<pre class="coq"><code>Compute 12%R.                                   
+(*
+= ((R1 + R1) * ((R1 + R1) * (R1 + (R1 + R1))))%R
+     : R
+*)
+</code></pre>
+<p>This is like:</p>
+<pre><code>((R1 + R1) * ((R1 + R1) * (R1 + (R1 + R1))))
+  |    |       |    |      |     |    |
+  v    v       v    v      v     v    v
+((1  + 1 ) * ((1  + 1 ) * (1  + (1  + 1 ))))
+  |    |       |    |      |     |    |
+  +--+-+       +--+-+      |     +-+--+
+     |            |        |       |      
+     v            v        v       v      
+     2     *      2   *   (1  +    2)   
+     |            |        |       |      
+     +-----+------+        +---+---+
+           |                   |
+           v                   v
+           4          *        3
+           |                   |
+           +----------+--------+
+                      |
+                      v
+                     12
+</code></pre>
+<p><code>INR</code> can be used to make an <code>R</code> out of a
+<code>nat</code>.</p>
+<pre class="coq"><code>Check INR.      
+(*
+INR
+     : nat -&gt; R
+*)
+
+Compute INR 5.                                  
+(*
+= (R1 + R1 + R1 + R1 + R1)%R
+     : R
+*)
+</code></pre>
+<p><a href="https://github.com/coq-community/corn">CoRN</a> has a
+different representation of real numbers.</p>
+<p>Coq's built-in <code>R</code> is an <a
+href="https://coq.inria.fr/distrib/current/stdlib/Coq.Reals.Rdefinitions.html#">axiomatic
+representation</a>.</p>
+</div>
+</body>
+</html>

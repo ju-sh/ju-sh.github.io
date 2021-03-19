@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Simple custom pass in yosys</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://rawtext.club/~famubu">Home</a>
+ | 
+<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+ | 
+<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+ | 
+<a href="https://rawtext.club/~famubu/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Simple custom pass in yosys</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+<div id="description">
+A simple custom yosys.
+</div>
+
+<div id="content-container">
+<p>For use with <a href="http://www.clifford.at/yosys">yosys</a> (<a
+href="https://yosyshq.net/yosys/">link</a>).</p>
+<hr />
+<h2 id="input-verilog-file">Input verilog file</h2>
+<p>Suppose that we got a verilog file <code>adder.v</code> for a
+half-adder like</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> halfadder <span class="op">(</span>a<span class="op">,</span> b<span class="op">,</span> sum<span class="op">,</span> carry<span class="op">);</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">input</span> a<span class="op">,</span> b<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">output</span> sum<span class="op">,</span> carry<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">wire</span> sum<span class="op">,</span> carry<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">xor</span><span class="op">(</span>sum<span class="op">,</span> a<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">and</span><span class="op">(</span>carry<span class="op">,</span> a<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">endmodule</span></span></code></pre></div>
+<p><!--
+    module counter (clk,rst,en,count);
+    input clk,rst,en;
+    output reg [1:0] count;
+    always@(posedge clk)
+        begin
+            if(rst)
+                count<=2'd0;
+            else if (en)
+                count<=count+2'd1;
+        end
+    endmodule
+--></p>
+<h2 id="creating-a-custom-pass">Creating a custom pass</h2>
+<p>Create a directory named 'mypass/ under the <code>passes/</code>
+directory and create a file mypass.cc with the following:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;kernel/yosys.h&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>USING_YOSYS_NAMESPACE</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>PRIVATE_NAMESPACE_BEGIN</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> MyPass <span class="op">:</span> <span class="kw">public</span> Pass <span class="op">{</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    MyPass<span class="op">()</span> <span class="op">:</span> Pass<span class="op">(</span><span class="st">&quot;MyPass&quot;</span><span class="op">,</span><span class="st">&quot;counter&quot;</span><span class="op">)</span> <span class="op">{</span> <span class="op">}</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> execute<span class="op">(</span>vector<span class="op">&lt;</span>string<span class="op">&gt;,</span> RTLIL<span class="op">::</span>Design <span class="op">*</span>design<span class="op">)</span> <span class="kw">override</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        log<span class="op">(</span><span class="st">&quot;Inside the newly created pass</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        log_header<span class="op">(</span>design<span class="op">,</span> <span class="st">&quot;Executing MyPass</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> mod <span class="op">:</span> design<span class="op">-&gt;</span>modules<span class="op">())</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            log<span class="op">(</span><span class="st">&quot;  </span><span class="sc">%s</span><span class="st"> (</span><span class="sc">%d</span><span class="st"> wires, </span><span class="sc">%d</span><span class="st"> cells)</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> log_id<span class="op">(</span>mod<span class="op">),</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                    GetSize<span class="op">(</span>mod<span class="op">-&gt;</span>wires<span class="op">()),</span> GetSize<span class="op">(</span>mod<span class="op">-&gt;</span>cells<span class="op">()));</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            run_pass<span class="op">(</span><span class="st">&quot;dump&quot;</span><span class="op">,*&amp;</span>design<span class="op">);</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> MyPass<span class="op">;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>PRIVATE_NAMESPACE_END</span></code></pre></div>
+<h2 id="synthesizing-gate-level-netlist">Synthesizing gate-level
+netlist</h2>
+<p>We convert behavioural verilog code into gate-level netlist here.</p>
+<p>Create a file named script.ys (just a random name) with the following
+yosys commands:</p>
+<pre><code># Read verilog source and convert to an internal representation
+read_verilog adder.v
+
+# Elaborate design hierarchy??
+hierarchy -check -top adder
+
+# Convert high-level behavioural constructs (processes) to D-flip flops and MUXes
+proc
+
+# Analyze and optimize FSMs
+fsm
+
+# Optimizations
+opt
+
+# Analyze memories and create their circuit implementations
+memory                                                  
+
+# Optimizations
+opt
+
+# Convert design to logical gate-level netlists (like adders to logic gates)
+techmap
+
+# Optimizations
+opt
+
+# Map registers to the hardware flip flops available from the cell library
+dfflibmap -liberty examples/cmos/cmos_cells.lib
+
+# Map remaining logic to cell library cells
+abc -liberty examples/cmos/cmos_cells.lib
+
+# Cleanup (just last step of opt)
+clean
+
+# Write results to output file
+write_verilog synth.v
+</code></pre>
+<p>and run them with yosys using</p>
+<pre><code>yosys -s script.ys
+</code></pre>
+<p>This will create a <code>synth.v</code> file with the netlist in
+it.</p>
+<p>We are using a cell library named <code>cmos_cells.lib</code> from
+the <code>examples/</code> directory of the yosys source code.</p>
+<h2 id="running-the-custom-pass">Running the custom pass</h2>
+<p>Use</p>
+<pre><code>yosys-config --build hello.so hello.cc
+</code></pre>
+<p>and a file named <code>hello.so</code> would get created.</p>
+<p>Now use the <code>synth.v</code> file that got generated earlier and
+run</p>
+<pre><code>yosys -ql hello.log -m hello.so synth.v -p MyPass
+</code></pre>
+<p>to get the log data in the file <code>hello.log</code>.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.clifford.at/yosys/files/yosys_manual.pdf">yosys
+manual</a></li>
+<li><a
+href="http://www.clifford.at/yosys/files/yosys_presentation.pdf">yosys
+presentation by Clifford Wolf</a></li>
+</ul>
+<p><!--
+
+** Full output (Attempt 3)
+
+** Full output (Attempt 2)
+
+*** yosys
+
+     /----------------------------------------------------------------------------\
+     |                                                                            |
+     |  yosys -- Yosys Open SYnthesis Suite                                       |
+     |                                                                            |
+     |  Copyright (C) 2012 - 2019  Clifford Wolf <clifford@clifford.at>           |
+     |                                                                            |
+     |  Permission to use, copy, modify, and/or distribute this software for any  |
+     |  purpose with or without fee is hereby granted, provided that the above    |
+     |  copyright notice and this permission notice appear in all copies.         |
+     |                                                                            |
+     |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+     |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+     |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+     |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+     |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+     |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+     |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+     |                                                                            |
+     \----------------------------------------------------------------------------/
+
+     Yosys 0.9 (git sha1 UNKNOWN, gcc 7.5.0-3ubuntu1~18.04 -fPIC -Os)
+
+
+    yosys> read_verilog counter
+    counter.v   counter1.v  counter2.v
+
+    yosys> read_verilog counter.v
+    1. Executing Verilog-2005 frontend: counter.v
+    Parsing Verilog input from `counter.v' to AST representation.
+    Generating RTLIL representation for module `\counter'.
+    Successfully finished Verilog frontend.
+
+    yosys> proc
+
+    2. Executing PROC pass (convert processes to netlists).
+
+    2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+    Cleaned up 0 empty switches.
+
+    2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+    Marked 1 switch rules as full_case in process $proc$counter.v:4$1 in module counter.
+    Removed a total of 0 dead cases.
+
+    2.3. Executing PROC_INIT pass (extract init attributes).
+
+    2.4. Executing PROC_ARST pass (detect async resets in processes).
+
+    2.5. Executing PROC_MUX pass (convert decision trees to multiplexers).
+    Creating decoders for process `\counter.$proc$counter.v:4$1'.
+         1/1: $0\count[1:0]
+
+    2.6. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+    2.7. Executing PROC_DFF pass (convert process syncs to FFs).
+    Creating register for signal `\counter.\count' using process `\counter.$proc$counter.v:4$1'.
+      created $dff cell `$procdff$8' with positive edge clock.
+
+    2.8. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+    Found and cleaned up 2 empty switches in `\counter.$proc$counter.v:4$1'.
+    Removing empty process `counter.$proc$counter.v:4$1'.
+    Cleaned up 2 empty switches.
+
+    yosys> opt
+
+    3. Executing OPT pass (performing simple optimizations).
+
+    3.1. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+
+    3.2. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    3.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+    Running muxtree optimizer on module \counter..
+      Creating internal representation of mux trees.
+      Evaluating internal representation of mux trees.
+      Analyzing evaluation results.
+    Removed 0 multiplexer ports.
+    <suppressed ~1 debug messages>
+
+    3.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+      Optimizing cells in module \counter.
+    Performed a total of 0 changes.
+
+    3.5. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    3.6. Executing OPT_RMDFF pass (remove dff with constant values).
+
+    3.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+    Finding unused cells or wires in module \counter..
+    Removed 0 unused cells and 3 unused wires.
+    <suppressed ~1 debug messages>
+
+    3.8. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+
+    3.9. Finished OPT passes. (There is nothing left to do.)
+
+    yosys> memory
+
+    4. Executing MEMORY pass.
+
+    4.1. Executing MEMORY_DFF pass (merging $dff cells to $memrd and $memwr).
+
+    4.2. Executing OPT_CLEAN pass (remove unused cells and wires).
+    Finding unused cells or wires in module \counter..
+
+    4.3. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+    4.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+    Finding unused cells or wires in module \counter..
+
+    4.5. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+    4.6. Executing MEMORY_MAP pass (converting $mem cells to logic and flip-flops).
+
+    yosys> opt
+
+    5. Executing OPT pass (performing simple optimizations).
+
+    5.1. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+
+    5.2. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    5.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+    Running muxtree optimizer on module \counter..
+      Creating internal representation of mux trees.
+      Evaluating internal representation of mux trees.
+      Analyzing evaluation results.
+    Removed 0 multiplexer ports.
+    <suppressed ~1 debug messages>
+
+    5.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+      Optimizing cells in module \counter.
+    Performed a total of 0 changes.
+
+    5.5. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    5.6. Executing OPT_RMDFF pass (remove dff with constant values).
+
+    5.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+    Finding unused cells or wires in module \counter..
+
+    5.8. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+
+    5.9. Finished OPT passes. (There is nothing left to do.)
+
+    yosys> techmap
+
+    6. Executing TECHMAP pass (map to technology primitives).
+
+    6.1. Executing Verilog-2005 frontend: <techmap.v>
+    Parsing Verilog input from `<techmap.v>' to AST representation.
+    Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+    Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+    Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+    Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+    Generating RTLIL representation for module `\_90_simplemap_various'.
+    Generating RTLIL representation for module `\_90_simplemap_registers'.
+    Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+    Generating RTLIL representation for module `\_90_shift_shiftx'.
+    Generating RTLIL representation for module `\_90_fa'.
+    Generating RTLIL representation for module `\_90_lcu'.
+    Generating RTLIL representation for module `\_90_alu'.
+    Generating RTLIL representation for module `\_90_macc'.
+    Generating RTLIL representation for module `\_90_alumacc'.
+    Generating RTLIL representation for module `\$__div_mod_u'.
+    Generating RTLIL representation for module `\$__div_mod'.
+    Generating RTLIL representation for module `\_90_div'.
+    Generating RTLIL representation for module `\_90_mod'.
+    Generating RTLIL representation for module `\_90_pow'.
+    Generating RTLIL representation for module `\_90_pmux'.
+    Generating RTLIL representation for module `\_90_lut'.
+    Successfully finished Verilog frontend.
+
+    6.2. Continuing TECHMAP pass.
+    Running "alumacc" on wrapper $extern:wrap:$add:A_SIGNED=0:A_WIDTH=2:B_SIGNED=0:B_WIDTH=2:Y_WIDTH=2:394426c56d1a028ba8fdd5469b163e04011def47.
+    Using template $extern:wrap:$add:A_SIGNED=0:A_WIDTH=2:B_SIGNED=0:B_WIDTH=2:Y_WIDTH=2:394426c56d1a028ba8fdd5469b163e04011def47 for cells of type $extern:wrap:$add:A_SIGNED=0:A_WIDTH=2:B_SIGNED=0:B_WIDTH=2:Y_WIDTH=2:394426c56d1a028ba8fdd5469b163e04011def47.
+    Using extmapper simplemap for cells of type $mux.
+    Using extmapper simplemap for cells of type $dff.
+    Using template $paramod\_90_alu\A_SIGNED=0\B_SIGNED=0\A_WIDTH=2\B_WIDTH=2\Y_WIDTH=2 for cells of type $alu.
+    Using extmapper simplemap for cells of type $and.
+    Using extmapper simplemap for cells of type $xor.
+    Using template $paramod\_90_lcu\WIDTH=2 for cells of type $lcu.
+    Using extmapper simplemap for cells of type $not.
+    Using extmapper simplemap for cells of type $pos.
+    Using extmapper simplemap for cells of type $or.
+    No more expansions possible.
+    <suppressed ~138 debug messages>
+
+    yosys> opt
+
+    7. Executing OPT pass (performing simple optimizations).
+
+    7.1. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+    <suppressed ~12 debug messages>
+
+    7.2. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    7.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+    Running muxtree optimizer on module \counter..
+      Creating internal representation of mux trees.
+      No muxes found in this module.
+    Removed 0 multiplexer ports.
+
+    7.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+      Optimizing cells in module \counter.
+    Performed a total of 0 changes.
+
+    7.5. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    7.6. Executing OPT_RMDFF pass (remove dff with constant values).
+
+    7.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+    Finding unused cells or wires in module \counter..
+    Removed 1 unused cells and 32 unused wires.
+    <suppressed ~2 debug messages>
+
+    7.8. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+
+    7.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+    7.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+    Running muxtree optimizer on module \counter..
+      Creating internal representation of mux trees.
+      No muxes found in this module.
+    Removed 0 multiplexer ports.
+
+    7.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+      Optimizing cells in module \counter.
+    Performed a total of 0 changes.
+
+    7.12. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    7.13. Executing OPT_RMDFF pass (remove dff with constant values).
+
+    7.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+    Finding unused cells or wires in module \counter..
+
+    7.15. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+
+    7.16. Finished OPT passes. (There is nothing left to do.)
+
+    yosys> dfflibmap -liberty examples/cmos/cmos_cells.lib
+
+    8. Executing DFFLIBMAP pass (mapping DFF cells to sequential cells from liberty file).
+      cell DFF (noninv, pins=3, area=18.00) is a direct match for cell type $_DFF_P_.
+      cell DFFSR (noninv, pins=5, area=18.00) is a direct match for cell type $_DFFSR_PPP_.
+      create mapping for $_DFFSR_PNP_ from mapping for $_DFFSR_PPP_.
+      create mapping for $_DFFSR_PNN_ from mapping for $_DFFSR_PNP_.
+      create mapping for $_DFFSR_PPN_ from mapping for $_DFFSR_PNN_.
+      create mapping for $_DFF_N_ from mapping for $_DFF_P_.
+      create mapping for $_DFFSR_NNN_ from mapping for $_DFFSR_PNN_.
+      create mapping for $_DFFSR_NPN_ from mapping for $_DFFSR_NNN_.
+      create mapping for $_DFFSR_NNP_ from mapping for $_DFFSR_NNN_.
+      create mapping for $_DFFSR_NPP_ from mapping for $_DFFSR_NNP_.
+      create mapping for $_DFF_NN0_ from mapping for $_DFFSR_NNN_.
+      create mapping for $_DFF_NN1_ from mapping for $_DFFSR_NNN_.
+      create mapping for $_DFF_NP0_ from mapping for $_DFFSR_NPP_.
+      create mapping for $_DFF_NP1_ from mapping for $_DFFSR_NPP_.
+      create mapping for $_DFF_PN0_ from mapping for $_DFFSR_PNN_.
+      create mapping for $_DFF_PN1_ from mapping for $_DFFSR_PNN_.
+      create mapping for $_DFF_PP0_ from mapping for $_DFFSR_PPP_.
+      create mapping for $_DFF_PP1_ from mapping for $_DFFSR_PPP_.
+      final dff cell mappings:
+        DFF _DFF_N_ (.C(~C), .D( D), .Q( Q));
+        DFF _DFF_P_ (.C( C), .D( D), .Q( Q));
+        DFFSR _DFF_NN0_ (.C(~C), .D( D), .Q( Q), .R(~R), .S( 0));
+        DFFSR _DFF_NN1_ (.C(~C), .D( D), .Q( Q), .R( 0), .S(~R));
+        DFFSR _DFF_NP0_ (.C(~C), .D( D), .Q( Q), .R( R), .S( 0));
+        DFFSR _DFF_NP1_ (.C(~C), .D( D), .Q( Q), .R( 0), .S( R));
+        DFFSR _DFF_PN0_ (.C( C), .D( D), .Q( Q), .R(~R), .S( 0));
+        DFFSR _DFF_PN1_ (.C( C), .D( D), .Q( Q), .R( 0), .S(~R));
+        DFFSR _DFF_PP0_ (.C( C), .D( D), .Q( Q), .R( R), .S( 0));
+        DFFSR _DFF_PP1_ (.C( C), .D( D), .Q( Q), .R( 0), .S( R));
+        DFFSR _DFFSR_NNN_ (.C(~C), .D( D), .Q( Q), .R(~R), .S(~S));
+        DFFSR _DFFSR_NNP_ (.C(~C), .D( D), .Q( Q), .R( R), .S(~S));
+        DFFSR _DFFSR_NPN_ (.C(~C), .D( D), .Q( Q), .R(~R), .S( S));
+        DFFSR _DFFSR_NPP_ (.C(~C), .D( D), .Q( Q), .R( R), .S( S));
+        DFFSR _DFFSR_PNN_ (.C( C), .D( D), .Q( Q), .R(~R), .S(~S));
+        DFFSR _DFFSR_PNP_ (.C( C), .D( D), .Q( Q), .R( R), .S(~S));
+        DFFSR _DFFSR_PPN_ (.C( C), .D( D), .Q( Q), .R(~R), .S( S));
+        DFFSR _DFFSR_PPP_ (.C( C), .D( D), .Q( Q), .R( R), .S( S));
+    Mapping DFF cells in module `\counter':
+      mapped 2 $_DFF_P_ cells to \DFF cells.
+
+    yosys> abc -liberty examples/cmos/cmos_cells.lib
+
+    9. Executing ABC pass (technology mapping using ABC).
+
+    9.1. Extracting gate netlist of module `\counter' to `<abc-temp-dir>/input.blif'..
+    Extracted 6 gates and 12 wires to a netlist network with 4 inputs and 2 outputs.
+
+    9.1.1. Executing ABC.
+    Running ABC command: <yosys-exe-dir>/yosys-abc -s -f <abc-temp-dir>/abc.script 2>&1
+    ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+    ABC:
+    ABC: + read_blif <abc-temp-dir>/input.blif
+    ABC: + read_lib -w /home/famubu/qflow/yosys-yosys-0.9/examples/cmos/cmos_cells.lib
+    ABC: Parsing finished successfully.  Parsing time =     0.00 sec
+    ABC: Warning: Templates are not defined.
+    ABC: Libery parser cannot read "time_unit".  Assuming   time_unit : "1ns".
+    ABC: Libery parser cannot read "capacitive_load_unit". Assuming   capacitive_load_unit(1, pf).
+    ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFF".
+    ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSR".
+    ABC: Library "demo" from "/home/famubu/qflow/yosys-yosys-0.9/examples/cmos/cmos_cells.lib" has 4 cells (2 skipped: 2 seq; 0 tri-state; 0 no func; 0 dont_use).  Time =     0.00 sec
+    ABC: Memory =    0.00 MB. Time =     0.00 sec
+    ABC: + strash
+    ABC: + ifraig
+    ABC: + scorr
+    ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+    ABC: + dc2
+    ABC: + dretime
+    ABC: + retime
+    ABC: + strash
+    ABC: + &get -n
+    ABC: + &dch -f
+    ABC: + &nf
+    ABC: + &put
+    ABC: + write_blif <abc-temp-dir>/output.blif
+
+    9.1.2. Re-integrating ABC results.
+    ABC RESULTS:              NAND cells:        4
+    ABC RESULTS:               NOR cells:        4
+    ABC RESULTS:               NOT cells:        3
+    ABC RESULTS:        internal signals:        6
+    ABC RESULTS:           input signals:        4
+    ABC RESULTS:          output signals:        2
+    Removing temp directory.
+
+    yosys> opt
+
+    10. Executing OPT pass (performing simple optimizations).
+
+    10.1. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+
+    10.2. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    10.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+    Running muxtree optimizer on module \counter..
+      Creating internal representation of mux trees.
+      No muxes found in this module.
+    Removed 0 multiplexer ports.
+
+    10.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+      Optimizing cells in module \counter.
+    Performed a total of 0 changes.
+
+    10.5. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    10.6. Executing OPT_RMDFF pass (remove dff with constant values).
+
+    10.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+    Finding unused cells or wires in module \counter..
+    Removed 0 unused cells and 8 unused wires.
+    <suppressed ~1 debug messages>
+
+    10.8. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+
+    10.9. Finished OPT passes. (There is nothing left to do.)
+
+    yosys> write_verilog synth.v
+
+    11. Executing Verilog backend.
+    Dumping module `\counter'.
+
+*** synth.v
+
+    /* Generated by Yosys 0.9 (git sha1 UNKNOWN, gcc 7.5.0-3ubuntu1~18.04 -fPIC -Os) */
+
+    (* cells_not_processed =  1  *)
+    (* src = "counter.v:1" *)
+    module counter(clk, rst, en, count);
+      (* src = "counter.v:4" *)
+      wire [1:0] _00_;
+      wire _01_;
+      wire _02_;
+      wire _03_;
+      wire _04_;
+      wire _05_;
+      wire _06_;
+      wire _07_;
+      wire _08_;
+      wire _09_;
+      (* src = "counter.v:2" *)
+      input clk;
+      (* src = "counter.v:3" *)
+      output [1:0] count;
+      (* src = "counter.v:2" *)
+      input en;
+      (* src = "counter.v:2" *)
+      input rst;
+      NAND _10_ (
+        .A(_07_),
+        .B(_09_),
+        .Y(_05_)
+      );
+      NAND _11_ (
+        .A(_08_),
+        .B(_05_),
+        .Y(_06_)
+      );
+      NOR _12_ (
+        .A(_04_),
+        .B(_06_),
+        .Y(_00_[1])
+      );
+      NOT _13_ (
+        .A(count[1]),
+        .Y(_07_)
+      );
+      NOT _14_ (
+        .A(rst),
+        .Y(_08_)
+      );
+      NAND _15_ (
+        .A(en),
+        .B(count[0]),
+        .Y(_09_)
+      );
+      NOR _16_ (
+        .A(en),
+        .B(count[0]),
+        .Y(_01_)
+      );
+      NOR _17_ (
+        .A(rst),
+        .B(_01_),
+        .Y(_02_)
+      );
+      NAND _18_ (
+        .A(_09_),
+        .B(_02_),
+        .Y(_03_)
+      );
+      NOT _19_ (
+        .A(_03_),
+        .Y(_00_[0])
+      );
+      NOR _20_ (
+        .A(_07_),
+        .B(_09_),
+        .Y(_04_)
+      );
+      (* src = "counter.v:4" *)
+      DFF _21_ (
+        .C(clk),
+        .D(_00_[0]),
+        .Q(count[0])
+      );
+      (* src = "counter.v:4" *)
+      DFF _22_ (
+        .C(clk),
+        .D(_00_[1]),
+        .Q(count[1])
+      );
+    endmodule
+
+*** log file
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2019  Clifford Wolf <clifford@clifford.at>           |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.9 (git sha1 UNKNOWN, gcc 7.5.0-3ubuntu1~18.04 -fPIC -Os)
+
+
+-- Parsing `synth.v' using frontend `verilog' --
+
+1. Executing Verilog-2005 frontend: synth.v
+Parsing Verilog input from `synth.v' to AST representation.
+Generating RTLIL representation for module `\counter'.
+Successfully finished Verilog frontend.
+
+-- Running command `MyPass' --
+Inside the newly created pass
+
+2. Executing MyPass
+Iter
+  counter (14 wires, 13 cells)
+
+-- Running command `dump' --
+
+autoidx 1
+
+attribute \cells_not_processed 1
+attribute \src "counter.v:1"
+module \counter
+
+  attribute \src "counter.v:2"
+  wire input 2 \rst
+
+  attribute \src "counter.v:2"
+  wire input 3 \en
+
+  attribute \src "counter.v:3"
+  wire width 2 output 4 \count
+
+  attribute \src "counter.v:2"
+  wire input 1 \clk
+
+  attribute \src "synth.v:16"
+  wire \_09_
+
+  attribute \src "synth.v:15"
+  wire \_08_
+
+  attribute \src "synth.v:14"
+  wire \_07_
+
+  attribute \src "synth.v:13"
+  wire \_06_
+
+  attribute \src "synth.v:12"
+  wire \_05_
+
+  attribute \src "synth.v:11"
+  wire \_04_
+
+  attribute \src "synth.v:10"
+  wire \_03_
+
+  attribute \src "synth.v:9"
+  wire \_02_
+
+  attribute \src "synth.v:8"
+  wire \_01_
+
+  attribute \src "counter.v:4"
+  wire width 2 \_00_
+
+  attribute \module_not_derived 1
+  attribute \src "counter.v:4"
+  cell \DFF \_22_
+    connect \Q \count [1]
+    connect \D \_00_ [1]
+    connect \C \clk
+  end
+
+  attribute \module_not_derived 1
+  attribute \src "counter.v:4"
+  cell \DFF \_21_
+    connect \Q \count [0]
+    connect \D \_00_ [0]
+    connect \C \clk
+  end
+
+  attribute \module_not_derived 1
+  attribute \src "synth.v:72"
+  cell \NOR \_20_
+    connect \Y \_04_
+    connect \B \_09_
+    connect \A \_07_
+  end
+
+  attribute \module_not_derived 1
+  attribute \src "synth.v:68"
+  cell \NOT \_19_
+    connect \Y \_00_ [0]
+    connect \A \_03_
+  end
+
+  attribute \module_not_derived 1
+  attribute \src "synth.v:63"
+  cell \NAND \_18_
+    connect \Y \_03_
+    connect \B \_02_
+    connect \A \_09_
+  end
+
+  attribute \module_not_derived 1
+  attribute \src "synth.v:58"
+  cell \NOR \_17_
+    connect \Y \_02_
+    connect \B \_01_
+    connect \A \rst
+  end
+
+  attribute \module_not_derived 1
+  attribute \src "synth.v:53"
+  cell \NOR \_16_
+    connect \Y \_01_
+    connect \B \count [0]
+    connect \A \en
+  end
+
+  attribute \module_not_derived 1
+  attribute \src "synth.v:48"
+  cell \NAND \_15_
+    connect \Y \_09_
+    connect \B \count [0]
+    connect \A \en
+  end
+
+  attribute \module_not_derived 1
+  attribute \src "synth.v:44"
+  cell \NOT \_14_
+    connect \Y \_08_
+    connect \A \rst
+  end
+
+  attribute \module_not_derived 1
+  attribute \src "synth.v:40"
+  cell \NOT \_13_
+    connect \Y \_07_
+    connect \A \count [1]
+  end
+
+  attribute \module_not_derived 1
+  attribute \src "synth.v:35"
+  cell \NOR \_12_
+    connect \Y \_00_ [1]
+    connect \B \_06_
+    connect \A \_04_
+  end
+
+  attribute \module_not_derived 1
+  attribute \src "synth.v:30"
+  cell \NAND \_11_
+    connect \Y \_06_
+    connect \B \_05_
+    connect \A \_08_
+  end
+
+  attribute \module_not_derived 1
+  attribute \src "synth.v:25"
+  cell \NAND \_10_
+    connect \Y \_05_
+    connect \B \_09_
+    connect \A \_07_
+  end
+end
+
+End of script. Logfile hash: a96fdab7be
+CPU: user 0.01s system 0.00s, MEM: 38.98 MB total, 8.54 MB resident
+Yosys 0.9 (git sha1 UNKNOWN, gcc 7.5.0-3ubuntu1~18.04 -fPIC -Os)
+Time spent: 87% 1x read_verilog (0 sec), 9% 1x dump (0 sec), ...
+
+** Full output (Attempt 1)
+*** yosys
+
+    Yosys 0.9 (git sha1 UNKNOWN, gcc 7.5.0-3ubuntu1~18.04 -fPIC -Os)
+
+
+    yosys> read_verilog counter.v
+    1. Executing Verilog-2005 frontend: counter.v
+    Parsing Verilog input from `counter.v' to AST representation.
+    Generating RTLIL representation for module `\counter'.
+    Successfully finished Verilog frontend.
+
+    yosys> proc
+
+    2. Executing PROC pass (convert processes to netlists).
+
+    2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+    Cleaned up 0 empty switches.
+
+    2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+    Marked 1 switch rules as full_case in process $proc$counter.v:4$1 in module counter.
+    Removed a total of 0 dead cases.
+
+    2.3. Executing PROC_INIT pass (extract init attributes).
+
+    2.4. Executing PROC_ARST pass (detect async resets in processes).
+
+    2.5. Executing PROC_MUX pass (convert decision trees to multiplexers).
+    Creating decoders for process `\counter.$proc$counter.v:4$1'.
+         1/1: $0\count[1:0]
+
+    2.6. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+    2.7. Executing PROC_DFF pass (convert process syncs to FFs).
+    Creating register for signal `\counter.\count' using process `\counter.$proc$counter.v:4$1'.
+      created $dff cell `$procdff$8' with positive edge clock.
+
+    2.8. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+    Found and cleaned up 2 empty switches in `\counter.$proc$counter.v:4$1'.
+    Removing empty process `counter.$proc$counter.v:4$1'.
+    Cleaned up 2 empty switches.
+
+    yosys> opt
+
+    3. Executing OPT pass (performing simple optimizations).
+
+    3.1. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+
+    3.2. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    3.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+    Running muxtree optimizer on module \counter..
+      Creating internal representation of mux trees.
+      Evaluating internal representation of mux trees.
+      Analyzing evaluation results.
+    Removed 0 multiplexer ports.
+    <suppressed ~1 debug messages>
+
+    3.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+      Optimizing cells in module \counter.
+    Performed a total of 0 changes.
+
+    3.5. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    3.6. Executing OPT_RMDFF pass (remove dff with constant values).
+
+    3.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+    Finding unused cells or wires in module \counter..
+    Removed 0 unused cells and 3 unused wires.
+    <suppressed ~1 debug messages>
+
+    3.8. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+
+    3.9. Finished OPT passes. (There is nothing left to do.)
+
+    yosys> techmap
+
+    4. Executing TECHMAP pass (map to technology primitives).
+
+    4.1. Executing Verilog-2005 frontend: <techmap.v>
+    Parsing Verilog input from `<techmap.v>' to AST representation.
+    Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+    Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+    Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+    Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+    Generating RTLIL representation for module `\_90_simplemap_various'.
+    Generating RTLIL representation for module `\_90_simplemap_registers'.
+    Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+    Generating RTLIL representation for module `\_90_shift_shiftx'.
+    Generating RTLIL representation for module `\_90_fa'.
+    Generating RTLIL representation for module `\_90_lcu'.
+    Generating RTLIL representation for module `\_90_alu'.
+    Generating RTLIL representation for module `\_90_macc'.
+    Generating RTLIL representation for module `\_90_alumacc'.
+    Generating RTLIL representation for module `\$__div_mod_u'.
+    Generating RTLIL representation for module `\$__div_mod'.
+    Generating RTLIL representation for module `\_90_div'.
+    Generating RTLIL representation for module `\_90_mod'.
+    Generating RTLIL representation for module `\_90_pow'.
+    Generating RTLIL representation for module `\_90_pmux'.
+    Generating RTLIL representation for module `\_90_lut'.
+    Successfully finished Verilog frontend.
+
+    4.2. Continuing TECHMAP pass.
+    Running "alumacc" on wrapper $extern:wrap:$add:A_SIGNED=0:A_WIDTH=2:B_SIGNED=0:B_WIDTH=2:Y_WIDTH=2:394426c56d1a028ba8fdd5469b163e04011def47.
+    Using template $extern:wrap:$add:A_SIGNED=0:A_WIDTH=2:B_SIGNED=0:B_WIDTH=2:Y_WIDTH=2:394426c56d1a028ba8fdd5469b163e04011def47 for cells of type $extern:wrap:$add:A_SIGNED=0:A_WIDTH=2:B_SIGNED=0:B_WIDTH=2:Y_WIDTH=2:394426c56d1a028ba8fdd5469b163e04011def47.
+    Using extmapper simplemap for cells of type $mux.
+    Using extmapper simplemap for cells of type $dff.
+    Using template $paramod\_90_alu\A_SIGNED=0\B_SIGNED=0\A_WIDTH=2\B_WIDTH=2\Y_WIDTH=2 for cells of type $alu.
+    Using extmapper simplemap for cells of type $and.
+    Using extmapper simplemap for cells of type $xor.
+    Using template $paramod\_90_lcu\WIDTH=2 for cells of type $lcu.
+    Using extmapper simplemap for cells of type $not.
+    Using extmapper simplemap for cells of type $pos.
+    Using extmapper simplemap for cells of type $or.
+    No more expansions possible.
+    <suppressed ~138 debug messages>
+
+    yosys> opt
+
+    5. Executing OPT pass (performing simple optimizations).
+
+    5.1. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+    <suppressed ~12 debug messages>
+
+    5.2. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    5.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+    Running muxtree optimizer on module \counter..
+      Creating internal representation of mux trees.
+      No muxes found in this module.
+    Removed 0 multiplexer ports.
+
+    5.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+      Optimizing cells in module \counter.
+    Performed a total of 0 changes.
+
+    5.5. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    5.6. Executing OPT_RMDFF pass (remove dff with constant values).
+
+    5.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+    Finding unused cells or wires in module \counter..
+    Removed 1 unused cells and 32 unused wires.
+    <suppressed ~2 debug messages>
+
+    5.8. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+
+    5.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+    5.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+    Running muxtree optimizer on module \counter..
+      Creating internal representation of mux trees.
+      No muxes found in this module.
+    Removed 0 multiplexer ports.
+
+    5.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+      Optimizing cells in module \counter.
+    Performed a total of 0 changes.
+
+    5.12. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    5.13. Executing OPT_RMDFF pass (remove dff with constant values).
+
+    5.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+    Finding unused cells or wires in module \counter..
+
+    5.15. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+
+    5.16. Finished OPT passes. (There is nothing left to do.)
+
+
+
+
+
+
+
+    yosys> dfflibmap -liberty examples/cmos/cmos_cells.lib
+
+    8. Executing DFFLIBMAP pass (mapping DFF cells to sequential cells from liberty file).
+      cell DFF (noninv, pins=3, area=18.00) is a direct match for cell type $_DFF_P_.
+      cell DFFSR (noninv, pins=5, area=18.00) is a direct match for cell type $_DFFSR_PPP_.
+      create mapping for $_DFFSR_PNP_ from mapping for $_DFFSR_PPP_.
+      create mapping for $_DFFSR_PNN_ from mapping for $_DFFSR_PNP_.
+      create mapping for $_DFFSR_PPN_ from mapping for $_DFFSR_PNN_.
+      create mapping for $_DFF_N_ from mapping for $_DFF_P_.
+      create mapping for $_DFFSR_NNN_ from mapping for $_DFFSR_PNN_.
+      create mapping for $_DFFSR_NPN_ from mapping for $_DFFSR_NNN_.
+      create mapping for $_DFFSR_NNP_ from mapping for $_DFFSR_NNN_.
+      create mapping for $_DFFSR_NPP_ from mapping for $_DFFSR_NNP_.
+      create mapping for $_DFF_NN0_ from mapping for $_DFFSR_NNN_.
+      create mapping for $_DFF_NN1_ from mapping for $_DFFSR_NNN_.
+      create mapping for $_DFF_NP0_ from mapping for $_DFFSR_NPP_.
+      create mapping for $_DFF_NP1_ from mapping for $_DFFSR_NPP_.
+      create mapping for $_DFF_PN0_ from mapping for $_DFFSR_PNN_.
+      create mapping for $_DFF_PN1_ from mapping for $_DFFSR_PNN_.
+      create mapping for $_DFF_PP0_ from mapping for $_DFFSR_PPP_.
+      create mapping for $_DFF_PP1_ from mapping for $_DFFSR_PPP_.
+      final dff cell mappings:
+        DFF _DFF_N_ (.C(~C), .D( D), .Q( Q));
+        DFF _DFF_P_ (.C( C), .D( D), .Q( Q));
+        DFFSR _DFF_NN0_ (.C(~C), .D( D), .Q( Q), .R(~R), .S( 0));
+        DFFSR _DFF_NN1_ (.C(~C), .D( D), .Q( Q), .R( 0), .S(~R));
+        DFFSR _DFF_NP0_ (.C(~C), .D( D), .Q( Q), .R( R), .S( 0));
+        DFFSR _DFF_NP1_ (.C(~C), .D( D), .Q( Q), .R( 0), .S( R));
+        DFFSR _DFF_PN0_ (.C( C), .D( D), .Q( Q), .R(~R), .S( 0));
+        DFFSR _DFF_PN1_ (.C( C), .D( D), .Q( Q), .R( 0), .S(~R));
+        DFFSR _DFF_PP0_ (.C( C), .D( D), .Q( Q), .R( R), .S( 0));
+        DFFSR _DFF_PP1_ (.C( C), .D( D), .Q( Q), .R( 0), .S( R));
+        DFFSR _DFFSR_NNN_ (.C(~C), .D( D), .Q( Q), .R(~R), .S(~S));
+        DFFSR _DFFSR_NNP_ (.C(~C), .D( D), .Q( Q), .R( R), .S(~S));
+        DFFSR _DFFSR_NPN_ (.C(~C), .D( D), .Q( Q), .R(~R), .S( S));
+        DFFSR _DFFSR_NPP_ (.C(~C), .D( D), .Q( Q), .R( R), .S( S));
+        DFFSR _DFFSR_PNN_ (.C( C), .D( D), .Q( Q), .R(~R), .S(~S));
+        DFFSR _DFFSR_PNP_ (.C( C), .D( D), .Q( Q), .R( R), .S(~S));
+        DFFSR _DFFSR_PPN_ (.C( C), .D( D), .Q( Q), .R(~R), .S( S));
+        DFFSR _DFFSR_PPP_ (.C( C), .D( D), .Q( Q), .R( R), .S( S));
+    Mapping DFF cells in module `\counter':
+      mapped 2 $_DFF_P_ cells to \DFF cells.
+
+    yosys> opt
+
+    9. Executing OPT pass (performing simple optimizations).
+
+    9.1. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+
+    9.2. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    9.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+    Running muxtree optimizer on module \counter..
+      Creating internal representation of mux trees.
+      No muxes found in this module.
+    Removed 0 multiplexer ports.
+
+    9.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+      Optimizing cells in module \counter.
+    Performed a total of 0 changes.
+
+    9.5. Executing OPT_MERGE pass (detect identical cells).
+    Finding identical cells in module `\counter'.
+    Removed a total of 0 cells.
+
+    9.6. Executing OPT_RMDFF pass (remove dff with constant values).
+
+    9.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+    Finding unused cells or wires in module \counter..
+
+    9.8. Executing OPT_EXPR pass (perform const folding).
+    Optimizing module counter.
+
+    9.9. Finished OPT passes. (There is nothing left to do.)
+
+    yosys> write_verilog synth.v
+
+    10. Executing Verilog backend.
+    Dumping module `\counter'.
+
+*** synth.v
+
+    /* Generated by Yosys 0.9 (git sha1 UNKNOWN, gcc 7.5.0-3ubuntu1~18.04 -fPIC -Os) */
+
+    (* cells_not_processed =  1  *)
+    (* src = "counter.v:1" *)
+    module counter(clk, rst, en, count);
+      (* src = "counter.v:4" *)
+      wire [1:0] _00_;
+      (* src = "counter.v:9" *)
+      wire [1:0] _01_;
+      wire [1:0] _02_;
+      (* src = "counter.v:2" *)
+      input clk;
+      (* src = "counter.v:3" *)
+      output [1:0] count;
+      (* src = "counter.v:2" *)
+      input en;
+      (* src = "counter.v:2" *)
+      input rst;
+      assign _02_[0] = en ? (* src = "counter.v:8" *) _01_[0] : count[0];
+      assign _02_[1] = en ? (* src = "counter.v:8" *) _01_[1] : count[1];
+      assign _00_[0] = rst ? (* src = "counter.v:6" *) 1'h0 : _02_[0];
+      assign _00_[1] = rst ? (* src = "counter.v:6" *) 1'h0 : _02_[1];
+      (* src = "counter.v:4" *)
+      DFF _07_ (
+        .C(clk),
+        .D(_00_[0]),
+        .Q(count[0])
+      );
+      (* src = "counter.v:4" *)
+      DFF _08_ (
+        .C(clk),
+        .D(_00_[1]),
+        .Q(count[1])
+      );
+      assign _01_[1] = count[1] ^(* src = "counter.v:9|<techmap.v>:263" *)  count[0];
+      assign _01_[0] = count[0] ^(* src = "counter.v:9|<techmap.v>:262" *)  1'h1;
+    endmodule
+
+*** test1.log
+
+     /----------------------------------------------------------------------------\
+     |                                                                            |
+     |  yosys -- Yosys Open SYnthesis Suite                                       |
+     |                                                                            |
+     |  Copyright (C) 2012 - 2019  Clifford Wolf <clifford@clifford.at>           |
+     |                                                                            |
+     |  Permission to use, copy, modify, and/or distribute this software for any  |
+     |  purpose with or without fee is hereby granted, provided that the above    |
+     |  copyright notice and this permission notice appear in all copies.         |
+     |                                                                            |
+     |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+     |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+     |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+     |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+     |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+     |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+     |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+     |                                                                            |
+     \----------------------------------------------------------------------------/
+
+     Yosys 0.9 (git sha1 UNKNOWN, gcc 7.5.0-3ubuntu1~18.04 -fPIC -Os)
+
+
+    -- Parsing `synth.v' using frontend `verilog' --
+
+    1. Executing Verilog-2005 frontend: synth.v
+    Parsing Verilog input from `synth.v' to AST representation.
+    Generating RTLIL representation for module `\counter'.
+    Successfully finished Verilog frontend.
+
+    -- Running command `MyPass' --
+    Inside the newly created pass
+
+    2. Executing MyPass
+    Iter
+      counter (13 wires, 8 cells)
+
+    -- Running command `dump' --
+
+    autoidx 7
+
+    attribute \cells_not_processed 1
+    attribute \src "counter.v:1"
+    module \counter
+
+      attribute \src "synth.v:36"
+      wire $xor$synth.v:36$6_Y
+
+      attribute \src "synth.v:35"
+      wire $xor$synth.v:35$5_Y
+
+      attribute \src "synth.v:22"
+      wire $ternary$synth.v:22$4_Y
+
+      attribute \src "synth.v:21"
+      wire $ternary$synth.v:21$3_Y
+
+      attribute \src "synth.v:20"
+      wire $ternary$synth.v:20$2_Y
+
+      attribute \src "synth.v:19"
+      wire $ternary$synth.v:19$1_Y
+
+      attribute \src "counter.v:2"
+      wire input 2 \rst
+
+      attribute \src "counter.v:2"
+      wire input 3 \en
+
+      attribute \src "counter.v:3"
+      wire width 2 output 4 \count
+
+      attribute \src "counter.v:2"
+      wire input 1 \clk
+
+      attribute \src "synth.v:10"
+      wire width 2 \_02_
+
+      attribute \src "counter.v:9"
+      wire width 2 \_01_
+
+      attribute \src "counter.v:4"
+      wire width 2 \_00_
+
+      attribute \src "counter.v:9|<techmap.v>:262"
+      cell $xor $xor$synth.v:36$6
+        parameter \Y_WIDTH 1
+        parameter \B_WIDTH 1
+        parameter \A_WIDTH 1
+        parameter \B_SIGNED 0
+        parameter \A_SIGNED 0
+        connect \Y $xor$synth.v:36$6_Y
+        connect \B 1'1
+        connect \A \count [0]
+      end
+
+      attribute \src "counter.v:9|<techmap.v>:263"
+      cell $xor $xor$synth.v:35$5
+        parameter \Y_WIDTH 1
+        parameter \B_WIDTH 1
+        parameter \A_WIDTH 1
+        parameter \B_SIGNED 0
+        parameter \A_SIGNED 0
+        connect \Y $xor$synth.v:35$5_Y
+        connect \B \count [0]
+        connect \A \count [1]
+      end
+
+      attribute \module_not_derived 1
+      attribute \src "counter.v:4"
+      cell \DFF \_08_
+        connect \Q \count [1]
+        connect \D \_00_ [1]
+        connect \C \clk
+      end
+
+      attribute \module_not_derived 1
+      attribute \src "counter.v:4"
+      cell \DFF \_07_
+        connect \Q \count [0]
+        connect \D \_00_ [0]
+        connect \C \clk
+      end
+
+      attribute \src "counter.v:6"
+      cell $mux $ternary$synth.v:22$4
+        parameter \WIDTH 1
+        connect \Y $ternary$synth.v:22$4_Y
+        connect \S \rst
+        connect \B 1'0
+        connect \A \_02_ [1]
+      end
+
+      attribute \src "counter.v:6"
+      cell $mux $ternary$synth.v:21$3
+        parameter \WIDTH 1
+        connect \Y $ternary$synth.v:21$3_Y
+        connect \S \rst
+        connect \B 1'0
+        connect \A \_02_ [0]
+      end
+
+      attribute \src "counter.v:8"
+      cell $mux $ternary$synth.v:20$2
+        parameter \WIDTH 1
+        connect \Y $ternary$synth.v:20$2_Y
+        connect \S \en
+        connect \B \_01_ [1]
+        connect \A \count [1]
+      end
+
+      attribute \src "counter.v:8"
+      cell $mux $ternary$synth.v:19$1
+        parameter \WIDTH 1
+        connect \Y $ternary$synth.v:19$1_Y
+        connect \S \en
+        connect \B \_01_ [0]
+        connect \A \count [0]
+      end
+
+      connect \_02_ [0] $ternary$synth.v:19$1_Y
+      connect \_02_ [1] $ternary$synth.v:20$2_Y
+      connect \_00_ [0] $ternary$synth.v:21$3_Y
+      connect \_00_ [1] $ternary$synth.v:22$4_Y
+      connect \_01_ [1] $xor$synth.v:35$5_Y
+      connect \_01_ [0] $xor$synth.v:36$6_Y
+    end
+
+    End of script. Logfile hash: 391dcb3568
+    CPU: user 0.01s system 0.00s, MEM: 39.04 MB total, 8.49 MB resident
+    Yosys 0.9 (git sha1 UNKNOWN, gcc 7.5.0-3ubuntu1~18.04 -fPIC -Os)
+    Time spent: 85% 1x read_verilog (0 sec), 9% 1x dump (0 sec), ...
+--></p>
+</div>
+</body>
+</html>
