@@ -1,12 +1,14 @@
-<h1>Setting up coq with emacs as interface</h1>
+<h1>Installing coq using opam (Ubuntu and FreeBSD)</h1>
+
+<p><a href="https://opam.ocaml.org/">opam</a> is a 'source-based package manager for OCaml'.</p>
+
+<h2>Ubuntu</h2>
 
 <p>This is just what worked for me on an Ubuntu 18.04 computer.</p>
 
 <p>I followed some docs and compiled coq (8.12.0) from source using an environment set up with opam.</p>
 
-<h2>opam</h2>
-
-<p><a href="https://opam.ocaml.org/">opam</a> is a 'source-based package manager for OCaml'</p>
+<h3>opam</h3>
 
 <p>An official release of opam is available in a <a href="https://opam.ocaml.org/doc/Install.html#Ubuntu">ppa</a>. We can use that.</p>
 
@@ -15,14 +17,14 @@ sudo apt update
 sudo apt install opam
 </code></pre>
 
-<h2>Set up an opam environment</h2>
+<h3>Set up an opam environment</h3>
 
 <pre><code>opam init
 opam switch create coq 4.10.0+flambda  # (twice?)
 opam install num ocamlfind lablgtk3-sourceview3
 </code></pre>
 
-<h2>Coq</h2>
+<h3>Coq</h3>
 
 <p>Download the version of coq that you would like to have.</p>
 
@@ -33,65 +35,60 @@ make
 sudo make install
 </code></pre>
 
-<h2>Proof general and company-coq</h2>
-
-<p>Proof general mode of emacs, together with the company-coq package can be used as an interface for coq as mentioned <a href="https://coq.inria.fr/user-interfaces.html">here</a>.</p>
-
-<h3>.emacs file</h3>
-
-<p>Add the following to your <code>.emacs</code> file.</p>
-
-<pre><code>(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-</code></pre>
-
-<p>(Source: <a href="https://github.com/ProofGeneral/PG#installing-proof-general">Proof General github page</a>)</p>
-
-<h3>Edit gpg.conf</h3>
-
-<p>Go to <code>~/.emacs.d/elpa/gnupg/</code> directory (make it if it doesn't exist) and open the gpg.conf file.</p>
-
-<p>Add the following to it.</p>
-
-<pre><code>keyserver hkp://keys.gnupg.net:80
-</code></pre>
-
-<h3>Receive gpg keys</h3>
-
-<p>Run</p>
-
-<pre><code>gpg --homedir ~/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40
-</code></pre>
-
-<h3>Install the packages inside emacs</h3>
-
-<p>Finally, open up emacs and run (to update the list of packages, I guess)</p>
-
-<pre><code>M-x package-refresh-contents
-</code></pre>
-
-<p>Then, install the packages with</p>
-
-<pre><code>M-x package-install RET proof-general 
-M-x package-install RET company-coq
-</code></pre>
-
-<p><a href="https://github.com/cpitclaudel/company-coq">company-coq</a> extends the proof general's coq mode.</p>
-
-<h2>Versions of software involved</h2>
+<h3>Versions of software involved</h3>
 
 <ul>
 <li>Coq: 8.12.0</li>
 <li>opam: 2.0.4</li>
-<li>proof-general: 20210131.2042</li>
-<li>company-coq: 20200729.401</li>
+<li>Ubuntu 18.04</li>
+</ul>
+
+<h2>FreeBSD</h2>
+
+<p>What worked for FreeBSD system (FreeBSD 12.2-RELEASE-p4).</p>
+
+<h3>opam</h3>
+
+<p>Use the script from the <a href="https://opam.ocaml.org/doc/Install.html#Binary-distribution">opam website</a> to install the binary distribution.</p>
+
+<pre><code>sh &lt;(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
+</code></pre>
+
+<h3>Build and install coq</h3>
+
+<p>Once opam has been installed initialize it with</p>
+
+<pre><code>opam init
+</code></pre>
+
+<p>Now install <code>opam-depext</code> to figure out what more packages are needed to build coq.</p>
+
+<pre><code>opam install opam-depext
+eval $(opam env)
+opam-depext coq
+</code></pre>
+
+<p>Install any more packages if needed.</p>
+
+<p>Now, 'pin' the coq version to the version you need (to avoid auto upgradation of the package so that potential future trouble due to version mismatch may be avoided) and install it.</p>
+
+<pre><code>opam pin add coq 8.13.1
+eval $(opam env)
+</code></pre>
+
+<h3>Versions of software involved</h3>
+
+<ul>
+<li>Coq: 8.13.1</li>
+<li>opam: 2.0.8</li>
+<li>FreeBSD 12.2-RELEASE-p4</li>
 </ul>
 
 <h2>References</h2>
 
 <ul>
 <li><a href="https://opam.ocaml.org/">https://opam.ocaml.org/</a></li>
+<li><a href="https://coq.inria.fr/opam-using.html">https://coq.inria.fr/opam-using.html</a></li>
 <li><a href="https://opam.ocaml.org/doc/Install.html#Ubuntu">https://opam.ocaml.org/doc/Install.html#Ubuntu</a></li>
 <li><a href="https://github.com/ProofGeneral/PG#installing-proof-general">https://github.com/ProofGeneral/PG#installing-proof-general</a></li>
 <li><a href="https://coq.inria.fr/user-interfaces.html">https://coq.inria.fr/user-interfaces.html</a></li>

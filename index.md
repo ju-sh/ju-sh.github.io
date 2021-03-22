@@ -6,7 +6,8 @@ Corrections would appreciated (maybe as a github issue).
 
 # Posts
 
- - [Setting up coq with emacs](posts/coq.html)
+ - [Installing coq using opam (Ubuntu and FreeBSD)](posts/coq.html)
+ - [Setting up emacs as interface for coq](posts/coq-emacs.html)
  - [Installing coqtail in nvim with vimplug](posts/coqtail.html)
 
 # Talks
