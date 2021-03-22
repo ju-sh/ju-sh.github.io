@@ -13,7 +13,7 @@ We can install vim-plug to work with nvim using:
     sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-Now ask nvim to use vim-plug by editing the file at `/home/famubu/.config/nvim/init.vim` and adding the following.
+Now ask nvim to use vim-plug by editing the file at `/home/user/.config/nvim/init.vim` and adding the following.
 
     " Plugins will be downloaded under the specified directory.
     call plug#begin('~/.config/nvim/plugged')

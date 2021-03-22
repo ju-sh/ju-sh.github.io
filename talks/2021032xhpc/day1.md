@@ -1,6 +1,6 @@
 # HPC workshop - Day 1
 
- - By: Nikhil Hegde from IIT Dharwad
+ - Speaker: Nikhil Hegde from IIT Dharwad
  - Date: 20-Mar-2021
  - [Info link](https://www.cse.iitm.ac.in/~rupesh/events/hpc2021/)
  - NSM HPC 2-day workshop

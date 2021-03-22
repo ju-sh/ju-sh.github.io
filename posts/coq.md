@@ -43,9 +43,10 @@ What worked for FreeBSD system (FreeBSD 12.2-RELEASE-p4).
 
 ### opam
 
-Use the script from the [opam website][3] to install the binary distribution.
+Use the version from the FreeBSD Ports Collection.
 
-    sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
+    cd /usr/ports/devel/ocaml-opam
+    sudo make install clean
 
 ### Build and install coq
 

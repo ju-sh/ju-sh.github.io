@@ -49,9 +49,10 @@ sudo make install
 
 <h3>opam</h3>
 
-<p>Use the script from the <a href="https://opam.ocaml.org/doc/Install.html#Binary-distribution">opam website</a> to install the binary distribution.</p>
+<p>Use the version from the FreeBSD Ports Collection.</p>
 
-<pre><code>sh &lt;(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
+<pre><code>cd /usr/ports/devel/ocaml-opam
+sudo make install clean
 </code></pre>
 
 <h3>Build and install coq</h3>

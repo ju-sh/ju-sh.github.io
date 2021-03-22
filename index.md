@@ -10,6 +10,6 @@ Corrections would appreciated (maybe as a github issue).
  - [Setting up emacs as interface for coq](posts/coq-emacs.html)
  - [Installing coqtail in nvim with vimplug](posts/coqtail.html)
 
-# Talks
+# Notes from talks attended
 
  - [2021-Mar: 2-day HPC workshop](talks/2021032xhpc/day1.html)
