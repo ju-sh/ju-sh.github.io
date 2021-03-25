@@ -7,6 +7,8 @@
 
 Couldn't actively participate in the lab session (didn't have access to a cluster to try it out).
 
+---
+
 Chandra: An HPC cluster at IITPKD.
 
 The giant computers consists of many smaller computes linked together.
