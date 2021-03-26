@@ -4,6 +4,8 @@
 
 Some notes on basic electronics stuff. Derived mostly from Wikipedia articles.
 
+---
+
 ## Band gap
  - Gap between top of **valence band** and bottom of **conducting band**.
  - An energy gap.
@@ -38,12 +40,12 @@ Some notes on basic electronics stuff. Derived mostly from Wikipedia articles.
  - Can be combined with other components to create logic gates like OR and AND => **Diode Resistor Logic (DRL)**
 
 ## Extrinsic semiconductor
-Semiconductor that has been doped.
+ - Semiconductor that has been doped.
 
 ## Intrinsic semiconductor
-Undoped semiconductor.
-Pure semiconductor without significant amount of dopants.
-Number of excited electrons = Number of electron holes. ie, n=p.
+ - Undoped semiconductor.
+ - Pure semiconductor without significant amount of dopants.
+ - Number of excited electrons = Number of electron holes. ie, n=p.
 
 ## Charge carrier
  - **Majority charge carrier**: The more abundant charge carrier
@@ -60,30 +62,29 @@ Amount of thermodynamic work that needs to be done to add an extra electron to t
  - Diodes, BJTs, FETs, etc rely on this phenomenon.
 
 ## p-type semiconductor
-Made by doping an intrinsic semiconductor with an _electron acceptor element_ -> holes created.
-Positive charge due to holes.
-Majority carrier: Holes
-Minority carrier: Electrons
-Dopant for Silicon could be Boron or Gallium
+ - Made by doping an intrinsic semiconductor with an _electron acceptor element_ -> holes created.
+ - Positive charge due to holes.
+ - Majority carrier: Holes
+ - Minority carrier: Electrons
+ - Dopant for Silicon could be Boron or Gallium
 
 ## n-type semiconductor
-Made by doping an intrinsic semiconductor with an _electron donor element_ -> extra electrons.
-Negative charge due to extra electrons.
-Majority carrier: Electrons
-Minority carrier: Holes
-Dopant for Silicon could be Phosphorus or Arsenic.
-
+ - Made by doping an intrinsic semiconductor with an _electron donor element_ -> extra electrons.
+ - Negative charge due to extra electrons.
+ - Majority carrier: Electrons
+ - Minority carrier: Holes
+ - Dopant for Silicon could be Phosphorus or Arsenic.
 
 ## p-n junction
-Created by doping.
-Boundary between two types of semiconductor materials:
-+ p-type
-+ n-type
-Electric current passes in only one direction because
-+ p side: has excess holes
-+ n side: has excess electrons
-A diode can be made from a single p-n junction
-A BJT consists of two p-n junctions (either as p-n-p or as n-p-n)
+ - Created by doping.
+ - Boundary between two types of semiconductor materials:
+   + p-type
+   + n-type
+ - Electric current passes in only one direction because
+   + p side: has excess holes
+   + n side: has excess electrons
+ - A diode can be made from a single p-n junction
+ - A BJT consists of two p-n junctions (either as p-n-p or as n-p-n)
 
 ## Transistor
  - Can amplify or switch electronic signals.
@@ -130,7 +131,7 @@ A BJT consists of two p-n junctions (either as p-n-p or as n-p-n)
  - MOSFET: Most widely used FET.
 
 ## Bipolar Junction Transistor (BJT)
-Uses both electrons and holes as charge carriers (hence the term bipolar?)
+ - Uses both electrons and holes as charge carriers (hence the term bipolar?)
 
 ## Impedence (in electronics)
 ### High impedence
@@ -140,20 +141,20 @@ Uses both electrons and holes as charge carriers (hence the term bipolar?)
    + Basis of bus systems in computers.
 
 ### Low impedence
-Low impedence circuits are high current and low voltage.
+ - Low impedence circuits are high current and low voltage.
 
 ## Other electronic stuff of interest
-pmos
-nmos
-Forward bias, reverse bias operation of p-n junction
-Breakdown voltage of a p-n junction
-Reverse voltage
-inversion layer
-cmos
-npn
-pnp
-p channel
-saturation in transistors
-Emitter Coupled Logic (ECL)
-MOS
-MOSFET
+ - pmos
+ - nmos
+ - Forward bias, reverse bias operation of p-n junction
+ - Breakdown voltage of a p-n junction
+ - Reverse voltage
+ - inversion layer
+ - cmos
+ - npn
+ - pnp
+ - p channel
+ - saturation in transistors
+ - Emitter Coupled Logic (ECL)
+ - MOS
+ - MOSFET
