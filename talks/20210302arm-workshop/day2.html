@@ -1,0 +1,133 @@
+<h1>Workshop on ARM based HPC: Day 2</h1>
+
+<ul>
+<li>Speaker: Phil Ridley</li>
+<li>NSM (National Supercomputing Mission) Industry Talks</li>
+<li>NSM Nodal Centres for Training in HPC and AI</li>
+<li><a href="https://www.cse.iitm.ac.in/~rupesh/events/arm2021/">Info link</a></li>
+<li>Date: 03-Mar-2021</li>
+</ul>
+
+<hr />
+
+<ul>
+<li>W register: 32 bits (lower half of X)</li>
+<li>X register: 64 bits</li>
+<li>D register: 64 bits (lower 64b of Q)</li>
+<li>Q register: 128bits (lower half??)</li>
+<li>word size : 128 bits?</li>
+</ul>
+
+<h2>Neon intrinsics</h2>
+
+<ul>
+<li>ACLE: ARM C Language Extensions</li>
+<li><code>#include arm_neon.h</code></li>
+<li>ARM Neon doesn't have SVE. Only 128b registers.</li>
+<li>Advanced SIMD</li>
+</ul>
+
+<h2>Scalable Vector Implementation</h2>
+
+<ul>
+<li>Vector length: hardware implementation choice from 128b to 2048b.</li>
+<li>Hardware sets VL.</li>
+<li>Software => vectors have no length.</li>
+<li>Same binary code runs on hardware with different VL.    </li>
+</ul>
+
+<h3>Vector length agnostic</h3>
+
+<ul>
+<li>There are programming models that allow software to scale to available vector length.</li>
+<li>No need of new ISA or rewrite or recompile for new vector lengths.</li>
+</ul>
+
+<h3>Auto-vectorization</h3>
+
+<ul>
+<li>Gather-load and scatter-store => Loads a single register from multiple scattered locations.</li>
+</ul>
+
+<h1>SVE vs traditional ISA</h1>
+
+<ul>
+<li>SVE is a predicate-centric architecture</li>
+</ul>
+
+<h2>Per lane predication</h2>
+
+<ul>
+<li>Operations are done in individual lanes each under the control of a predicate register.</li>
+</ul>
+
+<h2>Example</h2>
+
+<ul>
+<li>Consider an example with 10 chunks of 4B (ie, 32b each)</li>
+</ul>
+
+<h3>Aarch64 (Scalar)</h3>
+
+<ul>
+<li><p>10 iterations over a 4B register</p>
+
+<h3>Neon (128b Vector engine)</h3></li>
+<li><p>Two iterations over a 128b register (main loop) + two iterations of a drain loop over a 4B register</p>
+
+<h3>SVE (128b VLA vector engine)</h3></li>
+<li><p>VLA => Vector Length Agnostic</p></li>
+<li>Three iterations over a 16B VLA register with an adjustable predicate.</li>
+<li>VLA -> portability, scalability improved</li>
+</ul>
+
+<h2>SVE registers</h2>
+
+<h3>Scalable vector registers</h3>
+
+<ul>
+<li>Z0 to Z31 (Extends V0 to V31 of the NEON architecture)</li>
+<li>Packed registers: DP,SP,HP</li>
+</ul>
+
+<h3>Scalable predicate registers</h3>
+
+<ul>
+<li>P0-P7 (Predicates for load/store/arithmetic)</li>
+<li>P8-P15 (Predicates for loop management)</li>
+<li>FFR (First Fault Register for software speculation)</li>
+</ul>
+
+<h1>VL (Vector Length)</h1>
+
+<ul>
+<li>Set by the CPU architect.</li>
+<li>Any multiple of 128b upto 2048b</li>
+<li>VL can be dynamically adjusted.</li>
+<li>Implementation dependent</li>
+<li><p>Can be reduced by OS/hypervisor</p></li>
+<li><p>Predicates are not bit masks.</p></li>
+<li><p>Predicate gives a lot of advantage that the compiler can use.</p></li>
+<li><p>Lanes</p></li>
+<li>LBB in assembly</li>
+<li>Main loop</li>
+<li>Drain loop: do anything that remains, if any.</li>
+<li>auto vectorization</li>
+<li>AVX in vector implementation</li>
+<li>Disadvantages of a load/store architecture</li>
+<li>software speculation</li>
+<li>Full predicate</li>
+<li>Partial predicate</li>
+<li>A64 conditional instructions</li>
+<li>Hotchips (conference)</li>
+<li>Predicate instructions</li>
+<li>Why double precison for double data type (general NQ)</li>
+</ul>
+
+<h1>AI/ML With ARM</h1>
+
+<ul>
+<li><p>gvisor: Container sandbox by Google</p></li>
+<li><p>Edge computing</p></li>
+<li>ad hoc network</li>
+</ul>
