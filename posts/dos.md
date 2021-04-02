@@ -1,6 +1,6 @@
-# DOS Commands
+# DOS Commands for Linux users
 
- - Date: 28-Mar-2021
+ - Date created: 28-Mar-2021
 
 As seen in Windows XP.
 
@@ -33,6 +33,10 @@ Similar commands. Not exact same ones. There are differences.
     ping    | PING
     sort    | SORT
     date    | DATE
+
+Options in DOS start with `/` as in `/a` instead of `-a` in Linux.
+
+Help text of DOS commands is usually obtained using `/?`, like `--help` in Linux.
 
 # Compare files
 With `FC` command. As in 'File Compare'.
@@ -70,7 +74,7 @@ Or remove entire directory along with all its sub-directories and files with `DE
 ## Changing current directory
 `CD` command.
 
-## Goto the parent directory
+### Go to the parent directory
 
     cd ..
 
@@ -81,8 +85,9 @@ Run `cd` without any parameters.
 
 # Help
 ## --help option for DOS commands
+In DOS, `/?` fulfills the function of `--help` in Linux.
 
-    cmd \?
+    cmd /?
 
 ## HELP
 
@@ -108,7 +113,7 @@ For example, the following command makes the file `file.txt` 'not hidden' and 'n
 
     attrib -h -r file.txt
 
-Without any switches, `ATTRIB` acts like `ls -l` in Linux.
+Without any switches, `ATTRIB` acts something like `ls -l` in Linux.
 
 # Comments
 Two ways:
@@ -123,7 +128,7 @@ Example:
     :: Another comment
     echo "Hello"
     
-If we need comment after a command, we can use command concatenation character (&) like
+If we need comment after a command, we can use **command concatenation character** (&) like
 
     echo "hello" & REM A comment
     echo "world" & ::  Another comment
@@ -165,12 +170,22 @@ Two ways:
  - ren
 
 # Variables
+Using `SET` command.
+
+    set var=hello
+    echo %var%
+
 ## Environment variables
 
-    echo %cd%   REM Like `echo $PWD` in linux
+%cd%     : $PWD
+%date%   : 
+%time%
+   
 
 # Wildcards
 Unlike Unix, DOS considers file extension quite important.
+
+## Asterisk
 
     REM Like `ls *` in Linux
     dir *.*
@@ -180,6 +195,12 @@ and
     REM Like `ls *.txt` in Linux
     dir *.txt
 
+## Question mark
+
+    *.sw?
+
+would match ab.swp, 12a.swo, etc.
+
 # Date and time
 
 Display current date and prompt for new date value: `date`
@@ -188,22 +209,26 @@ Just display current date: `date /t`
 
 Likewise with time: `time` and `time /t`.
 
-
-# Change title of DOS window
-Change title of command prompt window with `TITLE` command.
-
-# Piping commands
+# Shell
+## Piping commands
 Like in Unix.
 
 For example, the following is like `cat file.txt | more` in Linux:
 
     type file.txt | more
 
-# Get DOS version
-`VER` command.
+## Input/output redirection
+Todo: Todo
 
 # Copy entire directory trees
-`XCOPY` command.
+Todo: `XCOPY` command.
+
+# Less oftenly used commands
+## Change title of DOS window
+Change title of command prompt window with `TITLE` command.
+
+## Get DOS version
+`VER` command.
 
 # Some 'equivalent' DOS commands
 ## `grep -r`
@@ -211,3 +236,7 @@ For example, the following is like `cat file.txt | more` in Linux:
     dir *.txt /s /b
 
 `/s` look in all sub-directories and `/b` keeps output concise.
+
+# References
+ - [https://en.wikipedia.org/wiki/List_of_DOS_commands](https://en.wikipedia.org/wiki/List_of_DOS_commands)
+ - Help output of the commands

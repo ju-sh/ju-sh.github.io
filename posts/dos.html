@@ -1,0 +1,296 @@
+<h1>DOS Commands for Linux users</h1>
+
+<ul>
+<li>Date created: 28-Mar-2021</li>
+</ul>
+
+<p>As seen in Windows XP.</p>
+
+<hr />
+
+<h1>Cheatsheet</h1>
+
+<p>Similar commands. Not exact same ones. There are differences.</p>
+
+<pre><code>Linux   | DOS
+--------+--------
+ls      | DIR
+cp      | COPY
+cd      | CD or CHDIR
+pwd     | CD
+clear   | CLS
+cat     | TYPE
+edit    | Launch editor
+rm      | DEL or ERASE
+echo    | ECHO
+man     | HELP
+diff    | FC
+rmdir   | RMDIR or RD
+mkdir   | MKDIR or MD
+chmod   | ATTRIB
+grep    | FIND (and FINDSTR ?)
+free    | MEM
+more    | MORE
+mv      | MOVE
+ping    | PING
+sort    | SORT
+date    | DATE
+</code></pre>
+
+<p>Options in DOS start with <code>/</code> as in <code>/a</code> instead of <code>-a</code> in Linux.</p>
+
+<p>Help text of DOS commands is usually obtained using <code>/?</code>, like <code>--help</code> in Linux.</p>
+
+<h1>Compare files</h1>
+
+<p>With <code>FC</code> command. As in 'File Compare'.</p>
+
+<pre><code>fc file1.txt file2.txt
+</code></pre>
+
+<p>Or with <code>COMP</code> command which is a bit different from <code>FC</code>.</p>
+
+<h1>Edit</h1>
+
+<p>Launch an editor.</p>
+
+<pre><code>edit [file]
+</code></pre>
+
+<p>MS-DOS editor in XP.</p>
+
+<p>MS-DOS editor not available in any 64-bit Windows.</p>
+
+<h1>Managing directories</h1>
+
+<h2>Create directory</h2>
+
+<pre><code>mkdir [dirs]
+md [dirs]
+</code></pre>
+
+<h2>Delete directory</h2>
+
+<p>Remove an empty directory.</p>
+
+<pre><code>rmdir [dirs]
+rd [dirs]
+</code></pre>
+
+<p>Or remove entire directory along with all its sub-directories and files with <code>DELTREE</code>:</p>
+
+<p><code>DELTREE</code> is considered a 'dangerous' command due to the possibility of accidental file deletion.</p>
+
+<h1>Navigating directories</h1>
+
+<h2>Changing current directory</h2>
+
+<p><code>CD</code> command.</p>
+
+<h3>Go to the parent directory</h3>
+
+<pre><code>cd ..
+</code></pre>
+
+<h2>Print current directory</h2>
+
+<p>Run <code>cd</code> without any parameters.</p>
+
+<pre><code>cd
+</code></pre>
+
+<h1>Help</h1>
+
+<h2>--help option for DOS commands</h2>
+
+<p>In DOS, <code>/?</code> fulfills the function of <code>--help</code> in Linux.</p>
+
+<pre><code>cmd /?
+</code></pre>
+
+<h2>HELP</h2>
+
+<pre><code>HELP &lt;command-name&gt;
+</code></pre>
+
+<h1>Command options</h1>
+
+<p>In DOS, options are preceded by a '/' unlike Unix where hyphens are used instead.</p>
+
+<h1>Change file permissions</h1>
+
+<p>Use <code>ATTRIB</code> command.</p>
+
+<ul>
+<li><code>+h</code>: hidden</li>
+<li><code>+r</code>: read-only</li>
+<li><code>+s</code>: system file</li>
+<li><code>+a</code>: archived file</li>
+<li><code>-h</code>: not hidden</li>
+<li><code>-r</code>: not read-only</li>
+<li><code>-s</code>: not system file</li>
+<li><code>-a</code>: not archived file</li>
+</ul>
+
+<p>For example, the following command makes the file <code>file.txt</code> 'not hidden' and 'not read-only'.</p>
+
+<pre><code>attrib -h -r file.txt
+</code></pre>
+
+<p>Without any switches, <code>ATTRIB</code> acts something like <code>ls -l</code> in Linux.</p>
+
+<h1>Comments</h1>
+
+<p>Two ways:
+ - <code>REM</code> command
+ - <code>::</code></p>
+
+<p>These work only when at the beginning of a line.</p>
+
+<p>Example:</p>
+
+<pre><code>REM Hello script
+:: Another comment
+echo "Hello"
+</code></pre>
+
+<p>If we need comment after a command, we can use <strong>command concatenation character</strong> (&amp;) like</p>
+
+<pre><code>echo "hello" &amp; REM A comment
+echo "world" &amp; ::  Another comment
+</code></pre>
+
+<h1>Find memory usage</h1>
+
+<p><code>MEM</code> command.</p>
+
+<pre><code>mem
+</code></pre>
+
+<p>and get output like</p>
+
+<pre><code>655360 bytes total conventional memory
+655360 bytes available to MS-DOS
+633456 largest executable program size
+</code></pre>
+
+<p>1048576 bytes total contiguous extended memory
+         0 bytes available contiguous extended memory
+    941056 bytes available XMS memory
+           MS-DOS resident in High Memory Area</p>
+
+<h1>Pager</h1>
+
+<p>'MORE' command.</p>
+
+<ul>
+<li>Next line: Return</li>
+<li>Next page: Space</li>
+<li>Exit     : q</li>
+</ul>
+
+<h1>PATH command</h1>
+
+<p>Displays search path for executable files.</p>
+
+<p>Like displaying or setting <code>$PATH</code> in Linux.</p>
+
+<h1>PAUSE command</h1>
+
+<p>Suspends execution and by default, displays a "Press any key to continue . . ." message, till a key is pressed.</p>
+
+<h1>Renaming files</h1>
+
+<p>Two ways:
+ - move
+ - ren</p>
+
+<h1>Variables</h1>
+
+<p>Using <code>SET</code> command.</p>
+
+<pre><code>set var=hello
+echo %var%
+</code></pre>
+
+<h2>Environment variables</h2>
+
+<p>%cd%     : $PWD
+%date%   : 
+%time%</p>
+
+<h1>Wildcards</h1>
+
+<p>Unlike Unix, DOS considers file extension quite important.</p>
+
+<h2>Asterisk</h2>
+
+<pre><code>REM Like `ls *` in Linux
+dir *.*
+</code></pre>
+
+<p>and</p>
+
+<pre><code>REM Like `ls *.txt` in Linux
+dir *.txt
+</code></pre>
+
+<h2>Question mark</h2>
+
+<pre><code>*.sw?
+</code></pre>
+
+<p>would match ab.swp, 12a.swo, etc.</p>
+
+<h1>Date and time</h1>
+
+<p>Display current date and prompt for new date value: <code>date</code></p>
+
+<p>Just display current date: <code>date /t</code></p>
+
+<p>Likewise with time: <code>time</code> and <code>time /t</code>.</p>
+
+<h1>Shell</h1>
+
+<h2>Piping commands</h2>
+
+<p>Like in Unix.</p>
+
+<p>For example, the following is like <code>cat file.txt | more</code> in Linux:</p>
+
+<pre><code>type file.txt | more
+</code></pre>
+
+<h2>Input/output redirection</h2>
+
+<p>Todo: Todo</p>
+
+<h1>Copy entire directory trees</h1>
+
+<p>Todo: <code>XCOPY</code> command.</p>
+
+<h1>Less oftenly used commands</h1>
+
+<h2>Change title of DOS window</h2>
+
+<p>Change title of command prompt window with <code>TITLE</code> command.</p>
+
+<h2>Get DOS version</h2>
+
+<p><code>VER</code> command.</p>
+
+<h1>Some 'equivalent' DOS commands</h1>
+
+<h2><code>grep -r</code></h2>
+
+<pre><code>dir *.txt /s /b
+</code></pre>
+
+<p><code>/s</code> look in all sub-directories and <code>/b</code> keeps output concise.</p>
+
+<h1>References</h1>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/List_of_DOS_commands">https://en.wikipedia.org/wiki/List<em>of</em>DOS_commands</a></li>
+<li>Help output of the commands</li>
+</ul>
