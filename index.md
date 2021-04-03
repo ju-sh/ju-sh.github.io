@@ -6,6 +6,7 @@ Corrections would be appreciated (maybe as an issue in my repo. Ideally with som
 
 # Posts
 
+ - _2021-Apr-03_: [Installing Qflow](posts/qflow-install.html)
  - _2021-Mar-28_: [DOS commands for Linux users](posts/dos.html)
  - _2021-Feb_: [Installing coq using opam (Ubuntu and FreeBSD)](posts/coq.html)
  - _2021-Feb_: [Setting up emacs as interface for coq](posts/coq-emacs.html)

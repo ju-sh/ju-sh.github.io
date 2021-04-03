@@ -1,0 +1,164 @@
+<h1>Installing qflow</h1>
+
+<ul>
+<li>Date created: 03-Apr-2021</li>
+</ul>
+
+<p>Just a record to remind myself of what I did to install qflow.</p>
+
+<p>As done on an Ubuntu 18.04 system.</p>
+
+<hr />
+
+<h2>Dependencies</h2>
+
+<p>qflow has the following dependencies that must be installed separately:</p>
+
+<ul>
+<li>Yosys</li>
+<li>graywolf</li>
+<li>Qrouter</li>
+<li>Magic</li>
+<li>netgen</li>
+<li>python3</li>
+</ul>
+
+<p>The following are also qflow dependencies. But for me, installing the above dependencies had somehow caused these to be installed as well. Or may be it was just because it was already there on my computer.</p>
+
+<ul>
+<li>tclsh</li>
+<li>wish</li>
+<li>tcsh</li>
+</ul>
+
+<h3>Yosys</h3>
+
+<p>Does Verilog <a href="https://en.wikipedia.org/wiki/Register-transfer_level">RTL</a> synthesis (Verilog parser/synthesis).</p>
+
+<pre><code>sudo apt install yosys
+</code></pre>
+
+<h3>graywolf</h3>
+
+<p>For placement in VLSI design (cell and pin placement).</p>
+
+<h4>Installing from package:</h4>
+
+<pre><code>sudo apt install graywolf
+</code></pre>
+
+<h4>Compiling from source:</h4>
+
+<p>Go to <a href="https://github.com/rubund/graywolf/releases">https://github.com/rubund/graywolf/releases</a> and download the files.</p>
+
+<p>I used v0.1.6</p>
+
+<pre><code>tar -xf graywolf-0.1.6.tar.gz
+cd graywolf-0.1.6
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+</code></pre>
+
+<p>Install missing libraries as needed if errors show up in between.</p>
+
+<p>I needed</p>
+
+<pre><code>sudo apt install libgsl-dev  # GNU Scientific library
+</code></pre>
+
+<h3>Qrouter</h3>
+
+<p>Detail router.</p>
+
+<h4>Installing from package:</h4>
+
+<pre><code>sudo apt install qrouter
+</code></pre>
+
+<h4>Compiling from source:</h4>
+
+<p>Download latest stable version from <a href="http://opencircuitdesign.com/qrouter/download.html">http://opencircuitdesign.com/qrouter/download.html</a></p>
+
+<p>I used v1.4.84</p>
+
+<pre><code>tar -xf qrouter-1.4.84.tgz
+cd qrouter-1.4.84/
+./configure                 # Creates the Makefile
+make
+</code></pre>
+
+<p>In case of missing library errors, install them. I needed</p>
+
+<pre><code>sudo apt install tk-dev tcl-dev
+</code></pre>
+
+<p>I also had to edit the Makefile to add flags for the compiler to find the tk header file. There are probably better ways to fix that but this one did work for me.</p>
+
+<p>Edit <code>CFLAGS</code> variable from</p>
+
+<pre><code>CFLAGS += -g -O2
+</code></pre>
+
+<p>to</p>
+
+<pre><code>CFLAGS += -g -O2 -I /usr/include/tcl/
+</code></pre>
+
+<p>where <code>/usr/include/tcl/</code> is the path to the header file.</p>
+
+<p>You can then install qrouter if you like with</p>
+
+<pre><code>sudo make install
+</code></pre>
+
+<h3>Magic</h3>
+
+<p>Layout viewer.</p>
+
+<pre><code>sudo apt install magic
+</code></pre>
+
+<h3>Netgen</h3>
+
+<p>Does <a href="https://en.wikipedia.org/wiki/Layout_Versus_Schematic">LVS</a> (Layout-vs-Schematic) to verify whether the IC layout corresponds to the original schematic (circuit diagram) of the design.</p>
+
+<p>Go to <a href="http://opencircuitdesign.com/netgen/download.html">http://opencircuitdesign.com/netgen/download.html</a> and download the stable version.</p>
+
+<p>I used v1.5</p>
+
+<pre><code>tar -xf netgen-1.5.173.tgz
+cd netgen-1.5.173/
+./configure
+make
+sudo make install
+</code></pre>
+
+<h2>qflow</h2>
+
+<p>Download the file from <a href="http://opencircuitdesign.com/qflow/download.html#Download">http://opencircuitdesign.com/qflow/download.html#Download</a>.</p>
+
+<p>I got v1.4.95</p>
+
+<pre><code>tar -xf qflow-1.4.95.tgz
+cd qflow-1.4.95/
+./configure
+make
+sudo make install
+</code></pre>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://opencircuitdesign.com/qflow/download.html">http://opencircuitdesign.com/qflow/download.html</a></li>
+<li><a href="http://opencircuitdesign.com/qflow/install.html">http://opencircuitdesign.com/qflow/install.html</a></li>
+<li><a href="http://www.clifford.at/yosys/download.html">http://www.clifford.at/yosys/download.html</a></li>
+<li><a href="https://github.com/rubund/graywolf">https://github.com/rubund/graywolf</a></li>
+<li><a href="http://opencircuitdesign.com/qrouter/download.html">http://opencircuitdesign.com/qrouter/download.html</a></li>
+<li><a href="http://opencircuitdesign.com/magic/download.html">http://opencircuitdesign.com/magic/download.html</a></li>
+<li><a href="http://opencircuitdesign.com/netgen/">http://opencircuitdesign.com/netgen/</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Layout_Versus_Schematic">https://en.wikipedia.org/wiki/Layout<em>Versus</em>Schematic</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Register-transfer_level">https://en.wikipedia.org/wiki/Register-transfer_level</a></li>
+</ul>
