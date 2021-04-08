@@ -1,12 +1,19 @@
 # Installing coq using opam (Ubuntu and FreeBSD)
 
+ - Date created: Feb-2021
+ - Last updated: 07-Apr-2021
+
+As seen in Windows XP.
+
+---
+
 [opam][1] is a 'source-based package manager for OCaml'.
 
 ## Ubuntu
 
 This is just what worked for me on an Ubuntu 18.04 computer.
 
-I followed some docs and compiled coq (8.12.0) from source using an environment set up with opam.
+I just followed some docs and installed coq (8.12.0) using opam.
 
 ### opam
 

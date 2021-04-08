@@ -2,6 +2,7 @@
 
 <ul>
 <li>Date created: 03-Apr-2021</li>
+<li>Last updated: 07-Apr-2021</li>
 </ul>
 
 <p>Just a record to remind myself of what I did to install qflow.</p>
@@ -9,6 +10,8 @@
 <p>As done on an Ubuntu 18.04 system.</p>
 
 <hr />
+
+<p>It's always better to read the README file first (though I'm sometimes too lazy for that and read it a bit too late). </p>
 
 <h2>Dependencies</h2>
 
@@ -35,7 +38,25 @@
 
 <p>Does Verilog <a href="https://en.wikipedia.org/wiki/Register-transfer_level">RTL</a> synthesis (Verilog parser/synthesis).</p>
 
+<h4>Installing from package:</h4>
+
 <pre><code>sudo apt install yosys
+</code></pre>
+
+<h4>Compiling from source</h4>
+
+<p>Download the required file from <a href="http://www.clifford.at/yosys/download.html">http://www.clifford.at/yosys/download.html</a>.</p>
+
+<p>I used v0.9</p>
+
+<pre><code>tar -xf yosys-yosys-0.9.tar.gz
+cd yosys-yosys-0.9/
+make
+</code></pre>
+
+<p>Missing libraries need to be installed, if any. I needed:</p>
+
+<pre><code>sudo apt install libreadline-dev flex
 </code></pre>
 
 <h3>graywolf</h3>
@@ -62,7 +83,7 @@ make
 sudo make install
 </code></pre>
 
-<p>Install missing libraries as needed if errors show up in between.</p>
+<p>Again, install missing libraries as needed.</p>
 
 <p>I needed</p>
 
@@ -149,6 +170,19 @@ make
 sudo make install
 </code></pre>
 
+<h3>GUI</h3>
+
+<p>qflow GUI can be launched with</p>
+
+<pre><code>qflow gui
+</code></pre>
+
+<p>I needed to copy the <code>tech/</code> directory from the extracted <code>qflow-1.4.95/</code> directory to <code>/usr/local/share/qflow</code> and install tkinter for python like</p>
+
+<pre><code>sudo apt install python3-tk
+sudo cp -r tech/ /usr/local/share/qflow/
+</code></pre>
+
 <h2>References</h2>
 
 <ul>
@@ -159,6 +193,6 @@ sudo make install
 <li><a href="http://opencircuitdesign.com/qrouter/download.html">http://opencircuitdesign.com/qrouter/download.html</a></li>
 <li><a href="http://opencircuitdesign.com/magic/download.html">http://opencircuitdesign.com/magic/download.html</a></li>
 <li><a href="http://opencircuitdesign.com/netgen/">http://opencircuitdesign.com/netgen/</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Layout_Versus_Schematic">https://en.wikipedia.org/wiki/Layout<em>Versus</em>Schematic</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Layout_Versus_Schematic">https://en.wikipedia.org/wiki/Layout_Versus_Schematic</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Register-transfer_level">https://en.wikipedia.org/wiki/Register-transfer_level</a></li>
 </ul>

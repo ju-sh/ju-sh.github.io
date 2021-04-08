@@ -1,12 +1,15 @@
 # Installing qflow
 
  - Date created: 03-Apr-2021
+ - Last updated: 07-Apr-2021
 
 Just a record to remind myself of what I did to install qflow.
 
 As done on an Ubuntu 18.04 system.
 
 ---
+
+It's always better to read the README file first (though I'm sometimes too lazy for that and read it a bit too late). 
 
 ## Dependencies
 qflow has the following dependencies that must be installed separately:
@@ -27,7 +30,22 @@ The following are also qflow dependencies. But for me, installing the above depe
 ### Yosys
 Does Verilog [RTL](https://en.wikipedia.org/wiki/Register-transfer_level) synthesis (Verilog parser/synthesis).
 
+#### Installing from package:
+
     sudo apt install yosys
+
+#### Compiling from source
+Download the required file from [http://www.clifford.at/yosys/download.html](http://www.clifford.at/yosys/download.html).
+
+I used v0.9
+
+    tar -xf yosys-yosys-0.9.tar.gz
+    cd yosys-yosys-0.9/
+    make
+
+Missing libraries need to be installed, if any. I needed:
+
+    sudo apt install libreadline-dev flex
 
 ### graywolf
 For placement in VLSI design (cell and pin placement).
@@ -49,7 +67,7 @@ I used v0.1.6
     make
     sudo make install
 
-Install missing libraries as needed if errors show up in between.
+Again, install missing libraries as needed.
 
 I needed
 
@@ -122,6 +140,17 @@ I got v1.4.95
     make
     sudo make install
 
+### GUI
+
+qflow GUI can be launched with
+
+    qflow gui
+
+I needed to copy the `tech/` directory from the extracted `qflow-1.4.95/` directory to `/usr/local/share/qflow` and install tkinter for python like
+
+    sudo apt install python3-tk
+    sudo cp -r tech/ /usr/local/share/qflow/
+
 ## References
  - [http://opencircuitdesign.com/qflow/download.html](http://opencircuitdesign.com/qflow/download.html)
  - [http://opencircuitdesign.com/qflow/install.html](http://opencircuitdesign.com/qflow/install.html)
@@ -130,5 +159,5 @@ I got v1.4.95
  - [http://opencircuitdesign.com/qrouter/download.html](http://opencircuitdesign.com/qrouter/download.html)
  - [http://opencircuitdesign.com/magic/download.html](http://opencircuitdesign.com/magic/download.html)
  - [http://opencircuitdesign.com/netgen/](http://opencircuitdesign.com/netgen/)
- - [https://en.wikipedia.org/wiki/Layout_Versus_Schematic](https://en.wikipedia.org/wiki/Layout_Versus_Schematic)
- - [https://en.wikipedia.org/wiki/Register-transfer_level](https://en.wikipedia.org/wiki/Register-transfer_level)
+ - [https://en.wikipedia.org/wiki/Layout\_Versus\_Schematic](https://en.wikipedia.org/wiki/Layout_Versus_Schematic)
+ - [https://en.wikipedia.org/wiki/Register-transfer\_level](https://en.wikipedia.org/wiki/Register-transfer_level)
