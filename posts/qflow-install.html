@@ -1,22 +1,33 @@
-<h1>Installing qflow</h1>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>qflow-install</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+    }
+  </style>
 
+</head>
+<body>
+<h1 id="installing-qflow">Installing qflow</h1>
 <ul>
 <li>Date created: 03-Apr-2021</li>
-<li>Last updated: 07-Apr-2021</li>
+<li>Last updated:
+<ul>
+<li>12-Apr-2021</li>
+<li>07-Apr-2021</li>
+</ul></li>
 </ul>
-
 <p>Just a record to remind myself of what I did to install qflow.</p>
-
 <p>As done on an Ubuntu 18.04 system.</p>
-
 <hr />
-
-<p>It's always better to read the README file first (though I'm sometimes too lazy for that and read it a bit too late). </p>
-
-<h2>Dependencies</h2>
-
-<p>qflow has the following dependencies that must be installed separately:</p>
-
+<p>It’s always better to read the README file first (though I’m sometimes too lazy for that and read it a bit too late).</p>
+<p>Dependencies of qflow that must be installed separately include:</p>
 <ul>
 <li>Yosys</li>
 <li>graywolf</li>
@@ -25,166 +36,151 @@
 <li>netgen</li>
 <li>python3</li>
 </ul>
-
-<p>The following are also qflow dependencies. But for me, installing the above dependencies had somehow caused these to be installed as well. Or may be it was just because it was already there on my computer.</p>
-
+<p>The following are also among the dependencies of qflow. But for me, installing the above dependencies had somehow caused these to be installed as well. Or may be it was just because it was already there on my computer.</p>
 <ul>
 <li>tclsh</li>
 <li>wish</li>
 <li>tcsh</li>
 </ul>
-
-<h3>Yosys</h3>
-
+<h1 id="yosys">Yosys</h1>
 <p>Does Verilog <a href="https://en.wikipedia.org/wiki/Register-transfer_level">RTL</a> synthesis (Verilog parser/synthesis).</p>
-
-<h4>Installing from package:</h4>
-
-<pre><code>sudo apt install yosys
-</code></pre>
-
-<h4>Compiling from source</h4>
-
 <p>Download the required file from <a href="http://www.clifford.at/yosys/download.html">http://www.clifford.at/yosys/download.html</a>.</p>
-
-<p>I used v0.9</p>
-
+<p>I used v0.9.</p>
 <pre><code>tar -xf yosys-yosys-0.9.tar.gz
-cd yosys-yosys-0.9/
+cd yosys-yosys-0.9/</code></pre>
+<p>Install the prerequisites as mentioned in the README.md file with</p>
+<pre><code>sudo apt-get install build-essential clang bison flex \
+    libreadline-dev gawk tcl-dev libffi-dev git \
+    graphviz xdot pkg-config python3 libboost-system-dev \
+    libboost-python-dev libboost-filesystem-dev</code></pre>
+<p>and then build it with</p>
+<pre><code>make</code></pre>
+<p>Now we may run the tests to be sure that everything is all right.</p>
+<h2 id="testing-the-build">Testing the build</h2>
+<p>We need <code>gawk</code> and a <em>recent version</em> of <code>iverilog</code> to run the tests.</p>
+<p>The <code>iverilog</code> in the Ubuntu repos is likely to be a bit old and using that could lead to problems like <a href="https://github.com/YosysHQ/yosys/issues/840">this</a>. Better build from source.</p>
+<h3 id="installing-iverilog">Installing iverilog</h3>
+<p>Download the file from <a href="http://iverilog.icarus.com/">http://iverilog.icarus.com/</a>. I used version 11.0.</p>
+<pre><code>tar -xf verilog-11.0.tar.gz
+cd verilog-11.0/
+./configure
 make
-</code></pre>
-
-<p>Missing libraries need to be installed, if any. I needed:</p>
-
-<pre><code>sudo apt install libreadline-dev flex
-</code></pre>
-
-<h3>graywolf</h3>
-
+make check  # Optional but good to do. To check if all works fine.
+sudo make install</code></pre>
+<p>Note: If this iverilog ever needs to uninstalled, run <code>make uninstall</code>.</p>
+<h3 id="running-tests-and-installing">Running tests and installing</h3>
+<pre><code>make test</code></pre>
+<p>And if tests pass, install the build with</p>
+<pre><code>sudo make install</code></pre>
+<p>Note: To uninstall this installation of yosys, run <code>make uninstall</code>.</p>
+<h3 id="make-some-symlinks">Make some symlinks</h3>
+<p>To let qflow see the yosys installation create a couple of symlink with</p>
+<pre><code>sudo ln -s /usr/local/bin/yosys /usr/local/share/qflow/tech/bin/yosys
+sudo ln -s /usr/local/bin/yosys-abc /usr/local/share/qflow/tech/bin/yosys-abc</code></pre>
+<h1 id="graywolf">graywolf</h1>
 <p>For placement in VLSI design (cell and pin placement).</p>
-
-<h4>Installing from package:</h4>
-
-<pre><code>sudo apt install graywolf
-</code></pre>
-
-<h4>Compiling from source:</h4>
-
 <p>Go to <a href="https://github.com/rubund/graywolf/releases">https://github.com/rubund/graywolf/releases</a> and download the files.</p>
-
-<p>I used v0.1.6</p>
-
+<p>I used v0.1.6.</p>
 <pre><code>tar -xf graywolf-0.1.6.tar.gz
 cd graywolf-0.1.6
 mkdir build
-cd build
-cmake ..
-make
-sudo make install
-</code></pre>
-
-<p>Again, install missing libraries as needed.</p>
-
-<p>I needed</p>
-
-<pre><code>sudo apt install libgsl-dev  # GNU Scientific library
-</code></pre>
-
-<h3>Qrouter</h3>
-
+cd build</code></pre>
+<p>If we use gcc (I was on 7.0), it would give the error mentioned in <a href="https://github.com/rubund/graywolf/issues/32">https://github.com/rubund/graywolf/issues/32</a> for which I couldn’t find a workaround.</p>
+<p>So I asked cmake to use clang by passing a couple of options.</p>
+<pre><code>cmake -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ ..
+make</code></pre>
+<p>If make shows errors related to missing packages install them and run <code>make</code> again. I needed</p>
+<pre><code>sudo apt install libgsl-dev  # GNU Scientific library</code></pre>
+<p>Now we can run the tests and install with</p>
+<pre><code>make test  # Optional, but good to do.
+sudo make install</code></pre>
+<p>Create a symlink in qflow’s bin/ directory with</p>
+<pre><code>sudo ln -s /usr/local/bin/graywolf /usr/local/share/qflow/bin/graywolf</code></pre>
+<h1 id="qrouter">Qrouter</h1>
 <p>Detail router.</p>
-
-<h4>Installing from package:</h4>
-
-<pre><code>sudo apt install qrouter
-</code></pre>
-
-<h4>Compiling from source:</h4>
-
 <p>Download latest stable version from <a href="http://opencircuitdesign.com/qrouter/download.html">http://opencircuitdesign.com/qrouter/download.html</a></p>
-
-<p>I used v1.4.84</p>
-
+<p>I used v1.4.84.</p>
 <pre><code>tar -xf qrouter-1.4.84.tgz
 cd qrouter-1.4.84/
-./configure                 # Creates the Makefile
-make
-</code></pre>
-
+./configure  # Creates the Makefile
+make</code></pre>
 <p>In case of missing library errors, install them. I needed</p>
-
-<pre><code>sudo apt install tk-dev tcl-dev
-</code></pre>
-
+<pre><code>sudo apt install tk-dev tcl-dev</code></pre>
 <p>I also had to edit the Makefile to add flags for the compiler to find the tk header file. There are probably better ways to fix that but this one did work for me.</p>
-
 <p>Edit <code>CFLAGS</code> variable from</p>
-
-<pre><code>CFLAGS += -g -O2
-</code></pre>
-
+<pre><code>CFLAGS += -g -O2</code></pre>
 <p>to</p>
-
-<pre><code>CFLAGS += -g -O2 -I /usr/include/tcl/
-</code></pre>
-
+<pre><code>CFLAGS += -g -O2 -I /usr/include/tcl/</code></pre>
 <p>where <code>/usr/include/tcl/</code> is the path to the header file.</p>
-
 <p>You can then install qrouter if you like with</p>
-
-<pre><code>sudo make install
-</code></pre>
-
-<h3>Magic</h3>
-
+<pre><code>sudo make install</code></pre>
+<p>Then create symlinks in qflow’s bin/ directory with</p>
+<pre><code>sudo ln -s /usr/local/bin/qrouter /usr/local/share/qflow/bin/qrouter</code></pre>
+<h1 id="magic">Magic</h1>
 <p>Layout viewer.</p>
-
-<pre><code>sudo apt install magic
-</code></pre>
-
-<h3>Netgen</h3>
-
+<p>It’s better to use a recent version of magic instead of the old one from the Ubuntu repo. Otherwise problems like <a href="https://github.com/RTimothyEdwards/qflow/issues/1">https://github.com/RTimothyEdwards/qflow/issues/1</a> could pop up.</p>
+<p>Go to <a href="http://opencircuitdesign.com/magic/download.html">http://opencircuitdesign.com/magic/download.html</a> and get the file.</p>
+<p>I used v8.3.153.</p>
+<pre><code>tar -xf magic-8.3.153.tgz
+cd magic-8.3.153/
+./configure
+make
+sudo make install</code></pre>
+<p>By default, magic would be installed at <code>/usr/local</code>. In order for qflow to find it, create a symlink like</p>
+<pre><code>sudo ln -s /usr/local/bin/magic /usr/local/share/qflow/bin/magic</code></pre>
+<h1 id="netgen">Netgen</h1>
 <p>Does <a href="https://en.wikipedia.org/wiki/Layout_Versus_Schematic">LVS</a> (Layout-vs-Schematic) to verify whether the IC layout corresponds to the original schematic (circuit diagram) of the design.</p>
-
 <p>Go to <a href="http://opencircuitdesign.com/netgen/download.html">http://opencircuitdesign.com/netgen/download.html</a> and download the stable version.</p>
-
 <p>I used v1.5</p>
-
 <pre><code>tar -xf netgen-1.5.173.tgz
 cd netgen-1.5.173/
 ./configure
 make
-sudo make install
-</code></pre>
-
-<h2>qflow</h2>
-
+sudo make install</code></pre>
+<p>and create symlink for qflow to see it with</p>
+<pre><code>sudo ln -s /usr/local/bin/netgen /usr/local/share/qflow/bin/netgen</code></pre>
+<h1 id="qflow">qflow</h1>
+<p>Once all its dependencies are met, we can install qflow itself.</p>
 <p>Download the file from <a href="http://opencircuitdesign.com/qflow/download.html#Download">http://opencircuitdesign.com/qflow/download.html#Download</a>.</p>
-
 <p>I got v1.4.95</p>
-
 <pre><code>tar -xf qflow-1.4.95.tgz
 cd qflow-1.4.95/
 ./configure
 make
-sudo make install
-</code></pre>
-
-<h3>GUI</h3>
-
-<p>qflow GUI can be launched with</p>
-
-<pre><code>qflow gui
-</code></pre>
-
-<p>I needed to copy the <code>tech/</code> directory from the extracted <code>qflow-1.4.95/</code> directory to <code>/usr/local/share/qflow</code> and install tkinter for python like</p>
-
-<pre><code>sudo apt install python3-tk
-sudo cp -r tech/ /usr/local/share/qflow/
-</code></pre>
-
-<h2>References</h2>
-
+sudo make install</code></pre>
+<p>And install the python3-tk package which would be needed by the qflow GUI.</p>
+<pre><code>sudo apt install python3-tk</code></pre>
+<h2 id="some-hacking">Some hacking</h2>
+<p>I also did some random stuff which somehow made qflow to work okay.</p>
+<h3 id="copy-tech-directory">Copy tech/ directory</h3>
+<p>Copy the <code>tech/</code> directory from the extracted <code>qflow-1.4.95/</code> directory to <code>/usr/local/share/qflow</code>.</p>
+<pre><code>sudo cp -r tech/ /usr/local/share/qflow/</code></pre>
+<h3 id="copy-the-executables">Copy the executables</h3>
+<p>Copy some executables that qflow would need to use to the bin/ directory that qflow uses.</p>
+<pre><code>sudo cp src/vlogFanout /usr/local/share/qflow/bin
+sudo cp src/vlog2Verilog /usr/local/share/qflow/bin
+sudo cp src/vlog2Spice /usr/local/share/qflow/bin
+sudo cp src/vlog2Cel /usr/local/share/qflow/bin
+sudo cp src/DEF2Verilog /usr/local/share/qflow/bin
+sudo cp src/rc2dly /usr/local/share/qflow/bin</code></pre>
+<h3 id="modify-a-few-tcsh-scripts">Modify a few tcsh scripts</h3>
+<p>As mentioned in <a href="https://github.com/RTimothyEdwards/qflow/issues/22">https://github.com/RTimothyEdwards/qflow/issues/22</a>, we need to modify some tcsh scripts at <code>/usr/local/share/qflow/scripts/</code>.</p>
+<p>This seems to be applicable for v1.4.95 but probably not for later releases.</p>
+<p>The modification to be made is same for all the files, which is to change the line</p>
+<pre><code>set techfile ${techdir}/${techfile}</code></pre>
+<p>to</p>
+<pre><code>set techfile = ${techdir}/${techfile}</code></pre>
+<p>The line number of the line to be modified and the files are as follows:</p>
+<ul>
+<li>L169: magic_db.sh</li>
+<li>L150: magic_drc.sh</li>
+<li>L122: magic_gds.sh</li>
+<li>L202: magic_view.sh</li>
+</ul>
+<h3 id="done">Done!</h3>
+<p>Now the qflow GUI can be launched with</p>
+<pre><code>qflow gui</code></pre>
+<h1 id="references">References</h1>
 <ul>
 <li><a href="http://opencircuitdesign.com/qflow/download.html">http://opencircuitdesign.com/qflow/download.html</a></li>
 <li><a href="http://opencircuitdesign.com/qflow/install.html">http://opencircuitdesign.com/qflow/install.html</a></li>
@@ -195,4 +191,11 @@ sudo cp -r tech/ /usr/local/share/qflow/
 <li><a href="http://opencircuitdesign.com/netgen/">http://opencircuitdesign.com/netgen/</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Layout_Versus_Schematic">https://en.wikipedia.org/wiki/Layout_Versus_Schematic</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Register-transfer_level">https://en.wikipedia.org/wiki/Register-transfer_level</a></li>
+<li><a href="http://iverilog.icarus.com/">http://iverilog.icarus.com/</a></li>
+<li><a href="https://github.com/YosysHQ/yosys/issues/840">https://github.com/YosysHQ/yosys/issues/840</a></li>
+<li><a href="https://github.com/rubund/graywolf/issues/32">https://github.com/rubund/graywolf/issues/32</a></li>
+<li><a href="https://github.com/RTimothyEdwards/qflow/issues/1">https://github.com/RTimothyEdwards/qflow/issues/1</a></li>
+<li><a href="https://github.com/RTimothyEdwards/qflow/issues/22">https://github.com/RTimothyEdwards/qflow/issues/22</a></li>
 </ul>
+</body>
+</html>
