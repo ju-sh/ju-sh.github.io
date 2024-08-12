@@ -1,1 +1,1 @@
-2024-08-12T00:00:00+00:00	Abstract syntax tree in Python | ju-sh.github.io/blog/python-adt.html
+2024-08-12T00:00:00+00:00	Abstract data types in Python | https://ju-sh.github.io/blog/python-adt.html

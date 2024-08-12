@@ -5,7 +5,7 @@
       famubu: Home
     </title>
     <link>
-      ju-sh.github.io
+      https://ju-sh.github.io
     </link>
     <description>
       Updates from famubu's site
@@ -16,22 +16,23 @@
     <language>
       en-us
     </language>
-    <atom:link href="ju-sh.github.io/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://ju-sh.github.io/blog/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>
-        Abstract syntax tree in Python
+        Abstract data types in Python
       </title>
       <link>
-        ju-sh.github.io/blog/python-adt.html
+        https://ju-sh.github.io/blog/python-adt.html
       </link>
       <description>
         
 &lt;div&gt;
   &lt;div&gt;
-    Creating abstract syntax tree as in functional programming languages, but within Python
+    Creating abstract data type as in functional programming languages, but within Python
   &lt;/div&gt;
   &lt;div&gt;
     &lt;div id=&quot;content-container&quot;&gt;
+&lt;hr/&gt;
 &lt;p&gt;Recently, I found a dataset of regular expressions used with python&#x27;s
 &lt;code&gt;re&lt;/code&gt; built-in package.&lt;/p&gt;
 &lt;p&gt;I kind of wished to use those regexes from ocaml. Randomly searched
@@ -310,7 +311,7 @@ Success: no issues found in 1 source file
         Mon, 12 Aug 2024 00:00:00 GMT
       </pubDate>
       <guid>
-        ju-sh.github.io/blog/python-adt.html
+        https://ju-sh.github.io/blog/python-adt.html
       </guid>
       <category>
         python
