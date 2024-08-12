@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Integration and differentiation</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="ju-sh.github.io">Home</a>
+ | 
+<a href="ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Integration and differentiation</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="integration">Integration</h2>
+<pre><code>
+⌠          1 
+⎮xⁿ.dx = ───── xⁿ⁺¹ + C
+⌡        (n+1)
+
+
+⌠ 1 
+⎮───.dx = logx + C
+⌡ x
+
+
+
+⌠
+⎮eˣ.dx = eˣ + C
+⌡
+
+
+⌠                   ⌠          ⌠               
+⎮[f(x) ± g(x)].dx = ⎮f(x).dx ± ⎮g(x).dx     
+⌡                   ⌡          ⌡               
+
+
+⌠
+⎮sinx.dx = -cosx + C
+⌡
+
+
+⌠
+⎮cosx.dx = sinx + C
+⌡
+
+</code></pre>
+<h3 id="integration-by-parts">Integration by parts</h3>
+<pre><code>⌠           ⌠       ⌠   ⎛⌠    ⎞     
+⎮u v dx =  u⎮v dx - ⎮u&#39; ⎜⎮v.dx⎟ . dx
+⌡           ⌡       ⌡   ⎝⌡    ⎠     
+</code></pre>
+<p>where u' = du/dx</p>
+<p>To choose u (first function) and v (second function), use the 'ILATE'
+trick: -I: Integral -L: Logarithm -A: Algebraic -T: Trigonometric -E:
+Exponent</p>
+<p>Example:</p>
+<pre><code>   ⌠          
+   ⎮x.cosx.dx 
+   ⌡          
+
+Algebraic and trigonometric parts. ILATE =&gt; A comes first.
+ie,
+ - u = x
+ - v = cosx
+
+    ⌠          ⌠dx ⎛⌠       ⎞ 
+=  x⎮cosx.dx - ⎮── ⎜⎮cosx.dx⎟ . dx
+    ⌡          ⌡dx ⎝⌡       ⎠
+
+
+            ⌠ ⎛⌠       ⎞       
+=  x.sinx - ⎮ ⎜⎮cosx.dx⎟ . dx
+            ⌡ ⎝⌡       ⎠
+
+
+            ⌠       
+=  x.sinx - ⎮sinx.dx
+            ⌡       
+
+
+=  x.sinx + cosx
+</code></pre>
+<h2 id="derivatives">Derivatives</h2>
+<h3 id="product-rule">Product rule</h3>
+<p>Derivative of:</p>
+<pre><code>f(x).g(x)
+</code></pre>
+<p>with respect to <code>x</code> is:</p>
+<pre><code>g.f&#39;(x) + f.g(x)
+</code></pre>
+<p>Or in Leibniz's notation:</p>
+<pre><code> d  ⎛   ⎞      df       dg
+─── ⎜f.g⎟ = g. ─── + f. ───
+ dx ⎝   ⎠      dx       dx
+</code></pre>
+<h3 id="chain-rule">Chain rule</h3>
+<p>Derivative of <code>f(g(x))</code> with respect to <code>x</code>
+is:</p>
+<pre><code>f&#39;(g(x)) . g&#39;(x)
+</code></pre>
+</div>
+</body>
+</html>

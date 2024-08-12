@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Agda</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="ju-sh.github.io">Home</a>
+ | 
+<a href="ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Agda</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<ul>
+<li><code>--without-K</code> and <code>--safe</code> seems like
+not-so-good-to-use flags.
+<ul>
+<li><code>--safe</code> option 'to avoid possible misuses of certain
+features which could lead to logical inconsistencies' <a
+href="https://arxiv.org/pdf/2005.07059.pdf">ʳ</a></li>
+</ul></li>
+<li><code>--cubical</code>: implements a computational interpretation of
+HoTT.
+<ul>
+<li>Supports univalence.</li>
+</ul></li>
+<li>UIP: Uniqueness of identity proofs</li>
+<li>Axiom K: Equivalent to UIP</li>
+<li>Setoid: Set equipped with an equivalence relation</li>
+<li>Extensional vs intentional type theory</li>
+<li><code>postulate</code>: like <code>Axiom</code> in Coq
+<ul>
+<li>Signature without definition</li>
+<li><a
+href="https://agda.readthedocs.io/en/v2.6.20240714/language/postulates.html">https://agda.readthedocs.io/en/v2.6.20240714/language/postulates.html</a></li>
+</ul></li>
+</ul>
+<h2 id="agda-technicalities">Agda technicalities</h2>
+<ul>
+<li>Mixfix notations</li>
+<li>Pragmas: Special comments</li>
+<li><code>{-# BUILTIN NATURAL ℕ #-}</code>
+<ul>
+<li>A pragma</li>
+<li>Informs agda that ℕ corresponds to natural numbers</li>
+<li>Allows to use numbers instead of constructors (eg: 0 instead of
+<code>zero</code>)</li>
+<li>Internally allows use of haskell <code>Int</code> (log₂ space)
+instead of unary nat.</li>
+</ul></li>
+<li>'Function' associates to right
+<ul>
+<li><code>A -&gt; B -&gt; C</code> is
+<code>A -&gt; (B -&gt; C)</code></li>
+</ul></li>
+<li>Looks like space is needed before <code>:</code> in type annotations
+<ul>
+<li><code>zero: ℕ</code> and <code>zero :ℕ</code> give parse error,
+<code>zero : ℕ</code> doesn't.</li>
+</ul></li>
+</ul>
+<p>More pragmas:</p>
+<ul>
+<li>Don't allow case overlaps:
+<code>{-# OPTIONS --exact-split #-}</code></li>
+</ul>
+<h2 id="precedence">Precedence</h2>
+<p>Lower precedence value =&gt; higher precedence</p>
+<ul>
+<li><code>infixl</code>: left associativity</li>
+<li><code>infixr</code>: right associativity</li>
+<li><code>infix</code>: no associativity (parenthesis always
+needed)</li>
+</ul>
+<h2 id="emacs">Emacs</h2>
+<ul>
+<li><p>C-c C-w: Show definition of a name</p></li>
+<li><p>C-c C-c: Case split</p></li>
+<li><p>C-c C-,: Show current goal info</p></li>
+<li><p>C-c C-Space: Finish hole after filling it</p></li>
+<li><p>C-c C-l: Type check buffer</p></li>
+<li><p>Right click on a typechecked part to go to its definiton</p></li>
+<li><p>Find type of an expression: C-c C-d</p></li>
+<li><p>Evaluate (find normal form) of an expression: C-c C-n</p></li>
+</ul>
+<h3 id="todo">Todo</h3>
+<ul>
+<li>Find type of name under cursor</li>
+<li>Find definition of name under cursor</li>
+</ul>
+<h3 id="unicode">Unicode</h3>
+<ul>
+<li>: ℕ</li>
+<li>\) then use C-n to choose from options: ⟩</li>
+</ul>
+<p>—</p>
+<ul>
+<li>M-x agda-input-show-translations: Show latex codes for unicode
+symbols</li>
+<li>Show how to input a unicode character already in a buffer:
+<code>M-x quail-show-key</code></li>
+</ul>
+</div>
+</body>
+</html>

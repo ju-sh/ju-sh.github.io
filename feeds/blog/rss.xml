@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>
+      famubu: Home
+    </title>
+    <link>
+      ju-sh.github.io
+    </link>
+    <description>
+      Updates from famubu's site
+    </description>
+    <generator>
+      Script using https://codeberg.org/ju-sh/mrkup
+    </generator>
+    <language>
+      en-us
+    </language>
+    <atom:link href="ju-sh.github.io/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>
+        Abstract syntax tree in Python
+      </title>
+      <link>
+        ju-sh.github.io/blog/python-adt.html
+      </link>
+      <description>
+        
+&lt;div&gt;
+  &lt;div&gt;
+    Creating abstract syntax tree as in functional programming languages, but within Python
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;div id=&quot;content-container&quot;&gt;
+&lt;p&gt;Recently, I found a dataset of regular expressions used with python&#x27;s
+&lt;code&gt;re&lt;/code&gt; built-in package.&lt;/p&gt;
+&lt;p&gt;I kind of wished to use those regexes from ocaml. Randomly searched
+online and came across an answer in &lt;a href=&quot;https://stackoverflow.com/questions/16258553/how-can-i-define-algebraic-data-types-in-python&quot;&gt;this&lt;/a&gt;
+stackoverflow post.&lt;/p&gt;
+&lt;p&gt;Was surprised to see that we could actually have a form of algebraic
+data type in python. So I had a closer look.&lt;/p&gt;
+&lt;p&gt;(Yeah, instead of my main goal, I went on a side-quest.. Not so proud
+to say that it&#x27;s not my first time.. 😅)&lt;/p&gt;
+&lt;p&gt;I had not used python much after Python 3.9 or so. It&#x27;s come a long
+way since then (latest stable is 3.12.5).&lt;/p&gt;
+&lt;p&gt;Some things that I liked:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Structural pattern matching (Python 3.10) (PEPs 634, 635)
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;match .. case&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;int | bool&lt;/code&gt; can be used in type hints instead of
+&lt;code&gt;Union[int, bool]&lt;/code&gt; (PEP 604)&lt;/li&gt;
+&lt;li&gt;Postponed evaluation of type annotations (PEP 563, Python 3.xx)
+&lt;ul&gt;
+&lt;li&gt;Allows to use types that are yet to defined in type hints&lt;/li&gt;
+&lt;li&gt;Thought &lt;a href=&quot;https://docs.python.org/3/library/typing.html#typing.ForwardRef&quot;&gt;&lt;code&gt;ForwardRef&lt;/code&gt;&lt;/a&gt;
+(Python 3.7.4) had something to do with this too..&lt;/li&gt;
+&lt;li&gt;Needs &lt;code&gt;from __future__ import annotations&lt;/code&gt; as of Python
+3.12&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Type parameter syntax and &lt;code&gt;type&lt;/code&gt; statement (Python 3.12)
+(PEP 695)
+&lt;ul&gt;
+&lt;li&gt;Allows more concise syntax to define generic (I guess that means
+polymorphic) classes and functions&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In a way, python&#x27;s type hints was what made me first realize the
+importance of types. To think of types as actually guiding the program
+rather than the nuisance that I used to think they were. It took a
+language without static type checking for me to realize value of type
+checks. But that was before I came in contact with Coq, Haskell, sml and
+ocaml.&lt;/p&gt;
+&lt;p&gt;Python does have &lt;a href=&quot;https://docs.python.org/3/howto/functional.html&quot;&gt;a lot of
+stuff&lt;/a&gt; inspired from the world of functional style of programming,
+after all.&lt;/p&gt;
+&lt;p&gt;—&lt;/p&gt;
+&lt;p&gt;Anyhow, as an example, I will show how a &#x27;ADT-like&#x27; type representing
+binary tree can be made in Python. I kind of follow the description &lt;a href=&quot;https://gitlab.com/piyush-kurur/popl/-/blob/5c41e2d6fdf59b413dea6b84fdb42e55cdde0caf/lab/archives/2022/2022-09-06-List-and-Tree.md&quot;&gt;here&lt;/a&gt;
+used during a programming course at our institute. That course was
+taught by my advisor (with me as one of the TAs) and used sml.&lt;/p&gt;
+&lt;h2 id=&quot;tree-type&quot;&gt;Tree type&lt;/h2&gt;
+&lt;p&gt;In sml, a tree type can be made like this:&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb1&quot;&gt;&lt;pre class=&quot;sourceCode sml&quot;&gt;&lt;code class=&quot;sourceCode sml&quot;&gt;&lt;span id=&quot;cb1-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;datatype&lt;/span&gt; &#x27;a tree&lt;/span&gt;
+&lt;span id=&quot;cb1-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  = Empty&lt;/span&gt;
+&lt;span id=&quot;cb1-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  | Node &lt;span class=&quot;kw&quot;&gt;of&lt;/span&gt; (&#x27;a tree) * &#x27;a * (&#x27;a tree)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Let&#x27;s try replicating this in Python.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb2&quot;&gt;&lt;pre class=&quot;sourceCode python&quot;&gt;&lt;code class=&quot;sourceCode python&quot;&gt;&lt;span id=&quot;cb2-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;im&quot;&gt;from&lt;/span&gt; __future__ &lt;span class=&quot;im&quot;&gt;import&lt;/span&gt; annotations&lt;/span&gt;
+&lt;span id=&quot;cb2-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;im&quot;&gt;import&lt;/span&gt; dataclasses&lt;/span&gt;
+&lt;span id=&quot;cb2-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb2-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;at&quot;&gt;@dataclasses.dataclass&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb2-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-5&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;class&lt;/span&gt; Node[T]:&lt;/span&gt;
+&lt;span id=&quot;cb2-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-6&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;   left: Tree[T]&lt;/span&gt;
+&lt;span id=&quot;cb2-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-7&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;   value: T&lt;/span&gt;
+&lt;span id=&quot;cb2-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-8&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;   right: Tree[T]&lt;/span&gt;
+&lt;span id=&quot;cb2-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-9&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb2-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-10&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;bu&quot;&gt;type&lt;/span&gt; Tree[T] &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; Node[T] &lt;span class=&quot;op&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Observe that this is a recursive type (Python 3.12 needs stuff from
+&lt;code&gt;future&lt;/code&gt; for this).&lt;/p&gt;
+&lt;p&gt;Looks like &lt;code&gt;None&lt;/code&gt; is kind of special in Python. It seems
+to be a value of type &lt;code&gt;NoneType&lt;/code&gt;, but it looked as if
+&lt;code&gt;NoneType&lt;/code&gt; is not meant to be used by users. So, it seemed
+like in this case, &lt;code&gt;None&lt;/code&gt; is both a value and a type. Kind of
+like &lt;code&gt;()&lt;/code&gt; in Haskell.&lt;/p&gt;
+&lt;p&gt;Anyway, let&#x27;s see if this working.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb3&quot;&gt;&lt;pre class=&quot;sourceCode python&quot;&gt;&lt;code class=&quot;sourceCode python&quot;&gt;&lt;span id=&quot;cb3-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# Type of binary trees&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb3-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# sml analogue: &#x27;a tree&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb3-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; Tree&lt;/span&gt;
+&lt;span id=&quot;cb3-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;Tree&lt;/span&gt;
+&lt;span id=&quot;cb3-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-5&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb3-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-6&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;# Type of binary trees with int values&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb3-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-7&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# sml analogue: int tree&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb3-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-8&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; Tree[&lt;span class=&quot;bu&quot;&gt;int&lt;/span&gt;]&lt;/span&gt;
+&lt;span id=&quot;cb3-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-9&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;Tree[&lt;span class=&quot;bu&quot;&gt;int&lt;/span&gt;]&lt;/span&gt;
+&lt;span id=&quot;cb3-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-10&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb3-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-11&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;# Type of binary trees with boolean values&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb3-12&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-12&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# sml analogue: bool tree&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb3-13&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-13&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; Tree[&lt;span class=&quot;bu&quot;&gt;int&lt;/span&gt;]&lt;/span&gt;
+&lt;span id=&quot;cb3-14&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-14&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; Tree[&lt;span class=&quot;bu&quot;&gt;bool&lt;/span&gt;]&lt;/span&gt;
+&lt;span id=&quot;cb3-15&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-15&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;Tree[&lt;span class=&quot;bu&quot;&gt;bool&lt;/span&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Python interpreter seems happy.&lt;/p&gt;
+&lt;p&gt;Now let&#x27;s make some values.&lt;/p&gt;
+&lt;p&gt;First, to make it easy to create values, let&#x27;s make a helper function
+&lt;code&gt;singleton&lt;/code&gt; to make a tree with a single value in it.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb4&quot;&gt;&lt;pre class=&quot;sourceCode python&quot;&gt;&lt;code class=&quot;sourceCode python&quot;&gt;&lt;span id=&quot;cb4-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;def&lt;/span&gt; singleton[T](val: T) &lt;span class=&quot;op&quot;&gt;-&amp;gt;&lt;/span&gt; Tree[T]:&lt;/span&gt;
+&lt;span id=&quot;cb4-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; Node(&lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;, val, &lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now on to actually making some trees:&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb5&quot;&gt;&lt;pre class=&quot;sourceCode python&quot;&gt;&lt;code class=&quot;sourceCode python&quot;&gt;&lt;span id=&quot;cb5-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; egbool: Tree[&lt;span class=&quot;bu&quot;&gt;bool&lt;/span&gt;] &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; Node(singleton(true), false, singleton(false))&lt;/span&gt;
+&lt;span id=&quot;cb5-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; egbool&lt;/span&gt;
+&lt;span id=&quot;cb5-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;Node(left&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;Node(left&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;, value&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;True&lt;/span&gt;, right&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;), value&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;False&lt;/span&gt;, right&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;Node(left&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;, value&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;False&lt;/span&gt;, right&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Note that python by itself doesn&#x27;t do any static type checking. So
+this would also run without error.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb6&quot;&gt;&lt;pre class=&quot;sourceCode python&quot;&gt;&lt;code class=&quot;sourceCode python&quot;&gt;&lt;span id=&quot;cb6-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# Type is boolean tree, but value is int tree!&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb6-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; egboolBad: Tree[&lt;span class=&quot;bu&quot;&gt;bool&lt;/span&gt;] &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; Node(singleton(&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;), &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, singleton(&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;))&lt;/span&gt;
+&lt;span id=&quot;cb6-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; egboolBad&lt;/span&gt;
+&lt;span id=&quot;cb6-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;Node(left&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;Node(left&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;, value&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, right&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;), value&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, right&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;Node(left&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;, value&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, right&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Got to run a static typer checker to catch this error. There are
+quite a few. Among them mypy, pyre, pytype, pyright are open source.&lt;/p&gt;
+&lt;p&gt;I tried mypy:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ mypy tree.py --enable-incomplete-feature=NewGenericSyntax
+
+tree.py:16: error: Argument 1 to &quot;singleton&quot; has incompatible type &quot;int&quot;; expected &quot;bool&quot;  [arg-type]
+tree.py:16: error: Argument 2 to &quot;Node&quot; has incompatible type &quot;int&quot;; expected &quot;bool&quot;  [arg-type]
+Found 2 errors in 1 file (checked 1 source file)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Syntax that is used to define &lt;code&gt;Tree&lt;/code&gt; uses a syntax that is
+new in Python 3.12 (PEP 695). Static type checkers like mypy has not yet
+finished incorporating this change apparently due to still supporting
+older code&lt;a href=&quot;https://github.com/python/mypy/issues/15238&quot;&gt;ʳ&lt;/a&gt;.
+Hence the extra option passed to the mypy command.&lt;/p&gt;
+&lt;p&gt;Without the
+&lt;code&gt;--enable-incomplete-feature=NewGenericSyntax&lt;/code&gt;, I got
+this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;error: PEP 695 generics are not yet supported. Use --enable-incomplete-feature=NewGenericSyntax for experimental support  [valid-type]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;—&lt;/p&gt;
+&lt;p&gt;Okay, let&#x27;s create a function on &lt;code&gt;Tree[T]&lt;/code&gt; type. Say,
+in-order traversal. A function that accepts a tree and returns a list of
+its values.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb9&quot;&gt;&lt;pre class=&quot;sourceCode python&quot;&gt;&lt;code class=&quot;sourceCode python&quot;&gt;&lt;span id=&quot;cb9-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;im&quot;&gt;from&lt;/span&gt; typing &lt;span class=&quot;im&quot;&gt;import&lt;/span&gt; assert_never&lt;/span&gt;
+&lt;span id=&quot;cb9-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;def&lt;/span&gt; inorder[T](tree: Tree[T]) &lt;span class=&quot;op&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;bu&quot;&gt;list&lt;/span&gt;[T]:&lt;/span&gt;
+&lt;span id=&quot;cb9-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    rval &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; []&lt;/span&gt;
+&lt;span id=&quot;cb9-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-5&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;match&lt;/span&gt; tree:&lt;/span&gt;
+&lt;span id=&quot;cb9-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-6&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;: &lt;span class=&quot;cf&quot;&gt;pass&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-7&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; Node(lft, val, rgt):&lt;/span&gt;
+&lt;span id=&quot;cb9-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-8&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            rval &lt;span class=&quot;op&quot;&gt;+=&lt;/span&gt; inorder(lft) &lt;span class=&quot;op&quot;&gt;+&lt;/span&gt; [val] &lt;span class=&quot;op&quot;&gt;+&lt;/span&gt; inorder(rgt)&lt;/span&gt;
+&lt;span id=&quot;cb9-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-9&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; _:&lt;/span&gt;
+&lt;span id=&quot;cb9-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-10&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            assert_never(tree)&lt;/span&gt;
+&lt;span id=&quot;cb9-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-11&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; rval&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This uses the &lt;code&gt;match .. case&lt;/code&gt; (patmat) syntax for
+structural pattern matching. Like the kind that we are used to in
+functional languages like sml. Not as cool maybe, but still nice.. 🙂 A
+tutorial for this syntax of Python is available &lt;a href=&quot;https://peps.python.org/pep-0636/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Also, see the way the &lt;code&gt;T&lt;/code&gt; type is put in here. Kind of
+like an implicit argument in a Coq function. Or of a typeclass in
+Haskell.&lt;/p&gt;
+&lt;p&gt;(Thanks to PEP 695, I guess. Earlier &lt;code&gt;T&lt;/code&gt; would have had to
+be declared separately with &lt;code&gt;TypeVar&lt;/code&gt;. And sometimes we would
+also have had to use &lt;code&gt;Generic&lt;/code&gt; from &lt;code&gt;typing&lt;/code&gt;
+package).&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.python.org/3/library/typing.html#typing.assert_never&quot;&gt;&lt;code&gt;assert_never&lt;/code&gt;&lt;/a&gt;
+is meant to be used only for static type checkers as a way to assert
+that some part of code will never be reached. See &lt;a href=&quot;https://typing.readthedocs.io/en/latest/guides/unreachable.html#assert-never-and-exhaustiveness-checking&quot;&gt;this&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Trying an example with &lt;code&gt;inorder&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb10&quot;&gt;&lt;pre class=&quot;sourceCode python&quot;&gt;&lt;code class=&quot;sourceCode python&quot;&gt;&lt;span id=&quot;cb10-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb10-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; egInt1: Tree[&lt;span class=&quot;bu&quot;&gt;int&lt;/span&gt;] &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; Node(singleton(&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;), &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, singleton(&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;))&lt;/span&gt;
+&lt;span id=&quot;cb10-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb10-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; egInt2: Tree[&lt;span class=&quot;bu&quot;&gt;int&lt;/span&gt;] &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; Node(singleton(&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;), &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;, singleton(&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;))&lt;/span&gt;
+&lt;span id=&quot;cb10-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb10-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; egInt: Tree[&lt;span class=&quot;bu&quot;&gt;int&lt;/span&gt;] &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; Node(egInt1, &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;, egInt2)&lt;/span&gt;
+&lt;span id=&quot;cb10-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb10-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;bu&quot;&gt;print&lt;/span&gt;(inorder(egInt))&lt;/span&gt;
+&lt;span id=&quot;cb10-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb10-5&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb10-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb10-6&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Similarly, pre-order and post-order traversal functions can be
+defined.&lt;/p&gt;
+&lt;p&gt;Next, let&#x27;s try making a function to map values in a
+&lt;code&gt;Tree[T]&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb11&quot;&gt;&lt;pre class=&quot;sourceCode python&quot;&gt;&lt;code class=&quot;sourceCode python&quot;&gt;&lt;span id=&quot;cb11-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb11-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;im&quot;&gt;from&lt;/span&gt; typing &lt;span class=&quot;im&quot;&gt;import&lt;/span&gt; Callable&lt;/span&gt;
+&lt;span id=&quot;cb11-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb11-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb11-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb11-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;def&lt;/span&gt; treemap[A, B](&lt;/span&gt;
+&lt;span id=&quot;cb11-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb11-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        func: Callable[[A], B],&lt;/span&gt;
+&lt;span id=&quot;cb11-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb11-5&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        tree: Tree[A]) &lt;span class=&quot;op&quot;&gt;-&amp;gt;&lt;/span&gt; Tree [B]:&lt;/span&gt;
+&lt;span id=&quot;cb11-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb11-6&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;match&lt;/span&gt; tree:&lt;/span&gt;
+&lt;span id=&quot;cb11-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb11-7&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;:&lt;/span&gt;
+&lt;span id=&quot;cb11-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb11-8&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb11-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb11-9&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; Node(lft, val, rgt):&lt;/span&gt;
+&lt;span id=&quot;cb11-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb11-10&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            lftmod &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; treemap(func, lft)&lt;/span&gt;
+&lt;span id=&quot;cb11-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb11-11&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            rgtmod &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; treemap(func, rgt)&lt;/span&gt;
+&lt;span id=&quot;cb11-12&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb11-12&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; Node(lftmod, func(val), rgtmod)&lt;/span&gt;
+&lt;span id=&quot;cb11-13&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb11-13&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; _:&lt;/span&gt;
+&lt;span id=&quot;cb11-14&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb11-14&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            assert_never(tree)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;Callable[[A], B]&lt;/code&gt; indicates type of a &#x27;callable&#x27; value
+(like a function) which accepts a value of type &lt;code&gt;A&lt;/code&gt; and
+returns a value of type &lt;code&gt;B&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The above function in sml could be like:&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb12&quot;&gt;&lt;pre class=&quot;sourceCode sml&quot;&gt;&lt;code class=&quot;sourceCode sml&quot;&gt;&lt;span id=&quot;cb12-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;fun&lt;/span&gt; treemap f Empty = Empty&lt;/span&gt;
+&lt;span id=&quot;cb12-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  | treemap f (Node (lft, x, rgt)) =&lt;/span&gt;
+&lt;span id=&quot;cb12-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;      &lt;span class=&quot;kw&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;val&lt;/span&gt; lftmod = treemap f lft &lt;span class=&quot;kw&quot;&gt;in&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;val&lt;/span&gt; rgtmod = treemap f rgt &lt;span class=&quot;kw&quot;&gt;in&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-5&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;          Node (lftmod, f x, rgtmod)&lt;/span&gt;
+&lt;span id=&quot;cb12-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-6&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-7&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;      &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;a-whole-program&quot;&gt;A whole program&lt;/h2&gt;
+&lt;p&gt;A complete python file with the definitions seen so far:&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb13&quot;&gt;&lt;pre class=&quot;sourceCode python&quot;&gt;&lt;code class=&quot;sourceCode python&quot;&gt;&lt;span id=&quot;cb13-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;im&quot;&gt;from&lt;/span&gt; __future__ &lt;span class=&quot;im&quot;&gt;import&lt;/span&gt; annotations&lt;/span&gt;
+&lt;span id=&quot;cb13-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;im&quot;&gt;import&lt;/span&gt; dataclasses&lt;/span&gt;
+&lt;span id=&quot;cb13-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;im&quot;&gt;from&lt;/span&gt; typing &lt;span class=&quot;im&quot;&gt;import&lt;/span&gt; Callable, assert_never&lt;/span&gt;
+&lt;span id=&quot;cb13-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-5&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-6&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;at&quot;&gt;@dataclasses.dataclass&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-7&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;class&lt;/span&gt; Node[T]:&lt;/span&gt;
+&lt;span id=&quot;cb13-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-8&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;   left: Tree[T]&lt;/span&gt;
+&lt;span id=&quot;cb13-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-9&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;   value: T&lt;/span&gt;
+&lt;span id=&quot;cb13-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-10&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;   right: Tree[T]&lt;/span&gt;
+&lt;span id=&quot;cb13-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-11&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-12&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-12&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;   &lt;span class=&quot;kw&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;__iter__&lt;/span&gt;(&lt;span class=&quot;va&quot;&gt;self&lt;/span&gt;):&lt;/span&gt;
+&lt;span id=&quot;cb13-13&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-13&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;       &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bu&quot;&gt;iter&lt;/span&gt;(inorder(&lt;span class=&quot;va&quot;&gt;self&lt;/span&gt;))&lt;/span&gt;
+&lt;span id=&quot;cb13-14&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-14&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-15&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-15&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;   &lt;span class=&quot;kw&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;__str__&lt;/span&gt;(&lt;span class=&quot;va&quot;&gt;self&lt;/span&gt;) &lt;span class=&quot;op&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;bu&quot;&gt;str&lt;/span&gt;:&lt;/span&gt;
+&lt;span id=&quot;cb13-16&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-16&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;       &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&#x27; &#x27;&lt;/span&gt;.join(&lt;span class=&quot;bu&quot;&gt;map&lt;/span&gt;(&lt;span class=&quot;bu&quot;&gt;str&lt;/span&gt;, &lt;span class=&quot;va&quot;&gt;self&lt;/span&gt;))&lt;/span&gt;
+&lt;span id=&quot;cb13-17&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-17&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-18&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-18&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# Type of trees with values of type `T`&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-19&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-19&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;bu&quot;&gt;type&lt;/span&gt; Tree[T] &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; Node[T] &lt;span class=&quot;op&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-20&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-20&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-21&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-21&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;def&lt;/span&gt; singleton[T](val: T) &lt;span class=&quot;op&quot;&gt;-&amp;gt;&lt;/span&gt; Tree[T]:&lt;/span&gt;
+&lt;span id=&quot;cb13-22&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-22&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; Node(&lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;, val, &lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;)&lt;/span&gt;
+&lt;span id=&quot;cb13-23&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-23&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-24&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-24&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;def&lt;/span&gt; inorder[T](tree: Tree[T]) &lt;span class=&quot;op&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;bu&quot;&gt;list&lt;/span&gt;[T]:&lt;/span&gt;
+&lt;span id=&quot;cb13-25&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-25&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    rval &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; []&lt;/span&gt;
+&lt;span id=&quot;cb13-26&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-26&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;match&lt;/span&gt; tree:&lt;/span&gt;
+&lt;span id=&quot;cb13-27&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-27&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;: &lt;span class=&quot;cf&quot;&gt;pass&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-28&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-28&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; Node(lft, val, rgt):&lt;/span&gt;
+&lt;span id=&quot;cb13-29&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-29&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            rval &lt;span class=&quot;op&quot;&gt;+=&lt;/span&gt; inorder(lft) &lt;span class=&quot;op&quot;&gt;+&lt;/span&gt; [val] &lt;span class=&quot;op&quot;&gt;+&lt;/span&gt; inorder(rgt)&lt;/span&gt;
+&lt;span id=&quot;cb13-30&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-30&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; _:&lt;/span&gt;
+&lt;span id=&quot;cb13-31&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-31&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            assert_never(tree)&lt;/span&gt;
+&lt;span id=&quot;cb13-32&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-32&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; rval&lt;/span&gt;
+&lt;span id=&quot;cb13-33&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-33&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-34&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-34&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;def&lt;/span&gt; preorder[T](tree: Tree[T]) &lt;span class=&quot;op&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;bu&quot;&gt;list&lt;/span&gt;[T]:&lt;/span&gt;
+&lt;span id=&quot;cb13-35&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-35&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    rval &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; []&lt;/span&gt;
+&lt;span id=&quot;cb13-36&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-36&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;match&lt;/span&gt; tree:&lt;/span&gt;
+&lt;span id=&quot;cb13-37&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-37&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;: &lt;span class=&quot;cf&quot;&gt;pass&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-38&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-38&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; Node(lft, val, rgt):&lt;/span&gt;
+&lt;span id=&quot;cb13-39&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-39&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            rval &lt;span class=&quot;op&quot;&gt;+=&lt;/span&gt; [val] &lt;span class=&quot;op&quot;&gt;+&lt;/span&gt; postorder(lft) &lt;span class=&quot;op&quot;&gt;+&lt;/span&gt; postorder(rgt)&lt;/span&gt;
+&lt;span id=&quot;cb13-40&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-40&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; _:&lt;/span&gt;
+&lt;span id=&quot;cb13-41&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-41&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            assert_never(tree)&lt;/span&gt;
+&lt;span id=&quot;cb13-42&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-42&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; rval&lt;/span&gt;
+&lt;span id=&quot;cb13-43&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-43&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-44&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-44&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;def&lt;/span&gt; postorder[T](tree: Tree[T]) &lt;span class=&quot;op&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;bu&quot;&gt;list&lt;/span&gt;[T]:&lt;/span&gt;
+&lt;span id=&quot;cb13-45&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-45&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    rval &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; []&lt;/span&gt;
+&lt;span id=&quot;cb13-46&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-46&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;match&lt;/span&gt; tree:&lt;/span&gt;
+&lt;span id=&quot;cb13-47&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-47&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;: &lt;span class=&quot;cf&quot;&gt;pass&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-48&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-48&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; Node(lft, val, rgt):&lt;/span&gt;
+&lt;span id=&quot;cb13-49&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-49&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            rval &lt;span class=&quot;op&quot;&gt;+=&lt;/span&gt; postorder(lft) &lt;span class=&quot;op&quot;&gt;+&lt;/span&gt; postorder(rgt) &lt;span class=&quot;op&quot;&gt;+&lt;/span&gt; [val]&lt;/span&gt;
+&lt;span id=&quot;cb13-50&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-50&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; _:&lt;/span&gt;
+&lt;span id=&quot;cb13-51&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-51&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            assert_never(tree)&lt;/span&gt;
+&lt;span id=&quot;cb13-52&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-52&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; rval&lt;/span&gt;
+&lt;span id=&quot;cb13-53&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-53&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-54&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-54&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;def&lt;/span&gt; treemap[A, B](&lt;/span&gt;
+&lt;span id=&quot;cb13-55&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-55&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        func: Callable[[A], B],&lt;/span&gt;
+&lt;span id=&quot;cb13-56&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-56&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        tree: Tree[A]) &lt;span class=&quot;op&quot;&gt;-&amp;gt;&lt;/span&gt; Tree [B]:&lt;/span&gt;
+&lt;span id=&quot;cb13-57&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-57&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;match&lt;/span&gt; tree:&lt;/span&gt;
+&lt;span id=&quot;cb13-58&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-58&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;:&lt;/span&gt;
+&lt;span id=&quot;cb13-59&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-59&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-60&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-60&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; Node(lft, val, rgt):&lt;/span&gt;
+&lt;span id=&quot;cb13-61&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-61&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            lftmod &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; treemap(func, lft)&lt;/span&gt;
+&lt;span id=&quot;cb13-62&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-62&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            rgtmod &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; treemap(func, rgt)&lt;/span&gt;
+&lt;span id=&quot;cb13-63&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-63&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; Node(lftmod, func(val), rgtmod)&lt;/span&gt;
+&lt;span id=&quot;cb13-64&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-64&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; _:&lt;/span&gt;
+&lt;span id=&quot;cb13-65&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-65&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            assert_never(tree)&lt;/span&gt;
+&lt;span id=&quot;cb13-66&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-66&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb13-67&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-67&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;def&lt;/span&gt; rotateClockwise[T](tree: Tree[T]) &lt;span class=&quot;op&quot;&gt;-&amp;gt;&lt;/span&gt; Tree[T]:&lt;/span&gt;
+&lt;span id=&quot;cb13-68&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-68&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;match&lt;/span&gt; tree:&lt;/span&gt;
+&lt;span id=&quot;cb13-69&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-69&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; Node(Node(llft, lval, lrgt), val, rgt):&lt;/span&gt;
+&lt;span id=&quot;cb13-70&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-70&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; Node(llft, lval, Node(lrgt, val, rgt))&lt;/span&gt;
+&lt;span id=&quot;cb13-71&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-71&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;cf&quot;&gt;case&lt;/span&gt; _:&lt;/span&gt;
+&lt;span id=&quot;cb13-72&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb13-72&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; tree&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Type checking with mypy:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ mypy tree.py --enable-incomplete-feature=NewGenericSyntax
+Success: no issues found in 1 source file
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Versions of software used&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Python: 3.12.3&lt;/li&gt;
+&lt;li&gt;mypy: 1.11.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+      </description>
+      <pubDate>
+        Mon, 12 Aug 2024 00:00:00 GMT
+      </pubDate>
+      <guid>
+        ju-sh.github.io/blog/python-adt.html
+      </guid>
+      <category>
+        python
+      </category>
+    </item>
+  </channel>
+</rss>

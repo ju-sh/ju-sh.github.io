@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>verilog</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="ju-sh.github.io">Home</a>
+ | 
+<a href="ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">verilog</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<ul>
+<li><code>always</code>: statements inside in these blocks are executed
+sequentially <span class="spurious-link" target="v1"><em>ʳ</em></span>
+<ul>
+<li><code>always @(&lt;sensitivity-list&gt;)</code>: fire if any signal
+in sensitivity list changes</li>
+<li><code>always @(*)</code>: means all input included</li>
+<li>Executed repeatedly throughout the simulation</li>
+</ul></li>
+<li><code>repeat(n)</code>: replicate a block <code>n</code> times</li>
+<li><code>`timescale &lt;time_unit&gt;/&lt;time_precision&gt;</code>
+<ul>
+<li><code>`timescale 1ns/1ps</code>: says 1 step is 1ns and I guess to
+report with precision upto 1ps</li>
+<li>Specified for the benefit of simulator</li>
+<li>Units of time usable: s, ms, us, ns, ps or fs</li>
+<li><a
+href="https://www.chipverify.com/verilog/verilog-timescale">https://www.chipverify.com/verilog/verilog-timescale</a></li>
+<li>This is a compiler directive</li>
+</ul></li>
+<li>Modules, wires, registers</li>
+<li><code>posedge &lt;signal&gt;</code>,
+<code>negedge &lt;signal&gt;</code>: positive &amp; negative edge of a
+signal respectively
+<ul>
+<li>eg:
+<code>always @(posedge clk or negedge rst) begin ... end</code></li>
+</ul></li>
+</ul>
+<h2 id="general">General</h2>
+<ul>
+<li>Comment: As in C
+<ul>
+<li>Single line: <code>//</code></li>
+<li>Multi-line: <code>/* ... */</code></li>
+</ul></li>
+<li>Values:
+<ul>
+<li><code>z</code>: high impedence</li>
+<li><code>x</code>: unknown/uninitialized</li>
+<li><code>0</code>: logic 0</li>
+<li><code>1</code>: logic 1</li>
+</ul></li>
+<li><code>localparam</code>: similar to <code>parameter</code> but
+cannot be modified by module instance argument or with
+<code>defparam</code>
+<ul>
+<li><a
+href="https://stackoverflow.com/questions/30288783/difference-between-parameter-and-localparam">https://stackoverflow.com/questions/30288783/difference-between-parameter-and-localparam</a></li>
+</ul></li>
+</ul>
+<h2 id="literals">Literals</h2>
+<p>Format: <code>n'bVAL</code>:</p>
+<ul>
+<li><code>n</code>: number of bits</li>
+<li><code>b</code>: base</li>
+<li><code>VAL</code>: value</li>
+</ul>
+<p>Default is base is decimal.</p>
+<ul>
+<li><code>8'hFF</code>: 8-bit hex number of value <code>FF</code> (ie,
+<code>0xFF</code>)</li>
+<li><code>5'b101</code>: 5-bit binary number (ie,
+<code>0b00101</code>)</li>
+<li><code>1</code>: decimal number</li>
+<li><code>3'o5</code>: 3-bit octal number (ie, <code>0o5</code>)</li>
+</ul>
+<p><a
+href="https://users.ece.utexas.edu/~patt/04s.382N/tutorial/verilog_manual.html">https://users.ece.utexas.edu/~patt/04s.382N/tutorial/verilog_manual.html</a></p>
+<h2 id="compiler-directives">Compiler directives</h2>
+<ul>
+<li>Starts with a backtick.</li>
+<li>Eg: <code>`define</code>, <code>`include</code>,
+<code>`ifdef .. else .. `endif</code>,</li>
+<li><code>`include "file.v"</code>: include another verilog file</li>
+<li><code>`define</code>: make text macros (à la C)</li>
+</ul>
+<p>See:</p>
+<ul>
+<li><a
+href="https://vlsiverify.com/verilog/compiler-directives/">https://vlsiverify.com/verilog/compiler-directives/</a></li>
+<li><a
+href="https://users.ece.utexas.edu/~patt/04s.382N/tutorial/verilog_manual.html">https://users.ece.utexas.edu/~patt/04s.382N/tutorial/verilog_manual.html</a></li>
+</ul>
+<h2 id="macros">Macros</h2>
+<ul>
+<li>C-style macros</li>
+<li>Textual replacement</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// word size</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">`define wsize 32</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ot">`define word [`wsize-1:0]</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dt">input</span> <span class="ot">`word</span> a<span class="op">,</span> b<span class="op">;</span></span></code></pre></div>
+<h2 id="operators">Operators</h2>
+<ul>
+<li>Conditional operator (ternary): <code>?:</code>
+<ul>
+<li><code>cond ? true : false</code></li>
+</ul></li>
+<li>Shifting: <code>&lt;&lt;</code> and <code>&gt;&gt;</code></li>
+<li>Concatenation
+<ul>
+<li>Possible for any sized value</li>
+<li>Syntax: comma seperated values inside curly braces</li>
+<li>Eg: <code>{1'b0, 1'b1, 1'b0}</code> gives <code>3'b010</code></li>
+<li>Provision for repetition available: <code>{2 {expr}}</code> is same
+as <code>{expr, expr}</code>
+<ul>
+<li>Eg: <code>{2 {1'b0}, 1'b1}</code> is <code>3'b001</code></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="bitwise-operators">Bitwise operators</h3>
+<table>
+<tbody>
+<tr class="odd">
+<td><code class="verbatim">~</code></td>
+<td>Unary negation</td>
+</tr>
+<tr class="even">
+<td><code>&amp;</code></td>
+<td>AND</td>
+</tr>
+<tr class="odd">
+<td><code>│</code></td>
+<td>OR</td>
+</tr>
+<tr class="even">
+<td><code>^</code></td>
+<td>XOR</td>
+</tr>
+<tr class="odd">
+<td><code class="verbatim">~^a</code> or <code
+class="verbatim">^~a</code></td>
+<td>XNOR</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reduction-operators">Reduction operators</h3>
+<ul>
+<li>These operators are unary.</li>
+<li>Kind of like a fold
+<ul>
+<li>Eg: Reduction AND does AND of all bits in operand vector</li>
+</ul></li>
+</ul>
+<table>
+<tbody>
+<tr class="odd">
+<td><code>&amp;a</code></td>
+<td>Reduction AND</td>
+</tr>
+<tr class="even">
+<td><code>│a</code></td>
+<td>Reduction OR</td>
+</tr>
+<tr class="odd">
+<td><code class="verbatim">~&amp;a</code></td>
+<td>Reduction NAND</td>
+</tr>
+<tr class="even">
+<td><code class="verbatim">~│a</code></td>
+<td>Reduction NOR</td>
+</tr>
+<tr class="odd">
+<td><code>^</code></td>
+<td>Reduction XOR</td>
+</tr>
+<tr class="even">
+<td><code class="verbatim">~^a</code> or <code
+class="verbatim">^~a</code></td>
+<td>Reduction XNOR</td>
+</tr>
+</tbody>
+</table>
+<h2 id="indexing-into-vectors">Indexing into vectors</h2>
+<p>Possible for sized values like vectors ??</p>
+<h3 id="bit-select">Bit-select</h3>
+<p>'Indexing' into a vector/similar</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">wire</span> <span class="op">[</span><span class="dv">7</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> a<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">// 0th bit of a</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>a<span class="op">[</span><span class="dv">0</span><span class="op">]</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">// 4th bit of a</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>a<span class="op">[</span><span class="dv">4</span><span class="op">]</span></span></code></pre></div>
+<h3 id="part-select">Part-select</h3>
+<p>'Slicing a vector/similar</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">wire</span> <span class="op">[</span><span class="dv">7</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> a<span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">// 2nd, 1st and 0th bits of a</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>a<span class="op">[</span><span class="dv">2</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">// 5th, 4th and 3rd bits of a</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>a<span class="op">[</span><span class="dv">5</span><span class="op">:</span><span class="dv">3</span><span class="op">]</span></span></code></pre></div>
+<h2 id="system-tasks">System tasks</h2>
+<ul>
+<li><code>$dumpfile("name.vcd")</code>: dump wave info as vcd</li>
+<li><code>$dumpvars(number_of_levels, instance_name)</code>: dump wave
+info as vcd
+<ul>
+<li>level<sub>count</sub> = 0: dump all signals at all levels of the
+instance</li>
+<li>level<sub>count</sub> = 1: only dump signals at top level</li>
+<li>level<sub>count</sub> = n: dump signals n level hierarchically below
+named instance ??</li>
+</ul></li>
+<li><code>$readmemb("filename", instance_name.mem, starting_addr)</code>:
+read from a binary file ??</li>
+<li><code>$readmemh("filename", instance_name.mem, starting_addr)</code>:
+read from a hex file ??</li>
+<li><code>$strobe</code>: print messages on screen after end of current
+time slot (postpone region)
+<ul>
+<li>Like <code>printf</code> in C</li>
+<li>Eg: <code>$strobe()</code></li>
+</ul></li>
+<li><code>$display</code>: print messages (active region)</li>
+<li><code>$write</code>: like <code>$display</code>, but no newline</li>
+<li><code>$time</code>: returns current simulation time</li>
+<li><code>$finish</code>: end simulation</li>
+</ul>
+<p>See:</p>
+<ul>
+<li><a
+href="https://users.ece.utexas.edu/~patt/04s.382N/tutorial/verilog_manual.html">https://users.ece.utexas.edu/~patt/04s.382N/tutorial/verilog_manual.html</a></li>
+</ul>
+<h2 id="iverilog">iverilog</h2>
+<ul>
+<li>Find directory of vpi modules:
+<code>iverilog-vpi --install-dir</code> <a
+href="https://github.com/m-labs/migen/issues/11">ʳ</a></li>
+</ul>
+<h2 id="tips">Tips</h2>
+<ul>
+<li>Delay in synthetically verilog ??
+<ul>
+<li>Count clock as per operating frequency</li>
+</ul></li>
+<li>How to find operating frequency of a design loaded onto fpga? Is
+that a constraint?</li>
+</ul>
+<h2 id="dbt">DBT</h2>
+<ul>
+<li>Postpone region</li>
+<li>Active region</li>
+<li>Can this be made a one-liner?</li>
+</ul>
+<pre><code>temp[0] &lt;= a^b;
+temp[1] &lt;= a&amp;b;
+</code></pre>
+<ul>
+<li>How to drive RGB output</li>
+<li>How to circularly shift a 1 in a vector</li>
+<li>Worst negative slack is 4.002ns, but total negative slack is 0.000ns
+??</li>
+<li>what colour if 11 is written to an rgb led?</li>
+</ul>
+<h2 id="links">Links</h2>
+<ul>
+<li>IEEE standard for SystemVerilog: <a
+href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8299595">https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8299595</a></li>
+</ul>
+<h1 id="systemverilog">SystemVerilog</h1>
+<ul>
+<li>Function:
+<code>function &lt;name&gt; (args); &lt;body&gt; endfunction</code>
+<ul>
+<li>Arguments can have default values</li>
+</ul></li>
+<li>Array
+<ul>
+<li>Declaration:
+<code>&lt;type&gt; &lt;name&gt; [&lt;size&gt;];</code></li>
+<li>Size of array: <code>$size &lt;name&gt;</code></li>
+</ul></li>
+<li><code>for</code> loop:
+<code>for(int i=0; i&lt;5; i++) begin ... end</code>
+<ul>
+<li>Kinda like in C</li>
+</ul></li>
+</ul>
+<h2 id="associative-array">Associative array</h2>
+<ul>
+<li>Like python dictionaries</li>
+<li>Declaration syntax:
+<code>&lt;val_type&gt; &lt;name&gt; [&lt;index_type&gt;];</code></li>
+</ul>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Assoc array with string index and int values</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>int fruitprice<span class="op">[</span>string<span class="op">];</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>fruitprice <span class="op">=</span> &#39;<span class="op">{</span><span class="st">&quot;Apple&quot;</span><span class="op">:</span> <span class="dv">190</span><span class="op">,</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;Orange&quot;</span><span class="op">:</span> <span class="dv">120</span><span class="op">};</span></span></code></pre></div>
+<p>See: <a
+href="https://www.chipverify.com/systemverilog/systemverilog-associative-array">https://www.chipverify.com/systemverilog/systemverilog-associative-array</a></p>
+<h2 id="classes">Classes</h2>
+<p><a
+href="https://www.chipverify.com/systemverilog/systemverilog-class">https://www.chipverify.com/systemverilog/systemverilog-class</a></p>
+<ul>
+<li>Syntax is kind of like JavaScript classes.</li>
+<li><code>this</code>: current object (or is it class??)</li>
+<li><code>function new ()</code>: constructor
+<ul>
+<li>Auto invoked on object creation</li>
+</ul></li>
+<li>Inheritance: <code>extends</code>
+<ul>
+<li>Eg: <code>class subclass extends baseclass;</code></li>
+<li>Invoke superclass attribute:
+<code>super.&lt;attribute&gt;</code></li>
+</ul></li>
+<li><code>virtual class</code>: abstract class
+<ul>
+<li>Can only be extended.</li>
+<li>Cannot be instantiated.</li>
+</ul></li>
+</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Python</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="ju-sh.github.io">Home</a>
+ | 
+<a href="ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Python</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h1 id="general">General</h1>
+<ul>
+<li><code>nonlocal</code>: allow modification of outer function variable
+from inner function
+<ul>
+<li>Otherwise, inner function can access outer function variables, but
+cannot modify them.</li>
+</ul></li>
+<li><code>*args, **kwargs</code> in function arguments
+<ul>
+<li><code>*args</code>: collect positional arguments as a list</li>
+<li><code>**kwargs</code>: collect arguments as a dictionary</li>
+</ul></li>
+</ul>
+<h2 id="re-regular-expression">re (regular expression)</h2>
+<p><a
+href="https://docs.python.org/3/library/re.html">https://docs.python.org/3/library/re.html</a></p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> c <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">&quot;\w\da&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> c.match(<span class="st">&quot;a0abbb&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>re.Match <span class="bu">object</span><span class="op">;</span> span<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">3</span>), match<span class="op">=</span><span class="st">&#39;a0a&#39;</span><span class="op">&gt;</span></span></code></pre></div>
+<h3 id="syntax">Syntax</h3>
+<ul>
+<li><p><code>.</code>, <code>^</code>, <code>$</code>, <code>*</code>,
+<code>+</code>, <code>?</code></p></li>
+<li><p><code>{m}</code>, <code>{m,}</code>, <code>{m,n}</code>,
+<code>{,m}</code></p></li>
+<li><p><code>[]</code>, <code>|</code>, <code>(..)</code></p></li>
+<li><p><code>\NUM</code>: refer to a group</p></li>
+<li><p><code>\b</code>: ??</p></li>
+<li><p><code>\B</code>: ??</p></li>
+<li><p><code>\d</code>: <code>[0-9]</code></p></li>
+<li><p><code>\D</code>: negation of <code>\d</code></p></li>
+<li><p><code>\s</code>: whitespaces (<code>[\t\n\f\v ]</code> and
+more)</p></li>
+<li><p><code>\S</code>: negation of <code>\s</code></p></li>
+<li><p><code>\w</code>: <code>[0-9A-Za-z_]</code></p></li>
+<li><p><code>\W</code>: negation of <code>\w</code></p></li>
+<li><p><code>\A</code>: match start of the string ??</p></li>
+<li><p><code>\Z</code>: match end of the string ??</p></li>
+</ul>
+<p>—</p>
+<ul>
+<li><code>*?</code>, <code>+?</code>, <code>??</code>, <code>{m}+</code>
+(non-greedy / minimal version)</li>
+<li><code>*+</code>, <code>++</code>, <code>?+</code> (possessive
+quantifiers ??)</li>
+</ul>
+<h2 id="enum-types">enum types</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> enum</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Op(enum.Enum):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    ADD <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    SUBTRACT <span class="op">=</span> <span class="dv">2</span></span></code></pre></div>
+<h1 id="mypy">mypy</h1>
+<p><a
+href="https://docs.python.org/3/library/typing.html">https://docs.python.org/3/library/typing.html</a></p>
+<ul>
+<li><code># type: ignore</code>: skip type checking for line with this
+at the end</li>
+<li>Type variable: <code>A = TypeVar("A")</code></li>
+<li>Any type: <code>Any</code></li>
+</ul>
+<p>numpy support type annotations too: <a
+href="https://numpy.org/doc/stable/reference/typing.html">https://numpy.org/doc/stable/reference/typing.html</a></p>
+<ul>
+<li><code>import numpy.typing as npt</code></li>
+<li>nptyping: Third party library for better type annotations for numpy
+<ul>
+<li><a
+href="https://github.com/ramonhagenaars/nptyping">https://github.com/ramonhagenaars/nptyping</a></li>
+</ul></li>
+</ul>
+<h1 id="numpy">numpy</h1>
+<ul>
+<li>Create array:
+<code>np.array([(1.5,2,3), (4,5,6)], dtype = float)</code></li>
+<li>Shape: <code>arr.shape</code></li>
+<li>1-D arrays can be made from list generator:
+<code>np.fromiter(list_gen)</code> (UNVERIFIED)</li>
+<li>Infinity: <code>np.inf</code></li>
+<li>Identity matrix: <code>np.identity(n)</code> (where <code>n</code>
+is number of rows)</li>
+<li>Add two matrices: <code>np.add(m1, m2)</code> or just
+<code>m1 + m2</code></li>
+<li>Broadcasting</li>
+<li>Default <code>dtype</code> is <code>float</code></li>
+</ul>
+<h2 id="axis-parameter">Axis parameter</h2>
+<p><a
+href="https://stackoverflow.com/questions/48200911/very-basic-numpy-array-dimension-visualization">https://stackoverflow.com/questions/48200911/very-basic-numpy-array-dimension-visualization</a></p>
+<ul>
+<li>nth axis =&gt; nth index</li>
+<li>'order of indexing into the array'</li>
+<li>In a 2D matrix,
+<ul>
+<li>axis=0 =&gt; rows</li>
+<li>axis=1 =&gt; column</li>
+</ul></li>
+</ul>
+<h2 id="stacking">Stacking</h2>
+<ul>
+<li><code>np.vstack</code>: stack two matrices one below the other</li>
+<li><code>np.hstack</code>: stack two matrices side by side</li>
+</ul>
+<pre><code>&gt;&gt;&gt; a = np.array([[1,0],[2,0],[3,0]])
+&gt;&gt;&gt; a
+array([[1, 0],
+       [2, 0],
+       [3, 0]])
+
+&gt;&gt;&gt; np.hstack([a,a])
+array([[1, 0, 1, 0],
+       [2, 0, 2, 0],
+       [3, 0, 3, 0]])
+</code></pre>
+<h2 id="matrix-creation">Matrix creation</h2>
+<h3 id="create-a-vectormatrix-of-all-zeros">Create a vector/matrix of
+all zeros</h3>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>array([<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).shape</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>(<span class="dv">3</span>,)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>array([[<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>]])</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>).shape</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">###</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.zeros((<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>array([[<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>]])</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.zeros((<span class="dv">1</span>,<span class="dv">3</span>)).shape</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span>, <span class="dv">3</span>)</span></code></pre></div>
+<p><a
+href="https://numpy.org/doc/stable/reference/generated/numpy.zeros.html">https://numpy.org/doc/stable/reference/generated/numpy.zeros.html</a></p>
+<h3 id="make-a-matrix-by-giving-all-values-explicitly">Make a matrix by
+giving all values explicitly</h3>
+<pre><code>&gt;&gt;&gt; np.array([[0, 1], [0, 0]])
+array([[0, 1],
+       [0, 0]])
+</code></pre>
+<h3 id="create-a-matrix-out-of-a-constant">Create a matrix out of a
+constant</h3>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">2</span>,<span class="dv">2</span>), <span class="dv">3</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>array([[<span class="dv">3</span>, <span class="dv">3</span>],</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>       [<span class="dv">3</span>, <span class="dv">3</span>]])</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">2</span>,<span class="dv">2</span>), np.inf)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>array([[inf, inf],</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>       [inf, inf]])</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">3</span>,<span class="dv">2</span>), [<span class="dv">1</span>,<span class="dv">2</span>])</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>array([[<span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>       [<span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>       [<span class="dv">1</span>, <span class="dv">2</span>]])</span></code></pre></div>
+<p><a
+href="https://numpy.org/doc/stable/reference/generated/numpy.full.html">https://numpy.org/doc/stable/reference/generated/numpy.full.html</a></p>
+<h2 id="matrix-multiplication">Matrix multiplication</h2>
+<ul>
+<li>Multipy vector with matrix: <code>np.dot</code></li>
+<li>Concatenate two vectors: <code>np.concatenate([v1, v2])</code>
+<ul>
+<li>Arguments must be given as a list</li>
+</ul></li>
+</ul>
+<h2 id="determinant-of-a-matrix">Determinant of a matrix</h2>
+<p>Remember that determinant is not defined for non-square matrices.</p>
+<pre><code>&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; np.linalg.det(np.array([[1,2],
+...                         [3,4]]))
+...
+-2.0000000000000004
+</code></pre>
+<p><a
+href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.det.html">https://numpy.org/doc/stable/reference/generated/numpy.linalg.det.html</a></p>
+<h2 id="eigen-values-of-a-matrix">Eigen values of a matrix</h2>
+<pre><code>&gt;&gt;&gt; np.linalg.eigvals(np.array([[1,2],
+...                             [3,4]]))
+...
+array([-0.37228132,  5.37228132])
+
+# Product of Eigen values is determinant
+&gt;&gt;&gt; np.prod(np.linalg.eigvals(np.array([[1,2],[3,4]])))
+-1.9999999999999998
+</code></pre>
+<p><a
+href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.eigvals.html">https://numpy.org/doc/stable/reference/generated/numpy.linalg.eigvals.html</a></p>
+<h1 id="scipy">scipy</h1>
+<h2 id="sparse-matrix">Sparse matrix</h2>
+<p><a
+href="https://docs.scipy.org/doc/scipy/reference/sparse.html">https://docs.scipy.org/doc/scipy/reference/sparse.html</a></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> scipy</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> X <span class="op">=</span> scipy.sparse.csr_matrix(<span class="fl">1.</span><span class="op">/</span><span class="fl">2.</span><span class="op">*</span>np.array([[<span class="fl">0.</span>,<span class="fl">1.</span>],[<span class="fl">1.</span>,<span class="fl">0.</span>]]))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> X</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="dv">2</span><span class="er">x2</span> sparse matrix of <span class="bu">type</span> <span class="st">&#39;&lt;class &#39;</span>numpy.float64<span class="st">&#39;&gt;&#39;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="dv">2</span> stored elements <span class="kw">in</span> Compressed Sparse Row <span class="bu">format</span><span class="op">&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span>(X)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">0</span>, <span class="dv">1</span>)        <span class="fl">0.5</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">1</span>, <span class="dv">0</span>)        <span class="fl">0.5</span></span></code></pre></div>
+<h1 id="networkx">networkx</h1>
+<h2 id="graph-attributes">Graph attributes</h2>
+<ul>
+<li>Adjacency matrix: <code>nx.adjacency_matrix(G)</code></li>
+<li>Attribute matrix: <code>nx.attr_matrix(G, &lt;attr-name&gt;)</code>
+<ul>
+<li>Eg: <code>nx.attr_matrix(G, "weight")</code></li>
+</ul></li>
+</ul>
+<h2 id="add-nodes">Add nodes</h2>
+<ul>
+<li>Insert single node: G.add<sub>node</sub>()</li>
+<li>Insert nodes from a list: G.add<sub>nodesfrom</sub>()</li>
+</ul>
+<h2 id="add-edges">Add edges</h2>
+<p>Adding edges implicitly adds nodes.</p>
+<ul>
+<li><p>Edges from/to on a node in undirected graphs:
+<code>G.edges(&lt;node&gt;)</code></p></li>
+<li><p>Edges incident on a node in directed graphs:
+<code>G.in_edges(&lt;node&gt;)</code></p></li>
+<li><p>Edges outgoing from a node in directed graphs:
+<code>G.out_edges(&lt;node&gt;)</code></p></li>
+<li><p>Check if an edge exists:
+<code>DiGraph.has_edge(n1, n2)</code></p></li>
+<li><p>Add edge with weight:
+<code>G.add_edge(from, to, weight=&lt;weight&gt;)</code></p></li>
+<li><p>Node attributes: <code>G[&lt;node&gt;]</code> or
+<code>G.nodes[&lt;node&gt;]</code></p></li>
+<li><p>Edge attributes:
+<code>G[n1][n2]['&lt;attr-name&gt;'] = &lt;attr-val&gt;</code></p></li>
+<li><p>Get edge data: <code>G.get_edge_data(n1, n2)</code></p></li>
+</ul>
+<h1 id="pdb">pdb</h1>
+<p>Python debugger part of stdlib: <a
+href="https://docs.python.org/3/library/pdb.html">https://docs.python.org/3/library/pdb.html</a></p>
+<ul>
+<li><code>.</code> is current line.</li>
+<li>Frame</li>
+</ul>
+<h2 id="commands">Commands</h2>
+<ul>
+<li>l: show current position in code
+<ul>
+<li>l &lt;line-num&gt;</li>
+</ul></li>
+<li>n: next command</li>
+<li>b: set break point</li>
+<li>s: next step</li>
+<li>p: print value</li>
+<li>a: print arguments of current function as a list</li>
+<li>pp: same as p but with pretty-printing</li>
+<li>w: where</li>
+<li>r: continue execution till current function returns</li>
+<li>q: abort and program being debugged and exit debugger</li>
+<li>whatis: print type of an expression</li>
+<li>source: attempt to print the source code of an object</li>
+<li>restart: restart program being debugged</li>
+<li>run: start debugging the program</li>
+<li>display &lt;expr&gt;: show a message when the argument expression
+changes</li>
+<li>interact: start an interpreter at this point</li>
+<li>alias: create an alias for a command</li>
+<li>unalias: delete an alias</li>
+</ul>
+<h2 id="drop-to-pdb-during-execution">Drop to pdb during execution</h2>
+<pre><code>import pdb
+pdb.set_trace()
+</code></pre>
+<p>The builtin <code>breakpoint()</code> available from 3.7 onwards,
+does the same thing. <a
+href="https://docs.python.org/3/library/functions.html#breakpoint">https://docs.python.org/3/library/functions.html#breakpoint</a></p>
+<h2 id="pdbrc">.pdbrc</h2>
+<p><a
+href="https://stackoverflow.com/questions/5169702/how-do-i-list-the-current-line-in-python-pdb">https://stackoverflow.com/questions/5169702/how-do-i-list-the-current-line-in-python-pdb</a></p>
+<pre><code>alias ll u;;d;;l
+</code></pre>
+<h1 id="conda">conda</h1>
+<ul>
+<li>Create new conda environment:
+<code>conda create -n &lt;env-name&gt; [python=3.6.8] [packages needed]</code></li>
+<li>Activate conda environment:
+<code>conda activate &lt;env-name&gt;</code></li>
+<li>Install pip to the environment: <code>conda install pip</code>
+<ul>
+<li>conda envs doesn't come with pip by default. Gotta install
+them.</li>
+</ul></li>
+<li>Install git: <code>conda install git</code></li>
+<li>Delete a conda environment:
+<code>conda env remove -n &lt;env-name&gt;</code></li>
+<li>Delete a package installed with conda (not with pip):
+<code>conda remove &lt;package-name&gt;</code></li>
+</ul>
+<h1 id="some-packages">Some packages</h1>
+<ul>
+<li>bidict: bijective maps (ie, 2-way dictionary)</li>
+</ul>
+<p>Tools:</p>
+<ul>
+<li>pylint, flake8: linters</li>
+<li>mypy, pytype: static type checkers</li>
+<li>pytest: unit testing
+<ul>
+<li>Show execution time of tests:
+<code>pytest durations=0  # show tests that ran for more than 0s</code></li>
+</ul></li>
+</ul>
+</div>
+</body>
+</html>

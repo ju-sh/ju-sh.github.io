@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>TAPL exercises</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="ju-sh.github.io">Home</a>
+ | 
+<a href="ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">TAPL exercises</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<p>Writing down answers from the <em>Types and Programming
+Languages</em> book.</p>
+<h2 id="section">5.2.1</h2>
+<pre class="ulc"><code>{- logical or -}
+or = λa. λb. a tru b
+
+{-
+| a   | b   | or a b            |
+|-----+-----+-------------------|
+| tru | tru | tru tru tru = tru |
+| tru | fls | tru tru fls = tru |
+| fls | tru | fls tru tru = tru |
+| fls | fls | fls tru fls = fls |
+-}
+</code></pre>
+<pre class="ulc" data-EX-5=".2.1:"><code>{- logical and -}
+and = λa. λb. a b fls
+
+{-
+| a   | b   | and a b           |
+|-----+-----+-------------------|
+| tru | tru | tru tru fls = tru |
+| tru | fls | tru fls fls = fls |
+| fls | tru | fls tru fls = fls |
+| fls | fls | fls fls fls = fls |
+-}
+</code></pre>
+<pre class="ulc" data-EX-5=".2.1:"><code>{- logical not -}
+and = λa. a fls tru
+
+{-
+| a   | not a             |
+|-----+-------------------|
+| tru | tru fls tru = fls |
+| fls | fls fls tru = tru |
+-}
+</code></pre>
+<h2 id="section-1">6.1.1</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Named term (question)</th>
+<th>de-Bruijn index term (answer)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>λs. λz. z;</td>
+<td>λ.λ. 0;</td>
+</tr>
+<tr class="even">
+<td>λs. λz. s (s z);</td>
+<td>λ.λ. 1 (1 0);</td>
+</tr>
+<tr class="odd">
+<td>λm. λn. λs. λz. m s (n z s);</td>
+<td>λ.λ.λ.λ. 3 1 (2 0 1);</td>
+</tr>
+<tr class="even">
+<td>λf. (λx. f (λy. (x x) y)) (λx. f (λy. (x x) y));</td>
+<td>λ. (λ. 1 (λ. (1 1) 0)) (λ. 1 (λ. (1 1) 0));</td>
+</tr>
+<tr class="odd">
+<td>(λx. (λx. x)) (λx. x);</td>
+<td>(λ. (λ. 0)) (λ. 0);</td>
+</tr>
+</tbody>
+</table>
+<h2 id="section-2"><span class="done DONE">DONE</span> 6.2.2</h2>
+<ol>
+<li>↑² (λ.λ. 1 (0 2))
+<ul>
+<li>↑²₀ (λ.λ. 1 (0 2))</li>
+<li>λ. ↑²₁(λ. 1 (0 2))</li>
+<li>λ. λ. ↑²₂(1 (0 2))</li>
+<li>λ. λ. (↑²₂ 1) (↑²₂ (0 2))</li>
+<li>λ. λ. 1 (↑²₂ (0 2))</li>
+<li>λ. λ. 1 ((↑²₂ 0) (↑²₂ 2))</li>
+<li>λ. λ. 1 (0 4)</li>
+</ul></li>
+<li>↑² (λ. 0 1 (λ. 0 1 2))
+<ul>
+<li>↑²₀ (λ. 0 1 (λ. 0 1 2))</li>
+<li>λ. ↑²₁ (0 1 (λ. 0 1 2))</li>
+<li>λ. [↑²₁ (0 1)] [↑²₁ ((λ. 0 1 2))]</li>
+<li>λ. (0 3) [↑²₁ ((λ. 0 1 2))]</li>
+<li>λ. (0 3) (λ. [↑²₂ (0 1 2)])</li>
+<li>λ. (0 3) (λ. (0 1 4))</li>
+</ul></li>
+</ol>
+<h2 id="section-3">13.1.1</h2>
+<h3 id="question">Question</h3>
+<p>Draw a similar diagram showing the effects of evaluating the
+expressions <code>a = {ref 0, ref 0}</code> and
+<code>b = (λx: Ref Nat. {x, x}) (ref 0)</code>.</p>
+<h3 id="answer">Answer</h3>
+<p><code>a = {ref 0, ref 0}</code></p>
+<pre><code>
+a = { _, _}
+      |  |
+      ↓  ↓
+    +---+---+
+    |   |   |
+    +---+---+
+
+</code></pre>
+<p>where the two elements of the record point to different memory
+locations.</p>
+<p>And</p>
+<p><code>b = (λx: Ref Nat. {x, x}) (ref 0)</code></p>
+<pre><code>
+b = { _, _}
+      |  |
+      ↓  ↓
+      ↘  ↙
+        ↓ 
+      +---+
+      |   |
+      +---+
+
+</code></pre>
+<p>where both elements of the record point to the same memory
+location.</p>
+<h2 id="section-4">15.2.1</h2>
+<h3 id="question-1">Question</h3>
+<p>Draw a derivation showing that <code>{x:Nat, y:Nat, z:Nat}</code> is
+a subtype of <code>{y:Nat}</code>.</p>
+<h3 id="answer-1">Answer</h3>
+<table>
+<tbody>
+<tr class="odd">
+<td>{x:Nat, y:Nat, z:Nat} &lt;: {x:Nat, y:Nat, z:Nat}</td>
+<td>(S-Refl)</td>
+</tr>
+<tr class="even">
+<td>{x:Nat, y:Nat, z:Nat} &lt;: {x:Nat, y:Nat}</td>
+<td>(S-RcdWidth, k=1)</td>
+</tr>
+<tr class="odd">
+<td>{x:Nat, y:Nat, z:Nat} &lt;: {y:Nat, x:Nat}</td>
+<td>(S-RcdPerm)</td>
+</tr>
+<tr class="even">
+<td>{x:Nat, y:Nat, z:Nat} &lt;: {y:Nat}</td>
+<td>(S-RcdWidth, k=1)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="section-5"><span class="done DONE">DONE</span> 22.2.3</h2>
+<pre><code>λx:X. λy:Y. λz:Z. (x z) (y z)
+</code></pre>
+<p>Type of bound variables are like:</p>
+<pre><code>x:_ -&gt; _ -&gt; _
+y:_ -&gt; _
+z:_
+</code></pre>
+<p><code>y</code> has to return something which <code>x z</code> can
+accept</p>
+<pre><code>x:A -&gt; X -&gt; _
+y:A -&gt; X
+z:A
+</code></pre>
+<p>Rest can be anything.</p>
+<pre><code>x:A -&gt; X -&gt; B
+y:A -&gt; X
+z:A
+</code></pre>
+<p>Some possible type unifiers:</p>
+<ul>
+<li>{A↦nat, X↦bool, B↦string}</li>
+<li>{A↦bool, X↦bool, B↦bool}</li>
+<li>{A↦bool, X↦nat, B↦string}</li>
+</ul>
+<h2 id="section-6"><span class="done DONE">DONE</span> 22.4.3</h2>
+<ul>
+<li>{X=Nat,Y=X→X}: {X=Nat, Y=Nat→Nat}</li>
+<li>{Nat→Nat=X→Y}: {X↦Nat, Y↦Nat}
+<ul>
+<li>Just constraints. So types can appear in LHS as well. I guess LHS
+and RHS swapping doesn't make a difference.</li>
+</ul></li>
+<li>{Nat=Nat→Y}: No unifier possible.</li>
+<li>{Y=Y→Nat}: No unifier possible.
+<ul>
+<li>∵ not enough info to make this right.</li>
+</ul></li>
+<li>{X→Y=Y→Z, Z=U→W}: {X:U→W, Y:U→W, Z:U→W}
+<ul>
+<li>Had got this wrong. Nothing stopping us from assigning the same type
+to all types!</li>
+</ul></li>
+<li>{}: Nothing</li>
+</ul>
+</div>
+</body>
+</html>

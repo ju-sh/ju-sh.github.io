@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Random math stuff</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="ju-sh.github.io">Home</a>
+ | 
+<a href="ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Random math stuff</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h1 id="general">General</h1>
+<h2 id="binomial-theorem">Binomial theorem:</h2>
+<p>From <em>Discrete mathematics and its applications</em>:</p>
+<pre><code>            n  
+(x + y)ⁿ =  Σ  ⁿCⱼ(xⁿ⁻ⁱ)(yⁱ)
+           i=0
+
+
+         = ⁿC₀(xⁿ) + ⁿC₁(xⁿ⁻¹)(y) + ⁿC₂(xⁿ⁻²)(y²) + .... +  ⁿCₙ(yⁿ)
+</code></pre>
+<p>From this, it follows that, the coefficient of xⁱyʲ is ⁿCⱼ</p>
+<p>For example, coefficient of x¹²y¹³ in (x+y)²⁵ is:</p>
+<pre><code>  ⁿCᵢ
+
+
+= ²⁵C₁₃ 
+
+
+        25!            
+=  --------------  = 5200300
+    (25-13)! 13!
+</code></pre>
+<h2 id="conjecture">Conjecture</h2>
+<p>A statement believed to be true but which hasn't been proven yet.</p>
+<p>Eg: Goldbach's conjecture</p>
+<h2 id="homomorphism">Homomorphism</h2>
+<p>f(a+b) = f(a) + f(b)</p>
+<p>where <code>+</code> denotes the homomorphism.</p>
+<p>Structure preserving mapping.</p>
+<p>Eg: z ↦ z mod 2 is structure preserving (but also loses some
+info.)</p>
+<h2 id="isomorphism">Isomorphism</h2>
+<ul>
+<li>Structure preserving mapping with an inverse that is also structure
+preserving.</li>
+<li>ie, every isomorphism is also a homomorphism.</li>
+<li>Unlike homomorphism, info will not be lost.
+<ul>
+<li>Always preserves all info.</li>
+</ul></li>
+</ul>
+<p><a
+href="https://math.stackexchange.com/questions/731724/what-is-the-difference-between-homomorphism-and-isomorphism">https://math.stackexchange.com/questions/731724/what-is-the-difference-between-homomorphism-and-isomorphism</a></p>
+<h2 id="morphism">Morphism</h2>
+<p>In category theory, morphisms are also known as
+<strong>arrows</strong>. <a
+href="https://en.wikipedia.org/wiki/Morphism">³</a></p>
+<h2 id="endomorphism">Endomorphism</h2>
+<p>A morphism from a mathematical object to itself.</p>
+<p>An endomorphism that is also an isomorphism is an
+<strong>automorphism</strong>.</p>
+<h2 id="linear-map">Linear map</h2>
+<p>A mapping from a vector space V to another vector space W (ie, V →
+W), that preserves the operations of vector addition and scalar
+multiplication.<a
+href="https://en.wikipedia.org/wiki/Linear_map">²</a></p>
+<p>If the mapping is bijective, then the linear map is a <strong>linear
+isomorphism</strong>.</p>
+<p>If V = W, the linear map is a <strong>linear
+endomorphism</strong>.</p>
+<h2 id="commensurability">Commensurability</h2>
+<p>Two non-zero real numbers <code>a</code> and <code>b</code> are said
+to be commensurable if their ratio <code>a/b</code> is a rational
+number; otherwise they are incommensurable.</p>
+<p>Examples:</p>
+<ul>
+<li>√3/2 : incommensurable</li>
+<li>2√3/√3: commensurable</li>
+</ul>
+<p>(Note: commensurability in group theory is something different)</p>
+<h2 id="weirdness-of-limits">'Weirdness' of limits</h2>
+<pre><code>      1
+    ----- = 1 + x + x² + x³ + ...
+     1-x
+
+=&gt;    1   = (1-x)(1 + x + x² + x³ + ...)
+=&gt;    1   = (1 + x + x² + x³ + ...) - (x + x² + x³ + ...)
+=&gt;    1   = 1
+</code></pre>
+<p>is <em>not</em> what it looks like.</p>
+<p>Try the original equation with x = 2.</p>
+<pre><code>      1
+    ----- = 1 + x + x² + x³ + ...
+     1-x
+
+
+      1
+=&gt;  ----- = 1 + 2 + 2² + 2³ + ...
+     1-2
+
+
+=&gt;   -1   = 1 + 2 + 2² + 2³ + ...
+</code></pre>
+<p>which is wrong.</p>
+<p>Try taking sum of first n+1 elements.</p>
+<pre><code>         n
+Sₙ = 1 + Σ  
+        i=1
+</code></pre>
+<p>2 + 4 + 8 + 16 + 32 + 2 6 14 30 64</p>
+<p>Reference: <em>Calculus for scientists and engineers: An analytical
+approach</em> - K. D. Joshi</p>
+<h2 id="infinitesimal-number">Infinitesimal number</h2>
+<p>A number other than zero that is closer to zero than all other real
+numbers.</p>
+<h2 id="relation-between-limits-and-derivatives">Relation between limits
+and derivatives</h2>
+<h3 id="limit">Limit</h3>
+<pre><code>lim f(x) = v
+x→k
+</code></pre>
+<p>When value of x <em>tends to</em> k, value of f(x) <em>tends to</em>
+v.</p>
+<h3 id="continuous-function">Continuous function</h3>
+<p>A function f(x) is continuous at a point c if whenever Δx is
+infinitesimaly small, f(c+Δx) - f(c) is infinitesimaly small as
+well.</p>
+<pre><code> f(c+Δx) - f(c)
+---------------  = f&#39;(c)
+     f(c)
+</code></pre>
+<p>where f'(c) is the first derivative of f(x) at c.</p>
+<h2 id="hyperreal-number-system">Hyperreal number system</h2>
+<p>A number system with all the real numbers and infinitesimal
+numbers.</p>
+<h2 id="some-properties-of-limits">Some properties of limits</h2>
+<p>If</p>
+<pre><code>lim aₙ = A   and    lim bₙ = B
+n→∞                 n→∞             
+</code></pre>
+<p>then,</p>
+<pre><code>lim (aₙ + bₙ) = A + B           (sum rule)
+n→∞
+
+lim (aₙ - bₙ) = A - B           (difference rule)
+n→∞
+
+lim (k.aₙ)    = k.A             (constant multiple rule)
+n→∞
+
+lim (aₙ * bₙ) = A * B           (product rule)
+n→∞
+
+lim (aₙ / bₙ) = A / B, if B≠0   (division rule)
+n→∞
+</code></pre>
+<p>Reference: <em>Thomas' Calculus</em> (12e) - George B. Thomas Jr.,
+Maruice D. Weir, Joel R. Hass</p>
+<h2 id="meaning-of-limit-tending-to-infinity">Meaning of limit tending
+to infinity</h2>
+<pre><code>lim aₙ = ∞
+n→∞
+</code></pre>
+<p>does not mean that aₙ approaches to ∞.</p>
+<p>(Converging to ∞ means difference between the terms of aₙ and ∞
+becomes smaller and smaller. But that cannot happen as ∞ is, well,
+infinity.)</p>
+<p>It's just a notation (ie, for limits in the case of ∞).</p>
+<blockquote>
+<p>aₙ eventually gets and stays larger than any fixed number as n gets
+large.</p>
+</blockquote>
+<p>Reference: <em>Thomas' Calculus</em> (12e) - George B. Thomas Jr.,
+Maruice D. Weir, Joel R. Hass</p>
+<h2 id="perfect-power">Perfect power</h2>
+<p><a
+href="https://en.wikipedia.org/wiki/Perfect_power">https://en.wikipedia.org/wiki/Perfect_power</a></p>
+<p>Basically means that a number n can be expressed in aᵇ form where,
+a&gt;1, b&gt;1, a∈ℕ, b∈ℕ</p>
+<p>If n = aᵏ, then n can be called a <strong>perfect k-th
+power</strong>.</p>
+<ul>
+<li>Perfect square is when k=2 (eg: 36 = 6²)</li>
+<li>Perfect cube is when k=3 (eg: 125 = 5³)</li>
+</ul>
+<h2 id="conjectures">Conjectures</h2>
+<h3 id="goldbachs-conjecture">Goldbach's conjecture</h3>
+<p>Every even natural number greater than 2 can be expressed as the sum
+of two prime numbers.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>4</td>
+<td> 2 +  2</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td> 3 +  3</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td> 5 +  3</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td> 7 +  3</td>
+</tr>
+<tr class="odd">
+<td>100</td>
+<td>53 + 47</td>
+</tr>
+</tbody>
+</table>
+<p>Some webages: <a
+href="https://math.hmc.edu/funfacts/goldbachs-conjecture/">l1</a>, <a
+href="https://plus.maths.org/content/mathematical-mysteries-goldbach-conjecture">l5</a></p>
+<h3 id="twin-prime-conjecture">Twin prime conjecture</h3>
+<p>aka Polignac’s conjecture.</p>
+<p>There are infinitely many twin primes.</p>
+<p>(Twin primes are prime numbers that differ by 2. Like 3 &amp; 5.)</p>
+<h2 id="diophantine-equations">Diophantine equations</h2>
+<p>A polynomial equation with</p>
+<ul>
+<li>integer coefficients</li>
+<li>a finite number of variables</li>
+</ul>
+<p>where</p>
+<ul>
+<li>only solutions of interest are integers</li>
+</ul>
+<p>Eg:</p>
+<ul>
+<li>x² - y² = z³</li>
+<li>x⁴ + y⁴ + z⁴ = w⁴</li>
+<li>ax + by = c (a linear Diophantine equation)</li>
+</ul>
+<p>See <a
+href="https://www.britannica.com/science/Diophantine-equation">Britannica
+page</a></p>
+<h2 id="fundamental-theorems">Fundamental theorems</h2>
+<ul>
+<li><a
+href="https://en.wikipedia.org/wiki/Fundamental_theorem_of_arithmetic">Fundamental
+theorem of arithmetic</a>: Every integer greater than 1 can be
+represented as a unique prime factorization.</li>
+<li><a
+href="https://en.wikipedia.org/wiki/Fundamental_theorem_of_calculus">Fundamental
+theorem of calculus</a>: Integration and differentiation are inverses of
+each other</li>
+</ul>
+<h3 id="fundamental-theorem-of-algebra"><a
+href="https://en.wikipedia.org/wiki/Fundamental_theorem_of_algebra">Fundamental
+theorem of algebra</a></h3>
+<ul>
+<li>aka d'Alembert's theorem
+<ul>
+<li>(Not to be confused with <em>d'Alembert's principle</em> in
+physics.)</li>
+</ul></li>
+</ul>
+<p>From <a
+href="https://www.britannica.com/science/fundamental-theorem-of-algebra">Britannica</a>:</p>
+<blockquote>
+<p>every polynomial equation of degree n with complex number
+coefficients has n roots, or solutions, in the complex numbers.</p>
+</blockquote>
+<p>Remember: ℝ ⊂ ℂ</p>
+<p>And: ℤ ⊂ ℚ ⊂ ℝ ⊂ ℂ <a
+href="https://math.stackexchange.com/questions/389897/the-set-of-real-numbers-is-a-subset-of-the-set-of-complex-numbers">²⁰</a></p>
+<h2 id="fermats-last-theorem">Fermat's last theorem</h2>
+<p>Named after 17th century French mathematician Pierre de Fermat.</p>
+<p>For <code>a,b,c ∈ ℤ⁺</code> and <code>n ∈ ℤ</code>,<br />
+(ie, <code>a</code>, <code>b</code>, <code>c</code> are positive
+integers.)</p>
+<p>there is no <code>n &gt; 2</code> such that</p>
+<pre><code>aⁿ + bⁿ = cⁿ
+</code></pre>
+<p>is satisfied.</p>
+<p>ie, the largest integer for which this equation is true is
+<code>2</code>.</p>
+<hr />
+<p>Fun fact: with <code>n=2</code>, we have the equation corresponding
+to the Pythagorus theorem for right triangles:</p>
+<pre><code>a² + b² = c²
+</code></pre>
+<hr />
+<p>Statement of this theorem was discovered 30 years after Fermat's
+death and hence the name by which it became known.</p>
+<p>No proof of this theorem was discovered in Fermat's writings, and
+numerous unsuccessful attempts were made to produce a proof. So much
+that it was considered more as a conjecture for many years till a proof
+was finally discovered in 1994 by the English mathematician Andrew
+Wiles.</p>
+<h2 id="fractals">Fractals</h2>
+<h3 id="sierpiński-curve">Sierpiński curve</h3>
+<pre><code>  +        +
+ / \      / \
++   +----+   +
+ \          /
+  +        +
+  |        |
+  +        +
+ /          \
++   +----+   +
+ \ /      \ /
+  +        +
+</code></pre>
+<h3 id="sierpiński-carpet">Sierpiński carpet</h3>
+<p><a
+href="https://en.wikipedia.org/wiki/Sierpi%C5%84ski_carpet">https://en.wikipedia.org/wiki/Sierpi%C5%84ski_carpet</a></p>
+<ul>
+<li>3D counterpart: <a
+href="https://en.wikipedia.org/wiki/Menger_sponge">Monger
+sponge</a></li>
+</ul>
+<pre><code>+---+---+---+---+---+---+---+---+---+
+|111|111|111|111|111|111|111|111|111|
++---+---+---+---+---+---+---+---+---+
+|111|   |111|111|   |111|111|   |111|
++---+---+---+---+---+---+---+---+---+
+|111|111|111|111|111|111|111|111|111|
++---+---+---+---+---+---+---+---+---+
+|111|111|111|           |111|111|111|
++---+---+---+           +---+---+---+
+|111|   |111|           |111|   |111|
++---+---+---+           +---+---+---+
+|111|111|111|           |111|111|111|
++---+---+---+---+---+---+---+---+---+
+|111|111|111|111|111|111|111|111|111|
++---+---+---+---+---+---+---+---+---+
+|111|   |111|111|   |111|111|   |111|
++---+---+---+---+---+---+---+---+---+
+|111|111|111|111|111|111|111|111|111|
++---+---+---+---+---+---+---+---+---+
+</code></pre>
+<h2 id="multiset">Multiset</h2>
+<ul>
+<li>Like set, but duplicate elements possible.</li>
+<li>Each element in a multiset has a <em>multiplicity</em> associated
+with it, which is simply the number of times that element shows up in
+the <a href="https://en.wikipedia.org/wiki/Multiset">multiset</a>.</li>
+<li>Order of elements doesn't matter
+<ul>
+<li>Eg: {1,1,2,2,2} ≡ {1,1,2,2,2} ≡ {1,1,2,2,2}</li>
+</ul></li>
+</ul>
+<p>Eg:</p>
+<ul>
+<li>{1,1,2,2,2} is a multiset where
+<ul>
+<li>Multiplicity(1) = 2</li>
+<li>Multiplicity(2) = 3</li>
+</ul></li>
+</ul>
+<h2 id="archimedean-propertynorm">Archimedean property/norm</h2>
+<p>Any two non-zero values are comparable.</p>
+<p>ie, no two values are infinitesimely apart with respect to each
+other.</p>
+<p>There are no infinitely large or infinitely small numbers.</p>
+<h2 id="totient-function">Totient function</h2>
+<p>aka Euler's totient function.</p>
+<p>φ(n) is the number of natural numbers less than n which are co-prime
+to n. These natural numbers are then called the totatives of n.</p>
+<p>Eg:</p>
+<ul>
+<li>φ(9) = |{1,2,4,5,7,8}| = 6</li>
+<li>φ(8) = |{1,3,5,7}| = 4</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sage: f<span class="op">=</span>sloane.A000010</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>sage: f</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>Euler<span class="st">&#39;s totient function</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="er">sage: f</span>(<span class="dv">9</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>sage: a<span class="op">=</span><span class="dv">9</span><span class="op">;</span> a.coprime_integers(a)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>]</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>sage: f(<span class="dv">8</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>sage: a<span class="op">=</span><span class="dv">8</span><span class="op">;</span> a.coprime_integers(a)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>]</span></code></pre></div>
+<h2 id="vandermonde-matrix-ʷ">Vandermonde matrix <a
+href="https://en.wikipedia.org/wiki/Vandermonde_matrix">ʷ</a></h2>
+<ul>
+<li>Named after ther French mathematician Alexandre-Théophile
+Vandermonde.</li>
+</ul>
+<p>A matrix in which each row is a geometric progression.</p>
+<pre><code>⎡ 1  a1  a1²  ...  a1ⁿ ⎤
+⎢ 1  a2  a2²  ...  a2ⁿ ⎥
+⎢     ....             ⎥
+⎢     ....             ⎥
+⎣ 1  am  am²  ...  amⁿ ⎦
+</code></pre>
+<p>ie, aᵢⱼ = aᵢʲ⁻¹ (where indexing starts from 1)* Geometry</p>
+<ul>
+<li>Parallelepiped (<code>/ˌparəlɛləˈpʌɪpɛd/</code> or
+<code>/ˌparəlɛˈlɛpɪpɛd/</code>): A solid object whose each face is a
+parallelogram. Like a generalized form of cube.</li>
+</ul>
+<p>—</p>
+<p>Determinant non-zero (ie, non-singular) as long as aᵢ-s are
+distinct.</p>
+<p>But ppk was talking about the transpose of the matrix that I got from
+wikipedia.</p>
+<h2 id="congruency-vs-similarity">Congruency vs similarity</h2>
+<p>Similarity means the proportions are conserved. Congruency means the
+measures (angles, sides, etc) should be equal.</p>
+<p>All congruent triangles are similar, but not the other way
+around.</p>
+<h2 id="disc">Disc</h2>
+<p>A disc is a region of a plane bounded by a circle.</p>
+<dl>
+<dt>Closed disc</dt>
+<dd>
+The disc includes the bounding circle.
+</dd>
+<dt>Open disc</dt>
+<dd>
+Bounding circle is not part of the disc.
+</dd>
+</dl>
+<h2 id="polygon">Polygon</h2>
+<ul>
+<li>Polygon actually consists only of the 'boundary' and not the region
+inside it.</li>
+</ul>
+<p>(Reminds one of a polynomial, doesn't it..)</p>
+<h2 id="eulers-identity-ʷ">Euler's identity <a
+href="https://en.wikipedia.org/wiki/Euler%27s_identity">ʷ</a></h2>
+<pre><code>e^{iπ} + 1 = 0
+</code></pre>
+<p>ie, e<sup>iπ</sup> is (almost?) -1.</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">pow</span>(math.e, math.pi <span class="op">*</span> <span class="ot">1j</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>(<span class="op">-</span><span class="dv">1</span><span class="op">+</span><span class="ot">1.2246467991473532e-16j</span>)</span></code></pre></div>
+<p>where <code>e</code> is Euler's number.</p>
+<pre><code>    ∞         1     2     3    
+e = Σ  = 1 + --- + --- + --- + ....
+   i=0        1!    2!    3!   
+</code></pre>
+<h1 id="group-theory">Group theory</h1>
+<h2 id="quotient-set">Quotient set</h2>
+<p>Quotient of a set A by a relation R is the set of all equivalence
+classes induced on A by R.</p>
+<p>Could think of all the 'equivalent' elements of A being considered
+single elements, and the set of all these 'merged' elements is the
+quotient set. <a
+href="https://leanprover.github.io/logic_and_proof/the_real_numbers.html">¹⁴</a></p>
+<p>Eg:</p>
+<pre><code>A = ℕ
+R x = x mod 5
+
+Then, quotient set of A with respect to R is:
+
+{[0], [1], [2], [3], [4]}
+</code></pre>
+<h2 id="order-of-a-group"><a
+href="https://en.wikipedia.org/wiki/Order_(group_theory)">Order</a> of a
+group</h2>
+<ul>
+<li>Number of elements present in the set associated with the group (ie,
+cardinality of the set) for finite groups.</li>
+<li>In the case of infinite groups, order is infinite.</li>
+</ul>
+<h2 id="odd-order-theorem">Odd order theorem</h2>
+<blockquote>
+<p>every finite group of odd order is solvable. <a
+href="https://en.wikipedia.org/wiki/Feit%E2%80%93Thompson_theorem">¹⁶</a></p>
+</blockquote>
+<ul>
+<li>aka Feit-Thompson theorem</li>
+<li>A proof made with Coq exists.</li>
+<li>DBT: What's there to solve in a group?
+<ul>
+<li><a
+href="https://mathworld.wolfram.com/SolvableGroup.html">https://mathworld.wolfram.com/SolvableGroup.html</a></li>
+</ul></li>
+</ul>
+<h2 id="sl2ℤ-in-group-theory">SL(2,ℤ) in group theory</h2>
+<p>Simply put, set of all 2x2 integer matrices whose determinant is
+1.</p>
+<p>Set of a matrices <code>M</code></p>
+<pre><code>     ⎡a  b⎤
+M =  ⎢    ⎥
+     ⎣c  d⎦
+</code></pre>
+<p>such that <code>a</code>, <code>b</code>, <code>c</code>,
+<code>d</code> ∈ ℤ</p>
+<p>and</p>
+<pre><code>|M| = 1
+</code></pre>
+<p>From <a
+href="https://groupprops.subwiki.org/wiki/Special_linear_group:SL(2,Z)">here</a>:</p>
+<pre><code>⎧                              ⎫
+⎮⎡a  b⎤                        ⎮
+⎨⎢    ⎥ | a,b,c,d ∈ ℤ, ad-bc=1 ⎬
+⎮⎣c  d⎦                        ⎮
+⎩                              ⎭
+</code></pre>
+<p>Not yet sure why this set is of special interest though…</p>
+<h1 id="order-theory">Order theory</h1>
+<h2 id="partially-ordered-set">Partially ordered set</h2>
+<ul>
+<li>aka <strong>poset</strong></li>
+<li>Consists of a set together with a binary relation.</li>
+<li>The relation: <strong>partial ordering</strong>
+<ul>
+<li>The name signifies that not every pair of elements are comparable
+(unlike total orderings).</li>
+</ul></li>
+</ul>
+<h2 id="totally-ordered-set"><a
+href="https://en.wikipedia.org/wiki/Total_order">Totally ordered
+set</a></h2>
+<ul>
+<li>A set equipped with a total ordering.</li>
+<li>Could think of as a 'stronger' partial order, where <em>every</em>
+pair of elements are comparable.</li>
+<li>aka:
+<ul>
+<li>Linearly ordered set (loset)</li>
+<li>Simply ordered set</li>
+</ul></li>
+</ul>
+<p>Total ordering (a relation) is usually written as <code>≤</code>. It
+is:</p>
+<ul>
+<li>Reflexive: if <code>a ∈ A</code> then <code>a ≤ a</code></li>
+<li>Anti-symmetric: if <code>a b ∈ A</code>, <code>a ≤ b</code> and
+<code>b ≤ a</code>, then <code>a = b</code></li>
+<li>Transitive: if <code>a b c ∈ A</code>, <code>a ≤ b</code> and
+<code>b ≤ c</code>, then <code>a ≤ c</code></li>
+<li>Strongly connected: if <code>a b ∈ A</code>, then either
+<code>a ≤ b</code> or <code>b ≤ a</code></li>
+</ul>
+<p>Total ordering is also known as:</p>
+<ul>
+<li>linear order</li>
+<li>full order</li>
+</ul>
+<h2 id="lattice"><a
+href="https://www.britannica.com/science/Diophantine-equation">Lattice</a></h2>
+<p>A lattice is defined on a poset.</p>
+<ul>
+<li>Every pair of elements have:
+<ul>
+<li>a unique supremum (aka join)</li>
+<li>a unique infimum (aka meet)</li>
+</ul></li>
+<li>Join (<code>⊔</code>)
+<ul>
+<li>Specific to a given pair of elements of the poset.</li>
+<li>aka least upper bound, aka supremum</li>
+</ul></li>
+<li>Meet (<code>⊓</code>)
+<ul>
+<li>Specific to a given pair of elements of the poset.</li>
+<li>aka greatest lower bound, aka infimum</li>
+</ul></li>
+</ul>
+<p>Example lattices:</p>
+<ul>
+<li>ℕ ordered by divisibility
+<ul>
+<li>Join: LCM</li>
+<li>Meet: GCD</li>
+</ul></li>
+</ul>
+<h2 id="bounded-lattice">Bounded lattice</h2>
+<p>Lattice is bounded if there exists a top element <code>⊤ ∈ A</code>
+and a bottom element <code>⊥ ∈ A</code> such that,</p>
+<pre><code>∀x ∈ A,
+
+  x ⨆ ⊤ = ⊤
+  x ⨅ ⊥ = ⊥
+</code></pre>
+<h1 id="topology">Topology</h1>
+<p>Informally called:</p>
+<ul>
+<li>'Rubber sheet geometry'</li>
+<li>'Elastic geometry'</li>
+</ul>
+<p>From <em>How to cut a cake</em> by Ian Stewart:</p>
+<blockquote>
+<p>Geometry of continuous transformations.</p>
+</blockquote>
+<blockquote>
+<p>provides a language of continuity that is general enough to include a
+vast array of phenomena while being precise enough to be developed in
+new ways.</p>
+</blockquote>
+<ul>
+<li><p>Möbius strip</p></li>
+<li><p>Klein bottle</p></li>
+<li><p>Continuity</p></li>
+<li><p>Relative position matters, not magnitudes</p>
+<ul>
+<li>Hence the nick name 'rubber sheet geometry'.</li>
+</ul></li>
+</ul>
+<h2 id="kinds-of-topology">Kinds of topology</h2>
+<ul>
+<li>Point-set topology</li>
+<li>Algebraic topology</li>
+</ul>
+<h2 id="metric-space">Metric space</h2>
+<p>A space where there is a definition of the notion of distance.</p>
+<p>ie, distance between any pair of points in the space is defined.</p>
+<p>For this, the following conditions must be true:</p>
+<ul>
+<li>d(x, y) ≥ 0</li>
+<li>d(x, y) = 0 means x=y</li>
+<li>d(x, y) = d(y, x)</li>
+<li>d(x,y) + d(y,z) ≥ d(x,z)
+<ul>
+<li>Because the straight path is always the shortest.</li>
+</ul></li>
+</ul>
+<p>where X is the metric space and x,y,z ∈ X.</p>
+<h2 id="cobordism">Cobordism</h2>
+<p>An n-dimensional manifold going through a manifold of n-1
+dimension.</p>
+<h2 id="homotopy">Homotopy</h2>
+<p>Map between maps??</p>
+<p>2 maps f0,f1: X → Y are homotopic if there exists a homotopy
+connecting them.</p>
+<p>ie, f0 value at any t ∈ [0,1] can be mapped to f1 value at that
+t???</p>
+<p>f0 and f1 homotopic means: f0 ≃ f1</p>
+<h2 id="homotopy-equivalence">Homotopy equivalence</h2>
+<p>A map f:X→Y is called a homotopy equivalence if there is another map
+g:Y→X such that</p>
+<pre><code>fg ≃ 𝟙 and gf ≃ 𝟙
+</code></pre>
+<p>Then,</p>
+<ul>
+<li><code>f</code> and <code>g</code> have the same <strong>homotopy
+type</strong>.</li>
+<li>Spaces <code>X</code> and <code>Y</code> are <strong>homotopy
+equivalent</strong>
+<ul>
+<li>Notation: <code>X ≃ Y</code></li>
+</ul></li>
+</ul>
+<p>Fun fact: For two topological spaces X and Y, <code>X ≃ Y</code> is
+an equivalance relation.</p>
+<ul>
+<li>Any space is homotopy equivalent to itself. (reflexivity)</li>
+<li>If X ≃ Y, then Y ≃ X (symmetric)</li>
+<li>If X ≃ Y and Y ≃ Z, then X ≃ Z (transitivity)</li>
+</ul>
+<h2 id="path">Path</h2>
+<p>A path in a space <code>X</code> is a continuous map
+<code>f:[0,1] → X</code>.</p>
+<p>I guess we could think of it as the path followed by a point with
+I=[0,1] as indicative of time.<br />
+f gives the position of the point at each time instant.</p>
+<p>Another guess: 2 paths are said to be homotopic if one path can
+brought to overlap with the other by means of a map f, where the
+end-points of the paths are the same.</p>
+<h2 id="winding-number-ʷ">Winding number <a
+href="https://en.wikipedia.org/wiki/Winding_number">ʷ</a></h2>
+<p>Winding number of a closed curve with respect to a point in a plane
+is the number of counter-clockwise loops the curve takes around that
+point.</p>
+<p>Clockwise turns =&gt; negative.</p>
+<h2 id="misc">Misc</h2>
+<p>New terms</p>
+<ul>
+<li><p>Homology</p></li>
+<li><p>Homology type</p></li>
+<li><p>Homotopy</p></li>
+<li><p>Closed sets</p></li>
+<li><p>Open sets</p></li>
+<li><p>Dense sets</p></li>
+<li><p>Quotient space</p></li>
+<li><p>Homeomorphism: 'a correspondence between two figures or surfaces
+or other geometrical objects, defined by a one-to-one mapping that is
+continuous in both directions.' - from <a
+href="https://www.britannica.com/science/homeomorphism">Britannica</a></p></li>
+</ul>
+<p>Notations:</p>
+<ul>
+<li><code>a ~ b</code> means <code>a</code> is related <code>b</code>
+(ie, <code>(a,b) ∈ R</code> where <code>R</code> is a relation).</li>
+</ul>
+<p>References:</p>
+<ul>
+<li><em>A first course in topology</em> - John McCleary</li>
+</ul>
+<h1 id="linear-algebra">Linear algebra</h1>
+<h2 id="basis-of-a-vector-space">Basis of a vector space</h2>
+<p>Set of vectors B where every element of the vector space can be
+written as a finite linear combination of (elements of) B. <a
+href="https://en.wikipedia.org/wiki/Basis_(linear_algebra)">ʷ</a></p>
+<ul>
+<li><strong>Basis vectors</strong>: elements of a basis
+<ul>
+<li>Basis vectors are linearly independent.</li>
+</ul></li>
+<li><strong>Dimension</strong> of vector space: number of elements in
+basis</li>
+</ul>
+<p>Eg:</p>
+<p>ℝ² is a vector space under component-wise addition and scalar
+multiplication.</p>
+<p>ie,</p>
+<pre><code>(a,b) + (c,d) = (a+b,c+d)
+
+λ.(a,b) = (λa,λb)
+</code></pre>
+<p>Following is a basis of ℝ²:</p>
+<pre><code>e0 = [1, 0]
+e1 = [0, 0]
+</code></pre>
+<p>∵ any vector <code>(a,b) ∈ ℝ²</code> can be written as
+<code>ae₀ + be₁</code>.</p>
+<h2 id="linearly-independent-vectors">Linearly independent vectors</h2>
+<p>A set of vectors v₁, v₂, .. , vₙ are said to be linearly
+<em>dependent</em> <a
+href="https://en.wikipedia.org/wiki/Linear_independence">ʷ</a> if there
+is some (non-trivial) linear combination of them that equals the zero
+vector.</p>
+<p>v₁, v₂, .. , vₙ are linearly dependent if there exists scalars a₁,
+a₂, .. , aₙ (where at least one aᵢ is non-zero) such that:</p>
+<pre><code>a₁v₁, a₂v₂, .. , aₙvₙ = 0
+</code></pre>
+<p>If no such set of scalars exist, then the set of vectors are linearly
+independent.</p>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>a<span class="op">=</span>np.array([[<span class="dv">1</span>,<span class="op">-</span><span class="dv">3</span>,<span class="dv">2</span>],</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>            [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>]])</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>aa <span class="op">=</span> sympy.Matrix(a)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>aa.rref()</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="co"># (Matrix([</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co"># [1, 0, 16/5],</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="co"># [0, 1,  2/5]]), (0, 1))</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="co"># ie, 2 vectors linearly independent but the other is dependent</span></span></code></pre></div>
+<h2 id="characteristic-polynomial-ʷ">Characteristic polynomial <a
+href="https://en.wikipedia.org/wiki/Morphism">ʷ</a></h2>
+<p>Characteristic polynomial of a square matrix.</p>
+<h2 id="tensors-vs-vectors">Tensors vs vectors</h2>
+<p>Tensors are basically a generalization of scalars, vectors and
+matrices.</p>
+<p>Order/rank of a tensor is 'defined by the number of directions
+required to describe it'. <a
+href="https://www.doitpoms.ac.uk/tlplib/tensors/what_is_tensor.php">ʳ</a></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>Tensor</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>order</td>
+<td>A representation</td>
+<td>Dimensionality</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>Scalar</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Vector</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>Matrix</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>More: <a
+href="https://physics.stackexchange.com/questions/257838/what-is-the-difference-between-a-tensor-vector-and-a-matrix">https://physics.stackexchange.com/questions/257838/what-is-the-difference-between-a-tensor-vector-and-a-matrix</a></p>
+<h2 id="factoids">Factoids</h2>
+<ul>
+<li>Zero vector: all components zero</li>
+</ul>
+<h3 id="get-the-first-column-of-a-2x2-matrix">Get the first column of a
+2x2 matrix:</h3>
+<p>Just multiply it with [1 0]ᵀ.</p>
+<p>Eg:</p>
+<pre><code>⎡ 2  3 ⎤ ⎡ 1 ⎤   ⎡ 2 ⎤
+⎢      ⎥ ⎢   ⎥ = ⎢   ⎥
+⎣ 4  5 ⎦ ⎣ 0 ⎦   ⎣ 4 ⎦
+</code></pre>
+<h1 id="tips">Tips</h1>
+<ul>
+<li>All right isosceles triangles are similar.</li>
+<li>Group ℤₙ is associated with the set {0,1,2, … , n-1} with addition
+mod n as the operation.</li>
+<li>Power tower: <a
+href="https://mathworld.wolfram.com/PowerTower.html">https://mathworld.wolfram.com/PowerTower.html</a>
+<!-- Jam talk 26-Oct-2022 -->
+<ul>
+<li>'Height' of the tower</li>
+</ul></li>
+</ul>
+</div>
+</body>
+</html>

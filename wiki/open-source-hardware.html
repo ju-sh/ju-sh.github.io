@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Open source hardware</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="ju-sh.github.io">Home</a>
+ | 
+<a href="ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Open source hardware</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="tools">Tools</h2>
+<ul>
+<li><p>ghdl: VHDL compiler</p></li>
+<li><p>iverilog: verilog compiler</p></li>
+<li><p>bsc: BlueSpec compiler</p></li>
+<li><p><a href="https://github.com/YosysHQ/yosys">yosys</a>:
+synthesis</p></li>
+<li><p><a
+href="https://github.com/trabucayre/openFPGALoader">openfpgaloader</a></p></li>
+<li><p><a href="https://openram.org/">OpenRAM</a>: SRAM
+compiler</p></li>
+<li><p>f4pga (formerly SymbiFlow)</p></li>
+<li><p>KLayout: IC layout viewer and editor</p></li>
+<li><p><a href="https://github.com/RTimothyEdwards/magic">magic</a>:
+layout tool</p></li>
+<li><p><a href="https://github.com/RTimothyEdwards/netgen">netgen</a>:
+LVS (compares netlists)</p></li>
+<li><p><a href="https://github.com/RTimothyEdwards/irsim/">IRSIM</a>: a
+switch-level simulator</p></li>
+<li><p><a href="http://opencircuitdesign.com/xcircuit/">xcircuit</a>:
+produce schematic diagram of circuits</p>
+<ul>
+<li>Can also derive netlist from schematic? (schematic capture)</li>
+</ul></li>
+</ul>
+<p>Placement and routing</p>
+<ul>
+<li><a href="https://github.com/yosyshq/nextpnr">nextpnr</a>
+<ul>
+<li>arachne-pnr is superseded by this</li>
+</ul></li>
+<li><a
+href="https://github.com/verilog-to-routing/vtr-verilog-to-routing">vtr</a></li>
+<li><a href="https://github.com/rubund/graywolf">graywolf</a> (Placement
+only): Inactive??</li>
+</ul>
+<p>Static timing analysis:</p>
+<ul>
+<li><a href="https://github.com/OpenTimer/OpenTimer">OpenTimer</a></li>
+<li>vesta: Part of qflow</li>
+</ul>
+<p>Simulation/testing tools:</p>
+<ul>
+<li><a href="https://github.com/verilator/verilator">Verilator</a>: Fast
+simulation for verilog/systemverilog designs
+<ul>
+<li>Fast because design is compiled to C++ and then run</li>
+</ul></li>
+<li><a href="https://github.com/cocotb/cocotb">cocotb</a>: a
+verification framework in python
+<ul>
+<li>Can be used to simulate with verilator as well?</li>
+</ul></li>
+<li><a href="https://github.com/pyuvm/pyuvm">pyuvm</a>: UVM via python
+??</li>
+</ul>
+<p>View wave form:</p>
+<ul>
+<li>gtkwave</li>
+<li><a href="https://github.com/yne/vcd">vcd</a></li>
+</ul>
+<p>Tool chains:</p>
+<ul>
+<li><a href="http://opencircuitdesign.com/qflow/">qflow</a></li>
+<li><a href="https://github.com/efabless/openlane2">openlane2</a></li>
+</ul>
+<h2 id="hdls">HDLs</h2>
+<p>'Nouvelle vogue':</p>
+<ul>
+<li>pyRTL</li>
+<li><a href="https://masc.soe.ucsc.edu/pyrope.html">pyrope</a></li>
+<li><a href="https://clash-lang.org/">Clash</a> (Haskell)</li>
+<li>Chisel (Scala)</li>
+<li><a href="https://github.com/janestreet/hardcaml/">hardcaml</a>
+(OCaml)</li>
+<li>migen</li>
+<li>Spinal-HDL</li>
+</ul>
+<p>Old guard:</p>
+<ul>
+<li>SystemVerilog</li>
+</ul>
+<h2 id="misc">Misc</h2>
+<ul>
+<li><p><a href="https://www.tl-x.org/">TL-X</a>: A new paradigm for
+hardware design ?</p>
+<ul>
+<li>Something higher level than RTL ?</li>
+</ul></li>
+<li><p><a href="https://www.hardware-x.com">HardwareX</a>: An open
+access journal owned by Elsevier</p></li>
+<li><p><a href="https://www.oshwa.org/">OSHWA</a>: Open source hardware
+assocation</p></li>
+<li><p><a
+href="https://amaranth-lang.org/docs/amaranth/latest/intro.html">amaranth</a>:
+a python library</p></li>
+<li><p><a href="https://github.com/enjoy-digital/litex">LiteX</a>: For
+building</p></li>
+<li><p>LTspice</p></li>
+<li><p>ngspice</p></li>
+<li><p>kicad: pcb design</p></li>
+<li><p>qucs</p></li>
+</ul>
+<p>FPGA bitstream documentation projects:</p>
+<ul>
+<li>Project Apicula: Gowin</li>
+<li>Project Trellis: Lattice ECP5</li>
+<li><a href="https://github.com/YosysHQ/icestorm">Project IceStorm</a>:
+Lattice iCE40</li>
+</ul>
+<p>Companies making boards:</p>
+<ul>
+<li>Arduino</li>
+<li>Raspberry Pi</li>
+<li>AdaFruit</li>
+</ul>
+<h2 id="open-source-friendly-boards">Open source friendly boards</h2>
+<ul>
+<li>Gowin
+<ul>
+<li>SiPeed Tang Nano</li>
+</ul></li>
+<li>Lattice ICE40</li>
+</ul>
+<h2 id="proprietary-tools">Proprietary tools</h2>
+<ul>
+<li>Xilinx Vivado
+<ul>
+<li>Xilinx ISE was there before this.</li>
+</ul></li>
+<li>Intel Quartus</li>
+</ul>
+<p>By the looks of it, these are unnecessarily heavy on memory and not
+so user friendly.</p>
+</div>
+</body>
+</html>

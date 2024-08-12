@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Category theory</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="ju-sh.github.io">Home</a>
+ | 
+<a href="ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Category theory</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<p>From <em>Cakes, custard and category theory</em> by Eugenia
+Cheng:</p>
+<blockquote>
+<p>Category theory emphasises the <em>context</em> in which we’re
+thinking about things, rather than just the things themselves.</p>
+<p>Category theory seeks to highlight the context you’re thinking about
+at that moment, to emphasise its importance and raise our awareness of
+it. The way it does it [..] is by emphasising relationships between
+things rather than just their intrinsic characteristics.</p>
+</blockquote>
+<ul>
+<li>Pure theory of functions.
+<ul>
+<li>Not derived from set theory.</li>
+</ul></li>
+<li>Part of pure mathematics.
+<ul>
+<li>ie, not specific to some domain. Can be applied in a diverse set of
+fields. (eg: automata theory, type theory, etc)</li>
+</ul></li>
+<li>Originated from the field of algebraic topology.</li>
+</ul>
+<h2 id="category">Category</h2>
+<p>Consists of</p>
+<ul>
+<li>a collection of objects.</li>
+<li>a collection of arrows (aka <strong>morphisms</strong>).</li>
+<li>some operations
+<ul>
+<li>assigns to each arrow an object as its domain and an object as its
+codomain.</li>
+<li><code>f: A → B</code> means:
+<ul>
+<li><code>dom f</code> is <code>A</code> (aka <em>source</em>)</li>
+<li><code>cod f</code> is <code>B</code> (aka <em>target</em>)</li>
+</ul></li>
+<li><code>C(A, B)</code> is the collection of all arrows with
+<code>A</code> as domain and <code>B</code> as codomain.
+<ul>
+<li>ie, <code>f ∈ C(A, B)</code> means the same thing as
+<code>f : A → B</code>.</li>
+</ul></li>
+</ul></li>
+<li>composition operator <code>○</code>.
+<ul>
+<li>For each pair of arrows <code>f</code> and <code>g</code> which has
+<code>cod f = dom g</code>.</li>
+<li>A <strong>composite arrow</strong>.
+<code>g ○ f : dom f → cod g</code></li>
+<li>Associative. ∀f:A→B, ∀g:B→C, ∀h:C→D,
+<code>h ○ (g ○ f) = (h ○ g) ○ f</code></li>
+</ul></li>
+<li><strong>Identity arrow</strong>: for each object.</li>
+</ul>
+<h3 id="example-set">Example: Set</h3>
+<ul>
+<li>objects = sets</li>
+<li>arrows = (total) functions between sets</li>
+<li>identity arrows = identity functions</li>
+</ul>
+<h3 id="example-categorical-logic">Example: Categorical logic</h3>
+<ul>
+<li><p>objects = formulas</p></li>
+<li><p>arrows = proofs</p></li>
+<li><p>objects = types of a functional programming language</p></li>
+</ul>
+<h3 id="more-examples">More examples</h3>
+<ul>
+<li>Category <strong>0</strong>: has no objects and no arrows.
+<ul>
+<li>Identity and associativity laws vacuously satisfied.</li>
+</ul></li>
+</ul>
+<h2 id="morphism">Morphism</h2>
+<p>Just functions?? Or are functions just a kind of morphisms??</p>
+<ul>
+<li>1ₐ: identity on an object <code>a</code> in a category</li>
+<li>composition: 'process of combining arrows'
+<ul>
+<li>f∘g means g(f(x))</li>
+</ul></li>
+</ul>
+<h3 id="monomorphisms">Monomorphisms</h3>
+<p>aka monic.</p>
+<p>An arrow <code>f:B→C</code> is monic if for any two arrows
+<code>g:A→B</code> and <code>h:A→B</code> in the category,
+<code>f∘h = g∘h</code> then <code>g = h</code>.</p>
+<p>I guess we can say</p>
+<pre><code>∀(g h:A→B), (f∘g = f∘h) -&gt; (g = h)
+</code></pre>
+<h3 id="epimorphisms">Epimorphisms</h3>
+<p>aka epic.</p>
+<p>Sounds like a 'reversed' form of monomorphism..</p>
+<p>An arrow <code>f:A→B</code> is epic if for any two arrows
+<code>g:B→C</code> and <code>h:B→C</code> of the category,
+<code>g∘f = h∘f</code> means <code>g = h</code>.</p>
+<h2 id="partial-ordering">Partial ordering</h2>
+<ul>
+<li>Reflexive</li>
+<li>Asymmetric</li>
+<li>Transitive</li>
+</ul>
+<p>≤ₚ</p>
+<h2 id="monotone-function">Monotone function</h2>
+<p>Order preserving function. (Sort of like covariance in type
+theory??)</p>
+<h2 id="monoid">Monoid</h2>
+<p>(M,⋅,e) A set <code>M</code> equipped with:</p>
+<ul>
+<li>a relation/operation <code>⋅ : (M, M) → M</code> such that
+<ul>
+<li>(x⋅y)⋅z = x⋅(y⋅z), ∀x ∈ M, y ∈ M, z ∈ M</li>
+<li>(ie, <code>⋅</code> is a relation from pairs of elements in
+<code>M</code> to elements in <code>M</code>)</li>
+</ul></li>
+<li>an element e ∈ M such that
+<ul>
+<li>e⋅x = x⋅e = x, ∀x ∈ M</li>
+</ul></li>
+</ul>
+<h3 id="monoid-homomorphism">Monoid homomorphism</h3>
+<ul>
+<li>A function <code>f</code> from a monoid to another.</li>
+<li>Homomorphism =&gt; properties preserved.</li>
+</ul>
+<p>f : M -&gt; M'</p>
+<p>where M and M' are monoids.</p>
+<p>(M, ⋅, e) and (M', ⋅', e')</p>
+<p>Properties:</p>
+<ul>
+<li>f(e) = e'</li>
+<li>f(x⋅y) = f(x)⋅'f(y)</li>
+</ul>
+<h2 id="natural-transformation">Natural transformation</h2>
+<ul>
+<li>'Map between functors'</li>
+<li>Possible when two functors have the same domain and codomain.</li>
+</ul>
+<pre><code>   α
+F ==&gt; G
+
+This means that α is a natural transformation of F to G.
+</code></pre>
+<h2 id="terminal-object-1">Terminal object (1)</h2>
+<p>An object 1 of a category C is a terminal object if from any object
+q∈C, there exists a unique morphism from q to 1.</p>
+<ul>
+<li>Terminal object may not exist and may not be unique.</li>
+<li>But it is 'unique upto canonical isomorphism'. [1]
+<ul>
+<li>So we can <em>the</em> terminal object of category C.</li>
+</ul></li>
+</ul>
+<h2 id="terminal-category">Terminal category</h2>
+<h2 id="adjunction">Adjunction</h2>
+<p>A relationship between two functors.</p>
+<pre><code>F: C ⇆ D : U
+</code></pre>
+<p>'Sort of' means that the categories <code>C</code> and <code>D</code>
+are 'kinda related'.</p>
+<p>Then the functors F and U are said to be <strong>adjoint
+functors</strong>.</p>
+<h2 id="monad">Monad</h2>
+<p>'a monoid in the category of endofunctors'. <a
+href="https://en.wikipedia.org/wiki/Monad_(category_theory)">ʷ</a></p>
+<p>Free monoad: Monad with no additional constraints</p>
+<hr />
+<p>Monads aka triples: (T, η, μ)</p>
+<ul>
+<li><p>A functor T and two natural transformations: η and μ</p></li>
+<li><p>T: C -&gt; C</p>
+<ul>
+<li>A functor over the category C</li>
+</ul></li>
+<li><p>η: A -&gt; T A</p>
+<ul>
+<li>'inclusion of value into computation'</li>
+<li>aka unit function</li>
+</ul></li>
+<li><p>μ: T² A -&gt; T A</p>
+<ul>
+<li>Flattening computation of computation to just a computation</li>
+<li>aka join function</li>
+</ul></li>
+</ul>
+<pre><code>        η               μ
+T A -----&gt;---- T² A -----&gt;---- T A
+   |             |              |
+   |             |              |
+id v             v μ            v id
+   |             |              |
+   |             |              |
+   +-----&gt;----- T A -----&lt;------+                
+</code></pre>
+<p>Essentially, monad is a functor that comes with some additional rules
+(that supports some additional structure <a
+href="https://en.wikibooks.org/wiki/Haskell/Category_theory#Monads">⁸</a>):</p>
+<ul>
+<li>this functor is a from a category to the same category</li>
+<li>it comes with the two morphisms: η and μ</li>
+</ul>
+<p>The flattening function μ is called <code>join</code> in Haskell.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Like μ</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ot">join ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> m (m a) <span class="ot">-&gt;</span> m a</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Like η</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span><span class="ot"> ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">M</span> a</span></code></pre></div>
+<h2 id="a-table">A table</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Objects</th>
+<th>Arrows</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Set</td>
+<td>Sets</td>
+<td>Total functions</td>
+</tr>
+<tr class="even">
+<td>Pfn</td>
+<td>Sets</td>
+<td>Partial functions</td>
+</tr>
+<tr class="odd">
+<td>Poset</td>
+<td>Posets</td>
+<td>monotone functions</td>
+</tr>
+<tr class="even">
+<td>Mon</td>
+<td>Monoids</td>
+<td>monoid homomorphism</td>
+</tr>
+<tr class="odd">
+<td>Vect</td>
+<td>Vector spaces</td>
+<td>Linear transforms</td>
+</tr>
+<tr class="even">
+<td>Top</td>
+<td>Toplogical spaces</td>
+<td>Continuous functions</td>
+</tr>
+<tr class="odd">
+<td>Grp</td>
+<td>Groups</td>
+<td>Group homomorphisms</td>
+</tr>
+</tbody>
+</table>
+<h2 id="diagram">Diagram</h2>
+<p>Diagrams <em>in</em> categories. Propreties of the category satisfied
+=&gt; the diagram <strong>commutes</strong>.</p>
+<pre><code>           f&#39;
+  X →-→-→-→-→-→-→-→-→-→- Z
+  ↓                      ↓
+g&#39;↓                      ↓ g
+  ↓                      ↓
+  W →-→-→-→-→-→-→-→-→-→- Y
+           f
+</code></pre>
+<p>If this diagram commutes, it means that <code>f∘g' = g∘f'</code>.</p>
+<p>Many computer science people prefer to say <code>f;g</code> instead
+of <code>g∘f</code> (ie, by sort of reversing the order of
+functions).</p>
+<p>Another example:</p>
+<pre><code>               succ-int
+      int →-→-→-→-→-→-→-→-→- int
+       ↓                      ↓
+       ↓                      ↓
+toreal ↓                      ↓ toreal
+       ↓                      ↓
+       ↓                      ↓
+     real →-→-→-→-→-→-→-→-→- real
+               succ-real
+</code></pre>
+<p>This says that
+<code>toreal(succ-int(int)) ≡ succ-real(toreal(int))</code>.</p>
+<blockquote>
+<p>When a functional language is described as a category, commutative
+diagrams can be used to assert the validity of program transformations
+in which the order of operations is permuted.</p>
+</blockquote>
+<h2 id="product">Product</h2>
+<p>Products <em>within</em> a category. ie, with objects of the same
+category.</p>
+<pre><code>            C
+  +-←-←-←-←-+-→-→-→-→-+
+  ↓         ⇣         ↓
+  ↓         ⇣         ↓
+f ↓         ⇣ ⟨f,g⟩   ↓ g
+  ↓         ⇣         ↓
+  ↓         ⇣         ↓
+  A-←-←-←-A x B-→-→-→-B
+      π₁          π₂
+</code></pre>
+<p>(dashed arrows are assertions. Properties that should hold when the
+rest of the connections in the commutative diagram holds).</p>
+<p>ie,</p>
+<ul>
+<li>π₁ ∘ ⟨f,g⟩ = f</li>
+<li>π₂ ∘ ⟨f,g⟩ = g</li>
+</ul>
+<p>If</p>
+<ul>
+<li>f:C → A</li>
+<li>g:C → B</li>
+</ul>
+<p>then</p>
+<ul>
+<li>⟨f,g⟩:C → (AxB)</li>
+</ul>
+<h2 id="coproduct">Coproduct</h2>
+<p>Written as one of these</p>
+<ul>
+<li>A + B</li>
+<li>A ⨿ B</li>
+<li>A ⊔ B (well, this is notation for disjoint set)</li>
+</ul>
+<p>Coproduct of two objects A and B is (A+B) along with two arrows ι₁
+and ι₂.</p>
+<ul>
+<li>ι₁: A → (A + B)</li>
+<li>ι₂: B → (A + B)</li>
+</ul>
+<p>If</p>
+<ul>
+<li>f:A → C</li>
+<li>g:B → C</li>
+</ul>
+<p>then</p>
+<ul>
+<li>[f,g]:(A+B) → C</li>
+</ul>
+<pre><code>      ι₁         ι₂
+  A-→-→-→ A + B ←-←-← B
+  ↓         ⇣         ↓
+  ↓         ⇣         ↓
+f ↓         ⇣ [f,g]   ↓ g
+  ↓         ⇣         ↓
+  ↓         ⇣         ↓
+  +-→-→-→-→ C ←-←-←-←-+
+</code></pre>
+<h3 id="disjoint-union-ʷ">Disjoint-union <a
+href="https://en.wikipedia.org/wiki/Disjoint_union">ʷ</a></h3>
+<p>Set theory instance of coproduct is disjoint-union.</p>
+<p>It's like a union, where it's still possible to know which element
+came from which set.</p>
+<p>(Kind of reminds one of a wedding with a prenuptial agreement.)</p>
+<p>Eg:</p>
+<pre><code>A = {1,2,3}
+B = {2,3,4}
+
+A + B = {(1,A), (2,A), (3,A), (2,B), (3,B), (4,B)}
+</code></pre>
+<h2 id="functor">Functor</h2>
+<p>Forgetful functor:</p>
+<ul>
+<li>Often denoted with U</li>
+<li>'forgets' some structure</li>
+</ul>
+<p>Example:</p>
+<p>U: Monoid -&gt; Set</p>
+<p>which sends:</p>
+<ul>
+<li>each monoid <code>(M,⋅,e)</code> to <code>M</code></li>
+<li>each monoid homomorphism <code>(M,⋅,e) → (M',⋅,e)</code> to
+<code>M → M'</code></li>
+</ul>
+<h2 id="string-diagrams">String diagrams</h2>
+<h2 id="hom-set">Hom-set</h2>
+<ul>
+<li><code>hom(X,y)</code>: The set of all morphisms from object X to
+object Y (where X and Y are objects in the same category)
+<ul>
+<li>ie, Set of morphisms from object <code>X</code> to object
+<code>Y</code> in a category <code>C</code>.</li>
+<li>For every <code>f ∈ hom(X,Y)</code>, <code>f:X → Y</code></li>
+</ul></li>
+</ul>
+<h2 id="closed-cartesian-category-ccc">Closed Cartesian Category
+(CCC)</h2>
+<p>Corresponds to simply typed lambda calculus.</p>
+<h2 id="t-algebra-ʷ">T-algebra <a
+href="https://en.wikipedia.org/wiki/Monad_(category_theory)#Algebras_for_a_monad">ʷ</a></h2>
+<p>Given a monad <code>(T, η, μ)</code> on a category <code>C</code>,
+T-algebra consists of objects of <code>C</code> acted upon by
+<code>T</code>.</p>
+<p>A T-algebra <code>(x,h)</code> where:</p>
+<ul>
+<li><code>x ∈ C</code></li>
+<li><code>h</code> is an arrow <code>T x -&gt; x</code> (structure map
+of the T-algebra)</li>
+</ul>
+<p>(Remember, <code>T</code> is an endofunctor of type
+<code>C -&gt; C</code> where <code>C</code> is the category.)</p>
+<p>T-algebras form a category known as <strong>Eilenberg-Moore
+category</strong> (<code>Cᵀ</code>).</p>
+<h2 id="adjunction-1">Adjunction</h2>
+<p>A relationship between two functors. In which case the two functors
+are known as adjoint functors (left adjoint and right adjoint).</p>
+<pre><code>Example for two categories C and D,
+
+F: D -&gt; C
+G: C -&gt; D
+</code></pre>
+<h2 id="new-terms">New terms</h2>
+<ul>
+<li>Kan extension theorem</li>
+<li>Double categories</li>
+<li>dagger category</li>
+<li>Kleisli category</li>
+<li>Co-cartesian category</li>
+<li>Adjunction</li>
+<li>catamorphism</li>
+<li>anamorphism</li>
+<li>Large and small categories
+<ul>
+<li>Meant to get around Russell's paradox</li>
+</ul></li>
+<li>Ω-algebras, F-algebras</li>
+</ul>
+<h2 id="some-standard-categories">Some 'standard' categories</h2>
+<ul>
+<li>Cat: category of categories
+<ul>
+<li>Objects: Categories</li>
+<li>Arrows/morphisms: Functors</li>
+</ul></li>
+<li>Mon: category of monoids</li>
+<li>CRing: category of commutative rings</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><em>Basic category theory for computer scientists</em> - Benjamin C.
+Pierce</li>
+<li><a
+href="https://www.di.ens.fr/users/longo/files/CategTypesStructures/book.pdf"><em>Categories,
+types and structures</em>: An introduction to category theory for the
+working computer scientist</a> - Andrea Asperti, Giuseppe Longo</li>
+<li>[1]: Baez, J. and Stay, M., 2011. Physics, topology, logic and
+computation: a Rosetta Stone (pp. 95-172). Springer Berlin
+Heidelberg.</li>
+</ul>
+<h1 id="category-theory-vs-homotopy-theory">Category theory vs Homotopy
+theory</h1>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Homotopy theory</th>
+<th>Category theory</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Type</td>
+<td>Spaces</td>
+<td>Higher dimensional groupoids</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="reboot">Reboot</h1>
+<ul>
+<li>Morphisms: 'Functions' from one object of a category to another
+object (may be same) of the <em>same</em> category.</li>
+<li>Functor: 'Function' from a <em>category</em> to another category.
+<ul>
+<li>ie, functors are morphisms between categories.</li>
+</ul></li>
+</ul>
+<h1 id="category-theory-in-context"><em>Category theory in
+context</em></h1>
+<ul>
+<li>'It is traditional to name a category after its objects'</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Object</th>
+<th>Morphism</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Set</td>
+<td>Sets</td>
+<td>Functions</td>
+</tr>
+<tr class="even">
+<td>Top</td>
+<td>Topological spaces</td>
+<td>Continuous functions</td>
+</tr>
+<tr class="odd">
+<td>Group</td>
+<td>Set</td>
+<td>Group homomorphism</td>
+</tr>
+<tr class="even">
+<td>Poset</td>
+<td>Set</td>
+<td>Order preserving maps</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Morphisms aren't always functions.</strong>
+<ul>
+<li>Why ???</li>
+<li>Eg: A category Mat<sub>R</sub> where
+<ul>
+<li>Objects: non-zero ℕ</li>
+<li>Morphisms: Between n and m is an nxm matrix</li>
+</ul></li>
+</ul></li>
+<li>'Small and 'large' sets
+<ul>
+<li><strong>Sets and classes</strong></li>
+<li>Via an extended form of ZF set theory axioms</li>
+<li>Way to get around Russell's paradox ??</li>
+</ul></li>
+<li>Small category
+<ul>
+<li>A category that has 'only a set's worth of arrows'</li>
+</ul></li>
+<li>Locally small category
+<ul>
+<li>Appears small when we are considering only pairs of objects in the
+category.</li>
+<li>Between any pairs of objects, there's only a set's worth of
+morphisms.</li>
+</ul></li>
+<li>isomorphism: a morphism <code>f: X → Y</code> is an isomorphism if
+there exists a morphism <code>g: Y → X</code> such that:
+<ul>
+<li>g∘f = 1<sub>x</sub></li>
+<li>f∘g = 1<sub>y</sub></li>
+</ul></li>
+<li>Two objects X and Y are isomorphic is there exists an isomorphism
+between them.
+<ul>
+<li>X ≅ Y</li>
+</ul></li>
+<li>endomorphism: a morphism between the same object</li>
+<li>automorphism: an endomorphism that is also isomorphic.</li>
+<li>groupoid: category where all morphisms are isomorphisms.
+<ul>
+<li><strong>a group is a groupoid with exactly one object.</strong></li>
+</ul></li>
+</ul>
+<p>A functor <code>F: C → D</code> consists of:</p>
+<ul>
+<li>For each object c ∈ D, there is a <code>F c ∈ D</code></li>
+<li>For each morphism <code>(f: c → c') ∈ C</code>, there is a morphism
+<code>(F f: F c → F c') ∈ D</code></li>
+</ul>
+<h1 id="awodhey">Awodhey</h1>
+<ul>
+<li>DBT: May think of categories as generalized groups. How??</li>
+</ul>
+<h2 id="rel-is-a-category"><strong>Rel</strong> is a category</h2>
+<ul>
+<li><p>Object: sets</p></li>
+<li><p>Arrows: relations</p></li>
+<li><p>Identity: aRa = {(a,a) | a ∈ A}</p></li>
+<li><p>Composition:</p>
+<ul>
+<li>R: A -&gt; B</li>
+<li>S: B -&gt; C</li>
+<li>S∘R: A -&gt; C = {∃b∈B, aRb ∧ bSc | a∈A, c∈C}</li>
+</ul></li>
+<li><p>Associativity of composition</p>
+<ul>
+<li>H∘(G∘F) = (H∘G)∘F</li>
+</ul></li>
+</ul>
+<h2 id="continuing..">Continuing..</h2>
+<p>It's the arrows that really matter!</p>
+<p>Functor</p>
+<ul>
+<li>F:C-&gt;D gives a 'picture' of C in D</li>
+</ul>
+<p>Some categories</p>
+<ul>
+<li>Product category</li>
+<li>Dual or opposite category of another category
+<ul>
+<li>Objects = same, but arrow direction reversed</li>
+</ul></li>
+<li>Arrow category</li>
+<li>Co-slice category</li>
+</ul>
+<h3 id="slice-category-𝐂c">Slice category (𝐂/C)</h3>
+<p>Slice category 𝐂/C of a category 𝐂 over an object C</p>
+<ul>
+<li>Objects = arrows of 𝐂 whose codomain is in C.</li>
+<li>(f:X -&gt; C) (f': X' -&gt; C) ∈ Arrow(𝐂), (g: X -&gt; X') ∈
+Arrow(𝐂/C),</li>
+</ul>
+<p>C = base object</p>
+<pre><code>f : X  -&gt; C
+f&#39;: X&#39; -&gt; C
+a : X  -&gt; X&#39;
+
+f&#39;∘a = f
+</code></pre>
+<h2 id="free-monoid">Free monoid</h2>
+<h3 id="universal-mapping-property-ump">Universal mapping property
+(UMP)</h3>
+<p>A monoid <code>M(A)</code> is generated from a set
+<code>A</code>.</p>
+<p>Wikipedia: A monoid is free if it is isomorphic to the free monoid on
+some set.</p>
+<ul>
+<li>DBT: I guess that's because there is only one such monoid? Due to
+UMP?</li>
+</ul>
+<p>Notations:</p>
+<ul>
+<li><code>|N|</code> is the set underlying the monoid
+<code>N</code>.</li>
+<li><code>A*</code>: Free monoid on a set <code>A</code></li>
+</ul>
+<p>Given:</p>
+<ul>
+<li>a function from a set A to a monoid M(A):
+<code>i: A -&gt; |M(A)|</code>
+<ul>
+<li>DBT: is <code>A</code> the generating set</li>
+</ul></li>
+<li>a monoid <code>N</code></li>
+<li>a function <code>f: A -&gt; |N|</code></li>
+</ul>
+<p>then there is a unique monoid homomorphism
+<code>f̅: M(A) -&gt; N</code> such that:</p>
+<ul>
+<li><code>|f̅|∘i : A -&gt; |N|</code></li>
+</ul>
+<p>DBT: 'monoid is a category with only one object'. How?</p>
+<h2 id="ps1">PS1</h2>
+<h3 id="background">Background</h3>
+<p>Hom-set of a category: set of morphisms between two given objects of
+the category:</p>
+<ul>
+<li>Hom(X, Y)</li>
+</ul>
+<p>A functor does this:</p>
+<ul>
+<li>F: C -&gt; D</li>
+<li>F: Hom<sub>C</sub>(X, Y) -&gt; Hom<sub>D</sub>(F(X), F(Y)), where
+X,Y∈C</li>
+</ul>
+<p>Faithful functor (injective):</p>
+<ul>
+<li>Functor that is injective on hom-sets (ie, 1-to-1)</li>
+<li>No morphism2 is mapped onto from multiple morphism1-s.</li>
+</ul>
+<p>Full functor (surjective):</p>
+<ul>
+<li>Functor that is surjective on hom-sets (ie, onto)</li>
+</ul>
+<p>Fully faithful functor = bijective</p>
+<h3 id="section">1</h3>
+<ul>
+<li>Example of a category and functor from CS or math:</li>
+</ul>
+<p>Categories:</p>
+<ul>
+<li>STLC (Church or Curry)
+<ul>
+<li>Arrows = functions
+<ul>
+<li>Identity = identity function</li>
+<li>When you take the arrow, function is applied</li>
+</ul></li>
+<li>Objects = terms</li>
+</ul></li>
+<li>UTLC</li>
+<li>Functor with domain as STLC = type erasure to get UTLC from
+STLC</li>
+<li>Functor with codomain as STLC = from category of sml to STLC</li>
+</ul>
+<p>—</p>
+<p>Is ℕ and ℤ isomorphic ???? No, I guess. But why?</p>
+<h3 id="section-1">3</h3>
+<p>Every monoid is like an untyped program.</p>
+<ul>
+<li>skip = identity</li>
+<li>sequence = operation</li>
+</ul>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a
+href="https://www.logicmatters.net/categories/">https://www.logicmatters.net/categories/</a></li>
+</ul>
+<h1 id="glossary">Glossary</h1>
+<ul>
+<li><p>Groupoid = category where every morphism is an
+isomorphism</p></li>
+<li><p>Forgetful functor: functor that drops some properties of the
+domain category</p></li>
+<li><p>Sub-category: Restrict to some objects and morphism of parent
+category while still remaining a category</p></li>
+<li><p>Order theory terms</p>
+<ul>
+<li>Pre-order: refl, trans</li>
+<li>Poset or Partial order: refl, anti-symm, trans</li>
+<li>Total order: Partial order where every element is related</li>
+</ul></li>
+<li><p>Scott domain ???</p></li>
+<li><p>Concrete category: One that can be defined in terms of sets and
+functions over sets.</p></li>
+<li><p>Cayley representation of a group/category</p></li>
+<li><p>Dual of a category C: Same objects as C, but direction of arrows
+is reversed</p></li>
+<li><p>Atomic boolean algebra: ???</p>
+<ul>
+<li>Atom of boolean algebra or poset: <a
+href="https://ncatlab.org/nlab/show/atomic+Boolean+algebra">https://ncatlab.org/nlab/show/atomic+Boolean+algebra</a></li>
+</ul></li>
+<li><p>Complete boolean algebra: ???</p></li>
+<li><p>Universal algebra: Study of algebras themselves. Not just
+instances of algebras.</p></li>
+<li><p>Pointed set: Set together with an element that set called the
+<em>base point</em>.</p>
+<ul>
+<li>aka based set, rooted set</li>
+</ul></li>
+<li><p>Base map: Map functions that map between pointed sets</p></li>
+<li><p>Small category: Collection of objects is a set, collection of
+arrows is a set</p>
+<ul>
+<li><em>Not</em> the same as concrete categories</li>
+</ul></li>
+<li><p>Cat: category of small categories</p>
+<ul>
+<li>This is a large category</li>
+</ul></li>
+<li><p>Locally small category</p>
+<ul>
+<li>if <code>Hom(X, Y) = {f ∈ ℂ | f: X → Y}</code> is a set</li>
+<li>ie, if the collection of all morphisms between any pair of objects
+is a set</li>
+<li>Many large categories are locally small. Eg: Cat</li>
+</ul></li>
+<li><p>A rule of thumb??</p>
+<ul>
+<li>X =&gt; left, co-X =&gt; right ✗</li>
+<li>Eg: in relations, domain is in left. Co-domain is in right</li>
+<li>Slice category. base object is in right. Co-slice cat =&gt; base
+object in left</li>
+</ul></li>
+</ul>
+</div>
+</body>
+</html>
