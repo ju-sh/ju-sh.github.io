@@ -22,13 +22,13 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
@@ -36,8 +36,17 @@
 </header>
 
 <ul>
+    <li>Date created: 2020</li>
     </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/tools.html">tools</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
@@ -45,67 +54,44 @@ About Poetry, a tool to install, manage and create packages in Python.
 </div>
 
 <div id="content-container">
-<p><a href="https://python-poetry.org/">Poetry</a> is a tool for
-creating, managing and publishing packages in Python.</p>
+<p><a href="https://python-poetry.org/">Poetry</a> is a tool for creating, managing and publishing packages in Python.</p>
 <hr />
 <h2 id="installation">Installation</h2>
 <p>May be installed from PyPI or using a script.</p>
-<p>I prefer the PyPI version because I've heard people warning against
-getting accustomed to running scripts that you don't know.</p>
+<p>I prefer the PyPI version because I've heard people warning against getting accustomed to running scripts that you don't know.</p>
 <h3 id="pypi">PyPI</h3>
 <p>We can use pip to install poetry from PyPI.</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install poetry</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="ex">pip</span> install poetry</span></code></pre></div>
 <h3 id="script">Script</h3>
-<p>Download the installation script with curl and use Python to run
-it.</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sSL</span> https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py <span class="kw">|</span> <span class="ex">python</span> <span class="at">-</span></span></code></pre></div>
+<p>Download the installation script with curl and use Python to run it.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ex">curl</span> -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py <span class="kw">|</span> <span class="ex">python</span> -</span></code></pre></div>
 <p>Poetry's website recommends this method of installation as</p>
-<p>If installed using this method, a sub command of poetry itself can be
-used to update it independent of Python version.</p>
+<p>If installed using this method, a sub command of poetry itself can be used to update it independent of Python version.</p>
 <h2 id="create-a-project">Create a project</h2>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> new project-name</span></code></pre></div>
-<p>By default the project created using poetry would have a flat
-layout.</p>
-<p>If you prefer a src-layout, use the <code>--src</code> option and
-do</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> new <span class="at">--src</span> project-name</span></code></pre></div>
-<p>See [docs](<a
-href="https://python-poetry.org/docs/cli/#new">https://python-poetry.org/docs/cli/#new</a>).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ex">poetry</span> new project-name</span></code></pre></div>
+<p>By default the project created using poetry would have a flat layout.</p>
+<p>If you prefer a src-layout, use the <code>--src</code> option and do</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="ex">poetry</span> new --src project-name</span></code></pre></div>
+<p>See [docs](<a href="https://python-poetry.org/docs/cli/#new">https://python-poetry.org/docs/cli/#new</a>).</p>
 <h2 id="pre-existing-project">Pre-existing project</h2>
-<p>The <code>new</code> sub-command is used when we start a new package
-from scratch. If you already got the files, you may use the
-<code>init</code> sub-command to generate the pyproject.toml file.</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> init</span></code></pre></div>
+<p>The <code>new</code> sub-command is used when we start a new package from scratch. If you already got the files, you may use the <code>init</code> sub-command to generate the pyproject.toml file.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="ex">poetry</span> init</span></code></pre></div>
 <h2 id="add-dependency-packages">Add dependency packages</h2>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> add package-name</span></code></pre></div>
-<p>A package can be installed as a development dependency using the
-<code>--dev</code> or <code>-D</code> option as in</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> add <span class="at">-D</span> package-name</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="ex">poetry</span> add package-name</span></code></pre></div>
+<p>A package can be installed as a development dependency using the <code>--dev</code> or <code>-D</code> option as in</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="ex">poetry</span> add -D package-name</span></code></pre></div>
 <h2 id="build">Build</h2>
 <p>Build your package with</p>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> build</span></code></pre></div>
-<p>and the built module's files would appear under the
-<code>dist/</code> directory.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="ex">poetry</span> build</span></code></pre></div>
+<p>and the built module's files would appear under the <code>dist/</code> directory.</p>
 <h2 id="publish">Publish</h2>
-<p>You may want to adjust the remote server to which the package is
-published with</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> config repositories.pypi <span class="st">&quot;https://upload.pypi.org/legacy/&quot;</span>   <span class="co"># for pypi.org</span></span></code></pre></div>
+<p>You may want to adjust the remote server to which the package is published with</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="ex">poetry</span> config repositories.pypi <span class="st">&quot;https://upload.pypi.org/legacy/&quot;</span>   # for pypi.org</span></code></pre></div>
 <p>The built module can be pushed to a remote server with</p>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> publish</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="ex">poetry</span> publish</span></code></pre></div>
 <p>by default the remote server is pypi.org</p>
 <p>The package can be both built and published with</p>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> <span class="at">--build</span> publish</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="ex">poetry</span> --build publish</span></code></pre></div>
 </div>
 </body>
 </html>

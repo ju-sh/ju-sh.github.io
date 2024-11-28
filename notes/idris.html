@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>idris 2</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">idris 2</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="implicit-arguments">Implicit arguments</h2>
+<p>From <a href="https://idris2.readthedocs.io/en/latest/updates/updates.html">here</a>:</p>
+<blockquote>
+<p>names which begin with a lower case letter are automatically bound as implicit arguments in types</p>
+</blockquote>
+<h2 id="dependent-pairs">Dependent pairs</h2>
+<p><a href="https://idris2.readthedocs.io/en/latest/tutorial/typesfuns.html#dependent-pairs">https://idris2.readthedocs.io/en/latest/tutorial/typesfuns.html#dependent-pairs</a></p>
+<p>Two values. First value can show up in the second.</p>
+<p>Eg: an implementation of Vector:</p>
+<pre><code>(n:Nat ** Vector n Int)
+</code></pre>
+<h2 id="multiplicty">Multiplicty</h2>
+<ul>
+<li>Every variable has a multiplicty associated with it.</li>
+<li>Courtesy of Quantitative Type theory (QTT) on which idris2 is based.</li>
+<li>A concept apparently not there in idris1??</li>
+</ul>
+<p>Values:</p>
+<ul>
+<li>0: Erased at runtime</li>
+<li>1: Used <em>exactly</em> once at runtime</li>
+<li>Unrestricted: Can be used any number of times at runtime</li>
+</ul>
+<p>Explicit multiplicity examples:</p>
+<ul>
+<li>(0 n: Nat)</li>
+<li>(1 n: Nat)</li>
+</ul>
+<p>Default multiplicity values:</p>
+<ul>
+<li>No multiplicity annotation =&gt; unrestricted</li>
+<li>Implicit argument =&gt; 0</li>
+</ul>
+<p>Fun fact: Following is a function that cannot be realized as it requires two instances of <code>a</code> but only 1 is allowed:</p>
+<ul>
+<li>duplicate : (1 x:a) -&gt; (a, a)</li>
+</ul>
+<p><a href="https://idris2.readthedocs.io/en/latest/tutorial/multiplicities.html">https://idris2.readthedocs.io/en/latest/tutorial/multiplicities.html</a></p>
+<h2 id="repl">REPL</h2>
+<ul>
+<li><code>:?</code>: show help</li>
+<li><code>:import</code>: import modules</li>
+<li><code>:t</code>: show type of a value</li>
+<li><code>:ti</code>: show type (including implicit arguments) of a value</li>
+</ul>
+<pre><code>λΠ&gt; :doc **
+Used to build dependent pairs together with parentheses
+</code></pre>
+<h2 id="vim-plugin-idir">vim plugin: idir</h2>
+<ul>
+<li>Plugin seems not so maintained: <a href="https://github.com/edwinb/idris2-vim">https://github.com/edwinb/idris2-vim</a></li>
+<li>This is for idris1 apparently: <a href="https://github.com/idris-hackers/idris-vim">https://github.com/idris-hackers/idris-vim</a></li>
+</ul>
+<table>
+<tbody>
+<tr class="odd">
+<td>Reload buffer</td>
+<td>|̊</td>
+</tr>
+<tr class="even">
+<td>Case split</td>
+<td>|̧</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

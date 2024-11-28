@@ -22,13 +22,13 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
@@ -48,20 +48,12 @@
 </ul>
 <p>From [2]:</p>
 <blockquote>
-<p>Runtime verification avoids the complexity of traditional formal
-verification techniques (like model checking and theorem proving) by
-analyzing only one or a few execution traces and working directly with
-the actual system. Thus, runtime verification scales up relatively well
-and gives more confidence in the results of the analysis because it
-avoids the tedious and error-prone step of formally modeling the system
-(at the expense of reduced coverage).</p>
+<p>Runtime verification avoids the complexity of traditional formal verification techniques (like model checking and theorem proving) by analyzing only one or a few execution traces and working directly with the actual system. Thus, runtime verification scales up relatively well and gives more confidence in the results of the analysis because it avoids the tedious and error-prone step of formally modeling the system (at the expense of reduced coverage).</p>
 </blockquote>
 <p>—</p>
-<p>From abstract of <a
-href="https://www.uio.no/studier/emner/matnat/ifi/INF5140/v17/slides/runtime-verification.pdf">this</a>:</p>
+<p>From abstract of <a href="https://www.uio.no/studier/emner/matnat/ifi/INF5140/v17/slides/runtime-verification.pdf">this</a>:</p>
 <blockquote>
-<p>Runtime verification is the topic of analyzing execution traces using
-formal techniques.</p>
+<p>Runtime verification is the topic of analyzing execution traces using formal techniques.</p>
 </blockquote>
 <h2 id="safety-property">Safety property</h2>
 <ul>
@@ -70,54 +62,42 @@ formal techniques.</p>
 <ul>
 <li>Or <code>G</code> in LTL.</li>
 </ul></li>
-<li>Once a violation is found, there is no hope the property will
-hold.</li>
-<li>Eg: Mutual exclusion, deadlock freedom <a
-href="https://ecommons.cornell.edu/bitstream/handle/1813/6495/85-650.pdf">ʳ¹</a></li>
+<li>Once a violation is found, there is no hope the property will hold.</li>
+<li>Eg: Mutual exclusion, deadlock freedom <a href="https://ecommons.cornell.edu/bitstream/handle/1813/6495/85-650.pdf">ʳ¹</a></li>
 </ul>
 <h2 id="liveness-property">Liveness property</h2>
-<p>Every finite prefix <em>can</em> be extended to have a run that
-satisfies the property. ie, we can <strong>never</strong> be sure.</p>
+<p>Every finite prefix <em>can</em> be extended to have a run that satisfies the property. ie, we can <strong>never</strong> be sure.</p>
 <ul>
 <li>A property that 'something good' will eventually happen.
 <ul>
-<li>'Stipulates that a "good thing" happens during execution' <a
-href="https://ecommons.cornell.edu/bitstream/handle/1813/6495/85-650.pdf">ʳ¹</a></li>
+<li>'Stipulates that a "good thing" happens during execution' <a href="https://ecommons.cornell.edu/bitstream/handle/1813/6495/85-650.pdf">ʳ¹</a></li>
 </ul></li>
 <li>Essentially the <code>◇</code> in modal logic.
 <ul>
 <li>Or <code>F</code> in LTL.</li>
 </ul></li>
 <li>There's always some hope that it will hold.</li>
-<li>Eg: Starvation freedom, termination <a
-href="https://ecommons.cornell.edu/bitstream/handle/1813/6495/85-650.pdf">ʳ¹</a></li>
+<li>Eg: Starvation freedom, termination <a href="https://ecommons.cornell.edu/bitstream/handle/1813/6495/85-650.pdf">ʳ¹</a></li>
 </ul>
 <p>From abstract of [1]:</p>
 <blockquote>
-<p>liveliness properties stipulate that "something good" events really
-happens during execution</p>
+<p>liveliness properties stipulate that "something good" events really happens during execution</p>
 </blockquote>
 <h2 id="morbidity">Morbidity</h2>
-<p>Every finite prefix <em>can</em> be extended to have a run that
-violates the property. ie, we can <strong>never</strong> be sure.</p>
+<p>Every finite prefix <em>can</em> be extended to have a run that violates the property. ie, we can <strong>never</strong> be sure.</p>
 <h2 id="non-monitorable-property">Non-monitorable property</h2>
 <p>Not all properties are monitorable</p>
 <ul>
-<li>No matter how much of the stream is obtained, no definite verdict
-can be pronounced with respect to the property.</li>
+<li>No matter how much of the stream is obtained, no definite verdict can be pronounced with respect to the property.</li>
 <li>Verdict cannot be given based on <em>any finite</em> prefix.</li>
 </ul>
 <p>Eg: □(◇ p): ie, that a property holds infinitely often.</p>
-<p>DBT: ie, all liveness and morbidity properties are
-non-monitorable??</p>
+<p>DBT: ie, all liveness and morbidity properties are non-monitorable??</p>
 <h2 id="prefix">Prefix</h2>
 <ul>
-<li>Bad prefix: Every possible continuation would lead to a bad
-state</li>
-<li>Good prefix: Every possible continuation would lead to a good
-state</li>
-<li>Ugly prefix: There are continuations which can lead to good and bad
-states
+<li>Bad prefix: Every possible continuation would lead to a bad state</li>
+<li>Good prefix: Every possible continuation would lead to a good state</li>
+<li>Ugly prefix: There are continuations which can lead to good and bad states
 <ul>
 <li>Eg: □(request → ◇ack)</li>
 </ul></li>
@@ -209,21 +189,17 @@ states
 </tr>
 </tbody>
 </table>
-<p>Only property that's both a safety and guarantee property is
-<code>true</code>:</p>
+<p>Only property that's both a safety and guarantee property is <code>true</code>:</p>
 <ul>
 <li>safety: never fails, but we could've given ⊥ verdict if it did.</li>
-<li>guarantee: satisfied for empty prefix. Once satisfied, always
-satisfied (ie, ⊤).</li>
+<li>guarantee: satisfied for empty prefix. Once satisfied, always satisfied (ie, ⊤).</li>
 </ul>
-<p>Only property that's both a liveness and morbidity property is
-<code>false</code>:</p>
+<p>Only property that's both a liveness and morbidity property is <code>false</code>:</p>
 <ul>
 <li>liveness:</li>
 <li>morbidity:</li>
 </ul>
-<h2 id="model-checking-vs-runtime-verification">Model checking vs
-runtime verification</h2>
+<h2 id="model-checking-vs-runtime-verification">Model checking vs runtime verification</h2>
 <table>
 <thead>
 <tr class="header">
@@ -257,24 +233,13 @@ runtime verification</h2>
 <li>Set theory</li>
 <li>Automata</li>
 </ul>
-<p>From a 2008 issue of AMS <a
-href="https://www.ams.org/notices/200811/200811FullIssue.pdf">³</a>:</p>
+<p>From a 2008 issue of AMS <a href="https://www.ams.org/notices/200811/200811FullIssue.pdf">³</a>:</p>
 <blockquote>
-<p>A formal proof is a proof in which every logical inference has been
-checked all the way back to the fundamental axioms of mathematics. All
-the intermediate logical steps are supplied, without exception. No
-appeal is made to intuition, even if the translation from intuition to
-logic is routine. Thus, a formal proof is less intuitive, and yet less
-susceptible to logical errors.</p>
+<p>A formal proof is a proof in which every logical inference has been checked all the way back to the fundamental axioms of mathematics. All the intermediate logical steps are supplied, without exception. No appeal is made to intuition, even if the translation from intuition to logic is routine. Thus, a formal proof is less intuitive, and yet less susceptible to logical errors.</p>
 </blockquote>
-<p>In the same AMS issue, from 'Formal Proof-Theory and Practice' by
-John Harrison:</p>
+<p>In the same AMS issue, from 'Formal Proof-Theory and Practice' by John Harrison:</p>
 <blockquote>
-<p>A formal proof is a proof written in a precise artificial language
-that admits only a fixed repertoire of stylized steps. This formal
-language is usually designed so that there is a purely mechanical
-process by which the correctness of a proof in the language can be
-verified.</p>
+<p>A formal proof is a proof written in a precise artificial language that admits only a fixed repertoire of stylized steps. This formal language is usually designed so that there is a purely mechanical process by which the correctness of a proof in the language can be verified.</p>
 </blockquote>
 <h2 id="spec">Spec</h2>
 <p>An abstract description of the system.</p>
@@ -288,21 +253,16 @@ verified.</p>
 </blockquote>
 <h2 id="testing-vs-verification">Testing vs verification</h2>
 <ul>
-<li>Testing: Might be able prove presence of bugs, but not their
-absence</li>
+<li>Testing: Might be able prove presence of bugs, but not their absence</li>
 <li>Formal verification: Can prove absence of bugs.
 <ul>
-<li>Because the proof witnesses that it does what the spec say it
-does.</li>
+<li>Because the proof witnesses that it does what the spec say it does.</li>
 <li>Prove correctness of an abstract mode of the code.</li>
 </ul></li>
 </ul>
-<p>Although formal verification doesn't mean 100% guarantee, it can come
-quite close. It definitely increases the trustworthiness of the
-system.</p>
+<p>Although formal verification doesn't mean 100% guarantee, it can come quite close. It definitely increases the trustworthiness of the system.</p>
 <h2 id="errors-in-spec">Errors in spec</h2>
-<p>Wrong spec means result of verification cannot be relied upon
-either.</p>
+<p>Wrong spec means result of verification cannot be relied upon either.</p>
 <p>Types of errors in th spec level include:</p>
 <ul>
 <li>Incomplete spec</li>
@@ -330,40 +290,20 @@ Derived:
 
  - φ → ψ ≡ (¬ φ) ∨ ψ
 </code></pre>
-<p>Originally LTL specs were made for sequences of states, but for RV we
-usually indicate occurrence of events.</p>
+<p>Originally LTL specs were made for sequences of states, but for RV we usually indicate occurrence of events.</p>
 <h2 id="monitor">Monitor</h2>
-<p>A monitor checks whether an execution (ie, a finite prefix of a run)
-satisfies a property.</p>
-<p>If <code>⟦φ⟧</code> is the set of executions that satisfies a spec
-<code>φ</code>, and the current execution is <code>w</code>, runtime
-verification boils down to checking if <code>w ∈ ⟦φ⟧</code>. [1]</p>
-<p>So, runtime verification corresponds to a <em>word problem</em>. ie,
-checking whether a given word (<code>w</code>) is part of a given
-language (<code>⟦φ⟧</code>).</p>
+<p>A monitor checks whether an execution (ie, a finite prefix of a run) satisfies a property.</p>
+<p>If <code>⟦φ⟧</code> is the set of executions that satisfies a spec <code>φ</code>, and the current execution is <code>w</code>, runtime verification boils down to checking if <code>w ∈ ⟦φ⟧</code>. [1]</p>
+<p>So, runtime verification corresponds to a <em>word problem</em>. ie, checking whether a given word (<code>w</code>) is part of a given language (<code>⟦φ⟧</code>).</p>
 <h2 id="references">References</h2>
 <ol>
-<li>Alpern, B. and Schneider, F.B., <strong>1985</strong>. <a
-href="https://ecommons.cornell.edu/bitstream/handle/1813/6495/85-650.pdf"><em>Defining
-liveness</em></a>. Information processing letters, 21(4),
-pp.181-185.</li>
-<li>Peled, D. and Havelund, K., <strong>2019</strong>. <a
-href="http://havelund.com/Publications/bernhard-60.pdf"><em>Refining the
-safety–liveness classification of temporal properties according to
-monitorability</em></a>. In Models, Mindsets, Meta: The What, the How,
-and the Why Not? (pp. 218-234). Springer, Cham.</li>
-<li>Lamport, L., <strong>1977</strong>. <em>Proving the correctness of
-multiprocess programs</em>. IEEE transactions on software engineering,
-(2), pp.125-143.</li>
+<li>Alpern, B. and Schneider, F.B., <strong>1985</strong>. <a href="https://ecommons.cornell.edu/bitstream/handle/1813/6495/85-650.pdf"><em>Defining liveness</em></a>. Information processing letters, 21(4), pp.181-185.</li>
+<li>Peled, D. and Havelund, K., <strong>2019</strong>. <a href="http://havelund.com/Publications/bernhard-60.pdf"><em>Refining the safety–liveness classification of temporal properties according to monitorability</em></a>. In Models, Mindsets, Meta: The What, the How, and the Why Not? (pp. 218-234). Springer, Cham.</li>
+<li>Lamport, L., <strong>1977</strong>. <em>Proving the correctness of multiprocess programs</em>. IEEE transactions on software engineering, (2), pp.125-143.</li>
 </ol>
 <ol>
-<li>Leucker, M. and Schallhart, C., <strong>2009</strong>. <em>A brief
-account of runtime verification</em>. The journal of logic and algebraic
-programming, 78(5), pp.293-303.</li>
-<li>Daian, P., Guth, D., Hathhorn, C., Li, Y., Pek, E., Saxena, M.,
-Şerbănuţă, T.F. and Roşu, G., <strong>2016</strong>, September.
-<em>Runtime verification at work: A tutorial</em>. In International
-Conference on Runtime Verification (pp. 46-67). Springer, Cham.</li>
+<li>Leucker, M. and Schallhart, C., <strong>2009</strong>. <em>A brief account of runtime verification</em>. The journal of logic and algebraic programming, 78(5), pp.293-303.</li>
+<li>Daian, P., Guth, D., Hathhorn, C., Li, Y., Pek, E., Saxena, M., Şerbănuţă, T.F. and Roşu, G., <strong>2016</strong>, September. <em>Runtime verification at work: A tutorial</em>. In International Conference on Runtime Verification (pp. 46-67). Springer, Cham.</li>
 </ol>
 </div>
 </body>

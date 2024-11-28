@@ -22,13 +22,13 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
@@ -43,15 +43,11 @@
 
 <div id="content-container">
 <ul>
-<li><code>--without-K</code> and <code>--safe</code> seems like
-not-so-good-to-use flags.
+<li><code>--without-K</code> and <code>--safe</code> seems like not-so-good-to-use flags.
 <ul>
-<li><code>--safe</code> option 'to avoid possible misuses of certain
-features which could lead to logical inconsistencies' <a
-href="https://arxiv.org/pdf/2005.07059.pdf">ʳ</a></li>
+<li><code>--safe</code> option 'to avoid possible misuses of certain features which could lead to logical inconsistencies' <a href="https://arxiv.org/pdf/2005.07059.pdf">ʳ</a></li>
 </ul></li>
-<li><code>--cubical</code>: implements a computational interpretation of
-HoTT.
+<li><code>--cubical</code>: implements a computational interpretation of HoTT.
 <ul>
 <li>Supports univalence.</li>
 </ul></li>
@@ -59,6 +55,113 @@ HoTT.
 <li>Axiom K: Equivalent to UIP</li>
 <li>Setoid: Set equipped with an equivalence relation</li>
 <li>Extensional vs intentional type theory</li>
+<li><code>postulate</code>: like <code>Axiom</code> in Coq
+<ul>
+<li>Signature without definition</li>
+<li><a href="https://agda.readthedocs.io/en/v2.6.20240714/language/postulates.html">https://agda.readthedocs.io/en/v2.6.20240714/language/postulates.html</a></li>
+</ul></li>
+</ul>
+<h2 id="mutually-recursive-types">Mutually recursive types</h2>
+<ul>
+<li>Use <code>mutual</code> keyword</li>
+</ul>
+<p>Example from <a href="https://gist.github.com/bobatkey/72397ea77f047ab7296d17684032723e">here</a>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">mutual</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  <span class="kw">data</span> ty-ctx <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>    ε    <span class="ot">:</span> ty-ctx</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="ot">_</span>,-<span class="ot">_</span> <span class="ot">:</span> <span class="ot">(</span>Δ <span class="ot">:</span> ty-ctx<span class="ot">)</span> <span class="ot">→</span> defn Δ <span class="ot">→</span> ty-ctx</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>  <span class="kw">data</span> defn <span class="ot">:</span> ty-ctx <span class="ot">→</span> <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    synonym <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ<span class="ot">}</span> <span class="ot">→</span> ty Δ <span class="ot">→</span> defn Δ</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>    newtype <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ<span class="ot">}</span> <span class="ot">→</span> ty Δ <span class="ot">→</span> defn Δ</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>  <span class="kw">data</span> ty <span class="ot">:</span> ty-ctx <span class="ot">→</span> <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>    wk    <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ τ<span class="ot">}</span> <span class="ot">→</span> ty Δ <span class="ot">→</span> ty <span class="ot">(</span>Δ ,- τ<span class="ot">)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>    defd  <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ τ<span class="ot">}</span> <span class="ot">→</span> ty <span class="ot">(</span>Δ ,- τ<span class="ot">)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>    bit   <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ<span class="ot">}</span>   <span class="ot">→</span> ty Δ</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>    <span class="ot">_</span>⇒<span class="ot">_</span>  <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ<span class="ot">}</span>   <span class="ot">→</span> ty Δ <span class="ot">→</span> ty Δ <span class="ot">→</span> ty Δ</span></code></pre></div>
+<h2 id="levels">Levels</h2>
+<ul>
+<li>Type: <code>Level</code>
+<ul>
+<li><code>lzero: Level</code>: lowest level</li>
+<li><code>lsuc: Level -&gt; Level</code>: Next level</li>
+<li><code>_⊔_: Level -&gt; Level -&gt; Level</code>: Least upper bound of 2 levels</li>
+</ul></li>
+<li><code>Set</code>: Like <code>Type</code> in Coq
+<ul>
+<li><code>Set</code>: Set0</li>
+<li><code>Set₁</code>: Set ∈ Set₁ ??</li>
+<li><code>Set₂</code>: Set₁ ∈ Set₂ ??</li>
+</ul></li>
+<li><code>0ℓ</code>: Level <code>zero</code>
+<ul>
+<li><a href="https://agda.github.io/agda-stdlib/master/Level.html#521">https://agda.github.io/agda-stdlib/master/Level.html#521</a></li>
+</ul></li>
+</ul>
+<p>Example from <a href="https://arxiv.org/pdf/2005.07059.pdf">docs</a>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">data</span> <span class="ot">_</span>×<span class="ot">_</span> <span class="ot">{</span>n m <span class="ot">:</span> Level<span class="ot">}</span> <span class="ot">(</span>A <span class="ot">:</span> <span class="dt">Set</span> n<span class="ot">)</span> <span class="ot">(</span>B <span class="ot">:</span> <span class="dt">Set</span> m<span class="ot">)</span> <span class="ot">:</span> <span class="dt">Set</span> <span class="ot">(</span>n ⊔ m<span class="ot">)</span> <span class="kw">where</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>   <span class="ot">_</span>,<span class="ot">_</span> <span class="ot">:</span> A <span class="ot">→</span> B <span class="ot">→</span> A × B</span></code></pre></div>
+<p>Example import:</p>
+<ul>
+<li><code>open import Level using (0ℓ) renaming (suc to lsuc)</code></li>
+</ul>
+<h2 id="agda-technicalities">Agda technicalities</h2>
+<ul>
+<li>Mixfix notations</li>
+<li>Pragmas: Special comments</li>
+<li><code>{-# BUILTIN NATURAL ℕ #-}</code>
+<ul>
+<li>A pragma</li>
+<li>Informs agda that ℕ corresponds to natural numbers</li>
+<li>Allows to use numbers instead of constructors (eg: 0 instead of <code>zero</code>)</li>
+<li>Internally allows use of haskell <code>Int</code> (log₂ space) instead of unary nat.</li>
+</ul></li>
+<li>'Function' associates to right
+<ul>
+<li><code>A -&gt; B -&gt; C</code> is <code>A -&gt; (B -&gt; C)</code></li>
+</ul></li>
+<li>Looks like space is needed before <code>:</code> in type annotations
+<ul>
+<li><code>zero: ℕ</code> and <code>zero :ℕ</code> give parse error, <code>zero : ℕ</code> doesn't.</li>
+</ul></li>
+</ul>
+<p>More pragmas:</p>
+<ul>
+<li>Don't allow case overlaps: <code>{-# OPTIONS --exact-split #-}</code></li>
+</ul>
+<h2 id="precedence">Precedence</h2>
+<p>Lower precedence value =&gt; higher precedence</p>
+<ul>
+<li><code>infixl</code>: left associativity</li>
+<li><code>infixr</code>: right associativity</li>
+<li><code>infix</code>: no associativity (parenthesis always needed)</li>
+</ul>
+<h2 id="emacs">Emacs</h2>
+<ul>
+<li><p>C-c C-w: Show definition of a name</p></li>
+<li><p>C-c C-c: Case split</p></li>
+<li><p>C-c C-,: Show current goal info</p></li>
+<li><p>C-c C-Space: Finish hole after filling it</p></li>
+<li><p>C-c C-l: Type check buffer</p></li>
+<li><p>Right click on a typechecked part to go to its definiton</p></li>
+<li><p>Find type of an expression: C-c C-d</p></li>
+<li><p>Evaluate (find normal form) of an expression: C-c C-n</p></li>
+</ul>
+<h3 id="todo">Todo</h3>
+<ul>
+<li>Find type of name under cursor</li>
+<li>Find definition of name under cursor</li>
+</ul>
+<h3 id="unicode">Unicode</h3>
+<ul>
+<li>: ℕ</li>
+<li>\) then use C-n to choose from options: ⟩</li>
+</ul>
+<p>—</p>
+<ul>
+<li>M-x agda-input-show-translations: Show latex codes for unicode symbols</li>
+<li>Show how to input a unicode character already in a buffer: <code>M-x quail-show-key</code></li>
 </ul>
 </div>
 </body>

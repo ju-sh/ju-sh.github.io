@@ -22,13 +22,13 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
@@ -42,19 +42,46 @@
 
 
 <div id="content-container">
-<p><a
-href="https://github.com/math-comp/hierarchy-builder/">https://github.com/math-comp/hierarchy-builder/</a></p>
 <h2 id="general">General</h2>
 <ul>
 <li><code>HB.about</code></li>
 <li><code>HB.check</code></li>
 </ul>
+<pre class="coq"><code>HB.about isFinite.
+(*
+HB: isFinite is a factory (from &quot;./fintype.v&quot;, line 161)
+
+HB: isFinite operations and axioms are:
+    - enum_subdef
+    - enumP_subdef
+
+HB: isFinite requires the following mixins:
+    - hasDecEq
+
+HB: isFinite provides the following mixins:
+    - isFinite
+*)
+</code></pre>
+<h2 id="eta"><code>eta</code></h2>
+<p>From <code>structures.v</code>.</p>
+<pre><code>Notation &quot;[ &#39;eta&#39; f ]&quot; := (fun x =&gt; f x) : fun_scope (default interpretation)
+</code></pre>
 <h2 id="core">Core</h2>
 <ul>
-<li><p>mixin</p></li>
-<li><p>factory</p></li>
-<li><p>builder</p></li>
-<li><p>abbreviation</p></li>
+<li>mixin: operator + properties
+<ul>
+<li>Naming convention: isStruct (eg: <code>isFinite</code>)</li>
+</ul></li>
+<li>structure: carrier + mixin
+<ul>
+<li>Naming convention: Struct</li>
+</ul></li>
+<li>(Canonical) Structure instance: Z<sub>module</sub></li>
+</ul>
+<ul>
+<li>factory</li>
+<li>builder</li>
+<li>abbreviation</li>
 </ul>
 </div>
 </body>

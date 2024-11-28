@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Coq packages</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Coq packages</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<p>Info on some coq packages.</p>
+<h1 id="coqeal">CoqEAL</h1>
+<h2 id="general">General</h2>
+<ul>
+<li><code>hrel</code>: heterogeneous relation</li>
+<li><code>fun_hrel</code>: To make a value of <code>refines</code> ??</li>
+<li><code>computable_scope</code> notations with scope key <code>C</code>.</li>
+</ul>
+<h2 id="refines"><code>refines</code></h2>
+<pre><code>refines: (A -&gt; B -&gt; Type) -&gt; A -&gt; B -&gt; Type
+         |              |
+         +--------------+
+            |
+        refinement relation
+</code></pre>
+<p>From <a href="https://github.com/ejgallego/ssrbit/blob/master/refinement/bits.v">here</a>:</p>
+<p>Refinement relation:</p>
+<pre><code>(* Type of refinement relations *)
+R: SpecT -&gt; ImplT -&gt; Type
+</code></pre>
+<p>Transport lemma:</p>
+<pre><code>R_op: refines refinement_relation Spec Impl
+</code></pre>
+<p>Example:</p>
+<pre class="coq"><code>Definition tup2seq (n:nat)
+  : n.-tuple bool -&gt; seq bool -&gt; Type :=
+  fun btup bseq =&gt; tval btup = bseq.
+</code></pre>
+<p>(Pseudo-) examples:</p>
+<ul>
+<li><code>n.-tuple -&gt; Vector.t n -&gt; Type</code></li>
+</ul>
+<h2 id="refinement-relation-for-seqmx-in-coqeal">Refinement relation for <code>seqmx</code> in CoqEAL</h2>
+<p><code>Rseqmx</code>: <a href="https://github.com/coq-community/coqeal/blob/1.1.3/refinements/seqmx.v#L298">https://github.com/coq-community/coqeal/blob/1.1.3/refinements/seqmx.v#L298</a></p>
+<h2 id="r-s-hrel"><code>R ==&gt; S</code> (hrel)</h2>
+<p>If there are functions <code>R: A -&gt; B</code> and <code>S: A' -&gt; B'</code>, then there exists a function <code>(A -&gt; A') -&gt; (B -&gt; B')</code>.</p>
+<p>—</p>
+<p>Notation for <code>hrespectful R S</code>.</p>
+<p>From rel<sub>scope</sub>.</p>
+<pre><code>R: A -&gt; B -&gt; Type
+S: C -&gt; D -&gt; Type
+f: A -&gt; C
+g: B -&gt; D
+
+is
+
+R ==&gt; S
+
+which in turn is
+
+hrespectful R S: (A-&gt;C) -&gt; (B-&gt;D) -&gt; Type :=
+
+fun f g =&gt; forall (a:A) (b:B),
+    R a b -&gt; S (f a) (g b)
+</code></pre>
+<h2 id="guesses">Guesses</h2>
+<p><code>R spec impl</code> means</p>
+<ul>
+<li>R spec impl s i -&gt; impl<sub>of</sub> s = i (introduction)</li>
+<li>R spec impl s i -&gt; spec<sub>of</sub> i = s (elimination)</li>
+</ul>
+<p>—</p>
+<ul>
+<li><code>spec_of: impl -&gt; spec -&gt; Type</code>: type of specification functions</li>
+<li><code>impl_of: spec -&gt; spec -&gt; Type</code>: type of implementation functions</li>
+</ul>
+<h2 id="fun_hrel"><code>fun_hrel</code></h2>
+<pre><code>fun_hrel
+     : forall A B : Type, (B -&gt; A) -&gt; A -&gt; B -&gt; Type
+</code></pre>
+<p>Like:</p>
+<pre><code>fun_hrel (A:=Spec) (B:=Impl): (Impl -&gt; Spec) -&gt; s -&gt; i -&gt; Type
+</code></pre>
+<h1 id="quickchick">QuickChick</h1>
+<p>Coq version of quickcheck</p>
+<ul>
+<li>Make a <code>Show</code> instance for printing test cases
+<ul>
+<li>Execution might get slower though..</li>
+</ul></li>
+</ul>
+<p>Combinators:</p>
+<ul>
+<li><code>elems_</code>: Select from a list of values
+<ul>
+<li>First argument is a default value</li>
+<li><code>elems</code> notation automatically generates the default value argument</li>
+</ul></li>
+<li><code>oneOf_</code>: select from a list of generators
+<ul>
+<li>Notation: <code>oneOf</code></li>
+</ul></li>
+<li><code>freq_</code>: instruct qc to skew the distribution
+<ul>
+<li>Each generator has a <code>nat</code>-value as associated weight</li>
+<li>Notation: <code>freq</code></li>
+</ul></li>
+<li><code>listOf</code>: Get a list of random length from a generator</li>
+<li><code>vectorOf</code>: Get a list of fixed length from a generator</li>
+<li><code>choose</code>: select a value from a given range</li>
+<li><code>sample</code>: sample a generator</li>
+</ul>
+<pre class="coq"><code>Check choose (0,3).
+(* choose (0, 3) : G nat *)
+
+Check List.hd 5 (sample (choose (0,3))).
+(* List.hd 5 (sample (choose (0, 3))) : nat *)
+
+Check choose.
+(* choose : BinNums.N * BinNums.N -&gt; G BinNums.N *)
+</code></pre>
+<p>Typeclasses:</p>
+<ul>
+<li>G: generator</li>
+<li>Producer: For types that are both enumerators and generators
+<ul>
+<li>Probably not meant to be used directly by users..</li>
+</ul></li>
+</ul>
+<p>Links:</p>
+<ul>
+<li><a href="https://softwarefoundations.cis.upenn.edu/qc-current/QuickChickInterface.html">https://softwarefoundations.cis.upenn.edu/qc-current/QuickChickInterface.html</a></li>
+<li><a href="https://github.com/QuickChick/QuickChick/blob/master/examples/RedBlack/testing.v">https://github.com/QuickChick/QuickChick/blob/master/examples/RedBlack/testing.v</a></li>
+<li><a href="https://softwarefoundations.cis.upenn.edu/qc-current/QC.html">https://softwarefoundations.cis.upenn.edu/qc-current/QC.html</a></li>
+</ul>
+<h1 id="hierarchy-builder">Hierarchy builder</h1>
+<h2 id="general-1">General</h2>
+<ul>
+<li><code>HB.about</code></li>
+<li><code>HB.check</code></li>
+</ul>
+<pre class="coq"><code>HB.about isFinite.
+(*
+HB: isFinite is a factory (from &quot;./fintype.v&quot;, line 161)
+
+HB: isFinite operations and axioms are:
+    - enum_subdef
+    - enumP_subdef
+
+HB: isFinite requires the following mixins:
+    - hasDecEq
+
+HB: isFinite provides the following mixins:
+    - isFinite
+*)
+</code></pre>
+<p>Links:</p>
+<ul>
+<li><a href="https://github.com/math-comp/hierarchy-builder/">https://github.com/math-comp/hierarchy-builder/</a></li>
+<li><a href="https://math-comp.github.io/competing-inheritance-paths-in-dependent-type-theory/analysis-slides-ijcar.pdf">https://math-comp.github.io/competing-inheritance-paths-in-dependent-type-theory/analysis-slides-ijcar.pdf</a></li>
+</ul>
+<h2 id="eta"><code>eta</code></h2>
+<p>From <code>structures.v</code>.</p>
+<pre><code>Notation &quot;[ &#39;eta&#39; f ]&quot; := (fun x =&gt; f x) : fun_scope (default interpretation)
+</code></pre>
+<h2 id="core">Core</h2>
+<ul>
+<li><p>mixin: operator + properties</p>
+<ul>
+<li>Naming convention: isStruct (eg: <code>isFinite</code>)</li>
+</ul></li>
+<li><p>structure: carrier + mixin</p>
+<ul>
+<li>Naming convention: Struct</li>
+</ul></li>
+<li><p>(Canonical) Structure instance: Z<sub>module</sub></p></li>
+<li><p>factory</p></li>
+<li><p>builder</p></li>
+<li><p>abbreviation</p></li>
+</ul>
+<h1 id="coqdoc">coqdoc</h1>
+<p><a href="https://coq.inria.fr/refman/using/tools/coqdoc.html">https://coq.inria.fr/refman/using/tools/coqdoc.html</a></p>
+<h2 id="sections">Sections</h2>
+<pre><code>(** * Level 1
+
+    H1 size section. *)
+
+(** ** Level 2
+
+    H2 size section. *)
+</code></pre>
+<p>Increase the number of asterisks accordingly.</p>
+<h2 id="verbatim">Verbatim</h2>
+<p>Enclose between <code>&lt;&lt;</code> and <code>&gt;&gt;</code>.</p>
+<h3 id="multi-line">Multi-line</h3>
+<p>Like,</p>
+<pre><code>&lt;&lt;
+  let rec fact n =
+    if n &lt;= 1 then 1 else n * fact (n-1)
+&gt;&gt;
+</code></pre>
+<h3 id="inline">Inline</h3>
+<p>Like,</p>
+<pre><code>caml expression: &lt;&lt; fact (n-1) &gt;&gt;
+</code></pre>
+<h1 id="company-coq-emacs">company-coq (emacs)</h1>
+<ul>
+<li><p>View documentation of a word: C-c C-d</p></li>
+<li><p>View code outline in a separate buffer: C-c C-, (M-x company-coq-occur)</p></li>
+<li><p>Fold definition: C-c C-/</p></li>
+<li><p>Unfold definition: C-c C-\</p></li>
+<li><p>Make current goal a separate lemma: C-c C-a C-x</p></li>
+<li><p>Go to definition of identifier if present: M-. (doesn't play well with evil-mode)</p></li>
+<li><p>Insert a match case line: M-Ret</p></li>
+<li><p>grep current word in current directory sub-tree: C-c C-&amp;</p></li>
+<li><p>Show diff of expected and actual types upon error: C-c C-a C-d</p></li>
+<li><p>Compare with error messages in docs: C-c C-a C-e</p></li>
+<li><p>Show/unshow definition of a name as an overlay: M-F12:</p></li>
+<li><p>Show documentation for a term if available: Type its name (at least partially) and do C-h</p></li>
+</ul>
+<h1 id="more-packages">More packages</h1>
+<ul>
+<li><p>mathcomp 2.0:</p>
+<ul>
+<li>uses hierarchy builder.</li>
+<li>not completely compatible with older versions.</li>
+</ul></li>
+<li><p><em>coq-ext-lib</em>: has an hlist implementation</p></li>
+<li><p><a href="https://github.com/coq-community/trocq">trocq</a>: refinements, proof transfer</p></li>
+<li><p>coinduction</p></li>
+<li><p>param</p></li>
+<li><p>CoRN</p></li>
+<li><p>CoLoR</p></li>
+<li><p>paramcoq:</p>
+<ul>
+<li><a href="https://github.com/coq-community/paramcoq">https://github.com/coq-community/paramcoq</a></li>
+<li>Provides <code>Parametricity</code> vernacular command.</li>
+</ul></li>
+<li><p>Pretty output/interface:</p>
+<ul>
+<li><a href="https://github.com/coq-community/coqdocjs">CoqdocJS</a></li>
+<li><a href="https://github.com/cpitclaudel/alectryon ">Alectryon</a></li>
+</ul></li>
+</ul>
+<h2 id="better-stdlib">Better 'stdlib'</h2>
+<p>Efforts have been made to augment Coq's stdlib. <em>ʳ</em>.</p>
+<ul>
+<li><a href="https://gitlab.mpi-sws.org/iris/stdpp">stdpp</a> (std++)</li>
+<li><a href="https://github.com/coq/stdlib2">stdlib2</a> (looks bit inactive)
+<ul>
+<li>Seems to use mathcomp under the hood.</li>
+</ul></li>
+</ul>
+<p>mathcomp has got a lot of stuff as well.</p>
+<h2 id="satsmt-interfaces-ai-etc">SAT/SMT interfaces, AI, etc</h2>
+<ul>
+<li>coq-hammer</li>
+<li>tactician
+<ul>
+<li><code>tactician enable</code>: makes ~/.coqrc file that always import tactician.</li>
+<li><code>opam install coq-tactician-stdlib</code>: Optional, recompiles standard library</li>
+</ul></li>
+<li><a href="https://smtcoq.github.io/">SMTCoq</a></li>
+</ul>
+</div>
+</body>
+</html>

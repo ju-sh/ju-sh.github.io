@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>SPLS November 2024</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">SPLS November 2024</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h1 id="substitution-without-copy-and-paste">Substitution without Copy and Paste</h1>
+<ul>
+<li>Speaker: Philip Wadler
+<ul>
+<li>Helped introduce type classes in haskell, among many other things</li>
+<li>Affliation: UoE &amp; IOHK</li>
+</ul></li>
+</ul>
+<hr />
+<ul>
+<li>α-renaming and substitution often feels like an impediment.</li>
+<li>autosubst: makes this easier</li>
+</ul>
+<h2 id="accl-popl-90-explicit-substitutions---abadi-et-al">ACCL (POPL 90): Explicit substitutions - Abadi, et al</h2>
+<ul>
+<li>Key: Subst for all var at once instead of var-by-var</li>
+<li>Language: λΣ</li>
+<li>de-Bruijn orig paper did one by one and others followed ??</li>
+<li>reading original papers can sometimes lead to insights
+<ul>
+<li>But then again, Principia mathematica is quite hard to read</li>
+<li>Eg: It uses number of dots instead of parenthesis (So did Church??)</li>
+</ul></li>
+<li>But you must also be familiar with current research</li>
+<li>One must relate new research wrt to old research =&gt; better communication</li>
+<li>Beta redn in the ACCL paper:
+<ul>
+<li>square bracket: substitution</li>
+<li>∘: like <code>;</code></li>
+<li>↑: upshift by one</li>
+<li><code>⋅</code>: cons</li>
+<li>𝟙: 𝟘</li>
+</ul></li>
+<li>Subst can be represented as a list or fn
+<ul>
+<li>easier with fn</li>
+<li>but list more useful in dependent types ??</li>
+</ul></li>
+</ul>
+<h2 id="autosubst-itp-2015">Autosubst (ITP 2015)</h2>
+<ul>
+<li>Confluent over even open terms</li>
+<li>autosubst still couldn't handle terms quanitifed over sorts
+<ul>
+<li>autosubst2 does apparently</li>
+</ul></li>
+<li>rewriting system
+<ul>
+<li>Eg: [][] → compose → ⋅ →</li>
+</ul></li>
+</ul>
+<p>L M N: Church's favourite var names for terms</p>
+<h2 id="acmm-cpp-2017">ACMM (CPP 2017)</h2>
+<p>Type-and-scope safe progs and their proofs</p>
+<ul>
+<li><p>-,: ⋅</p></li>
+<li><p>su: succ</p></li>
+<li><pre class="example"><code>↑
+</code></pre></li>
+<li><p>sub 1st arg: traditionally done covariantly</p></li>
+<li><p>sub and ren =&gt; 4 proofs instead of 1 proof ???</p>
+<ul>
+<li>This paper did a generalization and instantiated it 4 times</li>
+</ul></li>
+</ul>
+<p>New stuff:</p>
+<ul>
+<li>well ordering for termination proof</li>
+<li>normalization by renaming</li>
+</ul>
+<h2 id="abw-cpp-25">ABW (CPP '25 ??)</h2>
+<p>Subst without copy paste - Altenkirch, Burke, Wadler</p>
+<ul>
+<li>Fording
+<ul>
+<li>Henry Ford quote: can have any car a long as it'ss black</li>
+</ul></li>
+</ul>
+<h2 id="misc">Misc</h2>
+<ul>
+<li>Feynmann books:
+<ul>
+<li>What you care about what other people think</li>
+<li>Surely you are joking</li>
+</ul></li>
+<li>Wadler's textbook (after 2017)
+<ul>
+<li>I guess it's the agda book</li>
+</ul></li>
+<li>Intrinsic proof vs extrinsic proof</li>
+<li>automatic REWRITE in agda</li>
+</ul>
+<h1 id="cardano">Cardano</h1>
+<p>Speaker affliation: IOHK</p>
+<ul>
+<li>Cardano is a block chain</li>
+<li>Written in haskell, formalized in agda</li>
+</ul>
+<p>PAPER: System F in agda: for fun and profit - James Chapman et al</p>
+<h2 id="misc-1">Misc</h2>
+<ul>
+<li>CEK machine</li>
+</ul>
+<h1 id="freely-extending-interpreters">Freely extending interpreters</h1>
+<p>Greg Partial evaluator</p>
+<p>Why partial evaluation:</p>
+<ul>
+<li>deptypes: term within type =&gt; term must evaluated first</li>
+<li>optimizing compilers: less complex prog input =&gt; less work for compiler</li>
+<li>possibility of running progs with holes
+<ul>
+<li>partially run the program. stuck at hole ??</li>
+</ul></li>
+</ul>
+<p>Comment: Scheme has only one type TST ??</p>
+<h2 id="misc-2">Misc</h2>
+<ul>
+<li>setoid: set with an equiv relation.
+<ul>
+<li>Why is it so useful?</li>
+</ul></li>
+<li>formal defn of a theory in logic</li>
+<li>context: type of vars</li>
+<li>env: value of vars ??</li>
+<li>second order theory</li>
+<li>substitution monad</li>
+</ul>
+<h1 id="hardware-architectures-for-lazy-functional-programming-revisited">Hardware Architectures for Lazy Functional Programming, Revisited</h1>
+<ul>
+<li><p>Craig Ramsay, Heriot-Watt University</p>
+<ul>
+<li>Project: haflang</li>
+</ul></li>
+<li><p>John Backus Turing award lecture</p></li>
+<li><p>GRIP: Circuit that supported parallel eval of fnal progs ??</p></li>
+<li><p>Heron</p></li>
+<li><p>Graph reduction</p></li>
+<li><p>Other univs working on similar themes</p></li>
+<li><p>DBT: What are templates in this context?</p></li>
+</ul>
+<h2 id="misc-3">Misc</h2>
+<ul>
+<li>Garbage collection techniques
+<ul>
+<li>mark and sweep (not suited for streaming apps because of delay ??)</li>
+<li>ref counting</li>
+</ul></li>
+<li>hardware multithreading</li>
+</ul>
+<h1 id="forwarders-should-be-lazy---wen-kokke">Forwarders Should Be Lazy - Wen Kokke</h1>
+<ul>
+<li>Classical processes: process calculus interpreation of classical linear logic</li>
+</ul>
+<p>DBT: Did Pfenning started something related to linear logic??</p>
+<h2 id="misc-4">Misc</h2>
+<ul>
+<li>Duals</li>
+<li>Cut elimination
+<ul>
+<li>Principal cut elimination</li>
+</ul></li>
+</ul>
+<h1 id="isabelle-talk">Isabelle talk</h1>
+<p>Misc:</p>
+<ul>
+<li>Axiom of choice</li>
+</ul>
+<h1 id="tale-of-two-compilers-wim">Tale of two compilers: Wim</h1>
+<p>Compiling fortran to utx</p>
+<p>Started as an attempt to compile fortran 77 to fortarn 90</p>
+<p>fortran still dominant in supercomputer usage</p>
+<p>pre 77 Fortran:</p>
+<ul>
+<li>Implicit types</li>
+<li>no dyn alloc</li>
+<li>no ptrs</li>
+</ul>
+<p>vm: uxn lang: uxntal wim's functional lang on top of uxn: funktal</p>
+<p>Comments by wim:</p>
+<ul>
+<li>WASM is supposedly stack-based but it isnt' really? Eg: Mutliple arg ??</li>
+<li>yeah wasm has an s-expr repr: <a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format">https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format</a></li>
+</ul>
+<h1 id="cconlucsion">CConlucsion</h1>
+<p>Next spls march 2025 next splv July 2025</p>
+<ul>
+<li>before edinburgh festival</li>
+</ul>
+</div>
+</body>
+</html>

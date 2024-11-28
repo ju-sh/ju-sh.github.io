@@ -22,13 +22,13 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
@@ -36,8 +36,17 @@
 </header>
 
 <ul>
+    <li>Date created: 13-Apr-2022</li>
     </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/coq.html">coq</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
@@ -47,17 +56,9 @@ About making heterogeneous list (hlist) in Coq's Gallina.
 <div id="content-container">
 <hr />
 <p>In programming languages, a list is a collection of values.</p>
-<p>The built-in lists of some programming languages (like OCaml and C++)
-are homogeneous lists. ie, lists where all elements should be of the
-same type.</p>
-<p>Whereas the lists that come out of the box in some other programming
-languages (like Python) can be heterogeneous, where the elements needn't
-all be of the same type. (I included a sample usage of lists in a few
-programming languages under the 'Addendum' section at the end of this
-blog post.)</p>
-<p>In Coq, we have built-in lists in the form of <a
-href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#list"><code>list</code></a>,
-which is defined as an inductive type:</p>
+<p>The built-in lists of some programming languages (like OCaml and C++) are homogeneous lists. ie, lists where all elements should be of the same type.</p>
+<p>Whereas the lists that come out of the box in some other programming languages (like Python) can be heterogeneous, where the elements needn't all be of the same type. (I included a sample usage of lists in a few programming languages under the 'Addendum' section at the end of this blog post.)</p>
+<p>In Coq, we have built-in lists in the form of <a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#list"><code>list</code></a>, which is defined as an inductive type:</p>
 <pre class="coq"><code>Inductive list (A : Type) : Set :=
 | nil  : list A
 | cons : A -&gt; list A -&gt; list A.
@@ -65,8 +66,7 @@ which is defined as an inductive type:</p>
 Arguments nil {A}.
 Arguments cons {A} a l.
 </code></pre>
-<p>As is clear from the definition, this list allows only elements of
-the same type. ie, it's a homogeneous list.</p>
+<p>As is clear from the definition, this list allows only elements of the same type. ie, it's a homogeneous list.</p>
 <p>Examples of using Coq's <code>list</code>:</p>
 <pre class="coq"><code>Require Import List.
 Import ListNotations.
@@ -77,8 +77,7 @@ Check [1; 2].
 Check [true; false].
 (* [true; false] : list bool *)
 </code></pre>
-<p>Coq's type checker won't be happy if we try making a non-homogenous
-list with <code>list</code>:</p>
+<p>Coq's type checker won't be happy if we try making a non-homogenous list with <code>list</code>:</p>
 <pre class="coq"><code>Check [1; true].
 (*
 The term &quot;[true]&quot; has type &quot;list bool&quot; while it is expected to have type
@@ -91,15 +90,9 @@ The term &quot;[1]&quot; has type &quot;list nat&quot; while it is expected to h
  &quot;list bool&quot;.
 *)
 </code></pre>
-<p>In the <code>list</code> type, the type of the <em>elements</em> of
-the list is declared as an implicit argument. So Coq looks at the first
-element of the list and expects every other element to be of the same
-type.</p>
-<p>A way to have heterogeneous lists (hlists) in Coq is described in the
-book <a href="http://adam.chlipala.net/cpdt/"><em>Certified Programming
-with Dependent Types</em></a>.</p>
-<p>I had found it a bit difficult to understand at first, so I describe
-the way that helped me understand it in this blog post.</p>
+<p>In the <code>list</code> type, the type of the <em>elements</em> of the list is declared as an implicit argument. So Coq looks at the first element of the list and expects every other element to be of the same type.</p>
+<p>A way to have heterogeneous lists (hlists) in Coq is described in the book <a href="http://adam.chlipala.net/cpdt/"><em>Certified Programming with Dependent Types</em></a>.</p>
+<p>I had found it a bit difficult to understand at first, so I describe the way that helped me understand it in this blog post.</p>
 <h2 id="an-hlist-type">An <code>hlist</code> type</h2>
 <p>Here's an inductive type representing <code>hlist</code> values:</p>
 <pre class="coq"><code>Inductive hlist (A : Type) (B : A -&gt; Type) : list A -&gt; Type :=
@@ -107,33 +100,15 @@ the way that helped me understand it in this blog post.</p>
 | hcons : forall (x : A) (ls : list A),
     (B x) -&gt; hlist A B ls -&gt; hlist A B (x::ls).
 </code></pre>
-<p>In this definition, the <code>hlist</code> type has a list associated
-with it (the <code>list A</code>).</p>
-<p>We also have <code>B</code>, which is a function that maps the actual
-type of the elements of the hlist to a common type. It does a
-'translation' to make Coq sort of feel that all elements are of the same
-type so that the type checker will stay happy.</p>
-<p>The elements of the <code>list A</code> are passed as arguments to
-the <code>B</code> function to get the type of the corresponding hlist
-element. ie, the i-th element of the <code>list A</code> is passed to
-<code>B</code> to get a type corresponding to the i-th element of the
-hlist.</p>
-<p>The way the <code>hlist</code> will turn out depends on our choice of
-<code>B</code>. I took <code>(fun x:Set =&gt; Type)</code> as the value
-of <code>B</code> (since <code>Type</code> is the type of all
-types).</p>
-<p>This is just one way of doing this. Coq just needs all elements to
-appear to be of the same type, one way or the other.</p>
-<p>Length of list in <code>hcons</code>'s type is same as the number of
-elements of the hlist to which a new element is being added. Quite like
-the case of <code>list</code>.</p>
-<p>(This often confuses me. I somehow keep thinking that this list is
-associated with the entire list put together by <code>hcons</code>
-instead of just its <code>hlist</code> argument to which a new element
-is being added.)</p>
+<p>In this definition, the <code>hlist</code> type has a list associated with it (the <code>list A</code>).</p>
+<p>We also have <code>B</code>, which is a function that maps the actual type of the elements of the hlist to a common type. It does a 'translation' to make Coq sort of feel that all elements are of the same type so that the type checker will stay happy.</p>
+<p>The elements of the <code>list A</code> are passed as arguments to the <code>B</code> function to get the type of the corresponding hlist element. ie, the i-th element of the <code>list A</code> is passed to <code>B</code> to get a type corresponding to the i-th element of the hlist.</p>
+<p>The way the <code>hlist</code> will turn out depends on our choice of <code>B</code>. I took <code>(fun x:Set =&gt; Type)</code> as the value of <code>B</code> (since <code>Type</code> is the type of all types).</p>
+<p>This is just one way of doing this. Coq just needs all elements to appear to be of the same type, one way or the other.</p>
+<p>Length of list in <code>hcons</code>'s type is same as the number of elements of the hlist to which a new element is being added. Quite like the case of <code>list</code>.</p>
+<p>(This often confuses me. I somehow keep thinking that this list is associated with the entire list put together by <code>hcons</code> instead of just its <code>hlist</code> argument to which a new element is being added.)</p>
 <h3 id="parameters">Parameters</h3>
-<p>Let's have a look at the arguments needed by the <code>hlist</code>
-constructors.</p>
+<p>Let's have a look at the arguments needed by the <code>hlist</code> constructors.</p>
 <p><code>hcons</code> needs the following arguments:</p>
 <table>
 <thead>
@@ -153,8 +128,7 @@ constructors.</p>
 </tr>
 <tr class="odd">
 <td><code>x : A</code></td>
-<td>Value to pass to <code>B</code> for new element
-<code>val</code></td>
+<td>Value to pass to <code>B</code> for new element <code>val</code></td>
 </tr>
 <tr class="even">
 <td><code>ls : list A</code></td>
@@ -170,11 +144,8 @@ constructors.</p>
 </tr>
 </tbody>
 </table>
-<p>(I gave names <code>val</code> and <code>xs</code> for convenience in
-the above table.)</p>
-<p>The 'translation' performed by the <code>B</code> function sort of
-makes it looks as if all elements of the hlist are of type
-<code>Type</code>.</p>
+<p>(I gave names <code>val</code> and <code>xs</code> for convenience in the above table.)</p>
+<p>The 'translation' performed by the <code>B</code> function sort of makes it looks as if all elements of the hlist are of type <code>Type</code>.</p>
 <p>A simple <code>hcons</code> constructor usage looks like:</p>
 <pre><code>hcons  Set   (fun x =&gt; x)   nat   []%list   3   hnil.
        | |   |          |   | |   |     |   |   |  |
@@ -184,8 +155,7 @@ makes it looks as if all elements of the hlist are of type
         |                    |              |
      A:Type                 x:A            B x
 </code></pre>
-<p>(Note: Length of the <code>ls</code> here is one less than the length
-of the resultant <code>hlist</code> itself.)</p>
+<p>(Note: Length of the <code>ls</code> here is one less than the length of the resultant <code>hlist</code> itself.)</p>
 <pre class="coq"><code>Compute hcons.
 (*
 = fun (A : Type) (B : A -&gt; Type) (x : A) (ls : list A)
@@ -246,10 +216,8 @@ Compute hcons Set (fun x =&gt; x) nat []%list 3
 = hcons Set (fun x : Set =&gt; x) nat [] 3 (hnil Set (fun x : Set =&gt; x))
 *)
 </code></pre>
-<p>(Well, the output is quite verbose and hence not so readable. We can
-make this better with notations. We'll do that later.)</p>
-<p><code>hnil</code> takes just the <code>A</code> and <code>B</code> as
-arguments.</p>
+<p>(Well, the output is quite verbose and hence not so readable. We can make this better with notations. We'll do that later.)</p>
+<p><code>hnil</code> takes just the <code>A</code> and <code>B</code> as arguments.</p>
 <p>A sample usage of the <code>hnil</code> constructor:</p>
 <pre><code>hnil  Set  (fun x =&gt; x)
       | |  |          |
@@ -282,10 +250,8 @@ Compute hnil Set (fun x =&gt; x).
 (* Okay, that&#39;s it. *)
 </code></pre>
 <h2 id="a-few-functions">A few functions</h2>
-<p>Now, let's define a few function for working with <code>hlist</code>
-values.</p>
-<p>But before that, it's good to have a few example hlists that can be
-used to try out these functions:</p>
+<p>Now, let's define a few function for working with <code>hlist</code> values.</p>
+<p>But before that, it's good to have a few example hlists that can be used to try out these functions:</p>
 <pre class="coq"><code>(* [[ 3; true ]] *)
 Example hls1 : hlist Set (fun x =&gt; x) [nat; bool] :=
   hcons Set (fun x=&gt;x) nat [bool] 3
@@ -298,22 +264,14 @@ Example hls2 : hlist Set (fun x =&gt; x) [bool; nat; bool] :=
     (hcons Set (fun x=&gt;x) nat [bool] 3
       (hcons Set (fun x=&gt;x) bool [] true (hnil _ _))).
 </code></pre>
-<p>While defining functions for <code>hlist</code>, we must bear in mind
-that Gallina functions need to be total. ie, all possibilities need to
-be considered.</p>
-<p>To satisfy this criterion while still keeping the type checker happy,
-the functions whose definitions are given below return <code>unit</code>
-type when a value cannot be returned (denoting an abnormal/error
-condition).</p>
+<p>While defining functions for <code>hlist</code>, we must bear in mind that Gallina functions need to be total. ie, all possibilities need to be considered.</p>
+<p>To satisfy this criterion while still keeping the type checker happy, the functions whose definitions are given below return <code>unit</code> type when a value cannot be returned (denoting an abnormal/error condition).</p>
 <h3 id="length">Length</h3>
-<p>Calculating the length of an <code>hlist</code> is quite easy as the
-<code>hlist</code> type itself carries the information needed to find
-its length.</p>
+<p>Calculating the length of an <code>hlist</code> is quite easy as the <code>hlist</code> type itself carries the information needed to find its length.</p>
 <pre class="coq"><code>Definition hlength {A:Type} {B:A-&gt;Type}
     {ls : list A} (hls : hlist A B ls) : nat := length ls.
 </code></pre>
-<p><code>hlength</code> merely takes <code>ls</code> which is part of
-the <code>hlist</code> type and returns its length.</p>
+<p><code>hlength</code> merely takes <code>ls</code> which is part of the <code>hlist</code> type and returns its length.</p>
 <p>Sample usage:</p>
 <pre><code>Compute hlength hls1.
 (* 2 : nat *)
@@ -331,8 +289,7 @@ the <code>hlist</code> type and returns its length.</p>
   | hcons _ _ typ typs x xs =&gt; x
   end.
 </code></pre>
-<p><code>hhead</code> returns <code>tt : unit</code> if the argument
-<code>hlist</code> is empty.</p>
+<p><code>hhead</code> returns <code>tt : unit</code> if the argument <code>hlist</code> is empty.</p>
 <p>Sample usage:</p>
 <pre class="coq"><code>Compute hhead hls1.
 (*
@@ -344,8 +301,7 @@ the <code>hlist</code> type and returns its length.</p>
 *)
 </code></pre>
 <h3 id="tail">Tail</h3>
-<p>Function that gets all elements of an <code>hlist</code> except the
-first element.</p>
+<p>Function that gets all elements of an <code>hlist</code> except the first element.</p>
 <pre class="coq"><code>Definition htail {A: Type} {B: A -&gt; Type}
     {ls: list A} (hls : hlist A B ls)
   : match ls with
@@ -380,8 +336,7 @@ Compute htail (htail hls1).
 (* ie, an empty hlist *)
 </code></pre>
 <h3 id="indexing">Indexing</h3>
-<p>Function to return the <code>i</code>-th element of an
-<code>hlist</code>.</p>
+<p>Function to return the <code>i</code>-th element of an <code>hlist</code>.</p>
 <p>Indexing starts from <code>0</code>.</p>
 <pre class="coq"><code>Fixpoint hidx_helper {A : Type} (B:A-&gt;Type)
     (ls : list A) (idx : nat) : Type :=
@@ -401,9 +356,7 @@ Fixpoint hidx {A: Type} {B: A -&gt; Type} {ls: list A}
   | S n&#39;, @hcons _ _ _ _ x xs =&gt; hidx n&#39; xs
   end.
 </code></pre>
-<p>A helper function is used to calculate the return type. Not sure how
-good a definition this is, as the return type of <code>hidx</code> will
-contain the <code>hidx_helper</code>. But it does seem to work. 😊</p>
+<p>A helper function is used to calculate the return type. Not sure how good a definition this is, as the return type of <code>hidx</code> will contain the <code>hidx_helper</code>. But it does seem to work. 😊</p>
 <p>Sample usage:</p>
 <pre class="coq"><code>Compute hidx 0 hls2.
 (*
@@ -441,8 +394,7 @@ Compute hidx 3 hls2.
       hcons A B _ _ y (happ ys hls2)
   end.
 </code></pre>
-<p>The second <code>hlist</code> is added to the end of the first
-<code>hlist</code>.</p>
+<p>The second <code>hlist</code> is added to the end of the first <code>hlist</code>.</p>
 <p>Sample usage:</p>
 <pre class="coq"><code>Compute happ hls1 hls2.
 (* [[ 3; true; false; 3; true ]] *)
@@ -458,15 +410,9 @@ bool])
 *)
 </code></pre>
 <h2 id="notations">Notations</h2>
-<p>The output that we saw so far were often too complex or unreadable.
-In addition we need to write stuff like that to make hlist values as
-well.</p>
-<p>To have a more readable <code>hlist</code> representation, we can use
-<a
-href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html">Coq
-notations</a>.</p>
-<p>We can think of these notations as doing simple textual replacement.
-We can make short notations for bigger definitions.</p>
+<p>The output that we saw so far were often too complex or unreadable. In addition we need to write stuff like that to make hlist values as well.</p>
+<p>To have a more readable <code>hlist</code> representation, we can use <a href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html">Coq notations</a>.</p>
+<p>We can think of these notations as doing simple textual replacement. We can make short notations for bigger definitions.</p>
 <p>All right, let's make a few notations.</p>
 <pre class="coq"><code>Module HListNotations.
 
@@ -492,8 +438,7 @@ Infix &quot;++&quot; := happ
 
 End HListNotations.
 </code></pre>
-<p>Placed all these notations into a module named
-<code>HListNotations</code> (under a new scope with 'hlist' as key).</p>
+<p>Placed all these notations into a module named <code>HListNotations</code> (under a new scope with 'hlist' as key).</p>
 <p>This module can then be imported with</p>
 <pre class="coq"><code>Import HListNotations.
 </code></pre>
@@ -585,10 +530,8 @@ Compute ([[1, true]]++[[&quot;hi&quot;%string]])%hlist.
 *)
 </code></pre>
 <h2 id="implicit-arguments">Implicit arguments</h2>
-<p>Though we now got notations, we might still need to use the hlist
-constructors directly.</p>
-<p>To make such explicit usages easier, let us make a few of the
-constructor parameters implicit.</p>
+<p>Though we now got notations, we might still need to use the hlist constructors directly.</p>
+<p>To make such explicit usages easier, let us make a few of the constructor parameters implicit.</p>
 <p><code>hnil</code> needs the following arguments:</p>
 <table>
 <thead>
@@ -622,8 +565,7 @@ where
 ?B : [ |- ?A -&gt; Type]
 *)
 </code></pre>
-<p>In the case of <code>hcons</code>, the following arguments are
-needed:</p>
+<p>In the case of <code>hcons</code>, the following arguments are needed:</p>
 <table>
 <thead>
 <tr class="header">
@@ -658,11 +600,8 @@ needed:</p>
 </tr>
 </tbody>
 </table>
-<p>(Here, I used <code>xs</code> as the name of the <code>hlist</code>
-to which an element is added with <code>hcons</code> and
-<code>val</code> to refer to the new element being added.)</p>
-<p>Making <code>A</code>, <code>B</code>, <code>x</code> and
-<code>ls</code> implicit,</p>
+<p>(Here, I used <code>xs</code> as the name of the <code>hlist</code> to which an element is added with <code>hcons</code> and <code>val</code> to refer to the new element being added.)</p>
+<p>Making <code>A</code>, <code>B</code>, <code>x</code> and <code>ls</code> implicit,</p>
 <pre class="coq"><code>Arguments hcons {A B x ls}.
 </code></pre>
 <p><code>hcons</code> may now be used like:</p>
@@ -679,14 +618,8 @@ Check hcons 3 hnil : hlist _ (fun x=&gt;x) _.
 
 Check @hcons Set (fun x=&gt;x) nat []%list 3 hnil.
 </code></pre>
-<p>Observe that while using <code>hcons</code> with implicit arguments,
-we had to provide the <code>hlist</code>'s type as well, whereas we
-needn't do that for the non-implicit argument version. This is due to
-the way in which our notation was defined. If the type of
-<code>hlist</code> is not provided, Coq has no way of figuring out the
-values of arguments declared as implicit.</p>
-<p>We could also make a few arguments of the <code>hlist</code> type
-implicit as well.</p>
+<p>Observe that while using <code>hcons</code> with implicit arguments, we had to provide the <code>hlist</code>'s type as well, whereas we needn't do that for the non-implicit argument version. This is due to the way in which our notation was defined. If the type of <code>hlist</code> is not provided, Coq has no way of figuring out the values of arguments declared as implicit.</p>
+<p>We could also make a few arguments of the <code>hlist</code> type implicit as well.</p>
 <p><code>hlist</code> needs the following arguments:</p>
 <table>
 <thead>
@@ -710,8 +643,7 @@ implicit as well.</p>
 </tr>
 </tbody>
 </table>
-<p>Let's make <code>A</code> and the <code>list A</code> implicit, while
-keeping <code>B</code> as it is.</p>
+<p>Let's make <code>A</code> and the <code>list A</code> implicit, while keeping <code>B</code> as it is.</p>
 <pre class="coq"><code>Arguments hlist {A} _ {ls}.
 </code></pre>
 <p>Now we can have:</p>
@@ -729,16 +661,12 @@ hcons 3 [[ ]]%hlist : hlist (fun x : Type =&gt; x)
      : hlist (fun x : Type =&gt; x)
 *)
 </code></pre>
-<p>Right, that looks much more concise than what we started off
-with.</p>
-<p>As was the case with notations, this is just one way doing things.
-There could be other (better) ways.</p>
+<p>Right, that looks much more concise than what we started off with.</p>
+<p>As was the case with notations, this is just one way doing things. There could be other (better) ways.</p>
 <h2 id="summary">Summary</h2>
 <p>All the definitions that we made.</p>
-<p>Included the functions as well as the notations makes use of some
-them.</p>
-<p>This version of the functions makes some use of the implicit
-arguments that we had declared.</p>
+<p>Included the functions as well as the notations makes use of some them.</p>
+<p>This version of the functions makes some use of the implicit arguments that we had declared.</p>
 <pre class="coq"><code>Require Import List.
 Import ListNotations.
 
@@ -833,74 +761,57 @@ End HListNotations.
 </code></pre>
 <h2 id="references">References</h2>
 <ul>
-<li><a
-href="http://adam.chlipala.net/cpdt/html/Cpdt.DataStruct.html">CPDT:
-Heterogeneous Lists</a></li>
-<li><a
-href="https://github.com/braibant/Synthesis/blob/922982aaddb8a7a16101ff304c45d24a6265dc2e/src/DList.v">Another
-hlist implementation in Coq</a></li>
-<li><a
-href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#list">https://coq.inria.fr/library/Coq.Init.Datatypes.html#list</a></li>
+<li><a href="http://adam.chlipala.net/cpdt/html/Cpdt.DataStruct.html">CPDT: Heterogeneous Lists</a></li>
+<li><a href="https://github.com/braibant/Synthesis/blob/922982aaddb8a7a16101ff304c45d24a6265dc2e/src/DList.v">Another hlist implementation in Coq</a></li>
+<li><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#list">https://coq.inria.fr/library/Coq.Init.Datatypes.html#list</a></li>
 </ul>
-<p>Thanks to Gaëtan Gilbert for help in setting the indexing function
-right. <a
-href="https://coq.gitlab.io/zulip-archive/stream/237977-Coq-users/topic/Indexing.20into.20an.20hlist.html">🙂</a></p>
+<p>Thanks to Gaëtan Gilbert for help in setting the indexing function right. <a href="https://coq.gitlab.io/zulip-archive/stream/237977-Coq-users/topic/Indexing.20into.20an.20hlist.html">🙂</a></p>
 <h2 id="addendum">Addendum</h2>
 <h3 id="list-in-different-languages">List in different languages</h3>
 <p><strong>Lists in OCaml</strong>:</p>
-<div class="sourceCode" id="cb31"><pre
-class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a># <span class="co">(* integer list *)</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a># [<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>];;</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> <span class="dt">list</span> = [<span class="dv">1</span>; <span class="dv">2</span>; <span class="dv">3</span>]</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a># <span class="co">(* boolean list *)</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a># [<span class="kw">true</span>;<span class="kw">false</span>];;</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">bool</span> <span class="dt">list</span> = [<span class="kw">true</span>; <span class="kw">false</span>]</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a># <span class="co">(* mixed type list gives error *)</span></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a># [<span class="dv">1</span>;<span class="kw">true</span>];;</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>Error: This expression has <span class="kw">type</span> <span class="dt">bool</span> but an expression was expected <span class="kw">of</span> <span class="kw">type</span></span></code></pre></div>
-<p>There are ways to have hlists in OCaml similar to Coq, though. See <a
-href="https://discuss.ocaml.org/t/a-heterogenous-list-difflist-that-you-can-both-append-to-and-safely-access-elements/3205/7">here</a>
-for a discussion on that.</p>
-<p><strong>Lists in C++</strong>: One way of having lists in C++ is by
-using <code>list</code> from its standard library.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a># <span class="co">(* integer list *)</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true"></a># [<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>];;</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true"></a>- : <span class="dt">int</span> <span class="dt">list</span> = [<span class="dv">1</span>; <span class="dv">2</span>; <span class="dv">3</span>]</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true"></a># <span class="co">(* boolean list *)</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true"></a># [<span class="kw">true</span>;<span class="kw">false</span>];;</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true"></a>- : <span class="dt">bool</span> <span class="dt">list</span> = [<span class="kw">true</span>; <span class="kw">false</span>]</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true"></a># <span class="co">(* mixed type list gives error *)</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true"></a># [<span class="dv">1</span>;<span class="kw">true</span>];;</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true"></a>Error: This expression has <span class="kw">type</span> <span class="dt">bool</span> but an expression was expected <span class="kw">of</span> <span class="kw">type</span></span></code></pre></div>
+<p>There are ways to have hlists in OCaml similar to Coq, though. See <a href="https://discuss.ocaml.org/t/a-heterogenous-list-difflist-that-you-can-both-append-to-and-safely-access-elements/3205/7">here</a> for a discussion on that.</p>
+<p><strong>Lists in C++</strong>: One way of having lists in C++ is by using <code>list</code> from its standard library.</p>
 <p>An example program using <code>list</code>:</p>
-<div class="sourceCode" id="cb32"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Make an integer list and display its elements</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;list&gt;</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>list<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> l <span class="op">=</span> <span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">};</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> elem <span class="op">:</span> l <span class="op">)</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cout<span class="op"> &lt;&lt;</span> elem <span class="op">&lt;&lt;</span> <span class="st">&quot; &quot;</span><span class="op">;</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout<span class="op"> &lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a><span class="co">// Make an integer list and display its elements</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;list&gt;</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true"></a><span class="dt">int</span> main()</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true"></a>{</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true"></a>    <span class="bu">std::</span>list&lt;<span class="dt">int</span>&gt; l = {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>};</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true"></a>    <span class="cf">for</span> (<span class="dt">int</span> elem : l )</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true"></a>    {</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true"></a>        <span class="bu">std::</span>cout &lt;&lt; elem &lt;&lt; <span class="st">&quot; &quot;</span>;</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true"></a>    }</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true"></a>    <span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>;</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true"></a>}</span></code></pre></div>
 <p>This would give <code>1 2 3 </code> as output.</p>
-<p><strong>Lists in Python</strong>: Python lists can be
-heterogeneous.</p>
-<div class="sourceCode" id="cb33"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># integer list</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># list with integers and a bool</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> [<span class="dv">1</span>, <span class="va">True</span>, <span class="dv">2</span>]</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="va">True</span>, <span class="dv">2</span>]</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co"># list with integer, float, string and bool</span></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> [<span class="dv">1</span>, <span class="fl">3.1415926</span>, <span class="st">&quot;hi&quot;</span>, <span class="va">True</span>]</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="fl">3.1415926</span>, <span class="st">&#39;hi&#39;</span>, <span class="va">True</span>]</span></code></pre></div>
-<h3 id="hlist-with-narrower-b"><code>hlist</code> with 'narrower'
-<code>B</code></h3>
-<p>We had used <code>(fun x:Set =&gt; Type)</code> as the value of
-<code>B</code> throughout the blog post. It's possible to have narrower
-types as well.</p>
+<p><strong>Lists in Python</strong>: Python lists can be heterogeneous.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a><span class="co"># integer list</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true"></a>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true"></a><span class="co"># list with integers and a bool</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> [<span class="dv">1</span>, <span class="va">True</span>, <span class="dv">2</span>]</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true"></a>[<span class="dv">1</span>, <span class="va">True</span>, <span class="dv">2</span>]</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true"></a><span class="co"># list with integer, float, string and bool</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> [<span class="dv">1</span>, <span class="fl">3.1415926</span>, <span class="st">&quot;hi&quot;</span>, <span class="va">True</span>]</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true"></a>[<span class="dv">1</span>, <span class="fl">3.1415926</span>, <span class="st">&#39;hi&#39;</span>, <span class="va">True</span>]</span></code></pre></div>
+<h3 id="hlist-with-narrower-b"><code>hlist</code> with 'narrower' <code>B</code></h3>
+<p>We had used <code>(fun x:Set =&gt; Type)</code> as the value of <code>B</code> throughout the blog post. It's possible to have narrower types as well.</p>
 <pre class="coq"><code>Check @hcons nat (fun x:nat =&gt; nat) 0 []%list 3 hnil.
 (*
 hcons 3 [[ ]]%hlist

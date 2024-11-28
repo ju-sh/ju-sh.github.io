@@ -22,13 +22,13 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
@@ -36,6 +36,7 @@
 </header>
 
 <ul>
+    <li>Date created: May-2021</li>
     </ul>
 
 
@@ -44,12 +45,10 @@
 <div id="content-container">
 <hr />
 <h2 id="relation">Relation</h2>
-<p>A (binary) relation R:X→Y is a sub-set of the Cartesian product X ×
-Y.</p>
+<p>A (binary) relation R:X→Y is a sub-set of the Cartesian product X × Y.</p>
 <p>ie, R ⊆ (X × Y)</p>
 <p>A set of <em>ordered pairs</em>.</p>
-<p><strong>n-ary relation</strong>: a sub-set of a Cartesian product A₁
-× A₂ × … × Aₙ</p>
+<p><strong>n-ary relation</strong>: a sub-set of a Cartesian product A₁ × A₂ × … × Aₙ</p>
 <ul>
 <li><strong>Homogenous relation</strong>: When X = Y</li>
 <li><strong>Heterogenous relation</strong>: When X ≠ Y</li>
@@ -63,17 +62,13 @@ Y.</p>
 </ul>
 <p>Eg: Arithmetic equality.</p>
 <h3 id="equivalence-class">Equivalence class</h3>
-<p>Given an equivalence relation R defined on a set A, if a ∈ A,
-equivalence class of a is</p>
+<p>Given an equivalence relation R defined on a set A, if a ∈ A, equivalence class of a is</p>
 <pre><code>[a] = {x∈A | aRx}
 </code></pre>
-<p>Set of all equivalence classes with regard to an equivalence relation
-R defined on a set A is</p>
+<p>Set of all equivalence classes with regard to an equivalence relation R defined on a set A is</p>
 <pre><code>[A]= {[a] | a ∈ A}
 </code></pre>
-<p>which is also written as <code>A/R</code> (read as <code>A</code>
-modulo <code>R</code>). This is the <strong>quotient set</strong> of
-<code>A</code> by <code>R</code>.</p>
+<p>which is also written as <code>A/R</code> (read as <code>A</code> modulo <code>R</code>). This is the <strong>quotient set</strong> of <code>A</code> by <code>R</code>.</p>
 <h2 id="operation">Operation</h2>
 <p>Not the same as relation.</p>
 <p>A binary relation is not necessarily a function</p>
@@ -97,42 +92,31 @@ modulo <code>R</code>). This is the <strong>quotient set</strong> of
 </ul>
 <p>ie, a partial order is an anti-symmetric preorder.</p>
 <h3 id="partially-ordered-set-poset">Partially ordered set (poset)</h3>
-<p>Combination of a set and a partially ordered relation on that
-set.</p>
+<p>Combination of a set and a partially ordered relation on that set.</p>
 <p>Eg: the relation &lt;= on the set of integers.</p>
 <pre><code>a&lt;=a                      ie, reflexive.
 a&lt;=b and b&lt;=a means a==b. ie, anti-symmetric
 a&lt;=b and b&lt;=c means a&lt;=c. ie, transitive
 </code></pre>
-<h3 id="totallylinearly-ordered-set-full-order">Totally/linearly ordered
-set (full order)</h3>
-<p>A poset where for any two elements a and b of the set, aRb or
-bRa.</p>
+<h3 id="totallylinearly-ordered-set-full-order">Totally/linearly ordered set (full order)</h3>
+<p>A poset where for any two elements a and b of the set, aRb or bRa.</p>
 <ul>
 <li>aka <em>full order</em>.</li>
 </ul>
-<p>Eg: &lt;= over the set of integers is a total ordering. But &lt; over
-integers isn't. Because if a=b, neither a&lt;b nor b&lt;a holds.</p>
+<p>Eg: &lt;= over the set of integers is a total ordering. But &lt; over integers isn't. Because if a=b, neither a&lt;b nor b&lt;a holds.</p>
 <h2 id="function">Function</h2>
 <p>A special type of relations.</p>
-<p>A relation R:X→Y is a function iff every elemment of X has only one
-image in Y.</p>
+<p>A relation R:X→Y is a function iff every elemment of X has only one image in Y.</p>
 <p>Every element in X must have exactly one image in Y.</p>
 <p>Also denoted as</p>
 <pre><code>y = f(x)
 </code></pre>
-<p>Functions are useful to represent how one quantity changes with
-respect to changes in another quantity.</p>
-<p>Like the value of a <a
-href="https://en.wikipedia.org/wiki/Sine_wave">sinsuoidal wave</a> (of
-the form <code>A.sin(ωt + Φ)</code>) being dependent on time
-(<code>t</code>).</p>
-<p>A relation is <em>not</em> a function if one of the following is
-true:</p>
+<p>Functions are useful to represent how one quantity changes with respect to changes in another quantity.</p>
+<p>Like the value of a <a href="https://en.wikipedia.org/wiki/Sine_wave">sinsuoidal wave</a> (of the form <code>A.sin(ωt + Φ)</code>) being dependent on time (<code>t</code>).</p>
+<p>A relation is <em>not</em> a function if one of the following is true:</p>
 <ul>
 <li>∃x x ∈ X, f(x) is undefined.</li>
-<li>There is more than one image in Y for an x ∈ X under f. (NOT SURE
-here. What about partial functions then??)</li>
+<li>There is more than one image in Y for an x ∈ X under f. (NOT SURE here. What about partial functions then??)</li>
 </ul>
 <h3 id="image-and-preimage">Image and preimage</h3>
 <p>If for y = f(x),</p>
@@ -142,33 +126,34 @@ here. What about partial functions then??)</li>
 </ul>
 <h3 id="domain">Domain</h3>
 <p>The domain of a relation R:X→Y is the set X.</p>
-<h3 id="range">Range</h3>
-<p>The range of a relation R:X→Y is the set Y.</p>
-<h3 id="codomain">Codomain</h3>
-<p>The set of values of the range set to which the values of the
-function are restricted to.</p>
-<pre><code>Codomain ⊆ Range
+<h3 id="range-and-codomain">Range and codomain</h3>
+<p>See: <a href="https://math.stackexchange.com/questions/3317941/what-is-the-difference-between-codomain-and-range">https://math.stackexchange.com/questions/3317941/what-is-the-difference-between-codomain-and-range</a></p>
+<p>The range of a relation R:X→Y is</p>
+<pre><code>range(R) = {R(x) | x∈X}
 </code></pre>
-<p>Eg: In a function f:X→Y where X = {1, 2}, Y = {10, 20, 30} and f:X→Y
-= {(1,10), (2,20)},</p>
+<p>—</p>
+<p>Codomain of a relation <code>R</code> is a set that contains <code>range(R)</code>.</p>
+<pre><code>Range ⊆ Codomain 
+</code></pre>
+<p>Codomain is kind of 'more independent'.</p>
+<ul>
+<li>DBT: But then what's the point of mentioning codomain ??</li>
+</ul>
+<p>Eg: In a function f:X→Y where X = {1, 2}, Y = {10, 20, 30} and f:X→Y = {1↦10, 2↦20},</p>
 <ul>
 <li>domain: {1, 2}</li>
-<li>range: {10, 20, 30}</li>
-<li>codomain: {10, 20}</li>
+<li>range: {10, 20}</li>
+<li>codomain: <del>{10, 20, 30} or {10,20,40} ???</del> Y</li>
 </ul>
 <h3 id="inverse-of-a-function">Inverse of a function</h3>
-<p>The inverse of a function f:X→Y is f⁻¹:Y→X where (x, y) ∈ f mean (y,
-x) ∈ f⁻¹.</p>
-<p>ie, g is inverse of f if f composed with g gives the identity
-function.</p>
-<p>There may be <strong>left inverse</strong> and <strong>right
-inverse</strong> (function here, not element).</p>
+<p>The inverse of a function f:X→Y is f⁻¹:Y→X where (x, y) ∈ f mean (y, x) ∈ f⁻¹.</p>
+<p>ie, g is inverse of f if f composed with g gives the identity function.</p>
+<p>There may be <strong>left inverse</strong> and <strong>right inverse</strong> (function here, not element).</p>
 <pre><code>g∘f = id  (g is left inverse of f)
 f∘g = id  (g is right inverse of f)
 </code></pre>
 <h3 id="function-composition">Function composition</h3>
-<p>When the domain of a function g and the codomain of another function
-f are the same, we can compose f and g.</p>
+<p>When the domain of a function g and the codomain of another function f are the same, we can compose f and g.</p>
 <pre><code>f:A-&gt;B
 g:B-&gt;C
 
@@ -176,67 +161,49 @@ then
 
 g∘f = A -&gt; C
 </code></pre>
-<p>(Notice that the order in which function are written look as if it is
-in 'reverse order').</p>
+<p>(Notice that the order in which function are written look as if it is in 'reverse order').</p>
 <h3 id="one-to-one-injection">One-to-one (Injection)</h3>
-<p>Each element in the codomain has only one pre-image in the
-domain.</p>
+<p>Each element in the codomain has only one pre-image in the domain.</p>
 <p>Whenever f(a1) = f(a2), a1 = a2.</p>
-<p>If a is the set of husbands and b is the set of wives, if R is an
-injective function, then there is no polyandry. 🥱</p>
+<p>If a is the set of husbands and b is the set of wives, if R is an injective function, then there is no polyandry. 🥱</p>
 <h3 id="onto-surjection">Onto (Surjection)</h3>
-<p>Every element in the codomain has at least one pre-image in the
-domain.</p>
+<p>Every element in the codomain has at least one pre-image in the domain.</p>
 <p>∀b∈B, ∃a∈A, f(a) = b</p>
-<p>If a is the set of men and b is the set of women, if R is a
-surjective function (indicative of marriage), then every woman is
-married.</p>
-<h3 id="one-to-one-and-onto-bijection">One-to-one and onto
-(Bijection)</h3>
+<p>If a is the set of men and b is the set of women, if R is a surjective function (indicative of marriage), then every woman is married.</p>
+<h3 id="one-to-one-and-onto-bijection">One-to-one and onto (Bijection)</h3>
 <p>A function that is both one-to-one and onto.</p>
 <p>An bijective function is invertible.</p>
-<p>A function can have an inverse iff it is a bijection (since it sort
-of needs to go somewhere and come back).</p>
+<p>A function can have an inverse iff it is a bijection (since it sort of needs to go somewhere and come back).</p>
 <p>If f:A→B, then f⁻¹:B→A.</p>
-<h3 id="partial-function-partial-ordering">Partial function (partial
-ordering)</h3>
-<p>A partial function is a function that is defined only on part of its
-domain. <a
-href="https://dl.acm.org/doi/pdf/10.1145/367177.367199">³</a></p>
-<h3 id="total-function-total-ordering">Total function (total
-ordering)</h3>
+<h3 id="partial-function-partial-ordering">Partial function (partial ordering)</h3>
+<p>A partial function is a function that is defined only on part of its domain. <a href="https://dl.acm.org/doi/pdf/10.1145/367177.367199">³</a></p>
+<h3 id="total-function-total-ordering">Total function (total ordering)</h3>
 <p>This is what we usually mean when we say 'function'.</p>
 <h2 id="some-functions">Some functions</h2>
 <h3 id="identity-function">Identity function</h3>
 <p>f: ℝ → ℝ such that <code>∀x, f(x) = x</code>.</p>
 <p>Its graph is a straight line passing through the origin at 45°.</p>
 <h3 id="constant-function">Constant function</h3>
-<p>f: ℝ → ℝ such that <code>∀x, f(x) = c</code> where <code>c</code> is
-a constant.</p>
-<p>Its graph is a straight line parallel to the X axis, intercepting the
-Y axis at y=c.</p>
+<p>f: ℝ → ℝ such that <code>∀x, f(x) = c</code> where <code>c</code> is a constant.</p>
+<p>Its graph is a straight line parallel to the X axis, intercepting the Y axis at y=c.</p>
 <h3 id="polynomial-function">Polynomial function</h3>
-<p>f: ℝ → ℝ such that <code>f(x) = a₀ + xa₁ + x²a₂ + .... + xⁿaₙ</code>
-where n is a non-negative integer and all aᵢ ∈ ℝ.</p>
+<p>f: ℝ → ℝ such that <code>f(x) = a₀ + xa₁ + x²a₂ + .... + xⁿaₙ</code> where n is a non-negative integer and all aᵢ ∈ ℝ.</p>
 <p>Examples:</p>
 <ul>
 <li>1 + √2x + x⁴</li>
 <li>x³ - x²</li>
 <li>x³</li>
 </ul>
-<p>Whereas 2x¾ + 4x⁴ is not a polynomial function since the power x is
-not a whole number.</p>
+<p>Whereas 2x¾ + 4x⁴ is not a polynomial function since the power x is not a whole number.</p>
 <h3 id="quadratic-function">Quadratic function</h3>
 <p>A restricted form of polynomial function.</p>
 <p>Has the form <code>f(x) = ax² + bx + c</code> where</p>
 <p>Degree of term with highest degree is 2.</p>
-<p>A bivariate version (ie, 2 variables) would be
-<code>f(x,y) = ax² + by² + cxy + dx + ey + f</code>.</p>
+<p>A bivariate version (ie, 2 variables) would be <code>f(x,y) = ax² + by² + cxy + dx + ey + f</code>.</p>
 <h3 id="rational-functions">Rational functions</h3>
 <p>Functions of the form f(x)/g(x) where</p>
 <ul>
-<li>both f(x) and g(x) are polynomial functions defined in the same
-domain and</li>
+<li>both f(x) and g(x) are polynomial functions defined in the same domain and</li>
 <li>g(x) ≠ 0</li>
 </ul>
 <p>Coefficients of the polynomial terms needn't be rational??</p>
@@ -246,8 +213,7 @@ domain and</li>
 <pre><code>f(x) = { x, if x ≥ 0
         -x, otherwise}
 </code></pre>
-<p>Graph is V-shaped, with point of the base of the 'V' being at the
-origin and the arms of the 'V' being at 45° with the origin.</p>
+<p>Graph is V-shaped, with point of the base of the 'V' being at the origin and the arms of the 'V' being at 45° with the origin.</p>
 <pre><code>         |         
          |         
          |         
@@ -285,8 +251,7 @@ origin and the arms of the 'V' being at 45° with the origin.</p>
 f(x) = ---------  =  --------
         1 + e⁻ˣ       eˣ + 1
 </code></pre>
-<p>Graph is a S-shaped curve, with one end 'tending' to 0 and the other
-'tending' to 1.</p>
+<p>Graph is a S-shaped curve, with one end 'tending' to 0 and the other 'tending' to 1.</p>
 <p>Sigmoid function has an interesting property:</p>
 <pre><code>f(x) = 1 - f(-x)
 </code></pre>
@@ -299,28 +264,22 @@ f(x) = ---------  =  --------
 <p>Examples:</p>
 <ul>
 <li>[3.4] = 4</li>
-<li>[3] = 3</li>
+<li></li>
 <li>[-2.2] = -1</li>
 </ul>
 <h2 id="limit-of-a-function">Limit of a function</h2>
 <pre><code>lim f(x)
 x→k
 </code></pre>
-<p>is the limit of the function <code>f</code> at a point
-<code>k</code>, which lies in the domain of <code>f</code>.</p>
-<p>f is said to have a limit at k if the left and right limits of f at k
-exists and are the same:</p>
+<p>is the limit of the function <code>f</code> at a point <code>k</code>, which lies in the domain of <code>f</code>.</p>
+<p>f is said to have a limit at k if the left and right limits of f at k exists and are the same:</p>
 <pre><code>lim f(x) =  lim f(x) = lim f(x) = L
 x→k         x→k⁻       x→k⁺       
 </code></pre>
 <h2 id="references">References</h2>
 <ul>
-<li><em>Recursive Functions of Symbolic Expressions and Their
-Computation by Machine, Part I</em><a
-href="https://dl.acm.org/doi/pdf/10.1145/367177.367199">³</a> - John
-McCarthy</li>
-<li>Chapter 6: Continuity and differentiability, NCERT textbook: Class
-XII</li>
+<li><em>Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part I</em><a href="https://dl.acm.org/doi/pdf/10.1145/367177.367199">³</a> - John McCarthy</li>
+<li>Chapter 6: Continuity and differentiability, NCERT textbook: Class XII</li>
 <li>Chapter 13: Limits and derivatives, NCERT textbook: Class XI</li>
 <li>Chapter 2: Relations and functions, NCERT textbook: Class XI</li>
 </ul>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Algebraic data types in Python</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Algebraic data types in Python</h1>
+</header>
+
+<ul>
+    <li>Date created: 12-Aug-2024</li>
+    </ul>
+
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/python.html">python</a>
+    </code> /
+  <p>
+</div>
+
+
+<div id="description">
+Creating an algebraic data type as in functional programming languages, but within Python.
+</div>
+
+<div id="content-container">
+<hr />
+<p>Recently, I found a dataset of regular expressions used with python's <code>re</code> built-in package.</p>
+<p>I kind of wished to use those regexes from ocaml. Randomly searched online and came across an answer in <a href="https://stackoverflow.com/questions/16258553/how-can-i-define-algebraic-data-types-in-python">this</a> stackoverflow post.</p>
+<p>Was surprised to see that we could actually have a form of algebraic data type in python. So I had a closer look.</p>
+<p>(Yeah, instead of my main goal, I went on a side-quest.. Not so proud to say that it's not my first time.. 😅)</p>
+<p>I had not used python much after Python 3.9 or so. It's come a long way since then (latest stable is 3.12.5).</p>
+<p>Some things that I liked:</p>
+<ul>
+<li>Structural pattern matching (Python 3.10) (PEPs 634, 635)
+<ul>
+<li><code>match .. case</code></li>
+</ul></li>
+<li><code>int | bool</code> can be used in type hints instead of <code>Union[int, bool]</code> (PEP 604)</li>
+<li>Postponed evaluation of type annotations (PEP 563, Python 3.xx)
+<ul>
+<li>Allows to use types that are yet to defined in type hints</li>
+<li>Thought <a href="https://docs.python.org/3/library/typing.html#typing.ForwardRef"><code>ForwardRef</code></a> (Python 3.7.4) had something to do with this too..</li>
+<li>Needs <code>from __future__ import annotations</code> as of Python 3.12</li>
+</ul></li>
+<li>Type parameter syntax and <code>type</code> statement (Python 3.12) (PEP 695)
+<ul>
+<li>Allows more concise syntax to define generic (I guess that means polymorphic) classes and functions</li>
+</ul></li>
+</ul>
+<p>In a way, python's type hints was what made me first realize the importance of types. To think of types as actually guiding the program rather than the nuisance that I used to think they were. It took a language without static type checking for me to realize value of type checks. But that was before I came in contact with Coq, Haskell, sml and ocaml.</p>
+<p>Python does have <a href="https://docs.python.org/3/howto/functional.html">a lot of stuff</a> inspired from the world of functional style of programming, after all.</p>
+<p>—</p>
+<p>Anyhow, as an example, I will show how a 'ADT-like' type representing binary tree can be made in Python. I kind of follow the description <a href="https://gitlab.com/piyush-kurur/popl/-/blob/5c41e2d6fdf59b413dea6b84fdb42e55cdde0caf/lab/archives/2022/2022-09-06-List-and-Tree.md">here</a> used during a programming course at our institute. That course was taught by my advisor (with me as one of the TAs) and used sml.</p>
+<h2 id="tree-type">Tree type</h2>
+<p>In sml, a tree type can be made like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">datatype</span> &#39;a tree</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  = Empty</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  | Node <span class="kw">of</span> (&#39;a tree) * &#39;a * (&#39;a tree)</span></code></pre></div>
+<p>Let's try replicating this in Python.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="im">from</span> __future__ <span class="im">import</span> annotations</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="im">import</span> dataclasses</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="at">@dataclasses.dataclass</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="kw">class</span> Node[T]:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>   left: Tree[T]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>   value: T</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>   right: Tree[T]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="bu">type</span> Tree[T] <span class="op">=</span> Node[T] <span class="op">|</span> <span class="va">None</span></span></code></pre></div>
+<p>Observe that this is a recursive type (Python 3.12 needs stuff from <code>future</code> for this).</p>
+<p>Looks like <code>None</code> is kind of special in Python. It seems to be a value of type <code>NoneType</code>, but it looked as if <code>NoneType</code> is not meant to be used by users. So, it seemed like in this case, <code>None</code> is both a value and a type. Kind of like <code>()</code> in Haskell.</p>
+<p>Anyway, let's see if this working.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="co"># Type of binary trees</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="co"># sml analogue: &#39;a tree</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> Tree</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>Tree</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Type of binary trees with int values</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a><span class="co"># sml analogue: int tree</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> Tree[<span class="bu">int</span>]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>Tree[<span class="bu">int</span>]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Type of binary trees with boolean values</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="co"># sml analogue: bool tree</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> Tree[<span class="bu">int</span>]</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> Tree[<span class="bu">bool</span>]</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>Tree[<span class="bu">bool</span>]</span></code></pre></div>
+<p>Python interpreter seems happy.</p>
+<p>Now let's make some values.</p>
+<p>First, to make it easy to create values, let's make a helper function <code>singleton</code> to make a tree with a single value in it.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">def</span> singleton[T](val: T) <span class="op">-&gt;</span> Tree[T]:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>    <span class="cf">return</span> Node(<span class="va">None</span>, val, <span class="va">None</span>)</span></code></pre></div>
+<p>Now on to actually making some trees:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> egbool: Tree[<span class="bu">bool</span>] <span class="op">=</span> Node(singleton(true), false, singleton(false))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> egbool</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>Node(left<span class="op">=</span>Node(left<span class="op">=</span><span class="va">None</span>, value<span class="op">=</span><span class="va">True</span>, right<span class="op">=</span><span class="va">None</span>), value<span class="op">=</span><span class="va">False</span>, right<span class="op">=</span>Node(left<span class="op">=</span><span class="va">None</span>, value<span class="op">=</span><span class="va">False</span>, right<span class="op">=</span><span class="va">None</span>))</span></code></pre></div>
+<p>Note that python by itself doesn't do any static type checking. So this would also run without error.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="co"># Type is boolean tree, but value is int tree!</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> egboolBad: Tree[<span class="bu">bool</span>] <span class="op">=</span> Node(singleton(<span class="dv">0</span>), <span class="dv">1</span>, singleton(<span class="dv">2</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> egboolBad</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>Node(left<span class="op">=</span>Node(left<span class="op">=</span><span class="va">None</span>, value<span class="op">=</span><span class="dv">0</span>, right<span class="op">=</span><span class="va">None</span>), value<span class="op">=</span><span class="dv">1</span>, right<span class="op">=</span>Node(left<span class="op">=</span><span class="va">None</span>, value<span class="op">=</span><span class="dv">2</span>, right<span class="op">=</span><span class="va">None</span>))</span></code></pre></div>
+<p>Got to run a static typer checker to catch this error. There are quite a few. Among them mypy, pyre, pytype, pyright are open source.</p>
+<p>I tried mypy:</p>
+<pre><code>$ mypy tree.py --enable-incomplete-feature=NewGenericSyntax
+
+tree.py:16: error: Argument 1 to &quot;singleton&quot; has incompatible type &quot;int&quot;; expected &quot;bool&quot;  [arg-type]
+tree.py:16: error: Argument 2 to &quot;Node&quot; has incompatible type &quot;int&quot;; expected &quot;bool&quot;  [arg-type]
+Found 2 errors in 1 file (checked 1 source file)
+</code></pre>
+<p>Syntax that is used to define <code>Tree</code> uses a syntax that is new in Python 3.12 (PEP 695). Static type checkers like mypy has not yet finished incorporating this change apparently due to still supporting older code<a href="https://github.com/python/mypy/issues/15238">ʳ</a>. Hence the extra option passed to the mypy command.</p>
+<p>Without the <code>--enable-incomplete-feature=NewGenericSyntax</code>, I got this:</p>
+<pre><code>error: PEP 695 generics are not yet supported. Use --enable-incomplete-feature=NewGenericSyntax for experimental support  [valid-type]
+</code></pre>
+<p>—</p>
+<p>Okay, let's create a function on <code>Tree[T]</code> type. Say, in-order traversal. A function that accepts a tree and returns a list of its values.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="im">from</span> typing <span class="im">import</span> assert_never</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="kw">def</span> inorder[T](tree: Tree[T]) <span class="op">-&gt;</span> <span class="bu">list</span>[T]:</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>    rval <span class="op">=</span> []</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a>    match tree:</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a>        case <span class="va">None</span>: <span class="cf">pass</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a>        case Node(lft, val, rgt):</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a>            rval <span class="op">+=</span> inorder(lft) <span class="op">+</span> [val] <span class="op">+</span> inorder(rgt)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a>        case _:</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a>            assert_never(tree)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a>    <span class="cf">return</span> rval</span></code></pre></div>
+<p>This uses the <code>match .. case</code> (patmat) syntax for structural pattern matching. Like the kind that we are used to in functional languages like sml. Not as cool maybe, but still nice.. 🙂 A tutorial for this syntax of Python is available <a href="https://peps.python.org/pep-0636/">here</a>.</p>
+<p>Also, see the way the <code>T</code> type is put in here. Kind of like an implicit argument in a Coq function. Or of a typeclass in Haskell.</p>
+<p>(Thanks to PEP 695, I guess. Earlier <code>T</code> would have had to be declared separately with <code>TypeVar</code>. And sometimes we would also have had to use <code>Generic</code> from <code>typing</code> package).</p>
+<p><a href="https://docs.python.org/3/library/typing.html#typing.assert_never"><code>assert_never</code></a> is meant to be used only for static type checkers as a way to assert that some part of code will never be reached. See <a href="https://typing.readthedocs.io/en/latest/guides/unreachable.html#assert-never-and-exhaustiveness-checking">this</a>.</p>
+<p>Trying an example with <code>inorder</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> egInt1: Tree[<span class="bu">int</span>] <span class="op">=</span> Node(singleton(<span class="dv">0</span>), <span class="dv">1</span>, singleton(<span class="dv">2</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> egInt2: Tree[<span class="bu">int</span>] <span class="op">=</span> Node(singleton(<span class="dv">4</span>), <span class="dv">5</span>, singleton(<span class="dv">6</span>))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> egInt: Tree[<span class="bu">int</span>] <span class="op">=</span> Node(egInt1, <span class="dv">3</span>, egInt2)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span>(inorder(egInt))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]</span></code></pre></div>
+<p>Similarly, pre-order and post-order traversal functions can be defined.</p>
+<p>Next, let's try making a function to map values in a <code>Tree[T]</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="im">from</span> typing <span class="im">import</span> Callable</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="kw">def</span> treemap[A, B](</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>        func: Callable[[A], B],</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a>        tree: Tree[A]) <span class="op">-&gt;</span> Tree [B]:</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a>    match tree:</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a>        case <span class="va">None</span>:</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a>            <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a>        case Node(lft, val, rgt):</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true"></a>            lftmod <span class="op">=</span> treemap(func, lft)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true"></a>            rgtmod <span class="op">=</span> treemap(func, rgt)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true"></a>            <span class="cf">return</span> Node(lftmod, func(val), rgtmod)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true"></a>        case _:</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true"></a>            assert_never(tree)</span></code></pre></div>
+<p><code>Callable[[A], B]</code> indicates type of a 'callable' value (like a function) which accepts a value of type <code>A</code> and returns a value of type <code>B</code>.</p>
+<p>The above function in sml could be like:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="kw">fun</span> treemap f Empty = Empty</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>  | treemap f (Node (lft, x, rgt)) =</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>      <span class="kw">let</span> <span class="kw">val</span> lftmod = treemap f lft <span class="kw">in</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a>        <span class="kw">let</span> <span class="kw">val</span> rgtmod = treemap f rgt <span class="kw">in</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>          Node (lftmod, f x, rgtmod)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a>        <span class="kw">end</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>      <span class="kw">end</span></span></code></pre></div>
+<h2 id="a-whole-program">A whole program</h2>
+<p>A complete python file with the definitions seen so far:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="im">from</span> __future__ <span class="im">import</span> annotations</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="im">import</span> dataclasses</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a><span class="im">from</span> typing <span class="im">import</span> Callable, assert_never</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a><span class="at">@dataclasses.dataclass</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a><span class="kw">class</span> Node[T]:</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a>   left: Tree[T]</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a>   value: T</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true"></a>   right: Tree[T]</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true"></a>   <span class="kw">def</span> <span class="fu">__iter__</span>(<span class="va">self</span>):</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true"></a>       <span class="cf">return</span> <span class="bu">iter</span>(inorder(<span class="va">self</span>))</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true"></a>   <span class="kw">def</span> <span class="fu">__str__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true"></a>       <span class="cf">return</span> <span class="st">&#39; &#39;</span>.join(<span class="bu">map</span>(<span class="bu">str</span>, <span class="va">self</span>))</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true"></a><span class="co"># Type of trees with values of type `T`</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true"></a><span class="bu">type</span> Tree[T] <span class="op">=</span> Node[T] <span class="op">|</span> <span class="va">None</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true"></a><span class="kw">def</span> singleton[T](val: T) <span class="op">-&gt;</span> Tree[T]:</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true"></a>    <span class="cf">return</span> Node(<span class="va">None</span>, val, <span class="va">None</span>)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true"></a><span class="kw">def</span> inorder[T](tree: Tree[T]) <span class="op">-&gt;</span> <span class="bu">list</span>[T]:</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true"></a>    rval <span class="op">=</span> []</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true"></a>    match tree:</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true"></a>        case <span class="va">None</span>: <span class="cf">pass</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true"></a>        case Node(lft, val, rgt):</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true"></a>            rval <span class="op">+=</span> inorder(lft) <span class="op">+</span> [val] <span class="op">+</span> inorder(rgt)</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true"></a>        case _:</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true"></a>            assert_never(tree)</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true"></a>    <span class="cf">return</span> rval</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true"></a></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true"></a><span class="kw">def</span> preorder[T](tree: Tree[T]) <span class="op">-&gt;</span> <span class="bu">list</span>[T]:</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true"></a>    rval <span class="op">=</span> []</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true"></a>    match tree:</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true"></a>        case <span class="va">None</span>: <span class="cf">pass</span></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true"></a>        case Node(lft, val, rgt):</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true"></a>            rval <span class="op">+=</span> [val] <span class="op">+</span> postorder(lft) <span class="op">+</span> postorder(rgt)</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true"></a>        case _:</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true"></a>            assert_never(tree)</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true"></a>    <span class="cf">return</span> rval</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true"></a></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true"></a><span class="kw">def</span> postorder[T](tree: Tree[T]) <span class="op">-&gt;</span> <span class="bu">list</span>[T]:</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true"></a>    rval <span class="op">=</span> []</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true"></a>    match tree:</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true"></a>        case <span class="va">None</span>: <span class="cf">pass</span></span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true"></a>        case Node(lft, val, rgt):</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true"></a>            rval <span class="op">+=</span> postorder(lft) <span class="op">+</span> postorder(rgt) <span class="op">+</span> [val]</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true"></a>        case _:</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true"></a>            assert_never(tree)</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true"></a>    <span class="cf">return</span> rval</span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true"></a></span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true"></a><span class="kw">def</span> treemap[A, B](</span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true"></a>        func: Callable[[A], B],</span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true"></a>        tree: Tree[A]) <span class="op">-&gt;</span> Tree [B]:</span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true"></a>    match tree:</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true"></a>        case <span class="va">None</span>:</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true"></a>            <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true"></a>        case Node(lft, val, rgt):</span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true"></a>            lftmod <span class="op">=</span> treemap(func, lft)</span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true"></a>            rgtmod <span class="op">=</span> treemap(func, rgt)</span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true"></a>            <span class="cf">return</span> Node(lftmod, func(val), rgtmod)</span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true"></a>        case _:</span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true"></a>            assert_never(tree)</span>
+<span id="cb13-66"><a href="#cb13-66" aria-hidden="true"></a></span>
+<span id="cb13-67"><a href="#cb13-67" aria-hidden="true"></a><span class="kw">def</span> rotateClockwise[T](tree: Tree[T]) <span class="op">-&gt;</span> Tree[T]:</span>
+<span id="cb13-68"><a href="#cb13-68" aria-hidden="true"></a>    match tree:</span>
+<span id="cb13-69"><a href="#cb13-69" aria-hidden="true"></a>        case Node(Node(llft, lval, lrgt), val, rgt):</span>
+<span id="cb13-70"><a href="#cb13-70" aria-hidden="true"></a>            <span class="cf">return</span> Node(llft, lval, Node(lrgt, val, rgt))</span>
+<span id="cb13-71"><a href="#cb13-71" aria-hidden="true"></a>        case _:</span>
+<span id="cb13-72"><a href="#cb13-72" aria-hidden="true"></a>            <span class="cf">return</span> tree</span></code></pre></div>
+<p>Type checking with mypy:</p>
+<pre><code>$ mypy tree.py --enable-incomplete-feature=NewGenericSyntax
+Success: no issues found in 1 source file
+</code></pre>
+<p>Versions of software used</p>
+<ul>
+<li>Python: 3.12.3</li>
+<li>mypy: 1.11.1</li>
+</ul>
+</div>
+</body>
+</html>

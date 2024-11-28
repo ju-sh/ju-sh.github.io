@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Puzzles</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Puzzles</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h1 id="probability">Probability</h1>
+<h2 id="jane-stree-real-numbers-p1">Jane Stree Real numbers: P1</h2>
+<h3 id="puzzle">Puzzle:</h3>
+<ul>
+<li>You are dogsitting for 5 nights.</li>
+<li>Dog will wake you up each night with probability 2/3</li>
+<li>What's the probablity of you being able to sleep for <em>at least</em> 2 full nights without being woken up by the dog?</li>
+</ul>
+<h3 id="solution">Solution</h3>
+<ul>
+<li>Each night prob of waking up is 2/3</li>
+<li>Each night is an independent event</li>
+<li>5 nights</li>
+</ul>
+<pre><code>P(&gt;=2) = 1 - [P(==0) + P(==1)]
+</code></pre>
+<p>P(==0) means you didn't get even a single night's full sleep. ie, dog woke you up on 5 days.</p>
+<p>P(==1) means you were able to sleep well on one day, but the dog woke you up on the other 4 days.</p>
+<pre><code>P(==0) = 5C5 * (2/3)⁵
+
+Number of sleepless nights = 5 days
+5 days can be chosen in 5C5 ways
+
+--
+
+P(==1) = 5C4 * (2/3)⁴ * (1/3)
+
+Number of sleepless nights = 4 days
+5 days can be chosen in 5C4 ways
+</code></pre>
+<p>Therefore,</p>
+<pre><code>P(&gt;=2) = 1 - [P(==0) + P(==1)]
+       = 1 - [(2/3)⁵ + 5*(1/3)*(2/3)⁴]
+       = 0.54
+</code></pre>
+<h3 id="info">Info</h3>
+<p>Generally,</p>
+<ul>
+<li>P(A ∩ B) = P(A) + P(B) - P(A ∪ B)</li>
+<li>P(A ∪ B) = P(A) + P(B) - P(A ∩ B)</li>
+</ul>
+<p>Independent events:</p>
+<ul>
+<li>P(A ∩ B) = P(A) * P(B)</li>
+<li>P(A ∪ B) = P(A) + P(B)</li>
+</ul>
+<p>Dependent events:</p>
+<ul>
+<li>P(A ∩ B) = P(A)*P(B/A)</li>
+<li>P(A ∪ B) = P(A) + P(B) - P(A ∩ B)</li>
+</ul>
+<p>Independent events and disjoint events are not same</p>
+<ul>
+<li>Disjoint events: Events that cannot happen together
+<ul>
+<li>Eg: A single die showing 1 and 2 at the same time</li>
+<li>Eg: A coin being head and tail at once</li>
+</ul></li>
+<li>Independent events: Events occurring independent of each other
+<ul>
+<li>When 2 coins are flipped together, result of each coin is independent of the other.</li>
+<li>In a chess game, each move is dependent on the previous moves.</li>
+</ul></li>
+</ul>
+<p>If two events are disjoint, they are dependent unless one of the event is of zero probability.</p>
+<hr />
+<p>A coin fip and a die roll simultaneously:</p>
+<ul>
+<li>Coin flip and die roll are <strong>independent events</strong></li>
+<li>Result of coin flip has no effect on result of die roll</li>
+</ul>
+<p>Example:</p>
+<pre><code>  P(coin=H ∧ die=1)  
+= P(coin=H)* P(die=1)
+=    1/2   *  1/6
+=    1/12
+
+---
+
+  P(die=3 ∨ die=5)  
+= P(die=3)+ (die=5)  
+= 1/6     + 1/6
+= 1/3
+</code></pre>
+<p>—</p>
+<p>Probability of event union for non-disjoint events:</p>
+<pre><code>P(A ∪ B) = P(A) + P(B) - P(A ∩ B)
+</code></pre>
+<p><code>P(coin=H)</code> and <code>P(die=1)</code> in our example are not disjoint events.</p>
+<p>∵ Coin can be head while die shows 1.</p>
+<pre><code>  P(coin=H ∨ die=1)  
+= P(coin=H) + P(die=1) - P(coin=H ∧ die=1)
+= P(coin=H) + P(die=1) - [P(coin=H) * P(die=1)]
+=    (1/2)  + (1/6)    -  (1/2)*(1/6)
+=        (4/6)         -  (1/12)
+=    7/12
+
+Could also be done like: 
+
+  P(coin=H ∨ die=1)  
+= 1 - P(¬(coin=H ∨ die=1))
+= 1 - P(¬(coin=H) ∧ ¬(die=1))
+= 1 - [P(¬(coin=H)) * P(¬(die=1))]
+= 1 - [1 - P(coin=H)] * [1 - P(die=1)]
+= 1 - [1 - (1/2)] * [1 - (1/6)]
+= 1 - [1/2] * [5/6]
+= 1 - [5/12]
+= 7/12
+</code></pre>
+<hr />
+<p>P(A ∧ ¬A) = 0</p>
+<p>Dependent events.</p>
+<pre><code>  P(A ∩ ¬A)
+= P(A) * P(¬A/A) 
+= P(A) * 0
+= 0
+</code></pre>
+<p>—</p>
+<p>P(A ∨ ¬A) = 1</p>
+<p>Dependent events.</p>
+<pre><code>  P(A ∪ ¬A)
+= P(A) + P(¬A) - P(A ∩ ¬A)  
+= x + (1-x) - 0
+= 1
+</code></pre>
+<h1 id="hmmt-2023-q1">HMMT 2023: Q1</h1>
+<p>Puzzle:</p>
+<p>Four people are playing rock-paper-scissors. They each play one of the three options (rock, paper, or scissors) independently at random, with equal probability of each choice. Compute the probability that someone beats everyone else.</p>
+<hr />
+<p>Solution:</p>
+<pre><code>    Scissor
+
+  ∧       ∨ 
+
+Stone  &lt;  Paper
+</code></pre>
+<p>Observe that:</p>
+<ul>
+<li>Move doesn't matter.</li>
+<li>A particular move can be beaten by only a specific move</li>
+</ul>
+<p>—</p>
+<ul>
+<li><p>Let player 1 choose a particular move =&gt; 1/3</p></li>
+<li><p>The other 3 players have to choose the same move and there is only one such move =&gt; (1/3)³</p></li>
+<li><p>There are 4 players and player-1 can start with one of 3 possible moves</p></li>
+</ul>
+<pre><code>P = 4*3 * (1/3 * (1/3)³)
+  = 12/81 = 4/27
+</code></pre>
+<p>—</p>
+<p>Related:</p>
+<ul>
+<li><a href="https://old.reddit.com/r/learnmath/comments/199d063/question_when_you_play_rockpaperscissors_with_3/">https://old.reddit.com/r/learnmath/comments/199d063/question_when_you_play_rockpaperscissors_with_3/</a></li>
+<li><a href="https://math.stackexchange.com/questions/3998809/probability-that-you-win-in-rock-scissors-paper-with-3-players">https://math.stackexchange.com/questions/3998809/probability-that-you-win-in-rock-scissors-paper-with-3-players</a></li>
+<li><a href="https://math.stackexchange.com/questions/3144669/probability-of-one-person-winning-in-a-four-way-game-of-rock-paper-scissors">https://math.stackexchange.com/questions/3144669/probability-of-one-person-winning-in-a-four-way-game-of-rock-paper-scissors</a></li>
+</ul>
+<h2 id="jane-stree-real-numbers-p2">Jane Stree Real numbers: P2</h2>
+<h3 id="puzzle-1">Puzzle</h3>
+<ul>
+<li>6 cars parked in a row</li>
+<li>Prob that a car is taxi (independently) is 1/2</li>
+<li>What is the prob that there are 3 consecutive taxis among the 6 cars?</li>
+</ul>
+<h3 id="solution-1">Solution</h3>
+<h2 id="of-green-book-coin-toss-game">4.1 of Green book: Coin toss game</h2>
+<p>Puzzle:</p>
+<ul>
+<li>A has n+1 coins</li>
+<li>B has n coins</li>
+<li>All coins are fair</li>
+<li>When all coins are tossed, whats the probability that A has more heads than B?</li>
+</ul>
+<p>Solution:</p>
+<h1 id="combinatronics">Combinatronics</h1>
+<h2 id="number-of-trailing-zeros-in-n">Number of trailing zeros in <code>n!</code></h2>
+<p>General forumla:</p>
+<pre><code> ∞   │ n │
+ Σ   │───│
+i=1  │ 5ⁱ│
+     └   ┘
+</code></pre>
+<p>—</p>
+<p>Example: 100!</p>
+<pre><code>  100/5 + 100/5² + 100/5³ + ....
+= 20 + 4
+= 24
+</code></pre>
+<p>So, there are 24 trailing zeros in 100!</p>
+<p>—</p>
+<p>An easier way: Keep dividing recursively to get the numbers and sum up.</p>
+<pre><code>100/5 = 20
+ 20/5 = 4
+  4/5 = 0
+      ─────
+        24
+</code></pre>
+<p>ie, <code>f(n) = n/5 + f(n/5)</code></p>
+<p>—</p>
+<p>Consider 25!.</p>
+<p>25/4 is 5</p>
+<ul>
+<li>∵ 5, 10, 15, 20, 25</li>
+<li>But not that 25 has actually two 5</li>
+<li>5, 10, 15, 20, 5*5</li>
+<li>So need to consider all powers of 5</li>
+</ul>
+<p>Likewise 4 consists of two 2s too. But we needn't care in this case, because number of 5s will always be lesser than that of 2s.</p>
+<p>See:</p>
+<ul>
+<li><a href="https://math.stackexchange.com/questions/1806642/find-the-number-of-trailing-zeros-in-n">https://math.stackexchange.com/questions/1806642/find-the-number-of-trailing-zeros-in-n</a></li>
+<li><a href="https://math.stackexchange.com/questions/286947/number-of-zero-digits-in-factorials">https://math.stackexchange.com/questions/286947/number-of-zero-digits-in-factorials</a></li>
+<li><a href="https://math.stackexchange.com/questions/975539/how-do-you-find-the-number-of-multiples-of-a-given-range-of-numbers">https://math.stackexchange.com/questions/975539/how-do-you-find-the-number-of-multiples-of-a-given-range-of-numbers</a></li>
+</ul>
+<h2 id="minimum-cut">Minimum cut</h2>
+<p>See:</p>
+<ul>
+<li><a href="https://www.geeksforgeeks.org/puzzle-31-minimum-cut-puzzle/">https://www.geeksforgeeks.org/puzzle-31-minimum-cut-puzzle/</a></li>
+</ul>
+<h1 id="facts">Facts</h1>
+<ul>
+<li>Number of leaves in a complete binary tree of height H: <code>2^H</code></li>
+</ul>
+</div>
+</body>
+</html>

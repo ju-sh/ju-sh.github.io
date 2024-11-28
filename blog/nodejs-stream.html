@@ -22,13 +22,13 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
@@ -36,8 +36,18 @@
 </header>
 
 <ul>
-    </ul>
+    <li>Date created: 11-Feb-2022</li>
+      <li>Last updated: 26-Dec-2021</li>
+  </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/nodejs js web.html">nodejs js web</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
@@ -45,55 +55,34 @@ About streams in node.js.
 </div>
 
 <div id="content-container">
-<p>Based on what I understood from <a
-href="https://jawahar.tech">Jawahar's</a> <a
-href="https://www.youtube.com/watch?v=0BvJhJlueoc">talk</a> during the
-January 2020 GeekNight (with me as part of audience) held at
-ThoughtWorks, Chennai.</p>
+<p>Based on what I understood from <a href="https://jawahar.tech">Jawahar's</a> <a href="https://www.youtube.com/watch?v=0BvJhJlueoc">talk</a> during the January 2020 GeekNight (with me as part of audience) held at ThoughtWorks, Chennai.</p>
 <p>Errors, if any, are my own. Corrections appreciated.</p>
 <hr />
-<p>Consider two files <code>medium.txt</code> and
-<code>large.txt</code>.</p>
-<p><code>medium.txt</code> is a reasonably large file and
-<code>large.txt</code> is a huge file with respect to the computer
-hardware.</p>
-<p>On a 4GB RAM computer, my <code>medium.txt</code> and
-<code>large.txt</code> span around 200MB and 2GB respectively.</p>
-<p>Let's write a simple nodejs application in a file
-<code>nostream.js</code> to compress a given file.</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> fs <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;fs&#39;</span>)<span class="op">;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> zlib <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;zlib&#39;</span>)<span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> filePath <span class="op">=</span> <span class="bu">process</span><span class="op">.</span><span class="at">argv</span>[<span class="dv">2</span>]<span class="op">;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> data <span class="op">=</span> fs<span class="op">.</span><span class="fu">readFileSync</span>(filePath)<span class="op">;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>zlib<span class="op">.</span><span class="fu">gzip</span>(data<span class="op">,</span> compressedData <span class="kw">=&gt;</span> {</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    fs<span class="op">.</span><span class="fu">writeFileSync</span>(<span class="st">&#39;out.gz&#39;</span><span class="op">,</span> compressedData)<span class="op">;</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Compression success!&quot;</span>)<span class="op">;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
-<p><a href="https://nodejs.org/api/fs.html"><code>fs</code></a> module
-is used for reading and writing files along with <a
-href="https://nodejs.org/api/zlib.html"><code>zlib</code></a>'s <a
-href="https://nodejs.org/api/zlib.html#zlibgzipbuffer-options-callback">~gzip()</a>~
-for the compression.</p>
-<p>As a quick way of doing it, it is assumed that the input file name
-would be given as the first argument for the application invocation.
-This would make it the third parameter when the application is invoked
-using <code>node</code>. Hence the <code>argv[2]</code>.</p>
-<p>When we try to compress the 200MB <code>medium.txt</code> file,
-everything works fine.</p>
+<p>Consider two files <code>medium.txt</code> and <code>large.txt</code>.</p>
+<p><code>medium.txt</code> is a reasonably large file and <code>large.txt</code> is a huge file with respect to the computer hardware.</p>
+<p>On a 4GB RAM computer, my <code>medium.txt</code> and <code>large.txt</code> span around 200MB and 2GB respectively.</p>
+<p>Let's write a simple nodejs application in a file <code>nostream.js</code> to compress a given file.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">const</span> fs <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;fs&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">const</span> zlib <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;zlib&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="kw">const</span> filePath <span class="op">=</span> <span class="bu">process</span><span class="op">.</span><span class="at">argv</span>[<span class="dv">2</span>]<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="kw">const</span> data <span class="op">=</span> fs<span class="op">.</span><span class="fu">readFileSync</span>(filePath)<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>zlib<span class="op">.</span><span class="fu">gzip</span>(data<span class="op">,</span> compressedData <span class="kw">=&gt;</span> {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>    fs<span class="op">.</span><span class="fu">writeFileSync</span>(<span class="st">&#39;out.gz&#39;</span><span class="op">,</span> compressedData)<span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Compression success!&quot;</span>)<span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>})<span class="op">;</span></span></code></pre></div>
+<p><a href="https://nodejs.org/api/fs.html"><code>fs</code></a> module is used for reading and writing files along with <a href="https://nodejs.org/api/zlib.html"><code>zlib</code></a>'s <a href="https://nodejs.org/api/zlib.html#zlibgzipbuffer-options-callback">~gzip()</a>~ for the compression.</p>
+<p>As a quick way of doing it, it is assumed that the input file name would be given as the first argument for the application invocation. This would make it the third parameter when the application is invoked using <code>node</code>. Hence the <code>argv[2]</code>.</p>
+<p>When we try to compress the 200MB <code>medium.txt</code> file, everything works fine.</p>
 <pre><code>$ node nostream.js medium.txt
 Compression success!
 $ du -h out.gz medium.txt
 4.0K    out.gz
 219M    medium.txt
 </code></pre>
-<p>(I used a trivial text file with repeating content as input. Hence
-the small size of the compressed file.)</p>
-<p>However, on trying the same with the 2GB <code>large.txt</code>, it
-was a different story and an error that looked something like this
-showed up:</p>
+<p>(I used a trivial text file with repeating content as input. Hence the small size of the compressed file.)</p>
+<p>However, on trying the same with the 2GB <code>large.txt</code>, it was a different story and an error that looked something like this showed up:</p>
 <pre><code>$ node nostream.js large.txt
 fs.js:317
       throw new ERR_FS_FILE_TOO_LARGE(size);
@@ -113,73 +102,47 @@ RangeError [ERR_FS_FILE_TOO_LARGE]: File size (2162601906) is greater than possi
 }
 </code></pre>
 <p>The error shows up because it can't handle so big a file.</p>
-<p>The reason is that in this case, the application attempts to load the
-entire file data into the memory before initiating the compression
-process.</p>
+<p>The reason is that in this case, the application attempts to load the entire file data into the memory before initiating the compression process.</p>
 <p>It need not be so.</p>
 <p>This is where streams come in handy.</p>
 <h2 id="streams">Streams</h2>
-<p>Stream in Node.js, is an interface for working with data that keep on
-coming. This means that all of the data needn't be there before we can
-start processing it.</p>
-<p>That's the very nature of streaming data in general: it may even be
-an infinite stream (for example, temperature readings of CPU cores of a
-supercomputer). So we can't necessarily wait for all the data to be
-available.</p>
+<p>Stream in Node.js, is an interface for working with data that keep on coming. This means that all of the data needn't be there before we can start processing it.</p>
+<p>That's the very nature of streaming data in general: it may even be an infinite stream (for example, temperature readings of CPU cores of a supercomputer). So we can't necessarily wait for all the data to be available.</p>
 <p>There are four types of streams in Node.js.</p>
 <ul>
 <li><code>Readable</code> streams: data can be read.</li>
 <li><code>Writable</code> streams: data can be written.</li>
 <li><code>Duplex</code> streams: data can both be read and written.</li>
-<li><code>Transform</code> streams: duplex streams which can apply some
-kind of transformation to the read data before it is written.</li>
+<li><code>Transform</code> streams: duplex streams which can apply some kind of transformation to the read data before it is written.</li>
 </ul>
-<p>The main objective of streams is to "limit the buffering of data to
-acceptable levels such that sources and destinations of differing speeds
-will not overwhelm the available memory". <a
-href="https://nodejs.org/api/stream.html#buffering">⁵</a></p>
+<p>The main objective of streams is to "limit the buffering of data to acceptable levels such that sources and destinations of differing speeds will not overwhelm the available memory". <a href="https://nodejs.org/api/stream.html#buffering">⁵</a></p>
 <h3 id="buffering-in-streams">Buffering in streams</h3>
-<p>An internal buffer is associated with every <code>Readable</code> and
-<code>Writable</code> stream.</p>
-<p>The size of this internal buffer depends on the <a
-href="https://nodejs.org/api/stream.html#readablereadablehighwatermark"><code>highWaterMark</code></a>
-option of the stream's constructor.</p>
-<p>For <code>Readable</code> streams, the data is read into the internal
-buffer till the limit specified by <code>highWaterMark</code> after
-which the reading process is paused. Reading can resume after enough
-data in the buffer has been consumed to make way for more data.</p>
-<p>Likewise for <code>Writable</code> streams, the data to be written
-out is first stored inside the internal buffer from where it is consumed
-later.</p>
-<p>Since <code>Duplex</code> and <code>Transform</code> streams can
-perform both reading and writing, each of them has two separate internal
-buffers. One each for reading and writing.</p>
+<p>An internal buffer is associated with every <code>Readable</code> and <code>Writable</code> stream.</p>
+<p>The size of this internal buffer depends on the <a href="https://nodejs.org/api/stream.html#readablereadablehighwatermark"><code>highWaterMark</code></a> option of the stream's constructor.</p>
+<p>For <code>Readable</code> streams, the data is read into the internal buffer till the limit specified by <code>highWaterMark</code> after which the reading process is paused. Reading can resume after enough data in the buffer has been consumed to make way for more data.</p>
+<p>Likewise for <code>Writable</code> streams, the data to be written out is first stored inside the internal buffer from where it is consumed later.</p>
+<p>Since <code>Duplex</code> and <code>Transform</code> streams can perform both reading and writing, each of them has two separate internal buffers. One each for reading and writing.</p>
 <h2 id="example-with-streams">Example with streams</h2>
-<p>Let us try compressing the <code>large.txt</code> file again. This
-time using streams.</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> fs <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;fs&#39;</span>)<span class="op">;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> zlib <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;zlib&#39;</span>)<span class="op">;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> filePath <span class="op">=</span> <span class="bu">process</span><span class="op">.</span><span class="at">argv</span>[<span class="dv">2</span>]<span class="op">;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inputStream <span class="op">=</span> fs<span class="op">.</span><span class="fu">createReadStream</span>(filePath)<span class="op">;</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> outputStream <span class="op">=</span> fs<span class="op">.</span><span class="fu">createWriteStream</span>(<span class="st">&quot;out_stream.gz&quot;</span>)<span class="op">;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> compressTransformStream <span class="op">=</span> zlib<span class="op">.</span><span class="fu">createGzip</span>()<span class="op">;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>inputStream</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">pipe</span>(compressTransformStream)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">pipe</span>(outputStream)</span></code></pre></div>
+<p>Let us try compressing the <code>large.txt</code> file again. This time using streams.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">const</span> fs <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;fs&#39;</span>)<span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="kw">const</span> zlib <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;zlib&#39;</span>)<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="kw">const</span> filePath <span class="op">=</span> <span class="bu">process</span><span class="op">.</span><span class="at">argv</span>[<span class="dv">2</span>]<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="kw">const</span> inputStream <span class="op">=</span> fs<span class="op">.</span><span class="fu">createReadStream</span>(filePath)<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="kw">const</span> outputStream <span class="op">=</span> fs<span class="op">.</span><span class="fu">createWriteStream</span>(<span class="st">&quot;out_stream.gz&quot;</span>)<span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="kw">const</span> compressTransformStream <span class="op">=</span> zlib<span class="op">.</span><span class="fu">createGzip</span>()<span class="op">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>inputStream</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>    <span class="op">.</span><span class="fu">pipe</span>(compressTransformStream)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>    <span class="op">.</span><span class="fu">pipe</span>(outputStream)</span></code></pre></div>
 <p>This time, it works.</p>
-<p>Let us modify this a bit and add a message using an event handler for
-the <code>close</code> event of the writable stream. This event is
-emitted when the file being written to is closed.</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>inputStream</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">pipe</span>(compressTransformStream)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">pipe</span>(outputStream)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;close&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Compression with streams success!&quot;</span>)<span class="op">;</span> </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span></code></pre></div>
+<p>Let us modify this a bit and add a message using an event handler for the <code>close</code> event of the writable stream. This event is emitted when the file being written to is closed.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>inputStream</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>    <span class="op">.</span><span class="fu">pipe</span>(compressTransformStream)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>    <span class="op">.</span><span class="fu">pipe</span>(outputStream)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>    <span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;close&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Compression with streams success!&quot;</span>)<span class="op">;</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>    })<span class="op">;</span></span></code></pre></div>
 <p>Running the new app,</p>
 <pre><code>$ node stream.js large.txt
 Compression with streams success!
@@ -187,22 +150,13 @@ $ du -h out_stream.gz large.txt
 2.1G    large.txt
 908K    out_stream.gz
 </code></pre>
-<p>The compression works when streams are used because the size of the
-data buffer need not be as big as the file itself as the 'produced' data
-is consumed before the entire file is loaded, making a smaller buffer
-size possible. The app can start writing to the output file before the
-entire input file has been compressed. This way, the app is way easier
-on the computer's memory.</p>
+<p>The compression works when streams are used because the size of the data buffer need not be as big as the file itself as the 'produced' data is consumed before the entire file is loaded, making a smaller buffer size possible. The app can start writing to the output file before the entire input file has been compressed. This way, the app is way easier on the computer's memory.</p>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://www.youtube.com/watch?v=0BvJhJlueoc"><a
-href="https://www.youtube.com/watch?v=0BvJhJlueoc">https://www.youtube.com/watch?v=0BvJhJlueoc</a></a></li>
-<li><a href="https://nodejs.org/api/stream.html"><a
-href="https://nodejs.org/api/stream.html">https://nodejs.org/api/stream.html</a></a></li>
+<li><a href="https://www.youtube.com/watch?v=0BvJhJlueoc"><a href="https://www.youtube.com/watch?v=0BvJhJlueoc">https://www.youtube.com/watch?v=0BvJhJlueoc</a></a></li>
+<li><a href="https://nodejs.org/api/stream.html"><a href="https://nodejs.org/api/stream.html">https://nodejs.org/api/stream.html</a></a></li>
 </ul>
-<p>(Almost all of this article was originally written in 2020 before
-having access to the talk's video (not long before corona forced us all
-inside 😅). Got around to dusting it off only now.)</p>
+<p>(Almost all of this article was originally written in 2020 before having access to the talk's video (not long before corona forced us all inside 😅). Got around to dusting it off only now.)</p>
 </div>
 </body>
 </html>

@@ -22,108 +22,92 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
-<h1 class="title"><code>atexit()</code>: Execute code just before
-terminating</h1>
+<h1 class="title"><code>atexit()</code>: Execute code just before terminating</h1>
 </header>
 
 <ul>
-    </ul>
+    <li>Date created: 28-Jul-2017</li>
+      <li>Last updated: 25-Jun-2021</li>
+  </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/c.html">c</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
-About the <code>atexit()</code> function in C that can be used to run
-code.
+About the ~atexit()~ function in C that can be used to run code.
 </div>
 
 <div id="content-container">
-<p><sub><sup><a href="../misc/old-blog.html">From my old
-blog</a>.</sup></sub></p>
+<p><sub><sup><a href="../misc/old-blog.html">From my old blog</a>.</sup></sub></p>
 <hr />
-<p><code>atexit()</code> is a function which can be used to call
-functions having code that needs to be executed just before terminating
-the program normally.</p>
+<p><code>atexit()</code> is a function which can be used to call functions having code that needs to be executed just before terminating the program normally.</p>
 <ul>
 <li>Header file: <code>stdlib.h</code></li>
 <li>Prototype: <code>int atexit(void (*function)(void));</code></li>
 </ul>
-<p>For this to work, the functions which must be executed just before
-termination must first be 'registered' with the <code>atexit()</code>
-function. It’s like informing <code>atexit()</code> that a certain
-function needs to be executed before termination.</p>
+<p>For this to work, the functions which must be executed just before termination must first be 'registered' with the <code>atexit()</code> function. It’s like informing <code>atexit()</code> that a certain function needs to be executed before termination.</p>
 <p>Eg: To register a function <code>fn1()</code>, do</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>atexit<span class="op">(</span>fn1<span class="op">);</span></span></code></pre></div>
-<p>Functions registered with <code>atexit()</code> are called in the
-reverse order of the order in which they were registered.</p>
-<p>ie, if the function <code>fn1()</code>, <code>fn2()</code>,
-<code>fn3()</code> were registered like</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>atexit<span class="op">(</span>fn1<span class="op">);</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>atexit<span class="op">(</span>fn2<span class="op">);</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>atexit<span class="op">(</span>fn3<span class="op">);</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>atexit<span class="op">(</span>fn1<span class="op">);</span></span></code></pre></div>
-<p>The order of execution of these functions would be
-<code>fn1()</code>, <code>fn3()</code>, <code>fn2()</code>,
-<code>fn1()</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>atexit(fn1);</span></code></pre></div>
+<p>Functions registered with <code>atexit()</code> are called in the reverse order of the order in which they were registered.</p>
+<p>ie, if the function <code>fn1()</code>, <code>fn2()</code>, <code>fn3()</code> were registered like</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>atexit(fn1);</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>atexit(fn2);</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>atexit(fn3);</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>atexit(fn1);</span></code></pre></div>
+<p>The order of execution of these functions would be <code>fn1()</code>, <code>fn3()</code>, <code>fn2()</code>, <code>fn1()</code>.</p>
 <p>For example, the following program</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdlib.h&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> call_me_before<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;Call me before...</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> you_terminate<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;... you terminate.</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    atexit<span class="op">(</span>you_terminate<span class="op">);</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    atexit<span class="op">(</span>call_me_before<span class="op">);</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="dt">void</span> call_me_before(<span class="dt">void</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>{</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>    printf(<span class="st">&quot;Call me before...</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>}</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a><span class="dt">void</span> you_terminate(<span class="dt">void</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>{</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>    printf(<span class="st">&quot;... you terminate.</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>}</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a><span class="dt">int</span> main()</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>{</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>    atexit(you_terminate);</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a>    atexit(call_me_before);</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a>}</span></code></pre></div>
 <p>would give</p>
 <pre><code>Call me before...
 ... you terminate.
 </code></pre>
-<p>We can even register the same function multiple times to make that
-function run more than once.</p>
-<p>The functions that need to be executed using <code>atexit()</code>
-must have <code>void</code> as their return type and can’t be taking
-arguments.</p>
-<p>This is why the argument of <code>atexit()</code> is a pointer to
-function of return type <code>void</code> taking no arguments.</p>
+<p>We can even register the same function multiple times to make that function run more than once.</p>
+<p>The functions that need to be executed using <code>atexit()</code> must have <code>void</code> as their return type and can’t be taking arguments.</p>
+<p>This is why the argument of <code>atexit()</code> is a pointer to function of return type <code>void</code> taking no arguments.</p>
 <p>The signature of <code>atexit()</code> is:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="op">(*</span>function<span class="op">)(</span><span class="dt">void</span><span class="op">);</span></span></code></pre></div>
-<p>In POSIX-compliant systems, at least 32 functions can be registered
-in this way. <a
-href="http://man7.org/linux/man-pages/man3/atexit.3.html">¹</a></p>
-<p>This is as per the value of <code>ATEXIT_MAX</code> defined inside
-<code>limits.h</code> header file. It denotes the maximum number of
-functions that may be registered with the <code>atexit()</code>
-function. <a
-href="http://pubs.opengroup.org/onlinepubs/7908799/xsh/limits.h.html">³</a></p>
-<p>It may not be executed if some error occurred in the program which
-causes it to terminate prematurely like a segmentation fault.</p>
-<p>Return value: <code>0</code> when successful. Otherwise a non-zero
-value.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="dt">void</span> (*function)(<span class="dt">void</span>);</span></code></pre></div>
+<p>In POSIX-compliant systems, at least 32 functions can be registered in this way. <a href="http://man7.org/linux/man-pages/man3/atexit.3.html">¹</a></p>
+<p>This is as per the value of <code>ATEXIT_MAX</code> defined inside <code>limits.h</code> header file. It denotes the maximum number of functions that may be registered with the <code>atexit()</code> function. <a href="http://pubs.opengroup.org/onlinepubs/7908799/xsh/limits.h.html">³</a></p>
+<p>It may not be executed if some error occurred in the program which causes it to terminate prematurely like a segmentation fault.</p>
+<p>Return value: <code>0</code> when successful. Otherwise a non-zero value.</p>
 <h3 id="references">References</h3>
 <ul>
-<li><a
-href="http://man7.org/linux/man-pages/man3/atexit.3.html">http://man7.org/linux/man-pages/man3/atexit.3.html</a></li>
-<li><a
-href="http://pubs.opengroup.org/onlinepubs/7908799/xsh/limits.h.html">http://pubs.opengroup.org/onlinepubs/7908799/xsh/limits.h.html</a></li>
+<li><a href="http://man7.org/linux/man-pages/man3/atexit.3.html">http://man7.org/linux/man-pages/man3/atexit.3.html</a></li>
+<li><a href="http://pubs.opengroup.org/onlinepubs/7908799/xsh/limits.h.html">http://pubs.opengroup.org/onlinepubs/7908799/xsh/limits.h.html</a></li>
 </ul>
 </div>
 </body>

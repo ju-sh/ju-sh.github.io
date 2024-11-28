@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Sorting algorithms</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Sorting algorithms</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<ul>
+<li><p>Bubble</p></li>
+<li><p>Selection</p></li>
+<li><p>Insertion</p></li>
+<li><p>Merge sort</p></li>
+<li><p>Quick</p></li>
+<li><p>Heap sort</p></li>
+<li><p>Tim sort</p></li>
+<li><p>Bucket/radix</p></li>
+<li><p>Shell sort</p></li>
+</ul>
+<h2 id="bubble-sort">Bubble sort</h2>
+<ul>
+<li>O(n²)</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co">-- | Bubble a value to end of list</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="co">-- The &#39;inner loop&#39; in imperative implementations</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>bubble</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="ot">  ::</span> <span class="dt">Ord</span> a</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>  <span class="ot">=&gt;</span> [a]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>  <span class="ot">-&gt;</span> [a]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>bubble l <span class="ot">=</span> <span class="kw">case</span> l <span class="kw">of</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>  x<span class="op">:</span>y<span class="op">:</span>l&#39;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>    <span class="op">|</span> x <span class="op">&lt;</span> y <span class="ot">-&gt;</span> x<span class="op">:</span>(bubble (y<span class="op">:</span>l&#39;))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>    <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">-&gt;</span> y<span class="op">:</span>(bubble (x<span class="op">:</span>l&#39;))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>  _ <span class="ot">-&gt;</span> l</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>bubsort  </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="ot">  ::</span> <span class="dt">Ord</span> a</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>  <span class="ot">=&gt;</span> [a] <span class="co">-- ^ List to be sorted</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>  <span class="ot">-&gt;</span> [a] <span class="co">-- ^ Sorted list</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>bubsort l <span class="ot">=</span> <span class="fu">foldr</span> (\_ <span class="ot">-&gt;</span> bubble) l l</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a><span class="co">--bubsort l = foldr (\_ acc -&gt; bubble acc) l l</span></span></code></pre></div>
+<h2 id="insertion-sort">Insertion sort</h2>
+<ul>
+<li>Algorithm run divides data into two parts: sorted and unsorted</li>
+<li>First element is assumed to be sorted</li>
+<li>Remaining elements are put in place by shifting other elements</li>
+</ul>
+<p>Properites:</p>
+<ul>
+<li>In place: Needs only one variable ??</li>
+</ul>
+<p>Time complexity</p>
+<ul>
+<li>Best: O(n)
+<ul>
+<li>Array is already sorted =&gt; Just one pass needed</li>
+</ul></li>
+<li>Worst: O(n²)</li>
+<li>Average: O(n²)</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>ins</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="ot">  ::</span> <span class="dt">Ord</span> a</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  <span class="ot">=&gt;</span> [a] <span class="co">-- ^ List to be sorted</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>  <span class="ot">-&gt;</span> [a] <span class="co">-- ^ Sorted list</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>ins l <span class="ot">=</span> <span class="kw">case</span> l <span class="kw">of</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>  []   <span class="ot">-&gt;</span> []</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>  x<span class="op">:</span>l&#39; <span class="ot">-&gt;</span> insert x (ins l&#39;)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a> <span class="kw">where</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>  insert</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="ot">    ::</span> <span class="dt">Ord</span> a</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>    <span class="ot">=&gt;</span> a    <span class="co">-- ^ New element to add</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>    <span class="ot">-&gt;</span> [a]  <span class="co">-- ^ Sorted list</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>    <span class="ot">-&gt;</span> [a]  <span class="co">-- ^ Sorted list after adding new element </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>  insert a l <span class="ot">=</span> <span class="kw">case</span> l <span class="kw">of</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a>    []            <span class="ot">-&gt;</span> [a]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>    x<span class="op">:</span>l&#39;</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a>      <span class="op">|</span> a <span class="op">&lt;</span> x     <span class="ot">-&gt;</span> a<span class="op">:</span>l</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a>      <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">-&gt;</span> x<span class="op">:</span>(insert a l&#39;)</span></code></pre></div>
+<p>(This snippet is a modified form of a function from <a href="https://stackoverflow.com/questions/28550361/insertion-sort-in-haskell">here</a>.)</p>
+<p>—</p>
+<p>A corecursive form of insertion sort from <a href="https://www.youtube.com/watch?v=w2XCnbLBHmw">here</a>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">import</span> <span class="dt">Data.List</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="ot">ins ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>ins l <span class="ot">=</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>  <span class="kw">if</span> <span class="fu">null</span> l <span class="kw">then</span> []</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>  <span class="kw">else</span> x <span class="op">:</span> ins xs</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a> <span class="kw">where</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>  x  <span class="ot">=</span> <span class="fu">minimum</span> l</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>  xs <span class="ot">=</span> l \\ [x]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a><span class="co">-- λ&gt; ins [3,13,2,53]</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="co">-- [2,3,13,53]</span></span></code></pre></div>
+<p>but I guess this version is always O(n²) because of the <code>minimum</code> usage.</p>
+<h2 id="merge-sort">Merge sort</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="ot">merge ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>merge l1 l2 <span class="ot">=</span> <span class="kw">case</span> (l1, l2) <span class="kw">of</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>  ([], _) <span class="ot">-&gt;</span> l2</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>  (_, []) <span class="ot">-&gt;</span> l1</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>  (x<span class="op">:</span>l1&#39;, y<span class="op">:</span>l2&#39;)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>    <span class="op">|</span> x <span class="op">&lt;</span> y <span class="ot">-&gt;</span> x<span class="op">:</span>(merge l1&#39; l2)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>    <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">-&gt;</span> y<span class="op">:</span>(merge l1 l2&#39;)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="co">-- Use of `length&#39; here makes this operation itself O(n)</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a><span class="ot">split ::</span> [a] <span class="ot">-&gt;</span> ([a], [a])</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>split l <span class="ot">=</span> (<span class="fu">take</span> n l, <span class="fu">drop</span> n l)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a> <span class="kw">where</span> </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>  n <span class="ot">=</span> <span class="fu">div</span> (<span class="fu">length</span> l) <span class="dv">2</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a><span class="ot">mergesort ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>mergesort [] <span class="ot">=</span> []</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>mergesort [x] <span class="ot">=</span> [x]</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a>mergesort l <span class="ot">=</span> </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a>  <span class="kw">let</span> (x, y) <span class="ot">=</span> split l <span class="kw">in</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a>  merge (mergesort x) (mergesort y)</span></code></pre></div>
+<p>(This is not merge sort in Haskell since <code>length</code> is used, but hopefully it makes the idea of merge sort clear..)</p>
+<h2 id="quick-sort">Quick sort</h2>
+<p>Time complexity</p>
+<ul>
+<li>Best: O(n)
+<ul>
+<li>Array is already sorted and pivot is middle element =&gt; Just one pass needed</li>
+</ul></li>
+<li>Worst: O(n²)
+<ul>
+<li>Pivot is smallest or largest element</li>
+</ul></li>
+<li>Average: O(n.logn)</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="ot">qsort ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>qsort [] <span class="ot">=</span> []</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>qsort (p<span class="op">:</span>xs) <span class="ot">=</span> (qsort lft) <span class="op">++</span> [p] <span class="op">++</span> (qsort rgt)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a> <span class="kw">where</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>  lft <span class="ot">=</span> <span class="fu">filter</span> (<span class="op">&lt;</span> p) xs</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>  rgt <span class="ot">=</span> <span class="fu">filter</span> (<span class="op">&gt;=</span> p) xs</span></code></pre></div>
+<p>Haskell prefers merge sort over quick sort??</p>
+<ul>
+<li></li>
+</ul>
+<p><a href="https://stackoverflow.com/questions/52237695/why-does-haskell-use-mergesort-instead-of-quicksort">https://stackoverflow.com/questions/52237695/why-does-haskell-use-mergesort-instead-of-quicksort</a></p>
+<p>—</p>
+<p>Python example from <a href="https://youtu.be/uRmg6Jl0mYk">here</a>:</p>
+<h3 id="worst-case">Worst case</h3>
+<ul>
+<li>When pivot is smallest or largest element.</li>
+<li>One partition is empty</li>
+<li>If pivot is first element, already sorted array gives worst case</li>
+</ul>
+<pre><code>T(n) = T(n-1)   // Sort the partition
+       + n      // Rearrange array (ie, the `left ++ [pivot] ++ right` part
+
+     = [T(n-2) + (n-1)] + n
+     =    ...
+     = 1 + 2 + .. + n
+     = O(n²)
+</code></pre>
+<h1 id="properties-of-sorting-algorithm">Properties of sorting algorithm</h1>
+<ul>
+<li>In-place: Needs constant amount of (extra) memory to sort</li>
+<li>Online: Can start sorting before all of the data is available</li>
+<li>Stable: No change in order of elements if they are equal</li>
+<li>Adaptive: If part of the data is already sorted, algorithm takes advantage of it</li>
+</ul>
+<h2 id="time-complexity">Time complexity</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Best</th>
+<th>Worst</th>
+<th>Average</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bubble sort</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+</tr>
+<tr class="even">
+<td>Selection sort</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+</tr>
+<tr class="odd">
+<td>Insertion sort</td>
+<td>O(n)</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+</tr>
+<tr class="even">
+<td>Merge sort</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

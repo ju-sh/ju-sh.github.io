@@ -22,13 +22,13 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
@@ -36,8 +36,17 @@
 </header>
 
 <ul>
+    <li>Date created: 20-Feb-2022</li>
     </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/xp event.html">xp event</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
@@ -45,32 +54,19 @@ About stuff that I did and saw at FOSDEM 2022.
 </div>
 
 <div id="content-container">
-<p><a href="https://fosdem.org/2022/about/">FOSDEM</a> <a
-href="https://fosdem.org/2022/">2022</a> happened a couple of weeks ago
-(Feb 5 and 6) and it was great. I did some each of attending,
-volunteering and speaking and met many interesting people along the
-way.</p>
-<p>This year, FOSDEM had: <a
-href="https://fosdem.org/2022/schedule/">¹⁴</a></p>
+<p><a href="https://fosdem.org/2022/about/">FOSDEM</a> <a href="https://fosdem.org/2022/">2022</a> happened a couple of weeks ago (Feb 5 and 6) and it was great. I did some each of attending, volunteering and speaking and met many interesting people along the way.</p>
+<p>This year, FOSDEM had: <a href="https://fosdem.org/2022/schedule/">¹⁴</a></p>
 <ul>
 <li>654 speakers</li>
 <li>731 events</li>
 <li>100 tracks</li>
 <li>19 lightning talks*</li>
 </ul>
-<p>(More interesting figures were mentioned in the <a
-href="https://fosdem.org/2022/schedule/event/closing_fosdem/">closing
-talk</a>.)</p>
+<p>(More interesting figures were mentioned in the <a href="https://fosdem.org/2022/schedule/event/closing_fosdem/">closing talk</a>.)</p>
 <h1 id="infrastructure">Infrastructure</h1>
-<p>True to its spirit, FOSDEM 2022 seems to have been done entirely
-using FOSS software.</p>
+<p>True to its spirit, FOSDEM 2022 seems to have been done entirely using FOSS software.</p>
 <p>Like in 2021, matrix was used for chatting.</p>
-<p>This time, a relatively new feature of Matrix, called <a
-href="https://element.io/blog/spaces-the-next-frontier/">Spaces</a>, was
-used (as <a
-href="https://seagl.org/news/2021/10/27/seagl-2021-theme.html">SeaGL did
-in 2021</a>). Spaces allowed for organizing the different chat rooms
-into a proper hierarchy.</p>
+<p>This time, a relatively new feature of Matrix, called <a href="https://element.io/blog/spaces-the-next-frontier/">Spaces</a>, was used (as <a href="https://seagl.org/news/2021/10/27/seagl-2021-theme.html">SeaGL did in 2021</a>). Spaces allowed for organizing the different chat rooms into a proper hierarchy.</p>
 <p>These are some of the tools that were used:</p>
 <ul>
 <li>Matrix: Chat</li>
@@ -78,147 +74,46 @@ into a proper hierarchy.</p>
 <li>SReview: Recordings review</li>
 </ul>
 <p>Use of matrix meant decentralization. Federation.</p>
-<p>Each track/devroom had an associated matrix channel from where
-audience could watch the talk being broadcast by means of matrix widget.
-Questions and comments could be posted to the same channel.</p>
-<p>The talks were pre-recorded. After the video playback is over, the
-remaining time would be for Q&amp;A. (If the recording was too long, it
-would cut into the time for Q&amp;A. If the recording exceeded the
-allotted time slot, the video itself would be cut off abruptly once the
-allotted time expires).</p>
-<p>Each talk had a room associated with it. This room would not be
-public initially and would be the place where the speaker and host can
-communicate. There is a jitsi widget in this room where the speaker and
-host can join live video which would be broadcast to the corresponding
-track/devroom. The Q&amp;A session happens here in this manner. Once the
-time for the talk is over, the a bot would make the room public (without
-sharing chat history prior to this point) and the same room would become
-the hallway for the talk where people can come in and join the video
-call with the speaker and host and have discussions.</p>
-<p>Audience could vote on the questions posted in the chat and they
-would appear in reverse order of upvotes in a widget in the speaker's
-room to be answered during the Q&amp;A session.</p>
-<p>Each track had a backstage room, but I felt that there wasn't much
-activity there except the bot warning about people who were expected to
-be there but hadn't yet showed up, but maybe that's just the backstage
-rooms that I had popped into.</p>
-<p>It seemed to me that anything which had a chance of being automated
-was automated. Like (FOSDEM bot) inviting speakers and volunteers to the
-correct rooms, ensuring that the speaker and host showed up, generating
-new invites every now and then depending on external changes like a new
-volunteer being available, etc.</p>
-<p>The people managing the infrastructure did a great job. Except for
-one small gitch on day 1 (which was fixed within a few minutes) where
-the Q&amp;A wasn't being broadcast in some rooms, I don't think there
-was any problem for an attendee.</p>
-<p>I haven't seen it yet, but an overview FOSDEM infrastructure was
-given as a <a
-href="https://fosdem.org/2022/schedule/event/conference_fosdem/">talk</a>
-during the conference itself.</p>
+<p>Each track/devroom had an associated matrix channel from where audience could watch the talk being broadcast by means of matrix widget. Questions and comments could be posted to the same channel.</p>
+<p>The talks were pre-recorded. After the video playback is over, the remaining time would be for Q&amp;A. (If the recording was too long, it would cut into the time for Q&amp;A. If the recording exceeded the allotted time slot, the video itself would be cut off abruptly once the allotted time expires).</p>
+<p>Each talk had a room associated with it. This room would not be public initially and would be the place where the speaker and host can communicate. There is a jitsi widget in this room where the speaker and host can join live video which would be broadcast to the corresponding track/devroom. The Q&amp;A session happens here in this manner. Once the time for the talk is over, the a bot would make the room public (without sharing chat history prior to this point) and the same room would become the hallway for the talk where people can come in and join the video call with the speaker and host and have discussions.</p>
+<p>Audience could vote on the questions posted in the chat and they would appear in reverse order of upvotes in a widget in the speaker's room to be answered during the Q&amp;A session.</p>
+<p>Each track had a backstage room, but I felt that there wasn't much activity there except the bot warning about people who were expected to be there but hadn't yet showed up, but maybe that's just the backstage rooms that I had popped into.</p>
+<p>It seemed to me that anything which had a chance of being automated was automated. Like (FOSDEM bot) inviting speakers and volunteers to the correct rooms, ensuring that the speaker and host showed up, generating new invites every now and then depending on external changes like a new volunteer being available, etc.</p>
+<p>The people managing the infrastructure did a great job. Except for one small gitch on day 1 (which was fixed within a few minutes) where the Q&amp;A wasn't being broadcast in some rooms, I don't think there was any problem for an attendee.</p>
+<p>I haven't seen it yet, but an overview FOSDEM infrastructure was given as a <a href="https://fosdem.org/2022/schedule/event/conference_fosdem/">talk</a> during the conference itself.</p>
 <h1 id="attending-and-speaking">Attending and speaking</h1>
-<p>I attended a few talks (don't ask how many, I have no idea) and these
-are a few among them</p>
+<p>I attended a few talks (don't ask how many, I have no idea) and these are a few among them</p>
 <h2 id="history-of-spreadsheets">History of spreadsheets</h2>
-<p><a
-href="https://fosdem.org/2022/schedule/event/retro_spreadsheets/">A
-Brief History of Spreadsheets: From LANPAR to VisiCalc to Lotus to
-LibreOffice</a> was very interesting. It was given by <a
-href="https://en.wikipedia.org/wiki/Jim_Hall_(computer_programmer)">Jim
-Hall</a>, the guy who started making <a
-href="https://www.freedos.org/">FreeDOS</a>.</p>
-<p>I didn't even know there were things like <a
-href="https://en.wikipedia.org/wiki/Spreadsheet#LANPAR_spreadsheet_compiler">LANPAR</a>,
-<a href="https://en.wikipedia.org/wiki/VisiCalc">VisiCal</a>, <a
-href="https://en.wikipedia.org/wiki/Lotus_1-2-3">Lotus 1-2-3</a>, and <a
-href="https://en.wikipedia.org/wiki/Quattro_Pro">Quattro Pro</a> before
-the kind of spreadsheets that we usually use these days and the story of
-how the rows in modern spreadsheets came to be named with numbers and
-columns with letters. The talk also involved demos these tools.</p>
-<p>Not sure if it's so, but I got the impression that the demand for
-spreadsheet software back in the day played a role in the subsequent
-popularity of personal computers and the emergence of Microsoft.</p>
+<p><a href="https://fosdem.org/2022/schedule/event/retro_spreadsheets/">A Brief History of Spreadsheets: From LANPAR to VisiCalc to Lotus to LibreOffice</a> was very interesting. It was given by <a href="https://en.wikipedia.org/wiki/Jim_Hall_(computer_programmer)">Jim Hall</a>, the guy who started making <a href="https://www.freedos.org/">FreeDOS</a>.</p>
+<p>I didn't even know there were things like <a href="https://en.wikipedia.org/wiki/Spreadsheet#LANPAR_spreadsheet_compiler">LANPAR</a>, <a href="https://en.wikipedia.org/wiki/VisiCalc">VisiCal</a>, <a href="https://en.wikipedia.org/wiki/Lotus_1-2-3">Lotus 1-2-3</a>, and <a href="https://en.wikipedia.org/wiki/Quattro_Pro">Quattro Pro</a> before the kind of spreadsheets that we usually use these days and the story of how the rows in modern spreadsheets came to be named with numbers and columns with letters. The talk also involved demos these tools.</p>
+<p>Not sure if it's so, but I got the impression that the demand for spreadsheet software back in the day played a role in the subsequent popularity of personal computers and the emergence of Microsoft.</p>
 <h2 id="raku">Raku</h2>
-<p>Had heard about <a href="https://raku.org/">Raku</a> but never got to
-take a closer look. This <a
-href="https://fosdem.org/2022/schedule/event/misc_raku/">talk</a> about
-the language and the subsequent discussion gave me some insights.</p>
-<p>Having initially started out as Perl 6 (there's a hint of that in
-Camelia, Raku's mascot), Raku grew to be something different.</p>
-<p>Raku has no reference implementation (unlike languages like Python)
-and <a href="https://rakudo.org/">Rakudo</a> (meaning 'way of the camel'
-according to <a
-href="https://en.wikipedia.org/wiki/Rakudo">Wikipedia</a>, a reference
-towards Raku's Perl heritage) seems to be the only implementation that's
-active.</p>
-<p>Also heard about <span class="spurious-link"
-target="33"><em>MoarVM</em></span>, <span class="spurious-link"
-target="34"><em>NQP</em></span> and <a
-href="https://docs.raku.org/language/grammars">grammars</a> of Raku
-(Raku parser itself seems to be using this kind of grammars). Got to
-look up on that when I get time (don't know when that will happen
-though..😅)</p>
+<p>Had heard about <a href="https://raku.org/">Raku</a> but never got to take a closer look. This <a href="https://fosdem.org/2022/schedule/event/misc_raku/">talk</a> about the language and the subsequent discussion gave me some insights.</p>
+<p>Having initially started out as Perl 6 (there's a hint of that in Camelia, Raku's mascot), Raku grew to be something different.</p>
+<p>Raku has no reference implementation (unlike languages like Python) and <a href="https://rakudo.org/">Rakudo</a> (meaning 'way of the camel' according to <a href="https://en.wikipedia.org/wiki/Rakudo">Wikipedia</a>, a reference towards Raku's Perl heritage) seems to be the only implementation that's active.</p>
+<p>Also heard about <em>MoarVM</em>, <em>NQP</em> and <a href="https://docs.raku.org/language/grammars">grammars</a> of Raku (Raku parser itself seems to be using this kind of grammars). Got to look up on that when I get time (don't know when that will happen though..😅)</p>
 <h2 id="electronics-with-open-source">Electronics with open source</h2>
-<p>Found from <a
-href="https://fosdem.org/2022/schedule/event/coriolis2/">talks</a> <a
-href="https://fosdem.org/2022/schedule/event/nmigen/">in the</a>
-<em>Libre-Open VLSI and FPGA devroom</em> about the <a
-href="http://coriolis.lip6.fr/">Alliance/Coriolis</a> toolchain, <a
-href="https://gitlab.com/nmigen/nmigen">nMigen HDL</a> and the <a
-href="https://libre-soc.org/">Libre-SOC project</a>.</p>
-<p>At first I thought <em>Hardware-Aided Trusted Computing devroom</em>
-would be about formal methods as well, but based on quick glance at the
-list of talks there, it seems that isn't the case (it sounded more in
-the line of stuff like Trusted Platform Module aka TPM). Not sure if I'm
-wrong though.</p>
-<p>I wanted to see the events in the <em>Hardware-Aided Trusted
-Computing devroom</em>, as I am working on a project in that area using
-formal methods, but couldn't attend it live (videos must be there
-though).</p>
+<p>Found from <a href="https://fosdem.org/2022/schedule/event/coriolis2/">talks</a> <a href="https://fosdem.org/2022/schedule/event/nmigen/">in the</a> <em>Libre-Open VLSI and FPGA devroom</em> about the <a href="http://coriolis.lip6.fr/">Alliance/Coriolis</a> toolchain, <a href="https://gitlab.com/nmigen/nmigen">nMigen HDL</a> and the <a href="https://libre-soc.org/">Libre-SOC project</a>.</p>
+<p>At first I thought <em>Hardware-Aided Trusted Computing devroom</em> would be about formal methods as well, but based on quick glance at the list of talks there, it seems that isn't the case (it sounded more in the line of stuff like Trusted Platform Module aka TPM). Not sure if I'm wrong though.</p>
+<p>I wanted to see the events in the <em>Hardware-Aided Trusted Computing devroom</em>, as I am working on a project in that area using formal methods, but couldn't attend it live (videos must be there though).</p>
 <h2 id="unified-push">Unified-Push</h2>
-<p>Listening to the <a
-href="https://fosdem.org/2022/schedule/event/rtc_unifiedpush/ ">talk</a>
-about <a href="https://unifiedpush.org/">Unified Push</a>, I got the
-impression that things are be a bit messed up in the Android world and
-that people are trying to fix that.</p>
+<p>Listening to the <a href="https://fosdem.org/2022/schedule/event/rtc_unifiedpush/ ">talk</a> about <a href="https://unifiedpush.org/">Unified Push</a>, I got the impression that things are be a bit messed up in the Android world and that people are trying to fix that.</p>
 <h2 id="ada">Ada</h2>
-<p>I listened to a few talks in the <em>Ada devroom</em>, but being a
-total stranger to the language, didn't understand much.</p>
+<p>I listened to a few talks in the <em>Ada devroom</em>, but being a total stranger to the language, didn't understand much.</p>
 <h2 id="others">Others</h2>
-<p>I was one of the speakers in the <em>Python devroom</em> and in
-between I couldn't attend most of the talks there (but then again,
-recordings are there!).</p>
-<p>And the name of the <em>Open Research Tools and Technologies
-devroom</em> sounded like it would have interesting talks, got to look
-into it.</p>
+<p>I was one of the speakers in the <em>Python devroom</em> and in between I couldn't attend most of the talks there (but then again, recordings are there!).</p>
+<p>And the name of the <em>Open Research Tools and Technologies devroom</em> sounded like it would have interesting talks, got to look into it.</p>
 <h1 id="volunteering">Volunteering</h1>
-<p>I had volunteered to be one of the people manning the infodesk for
-some time at FOSDEM 2021. I didn't do much as I didn't know the answer
-or fix to most of the questions that had come up. But it was fun (and I
-had someone I had already met before online as fellow infodesker).</p>
-<p>I wanted to volunteer to do hosting as well last year, but the place
-where I was at back in 2021 had poor internet connectivity that wouldn't
-stand video calls. But things changed as the place I am at now in 2022
-has <em>very</em> good Internet. So the moment I heard the volunteers
-were called for this year's FOSDEM, I signed up to do hosting.</p>
-<p>I had initially signed up to host two talks but that ended up being
-four once the conference had started (mainly in the <em>Real Time
-Communications</em> track) and I got to meet even more cool people!</p>
+<p>I had volunteered to be one of the people manning the infodesk for some time at FOSDEM 2021. I didn't do much as I didn't know the answer or fix to most of the questions that had come up. But it was fun (and I had someone I had already met before online as fellow infodesker).</p>
+<p>I wanted to volunteer to do hosting as well last year, but the place where I was at back in 2021 had poor internet connectivity that wouldn't stand video calls. But things changed as the place I am at now in 2022 has <em>very</em> good Internet. So the moment I heard the volunteers were called for this year's FOSDEM, I signed up to do hosting.</p>
+<p>I had initially signed up to host two talks but that ended up being four once the conference had started (mainly in the <em>Real Time Communications</em> track) and I got to meet even more cool people!</p>
 <h1 id="conclusion">Conclusion</h1>
-<p>With its latest edition, FOSDEM once again showed that it is
-perfectly possible to hold a giant conference online with open source
-software.</p>
-<p>Now that the effects brought about by corona are receding, next
-FOSDEM will probably be a physical event again.</p>
-<p>Sort of has mixed feeling about that, as I was able to attend FOSDEM
-only because it became online. There will be live video streams of talks
-regardless of whether the event is online or offline, but hopefully
-there will be a way to interact as well, but then again that may be
-asking too much.</p>
+<p>With its latest edition, FOSDEM once again showed that it is perfectly possible to hold a giant conference online with open source software.</p>
+<p>Now that the effects brought about by corona are receding, next FOSDEM will probably be a physical event again.</p>
+<p>Sort of has mixed feeling about that, as I was able to attend FOSDEM only because it became online. There will be live video streams of talks regardless of whether the event is online or offline, but hopefully there will be a way to interact as well, but then again that may be asking too much.</p>
 <p>Well, till the next FOSDEM then.</p>
-<p>In case you have missed any of the talks at FOSDEM 2022, all the
-recordings would probably become available soon enough (if it isn't
-already, that is). I missed a few talks myself and am planning to watch
-the videos. Cheers!</p>
+<p>In case you have missed any of the talks at FOSDEM 2022, all the recordings would probably become available soon enough (if it isn't already, that is). I missed a few talks myself and am planning to watch the videos. Cheers!</p>
 <hr />
 <p>(Most of this post was originally written on 09 Feb 2022.)</p>
 </div>

@@ -1,1 +1,0 @@
-2024-03-06T00:00:00+00:00	A taste of the PVS theorem prover | https://rawtext.club/~famubu/blog/hello-pvs.html

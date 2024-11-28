@@ -22,13 +22,13 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
@@ -44,13 +44,10 @@
 <div id="content-container">
 <p>A DSL for stream runtime verification</p>
 <p>(Not the scientist or the company!)</p>
-<p>Originally created for specifying properties about programs running
-on multi-core systems. <a
-href="https://www.tessla.io/papers/dagstuhl2017.pdf">¹</a></p>
+<p>Originally created for specifying properties about programs running on multi-core systems. <a href="https://www.tessla.io/papers/dagstuhl2017.pdf">¹</a></p>
 <hr />
 <h2 id="comments">Comments</h2>
-<p>Comments start with a <code>#</code> or a <code>--</code> and
-everything from it till the end of line is a comment.</p>
+<p>Comments start with a <code>#</code> or a <code>--</code> and everything from it till the end of line is a comment.</p>
 <p>There is no separate syntax for multi-line comments.</p>
 <h2 id="identifiers">Identifiers</h2>
 <p>The usual rules for identifiers.</p>
@@ -105,14 +102,12 @@ everything from it till the end of line is a comment.</p>
 <li>Option</li>
 </ul>
 <h3 id="option">Option</h3>
-<p><code>Option[T]</code> represents optional values of type
-<code>T</code>.</p>
+<p><code>Option[T]</code> represents optional values of type <code>T</code>.</p>
 <pre><code>Option ∈ {Some, None}
 </code></pre>
 <p>Often appears in the type of function arguments.</p>
 <h3 id="some">Some</h3>
-<p><code>Some[T]</code> represents existing values of type
-<code>T</code>.</p>
+<p><code>Some[T]</code> represents existing values of type <code>T</code>.</p>
 <p>'Some value of type <code>T</code>'.</p>
 <h3 id="none">None</h3>
 <p><!-- ♢  is the symbol, but it looks too faint --></p>
@@ -145,8 +140,7 @@ everything from it till the end of line is a comment.</p>
 </table>
 <h3 id="nil">nil</h3>
 <p>Represents a stream without events.</p>
-<p>Since there are no events, can be of any type. Like <code>Int</code>,
-<code>Unit</code>, etc.</p>
+<p>Since there are no events, can be of any type. Like <code>Int</code>, <code>Unit</code>, etc.</p>
 <pre><code>def nil[T]: Events[T]
 
 nil = {⊥, t≥0}
@@ -184,8 +178,7 @@ x-----------
 </code></pre>
 <h3 id="default">default</h3>
 <p>Initialize a stream with given value.</p>
-<p>ie, if the input stream doesn't have an event at t=0, the output
-stream would have an event with given value.</p>
+<p>ie, if the input stream doesn't have an event at t=0, the output stream would have an event with given value.</p>
 <pre><code>def default[T](stream: strict Events[T],
                value: strict T) : Events[T]
 
@@ -197,8 +190,7 @@ default = ⎧s        , if t=0 and stream[t=0]=s
           ⎩
 </code></pre>
 <h3 id="time">time</h3>
-<p>Takes an event stream as input and produces a stream whose event
-values are timestamp at which events occurred in the input stream.</p>
+<p>Takes an event stream as input and produces a stream whose event values are timestamp at which events occurred in the input stream.</p>
 <p>Looks like:</p>
 <pre><code>def time[T](a: Events[T]): Events[TIME]
 </code></pre>
@@ -209,24 +201,15 @@ z |--3----8-
   0123456789
 </code></pre>
 <h3 id="lift">lift</h3>
-<p>Takes some events streams and a function as arguments and applies the
-function at all timestamps of the input streams where there is an event
-to give a single stream as output.</p>
-<p>A simplified version of <code>lift2</code> (ie, <code>lift</code>
-taking 2 streams as input) would look like:</p>
+<p>Takes some events streams and a function as arguments and applies the function at all timestamps of the input streams where there is an event to give a single stream as output.</p>
+<p>A simplified version of <code>lift2</code> (ie, <code>lift</code> taking 2 streams as input) would look like:</p>
 <pre><code>lift[A, B, T](a: Events[A], b: Events[B],
               f: (Option[A], Option[B]) =&gt; Option[T]): Events[T]
 </code></pre>
-<p>where <code>A</code>, <code>B</code> and <code>T</code> are type
-variables.</p>
-<p>At every time stamp, <code>f</code> takes the values in
-<code>a</code> (of type <code>A</code>) and <code>b</code> (of type
-<code>B</code>) as parameters and returns a value of type
-<code>T</code>.</p>
-<p>If a stream doesn't have an event at a timestamp, the parameter
-passed to <code>f</code> gets <code>None</code> as value.</p>
-<p>We could say that the stream output by <code>lift</code> is like a
-'collection of values returned by <code>f</code>'.</p>
+<p>where <code>A</code>, <code>B</code> and <code>T</code> are type variables.</p>
+<p>At every time stamp, <code>f</code> takes the values in <code>a</code> (of type <code>A</code>) and <code>b</code> (of type <code>B</code>) as parameters and returns a value of type <code>T</code>.</p>
+<p>If a stream doesn't have an event at a timestamp, the parameter passed to <code>f</code> gets <code>None</code> as value.</p>
+<p>We could say that the stream output by <code>lift</code> is like a 'collection of values returned by <code>f</code>'.</p>
 <pre><code>in a: Events[Int]
 in b: Events[Int]
 def f(a: Option[Int], b: Option[Int]) =
@@ -242,15 +225,13 @@ b |-x---------x-------x----x---------x--
 
 z |-----------2-------2----3---------1--
 </code></pre>
-<p>The <a href="https://www.tessla.io/operators/">docs</a> show how
-<code>merge</code> operator can be made from <code>lift</code>.</p>
+<p>The <a href="https://www.tessla.io/operators/">docs</a> show how <code>merge</code> operator can be made from <code>lift</code>.</p>
 <pre><code>def merge[T](a: Events[T], b: Events[T]) =
     lift(a, b, (x: Option[T], y: Option[T]) =&gt;
         if isNone(x) then y else x)
 </code></pre>
 <h3 id="last">last</h3>
-<p>Takes two streams and gives the last know value in the first stream
-whenever an event occurs in the second stream.</p>
+<p>Takes two streams and gives the last know value in the first stream whenever an event occurs in the second stream.</p>
 <pre><code>last[T, U](v: Events[T], r: Events[U]): Events[T]
 </code></pre>
 <p>Example:</p>
@@ -266,9 +247,7 @@ r |--x--------x-------x----x---------x--
 
 z |-----------2-------2----3---------1--
 </code></pre>
-<p>If the value in stream <code>x</code> changes at the precise moment
-when an event occurs in stream <code>y</code>, the output would be the
-old value and not the new one.</p>
+<p>If the value in stream <code>x</code> changes at the precise moment when an event occurs in stream <code>y</code>, the output would be the old value and not the new one.</p>
 <h3 id="delay">delay</h3>
 <pre><code>def delay(delayTime: Events[Int],
           reset: Events[Unit]) : Events[Unit]
@@ -288,11 +267,9 @@ r |--x-----x---x------
 z |----x----------x-x-
   01234567890123456789
 </code></pre>
-<p>For this operation, events in both input streams should happen
-simultaneously. Otherwise there would be no effect on the output.</p>
+<p>For this operation, events in both input streams should happen simultaneously. Otherwise there would be no effect on the output.</p>
 <h3 id="merge">merge</h3>
-<p>Takes two event streams and 'combines' them, giving the first stream
-priority.</p>
+<p>Takes two event streams and 'combines' them, giving the first stream priority.</p>
 <pre><code>merge[T](a: Events[T], b: Events[T]) : Events[T]
 </code></pre>
 <p>ie,</p>
@@ -345,12 +322,8 @@ z |-1-----2------1---------2----3---------1--
 <pre><code>def slift2[A, B, C](a: Events[A], b: Events[B],
                     f: (A, B) =&gt; C): Events[C]
 </code></pre>
-<p><code>slift2</code> takes two events streams and a function that can
-accept events from these streams as input and returns another stream as
-output.</p>
-<p>Doesn't start giving output till at least one event occurs in each of
-the input streams. After which the current or last value from the events
-is used to produce output.</p>
+<p><code>slift2</code> takes two events streams and a function that can accept events from these streams as input and returns another stream as output.</p>
+<p>Doesn't start giving output till at least one event occurs in each of the input streams. After which the current or last value from the events is used to produce output.</p>
 <p>As in,</p>
 <pre><code>in x: Events[Int]
 in y: Events[Int]
@@ -412,8 +385,7 @@ def z = x + y
 </tr>
 </tbody>
 </table>
-<h2 id="function-evaluation-strategies">Function evaluation
-strategies</h2>
+<h2 id="function-evaluation-strategies">Function evaluation strategies</h2>
 <ul>
 <li>strict</li>
 <li>lazy</li>
@@ -425,18 +397,13 @@ strategies</h2>
 <li><code>=&gt;</code> (anonymous function)</li>
 <li><code>||</code></li>
 <li><code>&amp;&amp;</code></li>
-<li><code>==</code>, <code>&lt;</code>, <code>&gt;</code>,
-<code>&lt;=</code>, <code>&gt;=</code>, <code>!=</code>,
-<code>&gt;.</code>, <code>&lt;.</code>, <code>&lt;=.</code>,
-<code>&gt;=.</code></li>
+<li><code>==</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>!=</code>, <code>&gt;.</code>, <code>&lt;.</code>, <code>&lt;=.</code>, <code>&gt;=.</code></li>
 <li><code>|</code>, <code>^</code></li>
 <li><code>&amp;</code></li>
 <li><code>&gt;&gt;</code>, <code>&lt;&lt;</code></li>
 <li><code>+</code></li>
-<li><code>*</code>, <code>/</code>, <code>%</code>, <code>*.</code>,
-<code>/.</code></li>
-<li><code>!</code>, <code>-</code>, <code>~</code>, <code>-.</code>
-(unary)</li>
+<li><code>*</code>, <code>/</code>, <code>%</code>, <code>*.</code>, <code>/.</code></li>
+<li><code>!</code>, <code>-</code>, <code>~</code>, <code>-.</code> (unary)</li>
 <li><code>()</code> (function call)</li>
 </ol>
 <h2 id="errors">Errors</h2>
@@ -444,8 +411,7 @@ strategies</h2>
 <ul>
 <li><code>†</code>: stream evaluation error. An error event.
 <ul>
-<li>indicates that a previous operation couldn't determine if an event
-exists or not. (Chapter 6 of spec)</li>
+<li>indicates that a previous operation couldn't determine if an event exists or not. (Chapter 6 of spec)</li>
 </ul></li>
 <li><code>♢</code>: value evaluation error
 <ul>
@@ -454,28 +420,21 @@ exists or not. (Chapter 6 of spec)</li>
 </ul>
 <h3 id="some-notations">Some notations</h3>
 <ul>
-<li><code>⊥</code>: denotes absence of an event (ie, something like
-<code>None</code>)</li>
+<li><code>⊥</code>: denotes absence of an event (ie, something like <code>None</code>)</li>
 <li><code>⟦.⟧</code>: a finite event stream value of a stream</li>
 </ul>
-<p>Data domain of a stream of type <code>T</code> is
-<code>T ∪ {†}</code></p>
+<p>Data domain of a stream of type <code>T</code> is <code>T ∪ {†}</code></p>
 <h2 id="other-stuff">Other stuff</h2>
 <ul>
 <li>liftable</li>
 </ul>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://arxiv.org/pdf/1808.10717.pdf">TeSSLa: Temporal
-Stream-based Specification Language</a></li>
-<li><a href="https://www.tessla.io/documentation">TeSSLa
-documentation</a></li>
+<li><a href="https://arxiv.org/pdf/1808.10717.pdf">TeSSLa: Temporal Stream-based Specification Language</a></li>
+<li><a href="https://www.tessla.io/documentation">TeSSLa documentation</a></li>
 <li><a href="https://www.tessla.io/tutorial/">TeSSLa tutorial</a></li>
-<li><a
-href="https://www.tessla.io/TeSSLaLanguageSpecification-1.0.pdf">TeSSLa
-language specification (v1.0)</a></li>
-<li><a href="https://www.tessla.io/stdlib/">TeSSLa stdlib
-documentation</a></li>
+<li><a href="https://www.tessla.io/TeSSLaLanguageSpecification-1.0.pdf">TeSSLa language specification (v1.0)</a></li>
+<li><a href="https://www.tessla.io/stdlib/">TeSSLa stdlib documentation</a></li>
 <li><a href="https://www.tessla.io/tutorial/">TeSSLa tutorial</a></li>
 </ul>
 <p><!-- TeSSLa and TeSSLa core are different --></p>

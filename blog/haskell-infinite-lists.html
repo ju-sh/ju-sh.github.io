@@ -22,13 +22,13 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
@@ -36,45 +36,36 @@
 </header>
 
 <ul>
+    <li>Date created: 02-Jan-2022</li>
     </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/haskell lists.html">haskell lists</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
-About lazy evaluation making it possible to define infinite lists in
-Haskell..
+About lazy evaluation making it possible to define infinite lists in Haskell..
 </div>
 
 <div id="content-container">
 <hr />
-<p>It is possible for us to define infinite lists in Haskell due to its
-<a href="https://en.wikipedia.org/wiki/Lazy_evaluation">lazy
-evaluation</a> <a
-href="https://wiki.haskell.org/Lazy_vs._non-strict">⁶</a>.</p>
-<p>For example, the following defines an infinite list of
-<code>1</code>-s:</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> <span class="dv">1</span> <span class="op">:</span> a</span></code></pre></div>
-<p>The infinite list <code>a</code> definition says that it starts with
-a <code>1</code> to which <code>a</code> itself is added. ie,
-<code>a</code> is <code>1</code> followed by <code>a</code> itself.</p>
-<p>(Fun fact: The <code>a = 1 : a</code> is same as
-<code>a = (:) 1 a</code>)</p>
-<p>The first time I saw an infinite list like this, I was mighty puzzled
-being quite unfamiliar with Haskell.</p>
+<p>It is possible for us to define infinite lists in Haskell due to its <a href="https://en.wikipedia.org/wiki/Lazy_evaluation">lazy evaluation</a> <a href="https://wiki.haskell.org/Lazy_vs._non-strict">⁶</a>.</p>
+<p>For example, the following defines an infinite list of <code>1</code>-s:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>a <span class="ot">=</span> <span class="dv">1</span> <span class="op">:</span> a</span></code></pre></div>
+<p>The infinite list <code>a</code> definition says that it starts with a <code>1</code> to which <code>a</code> itself is added. ie, <code>a</code> is <code>1</code> followed by <code>a</code> itself.</p>
+<p>(Fun fact: The <code>a = 1 : a</code> is same as <code>a = (:) 1 a</code>)</p>
+<p>The first time I saw an infinite list like this, I was mighty puzzled being quite unfamiliar with Haskell.</p>
 <p>What does the definition of <code>a</code> say?</p>
 <p>It's a recursive definition.</p>
-<p>But how can we add a list to itself when it has not yet been
-completely defined? How is the initial value of <code>a</code> found
-out? Only after having a value can we append it to the <code>1</code>,
-right? Well, it needn't be so.</p>
-<p>This is possible due to Haskell being a lazily evaluated
-language.</p>
-<p>Unlike in the case of <a
-href="https://wiki.haskell.org/Eager_evaluation"><em>eager
-evaluation</em></a>, the RHS of <code>a</code>'s definition is not
-evaluated when the definition is bound to the variable <code>a</code>.
-<a href="https://wiki.haskell.org/Lazy_evaluation">¹</a></p>
+<p>But how can we add a list to itself when it has not yet been completely defined? How is the initial value of <code>a</code> found out? Only after having a value can we append it to the <code>1</code>, right? Well, it needn't be so.</p>
+<p>This is possible due to Haskell being a lazily evaluated language.</p>
+<p>Unlike in the case of <a href="https://wiki.haskell.org/Eager_evaluation"><em>eager evaluation</em></a>, the RHS of <code>a</code>'s definition is not evaluated when the definition is bound to the variable <code>a</code>. <a href="https://wiki.haskell.org/Lazy_evaluation">¹</a></p>
 <p>The evaluation happens only when it is needed.</p>
 <p>The infinite list <code>a</code> can be expanded like</p>
 <pre><code>a = 1 : a
@@ -84,8 +75,7 @@ evaluated when the definition is bound to the variable <code>a</code>.
   = ....
 </code></pre>
 <p>But Haskell expands the definition only as much as it needs to.</p>
-<p>Suppose we do something like <code>take 2 a</code>, then expansion
-proceeds but only till the required 2 elements are obtained.</p>
+<p>Suppose we do something like <code>take 2 a</code>, then expansion proceeds but only till the required 2 elements are obtained.</p>
 <pre><code>take 2 a
 take 2 (1 : a)
 take 2 (1 : (1 : a))
@@ -93,24 +83,15 @@ take 2 (1 : (1 : a))
 </code></pre>
 <h2 id="references">References</h2>
 <ul>
-<li><a
-href="https://wiki.haskell.org/Lazy_evaluation">https://wiki.haskell.org/Lazy_evaluation</a></li>
-<li><a
-href="https://wiki.haskell.org/Haskell/Lazy_evaluation">https://wiki.haskell.org/Haskell/Lazy_evaluation</a></li>
-<li><a
-href="https://en.wikipedia.org/wiki/Lazy_evaluation">https://en.wikipedia.org/wiki/Lazy_evaluation</a></li>
-<li><a
-href="https://www.schoolofhaskell.com/school/starting-with-haskell/introduction-to-haskell/6-laziness">https://www.schoolofhaskell.com/school/starting-with-haskell/introduction-to-haskell/6-laziness</a></li>
-<li><a
-href="https://wiki.haskell.org/Eager_evaluation">https://wiki.haskell.org/Eager_evaluation</a></li>
-<li><a
-href="https://wiki.haskell.org/Lazy_vs._non-strict">https://wiki.haskell.org/Lazy_vs._non-strict</a></li>
+<li><a href="https://wiki.haskell.org/Lazy_evaluation">https://wiki.haskell.org/Lazy_evaluation</a></li>
+<li><a href="https://wiki.haskell.org/Haskell/Lazy_evaluation">https://wiki.haskell.org/Haskell/Lazy_evaluation</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Lazy_evaluation">https://en.wikipedia.org/wiki/Lazy_evaluation</a></li>
+<li><a href="https://www.schoolofhaskell.com/school/starting-with-haskell/introduction-to-haskell/6-laziness">https://www.schoolofhaskell.com/school/starting-with-haskell/introduction-to-haskell/6-laziness</a></li>
+<li><a href="https://wiki.haskell.org/Eager_evaluation">https://wiki.haskell.org/Eager_evaluation</a></li>
+<li><a href="https://wiki.haskell.org/Lazy_vs._non-strict">https://wiki.haskell.org/Lazy_vs._non-strict</a></li>
 </ul>
 <hr />
-<p>(This post is a modified form of something that I had scribbled down
-in 06 September 2021 based on what heard in the class teaching us
-Haskell. <a
-href="https://bitbucket.org/piyush-kurur/functional-programming/src/master/notes/live.org">⁷</a>)</p>
+<p>(This post is a modified form of something that I had scribbled down in 06 September 2021 based on what heard in the class teaching us Haskell. <a href="https://bitbucket.org/piyush-kurur/functional-programming/src/master/notes/live.org">⁷</a>)</p>
 </div>
 </body>
 </html>

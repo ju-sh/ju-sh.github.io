@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>SystemC</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">SystemC</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<pre class="systemc"><code>#include &lt;systemc.h&gt;
+</code></pre>
+<hr />
+<ul>
+<li><p><code>sc_in</code>: input port</p></li>
+<li><p><code>sc_out</code>: output port</p></li>
+<li><p><code>sc_bit</code>: bit type</p></li>
+<li><p><code>sc_signal</code></p></li>
+<li><p><code>SC_CTOR</code>: constructor</p></li>
+<li><p><code>SC_METHOD</code>: a block with its sensitivity list</p>
+<ul>
+<li>Sensitivity list specified with <code>sensitive</code> keyword</li>
+</ul></li>
+<li><p><code>SC_MODULE</code></p></li>
+<li><p><code>SC_CTHREAD</code></p></li>
+<li><p><code>sc_time_stamp()</code></p></li>
+<li><p><code>wait()</code></p></li>
+<li><p><code>sc_trace</code></p></li>
+<li><p><code>sc_start</code>: starts simulation</p>
+<ul>
+<li>First call: starts scheduler <a href="https://www.asic-world.com/systemc/systemc_time2.html">ˡ</a></li>
+<li>Subsequent calls: resume scheduler</li>
+</ul></li>
+<li><p>sc<sub>main</sub>: like <code>main()</code> in C</p></li>
+</ul>
+<h2 id="misc">Misc</h2>
+<ul>
+<li>Convert synthesizable systemc to systemverilog: <a href="https://github.com/intel/systemc-compiler">https://github.com/intel/systemc-compiler</a></li>
+</ul>
+</div>
+</body>
+</html>

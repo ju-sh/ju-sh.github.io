@@ -22,13 +22,13 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
@@ -36,26 +36,29 @@
 </header>
 
 <ul>
+    <li>Date created: 04-Oct-2022</li>
     </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/math.html">math</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
-Finding Sierpiński triangle in Pascal's triangle with help of Lucas's
-theorem.
+Finding Sierpiński triangle in Pascal's triangle with help of Lucas's theorem.
 </div>
 
 <div id="content-container">
-<p>I am one of the TAs for the lab sessions of a UG-level course that
-our teacher is teaching this semester and during the first lab session,
-the teacher gave us a bonus task, since a lot of the students had
-finished the programs to be done early.</p>
-<p>This blog post is a description of this task and a solution to
-it.</p>
+<p>I am one of the TAs for the lab sessions of a UG-level course that our teacher is teaching this semester and during the first lab session, the teacher gave us a bonus task, since a lot of the students had finished the programs to be done early.</p>
+<p>This blog post is a description of this task and a solution to it.</p>
 <hr />
 <h2 id="the-problem">The problem</h2>
-<p>Print the Pascal's triangle upto a given height, but with the numbers
-in it made modulo 2 of its actual value.</p>
+<p>Print the Pascal's triangle upto a given height, but with the numbers in it made modulo 2 of its actual value.</p>
 <p>ie, if the Pascal triangle is like this:</p>
 <pre><code>          1
         1   1
@@ -64,19 +67,16 @@ in it made modulo 2 of its actual value.</p>
   1   4   6   4   1
 1   5  10  10   5   1
 </code></pre>
-<p>the output should be the same triangle but with their values modulo
-2. Like:</p>
+<p>the output should be the same triangle but with their values modulo 2. Like:</p>
 <pre><code>        1
       1   1
     1   0   1
   1   1   1   1
 1   0   0   0   1
 </code></pre>
-<p>where the even numbers get replaced with <code>0</code> and odd
-numbers with <code>1</code>.</p>
+<p>where the even numbers get replaced with <code>0</code> and odd numbers with <code>1</code>.</p>
 <h2 id="pascals-triangle">Pascal's triangle</h2>
-<p>(I had mostly forgotten what Pascal's triangle was. So a
-refresher.)</p>
+<p>(I had mostly forgotten what Pascal's triangle was. So a refresher.)</p>
 <p>As was shown above, Pascal's triangle looks like:</p>
 <pre><code>
                 01
@@ -90,40 +90,19 @@ refresher.)</p>
 01  08  28  56  70  56  28  08  01
 
 </code></pre>
-<p>where the value of a position in a row is the sum of the nearest two
-values in the row directly above that position.</p>
-<p>Several people from different parts of the world had studied this
-triangle long before the time of Blaise Pascal (1623-1662 <a
-href="https://math.stackexchange.com/questions/3027798/what-do-brackets-mean-for-mod-operation">¹⁹</a>).</p>
-<p>But Pascal's <a
-href="https://gallica.bnf.fr/ark:/12148/btv1b86262012.texteImage"><em>Traité
-du triangle arithmétique</em></a> (published posthumously in <a
-href="https://www.repository.cam.ac.uk/bitstream/handle/1810/244353/pascalintro.pdf">1664</a>),
-which dealt with the properties of this triangle quite comprehensively,
-was sort of popular enough for Pascal's name to get attached to the
-triangle.</p>
-<p>Since it was known well before Pascal's time it is known by many
-names. Among them are:</p>
+<p>where the value of a position in a row is the sum of the nearest two values in the row directly above that position.</p>
+<p>Several people from different parts of the world had studied this triangle long before the time of Blaise Pascal (1623-1662 <a href="https://math.stackexchange.com/questions/3027798/what-do-brackets-mean-for-mod-operation">¹⁹</a>).</p>
+<p>But Pascal's <a href="https://gallica.bnf.fr/ark:/12148/btv1b86262012.texteImage"><em>Traité du triangle arithmétique</em></a> (published posthumously in <a href="https://www.repository.cam.ac.uk/bitstream/handle/1810/244353/pascalintro.pdf">1664</a>), which dealt with the properties of this triangle quite comprehensively, was sort of popular enough for Pascal's name to get attached to the triangle.</p>
+<p>Since it was known well before Pascal's time it is known by many names. Among them are:</p>
 <ul>
-<li>Arithmetic triangle, the name by which Pascal himself referred to
-it.</li>
-<li>Yang Hui triangle, after the 13th century Chinese Mathematician <a
-href="https://en.wikipedia.org/wiki/Yang_Hui">Yang Hui</a></li>
-<li>Khayyam triangle, after the 11th century Persian mathematician <a
-href="https://en.wikipedia.org/wiki/Omar_Khayyam">Omar Khayyam</a></li>
+<li>Arithmetic triangle, the name by which Pascal himself referred to it.</li>
+<li>Yang Hui triangle, after the 13th century Chinese Mathematician <a href="https://en.wikipedia.org/wiki/Yang_Hui">Yang Hui</a></li>
+<li>Khayyam triangle, after the 11th century Persian mathematician <a href="https://en.wikipedia.org/wiki/Omar_Khayyam">Omar Khayyam</a></li>
 </ul>
-<p>Was a bit surprised <a
-href="https://www.britannica.com/biography/Omar-Khayyam-Persian-poet-and-astronomer">to
-know</a> that Omar Khayyam, to whom <em>The Rubáiyát of Omar
-Khayyám</em> is attributed to, was more famous as a mathematician and
-had studied (what later became known as) the Pascal's triangle among
-other things.</p>
-<p>(I once tried to read the Rubáiyát, but couldn't really understand
-much. 😬)</p>
-<p>Pascal's triangle attracts the attention of mathematicians because it
-has several interesting properties.</p>
-<p>One of them is that its values correspond to coefficients of
-expansion of Binomial theorem.</p>
+<p>Was a bit surprised <a href="https://www.britannica.com/biography/Omar-Khayyam-Persian-poet-and-astronomer">to know</a> that Omar Khayyam, to whom <em>The Rubáiyát of Omar Khayyám</em> is attributed to, was more famous as a mathematician and had studied (what later became known as) the Pascal's triangle among other things.</p>
+<p>(I once tried to read the Rubáiyát, but couldn't really understand much. 😬)</p>
+<p>Pascal's triangle attracts the attention of mathematicians because it has several interesting properties.</p>
+<p>One of them is that its values correspond to coefficients of expansion of Binomial theorem.</p>
 <pre><code>            01
           01  01
         01  02  01
@@ -139,10 +118,8 @@ expansion of Binomial theorem.</p>
 (x + y)ⁿ =  Σ  nCi(xⁿ⁻ⁱ)(yⁱ)
            i=0
 </code></pre>
-<p>The elements of Pascal's triangle are same as the coefficients from
-binomial theorem.</p>
-<p>Row <code>i</code> of the Pascal triangle consists of the
-coefficients of the expansion of <code>(x+y)ⁿ</code>.<br />
+<p>The elements of Pascal's triangle are same as the coefficients from binomial theorem.</p>
+<p>Row <code>i</code> of the Pascal triangle consists of the coefficients of the expansion of <code>(x+y)ⁿ</code>.<br />
 (where <code>i</code> starts from <code>0</code>)</p>
 <pre><code>                  0C0                      | Coeffs of (x + y)⁰
                1C0   1C1                   | Coeffs of (x + y)¹
@@ -156,42 +133,26 @@ coefficients of the expansion of <code>(x+y)ⁿ</code>.<br />
 </code></pre>
 <p>where <code>nCk</code> is 'n choose k' (ie, <code>ⁿCₖ</code>).</p>
 <h2 id="a-solution">A solution</h2>
-<p>For our problem, we can use this property of the Pascal triangle
-elements being coefficients of binomial expansion.</p>
-<p>All we got to do is to find the appropriate <code>aCb</code> values,
-divide them by 2 and take the remainder.</p>
+<p>For our problem, we can use this property of the Pascal triangle elements being coefficients of binomial expansion.</p>
+<p>All we got to do is to find the appropriate <code>aCb</code> values, divide them by 2 and take the remainder.</p>
 <pre><code>           a!
 aCb = ─────────── 
       (a-b)! . b!
 </code></pre>
 <p>ie, find these coefficients and do modulo 2.</p>
-<p>Still.. that sounds like some unnecessary calculations are involved,
-right?</p>
-<p>I mean, we figure out the full value of the <code>aCb</code>-s just
-to see if it's odd or even. We calculate the whole thing and just
-truncate it by doing a modulo 2.</p>
-<p>If we write a program to print the first n rows of Pascal's triangle
-by actually calculating the whole <code>aCb</code> values and then doing
-modulo 2, it's going to be a bit slow.</p>
-<p>Would've been nice if we could just cut to the case and get to the
-<code>mod 2</code> value 'more directly'.</p>
-<p>Turns out there are such way(s). One way is by taking advantage of
-<em>Lucas's theorem</em>.</p>
+<p>Still.. that sounds like some unnecessary calculations are involved, right?</p>
+<p>I mean, we figure out the full value of the <code>aCb</code>-s just to see if it's odd or even. We calculate the whole thing and just truncate it by doing a modulo 2.</p>
+<p>If we write a program to print the first n rows of Pascal's triangle by actually calculating the whole <code>aCb</code> values and then doing modulo 2, it's going to be a bit slow.</p>
+<p>Would've been nice if we could just cut to the case and get to the <code>mod 2</code> value 'more directly'.</p>
+<p>Turns out there are such way(s). One way is by taking advantage of <em>Lucas's theorem</em>.</p>
 <h2 id="lucass-theorem">Lucas's theorem</h2>
-<p>This theorem is named after the French mathematician <a
-href="https://en.wikipedia.org/wiki/%C3%89douard_Lucas">Édouard
-Lucas</a>, who came up with it around 1878.</p>
-<p>Lucas's theorem gives us some information about the remainder
-resulting from the division of a <code>aCb</code> by a prime number
-<code>p</code> when <code>a</code> and <code>b</code> are expressed in
-base-p expansion.</p>
-<p><code>a</code> and <code>b</code> in base-<code>p</code> expansion
-meaning something like:</p>
+<p>This theorem is named after the French mathematician <a href="https://en.wikipedia.org/wiki/%C3%89douard_Lucas">Édouard Lucas</a>, who came up with it around 1878.</p>
+<p>Lucas's theorem gives us some information about the remainder resulting from the division of a <code>aCb</code> by a prime number <code>p</code> when <code>a</code> and <code>b</code> are expressed in base-p expansion.</p>
+<p><code>a</code> and <code>b</code> in base-<code>p</code> expansion meaning something like:</p>
 <pre><code>a = aₖpᵏ + aₖ₋₁pᵏ⁻¹ + .... + a₀
 b = bₖpᵏ + bₖ₋₁pᵏ⁻¹ + .... + b₀
 </code></pre>
-<p>then, Lucas's theorem tells us that the following is relation
-holds:</p>
+<p>then, Lucas's theorem tells us that the following is relation holds:</p>
 <pre><code>
         ⎡   k        ⎤ 
         ⎢  ┬─┬       ⎥
@@ -200,8 +161,7 @@ aCb  ≡  ⎢  │ │ aᵢCbᵢ ⎥  (mod p)
 
 where aCb is &#39;a choose b&#39;.
 </code></pre>
-<p>This means that the <code>∏ aᵢCbᵢ</code> would be the reminder if we
-divide <code>aCb</code> with <code>p</code>.</p>
+<p>This means that the <code>∏ aᵢCbᵢ</code> would be the reminder if we divide <code>aCb</code> with <code>p</code>.</p>
 <p>ie,</p>
 <pre><code>
              k                   
@@ -210,14 +170,10 @@ aCb % p  =  │ │ aᵢCbᵢ
             i=0                   
 
 </code></pre>
-<p>(<code>(mod p)</code> and <code>mod p</code> are not the same. See <a
-href="https://math.stackexchange.com/questions/3027798/what-do-brackets-mean-for-mod-operation">this</a>.)</p>
+<p>(<code>(mod p)</code> and <code>mod p</code> are not the same. See <a href="https://math.stackexchange.com/questions/3027798/what-do-brackets-mean-for-mod-operation">this</a>.)</p>
 <h2 id="a-faster-solution">A faster solution</h2>
-<p>If we use binary representations of <code>a</code> and
-<code>b</code>, we can use the equation from Lucas's theorem with
-<code>p = 2</code> to get what we want.</p>
-<p>ie, figure out whether a given <code>aCb</code> value is odd or
-even.</p>
+<p>If we use binary representations of <code>a</code> and <code>b</code>, we can use the equation from Lucas's theorem with <code>p = 2</code> to get what we want.</p>
+<p>ie, figure out whether a given <code>aCb</code> value is odd or even.</p>
 <pre><code>
              k                   
             ┬─┬                 
@@ -225,9 +181,7 @@ aCb % 2  =  │ │ aᵢCbᵢ
             i=0                   
 
 </code></pre>
-<p>This means significantly lesser number of operations to our earlier
-solution as we knock off a few big factorials in favour a few small
-multiplications.</p>
+<p>This means significantly lesser number of operations to our earlier solution as we knock off a few big factorials in favour a few small multiplications.</p>
 <p>For example, consider 10C4, which is 210. An even number.</p>
 <p>Let's try using Lucas theorem to figure that out.</p>
 <pre><code>p = 2
@@ -275,106 +229,100 @@ That means 10C4 results in an even value.
 
 Which is correct, since 210 is even.
 </code></pre>
-<p>(A couple more examples is included in the addendum section of this
-blog post.)</p>
-<p>In fact, we could git rid of a few more calculations since the
-Pascal's triangle is symmetrical. ie, values appearing in the right half
-are the same values as appearing in the left half, but in the reverse
-order.</p>
+<p>(A couple more examples is included in the addendum section of this blog post.)</p>
+<p>In fact, we could git rid of a few more calculations since the Pascal's triangle is symmetrical. ie, values appearing in the right half are the same values as appearing in the left half, but in the reverse order.</p>
 <h2 id="an-implementation">An implementation</h2>
-<p>I made a Haskell program that prints the Pascal's triangle modulo 2
-using facts that we can tell from Lucas's theorem:</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="dt">Main</span> <span class="kw">where</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Row indexing starts from zero.</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Rows on top are of smaller index.</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">--</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Row 0  |        1</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- Row 1  |       1 1</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Row 2  |      1 0 1</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- Row 3  |     1 1 1 1</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- Row 4  |    1 0 0 0 1</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Find binary representation of an integer</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>bin</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="ot">  ::</span> <span class="dt">Int</span>    <span class="co">-- ^ number n</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> [<span class="dt">Int</span>]  <span class="co">-- ^ digits of n to the base n. LSB first.</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>bin n</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> n <span class="op">&lt;</span> <span class="dv">2</span> <span class="ot">=</span> [n]</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> <span class="fu">rem</span><span class="op">:</span>bin nxt</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>     <span class="kw">where</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rem</span> <span class="ot">=</span> <span class="fu">mod</span> n <span class="dv">2</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>      nxt <span class="ot">=</span> <span class="fu">quot</span> n <span class="dv">2</span></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Find value for aCb where a and b ∈ {0, 1}</span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>aCb01</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="ot">  ::</span> (<span class="dt">Int</span>, <span class="dt">Int</span>)  <span class="co">-- ^ a and b values as tuple</span></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> <span class="dt">Int</span>         <span class="co">-- ^ aCb value</span></span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>aCb01 (<span class="dv">0</span>, <span class="dv">1</span>) <span class="ot">=</span> <span class="dv">0</span></span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>aCb01 _ <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Calculate aCb value</span></span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>aCb</span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a><span class="ot">  ::</span> <span class="dt">Int</span>   <span class="co">-- ^ a</span></span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> <span class="dt">Int</span>   <span class="co">-- ^ b</span></span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> <span class="dt">Int</span>   <span class="co">-- ^ aCb</span></span>
-<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>aCb a b <span class="ot">=</span> <span class="fu">product</span> <span class="op">$</span> <span class="fu">map</span> aCb01 <span class="op">$</span> <span class="fu">zip</span> apad bpad</span>
-<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span></span>
-<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>  abin <span class="ot">=</span> bin a</span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>  bbin <span class="ot">=</span> bin b</span>
-<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>  alen <span class="ot">=</span> <span class="fu">length</span> abin</span>
-<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>  blen <span class="ot">=</span> <span class="fu">length</span> bbin</span>
-<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>  maxlen <span class="ot">=</span> <span class="fu">max</span> alen blen</span>
-<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>  apad <span class="ot">=</span> abin <span class="op">++</span> <span class="fu">replicate</span> (maxlen<span class="op">-</span>alen) <span class="dv">0</span></span>
-<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>  bpad <span class="ot">=</span> bbin <span class="op">++</span> <span class="fu">replicate</span> (maxlen<span class="op">-</span>blen) <span class="dv">0</span></span>
-<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Find values for one row</span></span>
-<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>getRow</span>
-<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a><span class="ot">  ::</span> <span class="dt">Int</span>    <span class="co">-- ^ row index</span></span>
-<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> [<span class="dt">Int</span>]  <span class="co">-- ^ values of the row</span></span>
-<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>getRow idx <span class="ot">=</span> [aCb idx r <span class="op">|</span> r <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>idx]]</span>
-<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Find values of all rows</span></span>
-<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>getRows</span>
-<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a><span class="ot">  ::</span> <span class="dt">Int</span>      <span class="co">-- ^ index of largest row</span></span>
-<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> [[<span class="dt">Int</span>]]  <span class="co">-- ^ values of rows. Values of each row is in a separate list</span></span>
-<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>getRows rowMaxIdx <span class="ot">=</span> [getRow i <span class="op">|</span> i <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>rowMaxIdx ]]</span>
-<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Find values of a row and format it as a string</span></span>
-<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a>fmtRow</span>
-<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a><span class="ot">  ::</span> <span class="dt">Int</span>     <span class="co">-- ^ index of largest row</span></span>
-<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> <span class="dt">Int</span>     <span class="co">-- ^ row index</span></span>
-<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> <span class="dt">String</span>  <span class="co">-- ^ row data as formatted string</span></span>
-<span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a>fmtRow maxIdx idx <span class="ot">=</span> begg <span class="op">++</span> bodyhead <span class="op">++</span> bodytail</span>
-<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span></span>
-<span id="cb13-70"><a href="#cb13-70" aria-hidden="true" tabindex="-1"></a>  begg <span class="ot">=</span> <span class="fu">replicate</span> (maxIdx<span class="op">-</span>idx) <span class="ch">&#39; &#39;</span></span>
-<span id="cb13-71"><a href="#cb13-71" aria-hidden="true" tabindex="-1"></a>  digitstr <span class="ot">=</span> <span class="fu">map</span> <span class="fu">show</span> <span class="op">$</span> getRow idx</span>
-<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a>  bodyhead <span class="ot">=</span> <span class="fu">head</span> digitstr</span>
-<span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a>  bodytail <span class="ot">=</span> <span class="fu">foldl</span> (<span class="op">++</span>) <span class="st">&quot;&quot;</span> <span class="op">$</span> <span class="fu">map</span> ((<span class="op">++</span>) <span class="st">&quot; &quot;</span>) <span class="op">$</span> <span class="fu">tail</span> digitstr</span>
-<span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-75"><a href="#cb13-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-76"><a href="#cb13-76" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Find values of the entire Pascal triangle and format it as a string</span></span>
-<span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a>pascal</span>
-<span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a><span class="ot">  ::</span> <span class="dt">Int</span>     <span class="co">-- ^ maximum row</span></span>
-<span id="cb13-79"><a href="#cb13-79" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> <span class="dt">String</span>  <span class="co">-- ^ formatted, read-to-print, string</span></span>
-<span id="cb13-80"><a href="#cb13-80" aria-hidden="true" tabindex="-1"></a>pascal maxIdx <span class="ot">=</span> <span class="fu">foldl</span> (<span class="op">++</span>) <span class="st">&quot;&quot;</span>  <span class="op">$</span> <span class="fu">map</span> ((<span class="op">++</span>) <span class="st">&quot;\n&quot;</span>) strLines</span>
-<span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span></span>
-<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a>  strLines <span class="ot">=</span> [fmtRow maxIdx idx <span class="op">|</span> idx <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>maxIdx]]</span>
-<span id="cb13-83"><a href="#cb13-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-84"><a href="#cb13-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb13-86"><a href="#cb13-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">putStrLn</span> <span class="st">&quot;Enter number of rows:&quot;</span></span>
-<span id="cb13-87"><a href="#cb13-87" aria-hidden="true" tabindex="-1"></a>  rowCountStr <span class="ot">&lt;-</span> <span class="fu">getLine</span></span>
-<span id="cb13-88"><a href="#cb13-88" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> rowCount <span class="ot">=</span> <span class="fu">read</span><span class="ot"> rowCountStr ::</span> <span class="dt">Int</span></span>
-<span id="cb13-89"><a href="#cb13-89" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> ll <span class="ot">=</span> getRows rowCount</span>
-<span id="cb13-90"><a href="#cb13-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">putStrLn</span> <span class="op">$</span> pascal <span class="op">$</span> rowCount <span class="op">-</span> <span class="dv">1</span></span></code></pre></div>
+<p>I made a Haskell program that prints the Pascal's triangle modulo 2 using facts that we can tell from Lucas's theorem:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="kw">module</span> <span class="dt">Main</span> <span class="kw">where</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="co">-- Row indexing starts from zero.</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a><span class="co">-- Rows on top are of smaller index.</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a><span class="co">--</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a><span class="co">-- Row 0  |        1</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a><span class="co">-- Row 1  |       1 1</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a><span class="co">-- Row 2  |      1 0 1</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a><span class="co">-- Row 3  |     1 1 1 1</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true"></a><span class="co">-- Row 4  |    1 0 0 0 1</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true"></a><span class="co">-- | Find binary representation of an integer</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true"></a>bin</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true"></a><span class="ot">  ::</span> <span class="dt">Int</span>    <span class="co">-- ^ number n</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true"></a>  <span class="ot">-&gt;</span> [<span class="dt">Int</span>]  <span class="co">-- ^ digits of n to the base n. LSB first.</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true"></a>bin n</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true"></a>  <span class="op">|</span> n <span class="op">&lt;</span> <span class="dv">2</span> <span class="ot">=</span> [n]</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true"></a>  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> <span class="fu">rem</span><span class="op">:</span>bin nxt</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true"></a>     <span class="kw">where</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true"></a>      <span class="fu">rem</span> <span class="ot">=</span> <span class="fu">mod</span> n <span class="dv">2</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true"></a>      nxt <span class="ot">=</span> <span class="fu">quot</span> n <span class="dv">2</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true"></a></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true"></a><span class="co">-- | Find value for aCb where a and b ∈ {0, 1}</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true"></a>aCb01</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true"></a><span class="ot">  ::</span> (<span class="dt">Int</span>, <span class="dt">Int</span>)  <span class="co">-- ^ a and b values as tuple</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true"></a>  <span class="ot">-&gt;</span> <span class="dt">Int</span>         <span class="co">-- ^ aCb value</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true"></a>aCb01 (<span class="dv">0</span>, <span class="dv">1</span>) <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true"></a>aCb01 _ <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true"></a></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true"></a></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true"></a><span class="co">-- | Calculate aCb value</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true"></a>aCb</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true"></a><span class="ot">  ::</span> <span class="dt">Int</span>   <span class="co">-- ^ a</span></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true"></a>  <span class="ot">-&gt;</span> <span class="dt">Int</span>   <span class="co">-- ^ b</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true"></a>  <span class="ot">-&gt;</span> <span class="dt">Int</span>   <span class="co">-- ^ aCb</span></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true"></a>aCb a b <span class="ot">=</span> <span class="fu">product</span> <span class="op">$</span> <span class="fu">map</span> aCb01 <span class="op">$</span> <span class="fu">zip</span> apad bpad</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true"></a> <span class="kw">where</span></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true"></a>  abin <span class="ot">=</span> bin a</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true"></a>  bbin <span class="ot">=</span> bin b</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true"></a>  alen <span class="ot">=</span> <span class="fu">length</span> abin</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true"></a>  blen <span class="ot">=</span> <span class="fu">length</span> bbin</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true"></a>  maxlen <span class="ot">=</span> <span class="fu">max</span> alen blen</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true"></a>  apad <span class="ot">=</span> abin <span class="op">++</span> <span class="fu">replicate</span> (maxlen<span class="op">-</span>alen) <span class="dv">0</span></span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true"></a>  bpad <span class="ot">=</span> bbin <span class="op">++</span> <span class="fu">replicate</span> (maxlen<span class="op">-</span>blen) <span class="dv">0</span></span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true"></a></span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true"></a></span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true"></a><span class="co">-- | Find values for one row</span></span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true"></a>getRow</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true"></a><span class="ot">  ::</span> <span class="dt">Int</span>    <span class="co">-- ^ row index</span></span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true"></a>  <span class="ot">-&gt;</span> [<span class="dt">Int</span>]  <span class="co">-- ^ values of the row</span></span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true"></a>getRow idx <span class="ot">=</span> [aCb idx r <span class="op">|</span> r <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>idx]]</span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true"></a></span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true"></a></span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true"></a><span class="co">-- | Find values of all rows</span></span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true"></a>getRows</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true"></a><span class="ot">  ::</span> <span class="dt">Int</span>      <span class="co">-- ^ index of largest row</span></span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true"></a>  <span class="ot">-&gt;</span> [[<span class="dt">Int</span>]]  <span class="co">-- ^ values of rows. Values of each row is in a separate list</span></span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true"></a>getRows rowMaxIdx <span class="ot">=</span> [getRow i <span class="op">|</span> i <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>rowMaxIdx ]]</span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true"></a></span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true"></a></span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true"></a><span class="co">-- | Find values of a row and format it as a string</span></span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true"></a>fmtRow</span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true"></a><span class="ot">  ::</span> <span class="dt">Int</span>     <span class="co">-- ^ index of largest row</span></span>
+<span id="cb13-66"><a href="#cb13-66" aria-hidden="true"></a>  <span class="ot">-&gt;</span> <span class="dt">Int</span>     <span class="co">-- ^ row index</span></span>
+<span id="cb13-67"><a href="#cb13-67" aria-hidden="true"></a>  <span class="ot">-&gt;</span> <span class="dt">String</span>  <span class="co">-- ^ row data as formatted string</span></span>
+<span id="cb13-68"><a href="#cb13-68" aria-hidden="true"></a>fmtRow maxIdx idx <span class="ot">=</span> begg <span class="op">++</span> bodyhead <span class="op">++</span> bodytail</span>
+<span id="cb13-69"><a href="#cb13-69" aria-hidden="true"></a> <span class="kw">where</span></span>
+<span id="cb13-70"><a href="#cb13-70" aria-hidden="true"></a>  begg <span class="ot">=</span> <span class="fu">replicate</span> (maxIdx<span class="op">-</span>idx) <span class="ch">&#39; &#39;</span></span>
+<span id="cb13-71"><a href="#cb13-71" aria-hidden="true"></a>  digitstr <span class="ot">=</span> <span class="fu">map</span> <span class="fu">show</span> <span class="op">$</span> getRow idx</span>
+<span id="cb13-72"><a href="#cb13-72" aria-hidden="true"></a>  bodyhead <span class="ot">=</span> <span class="fu">head</span> digitstr</span>
+<span id="cb13-73"><a href="#cb13-73" aria-hidden="true"></a>  bodytail <span class="ot">=</span> <span class="fu">foldl</span> (<span class="op">++</span>) <span class="st">&quot;&quot;</span> <span class="op">$</span> <span class="fu">map</span> ((<span class="op">++</span>) <span class="st">&quot; &quot;</span>) <span class="op">$</span> <span class="fu">tail</span> digitstr</span>
+<span id="cb13-74"><a href="#cb13-74" aria-hidden="true"></a></span>
+<span id="cb13-75"><a href="#cb13-75" aria-hidden="true"></a></span>
+<span id="cb13-76"><a href="#cb13-76" aria-hidden="true"></a><span class="co">-- | Find values of the entire Pascal triangle and format it as a string</span></span>
+<span id="cb13-77"><a href="#cb13-77" aria-hidden="true"></a>pascal</span>
+<span id="cb13-78"><a href="#cb13-78" aria-hidden="true"></a><span class="ot">  ::</span> <span class="dt">Int</span>     <span class="co">-- ^ maximum row</span></span>
+<span id="cb13-79"><a href="#cb13-79" aria-hidden="true"></a>  <span class="ot">-&gt;</span> <span class="dt">String</span>  <span class="co">-- ^ formatted, read-to-print, string</span></span>
+<span id="cb13-80"><a href="#cb13-80" aria-hidden="true"></a>pascal maxIdx <span class="ot">=</span> <span class="fu">foldl</span> (<span class="op">++</span>) <span class="st">&quot;&quot;</span>  <span class="op">$</span> <span class="fu">map</span> ((<span class="op">++</span>) <span class="st">&quot;\n&quot;</span>) strLines</span>
+<span id="cb13-81"><a href="#cb13-81" aria-hidden="true"></a> <span class="kw">where</span></span>
+<span id="cb13-82"><a href="#cb13-82" aria-hidden="true"></a>  strLines <span class="ot">=</span> [fmtRow maxIdx idx <span class="op">|</span> idx <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>maxIdx]]</span>
+<span id="cb13-83"><a href="#cb13-83" aria-hidden="true"></a></span>
+<span id="cb13-84"><a href="#cb13-84" aria-hidden="true"></a></span>
+<span id="cb13-85"><a href="#cb13-85" aria-hidden="true"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb13-86"><a href="#cb13-86" aria-hidden="true"></a>  <span class="fu">putStrLn</span> <span class="st">&quot;Enter number of rows:&quot;</span></span>
+<span id="cb13-87"><a href="#cb13-87" aria-hidden="true"></a>  rowCountStr <span class="ot">&lt;-</span> <span class="fu">getLine</span></span>
+<span id="cb13-88"><a href="#cb13-88" aria-hidden="true"></a>  <span class="kw">let</span> rowCount <span class="ot">=</span> <span class="fu">read</span><span class="ot"> rowCountStr ::</span> <span class="dt">Int</span></span>
+<span id="cb13-89"><a href="#cb13-89" aria-hidden="true"></a>  <span class="kw">let</span> ll <span class="ot">=</span> getRows rowCount</span>
+<span id="cb13-90"><a href="#cb13-90" aria-hidden="true"></a>  <span class="fu">putStrLn</span> <span class="op">$</span> pascal <span class="op">$</span> rowCount <span class="op">-</span> <span class="dv">1</span></span></code></pre></div>
 <p>Sample output:</p>
 <pre><code>Enter number of rows:
 10
@@ -390,35 +338,21 @@ class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a
  1 0 0 0 0 0 0 0 1
 1 1 0 0 0 0 0 0 1 1
 </code></pre>
-<p>Okay, cool. Now that we've got an answer to our problem along with a
-program to try it out, let's take a look at another 'triangle' which has
-some connection to Pascal's triangle: <em>Sierpiński triangle</em>.</p>
+<p>Okay, cool. Now that we've got an answer to our problem along with a program to try it out, let's take a look at another 'triangle' which has some connection to Pascal's triangle: <em>Sierpiński triangle</em>.</p>
 <h2 id="sierpiński-triangle">Sierpiński triangle</h2>
-<p>Sierpiński (pronounced like 'shee-yer-piyen-ski') triangle is a
-self-replicating pattern (a <a
-href="https://en.wikipedia.org/wiki/Fractal">fractal</a>).</p>
-<p>Named after <a
-href="https://en.wikipedia.org/wiki/Wac%C5%82aw_Sierpi%C5%84ski">Wacław
-Sierpiński</a>, a mathematician from Poland, it's <a
-href="https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle">also known
-as</a> Sierpiński <a
-href="https://en.wikipedia.org/wiki/Gasket">gasket</a> or Sierpiński
-sieve.</p>
+<p>Sierpiński (pronounced like 'shee-yer-piyen-ski') triangle is a self-replicating pattern (a <a href="https://en.wikipedia.org/wiki/Fractal">fractal</a>).</p>
+<p>Named after <a href="https://en.wikipedia.org/wiki/Wac%C5%82aw_Sierpi%C5%84ski">Wacław Sierpiński</a>, a mathematician from Poland, it's <a href="https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle">also known as</a> Sierpiński <a href="https://en.wikipedia.org/wiki/Gasket">gasket</a> or Sierpiński sieve.</p>
 <p>It's construction goes like this:</p>
 <ol>
 <li>Start with an equilateral triangle.</li>
-<li>At each step do the following for each constituent non-empty
-triangle:
+<li>At each step do the following for each constituent non-empty triangle:
 <ol>
-<li>Form four smaller congruent equilateral triangles by joining the
-midpoints of each side.</li>
+<li>Form four smaller congruent equilateral triangles by joining the midpoints of each side.</li>
 <li>Remove the central triangle.</li>
 </ol></li>
 </ol>
-<p>Here's a representation of the construction of Sierpiński
-triangle:<br />
-(Parts of the triangle which are not 'filled' with <code>1</code>-s are
-the 'removed'/empty portions.)</p>
+<p>Here's a representation of the construction of Sierpiński triangle:<br />
+(Parts of the triangle which are not 'filled' with <code>1</code>-s are the 'removed'/empty portions.)</p>
 <pre><code>
             +                             +                             +            
            /1\                           /1\                           /1\           
@@ -436,12 +370,9 @@ the 'removed'/empty portions.)</p>
 
         Level 1                         Level 2                      Level 3
 </code></pre>
-<p>As you might have already noticed, the number of non-empty triangles
-in the pattern is <code>3ˡ</code> where <code>l</code> is the level.</p>
-<p>Okay, so what's the connection with Sierpiński triangle and Pascal's
-triangle?</p>
-<p>Let's try running the haskell program to print upto a not-so-small
-number of rows. Say 32 rows.</p>
+<p>As you might have already noticed, the number of non-empty triangles in the pattern is <code>3ˡ</code> where <code>l</code> is the level.</p>
+<p>Okay, so what's the connection with Sierpiński triangle and Pascal's triangle?</p>
+<p>Let's try running the haskell program to print upto a not-so-small number of rows. Say 32 rows.</p>
 <pre><code>Enter number of rows:
 32
 
@@ -480,8 +411,7 @@ number of rows. Say 32 rows.</p>
 </code></pre>
 <p>Notice anything? Yes? No?</p>
 <p>(I couldn't spot it when I first saw it.)</p>
-<p>Try filling in the <code>1</code>-s and removing the
-<code>0</code>-s.</p>
+<p>Try filling in the <code>1</code>-s and removing the <code>0</code>-s.</p>
 <pre><code>                               █
                               ███
                              █  ██
@@ -515,31 +445,20 @@ number of rows. Say 32 rows.</p>
  █  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██
 ███████████████████████████████████████████████████████████████
 </code></pre>
-<p>And we have something that looks pretty much like the Sierpiński
-triangle. 😃</p>
-<p>From <a
-href="https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle">Wikipedia</a>:</p>
+<p>And we have something that looks pretty much like the Sierpiński triangle. 😃</p>
+<p>From <a href="https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle">Wikipedia</a>:</p>
 <blockquote>
-<p>If one takes Pascal's triangle with 2ⁿ rows and colours the even
-numbers white, and the odd numbers black, the result is an approximation
-to the Sierpinski triangle. More precisely, the limit as <code>n</code>
-approaches infinity of this parity-colored 2ⁿ-row Pascal's triangle is
-the Sierpinski triangle.</p>
+<p>If one takes Pascal's triangle with 2ⁿ rows and colours the even numbers white, and the odd numbers black, the result is an approximation to the Sierpinski triangle. More precisely, the limit as <code>n</code> approaches infinity of this parity-colored 2ⁿ-row Pascal's triangle is the Sierpinski triangle.</p>
 </blockquote>
 <p>That's why I went with 32 rows. Because it's a power of 2.</p>
-<p><strong>Acknowledgements</strong>: Thanks to Piyush sir, the teacher
-who told us about this problem and the way of using Lucas's theorem to
-solve it.</p>
+<p><strong>Acknowledgements</strong>: Thanks to Piyush sir, the teacher who told us about this problem and the way of using Lucas's theorem to solve it.</p>
 <h2 id="references">References</h2>
 <ul>
 <li><em>Pascal's arithmetical triangle</em> - A. W. F. Edwards</li>
-<li><a
-href="https://www.maa.org/press/periodicals/loci/joma/patterns-in-pascals-triangle-with-a-twist-first-twist-what-is-it">Patterns
-in Pascal's Triangle - with a Twist - First Twist: What is It?</a></li>
+<li><a href="https://www.maa.org/press/periodicals/loci/joma/patterns-in-pascals-triangle-with-a-twist-first-twist-what-is-it">Patterns in Pascal's Triangle - with a Twist - First Twist: What is It?</a></li>
 </ul>
 <h2 id="addendum">Addendum</h2>
-<h3 id="couple-more-examples-using-lucas-theorem">Couple more examples
-using Lucas theorem</h3>
+<h3 id="couple-more-examples-using-lucas-theorem">Couple more examples using Lucas theorem</h3>
 <p>Suppose we need to find if 25C13 is odd or even.</p>
 <pre><code>p = 2
 a = 25₁₀ = 11001₂

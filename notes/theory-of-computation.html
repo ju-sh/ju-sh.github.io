@@ -22,13 +22,13 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
@@ -44,18 +44,14 @@
 <div id="content-container">
 <h2 id="general">General</h2>
 <ul>
-<li>Kleene's theorem: establishes equivalence between FA and regular
-languages</li>
+<li>Kleene's theorem: establishes equivalence between FA and regular languages</li>
 <li>Regular languages: aka rational languages</li>
 </ul>
 <ul>
-<li>A 2-stack DPDA is as powerful as a deterministic TM. <a
-href="https://stackoverflow.com/questions/62083942/can-a-pda-with-two-stacks-accept-re-language">²</a></li>
+<li>A 2-stack DPDA is as powerful as a deterministic TM. <a href="https://stackoverflow.com/questions/62083942/can-a-pda-with-two-stacks-accept-re-language">²</a></li>
 <li><code>aⁿcbⁿ</code> is a CFL but not regular.</li>
 <li><code>aⁿbⁿcⁿ</code> is neither a CFL nor a regular language.</li>
-<li><a
-href="https://en.wikipedia.org/wiki/Decider_(Turing_machine)">Total
-Turing machine</a>: A TM that <em>always</em> halts.
+<li><a href="https://en.wikipedia.org/wiki/Decider_(Turing_machine)">Total Turing machine</a>: A TM that <em>always</em> halts.
 <ul>
 <li>ie, for any input.</li>
 <li>Represents a total function that finishes.</li>
@@ -86,28 +82,20 @@ Turing machine</a>: A TM that <em>always</em> halts.
 <li>F: set of final states</li>
 </ul>
 <h2 id="dpda-vs-npda">DPDA vs NPDA</h2>
-<p>Unlike in the case of finite automata, DPDA are NPDA are not
-equivalent.</p>
-<p>For example, <code>wwᴿ</code> can be accepted by a NPDA but no DPDA
-can handle it.</p>
-<p>∵ the time to switch from the 'w-mode' to the 'wᴿ-mode' cannot be
-figured out deterministically since there is no delimiter. The
-possiblity always has to be explored.</p>
+<p>Unlike in the case of finite automata, DPDA are NPDA are not equivalent.</p>
+<p>For example, <code>wwᴿ</code> can be accepted by a NPDA but no DPDA can handle it.</p>
+<p>∵ the time to switch from the 'w-mode' to the 'wᴿ-mode' cannot be figured out deterministically since there is no delimiter. The possiblity always has to be explored.</p>
 <p><code>wcwᴿ</code> can be handled by DPDA if <code>c ∉ w</code>.</p>
 <h2 id="halting-problem">Halting problem</h2>
-<p>Problem: For a specific input, will the Turing machine halt (ie,
-finish computing and give a result)?</p>
-<p>For a given word and a Turing machine, there is no way to definitely
-tell whether the Turing machine will aceept that word (ie, halt) or
-not.</p>
+<p>Problem: For a specific input, will the Turing machine halt (ie, finish computing and give a result)?</p>
+<p>For a given word and a Turing machine, there is no way to definitely tell whether the Turing machine will aceept that word (ie, halt) or not.</p>
 <p>From Sipser:</p>
 <blockquote>
 <p>recognizers are more powerful than deciders</p>
 </blockquote>
 <h2 id="universal-turing-machine">Universal Turing machine</h2>
 <p>A TM capable of simulating any TM.</p>
-<h2 id="pumping-lemma-for-regular-languages">Pumping lemma for regular
-languages</h2>
+<h2 id="pumping-lemma-for-regular-languages">Pumping lemma for regular languages</h2>
 <ul>
 <li>Can be used to show that a language is not regular.</li>
 <li>Can't be used to show that a language is regular.</li>
@@ -137,8 +125,7 @@ languages</h2>
 <li><code>n</code> be the number of states of <code>M</code></li>
 <li><code>s ∈ L</code> such that <code>|s| ≥ n</code></li>
 </ul>
-<p>From: <a
-href="https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Pumping.html">https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Pumping.html</a></p>
+<p>From: <a href="https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Pumping.html">https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Pumping.html</a></p>
 <h2 id="context-free-languages">Context free languages</h2>
 <p>An example CFL: <code>aⁿbⁿ</code> where n≥0.</p>
 <p>CFG:</p>
@@ -153,8 +140,7 @@ href="https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Pumping.html">https:
 <pre><code>S -&gt; aSa | bSb | c
 </code></pre>
 <p>but <code>wcw</code> is not a CFL.</p>
-<p>∵ the stack can only be popped in last-in-first-out order.
-<code>wcw</code> requires FIFO order.</p>
+<p>∵ the stack can only be popped in last-in-first-out order. <code>wcw</code> requires FIFO order.</p>
 <p>—</p>
 <p><code>aⁿbⁿcᵐ</code> where n≥0, m≥0 is a D-CFL.</p>
 <pre><code>S = IE
@@ -163,15 +149,12 @@ E = cE | ε
 </code></pre>
 <h2 id="masters-theorem">Master's theorem</h2>
 <p>Expressed as a recurrence relation.</p>
-<p>A task of size <code>n</code> can be divided into <code>k</code>
-sub-tasks each of size <code>n/b</code>.</p>
-<p>The results of these sub-tasks are then combined in
-<code>𝑂(nᵈ)</code> time to get the final result.</p>
+<p>A task of size <code>n</code> can be divided into <code>k</code> sub-tasks each of size <code>n/b</code>.</p>
+<p>The results of these sub-tasks are then combined in <code>𝑂(nᵈ)</code> time to get the final result.</p>
 <pre><code>T(n) = k.T(n/b) + 𝑂(nᵈ)
 </code></pre>
 <h2 id="properties-of-languages">Properties of languages</h2>
-<p>From <a
-href="https://www.geeksforgeeks.org/closure-properties-table-in-toc/">here</a>:</p>
+<p>From <a href="https://www.geeksforgeeks.org/closure-properties-table-in-toc/">here</a>:</p>
 <table>
 <thead>
 <tr class="header">
@@ -196,8 +179,7 @@ href="https://www.geeksforgeeks.org/closure-properties-table-in-toc/">here</a>:<
 </tr>
 <tr class="even">
 <td>Complement</td>
-<td>Y<a
-href="https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Regular.html">⁶</a></td>
+<td>Y<a href="https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Regular.html">⁶</a></td>
 <td>N</td>
 <td>N</td>
 <td>Y</td>
@@ -234,14 +216,12 @@ href="https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Regular.html">⁶</a
 </tbody>
 </table>
 <h2 id="star-free-languages">Star free languages</h2>
-<p>Reference: <a
-href="https://www.irif.fr/~jep/PDF/MPRI/MPRI.pdf">https://www.irif.fr/~jep/PDF/MPRI/MPRI.pdf</a></p>
+<p>Reference: <a href="https://www.irif.fr/~jep/PDF/MPRI/MPRI.pdf">https://www.irif.fr/~jep/PDF/MPRI/MPRI.pdf</a></p>
 <p>Given:</p>
 <ul>
 <li>Σ: finite alphabet</li>
 </ul>
-<p>then set L of star-free languges within Σ* is the smallest set such
-that:</p>
+<p>then set L of star-free languges within Σ* is the smallest set such that:</p>
 <table>
 <tbody>
 <tr class="odd">
@@ -275,8 +255,7 @@ that:</p>
 <ul>
 <li>Star free languages over Σ ⊆ languages over Σ</li>
 </ul>
-<p>I guess this type in coq can represent star-free languages over
-Σ:</p>
+<p>I guess this type in coq can represent star-free languages over Σ:</p>
 <pre class="coq"><code>Inductive t (Σ: Type): Type :=
 | Nul: t Σ
 | Nil: t Σ
@@ -285,8 +264,7 @@ that:</p>
 | Alt: t Σ -&gt; t Σ -&gt; t Σ
 | Cmp: t Σ -&gt; t Σ.
 </code></pre>
-<p>Kamp's theorem: LTL properties are equivalent to star-free
-languages</p>
+<p>Kamp's theorem: LTL properties are equivalent to star-free languages</p>
 <table>
 <thead>
 <tr class="header">
@@ -313,10 +291,8 @@ languages</p>
 </tr>
 </tbody>
 </table>
-<p><code>a*</code> is star free for any finite alphabet. <code>a*</code>
-being same as <code>(Σ* \ a*)</code></p>
-<p><a
-href="https://cs.stackexchange.com/questions/10768/star-free-language-vs-regular-language">https://cs.stackexchange.com/questions/10768/star-free-language-vs-regular-language</a></p>
+<p><code>a*</code> is star free for any finite alphabet. <code>a*</code> being same as <code>(Σ* \ a*)</code></p>
+<p><a href="https://cs.stackexchange.com/questions/10768/star-free-language-vs-regular-language">https://cs.stackexchange.com/questions/10768/star-free-language-vs-regular-language</a></p>
 <pre><code>Σ* = ∅ᶜ
 
 a* = (Σ* (Σ \ a) Σ*)ᶜ
@@ -333,6 +309,91 @@ a* = (Σ* (Σ \ a) Σ*)ᶜ
 
 G p = p U ⊥
 </code></pre>
+<h2 id="linear-temporal-logic-ltl">Linear Temporal Logic (LTL)</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>b</td>
+<td>Boolean expression</td>
+</tr>
+<tr class="even">
+<td>¬ p</td>
+<td>Not</td>
+</tr>
+<tr class="odd">
+<td>X p</td>
+<td>Next</td>
+</tr>
+<tr class="even">
+<td>p ∨ q</td>
+<td>Or</td>
+</tr>
+<tr class="odd">
+<td>p U q</td>
+<td>Until (strong)</td>
+</tr>
+</tbody>
+</table>
+<p>Derived operations:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>G p</td>
+<td>Global</td>
+</tr>
+<tr class="even">
+<td>F p</td>
+<td>Finally</td>
+</tr>
+<tr class="odd">
+<td>p ∧ q</td>
+<td>Or</td>
+</tr>
+<tr class="even">
+<td>p M q</td>
+<td>Release (strong)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="past-time-ltl-pltl">Past-time LTL (pLTL)</h3>
+<p>Has:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>p S q</code></td>
+<td>since</td>
+</tr>
+<tr class="even">
+<td><code>P p</code></td>
+<td>previously</td>
+</tr>
+</tbody>
+</table>
+<p>PLTL is as expressive as LTL but properties can be much more succinct.</p>
+<p><code>p S q</code> is like <code>q+p.*</code> (or in PSL style, <code>q+p[*]</code>).</p>
+<ul>
+<li><a href="https://people.irisa.fr/Nicolas.Markey/PDF/MyPapers/eatcs-bull79">https://people.irisa.fr/Nicolas.Markey/PDF/MyPapers/eatcs-bull79</a>()-Mar.pdf</li>
+</ul>
+<h3 id="metric-tl-mtl">Metric TL (MTL)</h3>
+<p>Has interval for U and F in LTL.</p>
 </div>
 </body>
 </html>

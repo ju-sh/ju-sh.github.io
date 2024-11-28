@@ -22,13 +22,13 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
@@ -36,32 +36,31 @@
 </header>
 
 <ul>
+    <li>Date created: 05-Mar-2022</li>
     </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/git.html">git</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
-About my attempts at working with git submodules (before finally getting
-it to work).
+About my attempts at working with git submodules (before finally getting it to work).
 </div>
 
 <div id="content-container">
 <hr />
-<p>'A git submodule is a repository embedded inside another repository'
-where each submodule 'has its own history'.<a
-href="https://git-scm.com/docs/gitsubmodules">⁵</a></p>
-<p>I had been trying to work with git submodules and though I finally
-was able to use it properly (with a good deal of help from others), it
-gave me sufficient trouble that I'm a bit scared of forgetting what I
-found out. So I thought I better make a blog post on it.</p>
-<p>Acknowledgements: Thanks to the folks at #git, especially osse and
-jast for helping me get things working.</p>
-<p>At first, I er… didn't consult the git docs and relied on blog posts
-and stackoverflow. 😅 This was what caused me trouble.</p>
+<p>'A git submodule is a repository embedded inside another repository' where each submodule 'has its own history'.<a href="https://git-scm.com/docs/gitsubmodules">⁵</a></p>
+<p>I had been trying to work with git submodules and though I finally was able to use it properly (with a good deal of help from others), it gave me sufficient trouble that I'm a bit scared of forgetting what I found out. So I thought I better make a blog post on it.</p>
+<p>Acknowledgements: Thanks to the folks at #git, especially osse and jast for helping me get things working.</p>
+<p>At first, I er… didn't consult the git docs and relied on blog posts and stackoverflow. 😅 This was what caused me trouble.</p>
 <h2 id="overview">Overview</h2>
-<p>A rough description. May not be accurate. See <a
-href="https://git-scm.com/docs/git-submodule">docs</a> for accurate
-info.</p>
+<p>A rough description. May not be accurate. See <a href="https://git-scm.com/docs/git-submodule">docs</a> for accurate info.</p>
 <table>
 <thead>
 <tr class="header">
@@ -105,53 +104,32 @@ info.</p>
 </tbody>
 </table>
 <h2 id="description">Description</h2>
-<h3 id="adding-or-removing-submodules">Adding or removing
-submodules</h3>
+<h3 id="adding-or-removing-submodules">Adding or removing submodules</h3>
 <p>We can add a repo as a submodule to another repo with</p>
 <pre><code>git submodule add &lt;repo-url-or-path&gt;
 </code></pre>
-<p>The <code>&lt;repo-url-or-path&gt;</code> could either be a repo
-hosted online or one that we may already be having in our computer.</p>
-<p>(Though online hosting services like github may have lead many people
-to get the idea that git is something meant to be used over the
-Internet, it needn't be so. git is decentralized but services like
-github aren't.)</p>
+<p>The <code>&lt;repo-url-or-path&gt;</code> could either be a repo hosted online or one that we may already be having in our computer.</p>
+<p>(Though online hosting services like github may have lead many people to get the idea that git is something meant to be used over the Internet, it needn't be so. git is decentralized but services like github aren't.)</p>
 <p>The parent repo is called <em>super-project</em> in the git docs.</p>
 <p>And we can remove a submodule from the parent repo with</p>
 <pre><code>git submodule rm &lt;path/to/submodule/&gt;
 </code></pre>
-<h3 id="using-a-cloned-repo-with-submodules">Using a cloned repo with
-submodules</h3>
-<p>After cloning a repo with submodules, you need to initialize the
-submodules before you can do much with them. This is something that I
-missed, causing a <em>lot</em> of confusion and costing me a lot of
-time.</p>
+<h3 id="using-a-cloned-repo-with-submodules">Using a cloned repo with submodules</h3>
+<p>After cloning a repo with submodules, you need to initialize the submodules before you can do much with them. This is something that I missed, causing a <em>lot</em> of confusion and costing me a lot of time.</p>
 <pre><code>git submodule init
 </code></pre>
-<p>After initializing the submodule you can get their contents as per
-the last commits checked into the parent repo with</p>
+<p>After initializing the submodule you can get their contents as per the last commits checked into the parent repo with</p>
 <pre><code>git submodule update
 </code></pre>
-<p>(We could also use <code>git submodule update --init</code> to
-initialize submodule which haven't yet been initialized and then
-update.)</p>
-<p>If we need the changes from the remote repo corresponding to the
-submodules and not just the changes that were included in the parent
-repo, we can use:</p>
+<p>(We could also use <code>git submodule update --init</code> to initialize submodule which haven't yet been initialized and then update.)</p>
+<p>If we need the changes from the remote repo corresponding to the submodules and not just the changes that were included in the parent repo, we can use:</p>
 <pre><code>git submodule update --remote
 </code></pre>
-<h3 id="display-current-status-of-submodules">Display current status of
-submodules</h3>
-<p><a
-href="https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-status--cached--recursive--ltpathgt82308203"><code>git submodule〔status〕</code></a>
-can be used to get some info on the current status of the submodules of
-a repo.</p>
-<p>(The square brackets around <code>status</code> mean that it's
-optional.)</p>
-<p>It prints the commit hash of the currently checked out commit of each
-submodule.</p>
-<p>This hash may be preceded one of the following symbols if something
-changed in the submodule:</p>
+<h3 id="display-current-status-of-submodules">Display current status of submodules</h3>
+<p><a href="https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-status--cached--recursive--ltpathgt82308203"><code>git submodule〔status〕</code></a> can be used to get some info on the current status of the submodules of a repo.</p>
+<p>(The square brackets around <code>status</code> mean that it's optional.)</p>
+<p>It prints the commit hash of the currently checked out commit of each submodule.</p>
+<p>This hash may be preceded one of the following symbols if something changed in the submodule:</p>
 <table>
 <thead>
 <tr class="header">
@@ -174,18 +152,13 @@ changed in the submodule:</p>
 </tr>
 </tbody>
 </table>
-<p>For example, the following <code>git submodule status</code>
-output</p>
+<p>For example, the following <code>git submodule status</code> output</p>
 <pre><code> 3be52ac2a5e309b18d9a29f7a600db61d5831e91 child-repo-1 (3be52ac)
 -274c8a70a146a39b512d66130d0746aa458c1528 child-repo-2
 </code></pre>
-<p>means currently checkout out commit of <code>child-repo-1</code> is
-same as the one 'registered' with the parent repo of the submodule and
-that <code>child-repo-2</code> is not initialized.</p>
+<p>means currently checkout out commit of <code>child-repo-1</code> is same as the one 'registered' with the parent repo of the submodule and that <code>child-repo-2</code> is not initialized.</p>
 <h3 id="git-submodule-deinit"><code>git submodule deinit</code></h3>
-<p>If we need to sort of stop considering a particular submodule when we
-do stuff like <code>git submodule update</code>, we can 'deinitialize'
-(or unregister) it with</p>
+<p>If we need to sort of stop considering a particular submodule when we do stuff like <code>git submodule update</code>, we can 'deinitialize' (or unregister) it with</p>
 <pre><code>git submodule deinit &lt;path/to/submodule/&gt;
 </code></pre>
 <p>Then if we change our mind we can initialize it again:</p>
@@ -200,13 +173,8 @@ $ git submodule init child-repo-1/
 Submodule &#39;child-repo-1&#39; (git@codeberg.org:user-1/child-repo-1.git) registered for path &#39;child-repo-1&#39;
 </code></pre>
 <h3 id="git-submodule-foreach"><code>git submodule foreach</code></h3>
-<p><a
-href="https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-foreach--recursiveltcommandgt"><code>foreach</code></a>
-can be used to execute an arbitrary shell command within the root
-directories of each of the submodules inside a repo.</p>
-<p>This command has access to the following special variables (whose
-values are obtained from the <code>.gitmodules</code> files) when
-run:</p>
+<p><a href="https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-foreach--recursiveltcommandgt"><code>foreach</code></a> can be used to execute an arbitrary shell command within the root directories of each of the submodules inside a repo.</p>
+<p>This command has access to the following special variables (whose values are obtained from the <code>.gitmodules</code> files) when run:</p>
 <table>
 <thead>
 <tr class="header">
@@ -238,9 +206,7 @@ run:</p>
 </tbody>
 </table>
 <p>Rough description, may not be accurate!</p>
-<p>For example, for a repo with two submodules named
-<code>child-repo-1</code> and <code>child-repo-2</code>, we can do
-something like</p>
+<p>For example, for a repo with two submodules named <code>child-repo-1</code> and <code>child-repo-2</code>, we can do something like</p>
 <pre><code>$ git submodule foreach &#39;echo $displaypath&#39;
 Entering &#39;child-repo-1&#39;
 child-repo-1
@@ -248,19 +214,11 @@ Entering &#39;child-repo-2&#39;
 child-repo-2
 </code></pre>
 <h2 id="ssh-vs-https-urls">ssh vs https URLs</h2>
-<p>If there are a lot of submodules within a repo, it's probably better
-to use SSH URLs for managing the submodules rather than HTTPS as the
-latter requires password each time an update happens.</p>
-<p>SSH links combined with <code>ssh-add</code> can relieve us of the
-need to type in the password each time if access to submodule repos need
-authentication.</p>
+<p>If there are a lot of submodules within a repo, it's probably better to use SSH URLs for managing the submodules rather than HTTPS as the latter requires password each time an update happens.</p>
+<p>SSH links combined with <code>ssh-add</code> can relieve us of the need to type in the password each time if access to submodule repos need authentication.</p>
 <h2 id="gitmodules-file">gitmodules file</h2>
-<p>When you add a repo as submodule in a repo, the details of the
-submodule will get filled inside a <a
-href="https://git-scm.com/docs/gitmodules"><code>.gitmodules</code></a>
-file at the root of the parent repo.</p>
-<p>It contains the path to the submodule within the parent repo and the
-url associated with the submodule repo, among other possible info.</p>
+<p>When you add a repo as submodule in a repo, the details of the submodule will get filled inside a <a href="https://git-scm.com/docs/gitmodules"><code>.gitmodules</code></a> file at the root of the parent repo.</p>
+<p>It contains the path to the submodule within the parent repo and the url associated with the submodule repo, among other possible info.</p>
 <p>A <code>.gitmodules</code> file would look something like:</p>
 <pre><code>[submodule &quot;child-repo-1&quot;]
     path = child-repo-1
@@ -269,18 +227,10 @@ url associated with the submodule repo, among other possible info.</p>
     path = child-repo-2
     url = git@codeberg.org:user-2/child-repo-2.git
 </code></pre>
-<p>(URLs in this sample <code>.gitmodules</code> are SSH URLs. Haven't
-checked if codeberg allows cloning via SSH. Only HTTPS links are showing
-up in repo pages.)</p>
-<h2 id="a-problem-with-old-git-versions">A problem with old git
-versions</h2>
-<p>Initially I was using git v2.17.0. But it seems that older versions
-of git had a problem where running
-<code>git submodule update --remote</code> would throw error if the
-branch names of all the submodules aren't the same.</p>
-<p>Thankfully this <a
-href="https://github.com/git/git/commit/f0a96e8d4c98c2394dc726b57b914f95cbc7a0de">has
-been fixed</a> in v2.28.0.</p>
+<p>(URLs in this sample <code>.gitmodules</code> are SSH URLs. Haven't checked if codeberg allows cloning via SSH. Only HTTPS links are showing up in repo pages.)</p>
+<h2 id="a-problem-with-old-git-versions">A problem with old git versions</h2>
+<p>Initially I was using git v2.17.0. But it seems that older versions of git had a problem where running <code>git submodule update --remote</code> would throw error if the branch names of all the submodules aren't the same.</p>
+<p>Thankfully this <a href="https://github.com/git/git/commit/f0a96e8d4c98c2394dc726b57b914f95cbc7a0de">has been fixed</a> in v2.28.0.</p>
 <p>As an example I tried making a set of dummy repos.</p>
 <pre><code>.
 ├── parent (master)
@@ -289,12 +239,9 @@ been fixed</a> in v2.28.0.</p>
 └── child2 (main)
     └── readme.md (commit 1)
 </code></pre>
-<p>where <code>parent</code>, <code>child1</code> and
-<code>child2</code> are all git repos.</p>
-<p>The branch name of <code>parent</code> and <code>child1</code> was
-'master' and that of <code>child2</code> was 'main'.</p>
-<p>I had a line of text in each of the <code>readme.md</code> files and
-made a commit in in both child repos.</p>
+<p>where <code>parent</code>, <code>child1</code> and <code>child2</code> are all git repos.</p>
+<p>The branch name of <code>parent</code> and <code>child1</code> was 'master' and that of <code>child2</code> was 'main'.</p>
+<p>I had a line of text in each of the <code>readme.md</code> files and made a commit in in both child repos.</p>
 <p>Then I added them as submodules in the parent repo.</p>
 <pre><code>.
 ├── parent (master)
@@ -305,9 +252,7 @@ made a commit in in both child repos.</p>
 └── child2 (main)
     └── readme.md (commit 1)
 </code></pre>
-<p>Then I added a second line to both <code>readme.md</code> files, made
-a second commit in each of the two child repos and pushed the changes to
-remote.</p>
+<p>Then I added a second line to both <code>readme.md</code> files, made a second commit in each of the two child repos and pushed the changes to remote.</p>
 <pre><code>.
 ├── parent (master)
 │   ├── child1@commit1
@@ -317,29 +262,15 @@ remote.</p>
 └── child2 (main)
     └── readme.md (commit 2)
 </code></pre>
-<p>I went into the parent repo and tried to pull the changes with
-<code>git submodule update --remote</code>.</p>
-<p>That didn't work with git v2.17.0 (the error message probably
-wouldn't be of much of help to identify the real problem for someone not
-well-versed in git) but went all right with git v2.30.2</p>
-<p>It seems that this was because the older versions relied on the
-branch name to get things done, which caused complications when the
-branch names of the submodules were not the same.</p>
-<p>So if you too were using a pre v2.28.0 git and ran into this problem,
-you now know what to do. Switch to a newer git. 😃</p>
+<p>I went into the parent repo and tried to pull the changes with <code>git submodule update --remote</code>.</p>
+<p>That didn't work with git v2.17.0 (the error message probably wouldn't be of much of help to identify the real problem for someone not well-versed in git) but went all right with git v2.30.2</p>
+<p>It seems that this was because the older versions relied on the branch name to get things done, which caused complications when the branch names of the submodules were not the same.</p>
+<p>So if you too were using a pre v2.28.0 git and ran into this problem, you now know what to do. Switch to a newer git. 😃</p>
 <h3 id="there-was-an-attempt">There was an attempt…</h3>
-<p>When I realized the problem was the old git version, I tried using
-the latest version (v2.35.1 as of 2nd March 2022).</p>
-<p>Tried building without any configuration hoping it would work. But it
-didn't.. (again because of me being too lazy to read the docs 😅).</p>
-<p>Doing <code>git submodule</code> gave error saying
-<code>'submodule' is not a git command</code>. Tried using another
-executable named <code>git-submodule</code> as well. But doing
-<code>git-submodule update</code> gave
-<code>./git-submodule: 22: .: git-sh-setup: not found</code>.</p>
-<p>I obviously hadn't done something that should've been done. So I gave
-up and tried another computer which had a newer git version (v2.30.2) by
-default.</p>
+<p>When I realized the problem was the old git version, I tried using the latest version (v2.35.1 as of 2nd March 2022).</p>
+<p>Tried building without any configuration hoping it would work. But it didn't.. (again because of me being too lazy to read the docs 😅).</p>
+<p>Doing <code>git submodule</code> gave error saying <code>'submodule' is not a git command</code>. Tried using another executable named <code>git-submodule</code> as well. But doing <code>git-submodule update</code> gave <code>./git-submodule: 22: .: git-sh-setup: not found</code>.</p>
+<p>I obviously hadn't done something that should've been done. So I gave up and tried another computer which had a newer git version (v2.30.2) by default.</p>
 </div>
 </body>
 </html>

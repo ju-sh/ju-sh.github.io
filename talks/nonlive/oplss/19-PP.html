@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>19-PP</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h1 id="pp-sam-staton">2019: PP: Sam Staton</h1>
+<h2 id="lecture-1">Lecture 1</h2>
+<h3 id="bus-weekend-example">Bus weekend example</h3>
+<p>On an average:</p>
+<ul>
+<li>Weekend =&gt; 2 buses in an hour</li>
+<li>Weekday =&gt; 10 buses in an hour</li>
+</ul>
+<p>Saw 4 buses.</p>
+<p>Is it a weekend?</p>
+<p>Let's consider the probability of it <em>being</em> a weekend.</p>
+<p>x</p>
+<p>Buses showing up.</p>
+<ul>
+<li>Same event happening multiple times within a time period.</li>
+<li>Matches description of a <em>Poisson distribution</em>.</li>
+</ul>
+<p>Example languages:</p>
+<ul>
+<li>Hakaru: Indiana
+<ul>
+<li><a href="https://github.com/hakaru-dev/hakaru">https://github.com/hakaru-dev/hakaru</a></li>
+</ul></li>
+<li>PSI: ETH Zürich
+<ul>
+<li><a href="https://github.com/eth-sri/psi">https://github.com/eth-sri/psi</a></li>
+</ul></li>
+</ul>
+<p>—</p>
+<p>Methods of running a probabilistic program</p>
+<ul>
+<li>'Direct calculation'</li>
+<li>'Simulation method'</li>
+</ul>
+<p>—</p>
+<p>:Side-note:</p>
+<ul>
+<li>Definitional interpretor
+<ul>
+<li>By John Reynolds</li>
+<li>Describing a programming language by defining an interpreter for it</li>
+<li>Focus is on meaning, not efficiency</li>
+<li>Dana Scott and Christopher Strachey proposed <em>denotational semantics</em>
+<ul>
+<li><a href="https://homepage.divms.uiowa.edu/~slonnegr/plf/Book/Chapter9.pdf">https://homepage.divms.uiowa.edu/~slonnegr/plf/Book/Chapter9.pdf</a></li>
+</ul></li>
+</ul></li>
+<li>TODO: What's the difference from definitional interpreter?
+<ul>
+<li>Denotational semantics: Describes what a program does by associating it with a mathematical object</li>
+<li>Definitional interpretor: Describes what a program does by giving an interpretor giving that mathematical object ??</li>
+</ul></li>
+</ul>
+<h3 id="simulation">Simulation</h3>
+<p>Let's see two ways:</p>
+<ul>
+<li>Monte Carlo with rejection
+<ul>
+<li>Doesn't always work ??</li>
+</ul></li>
+<li>Weighted Monte Carlo
+<ul>
+<li>aka importance sampling Monte Carlo</li>
+</ul></li>
+</ul>
+<p>Monte Carlo with rejection</p>
+<ul>
+<li>Run the program numerous (a big number) times</li>
+<li>Make random choice on each run</li>
+</ul>
+<p>Note: Likelihood and probability are not the same. The subtle difference is more clearly in the case of continuous.</p>
+<p>TODO: How does one decide which probability distribution would be best suited to a scenario?</p>
+<h3 id="uncertainity">Uncertainity</h3>
+<p>Incorporating uncertainity about facts into the model.</p>
+<ul>
+<li>Gamma distribution</li>
+<li>Rate/mean = value that we think it is
+<ul>
+<li>ie, the uncertain value</li>
+</ul></li>
+<li>Changing observation</li>
+</ul>
+<h3 id="regression">Regression</h3>
+<p>Tries to answer this question: 'What function could have generated these data points?'</p>
+<ul>
+<li>Linear regression =&gt; this function is a straight line.</li>
+<li>'Traditional statistics'=&gt; find the line that fits best. Least squares method.</li>
+<li>Bayesian statistics</li>
+<li>TODO: Cubic functions will have 4 parameters ?? Why?</li>
+</ul>
+<p>Metropolis-Hastings algorithm</p>
+<h2 id="lecture-2">Lecture 2</h2>
+<ul>
+<li>An attraction of probabilistic programming: Model is separate from the inference algorithm</li>
+</ul>
+<h1 id="pfenning">2015?: Pfenning</h1>
+<ul>
+<li>Introduction rules from bottom to top
+<ul>
+<li>We apply intro rule to go towards something that we wish to prove from something that we know already.</li>
+</ul></li>
+<li>Elimination rules from top to bottom ✓
+<ul>
+<li>Makes sense since we are throwing away info</li>
+</ul></li>
+</ul>
+<p>Proofs in natural deduction proceeds like an attempt to reconcile the goal (bottom part) and assumptions (top part).</p>
+<p>—</p>
+<p>(A∨B) ∧ (A∨C) ⊢ A∨(B∧C)</p>
+<p>Step 1:</p>
+<p>(A∨B) ∧ (A∨C)</p>
+<hr />
+<p>A∨(B∧C)</p>
+<p>A∨B A∨C ————- ∧e₁ ————- ∧e₂ A∨(B∧C) A∨(B∧C)</p>
+<p>Consider the first case.</p>
+<p>A∨B ————- ∧e₁ A∨(B∧C)</p>
+<p>Case 1: Assume A:</p>
+<p>A ————- ∨i₁ A∨(B∧C)</p>
+<p>Case 2: Assume B:</p>
+<p>B ————- ∨i₁ A∨(B∧C)</p>
+<p>—</p>
+<p>Temporal logic.</p>
+<pre><code>A @ t+1         ○A
+------- ○i     ------- ○e      
+  ○A           A @ t+1            
+</code></pre>
+<p>–</p>
+<p>Soundness check: Does intro + elim add any info? No. =&gt; Sound</p>
+<p>We can say this:</p>
+<ul>
+<li>○(A ∧ B) ⊢ ○A ∧ ○B</li>
+</ul>
+<p>But can we say this?</p>
+<ul>
+<li>○(A ∨ B) ⊢ ○A ∨ ○B</li>
+</ul>
+<p>Not in the intuitinistic case. (TODO: Why ??)</p>
+<h2 id="propositions-as-type">Propositions as type</h2>
+<p>Read:</p>
+<ul>
+<li>Curry 1935
+<ul>
+<li>Gentzen's paper of natural deduction (and sequent calculus?) came out around the same time.</li>
+</ul></li>
+<li>Howard 1969</li>
+</ul>
+<p>Should math be constructive?</p>
+<ul>
+<li>Hilbert: no need of constructive</li>
+<li>Brouwer: needs to be constructive</li>
+</ul>
+<p>Intuitionsitic =&gt; <code>¬A</code> is <code>A ⊃ ⊥</code></p>
+<p>which makes <code>A ∨ ¬A</code> to be <code>A ∨ (A ⊃ ⊥)</code>.</p>
+<p>Not provable in general. Because you need to know what A is for both <code>A</code> and <code>A ⊃ ⊥</code>.</p>
+<p>Classical logic: Every proposition is assumed to be either true or false.</p>
+<h3 id="dbts">Dbts</h3>
+<ul>
+<li>How does expansion in logic correspond to extensional equality in type world?</li>
+</ul>
+<h2 id="william-duff">2018-William Duff</h2>
+<p>GADT:</p>
+<ul>
+<li>In addition to constructors, we can specify what kind of arguments the constructors can take</li>
+<li>Existential type in ocaml? Makable with gadts?</li>
+</ul>
+</div>
+</body>
+</html>

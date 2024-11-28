@@ -22,15 +22,18 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
+<header id="title-block-header">
+<h1 class="title">2024</h1>
+</header>
 
 <ul>
     </ul>
@@ -39,33 +42,1025 @@
 
 
 <div id="content-container">
+<h2 id="september">September</h2>
+<h2 id="july">July</h2>
+<h3 id="spls-keynote">SPLS: Keynote</h3>
+<ul>
+<li>Title: Functional Programming in Financial Markets given</li>
+<li>Date: 01-Jul-2024</li>
+<li>Speaker: José Pedro Magalhães (Standard Chartered)</li>
+</ul>
+<p>They use a custom dialect of haskell.</p>
+<ul>
+<li>APIs, GUIs
+<ul>
+<li>I wonder how well developed GUI libraries</li>
+</ul></li>
+</ul>
+<p>—</p>
+<ul>
+<li><p>Closure serialization</p></li>
+<li><p>Quantitative analytics: Stochastic calculus, measure theory</p></li>
+<li><p>High performance: Linear algebra, Monte-Carlo simulation</p></li>
+<li><p>FP in finance: Jane street, Barclays</p>
+<ul>
+<li>But most importantly, <strong>spreadsheets</strong></li>
+<li>Used to be heavily used at standard chartered</li>
+<li>2008: <em>Lambda</em>, C++, Excel add-ins</li>
+<li>Need for module system, etc. Without losing C++? =&gt; Mu</li>
+<li>Mu is Haskell-like. Proprietary.</li>
+<li><a href="https://serokell.io/blog/haskell-in-production-standard-chartered">https://serokell.io/blog/haskell-in-production-standard-chartered</a></li>
+<li>Mu is meant to work with SC's pre-existing eco-system (named Cortex)</li>
+</ul></li>
+<li><p>Type directed programming</p></li>
+<li><p>Mu:</p>
+<ul>
+<li>strict eval, lazy semantics. I wonder how that works..
+<ul>
+<li><code>Prelude Data.Maybe&gt; fromMaybe undefined (Just True) -- True</code>: works if lazy, but not in strict ??</li>
+</ul></li>
+<li>Byte-code, and then interpreted =&gt; portability
+<ul>
+<li>Long compile time</li>
+</ul></li>
+<li>Native C++</li>
+<li>No tail call optimization =&gt; recursion discouraged</li>
+<li>Strings are utf8 (as C++ std::string)</li>
+<li>Almost anything can be de/serialized</li>
+<li>Differentiation IO conflict possibility
+<ul>
+<li>SafeIO: read</li>
+<li>IO: writing</li>
+</ul></li>
+<li>Relational algebra instead of lists</li>
+</ul></li>
+<li><p>GUI with Mu</p>
+<ul>
+<li>Looks similar to elm: <a href="https://elm-lang.org/examples/text-fields">https://elm-lang.org/examples/text-fields</a></li>
+</ul></li>
+</ul>
+<p>Bottom line: Mu was made to have type safer interface to pre-existing eco-system made with C++, Excel and a variety of other languages.</p>
+<p>Static type system =&gt; fewer bugs. Entire class bugs eliminated</p>
+<p>DBTs:</p>
+<ul>
+<li>How is the lexer and parser for Mu written?</li>
+</ul>
+<ol>
+<li></li>
+</ol>
+<h3 id="spls-season-2-talk-1">SPLS: Season 2, Talk 1</h3>
+<ul>
+<li>Title: Linearity, uniqueness, ownership: An entente coridale</li>
+<li>Date: 01-Jul-2024</li>
+<li>Speaker: Danielle Marhsall (Glasgow and Kent)</li>
+</ul>
+<p>—</p>
+<ul>
+<li>Clean: A language
+<ul>
+<li>Haskell-like, but older</li>
+<li><a href="https://clean-lang.org/">https://clean-lang.org/</a></li>
+<li>Uniqueness type system ??</li>
+</ul></li>
+<li>Granule: Another language
+<ul>
+<li><a href="https://granule-project.github.io/">https://granule-project.github.io/</a></li>
+</ul></li>
+</ul>
+<ul>
+<li>Graded type system
+<ul>
+<li>Graded modal types</li>
+<li>Grades: Resource annotations</li>
+</ul></li>
+<li>Type directed program synthesis: Generating program from user-defined specification/type</li>
+</ul>
+<p>PAPER: How to Take the Inverse of a Type (Daniel Marshall and Dominic Orchard), ECOOP 2022</p>
+<p>–</p>
+<p>Linearity: Restrict data</p>
+<ul>
+<li><p>mutation</p></li>
+<li><p>discarding</p></li>
+<li><p>duplication</p></li>
+<li><p>Haskell has linear types ??</p>
+<ul>
+<li><code>{-# LANGUAGE LinearTypes -#}</code></li>
+</ul></li>
+</ul>
+<p>Granule:</p>
+<ul>
+<li>Functions are linear by default: →</li>
+<li>!val: val can be used non-linearly</li>
+</ul>
+<p>Linear type =&gt; every val has to be used exactly once</p>
+<ul>
+<li>Eg: Forgot to close file handler =&gt; error</li>
+</ul>
+<p>Linear logic has linear and non-linear values</p>
+<p>Bounded linear logic =&gt; !ᵣ</p>
+<ul>
+<li>There is an upper bound on the number of times val can be used non-linearly</li>
+<li>Generalizes (how??) to graded modal types: □ᵣ, where r ∈ pre-ordered semi-ring</li>
+</ul>
+<p>Unique types</p>
+<ul>
+<li>*a in granule</li>
+</ul>
+<pre><code>-- like return
+share: *a -&gt; !a
+
+-- like bind
+clone: !a -&gt; (*a -&gt; !b) -&gt; !b
+</code></pre>
+<ul>
+<li>Comonad</li>
+<li>relative monad</li>
+</ul>
+<p>Uniqueness in granule: mutable arrays</p>
+<p>Rust: borrowing a borrow is fine (reborrowing)</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">let</span> a <span class="op">=</span> <span class="kw">mut</span><span class="op">&amp;</span> x<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">let</span> b <span class="op">=</span> <span class="kw">mut</span><span class="op">&amp;</span> a<span class="op">;</span></span></code></pre></div>
+<p>Fractional permissions</p>
+<p>Graded types aka quantitative types ??</p>
+<p>DBTs:</p>
+<ul>
+<li>Difference: uniqueness and linearity</li>
+<li>!a -&gt; a is possible? Unrestricted to linear. How ??</li>
+</ul>
+<h3 id="spls-season-2-talk-2">SPLS: Season 2, Talk 2</h3>
+<ul>
+<li>Title: Meeting Developers Where They Are: Lessons Learned from Formal Verification in Practice</li>
+<li>Date: 01-Jul-2024</li>
+<li>Speaker: Bruce Collie, Runtime Verification Inc.</li>
+</ul>
+<ul>
+<li>RV Inc came out of Uni of Illinois</li>
+<li>Speaker works on something called the K-framework
+<ul>
+<li>Give sth like an opsem of the language and its associated syntax, K gives Interpreter, compiler, MC, symbolic verifier, deductive</li>
+</ul></li>
+</ul>
+<p>—</p>
+<ul>
+<li>Forge: A swiss-knife for Etherium</li>
+<li>Symbolic checking can uncover cases missed by fuzzy/manual testing</li>
+<li><a href="https://kframework.org/">https://kframework.org/</a></li>
+</ul>
+<h3 id="spls-season-3-talk-1">SPLS: Season 3, Talk 1</h3>
+<ul>
+<li>Universal algebra</li>
+<li>Algebraic presentation</li>
+<li>Idris2's elaborate reflection</li>
+<li>Elaborate reflection: Lang given access to its own elaborator</li>
+</ul>
+<p>Offtopic:</p>
+<ul>
+<li>'Semantic highlighting' instead of syntax highlighting</li>
+</ul>
+<h3 id="spls-season-3-talk-2">SPLS: Season 3, Talk 2</h3>
+<ul>
+<li>Title: Haskell in school: Functional programming for school algebra</li>
+</ul>
+<p>—</p>
+<ul>
+<li><p>1989: Why functional programming matters - John Hughes</p></li>
+<li><p>2004: The risks and benfits of teaching purely functional programming in first year - Chakravarty, Keller in JFP</p></li>
+<li><p>2010s: Haskell in middle and high school mathematics, Trends in Functional programming in education</p>
+<ul>
+<li><a href="https://wiki.tfpie.science.ru.nl/images/3/32/Alegre.pdf">https://wiki.tfpie.science.ru.nl/images/3/32/Alegre.pdf</a></li>
+</ul></li>
+<li><p>Haskell road to logic, math and programming - Doets, van Eijck</p></li>
+<li><p>iHaskell: Haskell kernel for JuPyter</p></li>
+</ul>
+<p>Some languages:</p>
+<ul>
+<li>BBC BASIC, Logo</li>
+<li>Scratch</li>
+<li>Hedy, Elm</li>
+</ul>
+<h2 id="may">May</h2>
+<h3 id="a-math-olympiad-question-video">A math olympiad question (video)</h3>
+<ul>
+<li>Video: <a href="https://www.youtube.com/watch?v=Oz-wlQnnN3c">https://www.youtube.com/watch?v=Oz-wlQnnN3c</a></li>
+</ul>
+<p>x¹ᐟ⁶ + x¹ᐟ⁴ = 12</p>
+<ul>
+<li>Find x</li>
+<li>x ∈ ℝ</li>
+</ul>
+<p>–</p>
+<p>x¹ᐟ⁶ + x¹ᐟ⁴ = 12</p>
+<p>LCM(6,4) = 12</p>
+<p>Let x = y¹²</p>
+<pre><code>=&gt; (y¹²)¹ᐟ⁶ + (y¹²)¹ᐟ⁴ = 12
+=&gt; y² + y³ = 12
+=&gt; y² + y³ - 12 = 0
+=&gt; y³ + y² - 8 - 4 = 0
+=&gt; y³ + y² - 2³ - 2² = 0
+=&gt; (y³ - 2³) + (y² - 2²) = 0
+=&gt; (y-2)(y² + 2y + 2²) + (y+2)(y-2) = 0
+=&gt; (y-2)(y² + 2y + 2² + y+2) = 0
+=&gt; (y-2)(y² + 3y + 6) = 0
+=&gt; (y-2) = 0 or (y² + 3y + 6) = 0
+</code></pre>
+<p>y-2=0 =&gt; y=2 ✓</p>
+<p>(y² + 3y + 6) = 0</p>
+<pre><code>Δ = b²-4ac
+  = 9 - 4*1*6 = -15
+  &lt; 0
+</code></pre>
+<p>No real solution.</p>
+<p>Since x ∈ ℝ, this can't lead to an answer.</p>
+<pre><code>∴ y = 2
+=&gt; x = y¹²
+     = 2¹² = 4096
+</code></pre>
+<p>—</p>
+<p>Equation used above: a³-b³ = (a - b)(a² + ab + b²)</p>
+<h3 id="ppk">ppk</h3>
+<ul>
+<li>Topic: Kleene algebra</li>
+<li>Date: 27-May-2024</li>
+</ul>
+<p>—</p>
+<p>Idempotent semiring</p>
+<ul>
+<li>Semiring = ring - requirement of additive inverse</li>
+<li>Idempotent: x + x = x</li>
+</ul>
+<p>—</p>
+<p>(K, +, ⋅, *, 1, 0)</p>
+<ul>
+<li></li>
+<li>Operations: +, ⋅</li>
+<li>Constants: 0, 1</li>
+</ul>
+<p>Properties:</p>
+<ul>
+<li>(K, +, ⋅, 1, 0) is an idempotent semiring</li>
+<li>+:
+<ul>
+<li>associative: x + (y + z) = (x + y) + z</li>
+<li>commutative: x + y = y + x</li>
+<li>idempotent: x + x = x</li>
+<li>unit is 0: x + 0 = x</li>
+</ul></li>
+<li>⋅: (no commutativity requirement)
+<ul>
+<li>associative: x ⋅ (y ⋅ z) = (x ⋅ y) ⋅ z</li>
+<li>distributive over +:
+<ul>
+<li>x ⋅ (y + z) = (x ⋅ y) + (x ⋅ z)</li>
+<li>(x + y) ⋅ z = x⋅z + y⋅z</li>
+<li>Note: The order matters due to commutativity of ⋅ being unnecessary</li>
+</ul></li>
+<li>unit is 1:
+<ul>
+<li>a⋅1 = a</li>
+<li>1⋅a = a</li>
+</ul></li>
+<li>for 0. (Since addition has no inverse ??)
+<ul>
+<li>a⋅0 = 0</li>
+<li>0⋅a = 0</li>
+</ul></li>
+</ul></li>
+<li><code>*</code>: Kleene star
+<ul>
+<li>1 + aa* = a*</li>
+<li>1 + a*a = a*</li>
+</ul></li>
+</ul>
+<p>An ordering: x ≤ y if x + y = y</p>
+<p>This is:</p>
+<ul>
+<li>Reflexive: x ≤ x ∵ x+x = x (by reflexivity of +)</li>
+<li>Transitive: x ≤ y ∧ y ≤ z -&gt; x ≤ z
+<ul>
+<li></li>
+</ul></li>
+<li>Anti-symmetric: x ≤ y ∧ y ≤ x -&gt; x = y
+<ul>
+<li>x ≤ y -&gt; x + y = y</li>
+<li>y ≤ x -&gt; y + x = x</li>
+<li></li>
+</ul></li>
+<li>Semiring properties:
+<ul>
+<li>if b + ax ≤ x then a*b ≤ x</li>
+<li>if b + xa ≤ x then ba* ≤ x</li>
+<li>we can think of ≤ as if it's subset operation</li>
+</ul></li>
+</ul>
+<p>First 2 alone -&gt; Pre-ordering All 3 -&gt; Partial order</p>
+<ol>
+<li><p>Example: Regular expressions</p>
+<pre><code>r := ∅
+   | ε
+</code></pre>
+<p>Language of a regular expression is L(r).</p>
+<pre><code>L(∅) = ∅
+L(ε) = {ε}
+L(a) = {a}
+L(r1+r2) = L(r1) ∪ L(r2)
+L(r1;r2) = {x1⋅x2 | x1 ∈ L(r1) ∧ x2 ∈ L(r2)}
+
+L(r*) = (L(r))* ???
+</code></pre>
+<p>L(r*) got to be defined as a fixpoint.</p>
+<p>Set of regular languages is a Kleene algebra with</p>
+<ul>
+<li><ul>
+<li>= ∪</li>
+</ul></li>
+<li>⋅ = concatenation</li>
+</ul></li>
+<li><p>Example: Binary relation on A</p>
+<p>Given a set A.</p>
+<p>K = all possible relations on A.</p>
+<p>R ⊆ A*A</p>
+<ul>
+<li><ul>
+<li>=&gt; U</li>
+</ul></li>
+<li>⋅ =&gt; 'join' the two relations
+<ul>
+<li>one step according to R1, 2nd step according to R2</li>
+</ul></li>
+</ul>
+<p>- * =&gt; reflexive, transitive closure of R</p>
+<ul>
+<li>0 = empty relation.
+<ul>
+<li>No element is related to another</li>
+</ul></li>
+<li>1 = identity relation
+<ul>
+<li>{(a,a) | a ∈ A}</li>
+<li>Because it needs to be multiplicative inverse</li>
+</ul></li>
+</ul>
+<p>R1⋅R2 = {(a,c) | ∃b, R1(a,b) ∧ R2(b,c)}</p></li>
+<li><p>Example: Non-negative real numbers including infinity</p>
+<ul>
+<li>K = non-negative real numbers including infinity
+<ul>
+<li>ℝ⁺_∞</li>
+</ul></li>
+<li>+: min</li>
+<li>⋅: real number addition</li>
+<li>0: ∞</li>
+<li>1: 0</li>
+<li>*: 0</li>
+</ul>
+<pre><code>  1 + x + x² + x³ + ...
+= 0 + x + x² + x³ + ... (∵ 1 is 0)
+= min(0 + x + 2x + 3x + ... (∵ ⋅ is addition)
+= 0 (∵ all x are non-negative)
+</code></pre>
+<p>Application: Shortest path (∵ of min being +) for a weighted graph.</p>
+<ul>
+<li><ul>
+<li>will give alternate paths</li>
+</ul></li>
+<li>⋅ will compose paths</li>
+<li>If weight of path is ∞ =&gt; no path exists</li>
+</ul></li>
+<li><p>A proof</p>
+<p>Trying to say that ≤ is enough (a weaker property) rather than equality ??</p>
+<pre><code>Given: 1 + aa* ≤ a*
+----------------------
+Goal: a* ≤ 1 + aa*
+</code></pre>
+<p>1 + aa* ≤ a* 1 + aa* + a* = a* (1 + aa*) + a* = a* (associativity) a* + a* = a* (Kleene star proprety) a* = a* (Idempotent +)</p>
+<p>Goal:</p>
+<p>a* ≤ 1 + aa* a* + 1 + aa* = 1 + aa* a* + (1 + aa*) = 1 + aa* (Kleene star property) a* + a* = 1 + aa*</p>
+<p>TODO</p></li>
+<li><p>Kozen's result</p>
+<p>Regular expression over Σ</p>
+<p>Equality defined in terms of equivalence classes.</p>
+<p>r1 ≡ r2 iff L(r1) = L(r2)</p>
+<p>If we can prove that r1 = r2 using KA, then their languages also will be same.</p>
+<p>But given that two languages are same, can we show that their regex would also be same using KA?</p>
+<p>Soundness and completeness.</p>
+<p>Free Kleene algebra.</p>
+<p>What does it mean to be free? Free monoid (M, ⋅, 1) List under concatenation</p>
+<p>Free =&gt; every axiom in implementation should be an axiom in the algebraic structure too. That should be it. Nothing more, nothing less.</p>
+<ul>
+<li>In this sense, Free monad is something similar</li>
+</ul>
+<p>Anything that's provalbe in implementation should be provable with the underlying theory as well.</p>
+<p>Regex under ≡ form a free Kleene algebra. Kozen showed that this is the case.</p>
+<hr />
+<p>Proof</p>
+<p>r1 = uT ⋅ A ⋅ v</p>
+<ul>
+<li>uT: u is transpose of initial state</li>
+<li>A: transition matrix</li>
+<li>v: final state</li>
+</ul>
+<p>Minimize A.</p>
+<ul>
+<li>algebraically done</li>
+</ul>
+<p>Given minimization of A for two given regex, if the minimized As are permutation of each other, then the regexes are equivalent.</p>
+<p>—</p>
+<p>Case of Kleene star operation</p>
+<p>Consider an automata with 2 states. Transition matrix would be 2x2.</p>
+<pre><code>  a                             c  
++-&gt;-+                         +-&gt;-+
+ \ /              b            \ / 
+  |      +--------&gt;------+      |  
++---+   /                 \   +---+
+| 1 |--+                   +--| 2 |
++---+   \                 /   +---+
+         +--------&lt;------+                                        
+                  d      
+</code></pre>
+<pre><code>(M₂ₓ₂(k), +, ⋅, *, 0, 1)
+
+⎡ a  b ⎤
+⎣ c  d ⎦
+
+
+a = transition from state 1 to state 1 itself
+b = 1 ↦ 2
+c = 2 ↦ 1
+d = 2 ↦ 2
+</code></pre>
+<p>Star of this would be like:</p>
+<pre><code>⎡ u  v ⎤
+⎣ w  x ⎦
+
+
+u = reflexive transitive closure for 1↦1 transitions
+  = (a* + bc*d)*
+  = (a + bc*d)*
+v = ubc*
+w = c*du
+x = (c* + da*b)*
+  = (c + da*b)*
+</code></pre>
+<hr />
+<p>Misc:</p>
+<p>This is true: (a* + b) = (a + b)*</p>
+<p>PAPER: <a href="https://www.cs.cornell.edu/~kozen/Papers/ka.pdf">https://www.cs.cornell.edu/~kozen/Papers/ka.pdf</a></p>
+<ul>
+<li>Also mentions some result by Arto Salomaa</li>
+</ul>
+<hr />
+<p>Permutation matrix</p>
+<ul>
+<li>first state may be called different, wire it up different =&gt; you got same transitions, but with different transition matrix.</li>
+</ul></li>
+<li><p>Variants of KA</p>
+<ul>
+<li>KAT
+<ul>
+<li>Captures semantics of while program</li>
+<li>There's a boolean algebra sitting inside a KA</li>
+<li>An implementation: NetKAT</li>
+</ul></li>
+<li>Concurrent KAT</li>
+</ul></li>
+</ol>
+<h3 id="varahan">Varahan</h3>
+<ul>
+<li>Date: 24-May-2024</li>
+</ul>
+<p>—</p>
+<ul>
+<li>Law of large numbers</li>
+<li>Central limit theorem</li>
+</ul>
+<ul>
+<li><p>Gamma function</p></li>
+<li><p>Chi and Chi-square</p></li>
+<li><p>Support of a probability distribution</p>
+<ul>
+<li>Extreme lower and upper points where probability is non-zero</li>
+<li>Examples:
+<ul>
+<li>Poisson: 0 to ∞ ??</li>
+<li>Gaussian: -∞ to +∞</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="labri">LaBRI</h3>
+<ul>
+<li>Topic: Deductive Verification of Probabilistic Programs</li>
+<li>Speaker: Joost-Pieter Katoen, RWTH Aachen
+<ul>
+<li><a href="https://www-i2.informatik.rwth-aachen.de/~katoen/">https://www-i2.informatik.rwth-aachen.de/~katoen/</a></li>
+</ul></li>
+<li>Date: 21-May-2024</li>
+</ul>
+<hr />
+<ul>
+<li>PPs: programs with random assignments and conditioning
+<ul>
+<li>DBT: What is conditioning?</li>
+</ul></li>
+<li>R2, STAN, Pyro (a form python by uber?), PyMC</li>
+<li>Naturally code up randomised algorithm</li>
+</ul>
+<blockquote>
+<p>Probabilistic programming aims to make probabilistic modeling and machine learning accessible to the programmer.</p>
+</blockquote>
+<ul>
+<li>Does the program terminate?
+<ul>
+<li>Almost sure termination</li>
+</ul></li>
+<li>What is the probability that the program diverges?</li>
+</ul>
+<pre><code>x := 1
+while (x &gt; 0) {
+  x := x + 2    [1/2]  x := x - 1
+}
+</code></pre>
+<ul>
+<li>Geometric distribution</li>
+</ul>
+<pre><code>x := geometric(1/4)
+y := geometric(1/4)
+t := x + y
+t := t+1 [5/9] skip
+</code></pre>
+<p>This will definitely terminate. What is the probablity that r == 1 on termination.</p>
+<ul>
+<li>Positive almost sure termination</li>
+<li>Expected runtime of sequential compositoin of a normal and probabilistic program?
+<ul>
+<li>Infinite ??</li>
+</ul></li>
+<li>Arithmetic hierarchy
+<ul>
+<li>Probabilistic stuff is typically more hard than their deterministic counterparts</li>
+</ul></li>
+<li>Verification of probabilistic programs</li>
+<li>Weakest expectations</li>
+</ul>
+<ul>
+<li>Semiring programs ??
+<ul>
+<li><a href="https://www.sciencedirect.com/science/article/pii/S0888613X20302073">https://www.sciencedirect.com/science/article/pii/S0888613X20302073</a></li>
+</ul></li>
+<li>Coupon collector's problem
+<ul>
+<li>Example: 6 sided die. Roll till you see each face at least once.</li>
+</ul></li>
+<li>Kuratowski's fixpoint theorem
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Knaster%E2%80%93Kuratowski%E2%80%93Mazurkiewicz_lemma">https://en.wikipedia.org/wiki/Knaster%E2%80%93Kuratowski%E2%80%93Mazurkiewicz_lemma</a></li>
+</ul></li>
+<li>Arithmetic hierarchy
+<ul>
+<li>Eg: π₃-complete</li>
+</ul></li>
+<li>Speaker's team seems to be working on this: <a href="https://www.caesarverifier.org/">https://www.caesarverifier.org/</a>*** Plclub</li>
+</ul>
+<p>GPU programming models (nvidia-oriented)</p>
+<ul>
+<li>Speaker focusese on nvidia stuff. Not open standards…</li>
+<li>GPU:
+<ul>
+<li>way more threads than CPUs</li>
+<li>Lockstep execution: Threads aren't independent, unlike in the case of CPUs</li>
+<li>SIMD: Single Instruction Multiple Data</li>
+</ul></li>
+<li>32 threads = 1 warp (CUDA hardware)</li>
+<li>kernel: a function that runs on the GPU
+<ul>
+<li><code>&gt;&gt;&gt;</code> and <code>&lt;&lt;&lt;</code> syntax</li>
+</ul></li>
+<li>block index, thread index</li>
+<li>Matrix transpose example</li>
+</ul>
+<p>CUDA:</p>
+<ul>
+<li>2006, inspired by work at University of Brook</li>
+<li><a href="https://developer.nvidia.com/blog/cuda-refresher-cuda-programming-model/">https://developer.nvidia.com/blog/cuda-refresher-cuda-programming-model/</a></li>
+<li>'streams' ??</li>
+<li>Programming model built as a C extension</li>
+<li>Compiles to PTX, a custom assembly language</li>
+<li>No abstractions. Pointer manipulation.</li>
+<li>Every register is 32bits</li>
+<li>Shared memory:
+<ul>
+<li>Random access</li>
+<li>Shared by all threads</li>
+<li>Default size: 48kB</li>
+<li>It's actually like L1 cache??
+<ul>
+<li><a href="https://forums.developer.nvidia.com/t/whats-the-difference-between-l1-cache-and-the-shared-memory/24730">https://forums.developer.nvidia.com/t/whats-the-difference-between-l1-cache-and-the-shared-memory/24730</a></li>
+</ul></li>
+</ul></li>
+<li>Thread block (as in a 'block of threads')
+<ul>
+<li>Maximum number of threads possible (as of 2024?): 1024</li>
+<li><a href="https://en.wikipedia.org/wiki/Thread_block_(CUDA_programming)">https://en.wikipedia.org/wiki/Thread_block_(CUDA_programming)</a></li>
+<li>Group of threads that can be executed serially/parallely</li>
+<li>Threads in same block run on the same stream processor</li>
+<li>Threads in same block can communicate using shared memory</li>
+<li>Each thread block has a shared memory associated with it</li>
+</ul></li>
+<li>Global memory
+<ul>
+<li>VRAM</li>
+<li>8GB-80GB</li>
+<li>Common to all thread blocks??</li>
+<li>Non-contiguous memory operations ('non-coalescing') is slow. Shared memory can be used to get around this.</li>
+</ul></li>
+</ul>
+<p>Functional languages:</p>
+<ul>
+<li>Question: stateless funcitonal programming =&gt; easy parallelism ?
+<ul>
+<li>Parallelism is easy, but not performance</li>
+<li>Immutable array updates =&gt; need to have copies</li>
+<li>Too function calls impact performance</li>
+</ul></li>
+</ul>
+<p>Futhark</p>
+<ul>
+<li>A language that tries to solve the above problems</li>
+<li>Written in haskell:
+<ul>
+<li><a href="https://futhark-lang.org/">https://futhark-lang.org/</a></li>
+<li><a href="https://github.com/diku-dk/futhark">https://github.com/diku-dk/futhark</a></li>
+</ul></li>
+<li>Defunctionalization to reduce function calls
+<ul>
+<li>Along with some restrictions on how functions are used</li>
+</ul></li>
+<li>In-place array mutation via ownership concepts</li>
+<li>Pan haskell library was rewritten using Futhark (2018)</li>
+</ul>
+<p>—</p>
+<ul>
+<li>Halide: A DSL for image processing
+<ul>
+<li>Written in C++</li>
+<li><a href="https://github.com/halide/Halide">https://github.com/halide/Halide</a></li>
+</ul></li>
+<li>Datalog
+<ul>
+<li>A good fit for GPU programming</li>
+</ul></li>
+</ul>
+<p>—</p>
+<p>Defunctionalization:</p>
+<p>—</p>
+<p>Look up:</p>
+<ul>
+<li>Reynolds 1972: Definitional interpreters for higher-order programming languages
+<ul>
+<li><a href="https://www.cs.tufts.edu/comp/150FP/archive/john-reynolds/definterps-revisted.pdf">https://www.cs.tufts.edu/comp/150FP/archive/john-reynolds/definterps-revisted.pdf</a></li>
+</ul></li>
+<li>Pan haskell library: <a href="http://conal.net/pan/Releases/default.htm">http://conal.net/pan/Releases/default.htm</a></li>
+</ul>
+<h2 id="april">April</h2>
+<h3 id="cambium-vellvm">Cambium: VeLLVM</h3>
+<ul>
+<li>Speaker: Irene Yoon
+<ul>
+<li>UPenn (PLClub member)</li>
+</ul></li>
+<li>Date: 12-Apr-2024</li>
+</ul>
+<hr />
+<ul>
+<li>Interaction trees</li>
+<li>Still having an extractable model</li>
+</ul>
+<p>LLVM:</p>
+<ul>
+<li>no official acronym now</li>
+<li>modular compiler infrastructure</li>
+<li>python front-end exists??</li>
+</ul>
+<pre><code>front ends -&gt; types SSA IR (human readable??) -&gt; code gen (jit) -&gt; backend
+                        |
+                        |
+                        |
+                     analysis
+                        |
+                        |
+                        |
+                     optimizations and transformations
+</code></pre>
+<ul>
+<li>LLVM IR</li>
+<li>interacdtion trrees</li>
+<li>VeLLVM: first version
+<ul>
+<li>first iterations came out in 2012: was monolithic then</li>
+<li>vellvm-legacy</li>
+<li>operational semantics</li>
+<li>relation is propositional =&gt; not extractable</li>
+<li>no modularity</li>
+</ul></li>
+</ul>
+<p>DBT: what was meant by the need to embrace the physicist side?</p>
+<p>Modular and executable semantics for LLVM IR</p>
+<p>LLVM IR:</p>
+<ul>
+<li>CFGS</li>
+<li>labeled nodes</li>
+<li>SSA (Phi nodes)</li>
+<li>Types: i64, i64* (pointer)</li>
+</ul>
+<p>LLVM langref =&gt; not a formal semantics. too big too</p>
+<ul>
+<li><a href="https://llvm.org/docs/LangRef.html">https://llvm.org/docs/LangRef.html</a></li>
+<li>Undefined behaviour</li>
+</ul>
+<p>VeLLVM 2.0</p>
+<ul>
+<li>uses itrees</li>
+<li>Changing LLVM IR: new bugs discovered, new features</li>
+</ul>
+<p><a href="https://github.com/vellvm/ctrees">https://github.com/vellvm/ctrees</a></p>
+<p>itrees:</p>
+<ul>
+<li>compositional</li>
+<li>modular</li>
+<li>executable</li>
+</ul>
+<p>VIR: formal semantics for a part of LLVM IR</p>
+<p>Event based semantics: based on itrees</p>
+<p>itree</p>
+<ul>
+<li>can model potentially diverging programs</li>
+</ul>
+<p>CoInductive itree</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>Tau: itree -&gt; itree</td>
+</tr>
+<tr class="even">
+<td>Vis: e: E X</td>
+</tr>
+<tr class="odd">
+<td>Ret (r: R)</td>
+</tr>
+</tbody>
+</table>
+<p>parametrized on an event type.</p>
+<p>Inspired by lay-monad ??</p>
+<p>A free monad</p>
+<ul>
+<li>meaning can be given ??</li>
+</ul>
+<p>Basic combinators:</p>
+<ul>
+<li>o</li>
+</ul>
+<p>Itree semnatics</p>
+<p>SSA ≅ functional programm (Appel 1998) Denotional semantcis (compoisitionality)</p>
+<p>Recursion modeled using fixpoint cominators and itrees.</p>
+<p>poison: deferred undefined behaviour</p>
+<p>Modeling mutually recursive CFGs</p>
+<p>Conor McBride 2015: mutual recursive combinator. tchnique for gneral recursion</p>
+<p>Modeling tail recursion</p>
+<p>iter combinator</p>
+<p>ackermann function example. tying the knot. <a href="https://en.wikipedia.org/wiki/Ackermann_function">https://en.wikipedia.org/wiki/Ackermann_function</a></p>
+<p>Weak bisimuluation: simulation equiv ignoreing the (silent) tau steps eutt: equivalance upto taus</p>
+<p>Yannick Zakowski (of ctrees fame) suggested Irene to use coinduction library instead of gpaco <a href="https://github.com/damien-pous/coinduction">https://github.com/damien-pous/coinduction</a> <a href="https://perso.ens-lyon.fr/yannick.zakowski/">https://perso.ens-lyon.fr/yannick.zakowski/</a></p>
+<h3 id="iitpkd-vydythi">IITPKD: Vydythi</h3>
+<ul>
+<li>Speaker: Hari (EE Phd student)</li>
+<li>Date: 11-Apr-2024</li>
+</ul>
+<hr />
+<p>DC-DC converter. Change voltage eg: solar panel is low voltage inverter: DC to AC conversion solar energy is DC rectifier: AC to DC conversion</p>
+<ul>
+<li>eg: for phone charger</li>
+</ul>
+<p>two kinds of sources:</p>
+<ul>
+<li>voltage: eg battery</li>
+<li>current: doesn't really exist. no ideal current source
+<ul>
+<li>ohm's law: for current to flow, voltage should exist</li>
+</ul></li>
+</ul>
+<p>what if we short circuit the two terminal of an ideal battery?</p>
+<p>Almost no resistance i = V/R large I heat ups blows wire melt</p>
+<p>–</p>
+<p>solar panel appear to produce current without voltage???? Like a current source?? can we short circuit a current source??</p>
+<p>we can but, its' of ver high volatae</p>
+<hr />
+<p>inductor</p>
+<ul>
+<li>sotre energy as amanetic field ??</li>
+</ul>
+<p>any current carryin conductor prodcues a magnertic field field will be circles wind up a coil =&gt; boosted field =&gt; strong magnetic field in one direction flux</p>
+<p>reluctance: like resistance for magnetic field</p>
+<p>volatae acorrs resistser = v = IR</p>
+<p>volatee across inductore = L.dI/dt</p>
+<p>Volatee differcne =EMF electro motive force MMF magneto MF for rlux to flow, ew need flux diff = mmf mmf is the foce that pushes the flux</p>
+<p>mmf = n * I where n is number of windins in coil</p>
+<p>reluctance = s</p>
+<p>φ = mmf / s φ = n*I / s</p>
+<p>dφ/dt = n/s * dI/dt n * dφ/dt = n²/s * dI/dt V = L * dI/dt</p>
+<p>Faraadys' law rate of change of flux is volatge</p>
+<p>inductance = L</p>
+<p>—</p>
+<p>V = L * dI/dt ∫V = L ∫dI/dt V = L I∫1/dt (if V is constant) I = 1/L * V∫dt = Vt/L</p>
+<p>integral of a constant is 'linear'. keeps increasing —</p>
+<p>What if we short circuit and inductive circuit with a current source. —- capacitor</p>
+<p>I = C.dV/dt</p>
+<ul>
+<li>Don't interrupt inductor or chargin capactiro current</li>
+</ul>
+<p><a href="https://www.coilcraft.com/en-us/edu/series/what-is-an-inductor/">https://www.coilcraft.com/en-us/edu/series/what-is-an-inductor/</a></p>
+<p>Step change in current =&gt; infinite voltage ??</p>
+<p><a href="https://openmodelica.org/">https://openmodelica.org/</a></p>
+<hr />
+<p>DC-DC buck converter</p>
+<ul>
+<li>stpe donw dc volate</li>
+</ul>
+<p>Resistance divider</p>
+<ul>
+<li>but low efficiency</li>
+</ul>
+<p>P = V²/R = I²R Efficiency = output power / input power</p>
+<p>—-</p>
+<p>Try witching on and off at same interval =&gt; voltage will half</p>
+<p>duty cycle: part of the period during which signal is high change pulse width</p>
+<p>but this output is all ripples</p>
+<p>voltae vidivsion cannot disrupt inductor current ???</p>
+<p>impedence of capactiro z = 1/jωC</p>
+<p>High impedence to low frequency sinals like DC</p>
+<p>DC boost converter: step up V or step down I buck boost converter: can do both stepu up or donw</p>
+<ol>
+<li><p>matlab</p>
+<ul>
+<li>simulink &gt; blank model</li>
+<li>model settings C-e
+<ul>
+<li>solver selection: fixed step</li>
+<li>solver details: fixed step size: 1e-06</li>
+</ul></li>
+<li>double click anywhere: search for powergui. and place component.</li>
+<li>double click anywhere: search for dc voltage source. and place component.</li>
+</ul>
+<p>series RLC branch</p>
+<ul>
+<li>branch type: R</li>
+<li>resistance: 1e-4</li>
+</ul>
+<p>current measurement: measures current scope; allows us a way to see outupt of currnet masurement</p>
+<p>Chane stop tiem to 0.01 Run , wait til l it show ready double clikcon scope: graph will show high voltage</p>
+<p>controlled current source (electrical not foundatoin)</p>
+<p>measurement block =&gt; postivie goes to positive</p></li>
+</ol>
 <h2 id="march">March</h2>
-<h3 id="rsd-6.0-iitpkd-mappila-malayalam">RSD 6.0 IITPKD: Mappila
-Malayalam</h3>
+<h3 id="sriram-krishnamurthi-video">Sriram Krishnamurthi (video)</h3>
+<ul>
+<li>Knuth plans to include a lot of information about SAT solving in a later Art of Programming volume.
+<ul>
+<li><a href="https://www.youtube.com/watch?v=g4lhrVPDUG0">https://www.youtube.com/watch?v=g4lhrVPDUG0</a></li>
+<li>The art of computer programming: Satisfiability, Volume 4, Fascicle 6 (2015, now part of volume 4B)</li>
+</ul></li>
+<li>alloy: A tool
+<ul>
+<li><a href="http://alloytools.org/">http://alloytools.org/</a></li>
+<li><em>Software abstractions: Logic, language and analysis</em> - Daniel Jackson</li>
+</ul></li>
+</ul>
+<h3 id="numberphile-video-return-of--112">Numberphile video: Return of -1/12</h3>
+<p>Caveats to be mindful of when dealing with values involving infinity.</p>
+<p>Question:<br />
+Is 0.9999… = 1</p>
+<p>Let:</p>
+<pre><code>         x = 0.99999....
+=&gt;     10x = 9.99999....
+=&gt; 10x - x = 9.9999.... - 0.999999...
+=&gt;      9x = 9
+=&gt;       x = 1
+</code></pre>
+<p>This might 'look' correct, but isn't. Because the normal rules of addition is not applicable here since we are dealing with value which is not 'fintite'.</p>
+<p>—</p>
+<p>Consider another series which is 'increasing' and not 'decreasing':</p>
+<p>1 + 10 + 100 + 1000 + ….</p>
+<p>Let:</p>
+<pre><code>         x = 1 + 10 + 100 + 1000 + ....
+=&gt;     10x = 10 + 100 + 1000 + ....
+=&gt; 10x - x = -1
+=&gt;       x = -1/9
+</code></pre>
+<p>Again, this is not correct in the 'usual' way.</p>
+<p>Because <code>x</code> was totally positive to begin with. How can it suddenly turn negative.</p>
+<p>An infinite series doesn't have a concrete value. So we can't simply assign to to a variable. That's where we went wrong.</p>
+<p>The sum of the above series is not really a number, yet it is 'equal' to <code>-1/9</code> in some sense.</p>
+<p>—</p>
+<p>Analytic continuation</p>
+<p>0.99999…. is like<br />
+0.9*10⁰ + 0.9*10⁻¹ + 0.9*10⁻² + ….</p>
+<p>—</p>
+<p>1 + r + r² + r³ + … = 1/(1-r) if |r|&lt;1</p>
+<p>As in:</p>
+<pre><code>          x = 1 + r + r² + r³ + ...
+=&gt;       rx = r + r² + r³ + ...
+=&gt;   rx - x = 1
+=&gt;   x(1-r) = 1
+=&gt;        x = 1/(1-r)
+</code></pre>
+<p>This is defined only if |r|&lt;1 because only then is there any chance of convergance.</p>
+<p>—</p>
+<p>Here's another infinite sum:</p>
+<pre><code>1 - 1 + 1 - 1 + .....
+</code></pre>
+<p>Not converging. Yet not diverging only in one direction.<br />
+It's 'oscillating'.</p>
+<p>Let:</p>
+<pre><code>       x = 1 - 1 + 1 - 1 + .....
+=&gt; 1 - x = 1 - (1 - 1 + 1 - 1 + .....)
+         = 0 + 1 - 1 + 1 - 1 + .....
+         = 1 - 1 + 1 - 1 + .....
+         = x
+=&gt;     1 = 2x
+=&gt;     x = 1/2
+</code></pre>
+<p>Which is what we would've got if we had put r=-1.</p>
+<p>—</p>
+<p>Another infinite sum (non-converging again):</p>
+<pre><code>1 + 2 + 3 + 4 + .....
+</code></pre>
+<p>Let:</p>
+<pre><code>          x = 1 + 2 + 3 + 4 + ...
+ =&gt;     -4x =   - 4     - 8 + ...
+ =&gt;  x - 4x = 1 -2  + 3 - 4 + ...
+ =&gt;     -3x = 1 -2  + 3 - 4 + ...
+
+---
+
+    -3x = 1 - 2  + 3 - 4 + ...
+    -3x =     1  - 2 + 3 - 4 + ...
+  ──────────────────────────────────
+    -6x = 1 - 1  + 1 - 1 + ...
+
+Taking our old value for the RHS series:
+
+    -6x = 1/2
+ =&gt;   x = -1/12
+</code></pre>
+<p>—</p>
+<p>The 1/1-r would give correct answer in some sense even |r|&gt;0 (as long as |r| ≠ 1)</p>
+<p>—</p>
+<p>Riemann Zeta function</p>
+<pre><code>         1       1       1       1   
+ζ(s) = ───── + ───── + ───── + ───── + ...
+         1ˢ      2ˢ      3ˢ      4ˢ  
+
+
+(where s = x +iy ??)
+
+As an aside, this contains an encoding of prime numbers:
+
+
+                             1
+ζ(s) = ──────────────────────────────────────────────────
+       ⎛     1  ⎞ ⎛     1  ⎞ ⎛     1  ⎞ ⎛     1  ⎞
+       ⎜1 - ────⎟ ⎜1 - ────⎟ ⎜1 - ────⎟ ⎜1 - ────⎟ ....
+       ⎝     2ˢ ⎠ ⎝     3ˢ ⎠ ⎝     5ˢ ⎠ ⎝     7ˢ ⎠
+</code></pre>
+<ul>
+<li>Has some relation with the distribution of prime numbers.</li>
+<li>Riemann hypthesis some something to do with this function as well.</li>
+<li><code>ζ(2) = π²/6</code></li>
+</ul>
+<p>Try watching this videos as well:</p>
+<ul>
+<li>3b1b: <a href="https://www.youtube.com/watch?v=sD0NjbwqlYw">https://www.youtube.com/watch?v=sD0NjbwqlYw</a></li>
+</ul>
+<p>—</p>
+<p>Offtopic: Casimir effect in quantum mechanics</p>
+<h3 id="rsd-6.0-iitpkd-mappila-malayalam">RSD 6.0 IITPKD: Mappila Malayalam</h3>
 <ul>
 <li>Speaker: Naseera Thasni
 <ul>
-<li>PhD candidate, Humanities and Social Sciences department, IIT
-Palakkad</li>
+<li>PhD candidate, Humanities and Social Sciences department, IIT Palakkad</li>
 </ul></li>
 <li>Date: 23-Mar-2024</li>
 </ul>
 <p>—</p>
 <ul>
 <li>Mappila Muslim community in Malaparam.</li>
-<li>Only sociolect of Malayalam with a fully developed script:
-Arabi-Malayalam
+<li>Only sociolect of Malayalam with a fully developed script: Arabi-Malayalam
 <ul>
-<li><a
-href="https://en.m.wikipedia.org/wiki/Sociolect">https://en.m.wikipedia.org/wiki/Sociolect</a></li>
-<li><a
-href="https://ml.wikipedia.org/wiki/%E0%B4%85%E0%B4%B1%E0%B4%AC%E0%B4%BF%E0%B4%AE%E0%B4%B2%E0%B4%AF%E0%B4%BE%E0%B4%B3%E0%B4%82">https://ml.wikipedia.org/wiki/%E0%B4%85%E0%B4%B1%E0%B4%AC%E0%B4%BF%E0%B4%AE%E0%B4%B2%E0%B4%AF%E0%B4%BE%E0%B4%B3%E0%B4%82</a></li>
+<li><a href="https://en.m.wikipedia.org/wiki/Sociolect">https://en.m.wikipedia.org/wiki/Sociolect</a></li>
+<li><a href="https://ml.wikipedia.org/wiki/%E0%B4%85%E0%B4%B1%E0%B4%AC%E0%B4%BF%E0%B4%AE%E0%B4%B2%E0%B4%AF%E0%B4%BE%E0%B4%B3%E0%B4%82">https://ml.wikipedia.org/wiki/%E0%B4%85%E0%B4%B1%E0%B4%AC%E0%B4%BF%E0%B4%AE%E0%B4%B2%E0%B4%AF%E0%B4%BE%E0%B4%B3%E0%B4%82</a></li>
 </ul></li>
 <li>direct and indirect approaches</li>
 <li>Matched guise test
 <ul>
-<li>Same speaker tracks shown without idin thems as belongin to same
-person</li>
+<li>Same speaker tracks shown without idin thems as belongin to same person</li>
 </ul></li>
 <li>Traits looked for: Financial, eduacational status
 <ul>
@@ -83,8 +1078,7 @@ person</li>
 <li>Pulithunni</li>
 <li>Is Mappila Malayalam written in Arabic script
 <ul>
-<li><a
-href="https://ml.wikipedia.org/wiki/%E0%B4%85%E0%B4%B1%E0%B4%AC%E0%B4%BF%E0%B4%AE%E0%B4%B2%E0%B4%AF%E0%B4%BE%E0%B4%B3%E0%B4%82">https://ml.wikipedia.org/wiki/%E0%B4%85%E0%B4%B1%E0%B4%AC%E0%B4%BF%E0%B4%AE%E0%B4%B2%E0%B4%AF%E0%B4%BE%E0%B4%B3%E0%B4%82</a></li>
+<li><a href="https://ml.wikipedia.org/wiki/%E0%B4%85%E0%B4%B1%E0%B4%AC%E0%B4%BF%E0%B4%AE%E0%B4%B2%E0%B4%AF%E0%B4%BE%E0%B4%B3%E0%B4%82">https://ml.wikipedia.org/wiki/%E0%B4%85%E0%B4%B1%E0%B4%AC%E0%B4%BF%E0%B4%AE%E0%B4%B2%E0%B4%AF%E0%B4%BE%E0%B4%B3%E0%B4%82</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -130,23 +1124,17 @@ href="https://ml.wikipedia.org/wiki/%E0%B4%85%E0%B4%B1%E0%B4%AC%E0%B4%BF%E0%B4%A
 <li>Fly not too close to sun: wax wings will melt</li>
 <li>Fly not too close to sea: wings will get wet</li>
 </ul></li>
-<li>Comparison between a grenade capable of killing a few people vs
-nuclear bomb killing thousands. When did it stop being totally
-inhumane?</li>
+<li>Comparison between a grenade capable of killing a few people vs nuclear bomb killing thousands. When did it stop being totally inhumane?</li>
 </ul>
-<p>Paradox of value quality of paradox a of values diamond vs water.
-diamond more costly</p>
+<p>Paradox of value quality of paradox a of values diamond vs water. diamond more costly</p>
 <p>scarcity vs utility marginal utility.</p>
 <ul>
 <li><p>less for water</p>
 <p>valuation could be interms of margginal utility</p>
-<p>relational paradox - when two people interact, one will hide what he
-thinks the other doesn't' like</p></li>
+<p>relational paradox - when two people interact, one will hide what he thinks the other doesn't' like</p></li>
 </ul>
-<p>Kant: qty, quality, modality Technology - society interaction
-realtion</p>
-<p>society: military dictation implies society i s essentially the
-dictatorship what is expected of tech tech becomes wht society wants</p>
+<p>Kant: qty, quality, modality Technology - society interaction realtion</p>
+<p>society: military dictation implies society i s essentially the dictatorship what is expected of tech tech becomes wht society wants</p>
 <p>mdoal paradox</p>
 <ul>
 <li>Technology of warfare</li>
@@ -154,39 +1142,30 @@ dictatorship what is expected of tech tech becomes wht society wants</p>
 <ul>
 <li>Two prisoners</li>
 <li>if both refuse to betray the other, both goes free</li>
-<li>The one who anonymously betray the other goes free, other
-punished</li>
+<li>The one who anonymously betray the other goes free, other punished</li>
 <li>If both betray the other, both get punished</li>
-<li>Obviously, it's in their collective best interest not to
-betray.</li>
-<li>But individual-focused view-wise, betraying stands a chance
-too.</li>
+<li>Obviously, it's in their collective best interest not to betray.</li>
+<li>But individual-focused view-wise, betraying stands a chance too.</li>
 </ul></li>
 <li>Cooperation vs self-interest</li>
-<li>Best action for society and best action for individual may not be
-same.</li>
+<li>Best action for society and best action for individual may not be same.</li>
 <li>How to make society cooperate?</li>
 <li>Cooperate then the society gain more</li>
 <li>Japanese companies discourage internal competition???
 <ul>
-<li>cooperation alone probably won't cut it. But competition shouldn't
-go overboard. Middle ground.</li>
+<li>cooperation alone probably won't cut it. But competition shouldn't go overboard. Middle ground.</li>
 </ul></li>
 <li>Tragedy of commons
 <ul>
-<li>Society will be better if ordinary people are also considered, but
-individuals may choose to benefit themselves even at the expense of
-others instead.</li>
-<li>Individual-wise benefit may be there, but society-wise may not be
-beneficial.</li>
+<li>Society will be better if ordinary people are also considered, but individuals may choose to benefit themselves even at the expense of others instead.</li>
+<li>Individual-wise benefit may be there, but society-wise may not be beneficial.</li>
 </ul></li>
 <li>Technology should be to make a life.
 <ul>
 <li>Technology should not be just to make a living.</li>
 </ul></li>
 </ul>
-<p><a
-href="https://en.wikipedia.org/wiki/Delphic_maxims">https://en.wikipedia.org/wiki/Delphic_maxims</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Delphic_maxims">https://en.wikipedia.org/wiki/Delphic_maxims</a></p>
 <h3 id="classical-dance">Classical dance</h3>
 <ul>
 <li>Bharatanatyam
@@ -202,8 +1181,7 @@ href="https://en.wikipedia.org/wiki/Delphic_maxims">https://en.wikipedia.org/wik
 <li>Kathak
 <ul>
 <li>Influenced by Mughal</li>
-<li>Bells on feet ring upon stomping in response to percussion. Like tap
-dancing.</li>
+<li>Bells on feet ring upon stomping in response to percussion. Like tap dancing.</li>
 <li>Reminds one of whirling dervishes of the Sufi tradition.</li>
 </ul></li>
 <li>Assam</li>
@@ -223,7 +1201,10 @@ dancing.</li>
 </ul>
 <p>Nritya, Nrita, Lasya ??</p>
 <h3 id="huawei">Huawei</h3>
-<p><em>The</em> denotational semantics of SSA Neel Krishnaswami</p>
+<ul>
+<li>Title: <em>The</em> denotational semantics of SSA</li>
+<li>Speaker: Neel Krishnaswami</li>
+</ul>
 <p>SSA:</p>
 <ul>
 <li>First order</li>
@@ -288,8 +1269,7 @@ A ::= X            (type)
 <li>0: impure</li>
 <li>1: pure</li>
 </ul>
-<p>0 and 1 were chosen so that it will look nice in some lattice
-representation.</p>
+<p>0 and 1 were chosen so that it will look nice in some lattice representation.</p>
 <p>Terms:</p>
 <pre><code> x:A ∈ Γ          Γ ⊢ x:₁A    Γ ⊢ y:₁B      f:A-&gt;ₚB    Γ ⊢ a:₁A
 ---------         --------------------      -------------------- 
@@ -301,8 +1281,7 @@ representation.</p>
 <li>store to memory: impure</li>
 <li>just copy a variable to another: pure</li>
 </ul>
-<p>In addition to these rules, some weakening rules are also used. These
-rules weren't shown in this talk.</p>
+<p>In addition to these rules, some weakening rules are also used. These rules weren't shown in this talk.</p>
 <hr />
 <p>Typing judgements for basic blocks</p>
 <p>Basic blocks are sequences of bindings.</p>
@@ -310,8 +1289,7 @@ rules weren't shown in this talk.</p>
 <li>Transformation of one state to anthoer.</li>
 <li>ie, like one version of value-variable mappings to another.</li>
 </ul>
-<p><code>Γ ⊢ₚ b:Δ</code> means starting from bindings <code>Γ</code>,
-run basic block <code>b</code>, and get new bindings <code>Δ</code>.</p>
+<p><code>Γ ⊢ₚ b:Δ</code> means starting from bindings <code>Γ</code>, run basic block <code>b</code>, and get new bindings <code>Δ</code>.</p>
 <pre><code>---------         (no basic block =&gt; no change to bindings)
  Γ ⊢ ⋅:Γ
 
@@ -334,8 +1312,7 @@ Do we read this rule UP-wards instead of DOWN-wards??
 <li><code>⋅</code> means empty list of bindings.</li>
 <li>Γ and Δ only store types? Not values??</li>
 </ul>
-<p>These rules correspond to an intuitionistic version, there is another
-version which is substructural??</p>
+<p>These rules correspond to an intuitionistic version, there is another version which is substructural??</p>
 <p>Body of the basic block is like a series of bindings.</p>
 <hr />
 <p>Jumps, labels, CFGs</p>
@@ -365,8 +1342,7 @@ exit(v):
 <pre><code>G ::= ⋅                  (empty CFG)
     | G, L(x:A) = β      (A CFG + a label with parameter x + a body β)
 </code></pre>
-<p>Target contexts: Collection of labels and their types (kinda like a
-list)</p>
+<p>Target contexts: Collection of labels and their types (kinda like a list)</p>
 <pre><code>j,k ::= ⋅                (empty)
       | k, L[Γ](x:A)     (label takes parameter of type A,
                           the basic block has free variable Γ inside it)
@@ -384,8 +1360,7 @@ list)</p>
 </ul>
 <p>Coproduct = like disjoint union in category theory</p>
 <p>—-</p>
-<p>There is a category of values and a category of computations, but
-they share the same objects. =&gt; Freyd category</p>
+<p>There is a category of values and a category of computations, but they share the same objects. =&gt; Freyd category</p>
 <p>Freyd category:</p>
 <ul>
 <li>Cartesian category for values: V</li>
@@ -397,16 +1372,14 @@ they share the same objects. =&gt; Freyd category</p>
 </ul>
 <p>Freyd category</p>
 <ul>
-<li><a
-href="https://ncatlab.org/nlab/show/Freyd+category">https://ncatlab.org/nlab/show/Freyd+category</a></li>
+<li><a href="https://ncatlab.org/nlab/show/Freyd+category">https://ncatlab.org/nlab/show/Freyd+category</a></li>
 <li>abstracts structure of Kleisli category of a monad</li>
 <li>Consists of two categories:
 <ul>
 <li>Category V: models values. No side effects.</li>
 <li>Category C: models computations. Can have side effects.</li>
 </ul></li>
-<li>Useful to give semantics for languages with side effects like
-writing to memory.</li>
+<li>Useful to give semantics for languages with side effects like writing to memory.</li>
 <li>Program types = objects of category</li>
 <li><code>Γ ⊢ t:X</code> is like a morphism <code>Γ → X</code> in C</li>
 </ul>
@@ -414,23 +1387,18 @@ writing to memory.</li>
 <ul>
 <li>assumes 'higher-order'-ness of objects</li>
 <li>if X is an object, T X is too.</li>
-<li>ie, something more than 'first-order' objects needed in the case of
-Kleisli category. Freyd category doesn't need this.</li>
-<li>ie, Freyd category can be used model languages without higher order
-functions</li>
+<li>ie, something more than 'first-order' objects needed in the case of Kleisli category. Freyd category doesn't need this.</li>
+<li>ie, Freyd category can be used model languages without higher order functions</li>
 </ul>
 <p>Cartesian category</p>
 <ul>
-<li><a
-href="https://ncatlab.org/nlab/show/cartesian+monoidal+category">https://ncatlab.org/nlab/show/cartesian+monoidal+category</a></li>
+<li><a href="https://ncatlab.org/nlab/show/cartesian+monoidal+category">https://ncatlab.org/nlab/show/cartesian+monoidal+category</a></li>
 <li>aka Cartesian monoidal category</li>
-<li>Think of it like as a category where one can make tuples and have
-means to destruct tuples into its components.</li>
+<li>Think of it like as a category where one can make tuples and have means to destruct tuples into its components.</li>
 </ul>
 <p>Monad:</p>
 <ul>
-<li><a
-href="https://ncatlab.org/nlab/show/monad">https://ncatlab.org/nlab/show/monad</a></li>
+<li><a href="https://ncatlab.org/nlab/show/monad">https://ncatlab.org/nlab/show/monad</a></li>
 <li>aka 'standard construction' or 'triplet' (considered old-style)</li>
 <li>Consists of:
 <ul>
@@ -441,10 +1409,8 @@ href="https://ncatlab.org/nlab/show/monad">https://ncatlab.org/nlab/show/monad</
 </ul>
 <p>Premonoidal categories:</p>
 <ul>
-<li><a
-href="https://ncatlab.org/nlab/show/premonoidal+categories">https://ncatlab.org/nlab/show/premonoidal+categories</a></li>
-<li>reordering computations involving effects can lead to
-'confusion'.</li>
+<li><a href="https://ncatlab.org/nlab/show/premonoidal+categories">https://ncatlab.org/nlab/show/premonoidal+categories</a></li>
+<li>reordering computations involving effects can lead to 'confusion'.</li>
 </ul>
 <p>Consider two computations c1 and c2:</p>
 <table>
@@ -467,28 +1433,20 @@ href="https://ncatlab.org/nlab/show/premonoidal+categories">https://ncatlab.org/
 </table>
 <p>c1;c2 gives 'hi' but c2;c1 gives 'ih'.</p>
 <hr />
-<p>Structured program theorem<a
-href="https://en.wikipedia.org/wiki/Structured_program_theorem">ʷ</a></p>
+<p>Structured program theorem<a href="https://en.wikipedia.org/wiki/Structured_program_theorem">ʷ</a></p>
 <ul>
-<li>aka Böhm-Jacopini theorem (named after the authors of the
-paper)</li>
+<li>aka Böhm-Jacopini theorem (named after the authors of the paper)</li>
 <li>A result in programming language theory</li>
 <li>Goto statements and structured loops are inter-expressible</li>
 </ul>
-<p>Said that only 3 things are needed to have any computable
-function</p>
+<p>Said that only 3 things are needed to have any computable function</p>
 <ul>
 <li>Sequencing: Execute one sub-program and then another</li>
-<li>Selection (like if): Depending on a boolean expression value, choose
-on of two sub-programs to execute.</li>
-<li>Iteration: Repeatedly execute a sub-program till a boolean
-expression value is true.</li>
+<li>Selection (like if): Depending on a boolean expression value, choose on of two sub-programs to execute.</li>
+<li>Iteration: Repeatedly execute a sub-program till a boolean expression value is true.</li>
 </ul>
-<p>This theorem was the 'Basis of structured programming', which avoided
-<code>goto</code>-s.</p>
-<p>Dijkstra's famous article 'Goto statement considered harmful' came
-after Böhm and Jacopini's paper.<a
-href="https://en.wikipedia.org/wiki/Structured_program_theorem">ʷ</a></p>
+<p>This theorem was the 'Basis of structured programming', which avoided <code>goto</code>-s.</p>
+<p>Dijkstra's famous article 'Goto statement considered harmful' came after Böhm and Jacopini's paper.<a href="https://en.wikipedia.org/wiki/Structured_program_theorem">ʷ</a></p>
 <p>–</p>
 <p>Offtopic:</p>
 <ul>
@@ -502,27 +1460,22 @@ href="https://en.wikipedia.org/wiki/Structured_program_theorem">ʷ</a></p>
 <li>phi nodes</li>
 </ul>
 <hr />
-<p>Typing for basic blocks <code
-class="verbatim">=====================</code></p>
+<p>Typing for basic blocks <span class="underline">_____________________</span></p>
 <p>body of bb are essentially sequences of bindings ??</p>
 <p>⋅: empty list of bindings</p>
-<p>This is the intuionstic version. So, what other versions are
-there?</p>
+<p>This is the intuionstic version. So, what other versions are there?</p>
 <p>CFG = a collection of labelled bbs</p>
 <p>Targets: collection of lables and their types</p>
 <p>Terminators t</p>
 <p>phi nodes</p>
-<p>free vars =&gt; can only jump to bbs?? which have that var
-defined??</p>
+<p>free vars =&gt; can only jump to bbs?? which have that var defined??</p>
 <p>Type checking terminator Γ ⊢ t ▶ k</p>
 <p>Type checking bindings Γ ⊢ β ▶ k</p>
 <p>J r G ▶ K G is only going to branch to K</p>
 <p>J ⊢ G is additionally allowed to jump to label L</p>
-<p>There's also an equational theory. Skipped in this talk. Which paper
-is this anyway?</p>
+<p>There's also an equational theory. Skipped in this talk. Which paper is this anyway?</p>
 <p>—</p>
-<p>Categorical semantics <code
-class="verbatim">===================</code></p>
+<p>Categorical semantics <span class="underline">___________________</span></p>
 <p>Model of SSA:</p>
 <ul>
 <li>Freyd category
@@ -544,8 +1497,7 @@ class="verbatim">===================</code></p>
 </ul>
 <p>Jerry ademeyer recursion theory book</p>
 <p>Weak memory model Compiler IRs</p>
-<p>Show that is a monad and that its Kleisli cat has elgot strucuture
-✓</p>
+<p>Show that is a monad and that its Kleisli cat has elgot strucuture ✓</p>
 <p>Step-indexed model</p>
 <ul>
 <li>loop ≠ unrolling of that loop</li>
@@ -565,12 +1517,8 @@ class="verbatim">===================</code></p>
 </ul>
 <p>Closure conversion</p>
 <p>Substructural type checking ???</p>
-<p><a
-href="https://www.cst.cam.ac.uk/people/dcm41">https://www.cst.cam.ac.uk/people/dcm41</a>
-<a
-href="https://github.com/dc-mak/NumLin">https://github.com/dc-mak/NumLin</a></p>
-<p><a
-href="https://yotamdvir.github.io/research/">https://yotamdvir.github.io/research/</a></p>
+<p><a href="https://www.cst.cam.ac.uk/people/dcm41">https://www.cst.cam.ac.uk/people/dcm41</a> <a href="https://github.com/dc-mak/NumLin">https://github.com/dc-mak/NumLin</a></p>
+<p><a href="https://yotamdvir.github.io/research/">https://yotamdvir.github.io/research/</a></p>
 <h3 id="pale-blue-dot-7-offline">Pale blue dot 7 (Offline)</h3>
 <p>At IITPKD.</p>
 <ul>
@@ -582,71 +1530,54 @@ href="https://yotamdvir.github.io/research/">https://yotamdvir.github.io/researc
 <ul>
 <li>'Angel of history'
 <ul>
-<li>Concept by German philospher Walter Benjamin<a
-href="https://en.wikipedia.org/wiki/Walter_Benjamin">ʷ</a>. Died by
-suicide.</li>
+<li>Concept by German philospher Walter Benjamin<a href="https://en.wikipedia.org/wiki/Walter_Benjamin">ʷ</a>. Died by suicide.</li>
 <li>Angel faces the past.</li>
-<li>What appears as a chain of events seems like a single big event to
-him??</li>
+<li>What appears as a chain of events seems like a single big event to him??</li>
 </ul></li>
-<li>Book: <em>The Politics of Excellence: Behind the Nobel Prize in
-Science</em> - Robert Marc Friedman
+<li>Book: <em>The Politics of Excellence: Behind the Nobel Prize in Science</em> - Robert Marc Friedman
 <ul>
 <li>About possible biases in selecting Nobel prize winners??</li>
 <li>'Politics and personal agendas'</li>
 </ul></li>
 </ul>
 <ul>
-<li>Photo 51<a href="https://en.wikipedia.org/wiki/Photo_51">ʷ</a>: An
-image that played a pivotal role in finding out the structure of the DNA
-(double helix)
+<li>Photo 51<a href="https://en.wikipedia.org/wiki/Photo_51">ʷ</a>: An image that played a pivotal role in finding out the structure of the DNA (double helix)
 <ul>
 <li>Named so because it was the 51st of a series of images.</li>
 <li>Made at King's college, London.</li>
 </ul></li>
-<li>Oldest particle accelerator that is still functional: Is in
-Chandigarh
+<li>Oldest particle accelerator that is still functional: Is in Chandigarh
 <ul>
 <li>Documentary: Cyclotrone</li>
-<li><a
-href="https://lifestyle.livemint.com/news/talking-point/why-the-cyclotron-in-chandigarh-has-a-special-place-in-science-history-111634531257153.html">https://lifestyle.livemint.com/news/talking-point/why-the-cyclotron-in-chandigarh-has-a-special-place-in-science-history-111634531257153.html</a></li>
-<li><a
-href="https://www.vice.com/en/article/wx8d8n/the-worlds-oldest-cyclotron-in-india-now-in-a-film">https://www.vice.com/en/article/wx8d8n/the-worlds-oldest-cyclotron-in-india-now-in-a-film</a></li>
+<li><a href="https://lifestyle.livemint.com/news/talking-point/why-the-cyclotron-in-chandigarh-has-a-special-place-in-science-history-111634531257153.html">https://lifestyle.livemint.com/news/talking-point/why-the-cyclotron-in-chandigarh-has-a-special-place-in-science-history-111634531257153.html</a></li>
+<li><a href="https://www.vice.com/en/article/wx8d8n/the-worlds-oldest-cyclotron-in-india-now-in-a-film">https://www.vice.com/en/article/wx8d8n/the-worlds-oldest-cyclotron-in-india-now-in-a-film</a></li>
 </ul></li>
 </ul>
 <ul>
-<li><p>C. V. Raman was originally accountant general as part of the
-civil service.</p>
+<li><p>C. V. Raman was originally accountant general as part of the civil service.</p>
 <ul>
 <li>Did</li>
 </ul></li>
-<li><p>Raman effect was independently discovered around the same time by
-a team in Russia.</p>
+<li><p>Raman effect was independently discovered around the same time by a team in Russia.</p>
 <ul>
 <li>Grigory Landsberg and Leonid Mandelstam in Moscow.</li>
 <li>Apparently 5 days after Raman and K. S. Krishnan.</li>
-<li>Soviet literature doesn't refer to this effect using Raman's name
-for this reason??</li>
+<li>Soviet literature doesn't refer to this effect using Raman's name for this reason??</li>
 </ul></li>
 <li><p>Cabinets of curiosities</p>
 <ul>
 <li>Rich people collecting curiosities from the age of exploration.</li>
 <li>Interest in science as a discipline emerged from it??</li>
-<li><a
-href="https://en.wikipedia.org/wiki/Cabinet_of_curiosities">https://en.wikipedia.org/wiki/Cabinet_of_curiosities</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Cabinet_of_curiosities">https://en.wikipedia.org/wiki/Cabinet_of_curiosities</a></li>
 </ul></li>
 <li><p>Blue carbon</p>
 <ul>
 <li>An idea. Not a real thing.</li>
 <li>To mitigate climate change.</li>
-<li><a
-href="https://oceanservice.noaa.gov/facts/bluecarbon.html">https://oceanservice.noaa.gov/facts/bluecarbon.html</a></li>
+<li><a href="https://oceanservice.noaa.gov/facts/bluecarbon.html">https://oceanservice.noaa.gov/facts/bluecarbon.html</a></li>
 </ul></li>
-<li><p>Vikram Sarabhai, who was originally from Ahmedabad, played an
-important role in the setting up of the 2nd IIM: IIM Ahmedabad (1961) <a
-href="https://www.tribuneindia.com/news/nation/iim-ahmedabad-not-just-had-founding-fathers-but-a-founding-mother-too-186097">ʳ</a></p></li>
-<li><p>How was investment brought in? Investors look for the following
-in the organizers:</p>
+<li><p>Vikram Sarabhai, who was originally from Ahmedabad, played an important role in the setting up of the 2nd IIM: IIM Ahmedabad (1961) <a href="https://www.tribuneindia.com/news/nation/iim-ahmedabad-not-just-had-founding-fathers-but-a-founding-mother-too-186097">ʳ</a></p></li>
+<li><p>How was investment brought in? Investors look for the following in the organizers:</p>
 <ul>
 <li>Who vouches for them? ie, letters of recommendation.</li>
 <li>What are their credentials? What have they done in the past?</li>
@@ -657,38 +1588,27 @@ in the organizers:</p>
 <li>Go attend other department events.</li>
 <li>Invite other department people to yours.</li>
 <li>Ask and be asked whatever questions that come to mind.</li>
-<li>Helps fill in gaps in articulation/knowledge and stimulate further
-research.</li>
-<li>Good way to get started: Start clubs like photography or film and
-that might snowball into something bigger.</li>
+<li>Helps fill in gaps in articulation/knowledge and stimulate further research.</li>
+<li>Good way to get started: Start clubs like photography or film and that might snowball into something bigger.</li>
 </ul></li>
 <li><p>Science gallery, Bangalore</p>
 <ul>
-<li><a
-href="https://bengaluru.sciencegallery.com/">https://bengaluru.sciencegallery.com/</a></li>
+<li><a href="https://bengaluru.sciencegallery.com/">https://bengaluru.sciencegallery.com/</a></li>
 <li>As of now, the only such gallery in Asia</li>
-<li>Tomorrow marks completion of 1 month since opening of first
-phase.</li>
+<li>Tomorrow marks completion of 1 month since opening of first phase.</li>
 </ul></li>
-<li><p>Why is there a shortage of original science research in
-India?</p>
+<li><p>Why is there a shortage of original science research in India?</p>
 <ul>
 <li>Most work seems to be incremental or derivative in nature.</li>
-<li>One tries to publish in some well-known conference and become part
-of an already well established community. That way, there is less
-motivation to break into new grounds.</li>
+<li>One tries to publish in some well-known conference and become part of an already well established community. That way, there is less motivation to break into new grounds.</li>
 <li>Funding to do independent research is a problem.</li>
-<li>India doesn't have a funding agency which is willing to take risks
-like NSF in USA.</li>
+<li>India doesn't have a funding agency which is willing to take risks like NSF in USA.</li>
 <li>BBSR in Germany??</li>
 </ul></li>
-<li><p>World's largest particle collider: Large Hydron Collider (LHC) at
-CERN</p></li>
-<li><p>Particle collider is a special kind of particle accelerators.
-They are not the same.</p>
+<li><p>World's largest particle collider: Large Hydron Collider (LHC) at CERN</p></li>
+<li><p>Particle collider is a special kind of particle accelerators. They are not the same.</p>
 <ul>
-<li><a
-href="https://home.cern/science/accelerators">https://home.cern/science/accelerators</a></li>
+<li><a href="https://home.cern/science/accelerators">https://home.cern/science/accelerators</a></li>
 </ul></li>
 </ul>
 <ol>
@@ -709,8 +1629,7 @@ href="https://home.cern/science/accelerators">https://home.cern/science/accelera
 </ul>
 <p>A Knuth quote:</p>
 <blockquote>
-<p>Beware of the bugs in the above code; I have only proved it correct,
-not tried it.</p>
+<p>Beware of the bugs in the above code; I have only proved it correct, not tried it.</p>
 </blockquote>
 <ul>
 <li>Getting the specification right is important</li>
@@ -718,11 +1637,9 @@ not tried it.</p>
 </ul>
 <p>VeLLVM</p>
 <ul>
-<li>LLVM IR semantics subtleties: <code>undef</code>,
-<code>ptrtoint</code></li>
+<li>LLVM IR semantics subtleties: <code>undef</code>, <code>ptrtoint</code></li>
 <li>Interaction trees, non-determinism, layered interpreters</li>
-<li>Language -&gt; front end -&gt; LLVM IR -&gt; Analysis, optmizaqtion
--&gt; code gen -&gt; Machine code</li>
+<li>Language -&gt; front end -&gt; LLVM IR -&gt; Analysis, optmizaqtion -&gt; code gen -&gt; Machine code</li>
 </ul>
 <pre><code>-- function named factorial taking an int64 arg
 -- and returns an int64
@@ -752,37 +1669,29 @@ end:
 <ul>
 <li>alloca
 <ul>
-<li>allocates memory on stack that is live till current function
-returns.</li>
-<li><a
-href="https://releases.llvm.org/1.1/docs/LangRef.html#i_alloca">https://releases.llvm.org/1.1/docs/LangRef.html#i_alloca</a></li>
+<li>allocates memory on stack that is live till current function returns.</li>
+<li><a href="https://releases.llvm.org/1.1/docs/LangRef.html#i_alloca">https://releases.llvm.org/1.1/docs/LangRef.html#i_alloca</a></li>
 </ul></li>
 <li>store: write to memory
 <ul>
-<li><code>store i64 1, i64* %acc</code>: Take the value
-<code>1:i64</code> and store it in the location pointed to by
-<code>%acc</code>.</li>
-<li><a
-href="https://releases.llvm.org/1.1/docs/LangRef.html#i_store">https://releases.llvm.org/1.1/docs/LangRef.html#i_store</a></li>
+<li><code>store i64 1, i64* %acc</code>: Take the value <code>1:i64</code> and store it in the location pointed to by <code>%acc</code>.</li>
+<li><a href="https://releases.llvm.org/1.1/docs/LangRef.html#i_store">https://releases.llvm.org/1.1/docs/LangRef.html#i_store</a></li>
 </ul></li>
 <li>br: branching
 <ul>
-<li><code>br label &lt;dest&gt;</code> is an unconditional jump to
-<code>&lt;dest&gt;</code></li>
+<li><code>br label &lt;dest&gt;</code> is an unconditional jump to <code>&lt;dest&gt;</code></li>
 </ul></li>
 <li>phi
 <ul>
 <li>Implements phi node in SSA, which represents a function</li>
-<li><a
-href="https://releases.llvm.org/1.1/docs/LangRef.html#i_phi">https://releases.llvm.org/1.1/docs/LangRef.html#i_phi</a></li>
+<li><a href="https://releases.llvm.org/1.1/docs/LangRef.html#i_phi">https://releases.llvm.org/1.1/docs/LangRef.html#i_phi</a></li>
 </ul></li>
 <li><code>%n</code> are virtual registers</li>
 <li>Note: LLVM IR are MLIR are different</li>
 </ul>
 <p>Phi nodes:</p>
 <ul>
-<li><a
-href="https://mlir.llvm.org/docs/Rationale/Rationale/#block-arguments-vs-phi-nodes">https://mlir.llvm.org/docs/Rationale/Rationale/#block-arguments-vs-phi-nodes</a></li>
+<li><a href="https://mlir.llvm.org/docs/Rationale/Rationale/#block-arguments-vs-phi-nodes">https://mlir.llvm.org/docs/Rationale/Rationale/#block-arguments-vs-phi-nodes</a></li>
 </ul>
 <p>–</p>
 <ul>
@@ -790,26 +1699,22 @@ href="https://mlir.llvm.org/docs/Rationale/Rationale/#block-arguments-vs-phi-nod
 <li>Basic blocks, SSA</li>
 <li>LLVM IR is more of a spec than an implementation
 <ul>
-<li>Some behaviour is undefined =&gt; Allows flexibility to
-compiler</li>
+<li>Some behaviour is undefined =&gt; Allows flexibility to compiler</li>
 </ul></li>
 <li>VeLLVM deals with a subset of LLVM IR</li>
 </ul>
 <p><code>undef</code>:</p>
 <ul>
-<li>Value for undefined values. 'An arbitrary indeterminate bit pattern
-of any type'.</li>
+<li>Value for undefined values. 'An arbitrary indeterminate bit pattern of any type'.</li>
 <li>'lazy eval' of <code>undef</code> ??</li>
 </ul>
-<p>An optimization example that could go wrong: Replace x*2 with
-x+x:</p>
+<p>An optimization example that could go wrong: Replace x*2 with x+x:</p>
 <ul>
 <li>If x is <code>undef</code>, this can't be done</li>
 </ul>
 <p>Other subtleties: poison, inttoptr, ptrtoint, aliasing rules, etc</p>
 <ul>
-<li>poison: eg: div by zero won't immediately cause error, but only when
-it is used ??</li>
+<li>poison: eg: div by zero won't immediately cause error, but only when it is used ??</li>
 </ul>
 <p>John Regehr ?? of LLVM</p>
 <p>Due to stuff like this, LLVM IR semantics is interesting. :)</p>
@@ -840,8 +1745,7 @@ it is used ??</li>
 | Tau.
 </code></pre>
 <ul>
-<li>itree asking env for interaction, but no response. This is used to
-model undefined behaviour of LLVM IR semantics.</li>
+<li>itree asking env for interaction, but no response. This is used to model undefined behaviour of LLVM IR semantics.</li>
 <li>monads: Allows to bigger entities from smaller ones</li>
 </ul>
 <p>Doubts:</p>
@@ -859,6 +1763,113 @@ model undefined behaviour of LLVM IR semantics.</li>
 <ul>
 <li>differential testing</li>
 <li>csmith</li>
+</ul>
+<h2 id="february">February</h2>
+<h3 id="popv">POPV</h3>
+<ul>
+<li>Topic: Computation as interaction</li>
+<li>Speaker: Zena M. Ariola</li>
+<li>Date: 20-Feb-2024</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Logic</th>
+<th>Types</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hilbert system</td>
+<td>combinatory logic</td>
+</tr>
+<tr class="even">
+<td>Pierce's law</td>
+<td>call/cc</td>
+</tr>
+<tr class="odd">
+<td>ex falso quodlibet</td>
+<td>abort</td>
+</tr>
+<tr class="even">
+<td>Natural deduction</td>
+<td>Lambda calculus</td>
+</tr>
+</tbody>
+</table>
+<table>
+<tbody>
+<tr class="odd">
+<td>2nd order quantification</td>
+<td>Generics and modules</td>
+</tr>
+<tr class="even">
+<td>Classical logic</td>
+<td>Control effects</td>
+</tr>
+<tr class="odd">
+<td>Double negation elimination</td>
+<td>Felleisen's C</td>
+</tr>
+<tr class="even">
+<td>Double negation translation</td>
+<td>CPS</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Sage vs skeptic dialogue scenario</li>
+<li>Proof of √2^√2 rationality?? xʸ</li>
+<li>Drinker's theorem</li>
+<li>Classical logic: LEM is like god</li>
+<li>Constructive logic</li>
+<li>Negation in constructive logic: ¬A is encoded as A -&gt; False
+<ul>
+<li>We don't need to provide counterexample. We just need to prove that a counterexample cannot fail to exist.</li>
+</ul></li>
+</ul>
+<p>Duality of constructive proofs:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Classical</th>
+<th>Intuitive</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>∨</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>∧</td>
+<td>&amp;</td>
+</tr>
+<tr class="odd">
+<td>¬</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>positive mindset: it's sage's job to find proof</li>
+<li>negative mindset: it's skeptic's job to find proof/counter-example to claims</li>
+</ul>
+<ul>
+<li>codata</li>
+<li>apparently the μ notation is similar to pattern matching, but not same.</li>
+<li>positive =&gt; builds term</li>
+<li>negative =&gt; builds coterm</li>
+</ul>
+<p>May be a basic doubt, but what does the '|' mean in 'Γ ⊢ v:A | Δ'? I guess Γ ⊢ v:A means Γ entails that v:A. But what does Δ here mean? And what did μ~ mean again?</p>
+<p>negative and positive types??</p>
+<ul>
+<li>in last slide about closure conversion example</li>
+</ul>
+<p>OFFTOPIC: Joint points in haskell</p>
+<p>Double negation translation</p>
+<ul>
+<li>Double negating a formula to get a formula that is equivalent to</li>
 </ul>
 </div>
 </body>

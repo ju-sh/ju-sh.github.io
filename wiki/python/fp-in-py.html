@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Functional programming influence in Python</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Functional programming influence in Python</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<table>
+<thead>
+<tr class="header">
+<th>Python</th>
+<th>Analogue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>functools.reduce</td>
+<td>foldl</td>
+</tr>
+<tr class="even">
+<td>itertools.product</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Indexing</td>
+<td>fst and snd</td>
+</tr>
+</tbody>
+</table>
+<h2 id="functools.reduce">functools.reduce</h2>
+<ul>
+<li>Kind of like <code>foldl</code> where first element is taken as accumulator.</li>
+<li>Error if iterable is empty.</li>
+</ul>
+<p>Using example from docs:</p>
+<pre><code>&gt;&gt;&gt; import functools as f
+&gt;&gt;&gt; f.reduce(lambda x, y: x+y, [1, 2, 3, 4, 5])
+15
+# ((((1+2)+3)+4)+5)
+
+&gt;&gt;&gt; f.reduce(lambda x, y: x+y, [4, 5])
+9
+
+&gt;&gt;&gt; f.reduce(lambda x, y: x+y, [4])
+4
+
+&gt;&gt;&gt; f.reduce(lambda x, y: x+y, [])
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: reduce() of empty sequence with no initial value
+</code></pre>
+<h2 id="itertools.product">itertools.product</h2>
+<pre><code>&gt;&gt;&gt; import itertools
+&gt;&gt;&gt; a=[1, 2, 3]
+&gt;&gt;&gt; b=[2, 3]
+&gt;&gt;&gt; [(i,j) for (i,j) in itertools.product(a,b)]
+
+[(1, 2), (1, 3), (2, 2), (2, 3), (3, 2), (3, 3)]
+</code></pre>
+<h2 id="tuples-fst-and-snd">Tuples: fst and snd</h2>
+<pre><code>&gt;&gt;&gt; a=(3,2)
+&gt;&gt;&gt; a[0]
+3
+
+&gt;&gt;&gt; a[1]
+2
+
+&gt;&gt;&gt; a[1:]
+(2,)
+</code></pre>
+</div>
+</body>
+</html>

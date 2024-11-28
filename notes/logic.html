@@ -22,13 +22,13 @@
 
 
 <div id="header">
-<a href="https://rawtext.club/~famubu">Home</a>
+<a href="https://ju-sh.github.io">Home</a>
  | 
-<a href="https://rawtext.club/~famubu/blog/index.html">Blog</a>
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
  | 
-<a href="https://rawtext.club/~famubu/wiki/index.html">Wiki</a>
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
  | 
-<a href="https://rawtext.club/~famubu/about.html">About</a>
+<a href="https://ju-sh.github.io/about.html">About</a>
 </div>
 
 <header id="title-block-header">
@@ -36,47 +36,36 @@
 </header>
 
 <ul>
+    <li>Date created: May-2021</li>
     </ul>
 
 
 
 
 <div id="content-container">
-<p>Based on a part of <a
-href="https://gitlab.com/piyush-kurur/logic/-/raw/master/notes/transcripts.org">a
-series of lectures</a> given by <a
-href="https://www.imsc.res.in/r_ramanujam">Prof. R. Ramanujam</a> <a
-href="https://www.imsc.res.in/">The Institute of Mathematical
-Sciences</a>, Chennai.</p>
+<p>Based on a part of <a href="https://gitlab.com/piyush-kurur/logic/-/raw/master/notes/transcripts.org">a series of lectures</a> given by <a href="https://www.imsc.res.in/r_ramanujam">Prof. R. Ramanujam</a> <a href="https://www.imsc.res.in/">The Institute of Mathematical Sciences</a>, Chennai.</p>
 <p>From what I understood. May be terribly wrong.</p>
 <p>Corrections appreciated!</p>
 <hr />
 <h1 id="languages-of-logic">Languages of logic</h1>
 <h2 id="desirable-properties">Desirable properties</h2>
-<p>We need to define the language precisely, unambiguously and with as
-few logical resources as possible.</p>
+<p>We need to define the language precisely, unambiguously and with as few logical resources as possible.</p>
 <ul>
 <li>must be able to describe math structures</li>
-<li>must be minimal (only what's needed. With as few primitives as
-possible.)</li>
+<li>must be minimal (only what's needed. With as few primitives as possible.)</li>
 </ul>
 <p>Given multiplication, we can implement divides like</p>
 <p>b divides a = (∃k a = kb)</p>
-<p><strong><strong>TODO</strong></strong>: Implement subtraction using
-addition.</p>
+<p><strong><strong>TODO</strong></strong>: Implement subtraction using addition.</p>
 <p>a - b = a + (a * (b-1))</p>
-<p><strong><strong>TODO</strong></strong>: Implement addition using
-subtraction.</p>
+<p><strong><strong>TODO</strong></strong>: Implement addition using subtraction.</p>
 <p>a + b = a - (0 - b)</p>
-<p><strong><strong>TODO</strong></strong>: Implement multiplication
-using addition.</p>
+<p><strong><strong>TODO</strong></strong>: Implement multiplication using addition.</p>
 <p>a * b = a + (a * (b-1))</p>
-<p><strong><strong>TODO</strong></strong>: Implement exponentiation
-using multiplication.</p>
+<p><strong><strong>TODO</strong></strong>: Implement exponentiation using multiplication.</p>
 <p>a ^ b = a * (a ^ (b-1))</p>
 <p>A predicate prime() could be defined as</p>
-<p>prime(p) :: (k divides p) → ((k = 1) ∨ (k = p)) = ∀k ∈ ℕ (∃n ∈ ℕ (p =
-nk) → ((k = 1) ∨ (k = p)))</p>
+<p>prime(p) :: (k divides p) → ((k = 1) ∨ (k = p)) = ∀k ∈ ℕ (∃n ∈ ℕ (p = nk) → ((k = 1) ∨ (k = p)))</p>
 <p>(1 divides p) and (p divides p)</p>
 <p>A predicate even() could be defined as</p>
 <p>even(n) :: ∀n ∀a ∃b (n = ab) → (a = 2)</p>
@@ -91,21 +80,16 @@ nk) → ((k = 1) ∨ (k = p)))</p>
 <p>m &gt; n could be defined like</p>
 <p>∃k (n+k = m) ∧ (k ≠ 0)</p>
 <p>or just define it in terms of &lt; as</p>
-<p>&gt;(m,n) :: &lt;(n,m) Logicians don't like 'operator overloading'
-kind of stuff. Because it creates lot of sources of confusion. We need a
-precise meaning.</p>
+<p>&gt;(m,n) :: &lt;(n,m) Logicians don't like 'operator overloading' kind of stuff. Because it creates lot of sources of confusion. We need a precise meaning.</p>
 <p>Predicate to check whether a number is zero:</p>
 <p>zero(n) :: ∀k ∈ ℕ (k + n = n)</p>
-<p>Can we define plus(n,m) using &lt;(n,m) (ie, can addition be defined
-using order)?</p>
-<p><u>No</u>. Why?</p>
-<p>Because addition returns a number, whereas order returns a truth
-value.</p>
+<p>Can we define plus(n,m) using &lt;(n,m) (ie, can addition be defined using order)?</p>
+<p><span class="underline">No</span>. Why?</p>
+<p>Because addition returns a number, whereas order returns a truth value.</p>
 <ul>
 <li><strong><strong>Descriptive complexity</strong></strong>.</li>
 <li><strong><strong>Logic resources</strong></strong>.</li>
-<li><strong><strong>Definability</strong></strong>: What things are
-definable? We need to show proof as well.</li>
+<li><strong><strong>Definability</strong></strong>: What things are definable? We need to show proof as well.</li>
 </ul>
 <ul>
 <li><p>Gottlobe Frege</p></li>
@@ -120,8 +104,7 @@ definable? We need to show proof as well.</li>
 <li>quantificational logic</li>
 </ul>
 <p>We wanna deal with statements that are true or false.</p>
-<p><strong><strong>Note</strong></strong>: RDBMS can be described using
-a first order language.</p>
+<p><strong><strong>Note</strong></strong>: RDBMS can be described using a first order language.</p>
 <p>(Signature of a) Language of (Peano) arithmetic:</p>
 <p>L = (R, F, C)</p>
 <p>where</p>
@@ -130,22 +113,17 @@ a first order language.</p>
 <li><code>F = {Succ, +, ^, x, ..}</code></li>
 <li><code>R = {&lt;, =, ..}  // Predicate symbols</code></li>
 </ul>
-<p>The predicates give a (Boolean?) truth value. Whereas the functions
-give another term.</p>
+<p>The predicates give a (Boolean?) truth value. Whereas the functions give another term.</p>
 <p>Language of graphs:</p>
 <ul>
 <li><code>C = ∅</code></li>
 <li><code>F = ∅</code></li>
 <li><code>R = {E²}  // E is set of edges</code></li>
 </ul>
-<p>The predicate <code>E(x,y)</code> could mean there is a directed edge
-from vertex <code>x</code> to vertex <code>y</code>.</p>
-<p>Then <code>∀y E(x,y)</code> means that the vertex <code>x</code> is
-connected to all other vertices in the graph.</p>
-<p><code>¬( ∃y E(x,y) )</code> :: the statement 'for some vertex y,
-there is an edge from vertex x to vertex y' is false.</p>
-<p>That means <code>∀y ¬E(x,y)</code> ie, the outdegree of the vertex x
-is zero.</p>
+<p>The predicate <code>E(x,y)</code> could mean there is a directed edge from vertex <code>x</code> to vertex <code>y</code>.</p>
+<p>Then <code>∀y E(x,y)</code> means that the vertex <code>x</code> is connected to all other vertices in the graph.</p>
+<p><code>¬( ∃y E(x,y) )</code> :: the statement 'for some vertex y, there is an edge from vertex x to vertex y' is false.</p>
+<p>That means <code>∀y ¬E(x,y)</code> ie, the outdegree of the vertex x is zero.</p>
 <p>Language of orders:</p>
 <ul>
 <li><code>C = ∅</code></li>
@@ -166,41 +144,31 @@ is zero.</p>
 <li><code>F = {dot}</code></li>
 <li><code>R = ∅</code></li>
 </ul>
-<p>We don't even need an explicit identity element, we can define it in
-terms of dot like</p>
+<p>We don't even need an explicit identity element, we can define it in terms of dot like</p>
 <p>∃x ∀y (x•y = y and y•x = y)</p>
-<p>A first order language (FOL) is defined by its <u>parameters</u>.</p>
+<p>A first order language (FOL) is defined by its <span class="underline">parameters</span>.</p>
 <h1 id="syntax">Syntax</h1>
 <p>Specifies the formulas (ie, how formulas can be formed)</p>
 <p>Using the syntax we can see if a formula is well-formed.</p>
 <p>Can find parsing errors?</p>
-<p>A structure. An <u>inductive</u> structure.</p>
+<p>A structure. An <span class="underline">inductive</span> structure.</p>
 <p>L = (R, F, C)</p>
 <p>where</p>
 <ul>
-<li><code>R</code>: A (countable) set or predicate (or relation) symbols
-each of which has an arity. (Examples: <code>&lt;</code> (binary),
-<code>∈</code> (binary), <code>prime(x)</code> (unary)).</li>
-<li><code>F</code>: A (countable) set of function symbols each of which
-has an arity.</li>
-<li><code>C</code>: A (countable) set of Constant symbols (not
-constants. Symbols denoting constants. Could 'zero' which stands for
-0)</li>
+<li><code>R</code>: A (countable) set or predicate (or relation) symbols each of which has an arity. (Examples: <code>&lt;</code> (binary), <code>∈</code> (binary), <code>prime(x)</code> (unary)).</li>
+<li><code>F</code>: A (countable) set of function symbols each of which has an arity.</li>
+<li><code>C</code>: A (countable) set of Constant symbols (not constants. Symbols denoting constants. Could 'zero' which stands for 0)</li>
 </ul>
 <p>Then there are:</p>
 <ul>
 <li><code>Terms(L)</code>: Terms of the language <code>L</code></li>
 <li><code>Vars(L)</code>: Set of variables</li>
 </ul>
-<p><strong><strong>Note</strong></strong>: <code>R = F = C = ∅</code> is
-an empty language.</p>
+<p><strong><strong>Note</strong></strong>: <code>R = F = C = ∅</code> is an empty language.</p>
 <ul>
-<li>Language of arithmetic =&gt; <code>R ≠ ∅</code>, <code>F ≠ ∅</code>,
-<code>C ≠ ∅</code></li>
-<li>Language of groups =&gt; <code>R ≠ ∅</code>,
-<code>F = C = ∅</code></li>
-<li>Language of orders =&gt; <code>F ≠ ∅</code>,
-<code>R = C = ∅</code></li>
+<li>Language of arithmetic =&gt; <code>R ≠ ∅</code>, <code>F ≠ ∅</code>, <code>C ≠ ∅</code></li>
+<li>Language of groups =&gt; <code>R ≠ ∅</code>, <code>F = C = ∅</code></li>
+<li>Language of orders =&gt; <code>F ≠ ∅</code>, <code>R = C = ∅</code></li>
 </ul>
 <h2 id="statements">Statements</h2>
 <h3 id="primitive-statements">Primitive statements</h3>
@@ -208,12 +176,9 @@ an empty language.</p>
 <p>x = y x = y + 5 (plus comes from F and 3 comes from C</p>
 <p>x, y x, y+5</p>
 <p>And regarding predicate/relational symbols,</p>
-<p><code>∀rᵏ ∈ R</code> with arity <code>k</code> and
-<code>t₁, t₂, .., tₖ ∈ Terms(L)</code>, then
-<code>r(t₁, t₂, ..., tₖ)</code> is a primitive statement.</p>
+<p><code>∀rᵏ ∈ R</code> with arity <code>k</code> and <code>t₁, t₂, .., tₖ ∈ Terms(L)</code>, then <code>r(t₁, t₂, ..., tₖ)</code> is a primitive statement.</p>
 <p>Like</p>
-<p>(x + y) ∈ Terms(L) and f(g(y,x)) ∈ Terms(L), then (x + y) &lt;
-f(g(y,x))</p>
+<p>(x + y) ∈ Terms(L) and f(g(y,x)) ∈ Terms(L), then (x + y) &lt; f(g(y,x))</p>
 <h3 id="compound-statements">Compound statements</h3>
 <p>Combine primitive statements to build more (using connectives).</p>
 <p>If <code>α</code>, <code>β</code> are statements then so are:</p>
@@ -222,14 +187,11 @@ f(g(y,x))</p>
 <ul>
 <li><code>α ∧ β</code> (conjunction): a binary connective</li>
 <li><code>α ∨ β</code> (disjunction): a binary connective</li>
-<li><code>α → β</code> (implies. aka <code>⊃</code>): a binary
-connective</li>
-<li><code>α ↔︎ β</code> (iff. ie, equivalence. aka <code>≡</code>): a
-binary connective</li>
+<li><code>α → β</code> (implies. aka <code>⊃</code>): a binary connective</li>
+<li><code>α ↔︎ β</code> (iff. ie, equivalence. aka <code>≡</code>): a binary connective</li>
 <li><code>¬α</code> (negation): a unary connective</li>
 </ul></li>
-<li><p>Quantifiers (the <code>x ∈ V</code> is substituted in place of
-variables in <code>α</code>):</p>
+<li><p>Quantifiers (the <code>x ∈ V</code> is substituted in place of variables in <code>α</code>):</p>
 <ul>
 <li><code>∀x α</code> (universal quantifier)</li>
 <li><code>∃x α</code> (existential quantifier)</li>
@@ -293,12 +255,9 @@ variables in <code>α</code>):</p>
 </tbody>
 </table>
 <p>The '::=' denotes an inductive definition.</p>
-<h3 id="examples-syntax-of-language-of-order">Examples: Syntax of
-language of order</h3>
-<h3
-id="x-y-z-x-y-y-z-x-z"><code>∀x ∀y ∀z (x &lt; y) ∧ (y &lt; z) → (x &lt; z)</code></h3>
-<p><code>∀x ∀y ∀z (x &lt; y) ∧ (y &lt; z) → (x &lt; z)</code> is a
-formula.</p>
+<h3 id="examples-syntax-of-language-of-order">Examples: Syntax of language of order</h3>
+<h3 id="x-y-z-x-y-y-z-x-z"><code>∀x ∀y ∀z (x &lt; y) ∧ (y &lt; z) → (x &lt; z)</code></h3>
+<p><code>∀x ∀y ∀z (x &lt; y) ∧ (y &lt; z) → (x &lt; z)</code> is a formula.</p>
 <p>This can be broken down like</p>
 <pre><code>    ∀x ∀y ∀z (x &lt; y) ∧ (y &lt; z) → (x &lt; z)  ✓
        ---------------------------------
@@ -375,23 +334,17 @@ ie,
 ┏━━┻━━┓
 x     ✗ ERROR
 </code></pre>
-<p>because <code>∃y</code> by itself is not a member of
-<code>Terms(L)</code>.</p>
+<p>because <code>∃y</code> by itself is not a member of <code>Terms(L)</code>.</p>
 <p>∴ <code>(∀x x &lt; ∃y)</code> is not a formula.</p>
-<h2 id="algorithm-to-parse-the-syntax-tree">Algorithm to parse the
-syntax tree</h2>
+<h2 id="algorithm-to-parse-the-syntax-tree">Algorithm to parse the syntax tree</h2>
 <ul>
 <li>Natural data structure: Tree representation of <code>α</code></li>
-<li>Length of input string: Number of nodes in the tree representation
-of <code>α</code></li>
+<li>Length of input string: Number of nodes in the tree representation of <code>α</code></li>
 <li>Terms will be sub-trees.</li>
 </ul>
-<p>Running time: <code>O(n)</code> because we need to visit all nodes at
-least once.</p>
-<p><strong><strong>TODO</strong></strong>: Write a recurrence relation
-for it.</p>
-<p><strong><strong>TODO</strong></strong>: Write algorithm to check if a
-string/formula is in FO formula.</p>
+<p>Running time: <code>O(n)</code> because we need to visit all nodes at least once.</p>
+<p><strong><strong>TODO</strong></strong>: Write a recurrence relation for it.</p>
+<p><strong><strong>TODO</strong></strong>: Write algorithm to check if a string/formula is in FO formula.</p>
 <h2 id="term">Term</h2>
 <p>Terms(L) =</p>
 <table>
@@ -413,8 +366,7 @@ string/formula is in FO formula.</p>
 <li>leaf nodes are constants or variables</li>
 </ul>
 <h2 id="formula-φl">Formula Φ(L)</h2>
-<p>Formulas(L) = // given any two terms ∈ Terms(L), we can say they are
-equal</p>
+<p>Formulas(L) = // given any two terms ∈ Terms(L), we can say they are equal</p>
 <table>
 <tbody>
 <tr class="odd">
@@ -422,8 +374,7 @@ equal</p>
 </tr>
 </tbody>
 </table>
-<p>// if we already have k terms ∈ Terms(L) and there is a relation
-symbol // (or predicate symbol??) r ∈ R of arity k</p>
+<p>// if we already have k terms ∈ Terms(L) and there is a relation symbol // (or predicate symbol??) r ∈ R of arity k</p>
 <table>
 <tbody>
 <tr class="odd">
@@ -459,11 +410,9 @@ symbol // (or predicate symbol??) r ∈ R of arity k</p>
 <p>Can be represented as a tree whose:</p>
 <ul>
 <li>internal nodes are connectors or quantifiers</li>
-<li>leaf nodes are atomic formulas (equality and relations??) which are
-then applied to terms.</li>
+<li>leaf nodes are atomic formulas (equality and relations??) which are then applied to terms.</li>
 </ul>
-<p><code>|α|</code> = number of nodes in the tree representation of
-<code>α</code>.</p>
+<p><code>|α|</code> = number of nodes in the tree representation of <code>α</code>.</p>
 <h1 id="semantics">Semantics</h1>
 <p>Assign meaning to the structure that we defined using the syntax.</p>
 <p>We decide this meaning. Like setting the context. :-)</p>
@@ -475,10 +424,8 @@ then applied to terms.</li>
 <p>But,</p>
 <pre><code>∀x ∀y, prime(x) → green(x)
 </code></pre>
-<p>makes no sense (ie, sounds meaningless). How can a number be of a
-certain colour… :-)</p>
-<p>But this could be meaningful depending on the semantics that we
-define.</p>
+<p>makes no sense (ie, sounds meaningless). How can a number be of a certain colour… :-)</p>
+<p>But this could be meaningful depending on the semantics that we define.</p>
 <p>And what about</p>
 <pre><code>large( pow(10, pow(10, pow(10))) )
 </code></pre>
@@ -493,31 +440,25 @@ define.</p>
 | otherwise =&gt; false
 </code></pre>
 <p>and <code>x</code> was <code>1000</code>, it would be false.</p>
-<p>(Again,) the truth value depends on our definition of
-<code>large()</code>.</p>
+<p>(Again,) the truth value depends on our definition of <code>large()</code>.</p>
 <p>But if had just said</p>
 <pre><code>∀x, large(x) → large(x-1)
 </code></pre>
-<p><code>large(x)</code> is true for any value of <code>x</code>,
-because it says <code>∀x</code>.</p>
+<p><code>large(x)</code> is true for any value of <code>x</code>, because it says <code>∀x</code>.</p>
 <p>So even <code>large(-1000)</code> would be true.</p>
-<p><strong><strong>Vague predicate</strong></strong>: difficult to say
-whether the statement is true or false.</p>
+<p><strong><strong>Vague predicate</strong></strong>: difficult to say whether the statement is true or false.</p>
 <p>Another example,</p>
 <pre><code>∀x ∃y, x = y²
 </code></pre>
-<p>is false, if <code>x</code> and <code>y</code> are natural numbers
-but true if they are real numbers.</p>
+<p>is false, if <code>x</code> and <code>y</code> are natural numbers but true if they are real numbers.</p>
 <p>ie, it is true in <em>some</em> structure.</p>
 <blockquote>
 <p>Truth depends on the underlying structure.</p>
 </blockquote>
-<p>Truth is a relation (between structures and sentences) here, not
-something like a judgement.</p>
+<p>Truth is a relation (between structures and sentences) here, not something like a judgement.</p>
 <h1 id="truth">Truth</h1>
 <p>Not a judgement.</p>
-<p>Simply a relation between structures and sentences (sentences aka
-statements)</p>
+<p>Simply a relation between structures and sentences (sentences aka statements)</p>
 <pre><code>structure ⊨ sentence   // or ⊨ (structure, sentence)
 </code></pre>
 <h1 id="structure">Structure</h1>
@@ -555,8 +496,7 @@ statements)</p>
 </tr>
 </tbody>
 </table>
-<p>Structure for a language L = an <strong><strong>L-
-structure</strong></strong>.</p>
+<p>Structure for a language L = an <strong><strong>L- structure</strong></strong>.</p>
 <h2 id="domain">Domain</h2>
 <p>From where the elements come from.</p>
 <h2 id="interpretation">Interpretation</h2>
@@ -569,24 +509,18 @@ structure</strong></strong>.</p>
 <li>IF: Interpretation for function symbols</li>
 <li>IR: Interpretation for predicate/relational symbols</li>
 </ul>
-<h3 id="interpretation-of-constant-symbols-ic">Interpretation of
-constant symbols (IC)</h3>
+<h3 id="interpretation-of-constant-symbols-ic">Interpretation of constant symbols (IC)</h3>
 <p>Every constant symbol is also an element of the domain.</p>
 <p>So,</p>
 <pre><code>IC: C → D
 </code></pre>
-<h3 id="interpretation-of-function-symbols">Interpretation of function
-symbols</h3>
+<h3 id="interpretation-of-function-symbols">Interpretation of function symbols</h3>
 <p>Each function symbol is a k-ary function. ie, its arity is k.</p>
 <pre><code>IF: fᵏ ↦ (Dᵏ → D)
 </code></pre>
-<p>ie, a function of arity k takes k elements of the domain and produces
-a mapping to a single element of the domain.</p>
-<p>For example, <code>fᵏ</code> could be a plus function of arity 2
-defined on <code>ℕ</code>, in which it would be
-<code>f²: (ℕxℕ → ℕ)</code></p>
-<h3 id="interpretation-for-predicaterelational-symbols">Interpretation
-for predicate/relational symbols</h3>
+<p>ie, a function of arity k takes k elements of the domain and produces a mapping to a single element of the domain.</p>
+<p>For example, <code>fᵏ</code> could be a plus function of arity 2 defined on <code>ℕ</code>, in which it would be <code>f²: (ℕxℕ → ℕ)</code></p>
+<h3 id="interpretation-for-predicaterelational-symbols">Interpretation for predicate/relational symbols</h3>
 <p>where each predicate/relation symbol is of arity k.</p>
 <pre><code>IR: rᵏ ↦ (Dᵏ → {0, 1})
 </code></pre>
@@ -594,8 +528,7 @@ for predicate/relational symbols</h3>
 <p>In</p>
 <pre><code>∀x ∀y, x = y
 </code></pre>
-<p>the domain consists of just one element (since there cannot be two
-elements with same value) or it could be empty.</p>
+<p>the domain consists of just one element (since there cannot be two elements with same value) or it could be empty.</p>
 <p>So here, the domain has at most 1 element.</p>
 <h2 id="formulas">Formulas</h2>
 <p>Simplest atomic formula is equality??</p>
@@ -603,66 +536,47 @@ elements with same value) or it could be empty.</p>
 <pre><code>x³ + y³ = z³
 </code></pre>
 <p>where <code>t₁ = x³ + y³</code> and <code>t₂ = z³</code></p>
-<p>(and <code>+</code> is addition, <code>x³</code> is
-<code>x * x * x</code>, etc)</p>
-<p>After assigning values to variables and functions, we can evaluate
-the terms!</p>
-<p>Suppose <code>D</code> is <code>ℝ</code>, <code>ᵏ: ℝᵏ → ℝ</code> and
-<code>+: ℝ² → ℝ</code>.</p>
+<p>(and <code>+</code> is addition, <code>x³</code> is <code>x * x * x</code>, etc)</p>
+<p>After assigning values to variables and functions, we can evaluate the terms!</p>
+<p>Suppose <code>D</code> is <code>ℝ</code>, <code>ᵏ: ℝᵏ → ℝ</code> and <code>+: ℝ² → ℝ</code>.</p>
 <h1 id="model-m">Model (M)</h1>
 <pre><code>M = (S, π)
 </code></pre>
 <p>where</p>
 <ul>
 <li><code>S</code>: structure</li>
-<li><code>π: V → D</code>: Assignment. ie, assigns variables to values
-in the domain</li>
+<li><code>π: V → D</code>: Assignment. ie, assigns variables to values in the domain</li>
 </ul>
-<p><code>π</code> is also known as an <strong><strong>environment /
-valuation</strong></strong>.</p>
-<p>We can extend (or 'lift') this <code>π</code> to a <code>π^</code>
-like</p>
+<p><code>π</code> is also known as an <strong><strong>environment / valuation</strong></strong>.</p>
+<p>We can extend (or 'lift') this <code>π</code> to a <code>π^</code> like</p>
 <pre><code>π^: Terms(L) → D
 </code></pre>
-<p>because once we get the assignment map for the variables, we can use
-it to evaluate the terms as well since the terms use variables.</p>
-<p>Each term <code>t ∈ Terms(L)</code> is evaluated to produce an
-element in the domain <code>D</code>.</p>
+<p>because once we get the assignment map for the variables, we can use it to evaluate the terms as well since the terms use variables.</p>
+<p>Each term <code>t ∈ Terms(L)</code> is evaluated to produce an element in the domain <code>D</code>.</p>
 <ul>
 <li><code>∀c ∈ C, π^(c) = IC(c)</code></li>
 <li><code>∀v ∈ V, π^(v) = IV(v)</code></li>
 <li><code>∀f ∈ F, π^(f(t₁,.., tₖ)) = IF(f)(π^(t₁), ..., π^(t₁))</code></li>
 </ul>
-<p>About the last one, the terms given as argument of f are all
-evaluated (by applying <code>π^</code>) to produce values in
-<code>D</code>. These resultant values are then given as the argument of
-the function given as the interpretation of <code>f</code>.</p>
-<p>If an <code>α</code> satisfies a model <code>M</code>, we say
-<code>M ⊨ α</code>. ie, <code>M</code> makes <code>α</code> true.</p>
-<p>A relation between models and formulas (ie,
-<code>(M x Formulas) → 𝔹</code>).</p>
-<p>Model for a language <code>L</code> is an
-<strong><strong>L-model</strong></strong>.</p>
-<p><code>M ⊨ α</code> is between the class of all <code>L</code>-models
-and all formulas in <code>L</code>.</p>
+<p>About the last one, the terms given as argument of f are all evaluated (by applying <code>π^</code>) to produce values in <code>D</code>. These resultant values are then given as the argument of the function given as the interpretation of <code>f</code>.</p>
+<p>If an <code>α</code> satisfies a model <code>M</code>, we say <code>M ⊨ α</code>. ie, <code>M</code> makes <code>α</code> true.</p>
+<p>A relation between models and formulas (ie, <code>(M x Formulas) → 𝔹</code>).</p>
+<p>Model for a language <code>L</code> is an <strong><strong>L-model</strong></strong>.</p>
+<p><code>M ⊨ α</code> is between the class of all <code>L</code>-models and all formulas in <code>L</code>.</p>
 <ul>
-<li>Compositionality: Meaning of the formulas is built
-compositionally.</li>
+<li>Compositionality: Meaning of the formulas is built compositionally.</li>
 <li>Inductive definitions</li>
 </ul>
 <p>Programming languages are built compositionally.</p>
 <p>Most formal languages are built compositionally.</p>
 <p>Logic is closely related to linguisitcs.</p>
-<p>But logic insists of compositional semantics: meanings given
-compositionally.</p>
+<p>But logic insists of compositional semantics: meanings given compositionally.</p>
 <p>And natural language is highly non-compositional.</p>
 <h2 id="atomic-formulas">Atomic formulas</h2>
 <blockquote>
 <p><code>M ⊨ t₁ = t₂ iff π^(t₁) = π^(t₂)</code></p>
 </blockquote>
-<p>Here, <code>t₁ = t₂</code> is something that is something in
-<code>L</code> where <code>π^(t₁)</code> = <code>π^(t₂)</code> is in the
-domain <code>D</code>.</p>
+<p>Here, <code>t₁ = t₂</code> is something that is something in <code>L</code> where <code>π^(t₁)</code> = <code>π^(t₂)</code> is in the domain <code>D</code>.</p>
 <blockquote>
 <p><code>M ⊨ rᵏ(t₁, ..., tₖ) iff IP(r)(π^(t₁), ..., π^(tₖ))  // a map from Dᵏ → {0, 1}</code></p>
 </blockquote>
@@ -690,18 +604,14 @@ domain <code>D</code>.</p>
 </ul></li>
 <li><p>Universal quantifier</p>
 <p>M ⊨ ∀x α iff for all d ∈ D.</p>
-<p><code>∀x</code> means <code>∀d, d ∈ D</code>. Every possible value in
-the domain.</p>
-<p>Substitute all occurrences of <code>x</code> in <code>α</code> with
-terms defined over <code>D</code>. We can't just substitute elements in
-<code>D</code>.</p>
+<p><code>∀x</code> means <code>∀d, d ∈ D</code>. Every possible value in the domain.</p>
+<p>Substitute all occurrences of <code>x</code> in <code>α</code> with terms defined over <code>D</code>. We can't just substitute elements in <code>D</code>.</p>
 <p>The definition is like <code>C → D</code> not <code>D → C</code>.</p>
 <p>So we can't say something like</p>
 <p>M ⊨ α[x/d]</p></li>
 <li><p>Existential quantifier</p>
 <p>M ⊨ ∃x, α iff</p>
-<p><strong><strong>TODO</strong></strong>: Given an M and a formula α,
-is M ⊨ α true? (Algorithm: Truth definition)</p>
+<p><strong><strong>TODO</strong></strong>: Given an M and a formula α, is M ⊨ α true? (Algorithm: Truth definition)</p>
 <hr />
 <table>
 <tbody>
@@ -712,23 +622,18 @@ is M ⊨ α true? (Algorithm: Truth definition)</p>
 </table>
 <hr />
 <p>M ⊨ α iff M ⊭ α</p>
-<p>Only one of the two can (actually, must) be true, but not both (in an
-'exclusive or' fashion).</p>
+<p>Only one of the two can (actually, must) be true, but not both (in an 'exclusive or' fashion).</p>
 <ul>
 <li><p><code>M ⊨ ¬α iff M ⊭ α</code></p></li>
 <li><p><code>M ⊨ α ∨ β iff M ⊨ α or M ⊨ β</code></p></li>
 <li><p><code>M ⊨ α ∧ β iff M ⊨ α and M ⊨ β</code></p></li>
 <li><p><code>M ⊨ α → β iff whenever M ⊨ α then also M ⊨ β</code></p></li>
-<li><p><code>M ⊨ α  ≡ β iff succeeds only when both α and β are equivalent</code>.
-Either both are true or both are false.</p></li>
+<li><p><code>M ⊨ α  ≡ β iff succeeds only when both α and β are equivalent</code>. Either both are true or both are false.</p></li>
 <li><p><code>M ⊭ α ∨ β iff M ⊭ α and M ⊭ β</code></p></li>
 <li><p><code>M ⊭ α ∧ β iff M ⊭ α or M ⊭ β</code></p></li>
-<li><p><code>M ⊭ α → β iff M ⊨ α and M ⊭ β</code> (ie, fails when 'the
-premise holds but the conclusion doesn't' which is same as 'the
-assumption holds, but the conclusion doesn't')</p></li>
+<li><p><code>M ⊭ α → β iff M ⊨ α and M ⊭ β</code> (ie, fails when 'the premise holds but the conclusion doesn't' which is same as 'the assumption holds, but the conclusion doesn't')</p></li>
 </ul>
-<p><strong><strong>vacuously true</strong></strong>: <code>α → b</code>
-when <code>¬α</code></p></li>
+<p><strong><strong>vacuously true</strong></strong>: <code>α → b</code> when <code>¬α</code></p></li>
 </ol>
 <h1 id="consequence-relation">Consequence relation</h1>
 <p>Let <code>Γ</code> be a set of formulas</p>
@@ -736,13 +641,23 @@ when <code>¬α</code></p></li>
 <p>Γ ⊨ α</p>
 <h1 id="henkin-construction">Henkin construction</h1>
 <p>Named after Leon Henkin</p>
+<h1 id="separation-logic">Separation logic</h1>
+<ul>
+<li>Hoare logic extended to handle heaps and pointers <a href="https://course.ccs.neu.edu/cs2800sp23/l33.html">ʳ</a></li>
+<li>Can handle complications arising when distinct pointers point to same memory object.</li>
+</ul>
+<h2 id="frame-rule">Frame rule</h2>
+<pre><code>   {P} C {Q}
+------------------
+{P * R} C {Q * R}
+</code></pre>
+<p>Can add more to the heap without disturbing. Provided <code>R</code> doesn't tamper with <code>C</code>.</p>
+<p>I suppose this rule, which makes a separation between sub-parts of heaps distinct, is the reason why it is called 'separation logic'.</p>
 <h1 id="interesting-to-note">Interesting to note</h1>
-<h2 id="possible-quantifiers-other-than-and">Possible quantifiers other
-than <code>∀</code> and <code>∃</code></h2>
+<h2 id="possible-quantifiers-other-than-and">Possible quantifiers other than <code>∀</code> and <code>∃</code></h2>
 <h3 id="uniqueness-x">Uniqueness (<code>∃!x</code>)</h3>
 <p>There exists one and only one <code>x</code>.</p>
-<p>This can actually be implement using <code>∀</code> and
-<code>∃</code> itself.</p>
+<p>This can actually be implement using <code>∀</code> and <code>∃</code> itself.</p>
 <p>∃!x α(x) ≡ ∃x(α(x) and ∀y α(y) → y=x)</p>
 <p>So we don't really need a separate <code>∃!x</code>.</p>
 <h3 id="non-existence">Non-existence</h3>
@@ -752,11 +667,9 @@ than <code>∀</code> and <code>∃</code></h2>
 <p>Can be implemented using <code>∀</code> and <code>∃</code> like</p>
 <pre><code>∄x α(x) ≡ ∀x ¬α(x)
 </code></pre>
-<h3 id="some-quantifiers-that-we-cant-code-up-easily-if-at-all">Some
-quantifiers that we can't code up easily (if at all)</h3>
+<h3 id="some-quantifiers-that-we-cant-code-up-easily-if-at-all">Some quantifiers that we can't code up easily (if at all)</h3>
 <ul>
-<li>For most <code>x</code>: <code>α(x)</code> is true for most
-<code>x</code> but not all.</li>
+<li>For most <code>x</code>: <code>α(x)</code> is true for most <code>x</code> but not all.</li>
 <li>For any random <code>x</code></li>
 <li>For infinitely many <code>x</code></li>
 </ul>
@@ -768,82 +681,57 @@ quantifiers that we can't code up easily (if at all)</h3>
 <li>Theorem</li>
 <li>Counter-example</li>
 </ul>
-<h2 id="difference-between-theorem-and-lemma">Difference between theorem
-and lemma</h2>
+<h2 id="difference-between-theorem-and-lemma">Difference between theorem and lemma</h2>
 <p>Lemma is like a 'minor-theorem' that is used to prove a theorem.</p>
-<p>ie, a minor result whose sole purpose is to help proving a
-theorem.</p>
+<p>ie, a minor result whose sole purpose is to help proving a theorem.</p>
 <p>Lemma is a helper to a theorem.</p>
-<h2 id="difference-between-axiom-and-theorem">Difference between axiom
-and theorem</h2>
-<p>Axiom is what is known to be (or assumed to be) true and hence
-doesn't need a proof.</p>
+<h2 id="difference-between-axiom-and-theorem">Difference between axiom and theorem</h2>
+<p>Axiom is what is known to be (or assumed to be) true and hence doesn't need a proof.</p>
 <p>Theorem is something that we prove using axioms.</p>
-<h2 id="difference-between-corollary-and-theorem">Difference between
-corollary and theorem</h2>
-<p>Corollary is something that can be derived trivially from a
-theorem.</p>
-<p>"a quick consequence of a [sic] theorem that was proven" Ref: [1] and
-<a href="#fn1" class="footnote-ref" id="fnref1"
-role="doc-noteref"><sup>1</sup></a>.</p>
+<h2 id="difference-between-corollary-and-theorem">Difference between corollary and theorem</h2>
+<p>Corollary is something that can be derived trivially from a theorem.</p>
+<p>"a quick consequence of a [sic] theorem that was proven" Ref: [1] and <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
 <h2 id="another-form-of-p-q">Another form of <code>p → q</code></h2>
 <p>p → q ≡ ¬p ∨ q</p>
-<h2 id="difference-between-and">Difference between <code>→</code> and
-<code>↦</code></h2>
-<p><code>f: x ↦ y</code> means that <code>f</code> is a function which
-takes a value <code>x</code> and produces <code>y</code>.</p>
-<p>Whereas <code>f: X → Y</code> says that <code>f</code> is a function
-taking the set <code>X</code> as its domain and results in a value in
-<code>Y</code>.</p>
-<p>So, I guess it means that <code>↦</code> works with <em>values</em>
-themselves and <code>→</code> works with <em>sets</em>.</p>
-<p>Reference: <a
-href="https://math.stackexchange.com/a/1751201">https://math.stackexchange.com/a/1751201</a></p>
+<h2 id="difference-between-and">Difference between <code>→</code> and <code>↦</code></h2>
+<p><code>f: x ↦ y</code> means that <code>f</code> is a function which takes a value <code>x</code> and produces <code>y</code>.</p>
+<p>Whereas <code>f: X → Y</code> says that <code>f</code> is a function taking the set <code>X</code> as its domain and results in a value in <code>Y</code>.</p>
+<p>So, I guess it means that <code>↦</code> works with <em>values</em> themselves and <code>→</code> works with <em>sets</em>.</p>
+<p>Reference: <a href="https://math.stackexchange.com/a/1751201">https://math.stackexchange.com/a/1751201</a></p>
 <h2 id="free-variable">Free variable</h2>
 <p>If a variable is not quantified, it is a free variable?</p>
 <p>For example, in</p>
 <pre><code>∀x, x ∧ y
 </code></pre>
-<p><code>y</code> is a free variable (and <code>x</code> is a bound
-variable). The sentence is equivalent to saying</p>
+<p><code>y</code> is a free variable (and <code>x</code> is a bound variable). The sentence is equivalent to saying</p>
 <pre><code>∀x ∃y, x ∧ y
 </code></pre>
-<p>We can say something about the truth value of the sentence only after
-fixing <code>y</code>.</p>
-<p>(Then we can pick an <code>x</code> value and see if it is
-true??)</p>
-<h2 id="difference-between-statementsentence-and-formula">Difference
-between statement/sentence and formula</h2>
+<p>We can say something about the truth value of the sentence only after fixing <code>y</code>.</p>
+<p>(Then we can pick an <code>x</code> value and see if it is true??)</p>
+<h2 id="difference-between-statementsentence-and-formula">Difference between statement/sentence and formula</h2>
 <p>There is a slight difference.</p>
-<p><strong>Formulas</strong> can have variables floating around (free
-variables) as in</p>
+<p><strong>Formulas</strong> can have variables floating around (free variables) as in</p>
 <pre><code>∀x, x = y  // y is floating
 </code></pre>
-<p><strong>Statements / sentences</strong> have no free variables. All
-variables are bound as in</p>
+<p><strong>Statements / sentences</strong> have no free variables. All variables are bound as in</p>
 <pre><code>∀x ∀y, x = y
 </code></pre>
-<h2 id="difference-between-and-1">Difference between <code>=</code> and
-<code>≡</code></h2>
+<h2 id="difference-between-and-1">Difference between <code>=</code> and <code>≡</code></h2>
 <p><code>=</code> is a stricter form of <code>≡</code>.</p>
 <p><code>≡</code> only says equivalent, not equal.</p>
 <p>Whereas <code>=</code> says equal. One and the same.</p>
-<p>For example in modular arithmetic (source: <a
-href="https://www.quora.com/What-are-the-differences-between-%E2%89%A1-and-symbols-in-mathematics-and-logic">https://www.quora.com/What-are-the-differences-between-%E2%89%A1-and-symbols-in-mathematics-and-logic</a>),</p>
+<p>For example in modular arithmetic (source: <a href="https://www.quora.com/What-are-the-differences-between-%E2%89%A1-and-symbols-in-mathematics-and-logic">https://www.quora.com/What-are-the-differences-between-%E2%89%A1-and-symbols-in-mathematics-and-logic</a>),</p>
 <pre><code>26 ≡ 2 mod 4  // 26 has remainder 2 when divided by 4
 26 ≡ 2 mod 8  // 26 has remainder 2 when divided by 8
 </code></pre>
-<p>means that both 26 and 2 give the same remainder when divided by
-4.</p>
+<p>means that both 26 and 2 give the same remainder when divided by 4.</p>
 <p>That doesn't mean 26=4 or 26=8.</p>
 <h1 id="dbts">Dbts</h1>
 <ul>
 <li>Linear orders</li>
 <li>Dense linear orders</li>
 <li>Equivalence class</li>
-<li>In <code>∀x P(x, y)</code>, how do we know what kind of value
-<code>y</code> is? Is it <code>∀y</code> or <code>∃y</code> or something
-else?</li>
+<li>In <code>∀x P(x, y)</code>, how do we know what kind of value <code>y</code> is? Is it <code>∀y</code> or <code>∃y</code> or something else?</li>
 </ul>
 <h2 id="cnf-and-dnf">CNF and DNF</h2>
 <h3 id="conjunctive-normal-form">Conjunctive Normal Form</h3>
@@ -853,11 +741,10 @@ else?</li>
 <p>Like</p>
 <p>(a ∨ b)(c ∨ abd)</p>
 <p><code>p → q ≡ ¬p ∨ q</code></p>
-<section id="footnotes" class="footnotes footnotes-end-of-document"
-role="doc-endnotes">
+<section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><pre class="example"><code>https://math.stackexchange.com/a/2935038
+<li id="fn1" role="doc-endnote"><pre class="example"><code>https://math.stackexchange.com/a/2935038
 </code></pre>
 <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></li>
 </ol>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>General</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">General</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h2 id="twelf">Twelf</h2>
+<ul>
+<li><p>File extension: <code>.elf</code></p></li>
+<li><p>Comment (single line): Starts with <code>%</code></p></li>
+<li><p>Comment (multi-line): between <code>%{</code> and <code>%}</code></p></li>
+<li><p>Coverage check</p></li>
+<li><p>Totality check</p></li>
+<li><p>Adequacy</p></li>
+</ul>
+<h3 id="name-ʳ"><code>%name</code> <a href="https://twelf.org/wiki/percent-name/#_top">ʳ</a></h3>
+<p>Not mandatory, but makes twelf output messages more readable.</p>
+<p>If <code>%name</code> is given for a type, names of variables of that type which twelf generates will have the prefix indicated by <code>%name</code>.</p>
+<p>Name starts with an uppercase letter. Usually a single letter would do, though multi-character prefixes are fine too.</p>
+<p>For example, with the following definitions,</p>
+<pre><code>nat: type.
+z: nat.
+s: nat -&gt; nat.
+
+plus: nat -&gt; nat -&gt; nat -&gt; type.
+plus/z: plus z N N.
+plus/s: plus (S N1) N2 (S N3) &lt;- plus N1 N2 N3.
+% plus/s: plus N1 N2 N3 -&gt; plus (S N1) N2 (S N3).
+</code></pre>
+<p>Twelf gives:</p>
+<pre><code>_ = plus/s (plus/s plus/z).
+
+% _ : {X1:nat -&gt; nat} {X2:nat -&gt; nat} {X3:nat} plus (X1 (X2 z)) X3 (X1 (X2 X3))
+%    = [X1:nat -&gt; nat] [X2:nat -&gt; nat] [X3:nat] plus/s (plus/s plus/z).
+</code></pre>
+<p>But if we add a <code>%name</code> for ~nat, like</p>
+<pre><code>%name nat N.
+</code></pre>
+<p>It would have been:</p>
+<pre><code>_ = plus/s (plus/s plus/z).
+
+% _ : {N1:nat -&gt; nat} {N2:nat -&gt; nat} {N3:nat} plus (N1 (N2 z)) N3 (N1 (N2 N3))
+%    = [N1:nat -&gt; nat] [N2:nat -&gt; nat] [N3:nat] plus/s (plus/s plus/z).
+</code></pre>
+<h3 id="list-of-keywords">List of keywords</h3>
+<table>
+<tbody>
+<tr class="odd">
+<td><code>%.</code></td>
+<td><code>%abbrev</code></td>
+<td><code>%assert</code></td>
+<td><code>%block</code></td>
+<td><code>%clause</code></td>
+</tr>
+<tr class="even">
+<td><code>%covers</code></td>
+<td><code>%define</code></td>
+<td><code>%deterministic</code></td>
+<td><code>%establish</code></td>
+<td><code>%freeze</code></td>
+</tr>
+<tr class="odd">
+<td><code>%infix</code></td>
+<td><code>%prefix</code></td>
+<td><code>%postfix</code></td>
+<td><code>%mode</code></td>
+<td><code>%name</code></td>
+</tr>
+<tr class="even">
+<td><code>%prove</code></td>
+<td><code>%query</code></td>
+<td><code>%querytabled</code></td>
+<td><code>%reduces</code></td>
+<td><code>%solve</code></td>
+</tr>
+<tr class="odd">
+<td><code>%subord</code></td>
+<td><code>%tabled</code></td>
+<td><code>%terminates</code></td>
+<td><code>%thaw</code></td>
+<td><code>%theorem</code></td>
+</tr>
+<tr class="even">
+<td><code>%total</code></td>
+<td><code>%trustme</code></td>
+<td><code>%unique</code></td>
+<td><code>%use</code></td>
+<td><code>%worlds</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="emacs-mode">Emacs mode</h3>
+<p>As of January 2024, twelf.el file for emacs mode needs some brackets removed. Other than that, it should work right out of the box.</p>
+<p>(Got to set <code>twelf-root</code> variable first.)</p>
+<p>First, twelf-server needs to be started: <code>M-x twelf-server</code> (will display a 'Server OK' message).</p>
+<ul>
+<li><code>C-c C-c</code>: Load a configuration file
+<ul>
+<li>Runs all files in the cfg file</li>
+</ul></li>
+<li><code>C-c C-s</code>: Load an elf file</li>
+<li><code>C-c C-d</code>: Type check a specific declaration</li>
+</ul>
+<p>First run the cfg file. Afterwards individual elf files can be run as needed.</p>
+<h3 id="configuration-file">Configuration file</h3>
+<p>All files in a twelf project should be listed in a <code>sources.cfg</code> files. Those files are compiled in the order in which they are listed.</p>
+<h3 id="misc">Misc</h3>
+<ul>
+<li>Wiki Twelf: like twelf literate programming.</li>
+<li>Elf: Predecessor of twelf</li>
+<li>Delphin: a research project which built on twelf</li>
+<li>To have unproven assertions (for experimentation purposes), twelf needs to be put to 'unsafe mode'.</li>
+</ul>
+<h2 id="beluga">Beluga</h2>
+<ul>
+<li>File extension: <code>.bel</code></li>
+<li>Comment (single line): Starts with <code>%</code></li>
+<li>Pure language
+<ul>
+<li>no IO, exception, reference</li>
+</ul></li>
+<li>There are no:
+<ul>
+<li>built-in tuples, nat, bool</li>
+<li>polymorphism (theory of beluga is inconsistent with it)</li>
+</ul></li>
+<li>Based on LF, like twelf.
+<ul>
+<li>Feels very similar to twelf, but has major differences.</li>
+</ul></li>
+<li>Boxing: Data is embedded into computations with <code>[ |- stuff ]</code>.</li>
+<li>Data and values live at different levels. So 'boxing' and 'unboxing' needed.
+<ul>
+<li>'Boxing is necessary to ensure we are working with pure data; unboxing is necessary for inspecting what the data looks like' <a href="http://complogic.cs.mcgill.ca/tutorial.pdf">ʳ</a></li>
+</ul></li>
+</ul>
+<h3 id="variables">Variables:</h3>
+<ul>
+<li><p>Data variables will always be within a box</p></li>
+<li><p>Program variables will never be within a box</p></li>
+<li><p>Convention:</p>
+<ul>
+<li>Upper-case letters: data variables</li>
+<li>Lower-case letters: computation/program variables</li>
+</ul></li>
+</ul>
+<h3 id="emacs-mode-1">Emacs mode</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Key</th>
+<th>Description</th>
+<th>elisp function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>C-c C-c</td>
+<td>Compile</td>
+<td><code>'compile</code></td>
+</tr>
+<tr class="even">
+<td>C-c C-l</td>
+<td>Highlight holes</td>
+<td><code>'beluga-highlight-holes</code></td>
+</tr>
+<tr class="odd">
+<td>C-c C-x</td>
+<td>Run command</td>
+<td><code>'beluga-run-command</code></td>
+</tr>
+<tr class="even">
+<td>C-c C-t</td>
+<td>Get type</td>
+<td><code>'beluga-get-type</code></td>
+</tr>
+<tr class="odd">
+<td>C-c C-s</td>
+<td>Split hole</td>
+<td><code>'beluga-split-hole</code></td>
+</tr>
+<tr class="even">
+<td>C-c C-i</td>
+<td>Intro hole</td>
+<td><code>'beluga-intro-hole</code></td>
+</tr>
+<tr class="odd">
+<td>C-c C-j</td>
+<td>Jump hole</td>
+<td><code>'beluga-hole-jump</code></td>
+</tr>
+<tr class="even">
+<td>C-c C-p</td>
+<td>Get hole info</td>
+<td><code>'beluga-hole-info</code></td>
+</tr>
+<tr class="odd">
+<td>C-c C-e</td>
+<td>Erase holes</td>
+<td><code>'beluga-erase-holes</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="harpoon">harpoon</h3>
+<ul>
+<li>For interactive theorem proving with commands.</li>
+<li>Bundled with beluga.</li>
+<li><a href="https://beluga-lang.readthedocs.io/en/latest/getting-started.html">https://beluga-lang.readthedocs.io/en/latest/getting-started.html</a></li>
+</ul>
+<p>Example:</p>
+<pre><code>$ harpoon --sig hello.bel
+## Type Reconstruction begin: hello.bel ##
+## Type Reconstruction done:  hello.bel ##
+Configuring theorem #1
+  Name of theorem (:quit or empty to finish):
+</code></pre>
+<h2 id="smtlib2">smtlib2</h2>
+<p>smtlib2 is a format for SAT/SMT solvers like z3.</p>
+<pre><code>(declare-const a Bool) 
+</code></pre>
+<p>is short for</p>
+<pre><code>(define-fun b () Bool)
+</code></pre>
+</div>
+</body>
+</html>
