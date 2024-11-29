@@ -42,24 +42,49 @@
 
 
 <div id="content-container">
+<h2 id="general">General</h2>
 <ul>
-<li><code>--without-K</code> and <code>--safe</code> seems like not-so-good-to-use flags.
+<li><p>Absurd pattern: <code>()</code> (kinda like <code>False</code> in Coq)</p>
+<ul>
+<li><a href="https://agda.readthedocs.io/en/v2.6.1/language/function-definitions.html#absurd-patterns">https://agda.readthedocs.io/en/v2.6.1/language/function-definitions.html#absurd-patterns</a></li>
+</ul></li>
+<li><p><code>tt</code>: not exactly unit type as in Coq. It's like the <code>I</code> constructor (of <code>True</code> type) in Coq.</p></li>
+<li><p><code>postulate</code>: like <code>Axiom</code> in Coq</p></li>
+<li><p>Each file should have module name.</p></li>
+<li><p>Type names should start with upper-case letter.</p></li>
+<li><p>Dotted expression</p></li>
+<li><p>No step-by-step evaluation as in Coq.</p></li>
+<li><p>Mixfix notations</p></li>
+<li><p>'Function' associates to right</p>
+<ul>
+<li><code>A -&gt; B -&gt; C</code> is <code>A -&gt; (B -&gt; C)</code></li>
+</ul></li>
+<li><p>Looks like space is needed before <code>:</code> in type annotations</p>
+<ul>
+<li><code>zero: ℕ</code> and <code>zero :ℕ</code> give parse error, <code>zero : ℕ</code> doesn't.</li>
+</ul></li>
+<li><p><code>--without-K</code> and <code>--safe</code> seems like not-so-good-to-use flags.</p>
 <ul>
 <li><code>--safe</code> option 'to avoid possible misuses of certain features which could lead to logical inconsistencies' <a href="https://arxiv.org/pdf/2005.07059.pdf">ʳ</a></li>
 </ul></li>
-<li><code>--cubical</code>: implements a computational interpretation of HoTT.
+<li><p><code>--cubical</code>: implements a computational interpretation of HoTT.</p>
 <ul>
 <li>Supports univalence.</li>
 </ul></li>
-<li>UIP: Uniqueness of identity proofs</li>
-<li>Axiom K: Equivalent to UIP</li>
-<li>Setoid: Set equipped with an equivalence relation</li>
-<li>Extensional vs intentional type theory</li>
-<li><code>postulate</code>: like <code>Axiom</code> in Coq
+<li><p>UIP: Uniqueness of identity proofs</p></li>
+<li><p>Axiom K: Equivalent to UIP ??</p></li>
+<li><p>Setoid: Set equipped with an equivalence relation</p></li>
+<li><p>Extensional vs intentional type theory</p></li>
+<li><p><code>postulate</code>: like <code>Axiom</code> in Coq</p>
 <ul>
 <li>Signature without definition</li>
 <li><a href="https://agda.readthedocs.io/en/v2.6.20240714/language/postulates.html">https://agda.readthedocs.io/en/v2.6.20240714/language/postulates.html</a></li>
 </ul></li>
+</ul>
+<h2 id="imports-needed">Imports needed</h2>
+<ul>
+<li>List: <code>open import Data.List using ([]; [_]; _++_; List; sum)</code></li>
+<li>Nat: <code>open import Data.Nat using (ℕ; _+_)</code></li>
 </ul>
 <h2 id="mutually-recursive-types">Mutually recursive types</h2>
 <ul>
@@ -80,6 +105,29 @@
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>    defd  <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ τ<span class="ot">}</span> <span class="ot">→</span> ty <span class="ot">(</span>Δ ,- τ<span class="ot">)</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>    bit   <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ<span class="ot">}</span>   <span class="ot">→</span> ty Δ</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>    <span class="ot">_</span>⇒<span class="ot">_</span>  <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ<span class="ot">}</span>   <span class="ot">→</span> ty Δ <span class="ot">→</span> ty Δ <span class="ot">→</span> ty Δ</span></code></pre></div>
+<h2 id="record-type">Record type</h2>
+<p><a href="https://agda.readthedocs.io/en/latest/language/record-types.html">https://agda.readthedocs.io/en/latest/language/record-types.html</a></p>
+<ul>
+<li>Access field of a record by with <code>.fieldname</code></li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">record</span> RecName <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  <span class="kw">field</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>    a <span class="ot">:</span> ℕ</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    b <span class="ot">:</span> 𝔹</span></code></pre></div>
+<p>—</p>
+<p>'Open' a record to bring their field names into default scope.</p>
+<ul>
+<li>Because by default, a module of the same name is also defined.</li>
+</ul>
+<pre><code>open RecName
+</code></pre>
+<p>Example from docs:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">record</span> Pair <span class="ot">(</span>A B <span class="ot">:</span> <span class="dt">Set</span><span class="ot">)</span> <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  <span class="kw">field</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>    fst <span class="ot">:</span> A</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>    snd <span class="ot">:</span> B</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>geta <span class="ot">:</span> Pair A B</span></code></pre></div>
 <h2 id="levels">Levels</h2>
 <ul>
 <li>Type: <code>Level</code>
@@ -100,36 +148,94 @@
 </ul></li>
 </ul>
 <p>Example from <a href="https://arxiv.org/pdf/2005.07059.pdf">docs</a>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">data</span> <span class="ot">_</span>×<span class="ot">_</span> <span class="ot">{</span>n m <span class="ot">:</span> Level<span class="ot">}</span> <span class="ot">(</span>A <span class="ot">:</span> <span class="dt">Set</span> n<span class="ot">)</span> <span class="ot">(</span>B <span class="ot">:</span> <span class="dt">Set</span> m<span class="ot">)</span> <span class="ot">:</span> <span class="dt">Set</span> <span class="ot">(</span>n ⊔ m<span class="ot">)</span> <span class="kw">where</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>   <span class="ot">_</span>,<span class="ot">_</span> <span class="ot">:</span> A <span class="ot">→</span> B <span class="ot">→</span> A × B</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">data</span> <span class="ot">_</span>×<span class="ot">_</span> <span class="ot">{</span>n m <span class="ot">:</span> Level<span class="ot">}</span> <span class="ot">(</span>A <span class="ot">:</span> <span class="dt">Set</span> n<span class="ot">)</span> <span class="ot">(</span>B <span class="ot">:</span> <span class="dt">Set</span> m<span class="ot">)</span> <span class="ot">:</span> <span class="dt">Set</span> <span class="ot">(</span>n ⊔ m<span class="ot">)</span> <span class="kw">where</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>   <span class="ot">_</span>,<span class="ot">_</span> <span class="ot">:</span> A <span class="ot">→</span> B <span class="ot">→</span> A × B</span></code></pre></div>
 <p>Example import:</p>
 <ul>
 <li><code>open import Level using (0ℓ) renaming (suc to lsuc)</code></li>
 </ul>
-<h2 id="agda-technicalities">Agda technicalities</h2>
+<h2 id="standard-library">Standard library</h2>
+<p>Standard library need to be installed separately.</p>
 <ul>
-<li>Mixfix notations</li>
-<li>Pragmas: Special comments</li>
+<li><a href="https://agda.readthedocs.io/en/latest/tools/package-system.html">https://agda.readthedocs.io/en/latest/tools/package-system.html</a></li>
+<li><a href="https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/agda.section.md">https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/agda.section.md</a></li>
+</ul>
+<p>—</p>
+<ul>
+<li><code>~/.agda/defaults</code>: list of agda libraries loaded by default
+<ul>
+<li>All these library names must be mentioned in <code>~/.agda/libraries</code></li>
+</ul></li>
+<li><code>~/.agda/libraries</code>: list of paths complete paths to agda-lib files of packages (including the agda-lib file name with extension)</li>
+<li>Default <code>AGDA_DIR</code> in unix: <code>~/.agda</code></li>
+</ul>
+<h2 id="pragmas">Pragmas</h2>
+<p>Special comments.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="pp">{-# BUILTIN NATURAL ℕ #-}</span></span></code></pre></div>
+<p>agda</p>
+<p>associates numbers with elements of the <code>ℕ</code> type. So 2 would implicitly mean <code>suc (suc zero)</code>.</p>
+<p>See: <a href="https://plfa.github.io/Naturals/#a-pragma">https://plfa.github.io/Naturals/#a-pragma</a></p>
+<p>—</p>
+<ul>
 <li><code>{-# BUILTIN NATURAL ℕ #-}</code>
 <ul>
-<li>A pragma</li>
 <li>Informs agda that ℕ corresponds to natural numbers</li>
 <li>Allows to use numbers instead of constructors (eg: 0 instead of <code>zero</code>)</li>
 <li>Internally allows use of haskell <code>Int</code> (log₂ space) instead of unary nat.</li>
 </ul></li>
-<li>'Function' associates to right
+<li><code>{-# OPTIONS --exact-split #-}</code>
 <ul>
-<li><code>A -&gt; B -&gt; C</code> is <code>A -&gt; (B -&gt; C)</code></li>
-</ul></li>
-<li>Looks like space is needed before <code>:</code> in type annotations
-<ul>
-<li><code>zero: ℕ</code> and <code>zero :ℕ</code> give parse error, <code>zero : ℕ</code> doesn't.</li>
+<li>Don't allow case overlaps</li>
 </ul></li>
 </ul>
-<p>More pragmas:</p>
+<h2 id="space-matters-a-set-vs-a-set">Space matters: <code>a : Set</code> vs <code>a: Set</code></h2>
+<p>The space matters. Looks if we do <code>a: Set</code>, <code>a:</code> will be considered a name.</p>
+<p>For example, this works:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="kw">data</span> Type <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>  Nat <span class="ot">:</span> Type</span></code></pre></div>
+<p>But this doesn't:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">data</span> Type: <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>  Nat <span class="ot">:</span> Type</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="co">{-</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="co">Missing type signature for data definition Type:</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="co">when scope checking the declaration</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="co">  data Type: Set where</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="co">    Nat : Type</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a><span class="co"> -}</span></span></code></pre></div>
+<h2 id="coq-vs-agda">Coq vs agda</h2>
+<p>False type:</p>
 <ul>
-<li>Don't allow case overlaps: <code>{-# OPTIONS --exact-split #-}</code></li>
+<li>Agda: <code>data 𝟘 : Type where</code></li>
+<li>Coq: <code>Inductive False : Prop :=.</code></li>
 </ul>
+<p>Following comparison is probably a bit too approximative…</p>
+<table>
+<thead>
+<tr class="header">
+<th>Coq</th>
+<th>Agda</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>False</td>
+<td>𝟘 / ()</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>unit</td>
+<td>𝟙</td>
+<td>Unit type</td>
+</tr>
+<tr class="odd">
+<td>I</td>
+<td>tt</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h2 id="precedence">Precedence</h2>
 <p>Lower precedence value =&gt; higher precedence</p>
 <ul>
@@ -148,6 +254,20 @@
 <li><p>Find type of an expression: C-c C-d</p></li>
 <li><p>Evaluate (find normal form) of an expression: C-c C-n</p></li>
 </ul>
+<p>—</p>
+<ul>
+<li>Move to next goal: <code>C-c C-f</code></li>
+<li>Move to previous goal: <code>C-c C-b</code></li>
+<li>Evaluate a term in current scope: <code>C-c C-n</code></li>
+<li>Infer type of an expression that you give: <code>C-c C-d</code></li>
+<li>Quit agda: C-c C-x C-q</li>
+</ul>
+<ul>
+<li>Hide/unhide hidden args: C-c C-x C-i</li>
+<li>Kill agda: C-c C-x C-q</li>
+<li>Kill and restart agda: C-c C-x C-r</li>
+</ul>
+<p><a href="https://agda.readthedocs.io/en/latest/tools/emacs-mode.html#keybindings">https://agda.readthedocs.io/en/latest/tools/emacs-mode.html#keybindings</a></p>
 <h3 id="todo">Todo</h3>
 <ul>
 <li>Find type of name under cursor</li>

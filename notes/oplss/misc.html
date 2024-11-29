@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>misc</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+
+<ul>
+    </ul>
+
+
+
+
+<div id="content-container">
+<h1 id="pfenning">2015?: Pfenning</h1>
+<ul>
+<li>Introduction rules from bottom to top
+<ul>
+<li>We apply intro rule to go towards something that we wish to prove from something that we know already.</li>
+</ul></li>
+<li>Elimination rules from top to bottom ✓
+<ul>
+<li>Makes sense since we are throwing away info</li>
+</ul></li>
+</ul>
+<p>Proofs in natural deduction proceeds like an attempt to reconcile the goal (bottom part) and assumptions (top part).</p>
+<p>—</p>
+<p>(A∨B) ∧ (A∨C) ⊢ A∨(B∧C)</p>
+<p>Step 1:</p>
+<p>(A∨B) ∧ (A∨C)</p>
+<hr />
+<p>A∨(B∧C)</p>
+<p>A∨B A∨C ————- ∧e₁ ————- ∧e₂ A∨(B∧C) A∨(B∧C)</p>
+<p>Consider the first case.</p>
+<p>A∨B ————- ∧e₁ A∨(B∧C)</p>
+<p>Case 1: Assume A:</p>
+<p>A ————- ∨i₁ A∨(B∧C)</p>
+<p>Case 2: Assume B:</p>
+<p>B ————- ∨i₁ A∨(B∧C)</p>
+<p>—</p>
+<p>Temporal logic.</p>
+<pre><code>A @ t+1         ○A
+------- ○i     ------- ○e      
+  ○A           A @ t+1            
+</code></pre>
+<p>–</p>
+<p>Soundness check: Does intro + elim add any info? No. =&gt; Sound</p>
+<p>We can say this:</p>
+<ul>
+<li>○(A ∧ B) ⊢ ○A ∧ ○B</li>
+</ul>
+<p>But can we say this?</p>
+<ul>
+<li>○(A ∨ B) ⊢ ○A ∨ ○B</li>
+</ul>
+<p>Not in the intuitinistic case. (TODO: Why ??)</p>
+<h2 id="propositions-as-type">Propositions as type</h2>
+<p>Read:</p>
+<ul>
+<li>Curry 1935
+<ul>
+<li>Gentzen's paper of natural deduction (and sequent calculus?) came out around the same time.</li>
+</ul></li>
+<li>Howard 1969</li>
+</ul>
+<p>Should math be constructive?</p>
+<ul>
+<li>Hilbert: no need of constructive</li>
+<li>Brouwer: needs to be constructive</li>
+</ul>
+<p>Intuitionsitic =&gt; <code>¬A</code> is <code>A ⊃ ⊥</code></p>
+<p>which makes <code>A ∨ ¬A</code> to be <code>A ∨ (A ⊃ ⊥)</code>.</p>
+<p>Not provable in general. Because you need to know what A is for both <code>A</code> and <code>A ⊃ ⊥</code>.</p>
+<p>Classical logic: Every proposition is assumed to be either true or false.</p>
+<h3 id="dbts">Dbts</h3>
+<ul>
+<li>How does expansion in logic correspond to extensional equality in type world?</li>
+</ul>
+<h2 id="william-duff">2018-William Duff</h2>
+<p>GADT:</p>
+<ul>
+<li>In addition to constructors, we can specify what kind of arguments the constructors can take</li>
+<li>Existential type in ocaml? Makable with gadts?</li>
+</ul>
+</div>
+</body>
+</html>
