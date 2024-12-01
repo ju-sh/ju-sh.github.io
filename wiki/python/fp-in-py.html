@@ -62,8 +62,34 @@
 <td>Indexing</td>
 <td>fst and snd</td>
 </tr>
+<tr class="even">
+<td>functool.partial</td>
+<td>Partial function application</td>
+</tr>
+<tr class="odd">
+<td>itertools.accumulate</td>
+<td>scanl</td>
+</tr>
+<tr class="even">
+<td>filter / itertools.compress</td>
+<td>filter</td>
+</tr>
 </tbody>
 </table>
+<h2 id="general">General</h2>
+<ul>
+<li>itertools.compress(l): make an iterator from a list ??</li>
+<li>itertools.cycle: Make infinite lists</li>
+<li>itertools.tee(it, n): Duplicate an iterator n times</li>
+<li>functools.lru<sub>cache</sub>: memoize a function
+<ul>
+<li>The argument function better be pure</li>
+</ul></li>
+</ul>
+<p>See:</p>
+<ul>
+<li><a href="https://martinheinz.dev/blog/52">https://martinheinz.dev/blog/52</a></li>
+</ul>
 <h2 id="functools.reduce">functools.reduce</h2>
 <ul>
 <li>Kind of like <code>foldl</code> where first element is taken as accumulator.</li>
@@ -105,6 +131,12 @@ TypeError: reduce() of empty sequence with no initial value
 &gt;&gt;&gt; a[1:]
 (2,)
 </code></pre>
+<h2 id="misc">Misc</h2>
+<ul>
+<li><a href="https://github.com/evhub/coconut">coconut</a>: A Python-like language with features to support functional programming style</li>
+<li><a href="https://github.com/sfermigier/awesome-functional-python">https://github.com/sfermigier/awesome-functional-python</a></li>
+<li><a href="https://old.reddit.com/r/functional_python/">https://old.reddit.com/r/functional_python/</a></li>
+</ul>
 </div>
 </body>
 </html>
