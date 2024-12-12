@@ -35,7 +35,7 @@
 &lt;p&gt;As part of my masters course project, I generate verilog designs that are then synthesized using vivado before being loaded onto FPGAs.&lt;/p&gt;
 &lt;p&gt;I once tried to see if open source tools can be used to achieve the same.&lt;/p&gt;
 &lt;p&gt;Spent some time looking up stuff like &lt;a href=&quot;https://github.com/google/skywater-pdk&quot;&gt;Skywater-PDK&lt;/a&gt; (being a hardware novice, I didn&#x27;t realize for a while that PDK is for ASIC designs).&lt;/p&gt;
-&lt;p&gt;Then I came across &lt;a href=&quot;https://learn.lushaylabs.com/os-toolchain-manual-installation/&quot;&gt;this article&lt;/a&gt; which describes how a verilog design can be synthesised and loaded onto an FPGA. The FPGA used was a &lt;a href=&quot;https://dl.sipeed.com/shareURL/TANG/Nano%209K/6_Chip_Manual/EN&quot;&gt;Sipeed Tang Nano 9K&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Then I came across &lt;a href=&quot;https://learn.lushaylabs.com/os-toolchain-manual-installation/&quot;&gt;this article&lt;/a&gt; which describes how a verilog design can be synthesised and loaded onto an FPGA. The board used was a &lt;a href=&quot;https://dl.sipeed.com/shareURL/TANG/Nano%209K/6_Chip_Manual/EN&quot;&gt;Sipeed Tang Nano 9K&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;FOSS tools involved in this included:&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -213,7 +213,7 @@ IO_LOC &quot;led[5]&quot; 16;
 &lt;p&gt;which specifies the ports for clock and the LEDs.&lt;/p&gt;
 &lt;p&gt;The port numbers are available from the schematics of the gowin Tang nano 9K FPGA. I could find such a schematic &lt;a href=&quot;https://learn.lushaylabs.com/content/files/2022/08/Tang_Nano_9K_3672_schematic.pdf&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Above nextpnr command would write the information about the placed and routed design to a file named &lt;code&gt;counter_pnr.json&lt;/code&gt;. The contents of this file is a netlist with placement and routing info.&lt;/p&gt;
-&lt;p&gt;next-pnr also produces an FPGA-specific utilization report:&lt;/p&gt;
+&lt;p&gt;First, nextpnr produces an FPGA-specific utilization report:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Info: Device utilisation:
 Info:                    VCC:     1/    1   100%
 Info:                  SLICE:    79/ 8640     0%
@@ -239,7 +239,30 @@ Info:                   rPLL:     0/    2     0%
 &lt;li&gt;OSC: Oscillator&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;(Couldn&#x27;t find what RAMW means..)&lt;/p&gt;
-&lt;p&gt;Then nextpnr does some timing analysis (but how can it be done before routing?).&lt;/p&gt;
+&lt;p&gt;nextpnr is &#x27;timing driven&#x27;. ie, it does some form of static timing analysis by itself. Every path in the netlist that starts from a FF and ends at another FF is analysed.&lt;/p&gt;
+&lt;p&gt;(nextpnr can be asked to output a report in json format with &lt;code&gt;--report&lt;/code&gt;. &lt;a href=&quot;https://github.com/YosysHQ/nextpnr/blob/master/docs/report.md&quot;&gt;ᵈ&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;nextpnr architechture is something like this (this is an ascii-art version of an image from &lt;a href=&quot;https://fpga-ignite.github.io/fpga_ignite_202/nextpnr/FPGA_Ignite_nextpnr.pdf&quot;&gt;here&lt;/a&gt;):&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;+----------+     +--------+
+|  JSON    |--&amp;gt;--| Packer |
+|front end |     +--------+
++----------+         |          +--------+
+                     v          | Timing |
+                     |          |  model |
+                     |          +--------+
+                 +--------+         |  
+         +---&amp;gt;---| Placer |--&amp;lt;--+   v
+         |       +--------+     |   |
+     +------+        |       +----------+
+     | Chip |        v       |  Timing  |
+     | data |        |       | analysis |
+     +------+        |       +----------+
+         |       +--------+     |        
+         +---&amp;gt;---| Router |--&amp;lt;--+  
+                 +--------+
+                     |
+                     v
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;where timing model, chip-data and packer varies with the target board.&lt;/p&gt;
 &lt;p&gt;I used to think that timing analysis cannot be done before routing. But turns out that isn&#x27;t the case. My wild guess is that paths can be inferred from the netlist that yosys generated since it specifies the paths in some form anyway. The separate routing proces can create more efficient paths specific to target board.&lt;/p&gt;
 &lt;p&gt;This was the slack histogram that nextpnr gave post-placement but pre-routing:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Info: Max frequency for clock &#x27;clk_IBUF_I_O&#x27;: 316.86 MHz (PASS at 27.00 MHz)
@@ -275,8 +298,8 @@ Info: Checksum: 0xb9798815
 &lt;p&gt;In the above histogram, there are 27 asterisks next to &lt;code&gt;[ 33881,
 33996)&lt;/code&gt; which means that there are 27 paths whose slack is greater than or equal to 33.881ns but less than 33.996ns.&lt;/p&gt;
 &lt;p&gt;The histogram would show negative values if there was negative slack. No negative slack. Yay!&lt;/p&gt;
-&lt;hr/&gt;
-&lt;p&gt;A summary of routing information is printed:&lt;/p&gt;
+&lt;p&gt;After doing placement and associated timing analysis, nextpnr will do routing.&lt;/p&gt;
+&lt;p&gt;As it tries various routes, it will show what it&#x27;s upto by printing stuff like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Info: Routing..
 Info: Setting up routing queue.
 Info: Routing 225 arcs.
@@ -287,9 +310,9 @@ Info: Routing complete.
 Info: Router1 time 1.82s
 Info: Checksum: 0x756ec238
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;(Looks like ripup is the name of a routing algorithm.)&lt;/p&gt;
+&lt;p&gt;(Looks like ripup is the name of a routing algorithm. &lt;a href=&quot;https://en.wikipedia.org/wiki/Routing_(electronic_design_automation)&quot;&gt;ʷ&lt;/a&gt;))&lt;/p&gt;
 &lt;p&gt;An &lt;a href=&quot;https://github.com/YosysHQ/nextpnr/blob/master/docs/faq.md&quot;&gt;arc&lt;/a&gt; is a &#x27;source-sink pair on a net&#x27; or a &#x27;directed connection between two nodes&#x27;. Looks like there were 225 of them in the netlist and nextpnr spent 1.82 seconds performing 426 iterations.&lt;/p&gt;
-&lt;p&gt;It also seems to do some static timing analysis. I&#x27;m not sure about the details here, but it prints out a report like this:&lt;/p&gt;
+&lt;p&gt;Once routing is done, nextpnr will perform timing analysis once again.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Info: Critical path report for cross-domain path &#x27;posedge clk_IBUF_I_O&#x27; -&amp;gt; &#x27;&amp;lt;async&amp;gt;&#x27;:
 Info: curr total
 Info:  0.5  0.5  Source ledCounter_DFFE_Q_DFFLC.Q
@@ -333,8 +356,9 @@ Info: [ 36151,  36271) |*
 &lt;p&gt;Hmm.. Not sure if I&#x27;m reading this correctly, but from the histograms alone, it looks as if total slack actually went up after routing…&lt;/p&gt;
 &lt;p&gt;Still the value shown as &#x27;Max delay posedge clk&lt;sub&gt;IBUFIO&lt;/sub&gt;&#x27; has gone down to 4.84ns from 6.69ns.&lt;/p&gt;
 &lt;p&gt;Yet the max frequency of the clock went down a bit to 315.86MHz from 316.86MHz.&lt;/p&gt;
+&lt;p&gt;We had requested the design to be run at 27MHz. nextpnr figures it can be run even at 315.86MHz (Fmax), so we are good in that aspect.&lt;/p&gt;
+&lt;p&gt;I have not yet figured out how the histogram is meant to be read. This histogram is not that intriguing since it is a tiny design. Histograph for a relatively less trivial is visible &lt;a href=&quot;https://github.com/YosysHQ/nextpnr/pull/31&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;—&lt;/p&gt;
-&lt;p&gt;We had requested the design to be run at 27MHz. nextpnr figures it can be run even at 315.86MHz, so we are good in that aspect.&lt;/p&gt;
 &lt;p&gt;nextpnr has gui that is not part of default installation which can provide visualization of placed and routed nets. I have not used it yet, but it looks nice.&lt;/p&gt;
 &lt;h3 id=&quot;bitstream-generation-project-apicula&quot;&gt;Bitstream generation (Project Apicula)&lt;/h3&gt;
 &lt;p&gt;Now that we have all the information needed for a loadable FPGA design, we convert the data into a bit stream that can then actually loaded onto the FPGA.&lt;/p&gt;
@@ -440,6 +464,7 @@ load: $(NAME).fs
 &lt;li&gt;Apycula: 0.12&lt;/li&gt;
 &lt;li&gt;openFPGALoader: 0.12.1&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;Also see: &lt;a href=&quot;https://arxiv.org/abs/1903.10407&quot;&gt;Yosys+nextpnr: an Open Source Framework from Verilog to Bitstream for Commercial FPGAs - David Shah, Eddie Hung, Clifford Wolf, Serge Bazanski, Dan Gisselquist, Miodrag Milanović (2019)&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&quot;addendum&quot;&gt;Addendum&lt;/h2&gt;
 &lt;h3 id=&quot;commands-corresponding-to-synth_gowin-of-yosys&quot;&gt;Commands corresponding to &lt;code&gt;synth_gowin&lt;/code&gt; of yosys&lt;/h3&gt;
 &lt;p&gt;As mentioned in the &lt;a href=&quot;https://yosys.readthedocs.io/_/downloads/en/latest/pdf/&quot;&gt;manual&lt;/a&gt;, &lt;code&gt;synth_gowin&lt;/code&gt; stands for:&lt;/p&gt;
@@ -508,68 +533,68 @@ load: $(NAME).fs
 &lt;h3 id=&quot;techmap-stuff&quot;&gt;Techmap stuff&lt;/h3&gt;
 &lt;p&gt;I guess files like the one at &lt;code&gt;/usr/share/yosys/gowin/cells_map.v&lt;/code&gt; are used for techmap.&lt;/p&gt;
 &lt;p&gt;Its contents were like:&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot; id=&quot;cb18&quot;&gt;&lt;pre class=&quot;sourceCode verilog&quot;&gt;&lt;code class=&quot;sourceCode verilog&quot;&gt;&lt;span id=&quot;cb18-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;// DFFR          D Flip-Flop with Synchronous Reset&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-2&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;module&lt;/span&gt;  \&lt;span class=&quot;dt&quot;&gt;$_SDFF_PP0_&lt;/span&gt; (&lt;span class=&quot;dt&quot;&gt;input&lt;/span&gt; D, C, R, &lt;span class=&quot;dt&quot;&gt;output&lt;/span&gt; Q);&lt;/span&gt;
-&lt;span id=&quot;cb18-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-3&quot;&gt;&lt;/a&gt;    DFFR _TECHMAP_REPLACE_ (.D(D), .Q(Q), .CLK(C), .RESET(R));&lt;/span&gt;
-&lt;span id=&quot;cb18-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-4&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; _TECHMAP_REMOVEINIT_Q_ = &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;
-&lt;span id=&quot;cb18-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-5&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-6&quot;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-7&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;// ..&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-8&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;// ..&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-9&quot;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-10&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;module&lt;/span&gt; \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; (A, Y);&lt;/span&gt;
-&lt;span id=&quot;cb18-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-11&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;parameter&lt;/span&gt; WIDTH = &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;
-&lt;span id=&quot;cb18-12&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-12&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;parameter&lt;/span&gt; LUT = &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;
-&lt;span id=&quot;cb18-13&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-13&quot;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-14&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-14&quot;&gt;&lt;/a&gt;    (* force_downto *)&lt;/span&gt;
-&lt;span id=&quot;cb18-15&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-15&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;input&lt;/span&gt; [WIDTH&lt;span class=&quot;dv&quot;&gt;-1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;] A;&lt;/span&gt;
-&lt;span id=&quot;cb18-16&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-16&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;output&lt;/span&gt; Y;&lt;/span&gt;
-&lt;span id=&quot;cb18-17&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-17&quot;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-18&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-18&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;kw&quot;&gt;generate&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-19&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-19&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-20&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-20&quot;&gt;&lt;/a&gt;            LUT1 #(.INIT(LUT)) _TECHMAP_REPLACE_ (.F(Y),&lt;/span&gt;
-&lt;span id=&quot;cb18-21&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-21&quot;&gt;&lt;/a&gt;                .I0(A[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]));&lt;/span&gt;
-&lt;span id=&quot;cb18-22&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-22&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-23&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-23&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-24&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-24&quot;&gt;&lt;/a&gt;            LUT2 #(.INIT(LUT)) _TECHMAP_REPLACE_ (.F(Y),&lt;/span&gt;
-&lt;span id=&quot;cb18-25&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-25&quot;&gt;&lt;/a&gt;                .I0(A[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .I1(A[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;]));&lt;/span&gt;
-&lt;span id=&quot;cb18-26&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-26&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-27&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-27&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-28&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-28&quot;&gt;&lt;/a&gt;            LUT3 #(.INIT(LUT)) _TECHMAP_REPLACE_ (.F(Y),&lt;/span&gt;
-&lt;span id=&quot;cb18-29&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-29&quot;&gt;&lt;/a&gt;                .I0(A[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .I1(A[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;]), .I2(A[&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;]));&lt;/span&gt;
-&lt;span id=&quot;cb18-30&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-30&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-31&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-31&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-32&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-32&quot;&gt;&lt;/a&gt;            LUT4 #(.INIT(LUT)) _TECHMAP_REPLACE_ (.F(Y),&lt;/span&gt;
-&lt;span id=&quot;cb18-33&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-33&quot;&gt;&lt;/a&gt;                .I0(A[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .I1(A[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;]), .I2(A[&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;]), .I3(A[&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;]));&lt;/span&gt;
-&lt;span id=&quot;cb18-34&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-34&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-35&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-35&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-36&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-36&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; f0, f1;&lt;/span&gt;
-&lt;span id=&quot;cb18-37&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-37&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;15&lt;/span&gt;: &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;)) lut0 (.A(A[&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f0));&lt;/span&gt;
-&lt;span id=&quot;cb18-38&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-38&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;31&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;16&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;)) lut1 (.A(A[&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f1));&lt;/span&gt;
-&lt;span id=&quot;cb18-39&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-39&quot;&gt;&lt;/a&gt;            MUX2_LUT5 mux5(.I0(f0), .I1(f1), .S0(A[&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;]), .O(Y));&lt;/span&gt;
-&lt;span id=&quot;cb18-40&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-40&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-41&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-41&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-42&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-42&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; f0, f1;&lt;/span&gt;
-&lt;span id=&quot;cb18-43&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-43&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;31&lt;/span&gt;: &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;)) lut0 (.A(A[&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f0));&lt;/span&gt;
-&lt;span id=&quot;cb18-44&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-44&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;63&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;32&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;)) lut1 (.A(A[&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f1));&lt;/span&gt;
-&lt;span id=&quot;cb18-45&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-45&quot;&gt;&lt;/a&gt;            MUX2_LUT6 mux6(.I0(f0), .I1(f1), .S0(A[&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;]), .O(Y));&lt;/span&gt;
-&lt;span id=&quot;cb18-46&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-46&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-47&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-47&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-48&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-48&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; f0, f1;&lt;/span&gt;
-&lt;span id=&quot;cb18-49&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-49&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;63&lt;/span&gt;: &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;)) lut0 (.A(A[&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f0));&lt;/span&gt;
-&lt;span id=&quot;cb18-50&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-50&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;127&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;64&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;)) lut1 (.A(A[&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f1));&lt;/span&gt;
-&lt;span id=&quot;cb18-51&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-51&quot;&gt;&lt;/a&gt;            MUX2_LUT7 mux7(.I0(f0), .I1(f1), .S0(A[&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;]), .O(Y));&lt;/span&gt;
-&lt;span id=&quot;cb18-52&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-52&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-53&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-53&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;8&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-54&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-54&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; f0, f1;&lt;/span&gt;
-&lt;span id=&quot;cb18-55&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-55&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;127&lt;/span&gt;: &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;)) lut0 (.A(A[&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f0));&lt;/span&gt;
-&lt;span id=&quot;cb18-56&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-56&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;255&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;128&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;)) lut1 (.A(A[&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f1));&lt;/span&gt;
-&lt;span id=&quot;cb18-57&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-57&quot;&gt;&lt;/a&gt;            MUX2_LUT8 mux8(.I0(f0), .I1(f1), .S0(A[&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;]), .O(Y));&lt;/span&gt;
-&lt;span id=&quot;cb18-58&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-58&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-59&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-59&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; _TECHMAP_FAIL_ = &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;
-&lt;span id=&quot;cb18-60&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-60&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-61&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-61&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;kw&quot;&gt;endgenerate&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb18-62&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-62&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb19&quot;&gt;&lt;pre class=&quot;sourceCode verilog&quot;&gt;&lt;code class=&quot;sourceCode verilog&quot;&gt;&lt;span id=&quot;cb19-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;// DFFR          D Flip-Flop with Synchronous Reset&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-2&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;module&lt;/span&gt;  \&lt;span class=&quot;dt&quot;&gt;$_SDFF_PP0_&lt;/span&gt; (&lt;span class=&quot;dt&quot;&gt;input&lt;/span&gt; D, C, R, &lt;span class=&quot;dt&quot;&gt;output&lt;/span&gt; Q);&lt;/span&gt;
+&lt;span id=&quot;cb19-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-3&quot;&gt;&lt;/a&gt;    DFFR _TECHMAP_REPLACE_ (.D(D), .Q(Q), .CLK(C), .RESET(R));&lt;/span&gt;
+&lt;span id=&quot;cb19-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-4&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; _TECHMAP_REMOVEINIT_Q_ = &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb19-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-5&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-6&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-7&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;// ..&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-8&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;// ..&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-9&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-10&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;module&lt;/span&gt; \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; (A, Y);&lt;/span&gt;
+&lt;span id=&quot;cb19-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-11&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;parameter&lt;/span&gt; WIDTH = &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb19-12&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-12&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;parameter&lt;/span&gt; LUT = &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb19-13&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-13&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-14&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-14&quot;&gt;&lt;/a&gt;    (* force_downto *)&lt;/span&gt;
+&lt;span id=&quot;cb19-15&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-15&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;input&lt;/span&gt; [WIDTH&lt;span class=&quot;dv&quot;&gt;-1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;] A;&lt;/span&gt;
+&lt;span id=&quot;cb19-16&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-16&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;output&lt;/span&gt; Y;&lt;/span&gt;
+&lt;span id=&quot;cb19-17&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-17&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-18&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-18&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;kw&quot;&gt;generate&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-19&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-19&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-20&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-20&quot;&gt;&lt;/a&gt;            LUT1 #(.INIT(LUT)) _TECHMAP_REPLACE_ (.F(Y),&lt;/span&gt;
+&lt;span id=&quot;cb19-21&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-21&quot;&gt;&lt;/a&gt;                .I0(A[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]));&lt;/span&gt;
+&lt;span id=&quot;cb19-22&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-22&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-23&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-23&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-24&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-24&quot;&gt;&lt;/a&gt;            LUT2 #(.INIT(LUT)) _TECHMAP_REPLACE_ (.F(Y),&lt;/span&gt;
+&lt;span id=&quot;cb19-25&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-25&quot;&gt;&lt;/a&gt;                .I0(A[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .I1(A[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;]));&lt;/span&gt;
+&lt;span id=&quot;cb19-26&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-26&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-27&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-27&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-28&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-28&quot;&gt;&lt;/a&gt;            LUT3 #(.INIT(LUT)) _TECHMAP_REPLACE_ (.F(Y),&lt;/span&gt;
+&lt;span id=&quot;cb19-29&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-29&quot;&gt;&lt;/a&gt;                .I0(A[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .I1(A[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;]), .I2(A[&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;]));&lt;/span&gt;
+&lt;span id=&quot;cb19-30&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-30&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-31&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-31&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-32&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-32&quot;&gt;&lt;/a&gt;            LUT4 #(.INIT(LUT)) _TECHMAP_REPLACE_ (.F(Y),&lt;/span&gt;
+&lt;span id=&quot;cb19-33&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-33&quot;&gt;&lt;/a&gt;                .I0(A[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .I1(A[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;]), .I2(A[&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;]), .I3(A[&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;]));&lt;/span&gt;
+&lt;span id=&quot;cb19-34&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-34&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-35&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-35&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-36&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-36&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; f0, f1;&lt;/span&gt;
+&lt;span id=&quot;cb19-37&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-37&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;15&lt;/span&gt;: &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;)) lut0 (.A(A[&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f0));&lt;/span&gt;
+&lt;span id=&quot;cb19-38&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-38&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;31&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;16&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;)) lut1 (.A(A[&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f1));&lt;/span&gt;
+&lt;span id=&quot;cb19-39&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-39&quot;&gt;&lt;/a&gt;            MUX2_LUT5 mux5(.I0(f0), .I1(f1), .S0(A[&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;]), .O(Y));&lt;/span&gt;
+&lt;span id=&quot;cb19-40&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-40&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-41&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-41&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-42&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-42&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; f0, f1;&lt;/span&gt;
+&lt;span id=&quot;cb19-43&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-43&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;31&lt;/span&gt;: &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;)) lut0 (.A(A[&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f0));&lt;/span&gt;
+&lt;span id=&quot;cb19-44&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-44&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;63&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;32&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;)) lut1 (.A(A[&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f1));&lt;/span&gt;
+&lt;span id=&quot;cb19-45&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-45&quot;&gt;&lt;/a&gt;            MUX2_LUT6 mux6(.I0(f0), .I1(f1), .S0(A[&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;]), .O(Y));&lt;/span&gt;
+&lt;span id=&quot;cb19-46&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-46&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-47&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-47&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-48&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-48&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; f0, f1;&lt;/span&gt;
+&lt;span id=&quot;cb19-49&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-49&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;63&lt;/span&gt;: &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;)) lut0 (.A(A[&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f0));&lt;/span&gt;
+&lt;span id=&quot;cb19-50&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-50&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;127&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;64&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;)) lut1 (.A(A[&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f1));&lt;/span&gt;
+&lt;span id=&quot;cb19-51&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-51&quot;&gt;&lt;/a&gt;            MUX2_LUT7 mux7(.I0(f0), .I1(f1), .S0(A[&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;]), .O(Y));&lt;/span&gt;
+&lt;span id=&quot;cb19-52&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-52&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-53&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-53&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;8&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-54&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-54&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; f0, f1;&lt;/span&gt;
+&lt;span id=&quot;cb19-55&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-55&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;127&lt;/span&gt;: &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;)) lut0 (.A(A[&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f0));&lt;/span&gt;
+&lt;span id=&quot;cb19-56&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-56&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;255&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;128&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;)) lut1 (.A(A[&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f1));&lt;/span&gt;
+&lt;span id=&quot;cb19-57&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-57&quot;&gt;&lt;/a&gt;            MUX2_LUT8 mux8(.I0(f0), .I1(f1), .S0(A[&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;]), .O(Y));&lt;/span&gt;
+&lt;span id=&quot;cb19-58&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-58&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-59&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-59&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; _TECHMAP_FAIL_ = &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb19-60&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-60&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-61&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-61&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;kw&quot;&gt;endgenerate&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb19-62&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb19-62&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&quot;writing-synth-stat-to-file&quot;&gt;Writing synth stat to file&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;yosys&amp;gt; stat -top NAME -json NAME_synth_stat.json
 &lt;/code&gt;&lt;/pre&gt;
