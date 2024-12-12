@@ -1,0 +1,1 @@
+2024-12-11T00:00:00+00:00	Hardware design with open source tools | https://ju-sh.github.io/blog/open-hw.html

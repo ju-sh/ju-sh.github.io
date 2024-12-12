@@ -8,7 +8,7 @@
       https://ju-sh.github.io
     </link>
     <description>
-      Updates from famubu's site
+      Updates from ju-sh.github.io
     </description>
     <generator>
       Script using https://codeberg.org/ju-sh/mrkup
@@ -17,5 +17,581 @@
       en-us
     </language>
     <atom:link href="https://ju-sh.github.io/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>
+        Hardware design with open source tools
+      </title>
+      <link>
+        https://ju-sh.github.io/blog/open-hw.html
+      </link>
+      <description>
+        
+&lt;div&gt;
+  &lt;div&gt;
+    EDA with open source tools: yosys + nextpnr
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;div id=&quot;content-container&quot;&gt;
+&lt;p&gt;As part of my masters course project, I generate verilog designs that are then synthesized using vivado before being loaded onto FPGAs.&lt;/p&gt;
+&lt;p&gt;I once tried to see if open source tools can be used to achieve the same.&lt;/p&gt;
+&lt;p&gt;Spent some time looking up stuff like &lt;a href=&quot;https://github.com/google/skywater-pdk&quot;&gt;Skywater-PDK&lt;/a&gt; (being a hardware novice, I didn&#x27;t realize for a while that PDK is for ASIC designs).&lt;/p&gt;
+&lt;p&gt;Then I came across &lt;a href=&quot;https://learn.lushaylabs.com/os-toolchain-manual-installation/&quot;&gt;this article&lt;/a&gt; which describes how a verilog design can be synthesised and loaded onto an FPGA. The FPGA used was a &lt;a href=&quot;https://dl.sipeed.com/shareURL/TANG/Nano%209K/6_Chip_Manual/EN&quot;&gt;Sipeed Tang Nano 9K&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;FOSS tools involved in this included:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&quot;header&quot;&gt;
+&lt;th&gt;Tool / Project&lt;/th&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td&gt;Yosys&lt;/td&gt;
+&lt;td&gt;Synthesis&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td&gt;nextpnr&lt;/td&gt;
+&lt;td&gt;Placement and routing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td&gt;Project apicula&lt;/td&gt;
+&lt;td&gt;Bitstream generation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td&gt;openFPGALoader&lt;/td&gt;
+&lt;td&gt;Bitstream loading&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;I found a Sipeed Tang Nano 9K and tried doing the stuff the stuff mentioned in the article and it worked perfect!&lt;/p&gt;
+&lt;p&gt;This blog post is a description of that experience.&lt;/p&gt;
+&lt;h2 id=&quot;the-board&quot;&gt;The board&lt;/h2&gt;
+&lt;p&gt;First thing to do was to get an FPGA that is (or was made by community effort) open-source friendly.&lt;/p&gt;
+&lt;p&gt;After some time on the internet, I figured there were two options: a lattice FPGA or a gowin FPGA. I couldn&#x27;t find a lattice FPGA anywhere but could get my hands on an gowin FPGA. What more? The gowin FPGA was a Sipeed Tang Nano 9K itself. It helped that gowin FPGA are relatively cheaper.&lt;/p&gt;
+&lt;p&gt;Sipeed Tang Nano 9K is a board made by Sipeed, a company from China, and uses a Gowin FPGA. As the &#x27;nano&#x27; in its name indicates, Tang Nano 9K is one of the smaller boards offered by Sipeed. It is one of the most cost effective boards with an FPGA available in the market that is suitable for beginners.&lt;/p&gt;
+&lt;p&gt;This board is powered by a GW1NR-9 FPGA (GW1NR-LV9QN88PC6/I5) made by Gowin, again a Chinese company.&lt;br/&gt;
+(If it weren&#x27;t for Chinese companies offering cheap boards, a lot of us wouldn&#x27;t even see an FPGA.)&lt;/p&gt;
+&lt;p&gt;Some of the specs of this board &lt;a href=&quot;https://wiki.sipeed.com/hardware/en/tang/Tang-Nano-9K/Nano-9K.html&quot;&gt;ˡ&lt;/a&gt; &lt;a href=&quot;https://www.gowinsemi.com/en/support/devkits_detail/43/&quot;&gt;ˡ&lt;/a&gt;:&lt;/p&gt;
+&lt;table&gt;
+&lt;tbody&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td&gt;LUTs&lt;/td&gt;
+&lt;td&gt;8640 (LUT4)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td&gt;Registers / FFs&lt;/td&gt;
+&lt;td&gt;6480&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td&gt;PLLs&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td&gt;Buttons&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td&gt;LEDs&lt;/td&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td&gt;Crystal oscillator frequency&lt;/td&gt;
+&lt;td&gt;27MHz&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td&gt;Hard core processor&lt;/td&gt;
+&lt;td&gt;-NA-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td&gt;Debugging&lt;/td&gt;
+&lt;td&gt;Onboard USB-JTAG, USB-UART&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;A schematic of Sipeed Tang Nano 9K is available &lt;a href=&quot;https://learn.lushaylabs.com/content/files/2022/08/Tang_Nano_9K_3672_schematic.pdf&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In the example design that we use, we would be using all 6 LEDs for output.&lt;/p&gt;
+&lt;p&gt;Gowin offers an IDE of its own which is free but still needs license like Vivado. Since we are focusing on open source tools, we don&#x27;t use this.&lt;/p&gt;
+&lt;h2 id=&quot;flow&quot;&gt;Flow&lt;/h2&gt;
+&lt;h3 id=&quot;verilog-design&quot;&gt;Verilog design&lt;/h3&gt;
+&lt;p&gt;We are using a simple 6-bit ring counter as an example. I got the verilog code for that as follows:&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb1&quot;&gt;&lt;pre class=&quot;sourceCode verilog&quot;&gt;&lt;code class=&quot;sourceCode verilog&quot;&gt;&lt;span id=&quot;cb1-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;module&lt;/span&gt; counter&lt;/span&gt;
+&lt;span id=&quot;cb1-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-2&quot;&gt;&lt;/a&gt;(&lt;/span&gt;
+&lt;span id=&quot;cb1-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-3&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;input&lt;/span&gt; clk,&lt;/span&gt;
+&lt;span id=&quot;cb1-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-4&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;output&lt;/span&gt; [&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;] led&lt;/span&gt;
+&lt;span id=&quot;cb1-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-5&quot;&gt;&lt;/a&gt;);&lt;/span&gt;
+&lt;span id=&quot;cb1-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-6&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-7&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;// 27M cycles for 1 second&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-8&quot;&gt;&lt;/a&gt;&lt;span class=&quot;dt&quot;&gt;localparam&lt;/span&gt; WAIT_TIME = &lt;span class=&quot;dv&quot;&gt;27000000&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb1-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-9&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-10&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;// Set initial value of cycle counter&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-11&quot;&gt;&lt;/a&gt;&lt;span class=&quot;dt&quot;&gt;reg&lt;/span&gt; [&lt;span class=&quot;dv&quot;&gt;23&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;] clockCounter = &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb1-12&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-12&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-13&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-13&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;// Indicates currently active LED&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-14&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-14&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;// Initially, first LED is lit&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-15&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-15&quot;&gt;&lt;/a&gt;&lt;span class=&quot;dt&quot;&gt;reg&lt;/span&gt; [&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;] ledCounter = &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb1-16&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-16&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-17&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-17&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;always&lt;/span&gt; @(&lt;span class=&quot;kw&quot;&gt;posedge&lt;/span&gt; clk) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-18&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-18&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;co&quot;&gt;// Step up cycle counter&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-19&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-19&quot;&gt;&lt;/a&gt;    clockCounter &amp;lt;= clockCounter + &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb1-20&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-20&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-21&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-21&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (clockCounter == WAIT_TIME) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-22&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-22&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;co&quot;&gt;// Reset cycle counter once 1s is up&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-23&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-23&quot;&gt;&lt;/a&gt;        clockCounter &amp;lt;= &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb1-24&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-24&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-25&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-25&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;co&quot;&gt;// Register change in active LED&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-26&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-26&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (ledCounter == &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;)&lt;/span&gt;
+&lt;span id=&quot;cb1-27&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-27&quot;&gt;&lt;/a&gt;          ledCounter &amp;lt;= &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb1-28&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-28&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-29&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-29&quot;&gt;&lt;/a&gt;          ledCounter &amp;lt;= ledCounter &amp;lt;&amp;lt; &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb1-30&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-30&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-31&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-31&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-32&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-32&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-33&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-33&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;// Update change in active LED&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-34&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-34&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;assign&lt;/span&gt; led = ~ledCounter;&lt;/span&gt;
+&lt;span id=&quot;cb1-35&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-35&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;There is no input other than clock. 6 output signals are activated one by one, one at a time, with a delay of 1 second when operated at 27MHz frequency. These output signals are meant to be mapped to LEDs.&lt;/p&gt;
+&lt;p&gt;(&lt;code&gt;iverilog&lt;/code&gt; can be used for simulation with a test bench or to just play around with the verilog file.)&lt;/p&gt;
+&lt;h3 id=&quot;synthesis-yosys&quot;&gt;Synthesis (&lt;code&gt;yosys&lt;/code&gt;)&lt;/h3&gt;
+&lt;p&gt;yosys is used to convert the verilog design into corresponding netlist containing data needed for placement and routing.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;yosys -p &quot;read_verilog counter.v; synth_gowin -top counter -json counter.json&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This tells yosys to read the verilog file, run synthesis targeting a gowin FPGA where top module is named &lt;code&gt;counter&lt;/code&gt; and write results into a file named &lt;code&gt;counter.json&lt;/code&gt;. yosys will perform optimizations, techmap, etc.&lt;/p&gt;
+&lt;p&gt;Output of synthesis is a netlist. The contents of &lt;code&gt;counter.json&lt;/code&gt; is a form of netlist.&lt;/p&gt;
+&lt;p&gt;We can use the &lt;code&gt;synth_gowin&lt;/code&gt; command here thanks to yosys providing support for gowin FPGAs out of the box. &lt;code&gt;synth_gowin&lt;/code&gt; is actually short for a bunch of yosys commands. I&#x27;ve included these commands in the addendum of this post.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;counter.json&lt;/code&gt; will contain information like mapping of blocks to FPGA components.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;synth_gowin&lt;/code&gt; command includes &lt;a href=&quot;https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/stat.html&quot;&gt;&lt;code&gt;stat&lt;/code&gt;&lt;/a&gt; command of yosys, which prints resource utilzation data like number of registers needed.&lt;/p&gt;
+&lt;p&gt;A sample report looks like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;=== counter ===
+
+   Number of wires:                 78
+   Number of wire bits:            127
+   Number of public wires:          78
+   Number of public wire bits:     127
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 87
+     ALU                            30
+     DFFE                            6
+     DFFR                           24
+     GND                             1
+     IBUF                            1
+     LUT1                            9
+     LUT4                            7
+     MUX2_LUT5                       2
+     OBUF                            6
+     VCC                             1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I didn&#x27;t know what many of these abbreviations meant. So looked up some of them &lt;a href=&quot;https://www.gowinsemi.com/upload/database_doc/39/document/5bfcff2ce0b72.pdf&quot;&gt;at a gowin user guide&lt;/a&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;DFFE: D-FF with clock enable (positive-edge triggered)&lt;/li&gt;
+&lt;li&gt;DFFR: D-FF with synchronous reset (positive-edge triggered)&lt;/li&gt;
+&lt;li&gt;ALU: 2-input ALU&lt;/li&gt;
+&lt;li&gt;IOBUF: Input/Ouput buffer (depending on a control bit, either input or output is done)&lt;/li&gt;
+&lt;li&gt;LUT1: 1-input LUT. Used for a buffer or as an inverter&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;placement-and-routing-nextpnr&quot;&gt;Placement and routing (&lt;code&gt;nextpnr&lt;/code&gt;)&lt;/h3&gt;
+&lt;p&gt;nextpnr is used to perform placement and routing after synthesis based on the information generated by yosys. It offers a gowin-specific command: &lt;code&gt;nextpnr-gowin&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;nextpnr-gowin \
+  --json counter.json \             # Info from yosys
+  --freq 27 \                       # Desired frequency in MHz
+  --write counter_pnr.json \        # Output file
+  --device GW1NR-LV9QN88PC6/I5 \    # Target FPGA info
+  --family GW1N-9C \                # Target FPGA family
+  --cst tangnano9k.cst              # Physical constraints file
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The constraints file say which pins are to be mapped to what. In our case, its contents are as follows:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;IO_LOC &quot;clk&quot; 52;
+IO_PORT &quot;clk&quot; PULL_MODE=UP;
+IO_LOC &quot;led[0]&quot; 10;
+IO_LOC &quot;led[1]&quot; 11;
+IO_LOC &quot;led[2]&quot; 13;
+IO_LOC &quot;led[3]&quot; 14;
+IO_LOC &quot;led[4]&quot; 15;
+IO_LOC &quot;led[5]&quot; 16;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;which specifies the ports for clock and the LEDs.&lt;/p&gt;
+&lt;p&gt;The port numbers are available from the schematics of the gowin Tang nano 9K FPGA. I could find such a schematic &lt;a href=&quot;https://learn.lushaylabs.com/content/files/2022/08/Tang_Nano_9K_3672_schematic.pdf&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Above nextpnr command would write the information about the placed and routed design to a file named &lt;code&gt;counter_pnr.json&lt;/code&gt;. The contents of this file is a netlist with placement and routing info.&lt;/p&gt;
+&lt;p&gt;next-pnr also produces an FPGA-specific utilization report:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Info: Device utilisation:
+Info:                    VCC:     1/    1   100%
+Info:                  SLICE:    79/ 8640     0%
+Info:                    IOB:     7/  274     2%
+Info:                 OSER16:     0/   38     0%
+Info:                 IDES16:     0/   38     0%
+Info:                IOLOGIC:     0/  296     0%
+Info:              MUX2_LUT5:     2/ 4320     0%
+Info:              MUX2_LUT6:     0/ 2160     0%
+Info:              MUX2_LUT7:     0/ 1080     0%
+Info:              MUX2_LUT8:     0/ 1056     0%
+Info:                    GND:     1/    1   100%
+Info:                   RAMW:     0/  270     0%
+Info:                    OSC:     0/    1     0%
+Info:                   rPLL:     0/    2     0%
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Looks like it needed only two 5-input LUTs. I guess, the 7 IOBs are the 6 LEDs and the input clock. But I&#x27;m not sure how the number of slices is 79.&lt;/p&gt;
+&lt;p&gt;Abbreviations&lt;a href=&quot;https://www.gowinsemi.com/upload/database_doc/39/document/5bfcff2ce0b72.pdf&quot;&gt;ˡ&lt;/a&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MUX2-LUTn: n-input LUT made with MUX2 and LUT4.&lt;/li&gt;
+&lt;li&gt;ISERn: 1-to-n deserializer&lt;/li&gt;
+&lt;li&gt;OSERn: n-to-1 serializer&lt;/li&gt;
+&lt;li&gt;OSC: Oscillator&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;(Couldn&#x27;t find what RAMW means..)&lt;/p&gt;
+&lt;p&gt;Then nextpnr does some timing analysis (but how can it be done before routing?).&lt;/p&gt;
+&lt;p&gt;I used to think that timing analysis cannot be done before routing. But turns out that isn&#x27;t the case. My wild guess is that paths can be inferred from the netlist that yosys generated since it specifies the paths in some form anyway. The separate routing proces can create more efficient paths specific to target board.&lt;/p&gt;
+&lt;p&gt;This was the slack histogram that nextpnr gave post-placement but pre-routing:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Info: Max frequency for clock &#x27;clk_IBUF_I_O&#x27;: 316.86 MHz (PASS at 27.00 MHz)
+
+Info: Max delay posedge clk_IBUF_I_O -&amp;gt; &amp;lt;async&amp;gt;: 6.69 ns
+
+Info: Slack histogram:
+Info:  legend: * represents 1 endpoint(s)
+Info:          + represents [1,1) endpoint(s)
+Info: [ 33881,  33996) |***************************
+Info: [ 33996,  34111) |
+Info: [ 34111,  34226) |
+Info: [ 34226,  34341) |
+Info: [ 34341,  34456) |
+Info: [ 34456,  34571) |
+Info: [ 34571,  34686) |*
+Info: [ 34686,  34801) |*
+Info: [ 34801,  34916) |
+Info: [ 34916,  35031) |
+Info: [ 35031,  35146) |
+Info: [ 35146,  35261) |
+Info: [ 35261,  35376) |
+Info: [ 35376,  35491) |
+Info: [ 35491,  35606) |
+Info: [ 35606,  35721) |
+Info: [ 35721,  35836) |
+Info: [ 35836,  35951) |
+Info: [ 35951,  36066) |
+Info: [ 36066,  36181) |*
+Info: Checksum: 0xb9798815
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The slack histogram groups slacks (in ps) into ranges and show how many paths fit in each of the ranges.&lt;/p&gt;
+&lt;p&gt;In the above histogram, there are 27 asterisks next to &lt;code&gt;[ 33881,
+33996)&lt;/code&gt; which means that there are 27 paths whose slack is greater than or equal to 33.881ns but less than 33.996ns.&lt;/p&gt;
+&lt;p&gt;The histogram would show negative values if there was negative slack. No negative slack. Yay!&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;A summary of routing information is printed:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Info: Routing..
+Info: Setting up routing queue.
+Info: Routing 225 arcs.
+Info:            |   (re-)routed arcs  |   delta    | remaining|       time spent     |
+Info:    IterCnt |  w/ripup   wo/ripup |  w/r  wo/r |      arcs| batch(sec) total(sec)|
+Info:        426 |      200        226 |  200   226 |         0|       1.82       1.82|
+Info: Routing complete.
+Info: Router1 time 1.82s
+Info: Checksum: 0x756ec238
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;(Looks like ripup is the name of a routing algorithm.)&lt;/p&gt;
+&lt;p&gt;An &lt;a href=&quot;https://github.com/YosysHQ/nextpnr/blob/master/docs/faq.md&quot;&gt;arc&lt;/a&gt; is a &#x27;source-sink pair on a net&#x27; or a &#x27;directed connection between two nodes&#x27;. Looks like there were 225 of them in the netlist and nextpnr spent 1.82 seconds performing 426 iterations.&lt;/p&gt;
+&lt;p&gt;It also seems to do some static timing analysis. I&#x27;m not sure about the details here, but it prints out a report like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Info: Critical path report for cross-domain path &#x27;posedge clk_IBUF_I_O&#x27; -&amp;gt; &#x27;&amp;lt;async&amp;gt;&#x27;:
+Info: curr total
+Info:  0.5  0.5  Source ledCounter_DFFE_Q_DFFLC.Q
+Info:  1.9  2.4    Net ledCounter[5] (3,17) -&amp;gt; (1,22)
+Info:                Sink ledCounter_LUT1_I0_3_LC.A
+Info:                Defined in:
+Info:                  counter.v:8.11-8.21
+Info:  1.0  3.4  Source ledCounter_LUT1_I0_3_LC.F
+Info:  1.4  4.8    Net led_OBUF_O_I[5] (1,22) -&amp;gt; (0,25)
+Info:                Sink led_OBUF_O$iob.I
+Info: 1.5 ns logic, 3.4 ns routing
+
+Info: Max frequency for clock &#x27;clk_IBUF_I_O&#x27;: 315.86 MHz (PASS at 27.00 MHz)
+
+Info: Max delay posedge clk_IBUF_I_O -&amp;gt; &amp;lt;async&amp;gt;: 4.84 ns
+
+Info: Slack histogram:
+Info:  legend: * represents 1 endpoint(s)
+Info:          + represents [1,1) endpoint(s)
+Info: [ 33871,  33991) |*
+Info: [ 33991,  34111) |
+Info: [ 34111,  34231) |*
+Info: [ 34231,  34351) |******
+Info: [ 34351,  34471) |
+Info: [ 34471,  34591) |*********
+Info: [ 34591,  34711) |**********
+Info: [ 34711,  34831) |*
+Info: [ 34831,  34951) |*
+Info: [ 34951,  35071) |
+Info: [ 35071,  35191) |
+Info: [ 35191,  35311) |
+Info: [ 35311,  35431) |
+Info: [ 35431,  35551) |
+Info: [ 35551,  35671) |
+Info: [ 35671,  35791) |
+Info: [ 35791,  35911) |
+Info: [ 35911,  36031) |
+Info: [ 36031,  36151) |
+Info: [ 36151,  36271) |*
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Hmm.. Not sure if I&#x27;m reading this correctly, but from the histograms alone, it looks as if total slack actually went up after routing…&lt;/p&gt;
+&lt;p&gt;Still the value shown as &#x27;Max delay posedge clk&lt;sub&gt;IBUFIO&lt;/sub&gt;&#x27; has gone down to 4.84ns from 6.69ns.&lt;/p&gt;
+&lt;p&gt;Yet the max frequency of the clock went down a bit to 315.86MHz from 316.86MHz.&lt;/p&gt;
+&lt;p&gt;—&lt;/p&gt;
+&lt;p&gt;We had requested the design to be run at 27MHz. nextpnr figures it can be run even at 315.86MHz, so we are good in that aspect.&lt;/p&gt;
+&lt;p&gt;nextpnr has gui that is not part of default installation which can provide visualization of placed and routed nets. I have not used it yet, but it looks nice.&lt;/p&gt;
+&lt;h3 id=&quot;bitstream-generation-project-apicula&quot;&gt;Bitstream generation (Project Apicula)&lt;/h3&gt;
+&lt;p&gt;Now that we have all the information needed for a loadable FPGA design, we convert the data into a bit stream that can then actually loaded onto the FPGA.&lt;/p&gt;
+&lt;p&gt;For this we need to know the bitstream format used by the FPGA. Usually FPGA vendors are not enthusiastic about revealing this information to the public.&lt;/p&gt;
+&lt;p&gt;(Found a &lt;a href=&quot;https://news.ycombinator.com/item?id=10653179&quot;&gt;hackernews discussion on the topic&lt;/a&gt; which was in response to &lt;a href=&quot;http://www.megacz.com/thoughts/bitstream.secrecy.html&quot;&gt;this post&lt;/a&gt; suggesting that there&#x27;s little point in keeping bitstream format secret.)&lt;/p&gt;
+&lt;p&gt;There have been many attempts to document the bitstream formats of different architectures over the years.&lt;/p&gt;
+&lt;p&gt;Examples include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/YosysHQ/prjtrellis&quot;&gt;Project Trellis&lt;/a&gt;: Lattice ECP5&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/YosysHQ/icestorm&quot;&gt;Project IceStorm&lt;/a&gt;: Lattice iCE40&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/f4pga/prjxray&quot;&gt;Project X-Ray&lt;/a&gt;: Xilinx 7-series&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/YosysHQ/apicula&quot;&gt;Project apicula&lt;/a&gt; is an effort that successfully managed to figure out the bitstream format of a class of gowin FPGAs that includes the one used by Sipeed Tang Nano 9K, which is what we are using.&lt;/p&gt;
+&lt;p&gt;The tools for apicula can be obtained by installing a python package called &lt;code&gt;apycula&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pip3 install apycula
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;apycula&lt;/code&gt; offers the &lt;code&gt;gowin_pack&lt;/code&gt; to generate bitstream. In our case, it can be used like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gowin_pack \
+  -d GW1N-9C \      # Target FPGA family
+  -o counter.fs \   # Output file with bitstream
+  counter_pnr.json  # Input file with info from nextpnr
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;counter.fs&lt;/code&gt; file is the generated bitstream.&lt;/p&gt;
+&lt;p&gt;(I tried opening this file in a text editor. Was expecting gibberish-like strings, but it was literally showing as a bunch 0s and 1s.)&lt;/p&gt;
+&lt;h3 id=&quot;loading-bitstream-to-fpga-openfpgaloader&quot;&gt;Loading bitstream to FPGA (&lt;code&gt;openFPGALoader&lt;/code&gt;)&lt;/h3&gt;
+&lt;p&gt;Once we have the bitstream file, we can load it on to our FPGA with openfpgaloader.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;openFPGALoader \
+  -b tangnano9k \  # Board name
+  -f counter.fs \  # Bitstream to be loaded
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But before this command can work, something needs to be done inorder for openfpgaloader to be able to detect connected FPGA connected to the computer.&lt;/p&gt;
+&lt;p&gt;Otherwise we can get errors like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ openFPGALoader -b tangnano9k -f counter.fs
+empty
+write to flash
+unable to open ftdi device: -3 (device not found)
+JTAG init failed with: unable to open ftdi device
+
+
+$ ls /dev/ttyUSB*
+/dev/ttyUSB0  /dev/ttyUSB1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The developer of openfpgaloader themselves &lt;a href=&quot;https://trabucayre.github.io/openFPGALoader/guide/install.html&quot;&gt;has got a blog post&lt;/a&gt; on getting around this error.&lt;/p&gt;
+&lt;p&gt;What we could do is to use udev rules:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo cp 99-openfpgaloader.rules /etc/udev/rules.d/
+
+$ ls /etc/udev/rules.d/
+52-xilinx-digilent-usb.rules  52-xilinx-ftdi-usb.rules  52-xilinx-pcusb.rules  99-openfpgaloader.rules
+
+$ sudo udevadm control --reload-rules
+$ sudo udevadm trigger
+$ sudo usermod -a $USER -G plugdev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The rule file (&lt;code&gt;99-openfpgaloader.rules&lt;/code&gt;) file can be obtained from &lt;a href=&quot;https://github.com/trabucayre/openFPGALoader/blob/master/99-openfpgaloader.rules&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Once that&#x27;s done, it should be smooth sailing. We can flash the FPGA with:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ openFPGALoader -b tangnano9k -f counter.fs
+empty
+write to flash
+Jtag frequency : requested 6.00MHz   -&amp;gt; real 6.00MHz
+Parse file Parse counter.fs:
+Done
+DONE
+Jtag frequency : requested 2.50MHz   -&amp;gt; real 2.00MHz
+Erase SRAM DONE
+Erase FLASH DONE
+Erasing FLASH: [==================================================] 100.00%
+Done
+write Flash: [==================================================] 100.00%
+Done
+CRC check : FAIL
+Read: 0x0000431b checksum: 0xb4bb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I still have not figured out why the &#x27;CRC check FAIL&#x27; is showing up, but it does not seem to prevent the bitstream being loaded onto the FPGA.&lt;/p&gt;
+&lt;p&gt;Once the FPGA is powered on, we can see the LED light blinking one-by-one, one-at-a-time.&lt;/p&gt;
+&lt;p&gt;:-)&lt;/p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;The 6-bit ring counter design we used is tiny and simple. One got to try larger designs to get a better feel of how it works.&lt;/p&gt;
+&lt;p&gt;It is helpful to have a Makefile to run the commands. I made one like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;NAME=counter
+BOARD=tangnano9k
+FAMILY=GW1N-9C
+DEVICE=GW1NR-LV9QN88PC6/I5
+
+all: $(NAME).fs
+
+synth: $(NAME).v
+    yosys -p &quot;read_verilog $(NAME).v; synth_gowin -top $(NAME) -json $(NAME).json&quot;
+
+pnr: $(NAME).json
+    nextpnr-gowin --json $(NAME).json --freq 1 --write $(NAME)_pnr.json \
+        --device $(DEVICE) --family $(FAMILY) --cst $(BOARD).cst
+
+bits: $(NAME)_pnr.json
+    gowin_pack -d $(FAMILY) -o $(NAME).fs $(NAME)_pnr.json
+
+load: $(NAME).fs
+    openFPGALoader -b $(BOARD) -f $(NAME).fs
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Versions of software used:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Yosys: 0.38 (git sha1 543faed9c8c, gcc 13.2.0 -fPIC -Os)&lt;/li&gt;
+&lt;li&gt;nextpnr: 0.7&lt;/li&gt;
+&lt;li&gt;Apycula: 0.12&lt;/li&gt;
+&lt;li&gt;openFPGALoader: 0.12.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;addendum&quot;&gt;Addendum&lt;/h2&gt;
+&lt;h3 id=&quot;commands-corresponding-to-synth_gowin-of-yosys&quot;&gt;Commands corresponding to &lt;code&gt;synth_gowin&lt;/code&gt; of yosys&lt;/h3&gt;
+&lt;p&gt;As mentioned in the &lt;a href=&quot;https://yosys.readthedocs.io/_/downloads/en/latest/pdf/&quot;&gt;manual&lt;/a&gt;, &lt;code&gt;synth_gowin&lt;/code&gt; stands for:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# yosys&amp;gt; help synth_gowin
+
+    begin:
+        read_verilog -specify -lib +/gowin/cells_sim.v
+        read_verilog -specify -lib +/gowin/cells_xtra.v
+        hierarchy -check -top &amp;lt;top&amp;gt;
+
+    flatten:    (unless -noflatten)
+        proc
+        flatten
+        tribuf -logic
+        deminout
+
+    coarse:
+        synth -run coarse [-no-rw-check]
+
+    map_ram:
+        memory_libmap -lib +/gowin/lutrams.txt -lib +/gowin/brams.txt [-no-auto-block] [-no-auto-distributed]    (-no-auto-block if -nobram, -no-auto-distributed if -nolutram)
+        techmap -map +/gowin/lutrams_map.v -map +/gowin/brams_map.v
+
+    map_ffram:
+        opt -fast -mux_undef -undriven -fine
+        memory_map
+        opt -undriven -fine
+
+    map_gates:
+        techmap -map +/techmap.v -map +/gowin/arith_map.v
+        opt -fast
+        abc -dff -D 1    (only if -retime)
+        iopadmap -bits -inpad IBUF O:I -outpad OBUF I:O -toutpad TBUF ~OEN:I:O -tinoutpad IOBUF ~OEN:O:I:IO    (unless -noiopads)
+
+    map_ffs:
+        opt_clean
+        dfflegalize -cell $_DFF_?_ 0 -cell $_DFFE_?P_ 0 -cell $_SDFF_?P?_ r -cell $_SDFFE_?P?P_ r -cell $_DFF_?P?_ r -cell $_DFFE_?P?P_ r
+        techmap -map +/gowin/cells_map.v
+        opt_expr -mux_undef
+        simplemap
+
+    map_luts:
+        read_verilog -icells -lib -specify +/abc9_model.v
+        abc9 -maxlut 8 -W 500
+        clean
+
+    map_cells:
+        techmap -map +/gowin/cells_map.v
+        opt_lut_ins -tech gowin
+        setundef -undriven -params -zero
+        hilomap -singleton -hicell VCC V -locell GND G
+        splitnets -ports    (only if -vout used)
+        clean
+        autoname
+
+    check:
+        hierarchy -check
+        stat
+        check -noinit
+        blackbox =A:whitebox
+
+    vout:
+        write_verilog -simple-lhs -decimal -attr2comment -defparam -renameprefix gen &amp;lt;file-name&amp;gt;
+        write_json &amp;lt;file-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;techmap-stuff&quot;&gt;Techmap stuff&lt;/h3&gt;
+&lt;p&gt;I guess files like the one at &lt;code&gt;/usr/share/yosys/gowin/cells_map.v&lt;/code&gt; are used for techmap.&lt;/p&gt;
+&lt;p&gt;Its contents were like:&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb18&quot;&gt;&lt;pre class=&quot;sourceCode verilog&quot;&gt;&lt;code class=&quot;sourceCode verilog&quot;&gt;&lt;span id=&quot;cb18-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;// DFFR          D Flip-Flop with Synchronous Reset&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-2&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;module&lt;/span&gt;  \&lt;span class=&quot;dt&quot;&gt;$_SDFF_PP0_&lt;/span&gt; (&lt;span class=&quot;dt&quot;&gt;input&lt;/span&gt; D, C, R, &lt;span class=&quot;dt&quot;&gt;output&lt;/span&gt; Q);&lt;/span&gt;
+&lt;span id=&quot;cb18-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-3&quot;&gt;&lt;/a&gt;    DFFR _TECHMAP_REPLACE_ (.D(D), .Q(Q), .CLK(C), .RESET(R));&lt;/span&gt;
+&lt;span id=&quot;cb18-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-4&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; _TECHMAP_REMOVEINIT_Q_ = &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb18-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-5&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-6&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-7&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;// ..&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-8&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;// ..&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-9&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-10&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;module&lt;/span&gt; \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; (A, Y);&lt;/span&gt;
+&lt;span id=&quot;cb18-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-11&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;parameter&lt;/span&gt; WIDTH = &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb18-12&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-12&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;parameter&lt;/span&gt; LUT = &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb18-13&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-13&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-14&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-14&quot;&gt;&lt;/a&gt;    (* force_downto *)&lt;/span&gt;
+&lt;span id=&quot;cb18-15&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-15&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;input&lt;/span&gt; [WIDTH&lt;span class=&quot;dv&quot;&gt;-1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;] A;&lt;/span&gt;
+&lt;span id=&quot;cb18-16&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-16&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;dt&quot;&gt;output&lt;/span&gt; Y;&lt;/span&gt;
+&lt;span id=&quot;cb18-17&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-17&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-18&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-18&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;kw&quot;&gt;generate&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-19&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-19&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-20&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-20&quot;&gt;&lt;/a&gt;            LUT1 #(.INIT(LUT)) _TECHMAP_REPLACE_ (.F(Y),&lt;/span&gt;
+&lt;span id=&quot;cb18-21&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-21&quot;&gt;&lt;/a&gt;                .I0(A[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]));&lt;/span&gt;
+&lt;span id=&quot;cb18-22&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-22&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-23&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-23&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-24&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-24&quot;&gt;&lt;/a&gt;            LUT2 #(.INIT(LUT)) _TECHMAP_REPLACE_ (.F(Y),&lt;/span&gt;
+&lt;span id=&quot;cb18-25&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-25&quot;&gt;&lt;/a&gt;                .I0(A[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .I1(A[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;]));&lt;/span&gt;
+&lt;span id=&quot;cb18-26&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-26&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-27&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-27&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-28&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-28&quot;&gt;&lt;/a&gt;            LUT3 #(.INIT(LUT)) _TECHMAP_REPLACE_ (.F(Y),&lt;/span&gt;
+&lt;span id=&quot;cb18-29&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-29&quot;&gt;&lt;/a&gt;                .I0(A[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .I1(A[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;]), .I2(A[&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;]));&lt;/span&gt;
+&lt;span id=&quot;cb18-30&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-30&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-31&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-31&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-32&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-32&quot;&gt;&lt;/a&gt;            LUT4 #(.INIT(LUT)) _TECHMAP_REPLACE_ (.F(Y),&lt;/span&gt;
+&lt;span id=&quot;cb18-33&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-33&quot;&gt;&lt;/a&gt;                .I0(A[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .I1(A[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;]), .I2(A[&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;]), .I3(A[&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;]));&lt;/span&gt;
+&lt;span id=&quot;cb18-34&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-34&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-35&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-35&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-36&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-36&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; f0, f1;&lt;/span&gt;
+&lt;span id=&quot;cb18-37&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-37&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;15&lt;/span&gt;: &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;)) lut0 (.A(A[&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f0));&lt;/span&gt;
+&lt;span id=&quot;cb18-38&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-38&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;31&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;16&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;)) lut1 (.A(A[&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f1));&lt;/span&gt;
+&lt;span id=&quot;cb18-39&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-39&quot;&gt;&lt;/a&gt;            MUX2_LUT5 mux5(.I0(f0), .I1(f1), .S0(A[&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;]), .O(Y));&lt;/span&gt;
+&lt;span id=&quot;cb18-40&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-40&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-41&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-41&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-42&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-42&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; f0, f1;&lt;/span&gt;
+&lt;span id=&quot;cb18-43&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-43&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;31&lt;/span&gt;: &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;)) lut0 (.A(A[&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f0));&lt;/span&gt;
+&lt;span id=&quot;cb18-44&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-44&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;63&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;32&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;)) lut1 (.A(A[&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f1));&lt;/span&gt;
+&lt;span id=&quot;cb18-45&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-45&quot;&gt;&lt;/a&gt;            MUX2_LUT6 mux6(.I0(f0), .I1(f1), .S0(A[&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;]), .O(Y));&lt;/span&gt;
+&lt;span id=&quot;cb18-46&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-46&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-47&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-47&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-48&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-48&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; f0, f1;&lt;/span&gt;
+&lt;span id=&quot;cb18-49&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-49&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;63&lt;/span&gt;: &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;)) lut0 (.A(A[&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f0));&lt;/span&gt;
+&lt;span id=&quot;cb18-50&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-50&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;127&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;64&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;)) lut1 (.A(A[&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f1));&lt;/span&gt;
+&lt;span id=&quot;cb18-51&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-51&quot;&gt;&lt;/a&gt;            MUX2_LUT7 mux7(.I0(f0), .I1(f1), .S0(A[&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;]), .O(Y));&lt;/span&gt;
+&lt;span id=&quot;cb18-52&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-52&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-53&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-53&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (WIDTH == &lt;span class=&quot;dv&quot;&gt;8&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-54&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-54&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; f0, f1;&lt;/span&gt;
+&lt;span id=&quot;cb18-55&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-55&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;127&lt;/span&gt;: &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;)) lut0 (.A(A[&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f0));&lt;/span&gt;
+&lt;span id=&quot;cb18-56&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-56&quot;&gt;&lt;/a&gt;            \&lt;span class=&quot;dt&quot;&gt;$lut&lt;/span&gt; #(.LUT(LUT[&lt;span class=&quot;dv&quot;&gt;255&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;128&lt;/span&gt;]), .WIDTH(&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;)) lut1 (.A(A[&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]), .Y(f1));&lt;/span&gt;
+&lt;span id=&quot;cb18-57&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-57&quot;&gt;&lt;/a&gt;            MUX2_LUT8 mux8(.I0(f0), .I1(f1), .S0(A[&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;]), .O(Y));&lt;/span&gt;
+&lt;span id=&quot;cb18-58&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-58&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;begin&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-59&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-59&quot;&gt;&lt;/a&gt;            &lt;span class=&quot;dt&quot;&gt;wire&lt;/span&gt; _TECHMAP_FAIL_ = &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;
+&lt;span id=&quot;cb18-60&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-60&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;kw&quot;&gt;end&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-61&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-61&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;kw&quot;&gt;endgenerate&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb18-62&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb18-62&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;endmodule&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;writing-synth-stat-to-file&quot;&gt;Writing synth stat to file&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;yosys&amp;gt; stat -top NAME -json NAME_synth_stat.json
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&quot;https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/stat.html&quot;&gt;https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/stat.html&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;static-timing-analsys&quot;&gt;static timing analsys&lt;/h3&gt;
+&lt;p&gt;yosys has sta but how to use??&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/YosysHQ/yosys/pull/2490&quot;&gt;https://github.com/YosysHQ/yosys/pull/2490&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+      </description>
+      <pubDate>
+        Wed, 11 Dec 2024 00:00:00 GMT
+      </pubDate>
+      <guid>
+        https://ju-sh.github.io/blog/open-hw.html
+      </guid>
+      <category>
+        electronics
+      </category>
+    </item>
   </channel>
 </rss>

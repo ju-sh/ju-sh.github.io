@@ -41,6 +41,8 @@
 
 
 
+<hr/>
+
 <div id="content-container">
 <p>(Jottings made while scouring the internet to get familiar with EDA)</p>
 <p>—</p>
@@ -371,6 +373,8 @@ create_clock –period 7 –waveform {2 4} [get_ports {CK3}]
 <li>WNS: Worst Negative Slack
 <ul>
 <li>Worst of all individual negative slacks</li>
+<li>(Confusing name… Slack need not actually negative here.)</li>
+<li>ie, slack of critical path <a href="https://adaptivesupport.amd.com/s/question/0D54U00006qTJxwSAG/what-is-the-worst-negative-slack?language=en_US">ˡ</a></li>
 <li>If it's negative, timing constraint is not met. Otherwise okay.
 <ul>
 <li>'The more negative, the worse it is' <a href="https://support.xilinx.com/s/question/0D54U00006qTJxwSAG/what-is-the-worst-negative-slack?language=en_US">ʳ</a></li>
