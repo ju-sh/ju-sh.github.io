@@ -44,6 +44,82 @@
 <hr/>
 
 <div id="content-container">
+<h2 id="limits">Limits</h2>
+<p><a
+href="https://en.cppreference.com/w/c/types/limits">https://en.cppreference.com/w/c/types/limits</a></p>
+<table>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Min value</th>
+<th>Max value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>char</code></td>
+<td><code>CHAR_MIN</code></td>
+<td><code>CHAR_MAX</code></td>
+</tr>
+<tr class="even">
+<td><code>signed char</code></td>
+<td><code>SCHAR_MIN</code></td>
+<td><code>SCHAR_MAX</code></td>
+</tr>
+<tr class="odd">
+<td><code>unsigned char</code></td>
+<td><code>UCHAR_MIN</code></td>
+<td><code>UCHAR_MAX</code></td>
+</tr>
+<tr class="even">
+<td><code>short</code></td>
+<td><code>SHRT_MIN</code></td>
+<td><code>SHRT_MAX</code></td>
+</tr>
+<tr class="odd">
+<td><code>unsigned short</code></td>
+<td><code>USHRT_MIN</code></td>
+<td><code>USHRT_MAX</code></td>
+</tr>
+<tr class="even">
+<td><code>int</code></td>
+<td><code>INT_MIN</code></td>
+<td><code>INT_MAX</code></td>
+</tr>
+<tr class="odd">
+<td><code>unsigned int</code></td>
+<td><code>UINT_MIN</code></td>
+<td><code>UINT_MAX</code></td>
+</tr>
+<tr class="even">
+<td><code>long</code></td>
+<td><code>LONG_MIN</code></td>
+<td><code>LONG_MAX</code></td>
+</tr>
+<tr class="odd">
+<td><code>unsigned long</code></td>
+<td><code>ULONG_MIN</code></td>
+<td><code>ULONG_MAX</code></td>
+</tr>
+<tr class="even">
+<td><code>long long</code></td>
+<td><code>LLONG_MIN</code></td>
+<td><code>LLONG_MAX</code></td>
+</tr>
+<tr class="odd">
+<td><code>unsigned long long</code></td>
+<td><code>ULLONG_MIN</code></td>
+<td><code>ULLONG_MAX</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="scanf"><code>scanf</code></h2>
+<p>Use of <code>scanf()</code> is usually frowned upon as it doesn't
+give the programmer enough control over what could happen (Eg: buffer
+overflow attack).</p>
+<p>Yet, it's quite useful to get stuff done quick when you are just
+messing around with C while learning it.</p>
+<p>In that sense, <code>scanf()</code> is in fact, quite useful.</p>
 <h2 id="format-specifiers">Format specifiers</h2>
 <table>
 <thead>
@@ -54,40 +130,300 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>zu</code></td>
+<td><code>%zu</code></td>
 <td><code>size_t</code></td>
 </tr>
 <tr class="even">
-<td><code>u</code></td>
-<td><code>unsigned</code></td>
-</tr>
-<tr class="odd">
-<td><code>lu</code></td>
-<td><code>long unsigned</code></td>
-</tr>
-<tr class="even">
-<td><code>p</code></td>
-<td>Pointer</td>
-</tr>
-<tr class="odd">
-<td><code>n</code></td>
+<td><code>%n</code></td>
 <td>Number of chars written so far</td>
 </tr>
-<tr class="even">
-<td><code>x</code> / <code>X</code></td>
-<td>Hexadecimal</td>
-</tr>
 <tr class="odd">
-<td><code>o</code></td>
+<td><code>%o</code></td>
 <td>Octal</td>
 </tr>
 <tr class="even">
-<td><code>%</code></td>
+<td><code>%%</code></td>
 <td>Literal '%'</td>
+</tr>
+<tr class="odd">
+<td><code>%c</code></td>
+<td>char</td>
+</tr>
+<tr class="even">
+<td><code>%d</code></td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td><code>%s</code></td>
+<td>string</td>
+</tr>
+<tr class="even">
+<td><code>%f</code></td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td><code>%n</code></td>
+<td>a special one</td>
+</tr>
+<tr class="even">
+<td><code>%d</code></td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td><code>%u</code></td>
+<td>unsigned int</td>
+</tr>
+<tr class="even">
+<td><code>%p</code></td>
+<td>address (pointer)</td>
+</tr>
+<tr class="odd">
+<td><code>%x</code></td>
+<td>int as hexadecimal (0x, 0X, ,)</td>
+</tr>
+<tr class="even">
+<td><code>%X</code></td>
+<td>int as hexadecimal (0x, 0X, ,)</td>
+</tr>
+<tr class="odd">
+<td><code>%[^\n]</code></td>
+<td>Exclude (till <code>\n</code>)</td>
 </tr>
 </tbody>
 </table>
-<p>See: <a href="https://en.cppreference.com/w/c/io/fprintf">https://en.cppreference.com/w/c/io/fprintf</a></p>
+<p>Modifiers:</p>
+<ul>
+<li>l: long</li>
+<li>ll: long long</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Format specifier</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>%ld</code></td>
+<td><code>long int</code></td>
+</tr>
+<tr class="even">
+<td><code>%lld</code></td>
+<td><code>long long int</code></td>
+</tr>
+<tr class="odd">
+<td><code>%lf</code></td>
+<td><code>double</code></td>
+</tr>
+<tr class="even">
+<td><code>%lu</code></td>
+<td><code>long unsigned</code></td>
+</tr>
+</tbody>
+</table>
+<p>See: <a
+href="https://en.cppreference.com/w/c/io/fprintf">https://en.cppreference.com/w/c/io/fprintf</a></p>
+<ul>
+<li>Precision
+<ul>
+<li>%.2f</li>
+<li>%.f // No precision. Truncate.</li>
+</ul></li>
+<li>Width and alignment
+<ul>
+<li>Right alignment: %2f</li>
+<li>Left alignment: %-2f</li>
+</ul></li>
+<li><code>*</code>
+<ul>
+<li>In printf(), variable as width: `%*.*f`, width, precision</li>
+<li>In scanf(), suppresses assignment: `%*f`</li>
+</ul></li>
+<li>Wide characters
+<ul>
+<li>L' stuff as format specifiers.</li>
+</ul></li>
+</ul>
+<h2 id="interesting-behavior-and-facts">Interesting behavior and
+facts</h2>
+<p>In my UG days, I spent a lot of time with the C programming language.
+Had forgotten most of it.</p>
+<p>But now (Feb 2023) I'm a TA for a lab course using C. Noting down
+stuff that I came across again..</p>
+<h3 id="no-evaluation-within-sizeof">No evaluation within
+<code>sizeof</code></h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a<span class="op">=</span><span class="dv">3</span><span class="op">,</span> b<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">=</span><span class="dv">10</span><span class="op">);</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;a=</span><span class="sc">%d</span><span class="st">, b=</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> a<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// a=3, b=4</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Value of b is compiler/arch dependent though.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>(Thanks to Kevin for telling me this.)</p>
+<p>—</p>
+<p>Expression inside <code>sizeof</code> is not evaluated. So the value
+of <code>a</code> never changed.</p>
+<p>In <code>sizeof(a=10)</code>, type of <code>a=10</code> is looked at.
+It is found to be <code>int</code>. So essentially, it is same as saying
+<code>sizeof(int)</code> or <code>sizeof(10)</code>, I guess.</p>
+<p><code>sizeof(int)</code> is usually 4, but can be different depending
+on architecture and compiler.</p>
+<h3 id="multiple-sequence-points">Multiple sequence points</h3>
+<p>Multiple sequence points =&gt; undefined behaviour.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a<span class="op">=</span><span class="dv">3</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> a<span class="op">++</span> <span class="op">+</span> <span class="op">++</span>a<span class="op">);</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 8</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Needn&#39;t be so though. It&#39;s undefined behaviour.</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Evaluation could be like:</p>
+<ul>
+<li><code>((a++) + ++a))</code></li>
+<li><code>(a++ + (++a))</code></li>
+</ul>
+<p>(Thanks to Kevin for reminding me about this.)</p>
+<h3 id="calling-main-from-main">Calling <code>main</code> from
+<code>main</code></h3>
+<p>Looks like this is possible in C (gcc).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ctr <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>ctr<span class="op">&gt;</span><span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;Hi</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        ctr<span class="op">--;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        main<span class="op">();</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span></code></pre></div>
+<p>Apparently, C++ standard prohibits this but gcc allows it.</p>
+<ul>
+<li><a
+href="https://stackoverflow.com/questions/2532912/call-main-itself-in-c">https://stackoverflow.com/questions/2532912/call-main-itself-in-c</a></li>
+</ul>
+<h2 id="digraphs">Digraphs</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Digraph</th>
+<th>Equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&lt;:</td>
+<td>[</td>
+</tr>
+<tr class="even">
+<td>:&gt;</td>
+<td>]</td>
+</tr>
+<tr class="odd">
+<td>&lt;%</td>
+<td>{</td>
+</tr>
+<tr class="even">
+<td>%&gt;</td>
+<td>}</td>
+</tr>
+<tr class="odd">
+<td>%:</td>
+<td>#</td>
+</tr>
+<tr class="even">
+<td>%:%:</td>
+<td>##</td>
+</tr>
+</tbody>
+</table>
+<h2 id="trigraphs">Trigraphs</h2>
+<ul>
+<li>Used when old keyboards didn't have some of the keys common
+today.</li>
+<li>Silently changes the tokens, so considered unsavory.</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Trigarph</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>??=</td>
+<td>#</td>
+</tr>
+<tr class="even">
+<td>??(</td>
+<td>[</td>
+</tr>
+<tr class="odd">
+<td>??/</td>
+<td>\</td>
+</tr>
+<tr class="even">
+<td>??)</td>
+<td>]</td>
+</tr>
+<tr class="odd">
+<td>??'</td>
+<td>^</td>
+</tr>
+<tr class="even">
+<td>??&lt;</td>
+<td>{</td>
+</tr>
+<tr class="odd">
+<td>??!</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>??&gt;</td>
+<td>}</td>
+</tr>
+<tr class="odd">
+<td>??-</td>
+<td>~</td>
+</tr>
+</tbody>
+</table>
+<h2 id="c-pre-processor-cpp">C pre-processor (CPP)</h2>
+<ul>
+<li>Define a macro: <code>#define NAME body</code></li>
+<li>Undefine a macro: <code>#undef NAME</code></li>
+<li>Check if a macro is defined: <code>#ifdef</code></li>
+<li>Check if a macro is not defined: <code>#ifndef</code></li>
+<li>Conditions: <code>#if</code>, <code>#elif</code>,
+<code>#else</code>, <code>#endif</code></li>
+<li>Concatenation of <code>a</code> and <code>b</code>:
+<code>a##b</code></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Check if a macro is defined</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef NAME</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  print<span class="op">(</span><span class="st">&quot;NAME is defined</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  print<span class="op">(</span><span class="st">&quot;NAME is not defined</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span></code></pre></div>
 </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Groups</title>
+  <title>Group theory and related</title>
   <style>
     body {
       max-width: 38rem;
@@ -32,7 +32,7 @@
 </div>
 
 <header id="title-block-header">
-<h1 class="title">Groups</h1>
+<h1 class="title">Group theory and related</h1>
 </header>
 
 <ul>
@@ -44,10 +44,15 @@
 <hr/>
 
 <div id="content-container">
+<p>An attempt ot get familiar with group theory from the internet.</p>
+<hr />
 <p>Has got applications in Physics, Chemistry and beyond.</p>
-<p>Found on <a href="https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Group_Theory/Group_Theory_and_its_Application_to_Chemistry">a webpage related to chemistry</a>:</p>
+<p>Found on <a
+href="https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Group_Theory/Group_Theory_and_its_Application_to_Chemistry">a
+webpage related to chemistry</a>:</p>
 <blockquote>
-<p>Group theory is the mathematical application of symmetry to an object to obtain knowledge of its physical properties.</p>
+<p>Group theory is the mathematical application of symmetry to an object
+to obtain knowledge of its physical properties.</p>
 </blockquote>
 <p>Rubik's cube can be represented using group theory concepts.</p>
 <h1 id="field">Field</h1>
@@ -62,7 +67,8 @@
 <p>Many cryptographic protocols rely on fields.</p>
 <h1 id="rings">Rings</h1>
 <ul>
-<li>Algebraic structures that support addition and multiplication. <a href="https://www.cs.cornell.edu/courses/cs3110/2018fa/lec/23-coq-induction/notes.html">¹</a></li>
+<li>Algebraic structures that support addition and multiplication. <a
+href="https://www.cs.cornell.edu/courses/cs3110/2018fa/lec/23-coq-induction/notes.html">¹</a></li>
 <li>Generalizes fields??</li>
 <li>An Abelian group</li>
 </ul>
@@ -71,15 +77,21 @@
 <li><code>+</code> (addition)</li>
 <li><code>.</code> (multiplication)</li>
 </ul>
-<p>that satisfies the following axioms (<strong>ring axioms</strong>):</p>
+<p>that satisfies the following axioms (<strong>ring
+axioms</strong>):</p>
 <ul>
 <li><code>+</code> is associative and commutative</li>
 <li>additive identity is <code>0</code></li>
 <li>additive inverse is <code>-</code></li>
 </ul>
-<h1 id="groups-1">Groups</h1>
-<p><a href="https://upload.wikimedia.org/wikipedia/commons/0/07/Algebraic_structures_-_magma_to_group.svg">Image</a></p>
-<p>A <strong><strong>set</strong></strong> associated with a <strong><strong>binary operation</strong></strong> that combines any two elements of the set to produce a third element in such a way that some conditions (called <strong><strong>group axioms</strong></strong> are satisfied).</p>
+<h1 id="groups">Groups</h1>
+<p><a
+href="https://upload.wikimedia.org/wikipedia/commons/0/07/Algebraic_structures_-_magma_to_group.svg">Image</a></p>
+<p>A <strong><strong>set</strong></strong> associated with a
+<strong><strong>binary operation</strong></strong> that combines any two
+elements of the set to produce a third element in such a way that some
+conditions (called <strong><strong>group axioms</strong></strong> are
+satisfied).</p>
 <p>(A, op)</p>
 <ul>
 <li>Associativity</li>
@@ -88,17 +100,22 @@
 </ul>
 <h2 id="group-axioms">Group axioms</h2>
 <h3 id="associativity">Associativity</h3>
-<p>Changing order of evaluation of two adjacent operations of the same operator won't change the result.</p>
+<p>Changing order of evaluation of two adjacent operations of the same
+operator won't change the result.</p>
 <p>x op (y op z) == (x op y) op z ∀ x, y, z ∈ A and op: A → A</p>
 <h3 id="identity">Identity</h3>
-<p>***# Identity element For a binary relation R defined on a set A, the identity element i is an element such that</p>
-<p>R(i, k) = k, ∀k ∈ A (<span class="underline">left identity</span>)</p>
+<p>***# Identity element For a binary relation R defined on a set A, the
+identity element i is an element such that</p>
+<p>R(i, k) = k, ∀k ∈ A (<u>left identity</u>)</p>
 <p>or</p>
-<p>R(k, i) = k, ∀k ∈ A (<span class="underline">right identity</span>)</p>
-<p><span class="underline">Two sided identity</span> if i is both left identity and right identity.</p>
-<p>Identity when the binary relation is addition is called <span class="underline">additive identity</span>.</p>
+<p>R(k, i) = k, ∀k ∈ A (<u>right identity</u>)</p>
+<p><u>Two sided identity</u> if i is both left identity and right
+identity.</p>
+<p>Identity when the binary relation is addition is called <u>additive
+identity</u>.</p>
 <p>Sometimes denoted as 0.</p>
-<p>This could be something other than zero for stuff like groups and rings.</p>
+<p>This could be something other than zero for stuff like groups and
+rings.</p>
 <p>ie, when k + 0 = k, ∀k ∈ A</p>
 <h3 id="invertibility">Invertibility</h3>
 <p>***# Inverse element For a binary relation R defined on a set A,</p>
@@ -116,19 +133,24 @@
 <h3 id="inverse">Inverse</h3>
 <p>∀k ∈ ℤ, -k is the inverse element.</p>
 <h2 id="abelian-group">Abelian group</h2>
-<p>A group where the relation is commutative (in addition to being associative).</p>
-<p>Eg: G(ℤ, +, 0) # ie, the set of integer with the addition operation as the relation and 0 as the identity element.</p>
+<p>A group where the relation is commutative (in addition to being
+associative).</p>
+<p>Eg: G(ℤ, +, 0) # ie, the set of integer with the addition operation
+as the relation and 0 as the identity element.</p>
 <h2 id="finite-groups">Finite groups</h2>
 <p>Groups whose underlying set is finite.</p>
 <p>So groups on ℕ, ℤ, etc are not finite groups.</p>
-<h1 id="symmetric-groups"><a href="https://mathworld.wolfram.com/SymmetricGroup.html">Symmetric groups</a></h1>
+<h1 id="symmetric-groups"><a
+href="https://mathworld.wolfram.com/SymmetricGroup.html">Symmetric
+groups</a></h1>
 <ul>
 <li>Order of symmetric group Sₙ: <code>n!</code></li>
 <li>Elements: function from Sₙ to itself</li>
 <li>Operation: function composition</li>
 </ul>
 <p>Example:</p>
-<p><a href="https://groupprops.subwiki.org/wiki/Symmetric_group:S3">S₃</a>:</p>
+<p><a
+href="https://groupprops.subwiki.org/wiki/Symmetric_group:S3">S₃</a>:</p>
 <ul>
 <li>elements: one-to-one functions from {1,2,3} to itself.
 <ul>
@@ -149,16 +171,23 @@
 
        (2,3)             (1,3)                (1,2)
 </code></pre>
-<p>where the map is like the positions in first row being mapped to those of the second row.</p>
+<p>where the map is like the positions in first row being mapped to
+those of the second row.</p>
 <p>(Here, αβ means α is applied first, and then β.)</p>
-<p>Note: S₃ is a non-Abelian group. Eg: βα ≠ αβ (and βα is same as α²β).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>sage: s3 <span class="op">=</span> SymmetricGroup(<span class="dv">3</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>sage: s3</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>Symmetric group of order <span class="dv">3</span><span class="op">!</span> <span class="im">as</span> a permutation group</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>sage: <span class="bu">list</span>(s3)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>[(), (<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>), (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), (<span class="dv">2</span>,<span class="dv">3</span>), (<span class="dv">1</span>,<span class="dv">3</span>), (<span class="dv">1</span>,<span class="dv">2</span>)]</span></code></pre></div>
-<p>The <code>list(s3)</code> output from sagemath is in <a href="https://groupprops.subwiki.org/wiki/Element_structure_of_symmetric_group:S3#Elements">cycle decomposition</a> notation (aka <a href="https://faculty.math.illinois.edu/~jpascale/courses/2018/417/notes/417lecture03.pdf">disjoint cycle notation</a>).</p>
+<p>Note: S₃ is a non-Abelian group. Eg: βα ≠ αβ (and βα is same as
+α²β).</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sage: s3 <span class="op">=</span> SymmetricGroup(<span class="dv">3</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sage: s3</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Symmetric group of order <span class="dv">3</span><span class="op">!</span> <span class="im">as</span> a permutation group</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>sage: <span class="bu">list</span>(s3)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>[(), (<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>), (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), (<span class="dv">2</span>,<span class="dv">3</span>), (<span class="dv">1</span>,<span class="dv">3</span>), (<span class="dv">1</span>,<span class="dv">2</span>)]</span></code></pre></div>
+<p>The <code>list(s3)</code> output from sagemath is in <a
+href="https://groupprops.subwiki.org/wiki/Element_structure_of_symmetric_group:S3#Elements">cycle
+decomposition</a> notation (aka <a
+href="https://faculty.math.illinois.edu/~jpascale/courses/2018/417/notes/417lecture03.pdf">disjoint
+cycle notation</a>).</p>
 <p>—</p>
 <p>Sₙ (Symmetric group of degree n):</p>
 <pre><code>ε = ⎡   1     2  ..   n ⎤
@@ -173,7 +202,8 @@
 </ul>
 <h1 id="cayleys-theorem">Cayley's theorem</h1>
 <p>Every group is isomorphic to some permutation group.</p>
-<h1 id="legranges-theorem-group-theory">Legrange's theorem (group theory)</h1>
+<h1 id="legranges-theorem-group-theory">Legrange's theorem (group
+theory)</h1>
 <p>Given:</p>
 <ul>
 <li>Group G and one of its sub-groups H.</li>
@@ -187,8 +217,12 @@
 <li>ie, |H| divides |G|</li>
 </ul></li>
 </ul>
-<p>ℤ₆ = {0, 1, 2, 3, 4, 5} H = {0, 2, 4} ℤ₃ = {0, 1, 2}</p>
-<p>ℤ₆/H = {0, 2, 4}</p>
+<pre><code>ℤ₆ = {0, 1, 2, 3, 4, 5}   
+H  = {0, 2, 4}   
+ℤ₃ = {0, 1, 2}   
+
+ℤ₆/H = {0, 2, 4}
+</code></pre>
 <h1 id="monoid">Monoid</h1>
 <p>A set associated with a binary relation where:</p>
 <ul>
@@ -196,7 +230,8 @@
 <li>there is an identity element</li>
 </ul>
 <p>Effectively, monoids are semigroups with identity.</p>
-<p>Or to put differently, groups where inverse elements aren't required.</p>
+<p>Or to put differently, groups where inverse elements aren't
+required.</p>
 <p>Different kinds of monoids include:</p>
 <ul>
 <li>Free monoid</li>
@@ -204,11 +239,15 @@
 <li>Syntactic monoid</li>
 </ul>
 <h1 id="cyclic-group">Cyclic group</h1>
-<p>Group is cyclic if there's an element <code>a ∈ G</code> such <code>G = {aⁿ | n ∈ ℤ}</code>.</p>
+<p>Group is cyclic if there's an element <code>a ∈ G</code> such
+<code>G = {aⁿ | n ∈ ℤ}</code>.</p>
 <p>where <code>a</code> is said to be the generator.</p>
-<p><strong>Notation</strong>: <code>&lt;a&gt;</code> where <code>a∈G</code> is the cyclic subgroup of <code>G</code> generated by <code>a</code>.</p>
+<p><strong>Notation</strong>: <code>&lt;a&gt;</code> where
+<code>a∈G</code> is the cyclic subgroup of <code>G</code> generated by
+<code>a</code>.</p>
 <p>Eg:</p>
-<p>For <code>(ℤ, +, 0)</code>, both <code>1</code> and <code>-1</code> are generators.</p>
+<p>For <code>(ℤ, +, 0)</code>, both <code>1</code> and <code>-1</code>
+are generators.</p>
 <p>ie, <code>ℤ = &lt;1&gt;</code> and <code>ℤ = &lt;-1&gt;</code></p>
 <p>Other examples:</p>
 <pre><code>- ℤ₈ = &lt;1&gt;
@@ -220,27 +259,31 @@
 </code></pre>
 <p>—</p>
 <p>Cyclic goupr =&gt; group can be generated by a single element.</p>
-<p>Eg: 1 is generator of ℤ₆. ∵ we can get all elements of ℤ₆ by repeatedly doing the group operation on 1.</p>
+<p>Eg: 1 is generator of ℤ₆. ∵ we can get all elements of ℤ₆ by
+repeatedly doing the group operation on 1.</p>
 <p>Fun facts:</p>
 <ul>
 <li>Every infinite cyclic group is isomorphic to (ℤ,+,0)</li>
 <li>Every finite cyclic group is isomorphic to ℤ/nℤ</li>
 </ul>
-<h1 id="degree-of-a-permutation-group">Degree of a permutation group</h1>
+<h1 id="degree-of-a-permutation-group">Degree of a permutation
+group</h1>
 <p><em>Not the same as order of a group!</em></p>
 <ul>
-<li>Degree of a group is the cardinality of the set on which the group is defined.</li>
+<li>Degree of a group is the cardinality of the set on which the group
+is defined.</li>
 <li>Order of group is the number of elements in the group itself.</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>sage: s3 <span class="op">=</span> SymmetricGroup(<span class="dv">3</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>sage: s3.degree()</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="dv">3</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>sage: <span class="bu">list</span>(s3)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>[(), (<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>), (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), (<span class="dv">2</span>,<span class="dv">3</span>), (<span class="dv">1</span>,<span class="dv">3</span>), (<span class="dv">1</span>,<span class="dv">2</span>)]</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a>sage: s3.order()</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a><span class="dv">6</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sage: s3 <span class="op">=</span> SymmetricGroup(<span class="dv">3</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sage: s3.degree()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>sage: <span class="bu">list</span>(s3)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>[(), (<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>), (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), (<span class="dv">2</span>,<span class="dv">3</span>), (<span class="dv">1</span>,<span class="dv">3</span>), (<span class="dv">1</span>,<span class="dv">2</span>)]</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>sage: s3.order()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span></span></code></pre></div>
 <h1 id="tips">Tips</h1>
 <ul>
 <li>ℤ, ℤₙ are cyclic subgroups</li>
@@ -261,8 +304,13 @@ Ring
 Field
 </code></pre>
 <h1 id="closure">Closure</h1>
-<p>Consider a relation <code>R</code> on a set <code>A</code> where <code>R</code> may or may not have a property <code>P</code> (like reflexivity, symmetry, etc). If there is a relation <code>S</code> with the property <code>P</code> such that <code>R ⊆ S</code>, then <code>S</code> is the closure</p>
-<p>For example, <strong>transitive closure</strong> of a relation R is the smallest transitive relation that contains R.</p>
+<p>Consider a relation <code>R</code> on a set <code>A</code> where
+<code>R</code> may or may not have a property <code>P</code> (like
+reflexivity, symmetry, etc). If there is a relation <code>S</code> with
+the property <code>P</code> such that <code>R ⊆ S</code>, then
+<code>S</code> is the closure</p>
+<p>For example, <strong>transitive closure</strong> of a relation R is
+the smallest transitive relation that contains R.</p>
 <p>Reference: <em>Discrete Mathematics</em> by Rosen</p>
 <h1 id="groupoid">Groupoid</h1>
 <p>(Related to category theory as well.)</p>
@@ -270,8 +318,10 @@ Field
 <h1 id="setoid">Setoid</h1>
 <p>A set, together with an equivalence relation.</p>
 <p><a href="https://ncatlab.org/nlab/show/setoid">(nlab link)</a>.</p>
-<h1 id="comparison-of-group-like-structures">Comparison of group-like structures</h1>
-<p>From <a href="https://en.wikipedia.org/wiki/Group_(mathematics)">Wikipedia</a>:</p>
+<h1 id="comparison-of-group-like-structures">Comparison of group-like
+structures</h1>
+<p>From <a
+href="https://en.wikipedia.org/wiki/Group_(mathematics)">Wikipedia</a>:</p>
 <table>
 <thead>
 <tr class="header">
@@ -393,18 +443,21 @@ Field
 <h1 id="cayley-diagrams">Cayley diagrams</h1>
 <p>aka Cayley graphs.</p>
 <p>Graphical representation of a permutation group.</p>
-<h1 id="kernel-of-group-homomorphism-ˡ">Kernel of group homomorphism <a href="https://www.socratica.com/lesson/kernel-of-group-homomorphisms">ˡ</a></h1>
+<h1 id="kernel-of-group-homomorphism-ˡ">Kernel of group homomorphism <a
+href="https://www.socratica.com/lesson/kernel-of-group-homomorphisms">ˡ</a></h1>
 <p>Given:</p>
 <ul>
 <li><code>f:G→H</code> is a group homomorphism</li>
 </ul>
 <p>then</p>
 <ul>
-<li>kernel is the set of all elements in <code>G</code> which are mapped by <code>f</code> to identity of <code>H</code>.</li>
+<li>kernel is the set of all elements in <code>G</code> which are mapped
+by <code>f</code> to identity of <code>H</code>.</li>
 </ul>
 <p>Info:</p>
 <ul>
-<li>Kernel is just identity element if <code>f</code> is an isomorphism</li>
+<li>Kernel is just identity element if <code>f</code> is an
+isomorphism</li>
 </ul>
 <h1 id="more">More</h1>
 <ul>
@@ -424,10 +477,6 @@ Field
 <li><p>Sylow theorems</p></li>
 <li><p>Cayley diagrams</p></li>
 <li><p>Galois theory</p></li>
-</ul>
-<h1 id="references">References</h1>
-<ul>
-<li>Wikipedia</li>
 </ul>
 </div>
 </body>

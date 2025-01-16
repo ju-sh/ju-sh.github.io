@@ -44,7 +44,8 @@
 <hr/>
 
 <div id="content-container">
-<p>(Jottings made while scouring the internet to get familiar with EDA)</p>
+<p>(Jottings made while scouring the internet to get familiar with
+EDA)</p>
 <p>—</p>
 <ul>
 <li>BUFG: Global buffer?
@@ -52,7 +53,8 @@
 <li>aka Clock buffer.</li>
 <li>Takes a signal as input and connect to a clock net</li>
 </ul></li>
-<li><a href="https://vhdlwhiz.com/terminology/clock-net/">Clock net</a>: Network of wires and buffers optimized for routing clock signals</li>
+<li><a href="https://vhdlwhiz.com/terminology/clock-net/">Clock net</a>:
+Network of wires and buffers optimized for routing clock signals</li>
 <li>CPLD: Complex Programmable Logic Device
 <ul>
 <li>PLD with complexity between PAL and FPGA</li>
@@ -65,31 +67,39 @@
 <ul>
 <li>Files with <code>.sdc</code> and <code>.xdc</code> extensions</li>
 <li>xdc is sdc with some xilinix-specific things added</li>
-<li><a href="https://www.latticesemi.com/en/Blog/2021/06/07/18/52/ImportanceofTimingConstraints">https://www.latticesemi.com/en/Blog/2021/06/07/18/52/ImportanceofTimingConstraints</a></li>
+<li><a
+href="https://www.latticesemi.com/en/Blog/2021/06/07/18/52/ImportanceofTimingConstraints">https://www.latticesemi.com/en/Blog/2021/06/07/18/52/ImportanceofTimingConstraints</a></li>
 <li>Setup and hold violations
 <ul>
-<li>Input to flip flop changes before the flip-flop's setup or hold time has passed.</li>
+<li>Input to flip flop changes before the flip-flop's setup or hold time
+has passed.</li>
 </ul></li>
 </ul></li>
 <li>MMCM: Mixed Mode Clock Manager</li>
-<li><a href="https://www.fpgakey.com/wiki/details/50">IOB</a>: Input Output Block
+<li><a href="https://www.fpgakey.com/wiki/details/50">IOB</a>: Input
+Output Block
 <ul>
 <li>Interface between FPGA and external circuits</li>
 <li>Typically grouped into multiple IOB banks.</li>
 </ul></li>
-<li><a href="https://docs.amd.com/r/en-US/am007-versal-memory/UltraRAM-Introduction">Ultra RAM</a> (©): a kind of non-volatile memory
+<li><a
+href="https://docs.amd.com/r/en-US/am007-versal-memory/UltraRAM-Introduction">Ultra
+RAM</a> (©): a kind of non-volatile memory
 <ul>
 <li>Architecture of Versal devices ??</li>
 <li>'288Kb, single-clock, synchronous memory blocks'</li>
 <li>8 times capacity of a block RAM</li>
 </ul></li>
-<li><a href="https://nandland.com/lesson-15-what-is-a-block-ram-bram/">Block RAM</a> (BRAM)
+<li><a
+href="https://nandland.com/lesson-15-what-is-a-block-ram-bram/">Block
+RAM</a> (BRAM)
 <ul>
 <li>aka embedded memory, aka Embedded Block RAM (EBR)</li>
 </ul></li>
 <li>DSP: Digital Signal Processors
 <ul>
-<li><a href="http://hunteng.co.uk/info/fpga-or-dsp.htm">http://hunteng.co.uk/info/fpga-or-dsp.htm</a></li>
+<li><a
+href="http://hunteng.co.uk/info/fpga-or-dsp.htm">http://hunteng.co.uk/info/fpga-or-dsp.htm</a></li>
 <li>Has to programmed
 <ul>
 <li>So does an FPGA, right??</li>
@@ -97,7 +107,9 @@
 <li>Slower clocks than FPGA capability</li>
 </ul></li>
 <li>LUT: Look Up Table</li>
-<li><a href="https://docs.amd.com/r/en-US/ug1273-versal-acap-design/MRMAC">MRMAC</a>: Multi-Rate Ethernet MAC
+<li><a
+href="https://docs.amd.com/r/en-US/ug1273-versal-acap-design/MRMAC">MRMAC</a>:
+Multi-Rate Ethernet MAC
 <ul>
 <li>where MAC is Medium Access Control</li>
 </ul></li>
@@ -109,29 +121,40 @@
 <ul>
 <li>Low latency. Like processing data streams in real-time.</li>
 </ul></li>
-<li>Seperation into behavioural, structural, gate-level designs is a relic of the past? <a href="https://www.edaboard.com/threads/behavioral-rtl-structural-and-gate-level-how-to-differentiate-them-in-vhdl.376376/">link</a>
+<li>Seperation into behavioural, structural, gate-level designs is a
+relic of the past? <a
+href="https://www.edaboard.com/threads/behavioral-rtl-structural-and-gate-level-how-to-differentiate-them-in-vhdl.376376/">link</a>
 <ul>
 <li>Now no longer mutually exclusive</li>
-<li>Safer to distinguish between synthesizable and non-sytheziable designs</li>
-<li><a href="https://electronics.stackexchange.com/questions/63682/difference-between-rtl-and-behavioral-verilog">https://electronics.stackexchange.com/questions/63682/difference-between-rtl-and-behavioral-verilog</a></li>
+<li>Safer to distinguish between synthesizable and non-sytheziable
+designs</li>
+<li><a
+href="https://electronics.stackexchange.com/questions/63682/difference-between-rtl-and-behavioral-verilog">https://electronics.stackexchange.com/questions/63682/difference-between-rtl-and-behavioral-verilog</a></li>
 </ul></li>
-<li>peak in vivado synthesis: maximum memory used by the process <a href="https://support.xilinx.com/s/question/0D52E00006oqRCwSAM/time-s-cpu-elapsed-memory-mb-peak-gain-meanings-?language=en_US">ʳ</a></li>
+<li>peak in vivado synthesis: maximum memory used by the process <a
+href="https://support.xilinx.com/s/question/0D52E00006oqRCwSAM/time-s-cpu-elapsed-memory-mb-peak-gain-meanings-?language=en_US">ʳ</a></li>
 <li>gain in vivado synthesis</li>
 <li>PLL: Phase Locked Loop ??
 <ul>
 <li>Can be used to increase internal clock speed</li>
 <li>But this increased speed also increases chances of glitches</li>
-<li><a href="https://www.digikey.in/en/maker/projects/introduction-to-fpga-part-9-phaselocked-loop-pll-and-glitches/2028ce62001b4cb69335f48e127fa366">https://www.digikey.in/en/maker/projects/introduction-to-fpga-part-9-phaselocked-loop-pll-and-glitches/2028ce62001b4cb69335f48e127fa366</a></li>
-<li><a href="https://www.techtarget.com/searchnetworking/definition/phase-locked-loop">https://www.techtarget.com/searchnetworking/definition/phase-locked-loop</a></li>
+<li><a
+href="https://www.digikey.in/en/maker/projects/introduction-to-fpga-part-9-phaselocked-loop-pll-and-glitches/2028ce62001b4cb69335f48e127fa366">https://www.digikey.in/en/maker/projects/introduction-to-fpga-part-9-phaselocked-loop-pll-and-glitches/2028ce62001b4cb69335f48e127fa366</a></li>
+<li><a
+href="https://www.techtarget.com/searchnetworking/definition/phase-locked-loop">https://www.techtarget.com/searchnetworking/definition/phase-locked-loop</a></li>
 </ul></li>
-<li><a href="https://www.realdigital.org/doc/9c21eab4a0f85c50486858a87380d1f6">Clock divider</a>: Circuit creating lower frequency clock from another clock
+<li><a
+href="https://www.realdigital.org/doc/9c21eab4a0f85c50486858a87380d1f6">Clock
+divider</a>: Circuit creating lower frequency clock from another clock
 <ul>
-<li>aka frequency divider<a href="https://en.wikipedia.org/wiki/Frequency_divider">ʷ</a></li>
+<li>aka frequency divider<a
+href="https://en.wikipedia.org/wiki/Frequency_divider">ʷ</a></li>
 </ul></li>
 <li>SPI flash
 <ul>
 <li>SPI: Serial Peripheral Interface</li>
-<li>Allows two chips to communicate. Needs 4 wires between them.<a href="https://www.fpga4fun.com/SPI1.html">ʳ</a></li>
+<li>Allows two chips to communicate. Needs 4 wires between them.<a
+href="https://www.fpga4fun.com/SPI1.html">ʳ</a></li>
 </ul></li>
 <li>QSPI: Quad Serial Peripheral Interface
 <ul>
@@ -152,11 +175,13 @@
 <li>High density of DRAM but with ease of use of SRAM ??</li>
 </ul></li>
 <li>GPIO: General Purpose IO pin</li>
-<li>FPGA has only LUT4 but design shows LUT5,6,7, etc. No problem if there are muxes which can combine LUT4 to become bigger LUTs.</li>
+<li>FPGA has only LUT4 but design shows LUT5,6,7, etc. No problem if
+there are muxes which can combine LUT4 to become bigger LUTs.</li>
 <li>Carry chain in FPGA:
 <ul>
 <li>For efficient arithmetic operations</li>
-<li><a href="https://www.fpga4fun.com/Counters4.html">https://www.fpga4fun.com/Counters4.html</a></li>
+<li><a
+href="https://www.fpga4fun.com/Counters4.html">https://www.fpga4fun.com/Counters4.html</a></li>
 </ul></li>
 <li>ALUT (Intel-only??): Adaptive LUT</li>
 <li>ALM (Intel-only??): Adaptive Logic Module</li>
@@ -173,12 +198,14 @@
 <li>PCIe: Peripheral Component Interconnect express
 <ul>
 <li>'Serial, computer expansion bus standard'</li>
-<li>Commonly used to connect components like sound and graphics cards to motherboard</li>
+<li>Commonly used to connect components like sound and graphics cards to
+motherboard</li>
 </ul></li>
 <li>I2C: aka IIC
 <ul>
 <li>Inter-Integrated Circuit</li>
-<li>Commonly used to attach low speed peripheral ICs to processors/microcontrollers</li>
+<li>Commonly used to attach low speed peripheral ICs to
+processors/microcontrollers</li>
 </ul></li>
 <li>LPDDR: Low-Power Double Data Rate
 <ul>
@@ -199,13 +226,32 @@
 <li>Reference operating voltage</li>
 <li>Setup and hold time ??
 <ul>
-<li><a href="https://vhdlwhiz.com/terminology/setup-and-hold-time/">https://vhdlwhiz.com/terminology/setup-and-hold-time/</a></li>
+<li><a
+href="https://vhdlwhiz.com/terminology/setup-and-hold-time/">https://vhdlwhiz.com/terminology/setup-and-hold-time/</a></li>
 </ul></li>
 <li>DRC (Design Rule Check)</li>
 <li>How to undo soldering</li>
 <li>Pull-up resistor: ??</li>
 </ul>
-<h2 id="devices-interfaces-protocols-etc">Devices, interfaces, protocols etc</h2>
+<h2 id="slices-in-fpgas">Slices in FPGAs</h2>
+<ul>
+<li>Each slice has a set number resources like registers, LUTs and
+MUXes</li>
+<li>Not the same as CLB (Configurable Logic Block)
+<ul>
+<li>A CLB may have multiple slices</li>
+<li>Eg: SLICEL and SLICEM in Xilinx Ultrascale</li>
+<li><a
+href="https://digilent.com/blog/fpga-configurable-logic-block">https://digilent.com/blog/fpga-configurable-logic-block</a></li>
+</ul></li>
+<li>Xilinix specific:
+<ul>
+<li>SLICEL: Used only for logic</li>
+<li>SLICEM: Used as memory or for logic</li>
+</ul></li>
+</ul>
+<h2 id="devices-interfaces-protocols-etc">Devices, interfaces, protocols
+etc</h2>
 <ul>
 <li>TF card: TransFlash card
 <ul>
@@ -215,28 +261,34 @@
 <li>UART: Universal Asynchronous Receiver Transmitter</li>
 <li>JTAG
 <ul>
-<li><a href="https://www.fpga4fun.com/JTAG1.html">https://www.fpga4fun.com/JTAG1.html</a></li>
+<li><a
+href="https://www.fpga4fun.com/JTAG1.html">https://www.fpga4fun.com/JTAG1.html</a></li>
 <li>Allows probing pins without messing around with it physically</li>
 <li>Can kind of 'hijack' the pins</li>
 <li>Joint Test Action Group</li>
 </ul></li>
 </ul>
-<h2 id="unified-verification-methodology-uvm">Unified Verification Methodology (UVM)</h2>
+<h2 id="unified-verification-methodology-uvm">Unified Verification
+Methodology (UVM)</h2>
 <ul>
 <li>Grew out of OVM (Open Verification Methodology)</li>
 <li>Only for SytemVerilog ??</li>
 <li>Consists of a bunch of extendable classes</li>
 <li>Phases (simulation): build, run, cleanup
 <ul>
-<li><a href="https://vlsiverify.com/uvm/uvm-phases/">https://vlsiverify.com/uvm/uvm-phases/</a></li>
-<li><a href="https://www.chipverify.com/uvm/uvm-phases">https://www.chipverify.com/uvm/uvm-phases</a></li>
+<li><a
+href="https://vlsiverify.com/uvm/uvm-phases/">https://vlsiverify.com/uvm/uvm-phases/</a></li>
+<li><a
+href="https://www.chipverify.com/uvm/uvm-phases">https://www.chipverify.com/uvm/uvm-phases</a></li>
 </ul></li>
 <li>Sequencer: initialization</li>
 <li>Scoreboard: takes input-output pair and passes judgement</li>
 <li>Transactions: Model communication between DUT and testbench</li>
-<li>Register Abstraction Layer (RAL): simplifies creating and accessing register map ??</li>
+<li>Register Abstraction Layer (RAL): simplifies creating and accessing
+register map ??</li>
 </ul>
-<h2 id="create_clock-in-sdcxdc-file"><code>create_clock</code> in sdc/xdc file</h2>
+<h2 id="create_clock-in-sdcxdc-file"><code>create_clock</code> in
+sdc/xdc file</h2>
 <p>Example from default xdc file for Pynq-Z2:</p>
 <pre><code>create_clock -add -name clk -period 8.00 -waveform {0 4} [get_ports { clk }];
 </code></pre>
@@ -249,7 +301,8 @@
 <h3 id="waveform">waveform</h3>
 <ul>
 <li>Specify rise and fall times of clock (in nano-seconds)</li>
-<li>Can make positive and negative parts of a cycle equal like in above example with <code>{0 4}</code>.</li>
+<li>Can make positive and negative parts of a cycle equal like in above
+example with <code>{0 4}</code>.</li>
 <li>Clock can be made to rise and fall multiple times as well??</li>
 </ul>
 <p>Another example:</p>
@@ -266,22 +319,28 @@ create_clock –period 7 –waveform {2 4} [get_ports {CK3}]
 </code></pre>
 <p>See:</p>
 <ul>
-<li><a href="http://ebook.pldworld.com/_Semiconductors/Actel/Libero_v70_fusion_webhelp/create_clock_sdc_constraint.htm">http://ebook.pldworld.com/_Semiconductors/Actel/Libero_v70_fusion_webhelp/create_clock_sdc_constraint.htm</a></li>
-<li><a href="https://docs.amd.com/r/2021.2-English/ug835-vivado-tcl-commands/create_clock">https://docs.amd.com/r/2021.2-English/ug835-vivado-tcl-commands/create_clock</a></li>
+<li><a
+href="http://ebook.pldworld.com/_Semiconductors/Actel/Libero_v70_fusion_webhelp/create_clock_sdc_constraint.htm">http://ebook.pldworld.com/_Semiconductors/Actel/Libero_v70_fusion_webhelp/create_clock_sdc_constraint.htm</a></li>
+<li><a
+href="https://docs.amd.com/r/2021.2-English/ug835-vivado-tcl-commands/create_clock">https://docs.amd.com/r/2021.2-English/ug835-vivado-tcl-commands/create_clock</a></li>
 </ul>
 <h2 id="false-path-in-sdcxdc-file">False path in sdc/xdc file</h2>
 <ul>
 <li><code>set_false_path</code></li>
 <li>Exclude a path from timing analysis</li>
-<li>For paths that exists in the design, but are not functional or doesn't need to timed. <a href="https://docs.amd.com/r/en-US/ug903-vivado-using-constraints/False-Paths">ˡ</a></li>
+<li>For paths that exists in the design, but are not functional or
+doesn't need to timed. <a
+href="https://docs.amd.com/r/en-US/ug903-vivado-using-constraints/False-Paths">ˡ</a></li>
 </ul>
-<p><a href="https://www.intel.com/content/www/us/en/docs/programmable/683068/18-1/false-paths-set-false-path.html">https://www.intel.com/content/www/us/en/docs/programmable/683068/18-1/false-paths-set-false-path.html</a></p>
+<p><a
+href="https://www.intel.com/content/www/us/en/docs/programmable/683068/18-1/false-paths-set-false-path.html">https://www.intel.com/content/www/us/en/docs/programmable/683068/18-1/false-paths-set-false-path.html</a></p>
 <h2 id="breadboard-stuff">Breadboard stuff</h2>
 <ul>
 <li>Solder bridge
 <ul>
 <li>Excessive soldering causing two pins to get connected</li>
-<li><a href="https://resources.pcb.cadence.com/blog/2022-what-is-a-solder-bridge">https://resources.pcb.cadence.com/blog/2022-what-is-a-solder-bridge</a></li>
+<li><a
+href="https://resources.pcb.cadence.com/blog/2022-what-is-a-solder-bridge">https://resources.pcb.cadence.com/blog/2022-what-is-a-solder-bridge</a></li>
 </ul></li>
 <li>Soldering iron and tin wire (solder)
 <ul>
@@ -295,7 +354,8 @@ create_clock –period 7 –waveform {2 4} [get_ports {CK3}]
 </ul></li>
 <li>Flux: 'Helps the solder flow'
 <ul>
-<li><a href="https://www.chemtronics.com/essential-guide-to-flux-for-soldering-electronics">https://www.chemtronics.com/essential-guide-to-flux-for-soldering-electronics</a></li>
+<li><a
+href="https://www.chemtronics.com/essential-guide-to-flux-for-soldering-electronics">https://www.chemtronics.com/essential-guide-to-flux-for-soldering-electronics</a></li>
 </ul></li>
 <li>Methods for desoldering: Removing soldering
 <ul>
@@ -303,7 +363,8 @@ create_clock –period 7 –waveform {2 4} [get_ports {CK3}]
 <ul>
 <li>Adding flux can help.</li>
 <li>DBT: Can we reuse solder wick?</li>
-<li><a href="https://kunkune.co.uk/blog/how-to-use-solder-wick/">https://kunkune.co.uk/blog/how-to-use-solder-wick/</a></li>
+<li><a
+href="https://kunkune.co.uk/blog/how-to-use-solder-wick/">https://kunkune.co.uk/blog/how-to-use-solder-wick/</a></li>
 </ul></li>
 <li>Solder sucker</li>
 </ul></li>
@@ -312,7 +373,8 @@ create_clock –period 7 –waveform {2 4} [get_ports {CK3}]
 <li>Heat shrink: Tube-like thing used to insulate exposed wire
 <ul>
 <li>Looks like the tube 'hugs' the wire once it is heated</li>
-<li><a href="https://en.wikipedia.org/wiki/Heat-shrink_tubing#/media/File:Schrumpfschlauch_animated_modified.gif">https://en.wikipedia.org/wiki/Heat-shrink_tubing#/media/File:Schrumpfschlauch_animated_modified.gif</a></li>
+<li><a
+href="https://en.wikipedia.org/wiki/Heat-shrink_tubing#/media/File:Schrumpfschlauch_animated_modified.gif">https://en.wikipedia.org/wiki/Heat-shrink_tubing#/media/File:Schrumpfschlauch_animated_modified.gif</a></li>
 <li>Heat gun could be used to do the heating</li>
 </ul></li>
 <li>Selective vs wave soldering</li>
@@ -325,7 +387,8 @@ create_clock –period 7 –waveform {2 4} [get_ports {CK3}]
 </ul></li>
 <li>Header pins
 <ul>
-<li><a href="https://riverdi.com/blog/header-pins-in-electronics">https://riverdi.com/blog/header-pins-in-electronics</a></li>
+<li><a
+href="https://riverdi.com/blog/header-pins-in-electronics">https://riverdi.com/blog/header-pins-in-electronics</a></li>
 </ul></li>
 </ul>
 <p>DBT: Can soldering be undone</p>
@@ -342,7 +405,8 @@ create_clock –period 7 –waveform {2 4} [get_ports {CK3}]
 </ul></li>
 <li>Inferred latch problem
 <ul>
-<li>Latches are usually not desirable in a design to be loaded to FPGA</li>
+<li>Latches are usually not desirable in a design to be loaded to
+FPGA</li>
 </ul></li>
 </ul>
 <h2 id="tidbits">Tidbits</h2>
@@ -358,55 +422,72 @@ create_clock –period 7 –waveform {2 4} [get_ports {CK3}]
 </ul>
 <h2 id="terms-in-eda">Terms in EDA</h2>
 <ul>
-<li>Slack: Difference between time needed for signal to propogate and available time to propagate
+<li>Slack: Difference between time needed for signal to propogate and
+available time to propagate
 <ul>
 <li>Negative slack: Bad. There isn't enough clock</li>
 <li>Positive slack: Okay, but better not be too big either</li>
 </ul></li>
 <li>TNS: Total Negative Slack
 <ul>
-<li>Total of all negative slacks <a href="https://www.edaboard.com/threads/whats-the-difference-between-tns-and-wns.94400/">ʳ</a>
+<li>Total of all negative slacks <a
+href="https://www.edaboard.com/threads/whats-the-difference-between-tns-and-wns.94400/">ʳ</a>
 <ul>
-<li>Does not include any positive slacks <a href="https://support.xilinx.com/s/question/0D54U00006qTJxwSAG/what-is-the-worst-negative-slack?language=en_US">ʳ</a></li>
+<li>Does not include any positive slacks <a
+href="https://support.xilinx.com/s/question/0D54U00006qTJxwSAG/what-is-the-worst-negative-slack?language=en_US">ʳ</a></li>
 </ul></li>
 </ul></li>
 <li>WNS: Worst Negative Slack
 <ul>
 <li>Worst of all individual negative slacks</li>
 <li>(Confusing name… Slack need not actually negative here.)</li>
-<li>ie, slack of critical path <a href="https://adaptivesupport.amd.com/s/question/0D54U00006qTJxwSAG/what-is-the-worst-negative-slack?language=en_US">ˡ</a></li>
+<li>ie, slack of critical path <a
+href="https://adaptivesupport.amd.com/s/question/0D54U00006qTJxwSAG/what-is-the-worst-negative-slack?language=en_US">ˡ</a></li>
 <li>If it's negative, timing constraint is not met. Otherwise okay.
 <ul>
-<li>'The more negative, the worse it is' <a href="https://support.xilinx.com/s/question/0D54U00006qTJxwSAG/what-is-the-worst-negative-slack?language=en_US">ʳ</a></li>
+<li>'The more negative, the worse it is' <a
+href="https://support.xilinx.com/s/question/0D54U00006qTJxwSAG/what-is-the-worst-negative-slack?language=en_US">ʳ</a></li>
 </ul></li>
 </ul></li>
-<li><a href="https://vhdlwhiz.com/terminology/primitive/">Primitives</a>: Smallest component that we can configure in an FPGA
+<li><a
+href="https://vhdlwhiz.com/terminology/primitive/">Primitives</a>:
+Smallest component that we can configure in an FPGA
 <ul>
-<li><a href="https://www.intel.com/content/www/us/en/programmable/quartushelp/17.0/hdl/prim/prim_file_dffe.htm">DFFE</a>: A primitive. D flip flop with clock enable.</li>
+<li><a
+href="https://www.intel.com/content/www/us/en/programmable/quartushelp/17.0/hdl/prim/prim_file_dffe.htm">DFFE</a>:
+A primitive. D flip flop with clock enable.</li>
 </ul></li>
 <li>Delta cycle
 <ul>
-<li>Non-time consuming cycles added for modeling properly while a design is being simulated</li>
-<li><a href="https://vhdlwhiz.com/delta-cycles-explained/">https://vhdlwhiz.com/delta-cycles-explained/</a></li>
-<li>To make up for hardware being inherently parallel whereas computer simulating it leans more towards sequential execution.</li>
+<li>Non-time consuming cycles added for modeling properly while a design
+is being simulated</li>
+<li><a
+href="https://vhdlwhiz.com/delta-cycles-explained/">https://vhdlwhiz.com/delta-cycles-explained/</a></li>
+<li>To make up for hardware being inherently parallel whereas computer
+simulating it leans more towards sequential execution.</li>
 </ul></li>
-<li>Duty cycle (power electronics): Fraction of a period for which a signal under consideration is active</li>
-<li>Sensitivity list: List of signals changes to which trigger running of a process block</li>
+<li>Duty cycle (power electronics): Fraction of a period for which a
+signal under consideration is active</li>
+<li>Sensitivity list: List of signals changes to which trigger running
+of a process block</li>
 <li>DUT: Design Under Test</li>
 <li>Power domain: ??</li>
 <li>Hard macro vs soft macro
 <ul>
 <li>Hard macro: already optimized. Is a blackbox</li>
 <li>Soft macro: can be further optimized</li>
-<li><a href="https://chipedge.com/macro-in-vlsi/">https://chipedge.com/macro-in-vlsi/</a></li>
+<li><a
+href="https://chipedge.com/macro-in-vlsi/">https://chipedge.com/macro-in-vlsi/</a></li>
 </ul></li>
 </ul>
 <h2 id="processes-in-eda">Processes in EDA</h2>
 <ul>
 <li>Synthesis: HDL converted to gate level netlist</li>
-<li>Implementation: Does placing and routing for target board using information in netlist
+<li>Implementation: Does placing and routing for target board using
+information in netlist
 <ul>
-<li>Power usage information can be figured out only after implementation</li>
+<li>Power usage information can be figured out only after
+implementation</li>
 </ul></li>
 <li>Elaboration:
 <ul>
@@ -415,19 +496,25 @@ create_clock –period 7 –waveform {2 4} [get_ports {CK3}]
 </ul></li>
 <li>LVS (Layout vs Schematic checking)
 <ul>
-<li>Compares netlist from schematic (pre place and route?) and netlist from layout (post place and route?)</li>
+<li>Compares netlist from schematic (pre place and route?) and netlist
+from layout (post place and route?)</li>
 <li>See if both netlists correspond to each other</li>
-<li><a href="https://www.synopsys.com/glossary/what-is-layout-versus-schematic-checking.html">https://www.synopsys.com/glossary/what-is-layout-versus-schematic-checking.html</a></li>
-<li><a href="https://www.zerotoasiccourse.com/terminology/lvs/">https://www.zerotoasiccourse.com/terminology/lvs/</a></li>
+<li><a
+href="https://www.synopsys.com/glossary/what-is-layout-versus-schematic-checking.html">https://www.synopsys.com/glossary/what-is-layout-versus-schematic-checking.html</a></li>
+<li><a
+href="https://www.zerotoasiccourse.com/terminology/lvs/">https://www.zerotoasiccourse.com/terminology/lvs/</a></li>
 </ul></li>
 <li>Techmapping</li>
 <li>Floorplanning vs placement
 <ul>
-<li>Floorplanning is 'kind of' like placement but at a higher level?? Placement goes into more detail.</li>
-<li><a href="https://www.edaboard.com/threads/difference-bettewen-floorplanning-and-placement.119533/">https://www.edaboard.com/threads/difference-bettewen-floorplanning-and-placement.119533/</a></li>
+<li>Floorplanning is 'kind of' like placement but at a higher level??
+Placement goes into more detail.</li>
+<li><a
+href="https://www.edaboard.com/threads/difference-bettewen-floorplanning-and-placement.119533/">https://www.edaboard.com/threads/difference-bettewen-floorplanning-and-placement.119533/</a></li>
 </ul></li>
 <li>Placement: Deciding where to place circuit components</li>
-<li>Routing: Connecting circuit components after they've been placed</li>
+<li>Routing: Connecting circuit components after they've been
+placed</li>
 <li>Post-implementation functional simulation (vivado term)</li>
 </ul>
 <h2 id="file-formats-and-related">File formats and related</h2>
@@ -447,15 +534,20 @@ create_clock –period 7 –waveform {2 4} [get_ports {CK3}]
 <li>PDK (Process Design Kit)
 <ul>
 <li>Set of files used for fabrication of an IC</li>
-<li><a href="https://www.synopsys.com/glossary/what-is-a-process-design-kit.html">https://www.synopsys.com/glossary/what-is-a-process-design-kit.html</a></li>
+<li><a
+href="https://www.synopsys.com/glossary/what-is-a-process-design-kit.html">https://www.synopsys.com/glossary/what-is-a-process-design-kit.html</a></li>
 </ul></li>
-<li><a href="https://teamvlsi.com/2020/05/lib-and-lef-file-in-asic-design.html">Liberty file</a> (<code>.lib</code>): Liberty timing file
+<li><a
+href="https://teamvlsi.com/2020/05/lib-and-lef-file-in-asic-design.html">Liberty
+file</a> (<code>.lib</code>): Liberty timing file
 <ul>
 <li>Has data on timing and power on cell components</li>
 <li>For a standard cell library</li>
 <li>DBT: Does it vary with boards?</li>
-<li><a href="https://www.vlsisystemdesign.com/worried-about-liberty-basics-lets-start-from-ground-zero/">https://www.vlsisystemdesign.com/worried-about-liberty-basics-lets-start-from-ground-zero/</a></li>
-<li>'contain all the properties of the cells of a standard cell library, but not the physical design of them.'</li>
+<li><a
+href="https://www.vlsisystemdesign.com/worried-about-liberty-basics-lets-start-from-ground-zero/">https://www.vlsisystemdesign.com/worried-about-liberty-basics-lets-start-from-ground-zero/</a></li>
+<li>'contain all the properties of the cells of a standard cell library,
+but not the physical design of them.'</li>
 </ul></li>
 <li>Gerber</li>
 </ul>
@@ -473,31 +565,39 @@ create_clock –period 7 –waveform {2 4} [get_ports {CK3}]
 </ul></li>
 <li>QFP: Quad Flat Package
 <ul>
-<li>Leads on all 4 sides of the chip. Like common in microprocessor chips.</li>
+<li>Leads on all 4 sides of the chip. Like common in microprocessor
+chips.</li>
 <li>Surface mounted</li>
 <li>Variants: TQFP, LQFP</li>
 </ul></li>
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://research.ibm.com/blog/what-is-computer-chip-packaging">https://research.ibm.com/blog/what-is-computer-chip-packaging</a></li>
+<li><a
+href="https://research.ibm.com/blog/what-is-computer-chip-packaging">https://research.ibm.com/blog/what-is-computer-chip-packaging</a></li>
 </ul>
-<h2 id="fpga-vs-microcontroller-vs-gpu">FPGA vs microcontroller vs GPU</h2>
+<h2 id="fpga-vs-microcontroller-vs-gpu">FPGA vs microcontroller vs
+GPU</h2>
 <ul>
 <li>Microcontroller &lt; GPU &lt; FPGA</li>
 <li>FPGA vs microcontroller
 <ul>
-<li>Microcontroller cannot be programmed at hardware level. Programming is done with software.</li>
-<li><a href="https://www.ibm.com/blog/fpga-vs-microcontroller/">https://www.ibm.com/blog/fpga-vs-microcontroller/</a></li>
-<li>Microcontroller usually has no parallel execution (since most have only one execution unit)</li>
+<li>Microcontroller cannot be programmed at hardware level. Programming
+is done with software.</li>
+<li><a
+href="https://www.ibm.com/blog/fpga-vs-microcontroller/">https://www.ibm.com/blog/fpga-vs-microcontroller/</a></li>
+<li>Microcontroller usually has no parallel execution (since most have
+only one execution unit)</li>
 </ul></li>
 <li>FPGA vs GPU
 <ul>
 <li>Both have parallelism</li>
 <li>GPU could have more computing</li>
 <li>But FPGA has low latency</li>
-<li><a href="https://www.ibm.com/blog/fpga-vs-gpu/">https://www.ibm.com/blog/fpga-vs-gpu/</a></li>
-<li><a href="https://blog.purestorage.com/purely-educational/gpus-vs-fpgas-whats-the-difference/">https://blog.purestorage.com/purely-educational/gpus-vs-fpgas-whats-the-difference/</a></li>
+<li><a
+href="https://www.ibm.com/blog/fpga-vs-gpu/">https://www.ibm.com/blog/fpga-vs-gpu/</a></li>
+<li><a
+href="https://blog.purestorage.com/purely-educational/gpus-vs-fpgas-whats-the-difference/">https://blog.purestorage.com/purely-educational/gpus-vs-fpgas-whats-the-difference/</a></li>
 </ul></li>
 </ul>
 <h2 id="some-historical-stuff">Some historical stuff</h2>
@@ -508,7 +608,8 @@ create_clock –period 7 –waveform {2 4} [get_ports {CK3}]
 </ul></li>
 <li>PLA: Programmable Logic Array
 <ul>
-<li>Programmable AND array followed by a <em>programmable</em> OR array</li>
+<li>Programmable AND array followed by a <em>programmable</em> OR
+array</li>
 </ul></li>
 </ul>
 <h2 id="not-general">Not general</h2>
@@ -518,7 +619,9 @@ create_clock –period 7 –waveform {2 4} [get_ports {CK3}]
 </ul>
 <h2 id="tcl-scripting">tcl scripting</h2>
 <ul>
-<li><a href="https://www.xilinx.com/support/documents/sw_manuals/xilinx2022_2/ug894-vivado-tcl-scripting.pdf">Vivado design suite user guide: Using TCL scripting</a></li>
+<li><a
+href="https://www.xilinx.com/support/documents/sw_manuals/xilinx2022_2/ug894-vivado-tcl-scripting.pdf">Vivado
+design suite user guide: Using TCL scripting</a></li>
 </ul>
 </div>
 </body>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Bash</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Bash</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<h1 id="tips">Tips</h1>
+<ul>
+<li><p>Alt-u: upper case word starting at cursor</p></li>
+<li><p>Alt-l: lower case word starting at cursor</p></li>
+<li><p>Ctrl-k: kill (ie, cut) all characters after cursor</p></li>
+<li><p>Ctrl-u: kill all characters before cursor</p></li>
+<li><p>Ctrl-y: paste last killed characters</p></li>
+<li><p>Ctrl-f: move cursor forward by one character (same as right
+arrow)</p></li>
+<li><p>Ctrl-b: move cursor backward by one character (same as left
+arrow)</p></li>
+<li><p>Alt-f: move cursor forward by one word (same as Ctrl-right
+arrow)</p></li>
+<li><p>Alt-b: move cursor backward by one word (same as Ctrl-left
+arrow)</p></li>
+</ul>
+<p><a
+href="https://mastodon.social/@YesIKnowIT/106757814475112522">https://mastodon.social/@YesIKnowIT/106757814475112522</a></p>
+<h1 id="general">General</h1>
+<ul>
+<li><code>basename</code>: file name with extension</li>
+<li><code>dirname</code>: name of parent directory</li>
+</ul>
+<h1 id="options">'Options'</h1>
+<ul>
+<li><code>-n</code>: not set</li>
+<li><code>-z</code>: is set ('is zero')</li>
+<li><code>-f</code>: check if a file exists</li>
+<li>Strings with <code>$</code>-sign prefix
+<ul>
+<li><a
+href="https://unix.stackexchange.com/questions/48106/what-does-it-mean-to-have-a-dollarsign-prefixed-string-in-a-script">https://unix.stackexchange.com/questions/48106/what-does-it-mean-to-have-a-dollarsign-prefixed-string-in-a-script</a></li>
+</ul></li>
+</ul>
+<h1 id="special-variables">Special variables</h1>
+<ul>
+<li><code>$-</code>: string with set of options in current shell
+<ul>
+<li><a
+href="https://stackoverflow.com/questions/42757236/what-does-mean-in-bash">https://stackoverflow.com/questions/42757236/what-does-mean-in-bash</a></li>
+</ul></li>
+<li><code>$@</code>: all positional arguments</li>
+<li><code>$#</code>: number of positional arguments</li>
+</ul>
+<p>Function args:</p>
+<ul>
+<li><p>$1, $2, …</p></li>
+<li><p>$0 is still script name</p></li>
+<li><p><code>$USER</code>: current username</p></li>
+<li><p><code>$HOME</code>: home dir of current user</p></li>
+</ul>
+<p>References:</p>
+<h1 id="get-directory-of-a-file-path">Get directory of a file path</h1>
+<pre><code>$(dirname /path/to/a/file.txt)  # /path/to/a/
+</code></pre>
+<p>Handy for use with <code>cd</code> command to do stuff like</p>
+<pre><code>cd $(dirname $_)  # go to directory of last argument of last command
+</code></pre>
+<h2 id="unexport-a-variable">'Unexport' a variable</h2>
+<p>Use <code>-n</code> option of <code>export</code> without the
+<code>$</code> in the variable.</p>
+<pre><code>export -n &lt;variable&gt;
+</code></pre>
+<h1 id="history">History</h1>
+<ul>
+<li>Repeat last command: <code>!!</code></li>
+<li>Repeat nth command from last in history:
+<code>!-&lt;n&gt;</code></li>
+</ul>
+<h1 id="alias">Alias</h1>
+<h2 id="set-alias">Set alias</h2>
+<pre><code>alias &lt;name&gt;=&#39;&lt;command&gt;&#39;
+</code></pre>
+<p>Like</p>
+<pre><code>alias emacs=&#39;emacs -nw&#39;
+</code></pre>
+<h2 id="unset-alias">Unset alias</h2>
+<pre><code>unalias &lt;name&gt;
+</code></pre>
+<h2 id="easy-renaming--">Easy renaming :-)</h2>
+<pre><code>mv path/to/file/{a,b}.ext
+</code></pre>
+<p>is same as</p>
+<pre><code>mv path/to/file/a.ext path/to/file/b.ext
+</code></pre>
+<h2 id="skip-history-for-a-command">Skip history for a command</h2>
+<p>Add a space before the command.</p>
+<h2 id="bash-loop">Bash: loop</h2>
+<pre><code>for i in {1..10}; do echo $i; done
+</code></pre>
+<h2 id="string-concatenation">String concatenation</h2>
+<p>Reference: <a
+href="https://www.delftstack.com/howto/linux/how-to-concatenate-strings-using-bash/">https://www.delftstack.com/howto/linux/how-to-concatenate-strings-using-bash/</a></p>
+<h3 id="two-string-variables">Two string variables</h3>
+<pre><code>a=&quot;hi&quot;
+b=&quot;hello&quot;
+c=$a$b
+echo $c  # hihello
+</code></pre>
+<h3 id="a-string-variable-and-a-string-literal">A string variable and a
+string literal</h3>
+<pre><code>a=&quot;hi&quot;
+c=&quot;${a}hello&quot;
+echo $c  # hihello
+</code></pre>
+<h3 id="a-string-variable-and-a-number">A string variable and a
+number</h3>
+<pre><code>a=&quot;hi&quot;
+b=10
+c=$a$b
+echo $c  # hi10
+</code></pre>
+<h3 id="dot-operator">Dot operator</h3>
+<pre><code>a=&quot;hello&quot;;
+echo &quot;hi&quot;.${a}  # hihello
+</code></pre>
+<h3 id="operator"><code>+=</code> operator</h3>
+<pre><code>a=&quot;hi&quot;
+b=&quot;hello&quot;
+a+=$b  # hihello
+</code></pre>
+<h1 id="dot-in-beginning-of-a-line">Dot in beginning of a line</h1>
+<p><code>.</code> in bash is same as the <code>source</code>
+command.</p>
+<p>As in</p>
+<pre><code>. ~/bash_aliases
+</code></pre>
+<p>Reference: <a
+href="https://unix.stackexchange.com/questions/114300/whats-the-meaning-of-a-dot-before-a-command-in-shell">https://unix.stackexchange.com/questions/114300/whats-the-meaning-of-a-dot-before-a-command-in-shell</a></p>
+<h1 id="pass-argument-to-function">Pass argument to function</h1>
+<p>Use $1 for first argument, $2 to 2nd, and so on.</p>
+<h1 id="tricks">Tricks</h1>
+<h2 id="repeat-previous-command-with-a-change">Repeat previous command
+with a change</h2>
+<p>Use <code>^old^new</code> to replace occurrence of the string
+<code>old</code> with <code>new</code> (they needn't be strings
+themselves).</p>
+<pre><code>fam@ubu:~$ echo hello
+hello
+fam@ubu:~$ ^l^hehe
+echo hehehelo
+hehehelo
+</code></pre>
+<p><a
+href="https://mastodon.social/@YesIKnowIT/107537702786292217">https://mastodon.social/@YesIKnowIT/107537702786292217</a></p>
+<h1 id="bash-if-switches">Bash if switches</h1>
+<ul>
+<li><code>-z</code>: true if argument string is null</li>
+<li><code>-n</code>: true if argument string is not null</li>
+</ul>
+<p>References:</p>
+<ul>
+<li><code>man bash</code></li>
+<li><a
+href="https://stackoverflow.com/questions/19074542/is-there-a-list-of-if-switches-anywhere">https://stackoverflow.com/questions/19074542/is-there-a-list-of-if-switches-anywhere</a></li>
+<li><a
+href="https://stackoverflow.com/questions/18096670/what-does-z-mean-in-bash">https://stackoverflow.com/questions/18096670/what-does-z-mean-in-bash</a></li>
+</ul>
+<h1 id="arrays">Arrays</h1>
+<p><a
+href="https://stackoverflow.com/questions/1335815/how-to-slice-an-array-in-bash">https://stackoverflow.com/questions/1335815/how-to-slice-an-array-in-bash</a></p>
+<pre><code># Creation
+$ arr=(foo bar 1 1.2)
+
+$ echo $arr
+foo
+
+$ echo ${arr[@]}
+foo bar 1 1.2
+
+# Indexing
+$ echo ${arr[1]}
+bar
+
+# Slicing
+$ echo ${arr[@]:1:2}
+bar 1
+
+# Slice from pos 1 to end of array
+$ echo ${arr[@]:1}
+bar 1 1.2
+
+$ echo ${arr[@]::2}
+foo bar
+</code></pre>
+<p>Note that array needs the <code>(</code> and <code>)</code>.</p>
+<ul>
+<li><code>files=$(ls -1 workspace/)</code> is not an array</li>
+<li><code>files=($(ls -1 workspace/))</code> is an array</li>
+</ul>
+<h1 id="hex-arithmetic-in-bash">hex arithmetic in bash</h1>
+<pre><code>$ echo $((0x12))
+18
+
+$ echo $((0x12 &lt;&lt; 2))
+72
+</code></pre>
+<h1 id="octal-arithmetic-in-bash">octal arithmetic in bash</h1>
+<pre><code>$ echo $((8#13))
+11
+
+$ echo $((8#13 &lt;&lt; 2))
+44
+</code></pre>
+<h1 id="bash-edit-and-execute-last-n-commands">Bash: Edit and execute
+last n commands</h1>
+<pre><code># last one command
+fc
+
+# last 3 commands
+fc -3 0
+</code></pre>
+<p>This will open up an editor (<code>$FCEDIT</code> is looked at first
+to select the editor) with the last n commands (default n=1). We can
+edit them as we like. When the editor is closed, those commands will be
+executed.</p>
+<h1 id="see-history-with-timestamps">See history with timestamps</h1>
+<pre><code># For like &quot;2022-07-04 05:16:19&quot;
+HISTTIMEFORMAT=&quot;%F %T &quot;
+history
+</code></pre>
+<p>Use the variable in <code>.bashrc</code> to make this permanent.</p>
+<p>Reference: <a
+href="https://askubuntu.com/questions/391082/how-to-see-time-stamps-in-bash-history">https://askubuntu.com/questions/391082/how-to-see-time-stamps-in-bash-history</a></p>
+<h1 id="options-1">Options</h1>
+<table>
+<thead>
+<tr class="header">
+<th><code>set -e</code></th>
+<th>Stop script on error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>set -u</code></td>
+<td>Throw error on unset variable use</td>
+</tr>
+<tr class="even">
+<td><code>set -o pipefail</code></td>
+<td>Throw error if any command in a 'pipe-chain' of</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>commands fail even if other commands succeeded</td>
+</tr>
+</tbody>
+</table>
+<h1 id="tests">Tests</h1>
+<ul>
+<li><code>-f</code> / <code>-d</code>: true if file/directory
+exists</li>
+<li><code>-s</code>: true if file is non-empty (non-zero size)</li>
+<li><code>-r</code> / <code>-w</code> / <code>-x</code>: true if file is
+readable / writable / executable</li>
+<li>-<code>z</code>: true if variable is unset or is empty string
+<ul>
+<li>See: <a
+href="https://stackoverflow.com/questions/3869072/test-for-non-zero-length-string-in-bash-n-var-or-var/49825114#49825114">https://stackoverflow.com/questions/3869072/test-for-non-zero-length-string-in-bash-n-var-or-var/49825114#49825114</a></li>
+</ul></li>
+<li><code>-e</code>: any kind of file</li>
+<li><code>-S</code>: Socket</li>
+<li><code>-L</code>: Symbolic link</li>
+<li><code>-b</code>: block special file</li>
+<li><code>-c</code>: character special file</li>
+</ul>
+<p>From: <a
+href="https://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash">https://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash</a></p>
+<h2 id="check-if-a-variable-is-set">Check if a variable is set</h2>
+<ul>
+<li>To check if variable is set, not whether it is empty.</li>
+<li>Note that <code>$</code> is not uesd for variable name in the
+test.</li>
+</ul>
+<pre><code>a=2 
+if [[ -v a ]; then
+  echo &quot;a set&quot;
+else
+  echo &quot;a not set&quot;
+fi
+</code></pre>
+<h2 id="check-if-a-directoryfile-exists">Check if a directory/file
+exists</h2>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> <span class="ot">-d</span> /home/user ]<span class="er">;</span> then</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="er">echo</span> <span class="st">&quot;/home/user exists&quot;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;/home/user doesn&#39;t exist&quot;</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Or</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> <span class="ot">!</span> <span class="ot">-d</span> /home/user ]<span class="er">;</span> then</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="er">echo</span> <span class="st">&quot;/home/user doesn&#39;t exist&quot;</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;/home/user exists&quot;</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
+<p>Replace <code>-d</code> with <code>-f</code> for files.</p>
+<h1 id="pass-contents-of-a-file-as-an-argument">Pass contents of a file
+as an argument</h1>
+<p>In bash: <code>"$(&lt;/path/to/file.txt)"</code>.</p>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span>  <span class="st">&quot;</span><span class="va">$(</span><span class="op">&lt;</span>/data/2.txt<span class="va">)</span><span class="st">&quot;</span></span></code></pre></div>
+<p>See:</p>
+<ul>
+<li><a
+href="https://unix.stackexchange.com/questions/58212/how-do-i-pass-the-contents-of-a-file-as-a-command-line-parameter">https://unix.stackexchange.com/questions/58212/how-do-i-pass-the-contents-of-a-file-as-a-command-line-parameter</a></li>
+<li><a
+href="https://unix.stackexchange.com/questions/361309/how-to-pass-the-contents-of-a-file-to-an-option-parameter-of-a-function">https://unix.stackexchange.com/questions/361309/how-to-pass-the-contents-of-a-file-to-an-option-parameter-of-a-function</a></li>
+<li><a
+href="https://unix.stackexchange.com/questions/393351/pass-contents-of-file-as-argument-to-bash-script">https://unix.stackexchange.com/questions/393351/pass-contents-of-file-as-argument-to-bash-script</a></li>
+</ul>
+<h1 id="show-definition-of-a-bash-function">Show definition of a bash
+function</h1>
+<p>Use <code>type</code>.</p>
+<p>For example, I got a function named <code>csv</code>:</p>
+<pre><code>$ type csv
+csv is a function
+csv ()
+{
+    if [ $# -lt 1 ]; then
+        echo &quot;Please specify file name&quot;;
+    else
+        if [ -f $1 ]; then
+            column -s, -t &lt; $1 | less -#2 -N -S;
+        else
+            echo &quot;$1: File not found&quot;;
+        fi;
+    fi
+}
+</code></pre>
+<h1 id="heredoc">heredoc</h1>
+<pre><code>cat &lt;&lt; SAMEWORD
+hello
+world
+SAMEWORD
+</code></pre>
+<p>Reference: <a
+href="https://tldp.org/LDP/abs/html/here-docs.html">https://tldp.org/LDP/abs/html/here-docs.html</a></p>
+<h2 id="temporary-files">Temporary files</h2>
+<ul>
+<li>mktemp: temporary file</li>
+<li>mktemp -d: temporary directory</li>
+</ul>
+<h2 id="check-if-a-variable-is-set-1">Check if a variable is set</h2>
+<ul>
+<li><code>-n</code>: not set</li>
+<li><code>-z</code>: is set ('is zero')</li>
+</ul>
+<pre><code>if [ -n $var ]; then
+  echo &quot;var is set&quot;
+fi
+
+if [ -z $var ]; then
+  echo &quot;var is not set&quot;
+fi
+</code></pre>
+<p>Reference: <a
+href="https://tldp.org/LDP/abs/html/here-docs.html">https://tldp.org/LDP/abs/html/here-docs.html</a></p>
+<h2 id="temporary-files-1">Temporary files</h2>
+<ul>
+<li>mktemp: temporary file</li>
+<li>mktemp -d: temporary directory</li>
+</ul>
+<h2 id="check-if-a-variable-is-set-2">Check if a variable is set</h2>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-n</span> <span class="va">$var</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;var is set&quot;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-z</span> <span class="va">$var</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;var is not set&quot;</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
+<h1 id="find-key-code-of-keyboard-keys">Find key code of keyboard
+keys</h1>
+<p>In a terminal do: <code>C-v &lt;key&gt;</code>.</p>
+<p>Eg:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><code class="verbatim">^[[A</code></td>
+<td>Up arrow</td>
+</tr>
+<tr class="even">
+<td><code class="verbatim">^[[D</code></td>
+<td>Left arrow</td>
+</tr>
+<tr class="odd">
+<td><code class="verbatim">^[[5~</code></td>
+<td>Page up</td>
+</tr>
+<tr class="even">
+<td><code class="verbatim">^[[1;5D</code></td>
+<td>Ctrl-Left</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>^[</code> is an escape sequence or something. The remaining
+characters are the real deal.</p>
+<p>These codes might be dependent on the terminal being used.</p>
+<p><a
+href="https://stackoverflow.com/questions/11816046/signs-for-the-enter-key-page-up-and-page-down">https://stackoverflow.com/questions/11816046/signs-for-the-enter-key-page-up-and-page-down</a></p>
+<h1 id="returning-values-from-function">Returning values from
+function</h1>
+<p><code>return</code> is for stating exit code? Values are 'returned'
+via printing. Do an <code>echo</code>.</p>
+<h1 id="underscore-in-variable-name">Underscore in variable name</h1>
+<ul>
+<li>VAR<sub>NAME</sub> reference should be ${VAR<sub>NAME</sub>}</li>
+<li>VARNAME can be $VARNAME</li>
+</ul>
+<h1 id="info">Info</h1>
+<ul>
+<li><code>cd</code> is same as <code>cd $HOME</code></li>
+<li>Tips for logging in bash scripts: <a
+href="https://blog.tratif.com/2023/01/09/bash-tips-1-logging-in-shell-scripts/">link</a></li>
+</ul>
+<h1 id="show-bash-version-info">Show bash version info</h1>
+<pre><code>C-x C-v
+</code></pre>
+<p>Sample output:</p>
+<pre><code>GNU bash, version 4.4.20(1)-release (x86_64-pc-linux-gnu)
+</code></pre>
+</div>
+</body>
+</html>

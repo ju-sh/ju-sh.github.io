@@ -36,47 +36,56 @@
 </header>
 
 <ul>
-    <li>Date created: 01-Sep-2022</li>
     </ul>
 
-<div>
-  <p>
-    Tags: / 
-    <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/math.html">math</a>
-    </code> /
-  <p>
-</div>
 
 
 <div id="description">
-Is it possible for a frog to return to starting position subject to some conditions? A puzzle..
+Is it possible for a frog to return to starting position subject to some
+conditions? A puzzle..
 </div>
 
 <hr/>
 
 <div id="content-container">
-<p>—</p>
-<p>A group of students and teachers from our college used to run a math circle for the students of nearby schools before Covid struck. Apparently it used to be quite active. Now that the lockdown era is over, the math circle is being resurrected.</p>
-<p>A bunch of volunteers including our teachers are working to get the programme running and one of my friends was among those who were tasked with finding math problems to help the participants of the math circle develop greater interest in mathematics.</p>
-<p>So my friend spent some time searching for math puzzles and found a few. One of them was quite simple to understand (once we got to know the answer, that is 😅) and he told us about it.</p>
+<p>A group of students and teachers from our college used to run a math
+circle for the students of nearby schools before Covid struck.
+Apparently it used to be quite active. Now that the lockdown era is
+over, the math circle is being resurrected.</p>
+<p>A bunch of volunteers including our teachers are working to get the
+programme running and one of my friends was among those who were tasked
+with finding math problems to help the participants of the math circle
+develop greater interest in mathematics.</p>
+<p>So my friend spent some time searching for math puzzles and found a
+few. One of them was quite simple to understand (once we got to know the
+answer, that is 😅) and he told us about it.</p>
 <p>I try to describe this puzzle and its solution in this blog post.</p>
-<hr />
 <h2 id="the-puzzle">The puzzle</h2>
-<p>Imagine a frog which can only move horizontally towards left or right. It cannot move in any other direction.</p>
-<p>When it moves for the first time, it takes one step. During each successive move it makes afterwards, it takes one step more than the number of steps it took during the previous move.</p>
+<p>Imagine a frog which can only move horizontally towards left or
+right. It cannot move in any other direction.</p>
+<p>When it moves for the first time, it takes one step. During each
+successive move it makes afterwards, it takes one step more than the
+number of steps it took during the previous move.</p>
 <p>It will be something like this:</p>
 <pre><code>| Move#      | 1st | 2nd | 3rd | 4th | 5th | .....
 |------------+-----+-----+-----+-----+-----|
 | Step count |   1 |   2 |   3 |   4 |   5 | .....
 </code></pre>
-<p>ie, the frog first takes one step, then two steps, afterwards three steps, and so on.</p>
-<p>And upon starting each move, the frog has the option to change the direction of its movement (ie, left or right).</p>
-<p>All steps within the same move will be made in the same direction.</p>
-<p>The puzzle is to figure out whether it is possible for the frog to come back to the position from where it started by the time it finishes making its 10th move.</p>
+<p>ie, the frog first takes one step, then two steps, afterwards three
+steps, and so on.</p>
+<p>And upon starting each move, the frog has the option to change the
+direction of its movement (ie, left or right).</p>
+<p>All steps within the same move will be made in the same
+direction.</p>
+<p>The puzzle is to figure out whether it is possible for the frog to
+come back to the position from where it started by the time it finishes
+making its 10th move.</p>
 <h2 id="formulating">Formulating</h2>
-<p>We need to find if it's possible for the frog to return to its starting position in 10 moves.</p>
-<p>We could think of the starting position as <code>0</code>, leftward movements as negative numbers and rightward movements as positive numbers whose value is the number of steps taken in that move.</p>
+<p>We need to find if it's possible for the frog to return to its
+starting position in 10 moves.</p>
+<p>We could think of the starting position as <code>0</code>, leftward
+movements as negative numbers and rightward movements as positive
+numbers whose value is the number of steps taken in that move.</p>
 <p>Sort of like:</p>
 <pre><code>
 negative         positive
@@ -84,15 +93,20 @@ negative         positive
 left                right
 
 </code></pre>
-<p>Then our puzzle reduces to checking if an arithmetic expression's value is zero.</p>
+<p>Then our puzzle reduces to checking if an arithmetic expression's
+value is zero.</p>
 <p>For example, if the frog moved like</p>
 <pre><code>1-Left, 2-Right, 3-Left 
 </code></pre>
-<p>we could represent the movements with the following arithmetic expression:</p>
+<p>we could represent the movements with the following arithmetic
+expression:</p>
 <pre><code>-1 + 2 - 3
 </code></pre>
 <h2 id="a-few-sample-movements">A few sample movements</h2>
-<p>Before going into the actual puzzle, where the number of movements (let's call that move count) is 10, let's have a casual glance at a few examples where the frog can actually return to its starting location.</p>
+<p>Before going into the actual puzzle, where the number of movements
+(let's call that move count) is 10, let's have a casual glance at a few
+examples where the frog can actually return to its starting
+location.</p>
 <pre><code>|  Move | Move                    |
 | count | sequence                |
 |-------+-------------------------|
@@ -103,14 +117,19 @@ left                right
 |     8 | +1 -2 -3 +4 +5 -6 -7 +8 |
 |     8 | +1 +2 +3 +4 -5 -6 -7 +8 |
 </code></pre>
-<p>The positive numbers represent rightward movement and the negative numbers indicate leftward movement.</p>
-<p>The sum of the numbers in each case is zero, meaning that the frog can return to its starting position if following one of these paths.</p>
+<p>The positive numbers represent rightward movement and the negative
+numbers indicate leftward movement.</p>
+<p>The sum of the numbers in each case is zero, meaning that the frog
+can return to its starting position if following one of these paths.</p>
 <h2 id="solution">Solution</h2>
-<p>The frog moves 10 times. For move number <code>n</code>, it takes <code>n</code> steps. And it has the option to change movement direction at the beginning of each move.</p>
+<p>The frog moves 10 times. For move number <code>n</code>, it takes
+<code>n</code> steps. And it has the option to change movement direction
+at the beginning of each move.</p>
 <p>So we could represent the movements like:</p>
 <pre><code>1 ± 2 ± 3 ± 4 ± 5 ± 6 ± 7 ± 8 ± 9 ± 10
 </code></pre>
-<p>We need to know if this arithmetic expression can turn out to be zero.</p>
+<p>We need to know if this arithmetic expression can turn out to be
+zero.</p>
 <p>In this expression, there are 5 even numbers and 5 odd numbers.</p>
 <pre><code>| Odd  | 1 | 3 | 5 | 7 |  9 |
 |------+---+---+---+---+----|
@@ -119,7 +138,8 @@ left                right
 <p>Let's focus on just the even numbers.</p>
 <pre><code>2  4  6  8  10
 </code></pre>
-<p>We know that addition or subtraction performed between two even numbers will always result in an even number.</p>
+<p>We know that addition or subtraction performed between two even
+numbers will always result in an even number.</p>
 <pre><code>even + even = even
 even - even = even
 </code></pre>
@@ -127,7 +147,8 @@ even - even = even
 <pre><code>4 + 2 = 6
 4 - 2 = 2
 </code></pre>
-<p>ie, no matter whether we use addition or subtraction between these 5 even numbers, it will end up being an even number itself.</p>
+<p>ie, no matter whether we use addition or subtraction between these 5
+even numbers, it will end up being an even number itself.</p>
 <pre><code>2  ±  4  ±  6  ±  8  ±  10
 |     |     |     |      |
 +--+--+     +--+--+      |
@@ -156,12 +177,14 @@ odd + odd = even
 <pre><code>1  3  5  7  9
 </code></pre>
 <p>Let's group the odd numbers into pairs.</p>
-<p>This leaves one of the odd numbers without a pair. Let it be <code>9</code>.</p>
+<p>This leaves one of the odd numbers without a pair. Let it be
+<code>9</code>.</p>
 <pre><code>1  3    5  7    9
 |  |    |  |            
 +--+    +--+            
 </code></pre>
-<p>The addition/subtraction operations done on each odd number pair will result in an even number.</p>
+<p>The addition/subtraction operations done on each odd number pair will
+result in an even number.</p>
 <pre><code>1  ±  3  ±  5  ±  7  ±  9
 |     |     |     |     |
 +--+--+     +--+--+     |
@@ -173,7 +196,8 @@ odd + odd = even
         even     ±     odd
 </code></pre>
 <p>Which results in an even number and an odd number.</p>
-<p>Recall that we got another even number, which is the contribution of the 5 even numbers that we had considered earlier.</p>
+<p>Recall that we got another even number, which is the contribution of
+the 5 even numbers that we had considered earlier.</p>
 <p>So we are left with 2 even numbers and an odd number.</p>
 <pre><code>even    ±    even    ±    odd
  |            |
@@ -181,7 +205,8 @@ odd + odd = even
         |
        even
 </code></pre>
-<p>Addition/subtraction done on the two even numbers will result in an even number.</p>
+<p>Addition/subtraction done on the two even numbers will result in an
+even number.</p>
 <p>And we are left with an even number and an odd number.</p>
 <pre><code>even    ±    odd
 </code></pre>
@@ -193,20 +218,31 @@ even - odd = odd
 <pre><code>4 + 5 = 9
 4 - 5 = -1
 </code></pre>
-<p>ie, addition/subtraction done between an even and odd number is going to result in an odd number.</p>
+<p>ie, addition/subtraction done between an even and odd number is going
+to result in an odd number.</p>
 <p>This means that the result of:</p>
 <pre><code>1 ± 2 ± 3 ± 4 ± 5 ± 6 ± 7 ± 8 ± 9 ± 10
 </code></pre>
 <p>is an odd number.</p>
-<p>Since <code>0</code> is not odd, the result cannot be <code>0</code>.</p>
-<p>Therefore, the frog cannot return to its initial location by the time it finishes moving for the 10th time.</p>
+<p>Since <code>0</code> is not odd, the result cannot be
+<code>0</code>.</p>
+<p>Therefore, the frog cannot return to its initial location by the time
+it finishes moving for the 10th time.</p>
 <pre><code>∎
 </code></pre>
-<p><strong>Acknowledgements</strong>: Thanks to Aditya, the friend mentioned in this blog post, who told us about this puzzle and its solution/proof.</p>
+<p><strong>Acknowledgements</strong>: Thanks to Aditya, the friend
+mentioned in this blog post, who told us about this puzzle and its
+solution/proof.</p>
 <h2 id="addendum">Addendum</h2>
 <ul>
-<li>I wasn't sure if the concept of <a href="https://en.wikipedia.org/wiki/Parity_of_zero">parity</a> (ie, odd/even) extended to negative numbers. But it seems it does. Parity talks about integers, which includes negative numbers. Wasn't sure where to look it up. Ended up taking Wikipedia's word for it.</li>
-<li>And zero is <a href="https://www.bbc.com/news/magazine-20559052">considered even</a>.</li>
+<li>I wasn't sure if the concept of <a
+href="https://en.wikipedia.org/wiki/Parity_of_zero">parity</a> (ie,
+odd/even) extended to negative numbers. But it seems it does. Parity
+talks about integers, which includes negative numbers. Wasn't sure where
+to look it up. Ended up taking Wikipedia's word for it.</li>
+<li>And zero is <a
+href="https://www.bbc.com/news/magazine-20559052">considered
+even</a>.</li>
 </ul>
 </div>
 </body>

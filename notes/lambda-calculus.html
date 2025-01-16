@@ -47,37 +47,59 @@
 <h2 id="intro">Intro</h2>
 <p>From Chapter 5 of TAPL:</p>
 <blockquote>
-<p>In the mid 1960s, Peter Landin observed that a complex programming language can be understood by formulating it as a tiny core caclulus capturing the language's essential mechanisms, together with a collection of convenient derived forms whose behaviour is understood by translating them into the core language.</p>
+<p>In the mid 1960s, Peter Landin observed that a complex programming
+language can be understood by formulating it as a tiny core caclulus
+capturing the language's essential mechanisms, together with a
+collection of convenient derived forms whose behaviour is understood by
+translating them into the core language.</p>
 </blockquote>
 <ul>
 <li><p>Landin chose lambda calculus as core language.</p></li>
-<li><p>All computations reduced to a few basic operations: function definition and function application</p></li>
+<li><p>All computations reduced to a few basic operations: function
+definition and function application</p></li>
 </ul>
 <h2 id="semantic-styles">Semantic styles</h2>
-<p>Semantics specifies how the terms are evaluated. The meaning of the terms in the language.</p>
+<p>Semantics specifies how the terms are evaluated. The meaning of the
+terms in the language.</p>
 <h3 id="operational-semantics">Operational semantics</h3>
 <ul>
-<li>Specifies behaviour of a language by specifying a simple abstract machine for it.</li>
+<li>Specifies behaviour of a language by specifying a simple abstract
+machine for it.</li>
 <li>This machine uses the terms of the language as instructions.
 <ul>
-<li>Simple language ⇒ state of machine is a term and transition function performs a simplification to proceed to next state.</li>
-<li>Meaning of the term is the final state of the machine (when the term was the input).</li>
+<li>Simple language ⇒ state of machine is a term and transition function
+performs a simplification to proceed to next state.</li>
+<li>Meaning of the term is the final state of the machine (when the term
+was the input).</li>
 </ul></li>
-<li>Sometimes useful to have multiple operational semantics for the same language. Some closer to the way machines see it and some closer to the way that humans see it. Then we can sort of chain proofs and prove correctness of the language. (I suppose this is how CompCert did it).</li>
+<li>Sometimes useful to have multiple operational semantics for the same
+language. Some closer to the way machines see it and some closer to the
+way that humans see it. Then we can sort of chain proofs and prove
+correctness of the language. (I suppose this is how CompCert did
+it).</li>
 </ul>
 <h3 id="denotational-semantics">Denotational semantics</h3>
 <ul>
-<li>Meaning of a term is taken as a mathematical object (like a number or function).</li>
-<li>Denotational semantics means finding semantic domains and defining an interpreter function mapping the terms of the language to elements in these domains.</li>
+<li>Meaning of a term is taken as a mathematical object (like a number
+or function).</li>
+<li>Denotational semantics means finding semantic domains and defining
+an interpreter function mapping the terms of the language to elements in
+these domains.</li>
 <li>Highlights the essential properties of the language.</li>
-<li><em>Domain theory</em> is a field that came out of the search for appropriate semantic domains for modeling various language features.</li>
-<li>Thoughtful selection of domains can let us derive powerful properties for reasoning about programs.</li>
+<li><em>Domain theory</em> is a field that came out of the search for
+appropriate semantic domains for modeling various language
+features.</li>
+<li>Thoughtful selection of domains can let us derive powerful
+properties for reasoning about programs.</li>
 <li>Can't handle non-determinism and concurrency??</li>
 </ul>
 <h3 id="axiomatic-semantics">Axiomatic semantics</h3>
 <ul>
-<li>Instead of assigning behaviour and then deriving laws and properties them, define the laws themselves first and then derive the behaviour.</li>
-<li>The laws themselves are the definition. Behaviour is whatever we can get from those laws.</li>
+<li>Instead of assigning behaviour and then deriving laws and properties
+them, define the laws themselves first and then derive the
+behaviour.</li>
+<li>The laws themselves are the definition. Behaviour is whatever we can
+get from those laws.</li>
 <li>Meaning of a term is what can be proved about it.</li>
 <li>Focuses on the process of reasoning about programs.</li>
 <li>Procedures can't be handled properly??</li>
@@ -115,29 +137,36 @@ pred (succ nv) → nv
 <h3 id="small-step-style">Small step style</h3>
 <ul>
 <li>Evaluation may be done in multiple steps.</li>
-<li>Computation progresses through individual steps guided by the evaluation relation till the term becomes a value.</li>
+<li>Computation progresses through individual steps guided by the
+evaluation relation till the term becomes a value.</li>
 </ul>
 <h3 id="big-step-style">Big step style</h3>
 <ul>
 <li>aka <strong>Natural semantics</strong></li>
 <li>Do everything in one step.</li>
 <li>Directly specifies that 'this term evaluates to this value'.</li>
-<li><code>t ⇓ v</code> means that the term <code>t</code> evaluates to the value <code>v</code>.</li>
+<li><code>t ⇓ v</code> means that the term <code>t</code> evaluates to
+the value <code>v</code>.</li>
 </ul>
 <h3 id="stuck-term">Stuck term</h3>
 <ul>
-<li>A term for which there is no further step in the evaluation relation but is still not a value.</li>
+<li>A term for which there is no further step in the evaluation relation
+but is still not a value.</li>
 <li>ie, the term is in normal form but is not a value.</li>
 </ul>
 <h2 id="notations">Notations</h2>
 <ul>
 <li>Open term: Term with at least one free variable.</li>
-<li>Closed term: Term with no free variables. All variables are bound.</li>
-<li><code>t → t'</code> means that <code>t</code> evaluates to <code>t'</code> in a single step from the evaluation relation.</li>
-<li>Value: A 'term' that has finished computing and cannot be reduced further.</li>
+<li>Closed term: Term with no free variables. All variables are
+bound.</li>
+<li><code>t → t'</code> means that <code>t</code> evaluates to
+<code>t'</code> in a single step from the evaluation relation.</li>
+<li>Value: A 'term' that has finished computing and cannot be reduced
+further.</li>
 </ul>
 <h2 id="curry-style-and-church-style">Curry-style and Church-style</h2>
-<p>Two styles in which simply typed lambda calculus can be formulated.</p>
+<p>Two styles in which simply typed lambda calculus can be
+formulated.</p>
 <table>
 <thead>
 <tr class="header">
@@ -182,10 +211,12 @@ pred (succ nv) → nv
 </table>
 <h2 id="type-erasure">Type erasure</h2>
 <ul>
-<li>Removing types. Effectively a conversion to a form of untyped lambda calculus.</li>
+<li>Removing types. Effectively a conversion to a form of untyped lambda
+calculus.</li>
 <li>Many compilers don't carry along type annotations for run-time.
 <ul>
-<li>Type checking is done at compile time after which the typing info is no longer needed and may be 'erased'.</li>
+<li>Type checking is done at compile time after which the typing info is
+no longer needed and may be 'erased'.</li>
 </ul></li>
 </ul>
 <pre><code>erasure(x) = x
@@ -193,26 +224,35 @@ erasure(λx:T.t) = λx. erasure(t)
 erasure(t₁ t₂) = erasure(t₁) erasure(t₂)
 </code></pre>
 <ul>
-<li><code>t₁ → t₂</code>, then <code>erasure(t₁) → erasure(t₂)</code></li>
-<li><code>erasure(t) → m'</code>, then <code>∃t'. t → t'</code> and <code>erasure(t') = m</code></li>
+<li><code>t₁ → t₂</code>, then
+<code>erasure(t₁) → erasure(t₂)</code></li>
+<li><code>erasure(t) → m'</code>, then <code>∃t'. t → t'</code> and
+<code>erasure(t') = m</code></li>
 </ul>
 <h2 id="type-reconstruction">Type reconstruction</h2>
 <dl>
 <dt>Type substitution (σ)</dt>
-<dd>a finite mapping from type variables to types.
+<dd>
+a finite mapping from type variables to types.
 </dd>
 </dl>
 <h2 id="multiple-argument-functions">Multiple argument functions</h2>
-<p>By definition, abstraction takes only one argument. But <strong>currying</strong> can be done to get the effect of functions with as many arguments as needed.</p>
+<p>By definition, abstraction takes only one argument. But
+<strong>currying</strong> can be done to get the effect of functions
+with as many arguments as needed.</p>
 <h2 id="de-bruijn-indexing">de Bruijn indexing</h2>
 <p>Nameless lambda calculus.</p>
 <p>Use numbers instead of names for variables.</p>
-<p>If used, no need of α-conversion as there can't be name collisions if there are no names. :)</p>
+<p>If used, no need of α-conversion as there can't be name collisions if
+there are no names. :)</p>
 <h3 id="terms-with-free-variables">Terms with free variables</h3>
 <p>ie, <em>open terms</em>.</p>
-<p>We don't know how far is the binder (ie, λ) for a free variable. We need a <strong>naming context</strong>.</p>
-<p>For example, in <code>λx. y x</code>, we know that <code>x</code> is <code>0</code> but are not sure about <code>y</code>.</p>
-<p>Use a naming context (which is basically an assignation of de-Bruijn indices to the free variables) and use this assignment consistently.</p>
+<p>We don't know how far is the binder (ie, λ) for a free variable. We
+need a <strong>naming context</strong>.</p>
+<p>For example, in <code>λx. y x</code>, we know that <code>x</code> is
+<code>0</code> but are not sure about <code>y</code>.</p>
+<p>Use a naming context (which is basically an assignation of de-Bruijn
+indices to the free variables) and use this assignment consistently.</p>
 <pre><code>Consider a naming context like
 
 Γ = x ↦ 4
@@ -232,8 +272,11 @@ Then the terms could be &#39;translated&#39; to:
 for each binder, we got to increment the de-Bruijn index of the free variables.
 </code></pre>
 <h3 id="free-variables">Free variables</h3>
-<p>But can't have free variables in this notation? Though that isn't much of a problem as any term with a free variable can be made into a closed term.</p>
-<p>Like: <code>λx. x y</code> being made into <code>λy. (λ.x x y)</code>.</p>
+<p>But can't have free variables in this notation? Though that isn't
+much of a problem as any term with a free variable can be made into a
+closed term.</p>
+<p>Like: <code>λx. x y</code> being made into
+<code>λy. (λ.x x y)</code>.</p>
 <h2 id="kinds-of-lambda-calculus">Kinds of lambda calculus</h2>
 <ul>
 <li>Untyped lambda calculus</li>
@@ -241,27 +284,38 @@ for each binder, we got to increment the de-Bruijn index of the free variables.
 <li>Pure typed/untyped lambda calculus</li>
 <li>Simply typed lambda calculus</li>
 </ul>
-<h2 id="need-and-motivation-for-lambda-calculus">Need and motivation for lambda calculus</h2>
+<h2 id="need-and-motivation-for-lambda-calculus">Need and motivation for
+lambda calculus</h2>
 <ul>
-<li>Can be viewed simultaneously as a programming language in which computations can be described and as a mathematical object with which we can reason about.</li>
+<li>Can be viewed simultaneously as a programming language in which
+computations can be described and as a mathematical object with which we
+can reason about.</li>
 <li>Good tool for analyzing programming languages</li>
-<li>Simple syntax to represent computable functions (ie, computations).</li>
+<li>Simple syntax to represent computable functions (ie,
+computations).</li>
 </ul>
 <h2 id="uses-of-lambda-calculus">Uses of lambda calculus</h2>
-<p>It's so simple (just 3 rules for untyped lambda calculus!), yet it can express any computable function.</p>
+<p>It's so simple (just 3 rules for untyped lambda calculus!), yet it
+can express any computable function.</p>
 <h3 id="church-turing-hypothesis">Church-Turing hypothesis</h3>
-<p>Lambda calculus with β-reduction is as powerful as a Turing machine.</p>
+<p>Lambda calculus with β-reduction is as powerful as a Turing
+machine.</p>
 <p>It can express any computable function.</p>
-<h2 id="untyped-lambda-calculus-utlc">Untyped lambda calculus (utlc)</h2>
+<h2 id="untyped-lambda-calculus-utlc">Untyped lambda calculus
+(utlc)</h2>
 <h3 id="syntax">Syntax</h3>
 <pre><code>term = x      -- variable
      | λx. t  -- abstraction
      | t₁ t₂  -- application
 </code></pre>
 <h3 id="substitution-operation">Substitution operation</h3>
-<p>We use an auxiliary operation called <strong>shifting</strong> for help in doing substitution.</p>
-<p>The name of the bound variables are irrelevant as long as the naming is consistent.</p>
-<p>For example, <code>λx. x</code> and <code>λw. w</code> are both same. The change in name doesn't make them different. Both are simply different forms of the identity function.</p>
+<p>We use an auxiliary operation called <strong>shifting</strong> for
+help in doing substitution.</p>
+<p>The name of the bound variables are irrelevant as long as the naming
+is consistent.</p>
+<p>For example, <code>λx. x</code> and <code>λw. w</code> are both same.
+The change in name doesn't make them different. Both are simply
+different forms of the identity function.</p>
 <h4 id="shifting">Shifting</h4>
 <ul>
 <li>Remembers the de-Bruijn indices of free variables in a term.</li>
@@ -269,9 +323,16 @@ for each binder, we got to increment the de-Bruijn index of the free variables.
 <p>To handle stuff like</p>
 <pre class="utlc"><code>[1 ↦ s](λ.2)
 </code></pre>
-<p>because as we are doing the substitution by going inside the body of the lambda (ie, the abstraction), the context becomes longer by one term (the variable over which the abstraction is done is added to the context).</p>
-<p>To ensure that the de-Bruijn indices still refer to the proper lambda terms, we would need to increment ('shift up') the all de-Bruijn indices of all <em>free variables</em> inside the body of the abstraction.</p>
-<p>Note that we can't just shift all variables just like that. Only free variables (ie, the variables which are bound somewhere outside the abstraction being examined) need to be shifted.</p>
+<p>because as we are doing the substitution by going inside the body of
+the lambda (ie, the abstraction), the context becomes longer by one term
+(the variable over which the abstraction is done is added to the
+context).</p>
+<p>To ensure that the de-Bruijn indices still refer to the proper lambda
+terms, we would need to increment ('shift up') the all de-Bruijn indices
+of all <em>free variables</em> inside the body of the abstraction.</p>
+<p>Note that we can't just shift all variables just like that. Only free
+variables (ie, the variables which are bound somewhere outside the
+abstraction being examined) need to be shifted.</p>
 <p>Bound variables should not be shifted.</p>
 <pre><code>shift(d, c) k       = k,     if k &lt; c
                     | k + d, if k ≥ c
@@ -296,9 +357,12 @@ shift(2) (λ. 0 1 (λ. 0 1 2))
 = λ. 0 3 (λ. 0 1 4)
 </code></pre>
 <p>Shifting 'moves'.</p>
-<h4 id="capture-avoiding-substitution">Capture avoiding substitution</h4>
-<p>A substitution operation that makes sure that the bound variable names of terms are kept distinct from the free variable names.</p>
-<p>This is the kind of substitution that we usually mean when we just say substitution.</p>
+<h4 id="capture-avoiding-substitution">Capture avoiding
+substitution</h4>
+<p>A substitution operation that makes sure that the bound variable
+names of terms are kept distinct from the free variable names.</p>
+<p>This is the kind of substitution that we usually mean when we just
+say substitution.</p>
 <h3 id="free-variables-1">Free variables</h3>
 <pre><code>FV(x)     = {x}              -- variable
 FV(λx.t)  = FV(t) - {x}      -- abstraction
@@ -317,7 +381,8 @@ FV(t₁ t₂) = FV(t₁) ∪ FV(t₂)  -- application
 <li>Useful for implicit communication via shared state.</li>
 <li>Allow some side effects.</li>
 <li>Significantly improve practical ease of use.</li>
-<li>Aliasing, which offers its advantages, also makes reasoning about difficult.</li>
+<li>Aliasing, which offers its advantages, also makes reasoning about
+difficult.</li>
 </ul>
 <h2 id="α-conversion">α-conversion</h2>
 <ul>
@@ -327,7 +392,8 @@ FV(t₁ t₂) = FV(t₁) ∪ FV(t₂)  -- application
 <li>Avoid <strong>free variable capture</strong>.</li>
 </ul>
 <p><code>λx. x h</code> can be α-reduced to <code>λy. y h</code></p>
-<p>Free variables are left untouched. Only the bound variable is renamed.</p>
+<p>Free variables are left untouched. Only the bound variable is
+renamed.</p>
 <pre><code>[x ↦ y z](λy. x y)
 
 is problematic as the condition
@@ -343,7 +409,8 @@ But if the term can be α-reduced like
 there is variable capture.
 </code></pre>
 <h2 id="β-reduction">β-reduction</h2>
-<p>Replace the occurrences of bound variable of the abstraction with the argument (on an application) in the body of the abstraction.</p>
+<p>Replace the occurrences of bound variable of the abstraction with the
+argument (on an application) in the body of the abstraction.</p>
 <p><code>(λ.x x) y → [x ↦ y](λ.x x) → y</code></p>
 <h3 id="strictness">Strictness</h3>
 <ul>
@@ -355,13 +422,15 @@ there is variable capture.
 <ul>
 <li>Reducible expression.</li>
 <li>Term coined by Alonzo Church.</li>
-<li>β-reduction is the process of rewriting a redex as per evaluation rules.</li>
+<li>β-reduction is the process of rewriting a redex as per evaluation
+rules.</li>
 </ul>
 <p>Types of β-reduction</p>
 <h3 id="full-β-reduction">Full β-reduction</h3>
 <ul>
 <li>Any redex can be reduced at any time.</li>
-<li>Each step picks a redex anywhere inside the term being evaluated and reduces it.</li>
+<li>Each step picks a redex anywhere inside the term being evaluated and
+reduces it.</li>
 </ul>
 <h3 id="normal-order">Normal order</h3>
 <ul>
@@ -383,9 +452,12 @@ id(λz. id z)
 </code></pre>
 <h3 id="call-by-name">Call by name</h3>
 <ul>
-<li>Similar to normal order but no reductions inside abstractions. (names preserved??)</li>
-<li>A lazy strategy. Evaluation happens only if the term is actually used.</li>
-<li>Haskell uses <em>call by need</em>, an optimized form of call by name form of β-reduction.</li>
+<li>Similar to normal order but no reductions inside abstractions.
+(names preserved??)</li>
+<li>A lazy strategy. Evaluation happens only if the term is actually
+used.</li>
+<li>Haskell uses <em>call by need</em>, an optimized form of call by
+name form of β-reduction.</li>
 </ul>
 <pre><code>id(id(λz. id z))
 ----------------
@@ -399,9 +471,12 @@ id(λz. id z)
 </code></pre>
 <h3 id="call-by-value">Call by value</h3>
 <ul>
-<li>Only outermost redexes are reduced (TODO: what does that mean??)</li>
-<li>Redex is reduces only when its right side has been reduced to a value.</li>
-<li>A strict strategy. Evaluation happens anyway, even if it not needed and the term is not being used.</li>
+<li>Only outermost redexes are reduced (TODO: what does that
+mean??)</li>
+<li>Redex is reduces only when its right side has been reduced to a
+value.</li>
+<li>A strict strategy. Evaluation happens anyway, even if it not needed
+and the term is not being used.</li>
 <li>Used by most languages.</li>
 </ul>
 <pre><code>id(id(λz. id z))
@@ -417,11 +492,14 @@ id(λz. id z)
 <h2 id="β-reduction-styles">β-reduction styles</h2>
 <ul>
 <li>evaluation strategies.</li>
-<li>Choice of this style doesn't really matter as far as evaluation itself is concerned.</li>
+<li>Choice of this style doesn't really matter as far as evaluation
+itself is concerned.</li>
 <li>Used by TAPL book.</li>
 </ul>
-<p>:DBT: Signficance of the term 'call' here. There are no 'function call', isn't it? Just rewrites?</p>
-<h3 id="full-β-reduction-1"><span class="done DONE">DONE</span> Full β reduction</h3>
+<p>:DBT: Signficance of the term 'call' here. There are no 'function
+call', isn't it? Just rewrites?</p>
+<h3 id="full-β-reduction-1"><span class="done DONE">DONE</span> Full β
+reduction</h3>
 <p>Any redux can be reduced at <em>any</em> time.</p>
 <p>Eg:</p>
 <pre><code>id (id (λz. id z))
@@ -460,7 +538,8 @@ Reduction stops.
 <li>Lazy. Arguments evaluated only when needed</li>
 <li>Used by Haskell (via rewrites)</li>
 </ul>
-<h3 id="call-by-name-1"><span class="done DONE">DONE</span> Call by name</h3>
+<h3 id="call-by-name-1"><span class="done DONE">DONE</span> Call by
+name</h3>
 <ul>
 <li>No reduction done inside an abstraction.</li>
 <li>Reduction stops if a lambda is encountered.</li>
@@ -478,11 +557,14 @@ id (λz. id z)
 Reduction stops.
 Even though the &#39;id z&#39; inside the last abstraction could also be reduced.
 </code></pre>
-<h3 id="call-by-value-1"><span class="done DONE">DONE</span> Call by value (??)</h3>
+<h3 id="call-by-value-1"><span class="done DONE">DONE</span> Call by
+value (??)</h3>
 <ul>
-<li>Redex reduced only when the right operand is already in normal form (ie, a value)</li>
+<li>Redex reduced only when the right operand is already in normal form
+(ie, a value)</li>
 <li>Only outermost redexes reduced.</li>
-<li>'Functions are called only on values' <a href="https://groups.seas.harvard.edu/courses/cs152/2010sp/lectures/lec08.pdf">²</a></li>
+<li>'Functions are called only on values' <a
+href="https://groups.seas.harvard.edu/courses/cs152/2010sp/lectures/lec08.pdf">²</a></li>
 <li>Strict. Arguments always evaluated. Whether needed or not.</li>
 <li>Used by most languages</li>
 </ul>
@@ -498,7 +580,8 @@ id (λz. id z)
 Reduction stops.
 Even though the &#39;id z&#39; inside the last abstraction could also be reduced.
 </code></pre>
-<h3 id="normal-order-1"><span class="done DONE">DONE</span> Normal order</h3>
+<h3 id="normal-order-1"><span class="done DONE">DONE</span> Normal
+order</h3>
 <ul>
 <li>leftmost, outermost redex is reduced first</li>
 <li>redexes inside abstractions also reduced</li>
@@ -519,23 +602,28 @@ Reduction stops.
 </code></pre>
 <h2 id="η-reduction">η-reduction</h2>
 <ul>
-<li>Replace <code>λx.f x</code> with <code>f</code> if <code>x</code> doesn't appear as a free variable in <code>f</code>.</li>
+<li>Replace <code>λx.f x</code> with <code>f</code> if <code>x</code>
+doesn't appear as a free variable in <code>f</code>.</li>
 </ul>
 <p>References:</p>
 <ul>
-<li><a href="https://wiki.haskell.org/Eta_conversion">https://wiki.haskell.org/Eta_conversion</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Lambda_calculus#%CE%B7-reduction">https://en.wikipedia.org/wiki/Lambda_calculus#%CE%B7-reduction</a></li>
+<li><a
+href="https://wiki.haskell.org/Eta_conversion">https://wiki.haskell.org/Eta_conversion</a></li>
+<li><a
+href="https://en.wikipedia.org/wiki/Lambda_calculus#%CE%B7-reduction">https://en.wikipedia.org/wiki/Lambda_calculus#%CE%B7-reduction</a></li>
 </ul>
 <h2 id="substitution">Substitution</h2>
 <h2 id="shifting-1">Shifting</h2>
 <h2 id="fixed-point-combinator">Fixed point combinator</h2>
 <ul>
 <li>Way for recursion.</li>
-<li>Combinators are closed lambda expressions (ie, no free variables).</li>
+<li>Combinators are closed lambda expressions (ie, no free
+variables).</li>
 </ul>
 <pre><code>fix f = f (fix f)
 </code></pre>
-<p><a href="https://en.wikipedia.org/wiki/Fixed-point_combinator">https://en.wikipedia.org/wiki/Fixed-point_combinator</a></p>
+<p><a
+href="https://en.wikipedia.org/wiki/Fixed-point_combinator">https://en.wikipedia.org/wiki/Fixed-point_combinator</a></p>
 <h2 id="system-f">System F</h2>
 <ul>
 <li><p>An extension of simply typed lambda calculus</p></li>
@@ -544,20 +632,28 @@ Reduction stops.
 <li><p>Well-typed terms in System F are normalizing.</p>
 <ul>
 <li>ie, evaluation of all terms terminates.</li>
-<li>For every term t, t is either in normalized form (ie, cannot be reduced further) or there is a typing rule <code>t → t'</code> that can reduce it (<em>progress</em>).</li>
+<li>For every term t, t is either in normalized form (ie, cannot be
+reduced further) or there is a typing rule <code>t → t'</code> that can
+reduce it (<em>progress</em>).</li>
 </ul></li>
 <li><p>Type inference for System-F is undecidable. (Why??)</p></li>
-<li><p>First discovered by the logician Jean-Yves Girard (1972) in the context of proof theory</p></li>
-<li><p>Then independently by the computer scientist John Reynolds (1974)</p>
+<li><p>First discovered by the logician Jean-Yves Girard (1972) in the
+context of proof theory</p></li>
+<li><p>Then independently by the computer scientist John Reynolds
+(1974)</p>
 <ul>
 <li>Reynolds named it <em>Polymorphic lambda calculus</em>.</li>
 </ul></li>
 <li><p>aka <em>second-order lambda calculus</em></p>
 <ul>
-<li>Corresponds to second-order intuitionistic logic via Curry-Howard correspondence.</li>
-<li>Allows quantification over types (predicates) in addition to terms.</li>
+<li>Corresponds to second-order intuitionistic logic via Curry-Howard
+correspondence.</li>
+<li>Allows quantification over types (predicates) in addition to
+terms.</li>
 </ul></li>
-<li><p>Has been extensively used as a research vehicle to study polymorphism and as the basis of many programming language designs.</p></li>
+<li><p>Has been extensively used as a research vehicle to study
+polymorphism and as the basis of many programming language
+designs.</p></li>
 </ul>
 <h3 id="examples">Examples</h3>
 <h4 id="map-function">map function</h4>
@@ -605,7 +701,8 @@ reverse =
 </ul>
 <h2 id="system-fω">System Fω</h2>
 <ul>
-<li>Doesn't allow dependent types (which are mappings from values to types).</li>
+<li>Doesn't allow dependent types (which are mappings from values to
+types).</li>
 </ul>
 <h2 id="system-fω-1">System Fω&lt;:</h2>
 <ul>
@@ -613,13 +710,16 @@ reverse =
 </ul>
 <h2 id="new-terms">New terms</h2>
 <ul>
-<li>Universal lambda functions?? <a href="https://en.wikipedia.org/wiki/Iota_and_Jot">link</a></li>
+<li>Universal lambda functions?? <a
+href="https://en.wikipedia.org/wiki/Iota_and_Jot">link</a></li>
 <li>Point-free programming</li>
 <li>Type reconstruction (tapl C22)</li>
 <li>Type erasure (tapl C9?)</li>
 </ul>
 <h3 id="normalization">Normalization</h3>
-<p>Evaluation of a well-typed term is guaranteed to halt in a finite number of steps. ie, every well-typed term is normalizable. (src: tapl)</p>
+<p>Evaluation of a well-typed term is guaranteed to halt in a finite
+number of steps. ie, every well-typed term is normalizable. (src:
+tapl)</p>
 <ul>
 <li>TODO: Strong normalization</li>
 </ul>
@@ -629,19 +729,25 @@ reverse =
 <li>cannot take another step under the evaluation relation.</li>
 <li>already a value.</li>
 </ul>
-<p>Not every term has a normal form. Terms without a normal form are said to <strong>diverge</strong> (<em>Divergent term</em>).</p>
+<p>Not every term has a normal form. Terms without a normal form are
+said to <strong>diverge</strong> (<em>Divergent term</em>).</p>
 <p>Par example, the term</p>
 <p><code>(λx. x x) (λx. x x)</code>.</p>
-<p>Any attempt to reduce this term will resultant in the original term itself.</p>
+<p>Any attempt to reduce this term will resultant in the original term
+itself.</p>
 <h3 id="impredicativity">Impredicativity</h3>
-<p>A definition (of a set/type etc) is impredicative if it involves a quantifier whose domain includes the very thing being defined. (src: tapl C23)</p>
+<p>A definition (of a set/type etc) is impredicative if it involves a
+quantifier whose domain includes the very thing being defined. (src:
+tapl C23)</p>
 <h3 id="monotypes">Monotypes</h3>
-<p>Type variables that range only over quantifier-free types. (src: tapl C23)</p>
+<p>Type variables that range only over quantifier-free types. (src: tapl
+C23)</p>
 <h3 id="polytype-or-type-scheme">Polytype or Type scheme</h3>
 <p>Quantified types.</p>
 <h3 id="subtypes">Subtypes</h3>
 <ul>
-<li>aka <em>second order lambda calculus</em> (via an analogy with second-order intuitionalistic logic)
+<li>aka <em>second order lambda calculus</em> (via an analogy with
+second-order intuitionalistic logic)
 <ul>
 <li>Quantification over types (analogous to predicates) possible.</li>
 <li>In addition to quantification over terms</li>
@@ -654,7 +760,8 @@ reverse =
 <h3 id="type-preservation">Type preservation</h3>
 <ul>
 <li>Meaning is not lost.</li>
-<li><code>t → t'</code> means <code>t</code> reduces to <code>t'</code></li>
+<li><code>t → t'</code> means <code>t</code> reduces to
+<code>t'</code></li>
 </ul>
 <pre><code> Γ ⊢ t : T         t → t&#39;
 ==========================
@@ -663,7 +770,10 @@ reverse =
 <h3 id="progress">Progress</h3>
 <ul>
 <li>Related to normalizability.</li>
-<li>For every term in the language:the term is either in normalized form (cannot be reduced further. Is already a value), or there is a typing rule (<code>t → t'</code>) that takes it a step closer to normalized form.</li>
+<li>For every term in the language:the term is either in normalized form
+(cannot be reduced further. Is already a value), or there is a typing
+rule (<code>t → t'</code>) that takes it a step closer to normalized
+form.</li>
 </ul>
 <h2 id="tapl-exercises">TAPL exercises</h2>
 <h3 id="section">5.2.1</h3>
@@ -703,7 +813,9 @@ reverse =
 <p>See tag EX-6.2.2</p>
 <h3 id="section-3">13.1.1</h3>
 <h4 id="question">Question</h4>
-<p>Draw a similar diagram showing the effects of evaluating the expressions <code>a = {ref 0, ref 0}</code> and <code>b = (λx: Ref Nat. {x, x}) (ref 0)</code>.</p>
+<p>Draw a similar diagram showing the effects of evaluating the
+expressions <code>a = {ref 0, ref 0}</code> and
+<code>b = (λx: Ref Nat. {x, x}) (ref 0)</code>.</p>
 <h4 id="answer">Answer</h4>
 <p><code>a = {ref 0, ref 0}</code></p>
 <pre><code>
@@ -715,7 +827,8 @@ a = { _, _}
     +---+---+
 
 </code></pre>
-<p>where the two elements of the record point to different memory locations.</p>
+<p>where the two elements of the record point to different memory
+locations.</p>
 <p>And</p>
 <p><code>b = (λx: Ref Nat. {x, x}) (ref 0)</code></p>
 <pre><code>
@@ -729,10 +842,12 @@ b = { _, _}
       +---+
 
 </code></pre>
-<p>where both elements of the record point to the same memory location.</p>
+<p>where both elements of the record point to the same memory
+location.</p>
 <h3 id="section-4">15.2.1</h3>
 <h4 id="question-1">Question</h4>
-<p>Draw a derivation showing that <code>{x:Nat, y:Nat, z:Nat}</code> is a subtype of <code>{y:Nat}</code>.</p>
+<p>Draw a derivation showing that <code>{x:Nat, y:Nat, z:Nat}</code> is
+a subtype of <code>{y:Nat}</code>.</p>
 <h4 id="answer-1">Answer</h4>
 <table>
 <tbody>
@@ -756,30 +871,44 @@ b = { _, _}
 </table>
 <h2 id="external-references">External References</h2>
 <ul>
-<li><p><em>Types and Programming Languages</em> by Benjamin Pierce</p></li>
-<li><p><em>Advanced topics in Types and Programming Languages</em> by Benjamin Pierce</p></li>
-<li><p><a href="https://plato.stanford.edu/entries/lambda-calculus/">Link</a></p></li>
-<li><p><em>Lambda-calculus and combinators, an introduction</em> by Hindley and Seldin</p></li>
-<li><p><em>An introduction to the lambda calculus for computer scientists</em> by Hankin (very basic)</p></li>
-<li><p><em>Lectures on the Curry-Howard isomorphism</em> by Sorensen and Urzyczyn (advanced)</p></li>
+<li><p><em>Types and Programming Languages</em> by Benjamin
+Pierce</p></li>
+<li><p><em>Advanced topics in Types and Programming Languages</em> by
+Benjamin Pierce</p></li>
+<li><p><a
+href="https://plato.stanford.edu/entries/lambda-calculus/">Link</a></p></li>
+<li><p><em>Lambda-calculus and combinators, an introduction</em> by
+Hindley and Seldin</p></li>
+<li><p><em>An introduction to the lambda calculus for computer
+scientists</em> by Hankin (very basic)</p></li>
+<li><p><em>Lectures on the Curry-Howard isomorphism</em> by Sorensen and
+Urzyczyn (advanced)</p></li>
 <li><p><em>Basic simple type theory</em> by Hindley (advanced)</p></li>
-<li><p><em>The lambda calculus: its syntax and semantics</em> by Barendregt (authoritative)</p></li>
-<li><p><a href="http://www.paultaylor.eu/stable/Proofs+Types.html">http://www.paultaylor.eu/stable/Proofs+Types.html</a></p></li>
-<li><p><a href="https://www.irif.fr/~krivine//articles/Lambda.pdf">https://www.irif.fr/~krivine//articles/Lambda.pdf</a></p></li>
-<li><p><a href="https://mathoverflow.net/questions/69337/what-is-some-good-introduction-to-lambda-calculus">https://mathoverflow.net/questions/69337/what-is-some-good-introduction-to-lambda-calculus</a></p></li>
+<li><p><em>The lambda calculus: its syntax and semantics</em> by
+Barendregt (authoritative)</p></li>
+<li><p><a
+href="http://www.paultaylor.eu/stable/Proofs+Types.html">http://www.paultaylor.eu/stable/Proofs+Types.html</a></p></li>
+<li><p><a
+href="https://www.irif.fr/~krivine//articles/Lambda.pdf">https://www.irif.fr/~krivine//articles/Lambda.pdf</a></p></li>
+<li><p><a
+href="https://mathoverflow.net/questions/69337/what-is-some-good-introduction-to-lambda-calculus">https://mathoverflow.net/questions/69337/what-is-some-good-introduction-to-lambda-calculus</a></p></li>
 </ul>
 <p>Using this definition, we can define identity function (λx:T. T):</p>
 <pre><code>idfn = Abs A A (λx:Term A. x)
 </code></pre>
 <p>where <code>A</code> is a type variable.</p>
 <h2 id="logical-frameworks">Logical frameworks</h2>
-<p>Systems that provide mechanisms for representing the syntax and proof systems which make up a logic.</p>
+<p>Systems that provide mechanisms for representing the syntax and proof
+systems which make up a logic.</p>
 <p>Eg: HOAS</p>
-<p>See: <a href="https://ncatlab.org/nlab/show/logical+framework">https://ncatlab.org/nlab/show/logical+framework</a></p>
+<p>See: <a
+href="https://ncatlab.org/nlab/show/logical+framework">https://ncatlab.org/nlab/show/logical+framework</a></p>
 <h2 id="barendregt-cube">Barendregt cube</h2>
 <ul>
-<li>Also known as lambda cube. <a href="https://www.cambridge.org/core/journals/journal-of-functional-programming/article/introduction-to-generalized-type-systems/869991BA6A99180BF96A616894C6D710">¹</a></li>
-<li>See <a href="https://en.wikipedia.org/wiki/Lambda_cube">https://en.wikipedia.org/wiki/Lambda_cube</a></li>
+<li>Also known as lambda cube. <a
+href="https://www.cambridge.org/core/journals/journal-of-functional-programming/article/introduction-to-generalized-type-systems/869991BA6A99180BF96A616894C6D710">¹</a></li>
+<li>See <a
+href="https://en.wikipedia.org/wiki/Lambda_cube">https://en.wikipedia.org/wiki/Lambda_cube</a></li>
 </ul>
 <pre><code>    Fω        CC
     +--------+ 
@@ -794,7 +923,8 @@ F / |      / |
 λ→         LF
 </code></pre>
 <ul>
-<li>Top face: systems with polymorphism (ie, have term families indexed by types).</li>
+<li>Top face: systems with polymorphism (ie, have term families indexed
+by types).</li>
 <li>Back face: systems with type operators.</li>
 <li>Right face: systems with dependent types</li>
 </ul>
@@ -809,11 +939,13 @@ F / |      / |
 </ul>
 <p>System-F: polymorphic lambda calculus</p>
 <ul>
-<li>aka <a href="https://users.cs.northwestern.edu/~jesse/course/type-systems-wi18/type-notes/sec_sysf.html">λ2</a></li>
+<li>aka <a
+href="https://users.cs.northwestern.edu/~jesse/course/type-systems-wi18/type-notes/sec_sysf.html">λ2</a></li>
 </ul>
 <h2 id="interesting-bits">Interesting bits</h2>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Iota_and_Jot">https://en.wikipedia.org/wiki/Iota_and_Jot</a></li>
+<li><a
+href="https://en.wikipedia.org/wiki/Iota_and_Jot">https://en.wikipedia.org/wiki/Iota_and_Jot</a></li>
 </ul>
 </div>
 </body>

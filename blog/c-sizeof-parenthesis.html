@@ -36,49 +36,43 @@
 </header>
 
 <ul>
-    <li>Date created: 21-Jun-2017</li>
-      <li>Last updated: 25-Jun-2021</li>
-  </ul>
+    </ul>
 
-<div>
-  <p>
-    Tags: / 
-    <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/c.html">c</a>
-    </code> /
-  <p>
-</div>
 
 
 <div id="description">
-About the two kinds of usages of the sizeof operator in C. One with parenthesis, and the one without..
+About the two kinds of usages of the sizeof operator in C. One with
+parenthesis, and the one without..
 </div>
 
 <hr/>
 
 <div id="content-container">
-<p><sub><sup><a href="../misc/old-blog.html">From my old blog</a>.</sup></sub></p>
-<hr />
-<p>The <code>sizeof</code> operator in C will sometimes work without parenthesis but sometimes won't.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="dt">int</span> main()</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>{</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="dt">int</span> a;</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">%d&quot;</span>, <span class="kw">sizeof</span> a);</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">%d&quot;</span>, <span class="kw">sizeof</span>(a));</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>}</span></code></pre></div>
-<p>In this case, <code>sizeof</code> will work regardless of the use of parenthesis.</p>
+<p><sub><sup><a href="../misc/old-blog.html">From my old
+blog</a>.</sup></sub></p>
+<p>The <code>sizeof</code> operator in C will sometimes work without
+parenthesis but sometimes won't.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n%d</span><span class="st">&quot;</span><span class="op">,</span> <span class="kw">sizeof</span> a<span class="op">);</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n%d</span><span class="st">&quot;</span><span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">));</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In this case, <code>sizeof</code> will work regardless of the use of
+parenthesis.</p>
 <p>Consider another example:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="dt">int</span> main()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>{</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">%d&quot;</span>, <span class="kw">sizeof</span> <span class="dt">int</span>);</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n%d</span><span class="st">&quot;</span><span class="op">,</span> <span class="kw">sizeof</span> <span class="dt">int</span><span class="op">);</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Here, in</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">%d&quot;</span>, <span class="kw">sizeof</span> <span class="dt">int</span>);</span></code></pre></div>
-<p>we are trying to print the size (in bytes) of the <code>int</code> data-type.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n%d</span><span class="st">&quot;</span><span class="op">,</span> <span class="kw">sizeof</span> <span class="dt">int</span><span class="op">);</span></span></code></pre></div>
+<p>we are trying to print the size (in bytes) of the <code>int</code>
+data-type.</p>
 <p>This will give an error:</p>
 <pre><code>main.c: In function ‘main&#39;:
 main.c:4:27: error: expected expression before ‘int&#39;
@@ -86,28 +80,38 @@ main.c:4:27: error: expected expression before ‘int&#39;
                 ^~~
 </code></pre>
 <p>But add parenthesis to the <code>sizeof</code> operator use,</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">%d&quot;</span>, sizof(<span class="dt">int</span>));</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n%d</span><span class="st">&quot;</span><span class="op">,</span> sizof<span class="op">(</span><span class="dt">int</span><span class="op">));</span></span></code></pre></div>
 <p>and the program will work.</p>
 <p>Strange isn't it?</p>
-<p>But it turns out that this is because of the way things are specified in the standard.</p>
-<p>As per the standard (under section 6.5.3 in <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf">this</a> draft of C99), <code>sizeof</code> has two forms:</p>
+<p>But it turns out that this is because of the way things are specified
+in the standard.</p>
+<p>As per the standard (under section 6.5.3 in <a
+href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf">this</a>
+draft of C99), <code>sizeof</code> has two forms:</p>
 <ul>
 <li><code>sizeof unary-expression</code></li>
 <li><code>sizeof(type-name)</code></li>
 </ul>
-<p><code>sizeof int</code> didn't work because <code>int</code> is a data-type and hence the second form of <code>sizeof</code> must be used. This case is applicable to <code>typedef</code>-ed names as well.</p>
-<p>I found a nice example for the need of parenthesis in the second version in <a href="https://stackoverflow.com/questions/5894892/why-and-when-do-i-need-to-use-parentheses-after-sizeof">this post</a>.</p>
+<p><code>sizeof int</code> didn't work because <code>int</code> is a
+data-type and hence the second form of <code>sizeof</code> must be used.
+This case is applicable to <code>typedef</code>-ed names as well.</p>
+<p>I found a nice example for the need of parenthesis in the second
+version in <a
+href="https://stackoverflow.com/questions/5894892/why-and-when-do-i-need-to-use-parentheses-after-sizeof">this
+post</a>.</p>
 <p>Consider the expression</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">sizeof</span> <span class="dt">int</span> * + <span class="dv">0</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">sizeof</span> <span class="dt">int</span> <span class="op">*</span> <span class="op">+</span> <span class="dv">0</span></span></code></pre></div>
 <p>There are no parenthesis. So it could be</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="kw">sizeof</span>(<span class="dt">int</span>) * (+<span class="dv">0</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">sizeof</span><span class="op">(</span><span class="dt">int</span><span class="op">)</span> <span class="op">*</span> <span class="op">(+</span><span class="dv">0</span><span class="op">)</span> </span></code></pre></div>
 <p>or</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">sizeof</span>(<span class="dt">int</span> *) + <span class="dv">0</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">sizeof</span><span class="op">(</span><span class="dt">int</span> <span class="op">*)</span> <span class="op">+</span> <span class="dv">0</span></span></code></pre></div>
 <p>Use of parenthesis helps avoid this ambiguity.</p>
 <h3 id="references">References</h3>
 <ul>
-<li><a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf">http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf</a></li>
-<li><a href="https://stackoverflow.com/questions/5894892/why-and-when-do-i-need-to-use-parentheses-after-sizeof">https://stackoverflow.com/questions/5894892/why-and-when-do-i-need-to-use-parentheses-after-sizeof</a></li>
+<li><a
+href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf">http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf</a></li>
+<li><a
+href="https://stackoverflow.com/questions/5894892/why-and-when-do-i-need-to-use-parentheses-after-sizeof">https://stackoverflow.com/questions/5894892/why-and-when-do-i-need-to-use-parentheses-after-sizeof</a></li>
 </ul>
 </div>
 </body>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>lean4</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">lean4</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<h2 id="general">General</h2>
+<ul>
+<li>Type check current file: C-c C-l</li>
+<li>Math library of lean: mathlib (like mathcomp of coq)</li>
+</ul>
+<h2 id="misc">Misc</h2>
+<pre><code>#check Nat
+</code></pre>
+<h1 id="mathlib">mathlib</h1>
+<ul>
+<li><code>[CommRing R]</code>: mention that <code>R</code> is a
+commutative ring</li>
+</ul>
+<h1 id="lean3">Lean3</h1>
+<pre><code>namespace &lt;namespace-name&gt;
+open &lt;namespace-name&gt;
+</code></pre>
+<h2 id="coq-analogues">Coq analogues</h2>
+<ul>
+<li>Check: #check</li>
+<li>Compute: #reduce (done by trusted kernel. Less efficient.)</li>
+<li>Eval: #eval (computation. Non-trusted? More efficient.)</li>
+<li>Admitted: sorry</li>
+<li>Proof-Qed: begin-end</li>
+</ul>
+<h2 id="ℕ-vs-ℕ">ℕ vs ℕ+</h2>
+<ul>
+<li>ℕ is ℕ₀.</li>
+<li>ℕ+ is ℕ₁.</li>
+</ul>
+<pre><code>#check (0:ℕ)
+#check (1:ℕ+)
+</code></pre>
+<h2 id="random-snippets">Random snippets</h2>
+<ul>
+<li>Type*: I guess it's like the Top type. Type of <em>all</em>
+types.</li>
+<li>fact: insert a fact. ie, info. Not factorial.</li>
+</ul>
+<pre><code>#reduce 1+2
+-- 3
+#check 1+2
+-- 1 + 2 : ℕ
+
+-----------------------------------
+
+constant p: ℕ.
+#check p.prime
+│ nat.prime p : Prop
+
+def x:ℕ := 5
+#reduce x.prime
+│ irreducible 5
+
+-----------------------------------
+
+
+</code></pre>
+<pre><code>#print or
+│ inductive or : Prop → Prop → Prop
+│ constructors:
+│ or.inl : ∀ {a b : Prop}, a → a ∨ b
+│ or.inr : ∀ {a b : Prop}, b → a ∨ b
+
+#print and.elim
+│ theorem and.elim : ∀ {a b c : Prop}, a ∧ b → (a → b → c) → c :=
+│ λ {a b c : Prop} (h₁ : a ∧ b) (h₂ : a → b → c), and.rec h₂ h₁
+
+
+theorem or_intro_l (p q: Prop) : p → p ∨ q :=
+show p ∨ q, from or.inl
+</code></pre>
+<h2 id="commas-in-proof-script">Commas in proof script</h2>
+<p>From <a
+href="https://www.ma.imperial.ac.uk/~buzzard/xena/natural_number_game/?world=1&amp;level=2">https://www.ma.imperial.ac.uk/~buzzard/xena/natural_number_game/?world=1&amp;level=2</a></p>
+<blockquote>
+<p>The comma tells Lean "I've finished writing this tactic now, please
+process it." Lean ignores newlines, but pays great attention to
+commas.</p>
+</blockquote>
+<h2 id="comment">Comment</h2>
+<ul>
+<li>Multi-line: <code>/-- comment --/</code></li>
+<li>Single-line: <code>-- comment</code></li>
+</ul>
+<h2 id="todo">Todo</h2>
+<ul>
+<li>How to search for existing lemmas? Like Coq's
+<code>Search</code>.</li>
+<li>Notations? And <code>Locate</code> equivalent?
+<ul>
+<li>Custom entries?</li>
+</ul></li>
+<li>Show Proof</li>
+<li>print proofs</li>
+</ul>
+</div>
+</body>
+</html>

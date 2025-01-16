@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Adjoint functional programming - Pfenning</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Adjoint functional programming - Pfenning</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<h1 id="d1-linear-functional-programming">D1: Linear functional
+programming</h1>
+<ul>
+<li>Linear logic</li>
+<li>á la rust language</li>
+<li>Substructural programming</li>
+<li>Language that will be made in this lecture series: SNAX
+<ul>
+<li><p>Name has something to do with proof theory</p></li>
+<li><p>Has a good proof theory</p></li>
+<li><p>linear + non-linear (with overloading. same function can be used
+in linear or non-linear way)</p></li>
+<li><p>type?? inference</p></li>
+<li><p>overloading</p></li>
+</ul></li>
+<li>All while sticking to logical foundations</li>
+<li>A proof theoretic compiler
+<ul>
+<li>Based on stuff like Natural deduction and sequent calculus</li>
+</ul></li>
+</ul>
+<p>Types</p>
+<ul>
+<li>Organizing blocks of a language</li>
+<li>We want as few types as possible</li>
+</ul>
+<p>Simplest type: empty type or unit</p>
+<p>DBT: 'I hate the empty type'. Why?</p>
+<p>Types with one element</p>
+<pre><code>-----   ---------
+(): 1   (): value      
+</code></pre>
+<p>Type with</p>
+<ul>
+<li>2 elements: 2 = 1 + 1</li>
+<li>3 elements: 2 = 1 + 1 + 1</li>
+</ul>
+<p>So the important this is the <code>+</code>.</p>
+<p>ie, the 'Either' type. Left or right. Ability to distinguish between
+the two directions. =&gt; sum type</p>
+<pre><code>Type:
+
+    e: A              e: B
+-------------     -------------         
+inl e: A + B      inr e: A + B         
+
+Value:
+
+  v: value          v value
+-------------     -------------         
+inl v: value      inr v: value
+
+
+Example:
+ - true = inl ()
+ - false = inr ()
+</code></pre>
+<p>Working with binary sum is cumbersome. So multi-way sum??</p>
+<p>+{e: Aₑ | e ← L} such that L≠∅ and L is finite</p>
+<p>L is an index set.</p>
+<p>A+B = +{inl: A, inr: B} bool = +{true: 1, false: 1}</p>
+<ul>
+<li>true (): bool</li>
+<li>false (): bool</li>
+</ul>
+<p>The <code>: 1</code> is a tag.</p>
+<p>Can L be recursive? Yes.</p>
+<p>Example: nat</p>
+<p>nat = +{zero: 1, succ: nat}</p>
+<pre><code>[0] = zero ()
+[1] = succ (zero ())
+[2] = succ (succ (zero ()))
+</code></pre>
+<p>DBT: This is equirecursive types. Not just isomorphic types.</p>
+<p>Note: sum cannot have recursion. This has.</p>
+<p>Typing rules for <code>+</code>.</p>
+<p><code>k (v)</code> means k tagging a value</p>
+<pre><code>(k ∈ L) e: Aₖ
+-----------------------  +i
+k (e): +{l: Aₗ | l ∈ L}
+</code></pre>
+<p>DBT: What is <code>A</code> ?</p>
+<p>Try a list of nats:</p>
+<p>list = +{nil: 1, cons: nat * list }</p>
+<p>Now we need pair type.</p>
+<pre><code>e1: A        e2: B      v1: val        v2: val
+-------------------     ----------------------      
+  (e1, e2):  A*B          (v1, v2):  val
+</code></pre>
+<p>We got few rules to construct elements. Now we need rules to actually
+compute with them.</p>
+<p>Try negation of bools.</p>
+<p>A function like: <code>nat (x: bool): bool</code></p>
+<p>Got to do case (ie, patmat).</p>
+<pre><code>nat x =
+  match x with
+  | true u =&gt; false u
+  | false u =&gt; true u
+  end
+</code></pre>
+<p>true and false are tags. u here will be unit/1.</p>
+<p>This is fine too:</p>
+<pre><code>nat x =
+  match x with
+  | true u =&gt; false ()
+  | false u =&gt; true ()
+  end
+</code></pre>
+<p>But in linear programming (aka garbage free programming), every var
+would be used exactly once. No garbage =&gt; no need of garbage
+collection. And in the above snippet, <code>u</code> is not used. So
+better not go with that.</p>
+<p>Now we got patmat. Got to give rules to type that.</p>
+<pre><code>Δ ⊢ e: +{
+----------------------------------
+Δ,Γ ⊢ match e with (l(x) -&gt; eₗ) l∈L : C
+</code></pre>
+<p>dup x = (x, x) not valid in LFP</p>
+<p>Disjoint union</p>
+<p>Γ is either empty or one var with another Γ ??</p>
+<pre><code>Γ := () 
+   | Γ, x:A
+</code></pre>
+<pre><code>Δ ⊢ e1: A      Γ ⊢ e2: B
+------------------------
+Δ,Γ ⊢ (e1, e2):  A*B    
+</code></pre>
+<p>Empty context can prove only one thing.</p>
+<pre><code>------------
+x: A ⊢ x: A
+</code></pre>
+<p>k x y = x not valid ∵ y not used.</p>
+<pre><code>Δ ⊢ e: A*B         Γ x:A y:B ⊢ e&#39;:C
+-------------------------------------
+match e with (x,y) =&gt; e&#39;: C
+</code></pre>
+<ul>
+<li>Difference</li>
+<li>Subtractive approach
+<ul>
+<li>Each time, it will spit out the vars that didn't use.</li>
+<li>If there's anything left over, error</li>
+</ul></li>
+<li>Additive apporach: Give all to both and merge if something appears
+on both =&gt; error
+<ul>
+<li>Used in Frank's implementation</li>
+</ul></li>
+</ul>
+<p>An example.</p>
+<pre><code>plus (x: nat) (y: nat): nat
+plus x y =
+  match x with
+  | zero () =&gt; y
+  | succ x&#39; =&gt; succ (plus x&#39; y)
+  end
+</code></pre>
+<p>Or</p>
+<pre><code>plus x y =
+  match x with
+  | zero () =&gt; y
+  | succ x&#39; =&gt; plus x&#39; (succ y)
+  end
+</code></pre>
+<p>Second one is tail recursive!</p>
+<p>DBT: (match on x or y doesn't matter. It's a symmetric function
+???)</p>
+<p>Linear program: use up all its vars, but only once.</p>
+<pre><code>plus (x: nat) (y: nat): nat
+plus x y =
+  match x with
+  | zero u =&gt; y
+  | succ x&#39; =&gt; succ (plus x&#39; y)
+  end
+
+This is wrong, I guess? Because u is not used.
+</code></pre>
+<p>—</p>
+<p>Tags and labels.</p>
+<p>Variable name clashes: Got to be different.</p>
+<ul>
+<li>implicit renaming happens? Variable shadowing</li>
+<li>But shadowing may be illegal in linear programming?</li>
+</ul>
+<p>Product of n elements: Has to be lazy</p>
+<ul>
+<li>Bit different what we just saw</li>
+</ul>
+<p>Pair has no labels</p>
+<pre><code>Γ ⊢ e: Aₖ (k ∈ L) 
+-----------------------  +i
+Γ ⊢ k (e): +{l: Aₗ | l ∈ L}
+</code></pre>
+<p>—</p>
+<pre><code>type bool = +{&#39;true:1, &#39;false: 1}
+
+decl not (x: bool): bool
+defn not x = match x with
+| &#39;true() =&gt; &#39;false()
+| &#39;false() =&gt; &#39;true()
+
+; $ ./snax --out=none hi.adj0
+; % loading file hi.adj0
+; % default mode: L
+; %%----- values
+; %%-----
+; % success
+
+
+decl false: bool
+defn false = not (&#39;true ())
+
+
+type nat = +{&#39;zero:1, &#39;succ: nat}
+
+decl three: nat
+defn three = succ (succ (succ (zero())))
+
+type list = +{&#39;nil: 1, &#39;cons: nat * list}
+</code></pre>
+<p>Reversing a list: It should be linear.</p>
+<p>HW: mult, exp</p>
+<p>drop and copy for nat mult =&gt; inefficiency ??</p>
+<p>You probably shouldn't be using this kind of copy/drop</p>
+<ul>
+<li>copy-garbage tradeoff</li>
+<li>no sharing =&gt; inefficient</li>
+</ul>
+<p>drop, copy any given type</p>
+<p>Benefits of linear proging: no need of GC</p>
+<p>The reverse can be made to be in-place. Space reuse. Conversion to C.
+Not all programs/function addition should be linear. If it isn't, it's
+probably a bug</p>
+<p>No higher order functions in SNAX. map isn't there ?</p>
+<p>At least not in adj0 (level 0)</p>
+<h1 id="d2-from-pl-to-logic-and-back">D2: From PL to logic and back</h1>
+<pre><code>------------
+x: A ⊢ x: A
+
+
+------------
+⋅ ⊢ (): 1
+
+
+Δ⊢e1: A         Γ⊢e2: B
+--------------------------
+Δ,Γ⊢(e1, e2): A*B
+
+
+Δ⊢e: 1         Γ⊢e&#39;: C
+-------------------------------
+Δ,Γ⊢(match e with () =&gt; e&#39;): C
+
+
+Δ⊢e: A*B         Γ,x:A,y:B⊢e&#39;: C
+-------------------------------
+Δ,Γ⊢(match e with (x,y) =&gt; e&#39;): C
+
+
+sum intro
+Γ⊢e: Aₖ | k∈L
+-------------------------
+Γ ⊢ k(e): +{l:Aₗ | l ∈ L}
+
+
+sum destr
+Δ⊢e:+{l:Aₗ | l∈L} Aₖ | k∈L
+-------------------------
+Γ ⊢ k(e): +{l:Aₗ | l ∈ L}
+
+</code></pre>
+<p>Setting up the logic system is the real deal. Proof is routine.</p>
+<p>Closer the correspondance between dynamcis and statiscs =&gt; easeir
+ther proofs ???</p>
+<p>Let η is env (ie, a variable map) for context Γ. While writing
+inference rules, write what you know first and follow from there.</p>
+<p>Already passed type checker =&gt; single use guaraneetted ???</p>
+<p>Subtractive approach. Spit out unused context. It has some
+problems.</p>
+<ul>
+<li>Forces evaluation to be left-to-right. Not parallel.</li>
+</ul>
+<p>Additive approach. Spit out <em>used</em> context.</p>
+<ul>
+<li>Pair example: any overlap between the two spit out =&gt; undefined
+becaue shared variable. Not allowed.</li>
+<li>Disjoint union</li>
+</ul>
+<p>—</p>
+<p>In addtivie approach, if Γ ⊢ e:A \ Ω then</p>
+<ul>
+<li>Ω ⊢ e:A</li>
+<li>Ω ⊆ Γ</li>
+</ul>
+<p>If Ω ⊢ e:A and Ω⊆Γ, then</p>
+<ul>
+<li>Γ ⊢ e:A \ Ω</li>
+</ul>
+<pre><code>η1⊢e1--&gt;v1\ω1   η2⊢e2--&gt;v2\ω2
+-----------------------------------
+η1,η2⊢(e1,e2) --&gt; (v1,v2) \ (ω1,ω2)
+</code></pre>
+<p>—</p>
+<pre><code>Γ⊢e:A \ Ω    η:Γ   ω:Ω   v:A
+-----------------------------
+ η ⊢ e--&gt;v\ω
+</code></pre>
+<p>adding lambdas. complicated, but still like done so far. merge
+operation affine logic: vars can be used <em>at most</em> once. are the
+evaluation rules and typing rules isomorphic? No, some
+discrepancies.</p>
+<ul>
+<li>match: typing rules are for all branches, but for eval not so
+???</li>
+</ul>
+<pre><code>------------
+⋅ A ⊢ A
+</code></pre>
+<p>Original natural deduction</p>
+<p>Linear logic:</p>
+<ul>
+<li>+ is circled:</li>
+<li></li>
+</ul>
+<p>Top definitions. Fully linear language =&gt; can't accomplish much
+??</p>
+<p>Linear logic</p>
+<pre><code>A,B := 1 | A*B | A+B
+     | !A (of course A. Allows assumption re-use. Use ordinary logic within linear??)
+     | A lollipop B (like implication. Notin Snax yet ??)
+     | A&amp;B (conjunction)
+</code></pre>
+<p>Positive can be duplicated, but not negative ?? So negative need
+<code>!</code>.`</p>
+<p>A =&gt; B is !A lollipop B</p>
+<p>1+1 ⊢ (1+1) * (1+1)</p>
+<p>Copy of boolean type</p>
+<p>Extracting proof from program ???? As long as logic is constructive
+??</p>
+<p>A -&gt; B -&gt; A cannot be proved??? Because B is never used.</p>
+<p>Γ,A ⊢ B</p>
+<hr />
+<p>Γ⊢A-&gt;B</p>
+<hr />
+<p>Γ⊢λx:A.e: A-&gt; B</p>
+<p>Γ⊢A-&gt;B Δ⊢A</p>
+<hr />
+<p>Γ,Δ ⊢ B</p>
+<p>can't patmat on lambdas. Can apply it though. Indicative of
+difference between positive and negative types. Observing structres??
+Negaive =&gt; can't observe structure, but can use them. &amp; is lazy
+??</p>
+<p>&amp; lazy record, or external choice</p>
+<p>positive =&gt; can look at their structure. we can observe them dirly
+=&gt; can duplicate them negative =&gt; apply / project component. can't
+just drop/duplicate</p>
+<p>recursive lazy record =&gt; OOP</p>
+<p>map fn is not linear. because f has to be applied in n times</p>
+<p>For now (adj1), !A is any top-level defns. ∵ they can be used as many
+times as needed.</p>
+<h1 id="d3-adjoint-types-and-modes">D3: Adjoint types (and modes)</h1>
+<pre class="snax"><code>type nat = +{&#39;zero: 1, &#39;succ: nat}
+type list = +{&#39;nil: 1, &#39;cons: nat*list}
+
+decl map (f: nat -&gt; nat) (xs: list): list
+defn map f xs =
+  match xs with
+  | &#39;nil() =&gt; &#39;nil()
+  | &#39;cons(x,xs) =&gt; &#39;cons(f x, map f xs)
+(*
+% loading file one.adj1
+% default mode: L
+one.adj1:8.26-8.39:error:
+variable f of mode L used more than once
+  | &#39;cons(x,xs) =&gt; &#39;cons(f x, map f xs)
+                         ~~~~~~~~~~~~~
+% static checking failed
+*)
+</code></pre>
+<p>Problems:</p>
+<ul>
+<li>nil branch doesn't use f and xs</li>
+<li>cons branch uses f twice</li>
+</ul>
+<p>It reports the first one it come across (here, it uses the additive
+approach)</p>
+<p>Modes:</p>
+<ul>
+<li>A: affine
+<ul>
+<li>At most once</li>
+</ul></li>
+<li>S: strict
+<ul>
+<li>At least once</li>
+</ul></li>
+<li>L: exactly once</li>
+<li>U: unrestricted</li>
+</ul>
+<pre><code>  U
+ / \
+A   S
+ \ /
+  L
+</code></pre>
+<p>$ snax -m A file.ajd1</p>
+<p>A:</p>
+<p>% loading file one.adj1 % default mode: A one.adj1:8.26-8.39:error:
+variable f of mode A used more than once</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>'cons(x,xs) =&gt; 'cons(f x, map f xs)</td>
+</tr>
+</tbody>
+</table>
+<p><code>~~~~~~~~~~~</code> % static checking failed</p>
+<p>S:</p>
+<p>% loading file one.adj1 % default mode: S one.adj1:7.5-7.11:error:
+variable f of mode S not used in all branches</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>'nil() =&gt; 'nil()</td>
+</tr>
+</tbody>
+</table>
+<p><code>~~~~</code> % static checking failed</p>
+<p>shell returned 1</p>
+<p>We should be able to write fns like map. Soln could be to be able to
+mix linear and non-linear modes.</p>
+<p>Replacing map by an iterator??</p>
+<pre><code>A,Bₘ ::= 1 | A*B | +{l:Aˡₘ | l∈L} | ↓ᵏₘAₖ (where k≥m)
+       | A -o B | &amp;{l:Aˡₘ | l∈L} | ↑ᵏᵢAₖ (where k≤i)
+</code></pre>
+<p>shift operators to switch between modes ??</p>
+<p>—</p>
+<p>U list but L elements. Nah.. ∵ throw away list =&gt; throw away
+elems, which are linear</p>
+<p>L list but U elements ??</p>
+<p>—</p>
+<p>=Δ</p>
+<p>mode polymorphism mode inference</p>
+<p>lazy, eager</p>
+<p>—</p>
+<p>Independence in typing rules:</p>
+<p>Γ ⊢ e: Aₘ</p>
+<p>Γ ≥ m</p>
+<p>—</p>
+<p>Syntax:</p>
+<ul>
+<li>&lt;&gt; is mode downshift</li>
+<li>mf: mode of a name <code>f</code></li>
+</ul>
+<pre><code>Γ≥k     Γ ⊢ e: Aₖ
+------------------
+Γ ⊢ &lt;e&gt;: ↓ᵏₘ
+
+where k≥m
+and Γ≥m ????
+</code></pre>
+<p>Paper: <a
+href="https://arxiv.org/abs/2402.01428">https://arxiv.org/abs/2402.01428</a></p>
+<p>Ability to controlling memory layout</p>
+<h1 id="d4-sax">D4: SAX</h1>
+<p>Semi-Axiomatic Sequent Calculus</p>
+<p>LNL (Linear and non-linear logic combined) 1995 Benton</p>
+<ul>
+<li>Forms an adjunction</li>
+</ul>
+<p>Contraction: Can dup a val Weakening: Can drop</p>
+<p>Γ,A,A ⊢ C ———– contraction Γ,A⊢C</p>
+<p>Proof theory: Read Bottom up Prog: Top down</p>
+<p>Γ⊢A ———– dup Γ,C ⊢ A</p>
+<p>Positive type =&gt; can observe it. ie, can patmat.</p>
+<ul>
+<li>it's a pointer</li>
+</ul>
+<p>Neg type</p>
+<ul>
+<li>can observe it dirly, can only use it</li>
+<li>it's a suspension</li>
+<li>force a suspension to get val</li>
+</ul>
+<p>sequent calculus considering a higher-level, non-flat memory
+layout</p>
+<pre><code>-------------
+A,B⊢A*circleB
+
+
+---
+⋅⊢1
+</code></pre>
+<p>semi axiomatci ∵ half the rules in Gentzen's version is replaced by
+axioms ??</p>
+<p>Cut-rule</p>
+<p>Futures in FP. can execute in llel, but need to wait if commn is
+needed ??</p>
+<p>cut is like allocation</p>
+<h1 id="d5-data-layout">D5: Data layout</h1>
+<p>Dynamics:</p>
+<p>SSOS: Sub Structural Operational Semantics</p>
+<p>cells and processes</p>
+<p>Sequential =&gt; processes are gone over left to right llel =&gt; any
+ordering</p>
+<p>In this semantics, we write to empty cells. But we can mutate ??</p>
+<pre><code>proc(cut x P(x); Q(x)) -&gt; proc(P(a)), proc(Q(a)) where a is a newly allocated cell.
+
+cell a □, proc(write a V) -&gt; cell a V
+
+# move b to a
+cell a □, cell b V, proc(id a b) -&gt; cell a V
+</code></pre>
+<p>Γ</p>
+<hr />
+<p>Memory data layout</p>
+<p><a
+href="https://arxiv.org/abs/2212.06321v3">https://arxiv.org/abs/2212.06321v3</a></p>
+<pre><code>Δ⊢A    Γ,A̲⊢C
+------------- snip (positive)
+Δ,Γ⊢C
+
+
+where A is a sub-formula of C.
+Then it&#39;s not a cut, but what Frank calls a &#39;snip&#39;.
+
+
+Δ⊢A̲    Γ,A⊢C
+------------- snip (negative)
+Δ,Γ⊢C
+
+</code></pre>
+<ul>
+<li>snips correspond to address computation</li>
+<li>cuts correspond to memory allocation</li>
+</ul>
+<h1 id="more">More</h1>
+<ul>
+<li>Check this out: Rast by Das and Pfenning, LMCS 2022
+<ul>
+<li><a
+href="https://ankushdas.github.io/docs/lmcs22.pdf">https://ankushdas.github.io/docs/lmcs22.pdf</a></li>
+</ul></li>
+</ul>
+<h1 id="reboot">Reboot</h1>
+<h2 id="l2">L2</h2>
+<ul>
+<li><code>Γ</code> (context, statics): vars ↦ types</li>
+<li><code>η: Γ</code> (environment, dynamis): vars ↦ values</li>
+</ul>
+<pre class="elisp"><code>(let ((default-directory &quot;/tmp&quot;)) 
+    (shell-command &quot;ls&quot;))
+
+(buffer-file-name)
+</code></pre>
+</div>
+</body>
+</html>

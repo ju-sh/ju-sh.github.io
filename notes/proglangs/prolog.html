@@ -49,10 +49,12 @@
 <li>swi-prolog (<code>swipl</code>)</li>
 <li>gnu-prolog (<code>gprolog</code>)</li>
 <li>yap</li>
-<li><a href="https://github.com/mthom/scryer-prolog">Scryer Prolog</a></li>
+<li><a href="https://github.com/mthom/scryer-prolog">Scryer
+Prolog</a></li>
 </ul>
 <p>Heart of prolog is the concept of unification.</p>
-<p>Each command needs to be appended with a <code>.</code> to let the interpreter know we are done typing.</p>
+<p>Each command needs to be appended with a <code>.</code> to let the
+interpreter know we are done typing.</p>
 <pre><code># Two atoms
 | ?- a = a.
 yes
@@ -76,21 +78,22 @@ Y = X
 yes
 </code></pre>
 <p>—</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode prolog"><code class="sourceCode prolog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>$ swipl</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="dt">Welcome</span> to <span class="dt">SWI</span><span class="fu">-</span><span class="dt">Prolog</span> (threaded<span class="kw">,</span> <span class="dv">64</span> bits<span class="kw">,</span> version <span class="fl">8.2</span><span class="al">.</span><span class="dv">4</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="dt">SWI</span><span class="fu">-</span><span class="dt">Prolog</span> comes with <span class="dt">ABSOLUTELY</span> <span class="dt">NO</span> <span class="dt">WARRANTY</span><span class="kw">.</span> <span class="dt">This</span> <span class="dt">is</span> free software<span class="kw">.</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="dt">Please</span> run <span class="fu">?-</span> license<span class="kw">.</span> for legal details<span class="kw">.</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="dt">For</span> online help and background<span class="kw">,</span> visit https://www<span class="kw">.</span>swi<span class="fu">-</span>prolog<span class="kw">.</span>org</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="dt">For</span> built<span class="fu">-</span>in help<span class="kw">,</span> use <span class="fu">?-</span> help(<span class="dt">Topic</span>)<span class="kw">.</span> or <span class="fu">?-</span> apropos(<span class="dt">Word</span>)<span class="kw">.</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="fu">?-</span> [user]<span class="kw">.</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>|<span class="fu">:</span> male(albert)<span class="kw">.</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>|<span class="fu">:</span> <span class="fu">^</span><span class="dt">D</span><span class="co">% user://1 compiled 0.02 sec, 1 clauses</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a><span class="kw">true.</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a><span class="fu">?-</span> male(albert)<span class="kw">.</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a><span class="kw">true.</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode prolog"><code class="sourceCode prolog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>$ swipl</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">Welcome</span> to <span class="dt">SWI</span><span class="fu">-</span><span class="dt">Prolog</span> (threaded<span class="kw">,</span> <span class="dv">64</span> bits<span class="kw">,</span> version <span class="fl">8.2</span><span class="al">.</span><span class="dv">4</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">SWI</span><span class="fu">-</span><span class="dt">Prolog</span> comes with <span class="dt">ABSOLUTELY</span> <span class="dt">NO</span> <span class="dt">WARRANTY</span><span class="kw">.</span> <span class="dt">This</span> <span class="dt">is</span> free software<span class="kw">.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">Please</span> run <span class="fu">?-</span> license<span class="kw">.</span> for legal details<span class="kw">.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="dt">For</span> online help and background<span class="kw">,</span> visit https://www<span class="kw">.</span>swi<span class="fu">-</span>prolog<span class="kw">.</span>org</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dt">For</span> built<span class="fu">-</span>in help<span class="kw">,</span> use <span class="fu">?-</span> help(<span class="dt">Topic</span>)<span class="kw">.</span> or <span class="fu">?-</span> apropos(<span class="dt">Word</span>)<span class="kw">.</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> [user]<span class="kw">.</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>|<span class="fu">:</span> male(albert)<span class="kw">.</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>|<span class="fu">:</span> <span class="fu">^</span><span class="dt">D</span><span class="co">% user://1 compiled 0.02 sec, 1 clauses</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">true.</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> male(albert)<span class="kw">.</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="kw">true.</span></span></code></pre></div>
 <h2 id="general">General</h2>
 <ul>
 <li>Comments:
@@ -107,9 +110,11 @@ yes
 </ul>
 <h2 id="operators">Operators</h2>
 <ul>
-<li><p><code>=</code>: identical with unification (ie, equivalent upon eval?)</p></li>
+<li><p><code>=</code>: identical with unification (ie, equivalent upon
+eval?)</p></li>
 <li><p><code>==</code>: identical (syntactically, I guess)</p></li>
-<li><p><code>\=</code>: not identical upon unification (ie, not unifiable)</p></li>
+<li><p><code>\=</code>: not identical upon unification (ie, not
+unifiable)</p></li>
 <li><p><code>\==</code>: not identical (syntactically)</p></li>
 <li><p><code>\+</code>: negation</p></li>
 <li><p><code>;</code>: disjunction (ie, OR)</p></li>
@@ -125,30 +130,36 @@ yes
 <li><p><code>//2</code>: (binary) division</p></li>
 <li><p><code>-/1</code>: unary minus</p></li>
 <li><p><code>-/2</code>: binary minus</p></li>
-<li><p><code>=:=</code>: evaluate both LHS and RHS, then evaluate results</p></li>
+<li><p><code>=:=</code>: evaluate both LHS and RHS, then evaluate
+results</p></li>
 <li><p><code>is</code>: evaluate only RHS, then eval result</p></li>
 </ul>
 <h2 id="if-else">if-else</h2>
-<p><code>if cond true-case else false-case</code> is written in prolog like</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode prolog"><code class="sourceCode prolog"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>cond <span class="kw">-&gt;</span> <span class="kw">true</span><span class="fu">-</span>case<span class="kw">;</span> <span class="kw">false</span><span class="fu">-</span>case</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>#+end src</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="fu">**</span> <span class="dt">Lists</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a> <span class="fu">-</span> <span class="dt">Syntax</span> <span class="dt">is</span> like that of python lists</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>   <span class="dt">+</span> <span class="dt">Eg</span><span class="fu">:</span> ~<span class="er">[</span><span class="dv">1</span><span class="kw">,</span><span class="dv">2</span><span class="kw">,</span><span class="dv">3</span><span class="er">]</span>~</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a> <span class="fu">-</span> ~member(<span class="dt">E</span><span class="kw">,</span> <span class="dt">L</span>)~: check if ~<span class="dt">E</span>~ <span class="dt">is</span> an element of list ~<span class="dt">L</span>~</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>*** head<span class="dt">-</span>tail notation</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>#+begin_src</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a><span class="er">[</span><span class="dt">H</span> | <span class="dt">T</span><span class="er">]</span></span></code></pre></div>
+<p><code>if cond true-case else false-case</code> is written in prolog
+like</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode prolog"><code class="sourceCode prolog"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cond <span class="kw">-&gt;</span> <span class="kw">true</span><span class="fu">-</span>case<span class="kw">;</span> <span class="kw">false</span><span class="fu">-</span>case</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>#+end src</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">**</span> <span class="dt">Lists</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">-</span> <span class="dt">Syntax</span> <span class="dt">is</span> like that of python lists</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">+</span> <span class="dt">Eg</span><span class="fu">:</span> ~<span class="er">[</span><span class="dv">1</span><span class="kw">,</span><span class="dv">2</span><span class="kw">,</span><span class="dv">3</span><span class="er">]</span>~</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">-</span> ~member(<span class="dt">E</span><span class="kw">,</span> <span class="dt">L</span>)~: check if ~<span class="dt">E</span>~ <span class="dt">is</span> an element of list ~<span class="dt">L</span>~</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>*** head<span class="dt">-</span>tail notation</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>#+begin_src</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="er">[</span><span class="dt">H</span> | <span class="dt">T</span><span class="er">]</span></span></code></pre></div>
 <ul>
 <li>Separate a list into two parts.
 <ul>
-<li>Head need not be a single element, apparently and can be a sub-list.</li>
+<li>Head need not be a single element, apparently and can be a
+sub-list.</li>
 </ul></li>
-<li>Useful for splitting for unification (and for pattern matching?)</li>
+<li>Useful for splitting for unification (and for pattern
+matching?)</li>
 </ul>
-<p>From <a href="http://www.cs.trincoll.edu/~ram/cpsc352/notes/prolog/search.html">http://www.cs.trincoll.edu/~ram/cpsc352/notes/prolog/search.html</a>:</p>
+<p>From <a
+href="http://www.cs.trincoll.edu/~ram/cpsc352/notes/prolog/search.html">http://www.cs.trincoll.edu/~ram/cpsc352/notes/prolog/search.html</a>:</p>
 <p>Suppose we have a list <code>[0,1,2,3]</code>.</p>
 <table>
 <thead>
@@ -191,7 +202,8 @@ yes
 </tr>
 </tbody>
 </table>
-<h3 id="an-implementation-of-membere-l">An implementation of <code>member(E, L)</code></h3>
+<h3 id="an-implementation-of-membere-l">An implementation of
+<code>member(E, L)</code></h3>
 <pre><code>member(X, [X|_]).
 member(X, [_|L]) :- member(X, L).
 </code></pre>
@@ -214,26 +226,30 @@ true .
 </code></pre>
 <h2 id="examples">Examples</h2>
 <h3 id="natural-numbers">Natural numbers</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode prolog"><code class="sourceCode prolog"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="co">% https://stackoverflow.com/questions/42965186/how-to-tell-prolog-that-n-is-a-natural-number-if-n-1-is-a-natural-number</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>natural(<span class="dv">0</span>)<span class="kw">.</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>natural(<span class="dt">N</span>) <span class="kw">:-</span> <span class="dt">M</span> <span class="dt">is</span> <span class="dt">N</span><span class="dv">-1</span><span class="kw">,</span> <span class="dt">M</span> <span class="dt">&gt;=</span><span class="dv">0</span><span class="kw">,</span> natural(<span class="dt">M</span>)<span class="kw">.</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode prolog"><code class="sourceCode prolog"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">% https://stackoverflow.com/questions/42965186/how-to-tell-prolog-that-n-is-a-natural-number-if-n-1-is-a-natural-number</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>natural(<span class="dv">0</span>)<span class="kw">.</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>natural(<span class="dt">N</span>) <span class="kw">:-</span> <span class="dt">M</span> <span class="dt">is</span> <span class="dt">N</span><span class="dv">-1</span><span class="kw">,</span> <span class="dt">M</span> <span class="dt">&gt;=</span><span class="dv">0</span><span class="kw">,</span> natural(<span class="dt">M</span>)<span class="kw">.</span></span></code></pre></div>
 <p>Running (swi-prolog):</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode prolog"><code class="sourceCode prolog"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="fu">?-</span> [user]<span class="kw">.</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>|<span class="fu">:</span> natural(<span class="dv">0</span>)<span class="kw">.</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>|<span class="fu">:</span> natural(<span class="dt">N</span>) <span class="kw">:-</span> <span class="dt">M</span> <span class="dt">is</span> <span class="dt">N</span><span class="dv">-1</span><span class="kw">,</span> <span class="dt">M</span> <span class="dt">&gt;=</span><span class="dv">0</span><span class="kw">,</span> natural(<span class="dt">M</span>)<span class="kw">.</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>|<span class="fu">:</span> <span class="fu">^</span><span class="dt">D</span><span class="co">% user://2 compiled 0.00 sec, 2 clauses</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="kw">true.</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="fu">?-</span> natural(<span class="dv">3</span>)<span class="kw">.</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="kw">true</span> <span class="kw">.</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a><span class="fu">?-</span> natural(<span class="fu">-</span><span class="dv">2</span>)<span class="kw">.</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a><span class="kw">false.</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode prolog"><code class="sourceCode prolog"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> [user]<span class="kw">.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>|<span class="fu">:</span> natural(<span class="dv">0</span>)<span class="kw">.</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>|<span class="fu">:</span> natural(<span class="dt">N</span>) <span class="kw">:-</span> <span class="dt">M</span> <span class="dt">is</span> <span class="dt">N</span><span class="dv">-1</span><span class="kw">,</span> <span class="dt">M</span> <span class="dt">&gt;=</span><span class="dv">0</span><span class="kw">,</span> natural(<span class="dt">M</span>)<span class="kw">.</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>|<span class="fu">:</span> <span class="fu">^</span><span class="dt">D</span><span class="co">% user://2 compiled 0.00 sec, 2 clauses</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">true.</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> natural(<span class="dv">3</span>)<span class="kw">.</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">true</span> <span class="kw">.</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> natural(<span class="fu">-</span><span class="dv">2</span>)<span class="kw">.</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">false.</span></span></code></pre></div>
 <p>Peano representation:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode prolog"><code class="sourceCode prolog"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>nat(<span class="dv">0</span>)<span class="kw">.</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>nat(z)<span class="kw">.</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>nat(s(<span class="dt">N</span>)) <span class="kw">:-</span> nat(<span class="dt">N</span>)<span class="kw">.</span></span></code></pre></div>
-<h3 id="check-if-a-number-is-within-a-range">Check if a number is within a range</h3>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode prolog"><code class="sourceCode prolog"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nat(<span class="dv">0</span>)<span class="kw">.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>nat(z)<span class="kw">.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>nat(s(<span class="dt">N</span>)) <span class="kw">:-</span> nat(<span class="dt">N</span>)<span class="kw">.</span></span></code></pre></div>
+<h3 id="check-if-a-number-is-within-a-range">Check if a number is within
+a range</h3>
 <pre><code>range(ST,EN,N) :- N&gt;=ST, N=&lt;EN.
 </code></pre>
 <pre><code>?- range(0,5,0).
@@ -242,7 +258,8 @@ true.
 ?- range(0,5,-1).
 false.
 </code></pre>
-<h3 id="list-append"><span class="todo TODO">TODO</span> list append</h3>
+<h3 id="list-append"><span class="todo TODO">TODO</span> list
+append</h3>
 <p>(This seems to be predefined in prolog.)</p>
 <p>append(l1,l2,l3) means l3=l1++l2.</p>
 <pre><code>append(L, [], L).
@@ -259,21 +276,27 @@ X = [b, c].
 <p>Given:</p>
 <ul>
 <li><code>gossips(X)</code>: <code>X</code> gossips</li>
-<li><code>knows(X, S)</code>: <code>X</code> knows the secret <code>S</code></li>
+<li><code>knows(X, S)</code>: <code>X</code> knows the secret
+<code>S</code></li>
 </ul>
 <ul>
-<li><code>friend(X, Y)</code>: <code>X</code> is a friend of <code>Y</code></li>
+<li><code>friend(X, Y)</code>: <code>X</code> is a friend of
+<code>Y</code></li>
 </ul>
 <p>Find if <code>X</code> gets to know secret <code>S</code>:</p>
 <pre><code>gets-to-know(X, S) :- knows(X, S)
 gets-to-know(X, S) :- friend(X, Y), gossips(Y), gets-to-know(Y, S)
 </code></pre>
-<h2 id="clp-constraint-logic-programming">clp (Constraint Logic Programming)</h2>
+<h2 id="clp-constraint-logic-programming">clp (Constraint Logic
+Programming)</h2>
 <ul>
-<li>clpfd: <a href="https://github.com/Anniepoo/swiplclpfd/blob/master/clpfd.adoc">https://github.com/Anniepoo/swiplclpfd/blob/master/clpfd.adoc</a></li>
-<li>clpb: <a href="https://www.swi-prolog.org/pldoc/man?section=clpb">https://www.swi-prolog.org/pldoc/man?section=clpb</a>
+<li>clpfd: <a
+href="https://github.com/Anniepoo/swiplclpfd/blob/master/clpfd.adoc">https://github.com/Anniepoo/swiplclpfd/blob/master/clpfd.adoc</a></li>
+<li>clpb: <a
+href="https://www.swi-prolog.org/pldoc/man?section=clpb">https://www.swi-prolog.org/pldoc/man?section=clpb</a>
 <ul>
-<li><a href="https://www.metalevel.at/boolean.pdf">https://www.metalevel.at/boolean.pdf</a></li>
+<li><a
+href="https://www.metalevel.at/boolean.pdf">https://www.metalevel.at/boolean.pdf</a></li>
 </ul></li>
 </ul>
 <p>—</p>
@@ -307,20 +330,21 @@ gets-to-know(X, S) :- friend(X, Y), gossips(Y), gets-to-know(Y, S)
 </tbody>
 </table>
 <p>—</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode prolog"><code class="sourceCode prolog"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="fu">?-</span> use_module(library(clpb))<span class="kw">.</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="kw">true.</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a><span class="fu">?-</span> sat(<span class="dt">A</span> <span class="dt">=:=</span> ~<span class="dt">A*B</span>)<span class="kw">.</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a><span class="dt">A</span> <span class="kw">=</span> <span class="dt">B</span><span class="kw">,</span> <span class="dt">B</span> <span class="kw">=</span> <span class="dv">0</span><span class="kw">.</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a><span class="fu">?-</span> sat(<span class="dt">X</span> <span class="fu">*</span> ~<span class="dt">X</span>)<span class="kw">.</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a><span class="kw">false.</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true"></a><span class="fu">?-</span> sat(a <span class="dt">=:=</span> ~b)<span class="kw">,</span> sat(b <span class="dt">=:=</span> ~(a#c))</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true"></a></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true"></a><span class="co">% ?- use_module(library(clpfd)).</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true"></a><span class="co">% true.</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode prolog"><code class="sourceCode prolog"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> use_module(library(clpb))<span class="kw">.</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">true.</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> sat(<span class="dt">A</span> <span class="dt">=:=</span> ~<span class="dt">A*B</span>)<span class="kw">.</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="dt">A</span> <span class="kw">=</span> <span class="dt">B</span><span class="kw">,</span> <span class="dt">B</span> <span class="kw">=</span> <span class="dv">0</span><span class="kw">.</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> sat(<span class="dt">X</span> <span class="fu">*</span> ~<span class="dt">X</span>)<span class="kw">.</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="kw">false.</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> sat(a <span class="dt">=:=</span> ~b)<span class="kw">,</span> sat(b <span class="dt">=:=</span> ~(a#c))</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">% ?- use_module(library(clpfd)).</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">% true.</span></span></code></pre></div>
 <p>—</p>
 <p>Use <code>labeling</code> to show possible assignment:</p>
 <pre><code>?- sat(card([1,3], [A, B, C])).
@@ -331,7 +355,8 @@ A = B, B = 0,
 C = 1 .
 </code></pre>
 <h2 id="edsls-in-prolog">eDSLs in prolog</h2>
-<p><a href="https://www.metalevel.at/acomip/">https://www.metalevel.at/acomip/</a></p>
+<p><a
+href="https://www.metalevel.at/acomip/">https://www.metalevel.at/acomip/</a></p>
 <p>op(precedence, type, name)</p>
 <ul>
 <li>type
@@ -344,7 +369,8 @@ C = 1 .
 </ul>
 <h2 id="definite-clause-grammars">Definite clause grammars</h2>
 <ul>
-<li><code>F//N</code> means a non-terminal <code>F</code> with <code>N</code> arguments</li>
+<li><code>F//N</code> means a non-terminal <code>F</code> with
+<code>N</code> arguments</li>
 </ul>
 <p>DCG corresponding to a regex <code>a*</code>:</p>
 <pre><code>?- [user].
@@ -365,9 +391,11 @@ true.
 ?- phrase(as, &quot;abc&quot;).
 false.
 </code></pre>
-<p>Here <code>as//0</code> is a non-terminal accepting <code>0</code> arguments.</p>
+<p>Here <code>as//0</code> is a non-terminal accepting <code>0</code>
+arguments.</p>
 <hr />
-<p>All strings with only <code>'X'</code> and <code>'Y'</code> with length <code>n</code>.</p>
+<p>All strings with only <code>'X'</code> and <code>'Y'</code> with
+length <code>n</code>.</p>
 <pre><code>?- [user].
 |: xy --&gt; [].
 |: xy --&gt; (&quot;X&quot; | &quot;Y&quot;), xy.
@@ -413,13 +441,17 @@ false.
 <hr />
 <p>See:</p>
 <ul>
-<li><a href="https://www.metalevel.at/prolog/dcg">https://www.metalevel.at/prolog/dcg</a></li>
-<li><a href="https://www.swi-prolog.org/pldoc/man?section=basics">https://www.swi-prolog.org/pldoc/man?section=basics</a></li>
-<li><a href="https://youtu.be/CvLsVfq6cks?list=PLEvH6T-1oh75UagVp5BqeOVageBljdmaC">https://youtu.be/CvLsVfq6cks?list=PLEvH6T-1oh75UagVp5BqeOVageBljdmaC</a></li>
+<li><a
+href="https://www.metalevel.at/prolog/dcg">https://www.metalevel.at/prolog/dcg</a></li>
+<li><a
+href="https://www.swi-prolog.org/pldoc/man?section=basics">https://www.swi-prolog.org/pldoc/man?section=basics</a></li>
+<li><a
+href="https://youtu.be/CvLsVfq6cks?list=PLEvH6T-1oh75UagVp5BqeOVageBljdmaC">https://youtu.be/CvLsVfq6cks?list=PLEvH6T-1oh75UagVp5BqeOVageBljdmaC</a></li>
 </ul>
 <h2 id="strings">Strings</h2>
 <p>A string is a list of characters.</p>
-<p>Use <code>set_prolog_flag(double_quotes, chars).</code> to use double quote notation for strings.</p>
+<p>Use <code>set_prolog_flag(double_quotes, chars).</code> to use double
+quote notation for strings.</p>
 <pre><code>?- set_prolog_flag(double_quotes, chars).
 true.
 
@@ -428,11 +460,13 @@ true.
 </code></pre>
 <h2 id="misc">Misc</h2>
 <ul>
-<li>Constraint Handling Rules (CHR): <a href="https://www.swi-prolog.org/pldoc/man?section=chr-intro">https://www.swi-prolog.org/pldoc/man?section=chr-intro</a>
+<li>Constraint Handling Rules (CHR): <a
+href="https://www.swi-prolog.org/pldoc/man?section=chr-intro">https://www.swi-prolog.org/pldoc/man?section=chr-intro</a>
 <ul>
 <li>I tried this only on swi-prolog.</li>
 </ul></li>
-<li>Original prolog system: Marseilles Prolog <a href="https://youtu.be/CvLsVfq6cks?list=PLEvH6T-1oh75UagVp5BqeOVageBljdmaC">ʳ</a></li>
+<li>Original prolog system: Marseilles Prolog <a
+href="https://youtu.be/CvLsVfq6cks?list=PLEvH6T-1oh75UagVp5BqeOVageBljdmaC">ʳ</a></li>
 </ul>
 </div>
 </body>

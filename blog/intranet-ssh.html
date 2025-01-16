@@ -36,43 +36,45 @@
 </header>
 
 <ul>
-    <li>Date created: 05-Apr-2022</li>
     </ul>
 
-<div>
-  <p>
-    Tags: / 
-    <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/networking.html">networking</a>
-    </code> /
-  <p>
-</div>
 
 
 <div id="description">
-Setting up a desktop computer as an ssh server for remote access in an intranet.
+Setting up a desktop computer as an ssh server for remote access in an
+intranet.
 </div>
 
 <hr/>
 
 <div id="content-container">
-<p>If you spot mistakes in this blog post, please let me know.</p>
-<hr />
-<p>I currently have access to a desktop computer and a laptop computer. Sometimes I need the files in one of these computers available in the other computer.</p>
-<p>Then I found that one of my friends is using ssh to allow remote access to their desktop.</p>
-<p>We are in our college's network. So that meant less effort to set up ssh for remote access.</p>
-<p><strong>Note</strong>: Whatever is mentioned here works only if both server and clients are on the <em>same</em> network.</p>
+<p>(If you spot mistakes in this blog post, please let me know.)</p>
+<p>I currently have access to a desktop computer and a laptop computer.
+Sometimes I need the files in one of these computers available in the
+other computer.</p>
+<p>Then I found that one of my friends is using ssh to allow remote
+access to their desktop.</p>
+<p>We are in our college's network. So that meant less effort to set up
+ssh for remote access.</p>
+<p><strong>Note</strong>: Whatever is mentioned here works only if both
+server and clients are on the <em>same</em> network.</p>
 <h2 id="software-installation">Software installation</h2>
-<p>For ssh, the server and client software components components need to be installed.</p>
+<p>For ssh, the server and client software components components need to
+be installed.</p>
 <p>In debian-based Linux distros, the package names are:</p>
 <ul>
 <li>openssh-server</li>
 <li>openssh-client</li>
 </ul>
-<p>Wasn't sure if the server needed the client software as well, but I installed both components in both client and server.</p>
-<p>(We can ssh into the server from the server itself, if the server has both server and client ssh software components installed.)</p>
+<p>Wasn't sure if the server needed the client software as well, but I
+installed both components in both client and server.</p>
+<p>(We can ssh into the server from the server itself, if the server has
+both server and client ssh software components installed.)</p>
 <h2 id="find-ip-address-of-host">Find ip address of host</h2>
-<p>Now that we have the software part ready and the ssh daemon is running in the server, we can connect to the server. For that we need to know its IP address (this seems to work merely because both the server and the clients are within the same network).</p>
+<p>Now that we have the software part ready and the ssh daemon is
+running in the server, we can connect to the server. For that we need to
+know its IP address (this seems to work merely because both the server
+and the clients are within the same network).</p>
 <p>For this, we could use <code>ip</code></p>
 <pre><code>$ # Show protocol (IP or IPv6) addresses on a device
 $ ip address
@@ -91,15 +93,26 @@ $ ip address
     inet6 ee80::7bff:ad1:b469:815c/64 scope link noprefixroute
        valid_lft forever preferred_lft forever
 </code></pre>
-<p>(<code>ip a</code> seems to do the same thing as <code>ip address</code>.)</p>
+<p>(<code>ip a</code> seems to do the same thing as
+<code>ip address</code>.)</p>
 <p>In my case, I got</p>
 <ul>
 <li>an ethernet connection (<code>en</code> prefix means ethernet)</li>
-<li>a wifi connection (<code>wl</code> prefix means wireless local area network)</li>
+<li>a wifi connection (<code>wl</code> prefix means wireless local area
+network)</li>
 </ul>
-<p>See <a href="https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html">this</a> for the naming scheme.</p>
-<p><code>lo</code> denotes <a href="https://www.juniper.net/documentation/en_US/junos/topics/concept/interface-security-loopback-understanding.html">loopback interface</a> (localhost. Anything the computer sends over this connection is being sent to itself). Its IP address is usually <code>127.0.0.1</code> (ipv4) or <code>::1</code> (ipv6). <code>localhost</code> is its domain name.</p>
-<p>I need to use the wireless connection. So the address that I need is the one corresponding to <code>wlp7s0</code>, which is <code>18.52.3.125</code>.</p>
+<p>See <a
+href="https://www.freedesktop.org/software/systemd/man/systemd.net-naming-scheme.html">this</a>
+for the naming scheme.</p>
+<p><code>lo</code> denotes <a
+href="https://www.juniper.net/documentation/en_US/junos/topics/concept/interface-security-loopback-understanding.html">loopback
+interface</a> (localhost. Anything the computer sends over this
+connection is being sent to itself). Its IP address is usually
+<code>127.0.0.1</code> (ipv4) or <code>::1</code> (ipv6).
+<code>localhost</code> is its domain name.</p>
+<p>I need to use the wireless connection. So the address that I need is
+the one corresponding to <code>wlp7s0</code>, which is
+<code>18.52.3.125</code>.</p>
 <p>We could also have used <code>ifconfig</code> command:</p>
 <pre><code>$ ifconfig
 enp8s0: flags=4099&lt;UP,BROADCAST,MULTICAST&gt;  mtu 1500
@@ -128,22 +141,34 @@ wlp7s0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 </code></pre>
 <p>(Looks like my wifi connection had been quite active…)</p>
-<p>Although people well-versed in Linux seem to prefer <code>ip</code> over <code>ifconfig</code>. See <a href="https://unix.stackexchange.com/questions/504063/ip-vs-ifconfig-commands-pros-and-cons">this</a>.</p>
+<p>Although people well-versed in Linux seem to prefer <code>ip</code>
+over <code>ifconfig</code>. See <a
+href="https://unix.stackexchange.com/questions/504063/ip-vs-ifconfig-commands-pros-and-cons">this</a>.</p>
 <h3 id="cidr-notation">CIDR notation</h3>
-<p>In the output of ifconfig and ip, we can see ipv4 addresses followed by a slash and a number.</p>
-<p>These are IP addresses written in the CIDR (<a href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing">Classless Inter Domain Routing</a>) notation.</p>
-<p>(For a small history behind the 'class' in the name of CIDR, see the addendum at the end of this blog post.)</p>
-<p>The number after the slash indicates how many bits (known as <em>prefix</em>) of the ip address are used to address the network. The remaining bits are used to address the node inside that network.</p>
-<p>For example, consider the ipv4 address <code>192.4.16.0/20</code>.</p>
+<p>In the output of ifconfig and ip, we can see ipv4 addresses followed
+by a slash and a number.</p>
+<p>These are IP addresses written in the CIDR (<a
+href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing">Classless
+Inter Domain Routing</a>) notation.</p>
+<p>(For a small history behind the 'class' in the name of CIDR, see the
+addendum at the end of this blog post.)</p>
+<p>The number after the slash indicates how many bits (known as
+<em>prefix</em>) of the ip address are used to address the network. The
+remaining bits are used to address the node inside that network.</p>
+<p>For example, consider the ipv4 address
+<code>192.4.16.0/20</code>.</p>
 <pre><code>11000000.00000100.0001 0000.00000000 
 |                    | |           |
 +--------------------+ +-----------+
      network part        host part
       (20 bits)          (12 bits)
 </code></pre>
-<p>So, the network denoted by 192.4.16.0/20 can have at most 2¹² hosts (as exactly 12 bits are available for addressing the hosts).</p>
-<p>ie, range of addresses available for hosts of this network is: <code>192.4.16.0</code> to <code>192.4.255.255</code></p>
-<p>A few more examples: <a href="https://superuser.com/questions/1163565/what-does-a-forward-slash-followed-by-a-number-mean-in-ip">¹³</a>.</p>
+<p>So, the network denoted by 192.4.16.0/20 can have at most 2¹² hosts
+(as exactly 12 bits are available for addressing the hosts).</p>
+<p>ie, range of addresses available for hosts of this network is:
+<code>192.4.16.0</code> to <code>192.4.255.255</code></p>
+<p>A few more examples: <a
+href="https://superuser.com/questions/1163565/what-does-a-forward-slash-followed-by-a-number-mean-in-ip">¹³</a>.</p>
 <table>
 <thead>
 <tr class="header">
@@ -165,7 +190,11 @@ wlp7s0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
 </tr>
 </tbody>
 </table>
-<p>CIDR notation can be used for ipv6 addresses as well. As in <code>2001:db8::/48</code> denoting addresses from <code>2001:db8:0:0:0:0:0:0</code> to <code>2001:db8:ffff:ffff:ffff:ffff:ffff:ffff</code>. <a href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing">¹⁴</a></p>
+<p>CIDR notation can be used for ipv6 addresses as well. As in
+<code>2001:db8::/48</code> denoting addresses from
+<code>2001:db8:0:0:0:0:0:0</code> to
+<code>2001:db8:ffff:ffff:ffff:ffff:ffff:ffff</code>. <a
+href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing">¹⁴</a></p>
 <pre><code>2001:0db8:0000:0000:0000:0000:0000:0000
 |                           | |       |
 +---------------------------+ +-------+
@@ -174,8 +203,14 @@ wlp7s0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
 </code></pre>
 <p>(IPv6 addresses are 16 bytes, while IPv4 addresses are 4 bytes.)</p>
 <h2 id="making-ssh-key-pair">Making ssh key pair</h2>
-<p>I prefer to use ssh keys instead of passwords to access remote machines (you should too!). For that I first need to make a key pair.</p>
-<p>There are lots of guides to make ssh keys these days (like <a href="https://docs.oracle.com/en/cloud/cloud-at-customer/occ-get-started/generate-ssh-key-pair.html">this</a>, <a href="https://www.ssh.com/academy/ssh/keygen">this</a> and <a href="https://help.ubuntu.com/community/SSH/OpenSSH/Keys#keys-with-specific-commands">this</a>), but I included the command and its output here nevertheless.</p>
+<p>I prefer to use ssh keys instead of passwords to access remote
+machines (you should too!). For that I first need to make a key
+pair.</p>
+<p>There are lots of guides to make ssh keys these days (like <a
+href="https://docs.oracle.com/en/cloud/cloud-at-customer/occ-get-started/generate-ssh-key-pair.html">this</a>,
+<a href="https://www.ssh.com/academy/ssh/keygen">this</a> and <a
+href="https://help.ubuntu.com/community/SSH/OpenSSH/Keys#keys-with-specific-commands">this</a>),
+but I included the command and its output here nevertheless.</p>
 <pre><code>$ ssh-keygen
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/myusername/.ssh/id_rsa): /home/myusername/.ssh/id_rsa
@@ -199,9 +234,14 @@ The key&#39;s randomart image is:
 +----[SHA256]-----+
 </code></pre>
 <h2 id="add-an-ssh-key-to-server">Add an ssh key to server</h2>
-<p>Right, now have got an ssh key pair with which we use to get authenticated to our remote server. But before using the key, we need to let the server know that this is the key that we are gonna use by 'installing' the key in the server.</p>
+<p>Right, now have got an ssh key pair with which we use to get
+authenticated to our remote server. But before using the key, we need to
+let the server know that this is the key that we are gonna use by
+'installing' the key in the server.</p>
 <p>We can use <code>ssh-copy-id</code> command for this.</p>
-<p>I had got my ssh public key (<code>id_rsa.pub</code>) in my server and sort of installed the to the server itself by naming <code>localhost</code> as the 'target'.</p>
+<p>I had got my ssh public key (<code>id_rsa.pub</code>) in my server
+and sort of installed the to the server itself by naming
+<code>localhost</code> as the 'target'.</p>
 <pre><code>$ ssh-copy-id -i ~/.ssh/id_rsa.pub localhost
 /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: &quot;/home/myusername/.ssh/id_rsa.pub&quot;
 /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
@@ -213,8 +253,10 @@ Number of key(s) added: 1
 Now try logging into the machine, with:   &quot;ssh &#39;localhost&#39;&quot;
 and check to make sure that only the key(s) you wanted were added.
 </code></pre>
-<p>As advised by the <code>ssh-copy-id</code>'s output, let's try if we can log in using this newly added key.</p>
-<p>We use the private key (in my case, <code>id_rsa</code> and not <code>id_rsa.pub</code>) while logging into the remote server.</p>
+<p>As advised by the <code>ssh-copy-id</code>'s output, let's try if we
+can log in using this newly added key.</p>
+<p>We use the private key (in my case, <code>id_rsa</code> and not
+<code>id_rsa.pub</code>) while logging into the remote server.</p>
 <pre><code>$ ssh -i ~/.ssh/id_rsa localhost
 Enter passphrase for key &#39;/home/myusername/.ssh/id_rsa&#39;:
 Linux myhostname 5.10.0-10-amd64 #1 SMP Debian 5.10.84-1 (2021-12-08) x86_64
@@ -229,21 +271,32 @@ $
 </code></pre>
 <p>Cool. It worked!</p>
 <h2 id="changing-ssh-configuration">Changing ssh configuration</h2>
-<p>Now I make some changes to the way ssh is configured in the server.</p>
-<p>(I referred to <a href="https://zduey.github.io/tutorials/ssh-server-on-home-computer/">this</a> nice blog post by Zach Duey for this part.)</p>
-<p>We make changes to the configuration by editing the <code>/etc/ssh/sshd_config</code> file.</p>
-<p>Note: Each time after editing this file, we got to 'reload' the ssh daemon.</p>
-<p>For setups using <code>systemd</code> as init system, we can restart <code>sshd</code> with</p>
+<p>Now I make some changes to the way ssh is configured in the
+server.</p>
+<p>(I referred to <a
+href="https://zduey.github.io/tutorials/ssh-server-on-home-computer/">this</a>
+nice blog post by Zach Duey for this part.)</p>
+<p>We make changes to the configuration by editing the
+<code>/etc/ssh/sshd_config</code> file.</p>
+<p>Note: Each time after editing this file, we got to 'reload' the ssh
+daemon.</p>
+<p>For setups using <code>systemd</code> as init system, we can restart
+<code>sshd</code> with</p>
 <pre><code>sudo systemctl reload sshd
 </code></pre>
 <p>and the changes that we made should take effect.</p>
 <p>Default port used by ssh is port 22. I didn't change that.</p>
 <h3 id="no-password-authentication">No password authentication</h3>
-<p>I am using ssh keys to log in as it is relative more secure, and don't want to allow logging in passwords. So I disable the authentication based on passwords with:</p>
+<p>I am using ssh keys to log in as it is relative more secure, and
+don't want to allow logging in passwords. So I disable the
+authentication based on passwords with:</p>
 <pre><code>PasswordAuthentication no
 </code></pre>
-<h3 id="allow-log-in-only-as-specific-users">Allow log in only as specific users</h3>
-<p>I may be having many user accounts in my server computer, but I don't want ssh login for most of them. So I restrict ssh login to some specific users.</p>
+<h3 id="allow-log-in-only-as-specific-users">Allow log in only as
+specific users</h3>
+<p>I may be having many user accounts in my server computer, but I don't
+want ssh login for most of them. So I restrict ssh login to some
+specific users.</p>
 <pre><code># can log-in to server via ssh only as &#39;myusername&#39;
 AllowUsers myusername
 </code></pre>
@@ -253,23 +306,29 @@ AllowUsers myusername
 </code></pre>
 <p>(This may be redundant as I already used <code>AllowUser</code>.)</p>
 <h3 id="limit-concurrent-connections">Limit concurrent connections</h3>
-<p>I guess it's a good idea to put a limit on the maximum number of concurrent unauthenticated connections to server:</p>
+<p>I guess it's a good idea to put a limit on the maximum number of
+concurrent unauthenticated connections to server:</p>
 <pre><code># Set maximum number of concurrent connections to 3
 MaxStartups 3
 </code></pre>
 <h3 id="gui">GUI</h3>
-<p>ssh has the option of sort of 'forwarding' the GUI of an application running on server to the client.</p>
-<p>I didn't want to use GUI via ssh. So I'm disabled that option with:</p>
+<p>ssh has the option of sort of 'forwarding' the GUI of an application
+running on server to the client.</p>
+<p>I didn't want to use GUI via ssh. So I'm disabled that option
+with:</p>
 <pre><code>X11Forwarding no
 </code></pre>
 <h3 id="tcp-forwarding">TCP forwarding</h3>
-<p>It's possible to forward traffic incident on server ports to ports in client.</p>
+<p>It's possible to forward traffic incident on server ports to ports in
+client.</p>
 <p>I disabled this forwarding traffic.</p>
 <pre><code>AllowTcpForwarding no
 </code></pre>
 <h2 id="managing">Managing</h2>
-<p>Now that we got an ssh service to which we can log into, we could use ways to work with it.</p>
-<p>For example, to see if the ssh service is active, we could do (if the init system is systemd):</p>
+<p>Now that we got an ssh service to which we can log into, we could use
+ways to work with it.</p>
+<p>For example, to see if the ssh service is active, we could do (if the
+init system is systemd):</p>
 <pre><code>$ systemctl status ssh
 ● ssh.service - OpenBSD Secure Shell server
      Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
@@ -284,7 +343,8 @@ MaxStartups 3
              └─109728 sshd: /usr/sbin/sshd -D [listener] 0 of 2-2 startups
 </code></pre>
 <h3 id="log-in-history">Log in history</h3>
-<p>I found ssh connect/disconnect history at <code>/var/log/auth.log</code>.</p>
+<p>I found ssh connect/disconnect history at
+<code>/var/log/auth.log</code>.</p>
 <p>It had stuff like:</p>
 <pre><code>Apr  4 12:44:02 myhostname sshd[109728]: Server listening on 0.0.0.0 port 22.
 Apr  4 12:44:02 myhostname sshd[109728]: Server listening on :: port 22.
@@ -298,61 +358,108 @@ Apr  4 12:48:55 myhostname sshd[111826]: pam_unix(sshd:session): session closed 
 <pre><code>Apr  4 12:37:43 myhostname sshd[111575]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=::1  user=myusername
 Apr  4 12:37:46 myhostname sshd[111575]: Failed password for myusername from ::1 port 39414 ssh2
 </code></pre>
-<p>Tools like <code>grep</code> and <code>awk</code> could come handy in finding the things you need here.</p>
-<h3 id="prevent-process-termination-on-disconnection">Prevent process termination on disconnection</h3>
-<p>When the client disconnects from the server over an ssh connection, every process that the client had started at the host will be terminated.</p>
-<p>That's a bit inconvenient if we have long-running jobs as we won't be able to disconnect till the end of the job execution, which might take days.</p>
+<p>Tools like <code>grep</code> and <code>awk</code> could come handy in
+finding the things you need here.</p>
+<h3 id="prevent-process-termination-on-disconnection">Prevent process
+termination on disconnection</h3>
+<p>When the client disconnects from the server over an ssh connection,
+every process that the client had started at the host will be
+terminated.</p>
+<p>That's a bit inconvenient if we have long-running jobs as we won't be
+able to disconnect till the end of the job execution, which might take
+days.</p>
 <p>To get around this problem, we could use screen or tmux.</p>
-<p>After logging into the server start screen/tmux and then start the process within it.</p>
-<p>Now you can disconnect from the server and the process will keep executing as if the server didn't realize that we had left.</p>
-<p>We can later come back and check on the job execution without breaking a sweat.</p>
-<p>Found a few other ways as well <a href="https://unix.stackexchange.com/questions/479/keep-processes-running-after-ssh-session-disconnects">here</a>. I haven't (yet) tried any of these, though.</p>
-<p>I had only known of tmux/screen. Had forgotten about <code>nohup</code>, didn't even know about <code>disown</code>.</p>
-<p>There are fancier tools like byobu (which can work on top of screen or tmux) as well.</p>
-<p>See <a href="https://unix.stackexchange.com/questions/3886/difference-between-nohup-disown-and">this</a> for a related discussion.</p>
-<h3 id="file-transfer-between-remote-and-clients">File transfer between remote and clients</h3>
-<p>Could use one of <code>rsync</code> and <code>scp</code>. I got the idea that <code>rsync</code> is usually better.</p>
+<p>After logging into the server start screen/tmux and then start the
+process within it.</p>
+<p>Now you can disconnect from the server and the process will keep
+executing as if the server didn't realize that we had left.</p>
+<p>We can later come back and check on the job execution without
+breaking a sweat.</p>
+<p>Found a few other ways as well <a
+href="https://unix.stackexchange.com/questions/479/keep-processes-running-after-ssh-session-disconnects">here</a>.
+I haven't (yet) tried any of these, though.</p>
+<p>I had only known of tmux/screen. Had forgotten about
+<code>nohup</code>, didn't even know about <code>disown</code>.</p>
+<p>There are fancier tools like byobu (which can work on top of screen
+or tmux) as well.</p>
+<p>See <a
+href="https://unix.stackexchange.com/questions/3886/difference-between-nohup-disown-and">this</a>
+for a related discussion.</p>
+<h3 id="file-transfer-between-remote-and-clients">File transfer between
+remote and clients</h3>
+<p>Could use one of <code>rsync</code> and <code>scp</code>. I got the
+idea that <code>rsync</code> is usually better.</p>
 <p>With <code>rsync</code>, we can copy from client to server with:</p>
 <pre><code>rsync -rve &quot;ssh -i /path/to/private-key&quot; /path/to/client-file remoteuser@remoteip:/path/to/remote-file
 </code></pre>
-<p>Similarly, copying from server to client can be accomplished with:</p>
+<p>Similarly, copying from server to client can be accomplished
+with:</p>
 <pre><code>rsync -rve &quot;ssh -i /path/to/private-key&quot; remoteuser@remoteip:/path/to/remote-file /path/to/client-file
 </code></pre>
-<p><code>rsync</code> needs to be installed on <em>both</em> client and server. This is true in the case of <code>scp</code> as well.</p>
-<p>This is the error that I got when I tried using <code>rsync</code> when only client had it:</p>
+<p><code>rsync</code> needs to be installed on <em>both</em> client and
+server. This is true in the case of <code>scp</code> as well.</p>
+<p>This is the error that I got when I tried using <code>rsync</code>
+when only client had it:</p>
 <pre><code>bash: line 1: rsync: command not found
 rsync: connection unexpectedly closed (0 bytes received so far) [Receiver]
 rsync error: remote command not found (code 127) at io.c(235) [Receiver=3.1.2]
 </code></pre>
-<p>Not exactly informative, but easy enough to figure out with an internet search, I guess.</p>
-<h3 id="remove-an-ssh-key-from-server">Remove an ssh key from server</h3>
-<p>Adding an ssh key to a server was as easy as using <code>ssh-copy-id</code>, so I expected there would be an similar way to remove a previously added key from the server as well.</p>
+<p>Not exactly informative, but easy enough to figure out with an
+internet search, I guess.</p>
+<h3 id="remove-an-ssh-key-from-server">Remove an ssh key from
+server</h3>
+<p>Adding an ssh key to a server was as easy as using
+<code>ssh-copy-id</code>, so I expected there would be an similar way to
+remove a previously added key from the server as well.</p>
 <p>Well apparently, there's no such way.</p>
-<p>One way that I found <a href="https://askubuntu.com/questions/1347011/how-to-remove-ssh-keys">here</a> is:</p>
+<p>One way that I found <a
+href="https://askubuntu.com/questions/1347011/how-to-remove-ssh-keys">here</a>
+is:</p>
 <ul>
 <li>open <code>/etc/ssh/sshd_config</code></li>
-<li>locate the line: <code>AuthorizedKeysFile:</code> and note the file paths after it.</li>
-<li>Open this file. It will have some keys. Just delete the line with the key that want to remove.</li>
+<li>locate the line: <code>AuthorizedKeysFile:</code> and note the file
+paths after it.</li>
+<li>Open this file. It will have some keys. Just delete the line with
+the key that want to remove.</li>
 </ul>
-<p>In my case, the key was in a file at <code>~/.ssh/authorized_keys</code>.</p>
+<p>In my case, the key was in a file at
+<code>~/.ssh/authorized_keys</code>.</p>
 <p>This is essentially reversing what <code>ssh-copy-id</code> did.</p>
 <p>From <a href="https://www.ssh.com/academy/ssh/copy-id">here</a>:</p>
 <blockquote>
-<p><code>ssh-copy-id</code> uses the SSH protocol to connect to the target host and upload the SSH user key. The command edits the <code>authorized_keys</code> file on the server. The <code>.ssh</code> directory is created if it doesn't exist. It also creates the <code>authorized_keys</code> file if it doesn't exist.</p>
+<p><code>ssh-copy-id</code> uses the SSH protocol to connect to the
+target host and upload the SSH user key. The command edits the
+<code>authorized_keys</code> file on the server. The <code>.ssh</code>
+directory is created if it doesn't exist. It also creates the
+<code>authorized_keys</code> file if it doesn't exist.</p>
 </blockquote>
 <h2 id="references">References</h2>
 <ul>
-<li><em>Computer Networks: A systems approach</em> (5th edition) - Larry L. Peterson, Bruce S. Davie</li>
-<li><a href="https://www.freebsd.org/cgi/man.cgi?query=sshd_config&amp;sektion=5"><code>sshd_config</code> man page</a></li>
-<li><a href="https://zduey.github.io/tutorials/ssh-server-on-home-computer/"><a href="https://zduey.github.io/tutorials/ssh-server-on-home-computer/">https://zduey.github.io/tutorials/ssh-server-on-home-computer/</a></a></li>
-<li><a href="https://www.juniper.net/documentation/en_US/junos/topics/concept/interface-security-loopback-understanding.html">Understanding the Loopback Interface</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Subnetwork">Wikipedia: Subnetwork</a></li>
+<li><em>Computer Networks: A systems approach</em> (5th edition) - Larry
+L. Peterson, Bruce S. Davie</li>
+<li><a
+href="https://www.freebsd.org/cgi/man.cgi?query=sshd_config&amp;sektion=5"><code>sshd_config</code>
+man page</a></li>
+<li><a
+href="https://zduey.github.io/tutorials/ssh-server-on-home-computer/"><a
+href="https://zduey.github.io/tutorials/ssh-server-on-home-computer/">https://zduey.github.io/tutorials/ssh-server-on-home-computer/</a></a></li>
+<li><a
+href="https://www.juniper.net/documentation/en_US/junos/topics/concept/interface-security-loopback-understanding.html">Understanding
+the Loopback Interface</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Subnetwork">Wikipedia:
+Subnetwork</a></li>
 </ul>
-<p>(The ip addresses mentioned in output of some commands mentioned in this blog past are not real.)</p>
+<p>(The ip addresses mentioned in output of some commands mentioned in
+this blog past are not real.)</p>
 <h2 id="addendum-class-in-cidr">Addendum: 'Class' in CIDR</h2>
-<p>The 'class' in the name 'Classless Inter-Domain Routing' has got to do with an addressing scheme that was in use before it.</p>
-<p>Before CIDR, there were <a href="https://en.wikipedia.org/wiki/Classful_network">classful networks</a>, where IP addresses were grouped into different classes.</p>
-<p>In classful networks, IP addresses (32 bits) were grouped into 5 classes:</p>
+<p>The 'class' in the name 'Classless Inter-Domain Routing' has got to
+do with an addressing scheme that was in use before it.</p>
+<p>Before CIDR, there were <a
+href="https://en.wikipedia.org/wiki/Classful_network">classful
+networks</a>, where IP addresses were grouped into different
+classes.</p>
+<p>In classful networks, IP addresses (32 bits) were grouped into 5
+classes:</p>
 <ul>
 <li>Class A ⎫</li>
 <li>Class B ⎬ unicast</li>
@@ -405,31 +512,63 @@ rsync error: remote command not found (code 127) at io.c(235) [Receiver=3.1.2]
 </tr>
 </tbody>
 </table>
-<p>Maximum number of hosts is actually two less than what's shown in the above table as the address with all bits in the host part set is the broadcast address and that with all host bits set to zero is the address of the network itself. <a href="https://en.wikipedia.org/wiki/Classful_network">²²</a> (I guess that's why localhost is <code>127.0.0.1</code> and not <code>127.0.0.0</code>).</p>
-<p>But soon it became evident that classful addresses don't scale that well.</p>
+<p>Maximum number of hosts is actually two less than what's shown in the
+above table as the address with all bits in the host part set is the
+broadcast address and that with all host bits set to zero is the address
+of the network itself. <a
+href="https://en.wikipedia.org/wiki/Classful_network">²²</a> (I guess
+that's why localhost is <code>127.0.0.1</code> and not
+<code>127.0.0.0</code>).</p>
+<p>But soon it became evident that classful addresses don't scale that
+well.</p>
 <p>From <em>Computer Networks: A systems approach</em>:</p>
 <blockquote>
-<p>The original idea was that the Internet would consist of a small number of wide area networks (these would be class A networks), a modest number of site-(campus-)sized networks (these would be class B networks), anda large number of LANs (these would be class C networks). However, it turned out not to be flexible enough</p>
+<p>The original idea was that the Internet would consist of a small
+number of wide area networks (these would be class A networks), a modest
+number of site-(campus-)sized networks (these would be class B
+networks), anda large number of LANs (these would be class C networks).
+However, it turned out not to be flexible enough</p>
 </blockquote>
-<p>One problem was that classful addresses could lead to unused addresses.</p>
-<p>For example, if a network needed 2⁸+1 host addresses, the addresses would be of class B. That means that 2¹⁶-(2⁸+1) = 65279 host addresses would remain unused. This would be even more if the number of host addresses required is at boundary of the number of hosts supported by class A and class B. That could mean huge wastage of address space. (Also see <a href="https://en.wikipedia.org/wiki/IPv4_address_exhaustion">Wikipedia: IPv4 address exhaustion</a>. Hadn't realized that we had already run out of IPv4 addresses…)</p>
-<p>In contrast to this scenario, with CIDR, the number of bits to be used to address networks is totally flexible. CIDR IP addresses sort of comes with a subnet mask (represented as the slash prefix like <code>/24</code>) which can be used to distinguish between the network and host part.</p>
-<p>For example, if an address of a network is <code>192.45.23.5/24</code>, the subnet mask is <code>255.255.255.0</code> as the <code>/24</code> means that the first 24 bits are used to identify the sub-network and the remaining bits are for addressing the hosts.</p>
-<p>If an ip address of a host of this network is <code>192.45.23.64</code>,</p>
+<p>One problem was that classful addresses could lead to unused
+addresses.</p>
+<p>For example, if a network needed 2⁸+1 host addresses, the addresses
+would be of class B. That means that 2¹⁶-(2⁸+1) = 65279 host addresses
+would remain unused. This would be even more if the number of host
+addresses required is at boundary of the number of hosts supported by
+class A and class B. That could mean huge wastage of address space.
+(Also see <a
+href="https://en.wikipedia.org/wiki/IPv4_address_exhaustion">Wikipedia:
+IPv4 address exhaustion</a>. Hadn't realized that we had already run out
+of IPv4 addresses…)</p>
+<p>In contrast to this scenario, with CIDR, the number of bits to be
+used to address networks is totally flexible. CIDR IP addresses sort of
+comes with a subnet mask (represented as the slash prefix like
+<code>/24</code>) which can be used to distinguish between the network
+and host part.</p>
+<p>For example, if an address of a network is
+<code>192.45.23.5/24</code>, the subnet mask is
+<code>255.255.255.0</code> as the <code>/24</code> means that the first
+24 bits are used to identify the sub-network and the remaining bits are
+for addressing the hosts.</p>
+<p>If an ip address of a host of this network is
+<code>192.45.23.64</code>,</p>
 <p>network part of address = address AND subnet-mask</p>
 <pre><code>    11000000.00101101.00010111.01000000 = 192.45.23.64
  &amp;  11111111.11111111.11111111.00000000 = 255.255.255.0
 ------------------------------------------------------------
     11000000.00101101.00010111.00000000 = 192.45.23.0           
 </code></pre>
-<p>host part of address = address AND (one's complement of subnet-mask)</p>
+<p>host part of address = address AND (one's complement of
+subnet-mask)</p>
 <pre><code>    11000000.00101101.00010111.01000000 = 192.45.23.64
  &amp;  00000000.00000000.00000000.11111111 = one&#39;s complement(255.255.255.0)
 ------------------------------------------------------------
     00000000.00000000.00000000.01000000 = 0.0.0.64           
 </code></pre>
-<p>In the case of classful networks, the mask was implied the network class itself. CIDR just makes it explicit.</p>
-<p>CIDR equivalent for the classes of addresses of classful networks would be:</p>
+<p>In the case of classful networks, the mask was implied the network
+class itself. CIDR just makes it explicit.</p>
+<p>CIDR equivalent for the classes of addresses of classful networks
+would be:</p>
 <table>
 <thead>
 <tr class="header">
@@ -453,7 +592,8 @@ rsync error: remote command not found (code 127) at io.c(235) [Receiver=3.1.2]
 </tbody>
 </table>
 <p>—</p>
-<p>Update (13-Aug-2022): Explicitly mention that init system should be systemd to use the <code>systemctl</code> command.</p>
+<p>Update (13-Aug-2022): Explicitly mention that init system should be
+systemd to use the <code>systemctl</code> command.</p>
 </div>
 </body>
 </html>

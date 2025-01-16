@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Regex</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Regex</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<h2 id="glushkovs-nfa-construction-algorithm">Glushkov's NFA
+construction algorithm</h2>
+<ul>
+<li>Input = r'</li>
+<li>r: r' with unique position labels asssigned to each of its atoms
+<ul>
+<li>The set of these labels is <code>pos</code></li>
+<li>Each <code>i ∈ pos</code> represents an atom in <code>r</code></li>
+</ul></li>
+<li>first(i): Set of atom-positions that can be matched right after the
+atom at position <code>i</code></li>
+<li>last(i): Set of atom-positions in <code>r</code> that will be
+last</li>
+<li><code>follow(i)</code>, set of atoms in <code>r</code> that can be
+matched right after the atom at position <code>i</code>.</li>
+</ul>
+<pre><code>first(ε) = ∅
+
+first(cᵢ) = {i}
+
+first(a;b)
+  = first(a)               if ε ∉ L(a)
+  = first(a) U first(b)    otherwise
+
+first(a|b) = first(a) ∪ first(b)
+
+first(a*) = first(a)
+</code></pre>
+<pre><code>last(ε) = ∅
+
+last(cᵢ) = {i}
+
+last(a;b)
+  = last(b)               if ε ∉ L(a)
+  = last(a) U last(b)     otherwise
+
+last(a|b) = last(a) ∪ last(b)
+
+last(a*) = last(a)
+</code></pre>
+<pre><code>follow(ε, i) = undefined
+
+follow(cᵢ, i) = ∅
+
+follow(a;b, i)
+  = if i ∈ pos(a)
+    = follow(a, i) ∪ first(b)  if i ∈ last(a)
+    = follow(a, i)             otherwise
+  = if i ∈ pos(b)
+    follow(b, i)
+
+follow(a|b, i)
+  = follow(a, i)  if i∈pos(a)
+  = follow(b, i)  if i∈pos(b)
+
+follow(a*, i)
+  = follow(a, i) ∪ first(a)  if i ∈ last(a)
+  = follow(a, i)             otherwise
+</code></pre>
+<ul>
+<li>Q = pos(r) u qI
+<ul>
+<li>where qI is a new state</li>
+</ul></li>
+<li>q₀ = qI</li>
+</ul>
+</div>
+</body>
+</html>

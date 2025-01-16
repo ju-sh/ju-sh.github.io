@@ -46,25 +46,36 @@
 <div id="content-container">
 <h2 id="general">General</h2>
 <ul>
-<li>Find location of the <code>.vo</code> file corresponding to an importable library: <code>Locate Library &lt;name&gt;</code> <a href="https://coq.inria.fr/doc/v8.12/refman/proof-engine/vernacular-commands.html#coq:cmd.locate-library">ʳ</a></li>
-<li><code>exists2</code>: there exists an <code>x</code> which satisfies 2 predicates <code>P</code> and <code>Q</code>
+<li>Find location of the <code>.vo</code> file corresponding to an
+importable library: <code>Locate Library &lt;name&gt;</code> <a
+href="https://coq.inria.fr/doc/v8.12/refman/proof-engine/vernacular-commands.html#coq:cmd.locate-library">ʳ</a></li>
+<li><code>exists2</code>: there exists an <code>x</code> which satisfies
+2 predicates <code>P</code> and <code>Q</code>
 <ul>
 <li>Eg: <code>exists2 (x:A), (P x) &amp; )Q x)</code></li>
 </ul></li>
-<li>Notations defined within a section are not available outside of that section.</li>
+<li>Notations defined within a section are not available outside of that
+section.</li>
 <li>Allow unicode symbols: <code>From Coq Require Import Utf8.</code>
 <ul>
-<li>Eg: <code>∀</code> (<code>forall</code>), <code>∃</code> (<code>exists</code>)</li>
+<li>Eg: <code>∀</code> (<code>forall</code>), <code>∃</code>
+(<code>exists</code>)</li>
 </ul></li>
 <li><code>Let</code>, <code>Let Fixpoint</code>, etc
 <ul>
-<li>Like <code>Definition</code>, <code>Fixpoint</code>, etc except that the definiton is not valid outside current section.</li>
-<li><a href="https://coq.inria.fr/doc/V8.20.0/refman/language/core/sections.html#coq:cmd.Let">https://coq.inria.fr/doc/V8.20.0/refman/language/core/sections.html#coq:cmd.Let</a></li>
+<li>Like <code>Definition</code>, <code>Fixpoint</code>, etc except that
+the definiton is not valid outside current section.</li>
+<li><a
+href="https://coq.inria.fr/doc/V8.20.0/refman/language/core/sections.html#coq:cmd.Let">https://coq.inria.fr/doc/V8.20.0/refman/language/core/sections.html#coq:cmd.Let</a></li>
 </ul></li>
-<li>Introduce already proven theorem to context: <code>pose proof &lt;theorem_name&gt;</code>.</li>
+<li>Introduce already proven theorem to context:
+<code>pose proof &lt;theorem_name&gt;</code>.</li>
 </ul>
-<h2 id="vernaculars-like-theorem-lemma-etc">Vernaculars like <code>Theorem</code>, <code>lemma</code>, etc</h2>
-<p>All of the following<a href="https://coq.inria.fr/refman/language/core/definitions.html#coq:cmd.Theorem">¹</a> can be used interchangably:</p>
+<h2 id="vernaculars-like-theorem-lemma-etc">Vernaculars like
+<code>Theorem</code>, <code>lemma</code>, etc</h2>
+<p>All of the following<a
+href="https://coq.inria.fr/refman/language/core/definitions.html#coq:cmd.Theorem">¹</a>
+can be used interchangably:</p>
 <ul>
 <li><code>Theorem</code></li>
 <li><code>Lemma</code></li>
@@ -74,13 +85,22 @@
 <li><code>Proposition</code></li>
 <li><code>Property</code></li>
 </ul>
-<p>All of these are same as far as coq is concerned but judicious use can improve readability.</p>
-<h2 id="variant-vs-inductive"><code>Variant</code> vs <code>Inductive</code></h2>
-<p>From the <a href="https://coq.inria.fr/refman/language/core/variants.html">manual</a>:</p>
+<p>All of these are same as far as coq is concerned but judicious use
+can improve readability.</p>
+<h2 id="variant-vs-inductive"><code>Variant</code> vs
+<code>Inductive</code></h2>
+<p>From the <a
+href="https://coq.inria.fr/refman/language/core/variants.html">manual</a>:</p>
 <blockquote>
-<p>The <code>Variant</code> command is similar to the <code>Inductive</code> command, except that it disallows recursive definition of types (for instance, lists cannot be defined using <code>Variant</code>). No induction scheme is generated for this variant, unless the <code>Nonrecursive Elimination Schemes</code> flag is on.</p>
+<p>The <code>Variant</code> command is similar to the
+<code>Inductive</code> command, except that it disallows recursive
+definition of types (for instance, lists cannot be defined using
+<code>Variant</code>). No induction scheme is generated for this
+variant, unless the <code>Nonrecursive Elimination Schemes</code> flag
+is on.</p>
 </blockquote>
-<p><code>Variant</code> is same as <code>Inductive</code> except that:</p>
+<p><code>Variant</code> is same as <code>Inductive</code> except
+that:</p>
 <ul>
 <li>inductive hypothesis is not generated</li>
 <li>Recursive types not possible</li>
@@ -106,7 +126,9 @@ Error:
 Types declared with the keyword Variant cannot be recursive. Recursive types are defined with the Inductive and CoInductive command.
 *)
 </code></pre>
-<p><code>Nonrecursive Elimination Schemes</code> flag can be set to allow induction principles generated for variants (and records) as well.</p>
+<p><code>Nonrecursive Elimination Schemes</code> flag can be set to
+allow induction principles generated for variants (and records) as
+well.</p>
 <pre class="coq"><code>Set Nonrecursive Elimination Schemes.
 
 Variant mbool : Type := mtrue | mfalse.
@@ -118,8 +140,11 @@ mbool_rec is defined
 mbool_sind is defined
 *)
 </code></pre>
-<p>See <a href="https://coq.zulipchat.com/#narrow/stream/237977-Coq-users/topic/Variant.20vs.20Inductive">here</a> for a discussion on <code>Variant</code> and <code>Inductive</code>.</p>
-<h2 id="record-syntax-in-inductive-type-definition">'Record syntax' in inductive type definition</h2>
+<p>See <a
+href="https://coq.zulipchat.com/#narrow/stream/237977-Coq-users/topic/Variant.20vs.20Inductive">here</a>
+for a discussion on <code>Variant</code> and <code>Inductive</code>.</p>
+<h2 id="record-syntax-in-inductive-type-definition">'Record syntax' in
+inductive type definition</h2>
 <p>This is possible:</p>
 <pre class="coq"><code>Inductive foo :=  go {_a:nat}.                
 Print foo.                                    
@@ -129,7 +154,8 @@ Inductive foo2 :=  go {_a:nat; _b:nat}.
 Print foo2.                                             
 (* Inductive foo2 : Set :=  go : nat -&gt; nat -&gt; foo2.  *)
 </code></pre>
-<h2 id="case-analysis-a-list-into-3-parts">Case analysis a list into 3 parts</h2>
+<h2 id="case-analysis-a-list-into-3-parts">Case analysis a list into 3
+parts</h2>
 <pre class="coq"><code>Goal forall (A:Type) (l : list A),
   match l with
   | [] =&gt; 0
@@ -214,20 +240,28 @@ P y
   (* ∵ [x] and [y] are equivalent proofs of the same [SProp]: [A] *)
 Qed.
 </code></pre>
-<p><a href="https://coq.inria.fr/refman/addendum/sprop.html#basic-constructs">https://coq.inria.fr/refman/addendum/sprop.html#basic-constructs</a></p>
-<h2 id="a-prop-vs-type-thing">A <code>Prop</code> vs <code>Type</code> thing</h2>
-<p><a href="https://stackoverflow.com/questions/40289890/coq-cant-discriminate-between-constructors-for-dependently-typed-inductive-prop">https://stackoverflow.com/questions/40289890/coq-cant-discriminate-between-constructors-for-dependently-typed-inductive-prop</a></p>
+<p><a
+href="https://coq.inria.fr/refman/addendum/sprop.html#basic-constructs">https://coq.inria.fr/refman/addendum/sprop.html#basic-constructs</a></p>
+<h2 id="a-prop-vs-type-thing">A <code>Prop</code> vs <code>Type</code>
+thing</h2>
+<p><a
+href="https://stackoverflow.com/questions/40289890/coq-cant-discriminate-between-constructors-for-dependently-typed-inductive-prop">https://stackoverflow.com/questions/40289890/coq-cant-discriminate-between-constructors-for-dependently-typed-inductive-prop</a></p>
 <h2 id="tactic-notation">Tactic Notation</h2>
 <p>Notations at the tactic level.</p>
-<p>See <a href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#coq:cmd.Tactic-Notation">https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#coq:cmd.Tactic-Notation</a></p>
+<p>See <a
+href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#coq:cmd.Tactic-Notation">https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#coq:cmd.Tactic-Notation</a></p>
 <h2 id="coercions">Coercions</h2>
-<p>(Implicit) Coercions in Coq are merely for better convenience, it doesn't add any extra power. <a href="https://coq.inria.fr/doc/v8.18/refman/addendum/implicit-coercions.html">https://coq.inria.fr/doc/v8.18/refman/addendum/implicit-coercions.html</a></p>
+<p>(Implicit) Coercions in Coq are merely for better convenience, it
+doesn't add any extra power. <a
+href="https://coq.inria.fr/doc/v8.18/refman/addendum/implicit-coercions.html">https://coq.inria.fr/doc/v8.18/refman/addendum/implicit-coercions.html</a></p>
 <ul>
 <li>Show all coercion paths: <code>Print Graph</code></li>
 </ul>
 <h3 id="in-record-types"><code>:&gt;</code> in record types</h3>
-<p>Have an implicit corecion from the record type to a particular field of that record.</p>
-<p>For example <a href="https://github.com/coq-community/reglang/blob/master/theories/nfa.v">ˡ</a>:</p>
+<p>Have an implicit corecion from the record type to a particular field
+of that record.</p>
+<p>For example <a
+href="https://github.com/coq-community/reglang/blob/master/theories/nfa.v">ˡ</a>:</p>
 <pre class="coq"><code>Record nfa : Type := {
    nfa_state :&gt; finType
  ; nfa_s : { set nfa_state }
@@ -235,7 +269,9 @@ Qed.
  ; nfa_trans : nfa_state -&gt; char -&gt; nfa_state -&gt; bool
 }.
 </code></pre>
-<p>Now we can have a value of type <code>nfa</code> and it can be implicitly converted to the value of its <code>nfa_state</code> field if needed.</p>
+<p>Now we can have a value of type <code>nfa</code> and it can be
+implicitly converted to the value of its <code>nfa_state</code> field if
+needed.</p>
 <h3 id="a-caveat">A caveat</h3>
 <p>If we have a coercion like <code>a2b: A &gt;-&gt; B</code>,</p>
 <ul>
@@ -247,15 +283,18 @@ Qed.
 </ul>
 <p>Apparently, coercion search happens only in the RHS.</p>
 <h2 id="coqdoc">coqdoc</h2>
-<p><a href="https://coq.inria.fr/refman/using/tools/coqdoc.html">https://coq.inria.fr/refman/using/tools/coqdoc.html</a></p>
+<p><a
+href="https://coq.inria.fr/refman/using/tools/coqdoc.html">https://coq.inria.fr/refman/using/tools/coqdoc.html</a></p>
 <h3 id="verbatim">Verbatim</h3>
 <p>Code block example:</p>
 <pre><code>&lt;&lt;&lt;
 Definition incr (n: nat): nat := S n.
 &gt;&gt;&gt;
 </code></pre>
-<p>Inline example: <code>&lt;&lt; fst &gt;&gt; will give first element of a tuple</code></p>
-<p><code>&gt;&gt;</code> (and <code>&gt;&gt;</code> ??) can't show up in the verbatim text if we use the inline version.</p>
+<p>Inline example:
+<code>&lt;&lt; fst &gt;&gt; will give first element of a tuple</code></p>
+<p><code>&gt;&gt;</code> (and <code>&gt;&gt;</code> ??) can't show up in
+the verbatim text if we use the inline version.</p>
 <h3 id="hidingunhiding">Hiding/unhiding</h3>
 <pre><code>(* begin hide *)
 &lt;hidden code&gt;
@@ -268,7 +307,8 @@ Definition incr (n: nat): nat := S n.
 </code></pre>
 <h3 id="not-sure">Not sure</h3>
 <ul>
-<li>Escape <code>[</code> and <code>]</code> by surrounding it with a pair of <code>#</code>
+<li>Escape <code>[</code> and <code>]</code> by surrounding it with a
+pair of <code>#</code>
 <ul>
 <li>Eg: <code>a list #[# a; b #]#</code></li>
 </ul></li>
@@ -279,22 +319,28 @@ Definition incr (n: nat): nat := S n.
 <li>To figure out terms without explictly specifying them.</li>
 </ul>
 <h2 id="generalized-rewriting">Generalized rewriting</h2>
-<p>See: <a href="https://coq.inria.fr/doc/V8.19.0/refman/addendum/generalized-rewriting.html">https://coq.inria.fr/doc/V8.19.0/refman/addendum/generalized-rewriting.html</a></p>
+<p>See: <a
+href="https://coq.inria.fr/doc/V8.19.0/refman/addendum/generalized-rewriting.html">https://coq.inria.fr/doc/V8.19.0/refman/addendum/generalized-rewriting.html</a></p>
 <ul>
 <li>Involves type classes</li>
 </ul>
 <h3 id="related-stuff">Related stuff</h3>
 <ul>
-<li><code>relation</code> (from Relations): like mathcomp <code>rel</code>, but in <code>Prop</code>
+<li><code>relation</code> (from Relations): like mathcomp
+<code>rel</code>, but in <code>Prop</code>
 <ul>
 <li><code>relation: A -&gt; A -&gt; Prop</code></li>
 </ul></li>
-<li><code>reflexive</code>: A <code>relation</code> that's reflexive</li>
+<li><code>reflexive</code>: A <code>relation</code> that's
+reflexive</li>
 </ul>
 <p>Links:</p>
 <ul>
-<li><a href="https://coq.inria.fr/doc/v8.19/stdlib/Coq.Relations.Relation_Operators.html">https://coq.inria.fr/doc/v8.19/stdlib/Coq.Relations.Relation_Operators.html</a></li>
-<li><a href="https://coq.inria.fr/doc/V8.19.1/stdlib/Coq.Relations.Operators_Properties.html">https://coq.inria.fr/doc/V8.19.1/stdlib/Coq.Relations.Operators_Properties.html</a>** Lists: <code>list_prod</code> vs <code>combine</code></li>
+<li><a
+href="https://coq.inria.fr/doc/v8.19/stdlib/Coq.Relations.Relation_Operators.html">https://coq.inria.fr/doc/v8.19/stdlib/Coq.Relations.Relation_Operators.html</a></li>
+<li><a
+href="https://coq.inria.fr/doc/V8.19.1/stdlib/Coq.Relations.Operators_Properties.html">https://coq.inria.fr/doc/V8.19.1/stdlib/Coq.Relations.Operators_Properties.html</a>**
+Lists: <code>list_prod</code> vs <code>combine</code></li>
 </ul>
 <pre class="coq"><code>(* Like cross-product. Length of output is product of lengths of inputs *)
 Compute list_prod [1; 2] [3;4;5].                 
@@ -312,7 +358,8 @@ Compute combine [1; 2] [3;4;5].
 </code></pre>
 <h2 id="tips">Tips</h2>
 <h3 id="clear-implicits"><code>clear implicits</code></h3>
-<p>Instead of first declaring a type argument implicit in a bunch of constructors as in:</p>
+<p>Instead of first declaring a type argument implicit in a bunch of
+constructors as in:</p>
 <pre class="coq"><code>Inductive instr (A:Type) : Type :=
 | Binop: instr A -&gt; instr A -&gt; instr A
 | Unop: instr A -&gt; instr A
@@ -340,9 +387,12 @@ Arguments instr : clear implicits.
 Check instr.
 (* instr : Type -&gt; Type *)
 </code></pre>
-<p>Got the idea from <a href="https://github.com/mit-plv/koika/blob/9a4771cc7275b1835097a40cb964ecd06b765361/coq/Vect.v#L7">here</a>.</p>
+<p>Got the idea from <a
+href="https://github.com/mit-plv/koika/blob/9a4771cc7275b1835097a40cb964ecd06b765361/coq/Vect.v#L7">here</a>.</p>
 <hr />
-<p>A <em>similar</em> effect (not same) can be attained using the <a href="https://coq.inria.fr/refman/language/core/inductive.html#coq:flag.Uniform-Inductive-Parameters"><code>Uniform Inductive Parameters</code></a> flag.</p>
+<p>A <em>similar</em> effect (not same) can be attained using the <a
+href="https://coq.inria.fr/refman/language/core/inductive.html#coq:flag.Uniform-Inductive-Parameters"><code>Uniform Inductive Parameters</code></a>
+flag.</p>
 <pre class="coq"><code>Set Uniform Inductive Parameters.
 
 Inductive instr (A:Type) : Type :=
@@ -360,8 +410,10 @@ Const
 *)
 </code></pre>
 <h3 id="mutually-inductive-types">Mutually inductive types</h3>
-<p>Once got parameters got to be the same for all types in a mutually inductive setup. (ltamer)</p>
-<p>Using <code>Variable</code> inside <code>Section</code> made it work.</p>
+<p>Once got parameters got to be the same for all types in a mutually
+inductive setup. (ltamer)</p>
+<p>Using <code>Variable</code> inside <code>Section</code> made it
+work.</p>
 <p>This got error:</p>
 <pre class="coq"><code>Inductive term {V:type-&gt;Type} {res:type} : Type :=
 | Halt: V res -&gt; term
@@ -409,14 +461,20 @@ with primop : type -&gt; Type :=
 
 End Foo.
 </code></pre>
-<h3 id="explicit-type-annotation-advantage">Explicit type annotation advantage?</h3>
-<p>Could it be that having explicit type annotations can help reduce time to perform type checks?</p>
-<p>Found this <a href="https://math-comp.github.io/htmldoc/mathcomp.field.finfield.html">here</a>:</p>
+<h3 id="explicit-type-annotation-advantage">Explicit type annotation
+advantage?</h3>
+<p>Could it be that having explicit type annotations can help reduce
+time to perform type checks?</p>
+<p>Found this <a
+href="https://math-comp.github.io/htmldoc/mathcomp.field.finfield.html">here</a>:</p>
 <blockquote>
-<p>The apparently redundant type annotation reduces checking time by 30%.</p>
+<p>The apparently redundant type annotation reduces checking time by
+30%.</p>
 </blockquote>
-<h3 id="succeed-⁹"><code>Succeed</code> <a href="https://coq.inria.fr/refman/proof-engine/vernacular-commands.html#coq:cmd.Succeed">⁹</a></h3>
-<p>Similar to <code>Fail</code>. Checks if the command succeeds and <em>reverts its effects</em>.</p>
+<h3 id="succeed-⁹"><code>Succeed</code> <a
+href="https://coq.inria.fr/refman/proof-engine/vernacular-commands.html#coq:cmd.Succeed">⁹</a></h3>
+<p>Similar to <code>Fail</code>. Checks if the command succeeds and
+<em>reverts its effects</em>.</p>
 <p>'Useful for writing tests.'</p>
 <pre class="coq"><code>Succeed Compute S 3.
 (*
@@ -438,24 +496,28 @@ The command has succeeded and its effects have been reverted.
 </code></pre>
 <h2 id="settings">Settings</h2>
 <ul>
-<li>Show explicit precedence via parentheses: <code>Set Printing Parentheses</code></li>
-<li>Temporarily disable notation printing: <code>Unset Printing Notations</code></li>
+<li>Show explicit precedence via parentheses:
+<code>Set Printing Parentheses</code></li>
+<li>Temporarily disable notation printing:
+<code>Unset Printing Notations</code></li>
 <li>Show coercions explicitly: <code>Set Printing Coercions</code>
 <ul>
 <li>Or to be more aggressive: <code>Set Printing All</code></li>
 </ul></li>
-<li><code>Print Coercions</code>: gives a (often huge and difficult to understand) list of currently active coercions.</li>
+<li><code>Print Coercions</code>: gives a (often huge and difficult to
+understand) list of currently active coercions.</li>
 <li>Print universes: <code>Set Printing Universes.</code></li>
+<li>Show difference form last goal in current goal
+<ul>
+<li><code>Set Diffs "on".</code></li>
+<li><a
+href="https://coq.inria.fr/refman/proofs/writing-proofs/proof-mode.html#showing-differences-between-proof-steps">https://coq.inria.fr/refman/proofs/writing-proofs/proof-mode.html#showing-differences-between-proof-steps</a></li>
+</ul></li>
+<li>Don't use notations while printing
+<ul>
+<li><code>Unset Printing Notations.</code></li>
+</ul></li>
 </ul>
-<h3 id="debug">Debug</h3>
-<p><code>Test Debug</code> shows the list of options related to debugging<a href="https://coq.inria.fr/refman/proof-engine/vernacular-commands.html#coq:opt.Debug">⁷</a>:</p>
-<pre class="coq"><code>Test Debug.
-(*
-Debug: -all,-backtrace,-vernacinterp,-unification,-tactic-unification,-proof-using,-native-compiler,-misc,-ho-unification,-congruence,-RAKAM,-Cbv
-*)
-RAKAM: Refolding Algebraic Krivine Abstract Machine [[8][⁸]]
-
-</code></pre>
 <h3 id="printing-projections">Printing Projections</h3>
 <p>Changes the way record projections are printed.</p>
 <pre><code>Record egrec := BuildEgRec {
@@ -472,42 +534,28 @@ Set Printing Projections.
 Check num r.
 (* r.(num) : nat *)
 </code></pre>
-<p><a href="https://coq.inria.fr/refman/language/core/records.html#coq:flag.Printing-Projections">https://coq.inria.fr/refman/language/core/records.html#coq:flag.Printing-Projections</a></p>
-<h3 id="primitive-projections"><span class="todo TODO">TODO</span> Primitive Projections</h3>
-<p><a href="https://coq.inria.fr/refman/language/core/records.html#coq:flag.Primitive-Projections">https://coq.inria.fr/refman/language/core/records.html#coq:flag.Primitive-Projections</a></p>
-<h2 id="search"><code>Search</code></h2>
-<p>Found from <a href="https://coq.zulipchat.com/#narrow/stream/237977-Coq-users/topic/Searching.20for.20a.20.60Fixpoint.60">here</a>:</p>
-<pre><code>(* Search only for definitions *)
-Search (nat -&gt; nat -&gt; nat) is:Definition.
-(* Fixpoints don&#39;t appear with this as of coq8.19, apparently *)
+<p><a
+href="https://coq.inria.fr/refman/language/core/records.html#coq:flag.Printing-Projections">https://coq.inria.fr/refman/language/core/records.html#coq:flag.Printing-Projections</a></p>
+<h3 id="primitive-projections"><span class="todo TODO">TODO</span>
+Primitive Projections</h3>
+<p><a
+href="https://coq.inria.fr/refman/language/core/records.html#coq:flag.Primitive-Projections">https://coq.inria.fr/refman/language/core/records.html#coq:flag.Primitive-Projections</a></p>
+<h2 id="print-commands">Print commands</h2>
+<h3 id="print-implicit-arguments-of-a-constructor">Print implicit
+arguments of a constructor</h3>
+<p>Use <code>Print Implicit</code>.</p>
+<p>Eg:</p>
+<pre><code>Print Implicit inl.
+(*
+inl : forall {A B : Type}, A -&gt; A + B
+
+When applied to no more than 1 argument:
+  Arguments A, B are implicit and maximally inserted
+When applied to 2 arguments:
+  Argument A is implicit
+*)
 </code></pre>
-<h2 id="hint-databases">Hint databases</h2>
-<ul>
-<li>Hint Mode: Useful for something to do with typeclasses
-<ul>
-<li>Mode says how the arguments are to be treated:
-<ul>
-<li><code>+</code>: Input: Matches term only if there are no existential variables</li>
-<li><code>-</code>: Output: Matches any term</li>
-<li><code>!</code>: 'head only is an output' ??: Matches only if head of term is devoid of existential variables</li>
-</ul></li>
-</ul></li>
-</ul>
-<p>Links:</p>
-<ul>
-<li><a href="https://coq.inria.fr/refman/proofs/automatic-tactics/auto.html">https://coq.inria.fr/refman/proofs/automatic-tactics/auto.html</a></li>
-<li><a href="https://github.com/tchajed/coq-tricks">https://github.com/tchajed/coq-tricks</a></li>
-<li><a href="https://softwarefoundations.cis.upenn.edu/plf-current/UseAuto.html">https://softwarefoundations.cis.upenn.edu/plf-current/UseAuto.html</a></li>
-</ul>
-<p>—</p>
-<ul>
-<li>Add all constructors of a type to hint: <code>Hint Constructors &lt;typename&gt;.</code>
-<ul>
-<li><a href="https://softwarefoundations.cis.upenn.edu/plf-current/UseAuto.html">https://softwarefoundations.cis.upenn.edu/plf-current/UseAuto.html</a></li>
-</ul></li>
-<li>Add a lemmas as a hint: <code>Hint Resolve &lt;lemma-name&gt; : &lt;db-name&gt;.</code></li>
-</ul>
-<h2 id="show-memory-used-by-coq">Show memory used by coq</h2>
+<h3 id="show-memory-used-by-coq">Show memory used by coq</h3>
 <pre class="coq"><code>Print Debug GC.
 (*
 minor words: 7311684983.
@@ -528,42 +576,130 @@ top_heap_words: 90810368
 stack_size: 239
 *)
 </code></pre>
-<p>Reference: <a href="https://coq.inria.fr/refman/proofs/writing-proofs/proof-mode.html#controlling-memory-usage">https://coq.inria.fr/refman/proofs/writing-proofs/proof-mode.html#controlling-memory-usage</a></p>
+<p>Reference: <a
+href="https://coq.inria.fr/refman/proofs/writing-proofs/proof-mode.html#controlling-memory-usage">https://coq.inria.fr/refman/proofs/writing-proofs/proof-mode.html#controlling-memory-usage</a></p>
+<h2 id="debug">Debug</h2>
+<p><code>Test Debug</code> shows the list of options related to
+debugging<a
+href="https://coq.inria.fr/refman/proof-engine/vernacular-commands.html#coq:opt.Debug">⁷</a>:</p>
+<pre class="coq"><code>Test Debug.
+(*
+Debug: -all,-backtrace,-vernacinterp,-unification,-tactic-unification,-proof-using,-native-compiler,-misc,-ho-unification,-congruence,-RAKAM,-Cbv
+*)
+RAKAM: Refolding Algebraic Krivine Abstract Machine [[8][⁸]]
+
+</code></pre>
+<h2 id="have-and-opaqueness"><code>have</code> and opaqueness</h2>
+<ul>
+<li><code>have</code> tactic introduces opaque terms from Coq 8.20
+inwards.
+<ul>
+<li><a
+href="https://coq.inria.fr/doc/V8.20.0/refman/changes.html#id97">https://coq.inria.fr/doc/V8.20.0/refman/changes.html#id97</a></li>
+<li><a
+href="https://github.com/coq/coq/pull/18449/files">https://github.com/coq/coq/pull/18449/files</a></li>
+</ul></li>
+<li>Use <code>have @H</code> instead of <code>have H</code> for
+transparent terms</li>
+</ul>
+<h2 id="search"><code>Search</code></h2>
+<p>Found from <a
+href="https://coq.zulipchat.com/#narrow/stream/237977-Coq-users/topic/Searching.20for.20a.20.60Fixpoint.60">here</a>:</p>
+<pre><code>(* Search only for definitions *)
+Search (nat -&gt; nat -&gt; nat) is:Definition.
+(* Fixpoints don&#39;t appear with this as of coq8.19, apparently *)
+</code></pre>
+<h2 id="hint-databases">Hint databases</h2>
+<ul>
+<li>Hint Mode: Useful for something to do with typeclasses
+<ul>
+<li>Mode says how the arguments are to be treated:
+<ul>
+<li><code>+</code>: Input: Matches term only if there are no existential
+variables</li>
+<li><code>-</code>: Output: Matches any term</li>
+<li><code>!</code>: 'head only is an output' ??: Matches only if head of
+term is devoid of existential variables</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Links:</p>
+<ul>
+<li><a
+href="https://coq.inria.fr/refman/proofs/automatic-tactics/auto.html">https://coq.inria.fr/refman/proofs/automatic-tactics/auto.html</a></li>
+<li><a
+href="https://github.com/tchajed/coq-tricks">https://github.com/tchajed/coq-tricks</a></li>
+<li><a
+href="https://softwarefoundations.cis.upenn.edu/plf-current/UseAuto.html">https://softwarefoundations.cis.upenn.edu/plf-current/UseAuto.html</a></li>
+</ul>
+<p>—</p>
+<ul>
+<li>Add all constructors of a type to hint:
+<code>Hint Constructors &lt;typename&gt;.</code>
+<ul>
+<li><a
+href="https://softwarefoundations.cis.upenn.edu/plf-current/UseAuto.html">https://softwarefoundations.cis.upenn.edu/plf-current/UseAuto.html</a></li>
+</ul></li>
+<li>Add a lemmas as a hint:
+<code>Hint Resolve &lt;lemma-name&gt; : &lt;db-name&gt;.</code></li>
+</ul>
 <h2 id="ltac">ltac</h2>
 <ul>
-<li><a href="https://coq.inria.fr/refman/proof-engine/ltac.html">https://coq.inria.fr/refman/proof-engine/ltac.html</a></li>
+<li><a
+href="https://coq.inria.fr/refman/proof-engine/ltac.html">https://coq.inria.fr/refman/proof-engine/ltac.html</a></li>
 </ul>
 <h3 id="intro">Intro</h3>
 <ul>
 <li>binder<sub>tactics</sub>: fun, let</li>
-<li>l3<sub>tactics</sub>: <code>try</code>, <code>do</code>, <code>repeat</code>, <code>timeout</code>, <code>time</code>, <code>progress</code>, <code>once</code>, <code>exactly_once</code>, <code>only</code>, <code>abstract</code></li>
+<li>l3<sub>tactics</sub>: <code>try</code>, <code>do</code>,
+<code>repeat</code>, <code>timeout</code>, <code>time</code>,
+<code>progress</code>, <code>once</code>, <code>exactly_once</code>,
+<code>only</code>, <code>abstract</code></li>
 <li>l2<sub>tactics</sub>: <code>tryif</code></li>
-<li>l1<sub>tactics</sub>: <code>first</code>, <code>solve</code>, <code>idtac</code>, <code>fail</code>, <code>gfail</code>
+<li>l1<sub>tactics</sub>: <code>first</code>, <code>solve</code>,
+<code>idtac</code>, <code>fail</code>, <code>gfail</code>
 <ul>
-<li><code>match</code>, <code>match goal</code> and their lazymatch and multimatch variants.</li>
+<li><code>match</code>, <code>match goal</code> and their lazymatch and
+multimatch variants.</li>
 </ul></li>
-<li>value<sub>tactics</sub>: <code>eval</code>, <code>context</code>, <code>numgoals</code>, <code>fresh</code>, <code>type of</code>, <code>type_term</code>
+<li>value<sub>tactics</sub>: <code>eval</code>, <code>context</code>,
+<code>numgoals</code>, <code>fresh</code>, <code>type of</code>,
+<code>type_term</code>
 <ul>
 <li>which return values rather than change the proof state.</li>
 </ul></li>
-<li><code>||</code>: Try the given tactics one by one and stop at the first tactic to make progress.</li>
+<li><code>||</code>: Try the given tactics one by one and stop at the
+first tactic to make progress.</li>
 </ul>
 <h3 id="ltac-debugging">ltac debugging</h3>
-<p><a href="https://stackoverflow.com/questions/52997319/is-printf-debugging-possible-in-ltac">https://stackoverflow.com/questions/52997319/is-printf-debugging-possible-in-ltac</a></p>
+<p><a
+href="https://stackoverflow.com/questions/52997319/is-printf-debugging-possible-in-ltac">https://stackoverflow.com/questions/52997319/is-printf-debugging-possible-in-ltac</a></p>
 <p>Use <code>idtac &lt;msg-string&gt;</code>.</p>
 <h2 id="misc">Misc</h2>
 <ul>
-<li>'It is dangerous to add Axioms to Coq: if you add one that's inconsistent, then it leads to the ability to prove False. While that's a convenient way to get a lot of things proved, it's unsound; the proofs are useless.' <a href="https://softwarefoundations.cis.upenn.edu/vfa-current/Decide.html#ScratchPad2.prove_with_max_axiom">ʳ</a></li>
+<li>'It is dangerous to add Axioms to Coq: if you add one that's
+inconsistent, then it leads to the ability to prove False. While that's
+a convenient way to get a lot of things proved, it's unsound; the proofs
+are useless.' <a
+href="https://softwarefoundations.cis.upenn.edu/vfa-current/Decide.html#ScratchPad2.prove_with_max_axiom">ʳ</a></li>
 <li>Logic.eq (from stdlib itself): eq<sub>refl</sub></li>
-<li>Syntax for type class with just one field: <code>Class className A := fieldName: A.</code></li>
-<li><code>Typeclasses Opaque</code>: Another way of saying <code>Hint Opaque</code> <a href="https://coq.inria.fr/doc/V8.18.0/refman/addendum/type-classes.html#coq:cmd.Typeclasses-Opaque">ᵈ</a></li>
-<li>The name <code>tt</code> (value of <code>unit</code> type) is historical. This was the name commonly used for the corresponding lambda calculus papers in old papers, apparently.
+<li>Syntax for type class with just one field:
+<code>Class className A := fieldName: A.</code></li>
+<li><code>Typeclasses Opaque</code>: Another way of saying
+<code>Hint Opaque</code> <a
+href="https://coq.inria.fr/doc/V8.18.0/refman/addendum/type-classes.html#coq:cmd.Typeclasses-Opaque">ᵈ</a></li>
+<li>The name <code>tt</code> (value of <code>unit</code> type) is
+historical. This was the name commonly used for the corresponding lambda
+calculus papers in old papers, apparently.
 <ul>
-<li><a href="https://stackoverflow.com/questions/52870230/what-is-the-origin-of-the-names-of-i-and-tt">https://stackoverflow.com/questions/52870230/what-is-the-origin-of-the-names-of-i-and-tt</a></li>
+<li><a
+href="https://stackoverflow.com/questions/52870230/what-is-the-origin-of-the-names-of-i-and-tt">https://stackoverflow.com/questions/52870230/what-is-the-origin-of-the-names-of-i-and-tt</a></li>
 <li>Not yet sure how <code>I: True</code> came about..</li>
 </ul></li>
 </ul>
-<h3 id="recommended-project-directory-structure"><a href="https://github.com/coq-community/manifesto/wiki/Recommended-Project-Structure">Recommended project directory structure</a></h3>
+<h3 id="recommended-project-directory-structure"><a
+href="https://github.com/coq-community/manifesto/wiki/Recommended-Project-Structure">Recommended
+project directory structure</a></h3>
 <pre><code>.
 ├── .github
 │   └── workflows
@@ -583,7 +719,9 @@ stack_size: 239
     ├── foo.v
     └── bar.v
 </code></pre>
-<p>As per this convention, many of the files are meant to be autogenerated based on the information made available in the <code>meta.yml</code> file.</p>
+<p>As per this convention, many of the files are meant to be
+autogenerated based on the information made available in the
+<code>meta.yml</code> file.</p>
 </div>
 </body>
 </html>

@@ -44,26 +44,35 @@
 <hr/>
 
 <div id="content-container">
-<p><a href="https://docs.python.org/3/reference/datamodel.html">https://docs.python.org/3/reference/datamodel.html</a></p>
+<p><a
+href="https://docs.python.org/3/reference/datamodel.html">https://docs.python.org/3/reference/datamodel.html</a></p>
 <ul>
 <li><p><code>__init__</code>: constructor</p></li>
 <li><p><code>__del__</code>: destructor ?? (use with care)</p></li>
 <li><p><code>__delete__</code>:</p></li>
-<li><p><code>__new__</code>: this is called before <code>__init__</code></p></li>
+<li><p><code>__new__</code>: this is called before
+<code>__init__</code></p></li>
 <li><p><code>__get__</code>: read attribute value</p></li>
 <li><p><code>__set__</code>: write attribute value</p></li>
 <li><p><code>__getattr__</code>:</p></li>
 <li><p><code>__getattribute__</code>:</p></li>
 <li><p><code>__setattr__</code>:</p></li>
 <li><p><code>__delattr__</code>:</p></li>
-<li><p><code>__getitem__</code>: used when reading from <code>x[i]</code></p></li>
-<li><p><code>__setitem__</code>: used when writing to <code>x[i]</code></p></li>
+<li><p><code>__getitem__</code>: used when reading from
+<code>x[i]</code></p></li>
+<li><p><code>__setitem__</code>: used when writing to
+<code>x[i]</code></p></li>
 <li><p><code>__delitem__</code>: used when deleting</p></li>
 <li><p><code>__missing__</code>:</p></li>
-<li><p><code>__repr__</code>: representation of object as a string</p></li>
-<li><p><code>__str__</code>: human readable representation of object as string</p></li>
-<li><p><code>__lt__</code>, - <code>__gt__</code>, - <code>__le__</code>, - <code>__ge__</code>, - <code>__eq__</code>, - <code>__ne__</code>: comparison</p></li>
-<li><p><code>__format__</code>: used by <code>format()</code> function (and f-strings)</p></li>
+<li><p><code>__repr__</code>: representation of object as a
+string</p></li>
+<li><p><code>__str__</code>: human readable representation of object as
+string</p></li>
+<li><p><code>__lt__</code>, - <code>__gt__</code>, -
+<code>__le__</code>, - <code>__ge__</code>, - <code>__eq__</code>, -
+<code>__ne__</code>: comparison</p></li>
+<li><p><code>__format__</code>: used by <code>format()</code> function
+(and f-strings)</p></li>
 <li><p><code>__hash__</code>: used by <code>hash()</code></p></li>
 <li><p><code>__bytes__</code>: used by <code>bytes()</code></p></li>
 <li><p><code>__bool__</code>: used by <code>bool()</code></p></li>
@@ -185,8 +194,10 @@
 </tr>
 </tbody>
 </table>
-<p>Functions with the <code>r</code> prefix are the same except that the order of arguments is reversed.</p>
-<p>Note: Ternary <code>pow()</code> will not try calling <code>rpow()</code>.</p>
+<p>Functions with the <code>r</code> prefix are the same except that the
+order of arguments is reversed.</p>
+<p>Note: Ternary <code>pow()</code> will not try calling
+<code>rpow()</code>.</p>
 <p>—</p>
 <table>
 <thead>
@@ -270,13 +281,14 @@
 </tr>
 <tr class="odd">
 <td><code>__invert__</code></td>
-<td><code>~</code></td>
+<td><code class="verbatim">~</code></td>
 </tr>
 </tbody>
 </table>
 <h2 id="slot__"><code>__slot__</code></h2>
 <ul>
-<li>Classes with slots does not have <code>__dict__</code> (but their instances might??).
+<li>Classes with slots does not have <code>__dict__</code> (but their
+instances might??).
 <ul>
 <li>Saves space.</li>
 <li>Faster attribute access</li>
@@ -285,8 +297,10 @@
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://stackoverflow.com/questions/472000/usage-of-slots">https://stackoverflow.com/questions/472000/usage-of-slots</a></li>
-<li><a href="https://wiki.python.org/moin/UsingSlots">https://wiki.python.org/moin/UsingSlots</a></li>
+<li><a
+href="https://stackoverflow.com/questions/472000/usage-of-slots">https://stackoverflow.com/questions/472000/usage-of-slots</a></li>
+<li><a
+href="https://wiki.python.org/moin/UsingSlots">https://wiki.python.org/moin/UsingSlots</a></li>
 </ul>
 </div>
 </body>

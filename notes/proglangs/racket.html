@@ -47,7 +47,8 @@
 <p>Quite similar to lisp.</p>
 <p>An advantage of s-expr:</p>
 <ul>
-<li><code>(+ 1 2 3 4 5 6)</code> is clearer than <code>1+2+3+4+5+6</code></li>
+<li><code>(+ 1 2 3 4 5 6)</code> is clearer than
+<code>1+2+3+4+5+6</code></li>
 </ul>
 <h2 id="general">General</h2>
 <ul>
@@ -59,16 +60,19 @@
 </ul></li>
 <li>Function call: <code>(fn-name args)</code></li>
 <li>Variable 'call': <code>var-name</code> (ie, no braces)</li>
-<li>'<code>#lang ...</code> is only a shorthand for <code>(module name initial-import decl ...)</code>
+<li>'<code>#lang ...</code> is only a shorthand for
+<code>(module name initial-import decl ...)</code>
 <ul>
-<li><a href="https://elixirforum.com/t/external-dsls/12504/5">https://elixirforum.com/t/external-dsls/12504/5</a></li>
+<li><a
+href="https://elixirforum.com/t/external-dsls/12504/5">https://elixirforum.com/t/external-dsls/12504/5</a></li>
 </ul></li>
 </ul>
 <h2 id="defining-new-language">Defining new language</h2>
 <ul>
 <li><code>provide</code>: mention list of names to export from a file
 <ul>
-<li><a href="https://docs.racket-lang.org/reference/require.html">https://docs.racket-lang.org/reference/require.html</a></li>
+<li><a
+href="https://docs.racket-lang.org/reference/require.html">https://docs.racket-lang.org/reference/require.html</a></li>
 </ul></li>
 <li><code>rename-out</code>: rename names while exporting</li>
 <li><code>define-syntax</code>:</li>
@@ -138,7 +142,8 @@ module: identifier already defined
 ; is same as
 &#39;(1 2 3)
 </code></pre>
-<p>The single quote sort of asks the interpreter to stop evaluating from that point.</p>
+<p>The single quote sort of asks the interpreter to stop evaluating from
+that point.</p>
 <ul>
 <li>Constructor: <code>list</code></li>
 <li>head: <code>car</code></li>
@@ -156,10 +161,12 @@ module: identifier already defined
 </code></pre>
 <p><code>car</code> and <code>cdr</code> for elisp is similar:</p>
 <ul>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/eintr/car-_0026-cdr.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/car-_0026-cdr.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/eintr/car-_0026-cdr.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/car-_0026-cdr.html</a></li>
 </ul>
 <h2 id="pairs">Pairs</h2>
-<p>See <a href="https://docs.racket-lang.org/reference/pairs.html">https://docs.racket-lang.org/reference/pairs.html</a>.</p>
+<p>See <a
+href="https://docs.racket-lang.org/reference/pairs.html">https://docs.racket-lang.org/reference/pairs.html</a>.</p>
 <ul>
 <li><p>Tuples.</p></li>
 <li><p>Immutable</p></li>
@@ -182,13 +189,17 @@ module: identifier already defined
 &gt; (cdr &#39;(1 . 2))
 2
 </code></pre>
-<p>Etymology of <code>car</code> and <code>cdr</code> (for pairs and lists) in the lisp world is historical.</p>
+<p>Etymology of <code>car</code> and <code>cdr</code> (for pairs and
+lists) in the lisp world is historical.</p>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/CAR_and_CDR">https://en.wikipedia.org/wiki/CAR_and_CDR</a></li>
-<li><a href="https://www.math.utah.edu/docs/info/emacs-lisp-intro_8.html">https://www.math.utah.edu/docs/info/emacs-lisp-intro_8.html</a></li>
+<li><a
+href="https://en.wikipedia.org/wiki/CAR_and_CDR">https://en.wikipedia.org/wiki/CAR_and_CDR</a></li>
+<li><a
+href="https://www.math.utah.edu/docs/info/emacs-lisp-intro_8.html">https://www.math.utah.edu/docs/info/emacs-lisp-intro_8.html</a></li>
 </ul>
 <h2 id="loops">Loops</h2>
-<p>See <a href="https://docs.racket-lang.org/guide/for.html">https://docs.racket-lang.org/guide/for.html</a></p>
+<p>See <a
+href="https://docs.racket-lang.org/guide/for.html">https://docs.racket-lang.org/guide/for.html</a></p>
 <pre class="racket"><code>(for ([i 3])
   (display i))
 
@@ -206,7 +217,8 @@ module: identifier already defined
 <h2 id="emacs">emacs</h2>
 <p>racket-mode: emacs mode for racket</p>
 <ul>
-<li>Load buffer to repl: <code>C-c C-c</code> (might take a few seconds to take effect)</li>
+<li>Load buffer to repl: <code>C-c C-c</code> (might take a few seconds
+to take effect)</li>
 </ul>
 <h2 id="info">Info</h2>
 <ul>
@@ -220,7 +232,8 @@ module: identifier already defined
 <li>Emacs mode: <a href="https://racket-mode.com/">racket-mode</a>
 <ul>
 <li>C-c C-c: Load buffer</li>
-<li><a href="https://wikemacs.org/wiki/Paredit-mode">paredit mode</a> could be useful.</li>
+<li><a href="https://wikemacs.org/wiki/Paredit-mode">paredit mode</a>
+could be useful.</li>
 </ul></li>
 </ul>
 </div>

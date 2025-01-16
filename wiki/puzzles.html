@@ -50,7 +50,8 @@
 <ul>
 <li>You are dogsitting for 5 nights.</li>
 <li>Dog will wake you up each night with probability 2/3</li>
-<li>What's the probablity of you being able to sleep for <em>at least</em> 2 full nights without being woken up by the dog?</li>
+<li>What's the probablity of you being able to sleep for <em>at
+least</em> 2 full nights without being woken up by the dog?</li>
 </ul>
 <h3 id="solution">Solution</h3>
 <ul>
@@ -60,8 +61,10 @@
 </ul>
 <pre><code>P(&gt;=2) = 1 - [P(==0) + P(==1)]
 </code></pre>
-<p>P(==0) means you didn't get even a single night's full sleep. ie, dog woke you up on 5 days.</p>
-<p>P(==1) means you were able to sleep well on one day, but the dog woke you up on the other 4 days.</p>
+<p>P(==0) means you didn't get even a single night's full sleep. ie, dog
+woke you up on 5 days.</p>
+<p>P(==1) means you were able to sleep well on one day, but the dog woke
+you up on the other 4 days.</p>
 <pre><code>P(==0) = 5C5 * (2/3)⁵
 
 Number of sleepless nights = 5 days
@@ -104,11 +107,13 @@ Number of sleepless nights = 4 days
 </ul></li>
 <li>Independent events: Events occurring independent of each other
 <ul>
-<li>When 2 coins are flipped together, result of each coin is independent of the other.</li>
+<li>When 2 coins are flipped together, result of each coin is
+independent of the other.</li>
 <li>In a chess game, each move is dependent on the previous moves.</li>
 </ul></li>
 </ul>
-<p>If two events are disjoint, they are dependent unless one of the event is of zero probability.</p>
+<p>If two events are disjoint, they are dependent unless one of the
+event is of zero probability.</p>
 <hr />
 <p>A coin fip and a die roll simultaneously:</p>
 <ul>
@@ -132,7 +137,8 @@ Number of sleepless nights = 4 days
 <p>Probability of event union for non-disjoint events:</p>
 <pre><code>P(A ∪ B) = P(A) + P(B) - P(A ∩ B)
 </code></pre>
-<p><code>P(coin=H)</code> and <code>P(die=1)</code> in our example are not disjoint events.</p>
+<p><code>P(coin=H)</code> and <code>P(die=1)</code> in our example are
+not disjoint events.</p>
 <p>∵ Coin can be head while die shows 1.</p>
 <pre><code>  P(coin=H ∨ die=1)  
 = P(coin=H) + P(die=1) - P(coin=H ∧ die=1)
@@ -171,7 +177,10 @@ Could also be done like:
 </code></pre>
 <h1 id="hmmt-2023-q1">HMMT 2023: Q1</h1>
 <p>Puzzle:</p>
-<p>Four people are playing rock-paper-scissors. They each play one of the three options (rock, paper, or scissors) independently at random, with equal probability of each choice. Compute the probability that someone beats everyone else.</p>
+<p>Four people are playing rock-paper-scissors. They each play one of
+the three options (rock, paper, or scissors) independently at random,
+with equal probability of each choice. Compute the probability that
+someone beats everyone else.</p>
 <hr />
 <p>Solution:</p>
 <pre><code>    Scissor
@@ -188,8 +197,10 @@ Stone  &lt;  Paper
 <p>—</p>
 <ul>
 <li><p>Let player 1 choose a particular move =&gt; 1/3</p></li>
-<li><p>The other 3 players have to choose the same move and there is only one such move =&gt; (1/3)³</p></li>
-<li><p>There are 4 players and player-1 can start with one of 3 possible moves</p></li>
+<li><p>The other 3 players have to choose the same move and there is
+only one such move =&gt; (1/3)³</p></li>
+<li><p>There are 4 players and player-1 can start with one of 3 possible
+moves</p></li>
 </ul>
 <pre><code>P = 4*3 * (1/3 * (1/3)³)
   = 12/81 = 4/27
@@ -197,29 +208,36 @@ Stone  &lt;  Paper
 <p>—</p>
 <p>Related:</p>
 <ul>
-<li><a href="https://old.reddit.com/r/learnmath/comments/199d063/question_when_you_play_rockpaperscissors_with_3/">https://old.reddit.com/r/learnmath/comments/199d063/question_when_you_play_rockpaperscissors_with_3/</a></li>
-<li><a href="https://math.stackexchange.com/questions/3998809/probability-that-you-win-in-rock-scissors-paper-with-3-players">https://math.stackexchange.com/questions/3998809/probability-that-you-win-in-rock-scissors-paper-with-3-players</a></li>
-<li><a href="https://math.stackexchange.com/questions/3144669/probability-of-one-person-winning-in-a-four-way-game-of-rock-paper-scissors">https://math.stackexchange.com/questions/3144669/probability-of-one-person-winning-in-a-four-way-game-of-rock-paper-scissors</a></li>
+<li><a
+href="https://old.reddit.com/r/learnmath/comments/199d063/question_when_you_play_rockpaperscissors_with_3/">https://old.reddit.com/r/learnmath/comments/199d063/question_when_you_play_rockpaperscissors_with_3/</a></li>
+<li><a
+href="https://math.stackexchange.com/questions/3998809/probability-that-you-win-in-rock-scissors-paper-with-3-players">https://math.stackexchange.com/questions/3998809/probability-that-you-win-in-rock-scissors-paper-with-3-players</a></li>
+<li><a
+href="https://math.stackexchange.com/questions/3144669/probability-of-one-person-winning-in-a-four-way-game-of-rock-paper-scissors">https://math.stackexchange.com/questions/3144669/probability-of-one-person-winning-in-a-four-way-game-of-rock-paper-scissors</a></li>
 </ul>
 <h2 id="jane-stree-real-numbers-p2">Jane Stree Real numbers: P2</h2>
 <h3 id="puzzle-1">Puzzle</h3>
 <ul>
 <li>6 cars parked in a row</li>
 <li>Prob that a car is taxi (independently) is 1/2</li>
-<li>What is the prob that there are 3 consecutive taxis among the 6 cars?</li>
+<li>What is the prob that there are 3 consecutive taxis among the 6
+cars?</li>
 </ul>
 <h3 id="solution-1">Solution</h3>
-<h2 id="of-green-book-coin-toss-game">4.1 of Green book: Coin toss game</h2>
+<h2 id="of-green-book-coin-toss-game">4.1 of Green book: Coin toss
+game</h2>
 <p>Puzzle:</p>
 <ul>
 <li>A has n+1 coins</li>
 <li>B has n coins</li>
 <li>All coins are fair</li>
-<li>When all coins are tossed, whats the probability that A has more heads than B?</li>
+<li>When all coins are tossed, whats the probability that A has more
+heads than B?</li>
 </ul>
 <p>Solution:</p>
 <h1 id="combinatronics">Combinatronics</h1>
-<h2 id="number-of-trailing-zeros-in-n">Number of trailing zeros in <code>n!</code></h2>
+<h2 id="number-of-trailing-zeros-in-n">Number of trailing zeros in
+<code>n!</code></h2>
 <p>General forumla:</p>
 <pre><code> ∞   │ n │
  Σ   │───│
@@ -234,7 +252,8 @@ i=1  │ 5ⁱ│
 </code></pre>
 <p>So, there are 24 trailing zeros in 100!</p>
 <p>—</p>
-<p>An easier way: Keep dividing recursively to get the numbers and sum up.</p>
+<p>An easier way: Keep dividing recursively to get the numbers and sum
+up.</p>
 <pre><code>100/5 = 20
  20/5 = 4
   4/5 = 0
@@ -251,21 +270,75 @@ i=1  │ 5ⁱ│
 <li>5, 10, 15, 20, 5*5</li>
 <li>So need to consider all powers of 5</li>
 </ul>
-<p>Likewise 4 consists of two 2s too. But we needn't care in this case, because number of 5s will always be lesser than that of 2s.</p>
+<p>Likewise 4 consists of two 2s too. But we needn't care in this case,
+because number of 5s will always be lesser than that of 2s.</p>
 <p>See:</p>
 <ul>
-<li><a href="https://math.stackexchange.com/questions/1806642/find-the-number-of-trailing-zeros-in-n">https://math.stackexchange.com/questions/1806642/find-the-number-of-trailing-zeros-in-n</a></li>
-<li><a href="https://math.stackexchange.com/questions/286947/number-of-zero-digits-in-factorials">https://math.stackexchange.com/questions/286947/number-of-zero-digits-in-factorials</a></li>
-<li><a href="https://math.stackexchange.com/questions/975539/how-do-you-find-the-number-of-multiples-of-a-given-range-of-numbers">https://math.stackexchange.com/questions/975539/how-do-you-find-the-number-of-multiples-of-a-given-range-of-numbers</a></li>
+<li><a
+href="https://math.stackexchange.com/questions/1806642/find-the-number-of-trailing-zeros-in-n">https://math.stackexchange.com/questions/1806642/find-the-number-of-trailing-zeros-in-n</a></li>
+<li><a
+href="https://math.stackexchange.com/questions/286947/number-of-zero-digits-in-factorials">https://math.stackexchange.com/questions/286947/number-of-zero-digits-in-factorials</a></li>
+<li><a
+href="https://math.stackexchange.com/questions/975539/how-do-you-find-the-number-of-multiples-of-a-given-range-of-numbers">https://math.stackexchange.com/questions/975539/how-do-you-find-the-number-of-multiples-of-a-given-range-of-numbers</a></li>
 </ul>
 <h2 id="minimum-cut">Minimum cut</h2>
 <p>See:</p>
 <ul>
-<li><a href="https://www.geeksforgeeks.org/puzzle-31-minimum-cut-puzzle/">https://www.geeksforgeeks.org/puzzle-31-minimum-cut-puzzle/</a></li>
+<li><a
+href="https://www.geeksforgeeks.org/puzzle-31-minimum-cut-puzzle/">https://www.geeksforgeeks.org/puzzle-31-minimum-cut-puzzle/</a></li>
 </ul>
+<h1 id="logic">Logic</h1>
+<h2 id="cheryls-birthday">Cheryl's birthday</h2>
+<p>(Heard from CakeML chat)</p>
+<h3 id="q">Q</h3>
+<p>Albert and Bernard just became friends with Cheryl, and they want to
+know when her birthday is.</p>
+<p>Cheryl gives them a list of 10 possible dates:</p>
+<ul>
+<li>May 15, May 16, May 19</li>
+<li>Jun 17, Jun 18</li>
+<li>Jul 14, Jul 16</li>
+<li>Aug 14, Aug 15, Aug 17</li>
+</ul>
+<p>Cheryl then tells Albert and Bernard separately the month and the day
+of her birthday respectively.</p>
+<ul>
+<li>Albert: I don't know when Cheryl's birthday is, but I know that
+Bernard doesn't know too.</li>
+<li>Bernard: At first I did't know when Cheryl's birthday is, but I know
+now.</li>
+<li>Albert: Then I also know when Cheryl's birthday is.</li>
+</ul>
+<p>So when is Cheryl's birthday?</p>
+<h3 id="a">A</h3>
+<ul>
+<li>A knows month</li>
+<li>B knows day</li>
+</ul>
+<p>&gt; Albert: I don't know when Cheryl's birthday is, but I know that
+Bernard doesn't know too.</p>
+<p>Bernad doesn't know means the day repeats in the list of 10
+dates.</p>
+<p>That means one of:</p>
+<ul>
+<li>Jul 14, Aug 14</li>
+<li>May 15, Aug 15</li>
+<li>May 16, Jul 16</li>
+<li>Jun 17, Aug 17</li>
+</ul>
+<p>&gt; Bernard: At first I did't know when Cheryl's birthday is, but I
+know now.</p>
+<h2 id="coins">Coins</h2>
+<p>(Heard from CakeML chat)</p>
+<h3 id="q-1">Q</h3>
+<p>How do you give change worth £1.5? Use two UK coins. One coin must
+not be 50p.</p>
+<p>For context: UK coins are £2, £1, 50p, 20p, 10p, 5p, 2p, 1p.</p>
+<h3 id="a-1">A</h3>
 <h1 id="facts">Facts</h1>
 <ul>
-<li>Number of leaves in a complete binary tree of height H: <code>2^H</code></li>
+<li>Number of leaves in a complete binary tree of height H:
+<code>2^H</code></li>
 </ul>
 </div>
 </body>

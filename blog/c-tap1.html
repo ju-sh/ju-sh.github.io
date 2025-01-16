@@ -36,17 +36,8 @@
 </header>
 
 <ul>
-    <li>Date created: 26-Aug-2017</li>
     </ul>
 
-<div>
-  <p>
-    Tags: / 
-    <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/c.html">c</a>
-    </code> /
-  <p>
-</div>
 
 
 <div id="description">
@@ -56,22 +47,33 @@ An example from Andrew König's book..
 <hr/>
 
 <div id="content-container">
-<p><sub><sup><a href="../misc/old-blog.html">From my old blog</a>.</sup></sub></p>
-<hr />
-<p>I have been reading Andrew Koenig’s <em>C traps and pitfalls</em> and found an interesting yet simple loop :</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="dt">int</span> main()</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>{</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="dt">int</span> i, arr[<span class="dv">10</span>];</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>    <span class="cf">for</span>(i=<span class="dv">1</span>; i&lt;=<span class="dv">10</span>; ++i)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>    {</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>        arr[i]=<span class="dv">0</span>;</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>    }</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>}</span></code></pre></div>
-<p>This program will obviously attempt to access <code>arr[10]</code> which does not exist. But that’s a minor thing when compared to its effect on most computers.</p>
-<p>If this "runs on a compiler that allocates memory for variables at decreasing addresses, the word after " <code>arr[9]</code> turns out to be <code>i</code>. Because <code>i</code> will be having the largest address, followed by <code>arr[9]</code>, <code>arr[8]</code>, …, <code>arr[1]</code>, <code>arr[0]</code>.</p>
-<p>So, if you try to access the non-existent <code>arr[10]</code>, what’s really being accessed is the memory right after <code>arr[9]</code> which is <code>i</code>.</p>
-<p>By setting this value to <code>0</code>, you are actually resetting the value of <code>i</code> causing the entire loop to start over and loop forever.</p>
+<p><sub><sup><a href="../misc/old-blog.html">From my old
+blog</a>.</sup></sub></p>
+<p>I have been reading Andrew Koenig’s <em>C traps and pitfalls</em> and
+found an interesting yet simple loop :</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> i<span class="op">,</span> arr<span class="op">[</span><span class="dv">10</span><span class="op">];</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span>i<span class="op">=</span><span class="dv">1</span><span class="op">;</span> i<span class="op">&lt;=</span><span class="dv">10</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        arr<span class="op">[</span>i<span class="op">]=</span><span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>This program will obviously attempt to access <code>arr[10]</code>
+which does not exist. But that’s a minor thing when compared to its
+effect on most computers.</p>
+<p>If this "runs on a compiler that allocates memory for variables at
+decreasing addresses, the word after " <code>arr[9]</code> turns out to
+be <code>i</code>. Because <code>i</code> will be having the largest
+address, followed by <code>arr[9]</code>, <code>arr[8]</code>, …,
+<code>arr[1]</code>, <code>arr[0]</code>.</p>
+<p>So, if you try to access the non-existent <code>arr[10]</code>,
+what’s really being accessed is the memory right after
+<code>arr[9]</code> which is <code>i</code>.</p>
+<p>By setting this value to <code>0</code>, you are actually resetting
+the value of <code>i</code> causing the entire loop to start over and
+loop forever.</p>
 </div>
 </body>
 </html>

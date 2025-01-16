@@ -46,9 +46,11 @@
 <div id="content-container">
 <h1 id="general">General</h1>
 <ul>
-<li><code>nonlocal</code>: allow modification of outer function variable from inner function
+<li><code>nonlocal</code>: allow modification of outer function variable
+from inner function
 <ul>
-<li>Otherwise, inner function can access outer function variables, but cannot modify them.</li>
+<li>Otherwise, inner function can access outer function variables, but
+cannot modify them.</li>
 </ul></li>
 <li><code>*args, **kwargs</code> in function arguments
 <ul>
@@ -57,20 +59,29 @@
 </ul></li>
 <li>Unit type in Python:
 <ul>
-<li><code>Ellipsis</code> with value <code>...</code> or <code>Ellipsis</code></li>
+<li><code>Ellipsis</code> with value <code>...</code> or
+<code>Ellipsis</code></li>
 <li><code>NoneType</code> with value <code>None</code></li>
 </ul></li>
-<li>Walrus operator (<code>:=</code>): assignment that is also an expression</li>
-<li>Set maximum number of recursive calls: <code>sys.setrecursionlimit()</code> <a href="https://docs.python.org/3/library/sys.html#sys.setrecursionlimit">ᵈ</a></li>
-<li>Check if a list <code>l</code> is empty: <code>"empty" if not l else "non-empty"</code></li>
+<li>Walrus operator (<code>:=</code>): assignment that is also an
+expression</li>
+<li>Set maximum number of recursive calls:
+<code>sys.setrecursionlimit()</code> <a
+href="https://docs.python.org/3/library/sys.html#sys.setrecursionlimit">ᵈ</a></li>
+<li>Check if a list <code>l</code> is empty:
+<code>"empty" if not l else "non-empty"</code></li>
 <li>Concatenate two lists: <code>l1 + l2</code></li>
-<li><code>functools.singledespatch</code>: used to have something like function overloading of C++
+<li><code>functools.singledespatch</code>: used to have something like
+function overloading of C++
 <ul>
-<li>Same function but definition is chosen based on type of argument</li>
-<li>Register different definitions of function with <code>functools.register</code></li>
+<li>Same function but definition is chosen based on type of
+argument</li>
+<li>Register different definitions of function with
+<code>functools.register</code></li>
 </ul></li>
 </ul>
-<h2 id="sort-vs-sorted"><code>sort()</code> vs <code>sorted()</code></h2>
+<h2 id="sort-vs-sorted"><code>sort()</code> vs
+<code>sorted()</code></h2>
 <ul>
 <li><code>list.sort()</code>:
 <ul>
@@ -83,29 +94,29 @@
 <li>input is not modified</li>
 </ul></li>
 </ul>
-<p><a href="https://docs.python.org/3/howto/sorting.html">https://docs.python.org/3/howto/sorting.html</a></p>
-<h2 id="positional-only-argument-syntax-pep-570">Positional only argument syntax (<a href="https://peps.python.org/pep-0570/">PEP 570</a>)</h2>
+<p><a
+href="https://docs.python.org/3/howto/sorting.html">https://docs.python.org/3/howto/sorting.html</a></p>
+<h2 id="positional-only-argument-syntax-pep-570">Positional only
+argument syntax (<a href="https://peps.python.org/pep-0570/">PEP
+570</a>)</h2>
 <pre><code>def foo(pos_only_args, /, pos-or-kw-args, *, kw-only-args):
     body
 </code></pre>
-<h2 id="args-and-kwargs"><code>*args</code> and <code>**kwargs</code></h2>
-<ul>
-<li><code>*args</code>: positional arguments</li>
-<li><code>*kwargs</code>: keyword arguments</li>
-</ul>
 <h2 id="fstrings">fstrings</h2>
 <p>Involves a mini-language.</p>
 <ul>
-<li>Literal <code>{</code> and <code>}</code> should be <code>{{</code> and <code>}}</code> respectively.</li>
+<li>Literal <code>{</code> and <code>}</code> should be <code>{{</code>
+and <code>}}</code> respectively.</li>
 </ul>
 <p>—</p>
 <p>Print variable name and value (useful for debugging):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> a<span class="op">=</span><span class="dv">3</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="ss">f&quot;</span><span class="sc">{a</span><span class="op">=</span><span class="sc">}</span><span class="ss">&quot;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="co">&#39;a=3&#39;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="ss">f&quot;</span><span class="sc">{a}</span><span class="ss">&quot;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="co">&#39;3&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> a<span class="op">=</span><span class="dv">3</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="ss">f&quot;</span><span class="sc">{</span>a<span class="op">=</span><span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;a=3&#39;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="ss">f&quot;</span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;3&#39;</span></span></code></pre></div>
 <p>—</p>
 <ul>
 <li>Padding</li>
@@ -172,23 +183,24 @@
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> s<span class="op">=</span><span class="st">&quot;hello&quot;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="ss">f&quot;</span><span class="sc">{s:^10}</span><span class="ss">&quot;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="co">&#39;  hello   &#39;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="ss">f&quot;</span><span class="sc">{s:10}</span><span class="ss">&quot;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a><span class="co">&#39;hello     &#39;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="ss">f&quot;</span><span class="sc">{s}</span><span class="ss">&quot;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a><span class="co">&#39;hello&#39;</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="ss">f&quot;</span><span class="sc">{s:*^11}</span><span class="ss">&quot;</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="co">&#39;***hello***&#39;</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="ss">f&quot;</span><span class="sc">{s:=10}</span><span class="ss">&quot;</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>Traceback (most recent call last):</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>  File <span class="st">&quot;&lt;stdin&gt;&quot;</span>, line <span class="dv">1</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a><span class="pp">ValueError</span>: <span class="st">&#39;=&#39;</span> alignment <span class="kw">not</span> allowed <span class="kw">in</span> string <span class="bu">format</span> specifier</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> s<span class="op">=</span><span class="st">&quot;hello&quot;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="ss">f&quot;</span><span class="sc">{</span>s<span class="sc">:^10}</span><span class="ss">&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;  hello   &#39;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="ss">f&quot;</span><span class="sc">{</span>s<span class="sc">:10}</span><span class="ss">&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;hello     &#39;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="ss">f&quot;</span><span class="sc">{</span>s<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;hello&#39;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="ss">f&quot;</span><span class="sc">{</span>s<span class="sc">:*^11}</span><span class="ss">&quot;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;***hello***&#39;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="ss">f&quot;</span><span class="sc">{</span>s<span class="sc">:=10}</span><span class="ss">&quot;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>Traceback (most recent call last):</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  File <span class="st">&quot;&lt;stdin&gt;&quot;</span>, line <span class="dv">1</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="pp">ValueError</span>: <span class="st">&#39;=&#39;</span> alignment <span class="kw">not</span> allowed <span class="kw">in</span> string <span class="bu">format</span> specifier</span></code></pre></div>
 <p>—</p>
 <p>Conversion</p>
 <table>
@@ -216,48 +228,59 @@
 <p>—</p>
 <p>See:</p>
 <ul>
-<li><a href="https://docs.python.org/3/library/string.html#format-specification-mini-language">https://docs.python.org/3/library/string.html#format-specification-mini-language</a></li>
-<li><a href="https://docs.python.org/3/library/string.html#format-examples">https://docs.python.org/3/library/string.html#format-examples</a></li>
-<li><a href="https://docs.python.org/3/library/string.html#formatstrings">https://docs.python.org/3/library/string.html#formatstrings</a></li>
-<li><a href="https://docs.python.org/3/reference/lexical_analysis.html#f-strings">https://docs.python.org/3/reference/lexical_analysis.html#f-strings</a></li>
+<li><a
+href="https://docs.python.org/3/library/string.html#format-specification-mini-language">https://docs.python.org/3/library/string.html#format-specification-mini-language</a></li>
+<li><a
+href="https://docs.python.org/3/library/string.html#format-examples">https://docs.python.org/3/library/string.html#format-examples</a></li>
+<li><a
+href="https://docs.python.org/3/library/string.html#formatstrings">https://docs.python.org/3/library/string.html#formatstrings</a></li>
+<li><a
+href="https://docs.python.org/3/reference/lexical_analysis.html#f-strings">https://docs.python.org/3/reference/lexical_analysis.html#f-strings</a></li>
 </ul>
 <h2 id="ellipsis">Ellipsis</h2>
 <p>A type with only a single possible value.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">type</span>(<span class="va">Ellipsis</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="op">&lt;</span><span class="kw">class</span> <span class="st">&#39;ellipsis&#39;</span><span class="op">&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">type</span>(...)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="op">&lt;</span><span class="kw">class</span> <span class="st">&#39;ellipsis&#39;</span><span class="op">&gt;</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="va">Ellipsis</span>: <span class="va">Ellipsis</span><span class="op">;</span> <span class="bu">print</span>(<span class="st">&quot;OK&quot;</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>OK</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="va">Ellipsis</span>: ellipsis</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>Traceback (most recent call last):</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>  File <span class="st">&quot;&lt;stdin&gt;&quot;</span>, line <span class="dv">1</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a><span class="pp">NameError</span>: name <span class="st">&#39;ellipsis&#39;</span> <span class="kw">is</span> <span class="kw">not</span> defined</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">type</span>(ellipsis)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>Traceback (most recent call last):</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>  File <span class="st">&quot;&lt;stdin&gt;&quot;</span>, line <span class="dv">1</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a><span class="pp">NameError</span>: name <span class="st">&#39;ellipsis&#39;</span> <span class="kw">is</span> <span class="kw">not</span> defined</span></code></pre></div>
-<p>I guess <code>ellipsis</code> is something not meant to be accessed by users.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">type</span>(<span class="va">Ellipsis</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="kw">class</span> <span class="st">&#39;ellipsis&#39;</span><span class="op">&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">type</span>(...)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="kw">class</span> <span class="st">&#39;ellipsis&#39;</span><span class="op">&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="va">Ellipsis</span>: <span class="va">Ellipsis</span><span class="op">;</span> <span class="bu">print</span>(<span class="st">&quot;OK&quot;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>OK</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="va">Ellipsis</span>: ellipsis</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>Traceback (most recent call last):</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  File <span class="st">&quot;&lt;stdin&gt;&quot;</span>, line <span class="dv">1</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="pp">NameError</span>: name <span class="st">&#39;ellipsis&#39;</span> <span class="kw">is</span> <span class="kw">not</span> defined</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">type</span>(ellipsis)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>Traceback (most recent call last):</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  File <span class="st">&quot;&lt;stdin&gt;&quot;</span>, line <span class="dv">1</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="pp">NameError</span>: name <span class="st">&#39;ellipsis&#39;</span> <span class="kw">is</span> <span class="kw">not</span> defined</span></code></pre></div>
+<p>I guess <code>ellipsis</code> is something not meant to be accessed
+by users.</p>
 <h2 id="re-regular-expression">re (regular expression)</h2>
-<p><a href="https://docs.python.org/3/library/re.html">https://docs.python.org/3/library/re.html</a></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> c <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">&quot;\w\da&quot;</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> c.match(<span class="st">&quot;a0abbb&quot;</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="op">&lt;</span>re.Match <span class="bu">object</span><span class="op">;</span> span<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">3</span>), match<span class="op">=</span><span class="st">&#39;a0a&#39;</span><span class="op">&gt;</span></span></code></pre></div>
+<p><a
+href="https://docs.python.org/3/library/re.html">https://docs.python.org/3/library/re.html</a></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> c <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">&quot;\w\da&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> c.match(<span class="st">&quot;a0abbb&quot;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>re.Match <span class="bu">object</span><span class="op">;</span> span<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">3</span>), match<span class="op">=</span><span class="st">&#39;a0a&#39;</span><span class="op">&gt;</span></span></code></pre></div>
 <h3 id="syntax">Syntax</h3>
 <ul>
-<li><p><code>.</code>, <code>^</code>, <code>$</code>, <code>*</code>, <code>+</code>, <code>?</code></p></li>
-<li><p><code>{m}</code>, <code>{m,}</code>, <code>{m,n}</code>, <code>{,m}</code></p></li>
+<li><p><code>.</code>, <code>^</code>, <code>$</code>, <code>*</code>,
+<code>+</code>, <code>?</code></p></li>
+<li><p><code>{m}</code>, <code>{m,}</code>, <code>{m,n}</code>,
+<code>{,m}</code></p></li>
 <li><p><code>[]</code>, <code>|</code>, <code>(..)</code></p></li>
 <li><p><code>\NUM</code>: refer to a group</p></li>
 <li><p><code>\b</code>: ??</p></li>
 <li><p><code>\B</code>: ??</p></li>
 <li><p><code>\d</code>: <code>[0-9]</code></p></li>
 <li><p><code>\D</code>: negation of <code>\d</code></p></li>
-<li><p><code>\s</code>: whitespaces (<code>[\t\n\f\v ]</code> and more)</p></li>
+<li><p><code>\s</code>: whitespaces (<code>[\t\n\f\v ]</code> and
+more)</p></li>
 <li><p><code>\S</code>: negation of <code>\s</code></p></li>
 <li><p><code>\w</code>: <code>[0-9A-Za-z_]</code></p></li>
 <li><p><code>\W</code>: negation of <code>\w</code></p></li>
@@ -266,32 +289,43 @@
 </ul>
 <p>—</p>
 <ul>
-<li><code>*?</code>, <code>+?</code>, <code>??</code>, <code>{m}+</code> (non-greedy / minimal version)</li>
-<li><code>*+</code>, <code>++</code>, <code>?+</code> (possessive quantifiers ??)</li>
+<li><code>*?</code>, <code>+?</code>, <code>??</code>, <code>{m}+</code>
+(non-greedy / minimal version)</li>
+<li><code>*+</code>, <code>++</code>, <code>?+</code> (possessive
+quantifiers ??)</li>
 </ul>
 <h2 id="enum-types">enum types</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="im">import</span> enum</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="kw">class</span> Op(enum.Enum):</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>    ADD <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>    SUBTRACT <span class="op">=</span> <span class="dv">2</span></span></code></pre></div>
-<h2 id="structural-pattern-matching-match-case">Structural pattern matching (<code>match</code> &amp; <code>case</code>)</h2>
-<p><a href="https://peps.python.org/pep-0636/">https://peps.python.org/pep-0636/</a>* mypy <a href="https://docs.python.org/3/library/typing.html">https://docs.python.org/3/library/typing.html</a></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> enum</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Op(enum.Enum):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    ADD <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    SUBTRACT <span class="op">=</span> <span class="dv">2</span></span></code></pre></div>
+<h2 id="structural-pattern-matching-match-case">Structural pattern
+matching (<code>match</code> &amp; <code>case</code>)</h2>
+<p><a
+href="https://peps.python.org/pep-0636/">https://peps.python.org/pep-0636/</a>*
+mypy <a
+href="https://docs.python.org/3/library/typing.html">https://docs.python.org/3/library/typing.html</a></p>
 <ul>
-<li><code># type: ignore</code>: skip type checking for line with this at the end</li>
+<li><code># type: ignore</code>: skip type checking for line with this
+at the end</li>
 <li>Type variable: <code>A = TypeVar("A")</code></li>
 <li>Any type: <code>Any</code></li>
 </ul>
-<p>numpy support type annotations too: <a href="https://numpy.org/doc/stable/reference/typing.html">https://numpy.org/doc/stable/reference/typing.html</a></p>
+<p>numpy support type annotations too: <a
+href="https://numpy.org/doc/stable/reference/typing.html">https://numpy.org/doc/stable/reference/typing.html</a></p>
 <ul>
 <li><code>import numpy.typing as npt</code></li>
 <li>nptyping: Third party library for better type annotations for numpy
 <ul>
-<li><a href="https://github.com/ramonhagenaars/nptyping">https://github.com/ramonhagenaars/nptyping</a></li>
+<li><a
+href="https://github.com/ramonhagenaars/nptyping">https://github.com/ramonhagenaars/nptyping</a></li>
 </ul></li>
 </ul>
 <h1 id="pdb">pdb</h1>
-<p>Python debugger part of stdlib: <a href="https://docs.python.org/3/library/pdb.html">https://docs.python.org/3/library/pdb.html</a></p>
+<p>Python debugger part of stdlib: <a
+href="https://docs.python.org/3/library/pdb.html">https://docs.python.org/3/library/pdb.html</a></p>
 <ul>
 <li><code>.</code> is current line.</li>
 <li>Frame</li>
@@ -315,7 +349,8 @@
 <li>source: attempt to print the source code of an object</li>
 <li>restart: restart program being debugged</li>
 <li>run: start debugging the program</li>
-<li>display &lt;expr&gt;: show a message when the argument expression changes</li>
+<li>display &lt;expr&gt;: show a message when the argument expression
+changes</li>
 <li>interact: start an interpreter at this point</li>
 <li>alias: create an alias for a command</li>
 <li>unalias: delete an alias</li>
@@ -324,9 +359,12 @@
 <pre><code>import pdb
 pdb.set_trace()
 </code></pre>
-<p>The builtin <code>breakpoint()</code> available from 3.7 onwards, does the same thing. <a href="https://docs.python.org/3/library/functions.html#breakpoint">https://docs.python.org/3/library/functions.html#breakpoint</a></p>
+<p>The builtin <code>breakpoint()</code> available from 3.7 onwards,
+does the same thing. <a
+href="https://docs.python.org/3/library/functions.html#breakpoint">https://docs.python.org/3/library/functions.html#breakpoint</a></p>
 <h2 id="pdbrc">.pdbrc</h2>
-<p><a href="https://stackoverflow.com/questions/5169702/how-do-i-list-the-current-line-in-python-pdb">https://stackoverflow.com/questions/5169702/how-do-i-list-the-current-line-in-python-pdb</a></p>
+<p><a
+href="https://stackoverflow.com/questions/5169702/how-do-i-list-the-current-line-in-python-pdb">https://stackoverflow.com/questions/5169702/how-do-i-list-the-current-line-in-python-pdb</a></p>
 <pre><code>alias ll u;;d;;l
 </code></pre>
 </div>

@@ -44,7 +44,8 @@
 <hr/>
 
 <div id="content-container">
-<p>Most of this is remnants of notes from 2021 which were found in 2024…</p>
+<p>Most of this is remnants of notes from 2021 some of which were found
+in 2024…</p>
 <h2 id="high-level-synthesis">High level synthesis:</h2>
 <p>Input:</p>
 <ul>
@@ -53,14 +54,17 @@
 <li>Only functionality is modeled here.</li>
 </ul></li>
 <li>Clock period</li>
-<li>Component library (the components that are availble to be used, I guess)
+<li>Component library (the components that are availble to be used, I
+guess)
 <ul>
-<li>Components of different area, delay, power dissipation, number of ports, etc.</li>
+<li>Components of different area, delay, power dissipation, number of
+ports, etc.</li>
 <li>ALUs, memory, adders, multipliers, comparators, etc.</li>
 </ul></li>
 <li>Constraints
 <ul>
-<li>Resource, delays, power, etc (which may also depend on the budget allocated to the design)</li>
+<li>Resource, delays, power, etc (which may also depend on the budget
+allocated to the design)</li>
 </ul></li>
 </ul>
 <p>Output:</p>
@@ -107,8 +111,10 @@ where the &#39;+&#39; denotes operations.
 </code></pre>
 <p>Function unit binding:</p>
 <ul>
-<li>Operations are mapped to appropriate FUs from the resource library.</li>
-<li>The kind of FUs chosen determines the interconnections and hence the data path.</li>
+<li>Operations are mapped to appropriate FUs from the resource
+library.</li>
+<li>The kind of FUs chosen determines the interconnections and hence the
+data path.</li>
 </ul>
 <p>Register allocation:</p>
 <ul>
@@ -126,7 +132,8 @@ where the &#39;+&#39; denotes operations.
 <li>Assign unique codes to symbolic states of FSM.</li>
 </ul></li>
 <li>Encoding is needed to have an implementation.</li>
-<li>Number of states = minimum number of bits (ie, D-FFs) in state register of FSM.</li>
+<li>Number of states = minimum number of bits (ie, D-FFs) in state
+register of FSM.</li>
 <li>State table is constructed.</li>
 <li>State table is converted to truth table.</li>
 <li>Truth table =&gt; logic for output and next state .</li>
@@ -156,9 +163,13 @@ v              ^   Next state
 <p>Mealy machine notation: <code>condition/action</code></p>
 <h2 id="synthesis">Synthesis</h2>
 <ul>
-<li>Converting an abstract, high-level specification to detailed implementation.</li>
-<li>Those who write the high-level specification needn't worry about the implementation details. They can focus on their problem to be solved.</li>
-<li>The synthesis tool takes the HLL as input and figures out which all components and circuits would be needed to implement it.</li>
+<li>Converting an abstract, high-level specification to detailed
+implementation.</li>
+<li>Those who write the high-level specification needn't worry about the
+implementation details. They can focus on their problem to be
+solved.</li>
+<li>The synthesis tool takes the HLL as input and figures out which all
+components and circuits would be needed to implement it.</li>
 <li>HLL describes the functionality of the circuit.</li>
 <li>HLL captures only the behaviour. Not how it is implemented.</li>
 <li>Similar to a compiler. But in synthesis,
@@ -175,15 +186,19 @@ v              ^   Next state
 <p>Example:</p>
 <ul>
 <li>A system may have an ALU =&gt; that can be used.</li>
-<li>Some other system may not have an ALU, so we would have to build an equivalent component.</li>
-<li>Or maybe there is a chip available in the system, which makes things easier.</li>
+<li>Some other system may not have an ALU, so we would have to build an
+equivalent component.</li>
+<li>Or maybe there is a chip available in the system, which makes things
+easier.</li>
 <li>Based on the target, implementation changes.</li>
 </ul>
 <h2 id="netlist">Netlist</h2>
 <ul>
 <li>Interconnection between the gates and modules.</li>
-<li>The components alone are not enough. We need to figure out how they are to be connected together.</li>
-<li>Netlist can be used by a chip manufacturer to create the actual chip.</li>
+<li>The components alone are not enough. We need to figure out how they
+are to be connected together.</li>
+<li>Netlist can be used by a chip manufacturer to create the actual
+chip.</li>
 </ul>
 <h2 id="multiple-abstraction-levels">Multiple abstraction levels</h2>
 <ul>
@@ -192,8 +207,10 @@ v              ^   Next state
 </ul>
 <h2 id="comparison-with-compilers">Comparison with compilers</h2>
 <ul>
-<li><p>In compilers, there may be a strict order in which the instructions are to be completed.</p></li>
-<li><p>But in digital circuits, parallelism is there. Parallel activity of gates and components.</p></li>
+<li><p>In compilers, there may be a strict order in which the
+instructions are to be completed.</p></li>
+<li><p>But in digital circuits, parallelism is there. Parallel activity
+of gates and components.</p></li>
 <li><p>Instructions in compilers.</p></li>
 <li><p>Gates and modules in sods.</p></li>
 </ul>
@@ -220,12 +237,15 @@ v              ^   Next state
 <ul>
 <li><p>Constraints in chip on silicon wafer (die)</p></li>
 <li><p>Processor is just one kind of a chip.</p></li>
-<li><p>What is the fastest chip that can be made? Keeping in mind all limitations?</p></li>
+<li><p>What is the fastest chip that can be made? Keeping in mind all
+limitations?</p></li>
 <li><p>Speed with which wires transmit signals?</p></li>
 <li><p>Crosstalk btw wires (capacitance?)</p></li>
-<li><p>There are physical limits on how fast a chip can operate.</p></li>
+<li><p>There are physical limits on how fast a chip can
+operate.</p></li>
 </ul>
-<h2 id="metrics-to-measure-efficiancy">Metrics to measure efficiancy</h2>
+<h2 id="metrics-to-measure-efficiancy">Metrics to measure
+efficiancy</h2>
 <ul>
 <li>Area</li>
 <li>Performance</li>
@@ -235,7 +255,8 @@ v              ^   Next state
 Energy =&gt; Power
 Power =&gt; Heating up
 </code></pre>
-<p>These are orthogonal metrics. We need to make a choice. Trade-offs for realistic designs.</p>
+<p>These are orthogonal metrics. We need to make a choice. Trade-offs
+for realistic designs.</p>
 <p>Tools should be able to deal with large designs</p>
 <ul>
 <li>geometric layout</li>
@@ -250,23 +271,32 @@ Power =&gt; Heating up
 <li><p>Model call: Calling a module in a sequence graph</p></li>
 <li><p>Links and operations</p></li>
 </ul>
-<h2 id="target-independent-optimizations">Target independent optimizations</h2>
+<h2 id="target-independent-optimizations">Target independent
+optimizations</h2>
 <ul>
 <li>Data-flow transformations</li>
 <li>Control-flow transformations</li>
 </ul>
 <h2 id="data-flow-transformations">Data-Flow transformations</h2>
 <h3 id="tree-height-reduction">Tree height reduction</h3>
-<p>With respect to the parse tree. Applies arithmetic properties to the arithmetic expression tree. Assume no hardware restriction now. Expression split into two-operand expressions. =&gt; Exploits parallelism better.</p>
+<p>With respect to the parse tree. Applies arithmetic properties to the
+arithmetic expression tree. Assume no hardware restriction now.
+Expression split into two-operand expressions. =&gt; Exploits
+parallelism better.</p>
 <p>Eg:</p>
 <pre><code>x = a + b + c + d
 x = a + b
 x = x + c
 x = x + d
 </code></pre>
-<p>But what if later when we take hardware restrictions into account? What if there was only one adder? Still this optimizations is good because it is better in most hardware configurations??</p>
-<h3 id="constant-and-variable-propagation-ie-folding">Constant and variable propagation (ie, folding)</h3>
-<p>Pre-compute values statically. Detect copies of the variable/constant. The input to this form of optimization itself may have been the result of some other optimizations.</p>
+<p>But what if later when we take hardware restrictions into account?
+What if there was only one adder? Still this optimizations is good
+because it is better in most hardware configurations??</p>
+<h3 id="constant-and-variable-propagation-ie-folding">Constant and
+variable propagation (ie, folding)</h3>
+<p>Pre-compute values statically. Detect copies of the
+variable/constant. The input to this form of optimization itself may
+have been the result of some other optimizations.</p>
 <p>Eg:</p>
 <pre><code>a = 0
 b = a
@@ -285,8 +315,12 @@ d = a * a + c + 1
 c = 0
 d = 1
 </code></pre>
-<h3 id="common-subexpression-elimination">Common subexpression elimination</h3>
-<p>Common subexpression patterns show up as isomorphic (ie, similar in form) patterns in parse trees (especially when reduced to 3 address code) Operator commutativity can be exploited?? No need to compute the subexpression over and over again.</p>
+<h3 id="common-subexpression-elimination">Common subexpression
+elimination</h3>
+<p>Common subexpression patterns show up as isomorphic (ie, similar in
+form) patterns in parse trees (especially when reduced to 3 address
+code) Operator commutativity can be exploited?? No need to compute the
+subexpression over and over again.</p>
 <p>Eg:</p>
 <pre><code>a = x + y
 b = a + 2
@@ -305,26 +339,36 @@ c = a * (a + 1)
 <p>could be made</p>
 <pre><code>b = a &lt;&lt; 1
 </code></pre>
-<p>because shift register cheaper and faster than building up a multiplier.</p>
-<p>This is particularly useful when the only kind of multiplication is by a power of 2. Then we don't need a multiplier and can be okay with a shift register instead.</p>
+<p>because shift register cheaper and faster than building up a
+multiplier.</p>
+<p>This is particularly useful when the only kind of multiplication is
+by a power of 2. Then we don't need a multiplier and can be okay with a
+shift register instead.</p>
 <p>But what if there's an overflow on shifting??</p>
 <h3 id="code-motion">Code motion</h3>
-<p>'Move' code to make it more efficient. Applies to loop invariants.</p>
+<p>'Move' code to make it more efficient. Applies to loop
+invariants.</p>
 <pre><code>for(int i=0; i&lt;a*b; ++i) {
     ...
 }
 </code></pre>
-<p>Provided `a` and `b` doesn't change within the loop, this could become</p>
+<p>Provided `a` and `b` doesn't change within the loop, this could
+become</p>
 <pre><code>t = a * b;
 for(int i=0; i&lt;t; ++i) {
     ...
 }
 </code></pre>
-<h2 id="control-flow-based-transformations">Control flow based transformations</h2>
+<h2 id="control-flow-based-transformations">Control flow based
+transformations</h2>
 <h3 id="model-expansion">Model expansion</h3>
-<p>'Flatten' models (submodules) that are called only once. ie, remove the hierarchy. This would expose optimization opportunities across the model's boundaries. ie, larger scope for optimizations.</p>
+<p>'Flatten' models (submodules) that are called only once. ie, remove
+the hierarchy. This would expose optimization opportunities across the
+model's boundaries. ie, larger scope for optimizations.</p>
 <h3 id="conditionals-expansion">Conditionals expansion</h3>
-<p>Control flow is converted to a data flow. Hardware is inherently parallel (unlike in the case of software). This could in turn expose more opportunities for optimization.</p>
+<p>Control flow is converted to a data flow. Hardware is inherently
+parallel (unlike in the case of software). This could in turn expose
+more opportunities for optimization.</p>
 <pre><code>y = ab
 if (a) {
     x = b+d
@@ -343,7 +387,8 @@ x = ab + ad + a&#39;bd
 <pre><code>y = ab
 x = y + ad + a&#39;bd  // -&gt; x = y + d(a + a&#39;b) -&gt; x = y + d(a&#39; + d)
 </code></pre>
-<h3 id="loop-unrolling-loop-expansion">Loop unrolling (Loop expansion)</h3>
+<h3 id="loop-unrolling-loop-expansion">Loop unrolling (Loop
+expansion)</h3>
 <p>Used in software world for <em>Software pipelining</em>.</p>
 <h1 id="dbts">Dbts</h1>
 <ul>
@@ -361,8 +406,10 @@ x = y + ad + a&#39;bd  // -&gt; x = y + d(a + a&#39;b) -&gt; x = y + d(a&#39; + 
 <p>Capability Enhanced Enhanced RISC Instructions (CHERI)</p>
 <ul>
 <li>Joint work by SRI and University of Cambridge</li>
-<li><a href="https://www.cl.cam.ac.uk/research/security/ctsrd/cheri/">https://www.cl.cam.ac.uk/research/security/ctsrd/cheri/</a></li>
-<li><a href="https://tratt.net/laurie/blog/2023/two_stories_for_what_is_cheri.html">https://tratt.net/laurie/blog/2023/two_stories_for_what_is_cheri.html</a></li>
+<li><a
+href="https://www.cl.cam.ac.uk/research/security/ctsrd/cheri/">https://www.cl.cam.ac.uk/research/security/ctsrd/cheri/</a></li>
+<li><a
+href="https://tratt.net/laurie/blog/2023/two_stories_for_what_is_cheri.html">https://tratt.net/laurie/blog/2023/two_stories_for_what_is_cheri.html</a></li>
 <li>CHERI-aware OS needed to take advantage of the extra features</li>
 <li>'Capabilities'</li>
 </ul>

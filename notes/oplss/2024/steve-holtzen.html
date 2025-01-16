@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Prbabilistic programming from the ground up</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Prbabilistic programming from the ground up</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<h1 id="d1">D1</h1>
+<p>PPLs are of interest in PL and AI</p>
+<p>Programs which incorporate an element of uncertainity</p>
+<ol>
+<li>You want to verify programs</li>
+<li>Programs have uncertainity in them
+<ul>
+<li>Randomized algorithms</li>
+<li>Distributed systems and networking</li>
+<li>Differential privacy: doesn't leak sensitive data</li>
+</ul></li>
+</ol>
+<p>Programs should have probabilistic semantics.</p>
+<p>1982 Kozen: Coined the term probabilistic programming.</p>
+<p>Why PPL from an AI perspective?</p>
+<ol>
+<li>Need to create agents that reason <em>rationally</em> about the
+world</li>
+<li>Need to represent the world to computer</li>
+</ol>
+<pre><code>
+World        Encode               Reasoning
+          ----------&gt;  Computer ------------&gt; Action
+Modeling
+paradigm  
+</code></pre>
+<p>The encoding: Sounds like computer programs!</p>
+<ol>
+<li>But the world is too complex.</li>
+<li>Probabilites to simplify the world model</li>
+</ol>
+<p>Juden Pearl: A Turing award winner</p>
+<ul>
+<li>Ended up making a new conf: Uncertainity in reasoning ??</li>
+<li>Pearl called it <em>Probabilistic graphical models</em> (PGM)
+<ul>
+<li>Relation between unknown and random quantities ??</li>
+</ul></li>
+</ul>
+<p>Complex PGM is difficult to understand ??</p>
+<ul>
+<li>=&gt; PPL: An expressive way to model the world</li>
+</ul>
+<p>Goal of this lecture series: Learning to build a series of PPLs</p>
+<p>Lectures:</p>
+<ol>
+<li>Syntax and semantics of PPLs</li>
+<li>Sampling</li>
+<li>Tractability and expressivity</li>
+</ol>
+<p>How does PP make reasoning better?</p>
+<ul>
+<li><em>Networks of Plausible Inference</em> - Jaden Pearl
+<ul>
+<li><a
+href="https://dl.acm.org/doi/pdf/10.5555/534975">https://dl.acm.org/doi/pdf/10.5555/534975</a></li>
+</ul></li>
+<li>Ordinary logic is monotonic. Not sufficient for changing world?</li>
+<li>World is not deterministic</li>
+<li>CYC</li>
+<li>PPLs</li>
+</ul>
+<p>Probabilistic programs: Programs that denote probability
+distributions</p>
+<p>Pseudo-random number generators</p>
+<ul>
+<li>tt: semantic true</li>
+<li>true: syntactic true</li>
+</ul>
+<pre><code>// x and y would get tt with probability 1/2
+x &lt;- flip 1/2;
+y &lt;- flip 1/2;
+return x ∨ y
+</code></pre>
+<p>Probability that return value is true is 3/4.</p>
+<pre><code>[tt ↦ 3/4, ff ↦ 1/4]
+</code></pre>
+<p>Currently considering countably finite sample space Ω.</p>
+<pre><code>Ω = {tt, ff}
+Prob distr is a function: Ω → [0, 1]
+
+such that Σ  Pr(ω) = 1
+         ω∈Ω
+</code></pre>
+<p>Semantic brackets <code>⟦⋅⟧</code></p>
+<h2 id="tiny-ppl">Tiny PPL</h2>
+<h3 id="syntax">Syntax</h3>
+<pre><code># Pure terms
+p := true | false
+   | x
+   | if p then p else p
+   | p ∧ p
+   | p ∨ p
+
+# Effectful or probabilistic terms
+e := x &lt;- e; e  
+   | return p   # Take a pure thing and make it impure. ie, lift to a probabilistic term
+   | flip θ     # Introduce randomness. Where θ is a probability ∈ ℝ
+</code></pre>
+<p>This is a valid program as per above:</p>
+<pre><code>x &lt;- return true
+return x
+</code></pre>
+<h3 id="semantics">Semantics</h3>
+<p>Semantics of pure terms:</p>
+<p>Let's go with an env way. Free variables are in env.</p>
+<p>⟦p⟧ₚ: Env -&gt; Bool</p>
+<p>This is a partial function. If a var is not in env, it's value under
+this function is undefined.</p>
+<p>Example:</p>
+<ul>
+<li>⟦x⟧ₚ(x ↦ tt) = tt
+<ul>
+<li>There's no var updation, so there won't be multiple vals for x in
+this</li>
+</ul></li>
+<li>⟦true⟧ₚ(ρ) = tt, where ρ is any env</li>
+<li>⟦p₁ ∧ p₂⟧(ρ) = ⟦p₁⟧(ρ) ∧ ⟦p₁⟧(ρ), where the RHS ∧ is semantic and
+LHS one syntactic</li>
+</ul>
+<p>—</p>
+<p>Semantics of probabilistic terms:</p>
+<p>⟦e⟧: Env -&gt; ({tt, ff} -&gt; [0, 1])</p>
+<p>Given an env and value, there is an associated probability with
+it.</p>
+<p>⟦flip r⟧(ρ) = {tt -&gt; r, ff -&gt; 1-r}, where r ∈ [0,1]</p>
+<p>A Bernoulli distribution.</p>
+<p>⟦return p⟧(ρ) = ∀v, v ↦ {if ⟦p⟧ₚ == v then 1, else 0}</p>
+<p>Now for bind, the main thing.</p>
+<p>⟦x ← e₁; e₂⟧(ρ)</p>
+<p>Got to be compositional. Meaning needs to be in terms of e₁ and
+e₂.</p>
+<p>An example:</p>
+<p>⟦x ← flip 1/2⟧(ρ)</p>
+<p>Got to do case analysis on x, which would be a pure term</p>
+<pre><code>⟦x ← flip 1/2; e⟧(ρ)
+  = if ⟦x⟧ₚ == tt then ⟦e⟧(ρ[x ↦ tt])
+    else ⟦e⟧(ρ[x ↦ ff])
+</code></pre>
+<p>Now the real one:</p>
+<pre><code>⟦x ← e₁; e₂⟧(ρ) = 
+
+Σ
+
+  v ↦ ⟦e₁⟧(ρ)(v) * 
+  ⟦e₂⟧(ρ[x ↦ v])
+</code></pre>
+<p>Considering that events are independent ??</p>
+<ul>
+<li>because only way to introduce randomness here is flip, which is
+independent</li>
+</ul>
+<p>Monadic semantics.</p>
+<ul>
+<li>PAPER: Ramsey and Pfeffer 2002</li>
+<li>PAPER: M. Givy 1986, categorical semantics of probability
+distributions</li>
+</ul>
+<p>Tractability</p>
+<ul>
+<li>sum of products not so efficient ??</li>
+</ul>
+<p>Complexity: #P-Hard</p>
+<ul>
+<li>Toda's theorem</li>
+<li>Input: boolean formula φ</li>
+<li>Output: number of solns to φ</li>
+<li>Example: x ∨ y
+<ul>
+<li>#SAT(x ∨ y) = 3</li>
+</ul></li>
+</ul>
+<p>—</p>
+<p>Redn of TinyPPL to #P.</p>
+<p>Example: φ = (x ∨ y) ∧ (y ∨ z)</p>
+<pre><code>x &lt;- flip 1/2
+y &lt;- flip 1/2
+z &lt;- flip 1/2
+return (x ∨ y) ∧ (y ∨ z)
+</code></pre>
+<p>#SAT(φ) = 2<sup>(number of vars)</sup></p>
+<p>2<sup>(#vars)</sup> * ⟦encoded prog⟧(∅)(tt)</p>
+<p>??</p>
+<p>—</p>
+<ul>
+<li>Why do we care about complexity of deno sem? Computer would be
+opsem.
+<ul>
+<li>Gives a lower bound on how good the opsem can be ??</li>
+</ul></li>
+<li>What's the price of adding new features? Like tuples/fns.
+<ul>
+<li>TinyPPL is almost nothing, still quite computationally inefficient.
+It will only get worse.</li>
+</ul></li>
+</ul>
+<p>Systems in the wild</p>
+<ul>
+<li>Stan from Columbia: <a
+href="https://mc-stan.org/">https://mc-stan.org/</a>
+<ul>
+<li>Doesn't have conditions</li>
+</ul></li>
+<li>Pyro</li>
+<li>Tensorflow probability</li>
+<li>Sth from microsoft</li>
+</ul>
+<p>Tradeoffs in design decisions.</p>
+<p>HW: TinyPPL + Tiny Cond, WebPPL</p>
+<p>—</p>
+<ul>
+<li>See sth about the world and then update my belief about it
+<ul>
+<li>Observe the probability of an event and then infer probability of
+some other event. =&gt; conditionaling</li>
+<li><code>observe e; e</code>: goes back in time and change stuff.
+Non-local</li>
+</ul></li>
+</ul>
+<p>—</p>
+<ul>
+<li>This is Bayesian learning model: Different style from deep learning
+<ul>
+<li>PPL is very interpretable. We can tell why a decision was made. Very
+difficult with DL.</li>
+</ul></li>
+</ul>
+<h1 id="d2-conditioning-and-sampling">D2: Conditioning and sampling</h1>
+<p>Reachability in a graph/network</p>
+<ul>
+<li>packet getting routed from a router when there are two options</li>
+</ul>
+<pre><code>     R2
+     /\
+    /  \
+   /    \
+R1      R4
+   \    /
+    \  /
+     \/
+     R3
+</code></pre>
+<p>Each link has a failure probability lᵢ.</p>
+<pre><code># Prob that R1 to R4:
+route &lt;- flip 0.5
+l1 &lt;- flip 0.99
+l2 &lt;- flip _
+l3 &lt;- flip _
+l4 &lt;- flip _
+return 
+  if route then l12 * l24
+  else l13 * l34
+</code></pre>
+<h2 id="tinycond">TinyCond</h2>
+<p>A PPL with conditionals.</p>
+<p>Syntax:</p>
+<pre><code>p := true | false
+   | x
+   | if p then p else p
+   | p ∧ p
+   | p ∨ p
+
+# Effectful or probabilistic terms
+e := x &lt;- e; e  
+   | return p
+   | flip θ
+   | observe p; e  # tells the prob that e happens provided p happened
+</code></pre>
+<p>Bayesian conditioning.</p>
+<p>Example 2: R1 to R4 doesn't happen. What's the probability that l12
+failed?</p>
+<pre><code># Prob that R1 to R4:
+route &lt;- flip 0.5
+l1 &lt;- flip 0.99
+l2 &lt;- flip _
+l3 &lt;- flip _
+l4 &lt;- flip _
+observe 
+  (if route then l12 * l24
+  else l13 * l34);
+return l1
+</code></pre>
+<p>Example 3: Flip two coins. At least one of them is head. What's the
+prob that first one is head?</p>
+<pre><code># Prob that R1 to R4:
+x &lt;- flip 0.5
+y &lt;- flip 0.5
+observe (x ∨ y);
+return x
+</code></pre>
+<p>Probability is 1/4 ???</p>
+<p>x=F, y=F can be eliminated. Because at least one is true. Left with 3
+choices?? Left with something that's not a prob distr? Got to normalize.
+Becasue prob sum is no longer 1. Left with 3/4. Divied each possibility
+by 3/4.</p>
+<p>x=F, y=T =&gt; 1/4 becomes (1/4)/(3/4) = 1/3 x=T, y=F =&gt; 1/4
+becomes (1/4)/(3/4) = 1/3 x=T, y=T =&gt; 1/4 becomes (1/4)/(3/4) =
+1/3</p>
+<p>Bayes' rule</p>
+<p>We are interested in just x being true.</p>
+<p>So rule out x=F,y=T.</p>
+<p>=&gt; Result of the above prog = 2/3</p>
+<ul>
+<li>semantics(prog)(tt) = 2/3</li>
+</ul>
+<h3 id="semantics-of-tinycond">Semantics of TinyCond</h3>
+<p>Unnormalized semantics =&gt; Doesn't sum to 1 Sub-sth: Has all
+features of a prob distr except that it doesn't sum to 1.</p>
+<p>Subscript u for unnormalized.</p>
+<ul>
+<li>⟦flip 1/2⟧ᵤ(ρ)(tt) = 1/2</li>
+<li>⟦true⟧ᵤ(ρ)(tt) = 1</li>
+<li>⟦observe p;e⟧ᵤ(ρ)(v)
+<ul>
+<li>if ⟦p⟧ₚ(ρ) = tt then ⟦e⟧ᵤ(ρ)(v)</li>
+<li>otherwise 0</li>
+</ul></li>
+</ul>
+<p>—</p>
+<p>Now, the normalized semantics. From the unnormalized version.</p>
+<pre><code>                  ⟦e⟧ᵤ(ρ)(v)     
+⟦e⟧(ρ)(v) = ────────────────────────
+             ⟦e⟧(ρ)(tt) + ⟦e⟧(ρ)(ff)
+</code></pre>
+<p>deterministic ??</p>
+<ul>
+<li>pure</li>
+<li>Probability monad</li>
+</ul>
+<p>observe:</p>
+<ul>
+<li>kind of goes back in time and changes prob</li>
+<li>non-locality</li>
+<li>Still #P-hard ∵ only extra is the addition to normalize ??</li>
+</ul>
+<pre><code>x &lt;- flip 1/2           |   x &lt;- flip 2/3   |  x &lt;- flip 2/3
+y &lt;- flip 1/2           |   y &lt;- flip 2/3   |  return x
+-----------------&gt;      |   return x        |
+observe x ∨ y           |                   |
+return x                |                   |
+</code></pre>
+<hr />
+<p>Are these same ????</p>
+<p>while true: pass</p>
+<p>and</p>
+<p>observe false</p>
+<p>???</p>
+<hr />
+<p>Conditioning will still make things more complex ??</p>
+<h3 id="operational-sampling-semantics">Operational sampling
+semantics</h3>
+<p>Expectation of a random fn = average val of the fn</p>
+<p>We can approximate the E with a finite number of samples.</p>
+<pre><code>E(Pr)[f] = Σ Pr(ω) * f(ω)
+           ω
+
+
+            1   N
+         ≈ ---  Σ  f(ω)
+        N  ω~Pr
+</code></pre>
+<p>Monte Carlo ??</p>
+<p><code class="verbatim">w ~ Pr</code> means w is drawn from a prob
+distr <code class="verbatim">Pr</code>.</p>
+<p>There is a bound on the number of samples needed to approximate mean
+of a random var Concentration inequalities. Will only work on some
+classes of problems though. Which classes ???</p>
+<p><em><strong>Efficiency</strong></em></p>
+<p>To prove soundness of our runtime strategy, we relate it to an
+expectation.</p>
+<hr />
+<p>Semantics. Trying a big step. Small-step too possible.</p>
+<p>PAPER: Culpepper and Cobb: Contextual Eq 2017)</p>
+<ul>
+<li>σ ∈ 𝔹<sup>N</sup>: (infinte stream of boolean) random values</li>
+<li>ρ: env</li>
+</ul>
+<p>σ ⊢ &lt;c,ρ&gt; ⇓ v means in the context of σ, c under env ρ reduces
+to v</p>
+<p>Externalize randomness. Put it all in one place. Considering only
+<code>flip 1/2</code></p>
+<ul>
+<li>v::σ ⊢ flip 1/2 ⇓ v</li>
+</ul>
+<pre><code>πₗ(σ) ⊢ &lt;e1, ρ&gt; ⇓ v        πᵣ(σ) ⊢ &lt;e2, ρ&gt; ⇓ v&#39;
+────────────────────────────────────────────── 
+           σ ⊢ &lt;x←e1;e2, ρ&gt; ⇓ v&#39;
+</code></pre>
+<p>πₗ splits σ into two and takes left part. Likewise for right with πᵣ
+To split between e1 and e2.</p>
+<pre><code>──────────────────────
+σ ⊢ &lt;return p, ρ&gt; ⇓ v
+</code></pre>
+<hr />
+<p>OT:</p>
+<ul>
+<li>Hilbert cube: [0,1]<sup>ℕ</sup></li>
+<li>v ∈ [0,1]<sup>ℕ</sup></li>
+</ul>
+<hr />
+<pre><code> E   [𝟙 (eval(e, σ, ρ)=tt)] = ⟦e⟧(ρ)(tt)
+σ~Pr
+</code></pre>
+<p>where Pr is uniform distr on infinite bit streams.</p>
+<p>–</p>
+<p>Bind:</p>
+<pre><code>E[f g] = E[f] * E[g]
+</code></pre>
+<p>considering f and g are independent ??</p>
+<hr />
+<p>OT:</p>
+<p>x := 0 while flip 1/2: x := x+1</p>
+<p>Should approach a limit</p>
+<p>Measure theory stuff refs:</p>
+<ul>
+<li><em>Measure integration and real analysis</em> - Sheldon Axler</li>
+</ul>
+<h1 id="d3-tractability-and-expressivity">D3: Tractability and
+expressivity</h1>
+<p>When does sampling work well and poorly?</p>
+<p>Eg:</p>
+<pre><code>x &lt;- flip 10^-6
+y &lt;- flip 10^-6
+return x ∧ y
+// DBT: what if x ∨ y ??
+</code></pre>
+<p>Here, it would take around a million samples before we get a
+true.</p>
+<p>ie, sampling works poorly for low probabilty estimates.</p>
+<p>Conditioning and sampling doesn't play well together. Why??</p>
+<pre><code>x &lt;- flip 10^-6
+y &lt;- flip 10^-6
+observe x ∧ y
+return x
+</code></pre>
+<ul>
+<li>Rejection sampling</li>
+<li>Downside of sampling.</li>
+<li>Low probability of evidence</li>
+</ul>
+<p>Let's explore alternatives to sampling.</p>
+<ul>
+<li>Worst case hardness</li>
+<li>approximation. sampling
+<ul>
+<li>Problem: approximate condition</li>
+</ul></li>
+</ul>
+<p>Search-based:</p>
+<pre><code>x &lt;- flip 1/2
+y &lt;- if x then flip 1/3 else flip 1/4
+z &lt;- if y then flip 1/6 else flip 1/7
+return z
+</code></pre>
+<p>It's a probabilistic <code>if</code> (which we haven't defined
+yet).</p>
+<p>Builing a search tree:</p>
+<pre><code>
+                  x
+                 / \
+                /   \
+               y     y
+              / \   / \
+             /   \ /   \  
+
+
+
+   +----
+   |
+x--+────
+
+</code></pre>
+<p>Work inductively from leaves.</p>
+<p>But there's some redundancy. z trees are identical. ∵ it doesn't
+depend on x, so there are copies.</p>
+<p>Could we do better and use reuse the substructure? Some sharing.
+Let's try.</p>
+<pre><code>&lt;graph here&gt;
+</code></pre>
+<p>This is what's called Binary Decision Diagrams (BDDs).</p>
+<ul>
+<li>adding new var =&gt; just another layer. It's not growing that
+fast.</li>
+<li>Knuth said: the fundamental data struct that's has been introduced
+in the last 25 years</li>
+</ul>
+<p>Can we build the BDD without explicitly building the other tree?</p>
+<h2 id="tractability-and-expressivity">Tractability and
+expressivity</h2>
+<ul>
+<li>Computing semantics is #P-Hard</li>
+<li>But with BDD, it becomes easy?? As in P??
+<ul>
+<li>Langs which can be computed in P-time: d-DNNF, BDD, SDD, tree</li>
+</ul></li>
+</ul>
+<p>Lang desing landscape:</p>
+<pre><code>|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
++-----------------------------------------------------------------
+</code></pre>
+<p>We could compile a more expressive lang to a more tractable lang
+????</p>
+<ul>
+<li>Could think of the tractable langs like assembly lang.</li>
+<li>The compilation has a cost</li>
+<li>A syntactic way to study this cost ??</li>
+</ul>
+<hr />
+<p>Knowledge compilation - Adron Darwiche</p>
+<ul>
+<li>Hardness of propositional/boolean reasoning tasks is related to
+formulae syntax</li>
+<li>PAPER: Knowledge compilation map 2002</li>
+</ul>
+<p>A DNF: AB + ACD' + …</p>
+<p>SAT is NP-C but this one is easy ??</p>
+<p>What kind of struct on this enable efficient reasoning?</p>
+<ul>
+<li>Darwiche identified BDD as one of them ??</li>
+</ul>
+<p>Succinctness:</p>
+<ul>
+<li>L1 is more succinct than L2 if there is an efficient translation
+from <em>all</em> L2 programs to L1 progs</li>
+<li>Eg: BDD is <em>not</em> more succint than TinyPPL
+<ul>
+<li>∵ there can't be an efficient conversion from TinyPPL (#P-H) to BDD
+(P)</li>
+</ul></li>
+</ul>
+<p>PAPER: On the expressive power of programming languages - Matthias
+Felleisen</p>
+<h3 id="compiling-tinyppl-to-bdd">Compiling TinyPPL to BDD</h3>
+<p>PAPER: Holtzen 2020 OOPSLA Desired: compositional compilaton: This
+would allow locality</p>
+<h3 id="composing-bdds">Composing BDDs</h3>
+<p>Base cases:</p>
+<ul>
+<li>T*B = B</li>
+<li>F*B = F</li>
+</ul>
+<pre><code>A──B1
+|
++--B2
+
+∧
+</code></pre>
+<p>BDD needs some structural invariants</p>
+<ol>
+<li>Ordering: Vars are encountered in same order along all paths, and at
+most once</li>
+<li>Redn: No isomorphic sub-trees
+<ul>
+<li>Also means no vacuous nodes</li>
+</ul></li>
+</ol>
+<p>These two together: Canonicity</p>
+<p>⟦ψ₁⟧= ⟦ψ₂⟧ &lt;=&gt; BDD(ψ₁) = BDD(ψ₂)</p>
+<ul>
+<li>assuming the 2 BDDs have same var order</li>
+</ul>
+<p>See: <a
+href="https://github.com/SHoltzen/oplss24-code/blob/main/6-tinybdd/bdd.ml">https://github.com/SHoltzen/oplss24-code/blob/main/6-tinybdd/bdd.ml</a></p>
+<p>This was bottom-up way to combine BDDs ??</p>
+<p>An advantage of BDD: Lot of efficient BDD engineering has already
+been done. Can piggyback.</p>
+<h1 id="d4-separation-logic-perspectives">D4: Separation logic,
+perspectives</h1>
+<p>Probability + mutable states</p>
+<ul>
+<li>PAPER: POPL'20 Barthe, Hsu, Liao</li>
+<li>PAPER: Lilac: John Li, Ahmed, Holtzen</li>
+<li>PAPER: Bluebell</li>
+</ul>
+<p>—</p>
+<p>Disjoint parts of the heap</p>
+<pre><code>{⊤}
+  x := alloc 10
+{x ↦ 10}
+  y := alloc 20
+{x ↦ 10 * y ↦ 20}
+</code></pre>
+<p><code>*</code> means it holds over disjoint spaces in program.</p>
+<p>—</p>
+<pre><code>{⊤}
+  x := flip 1/2
+{x~Bernoulli(1/2)}
+  y := flip 1/2
+{x~Bernoulli(1/2) * y~Bernoulli(1/2)}
+</code></pre>
+<ul>
+<li>x is a rand var that follows Bernouilli(1/2)</li>
+<li>x and y are statistically independent rand vars</li>
+</ul>
+<p>—</p>
+<p>Frame rule?? in seplog: <code>{P} c {Q}</code></p>
+<ul>
+<li>composition using other rules difficult due to possible
+aliases.</li>
+<li>But if the disjoint stuff is there, composition is possible</li>
+</ul>
+<pre><code>  {P} c {Q}
+--------------
+{P*F} c {Q*F}
+</code></pre>
+<p>—</p>
+<p>Seplog for heap programs</p>
+<p>(s,h)</p>
+<ul>
+<li><p>store = s: names → heap locations</p></li>
+<li><p>heap = h: loc → value</p></li>
+<li><p>(s,h) ⊨ ⊤</p></li>
+<li><p>(s,h) ⊭ ⊥</p></li>
+<li><p>(s,h) ⊨ [x↦v] iff h(s(x))=v</p></li>
+</ul>
+<pre><code>(s,h) ⊨ P      (s,h) ⊨ Q   
+--------------------------
+       (s,h) ⊨ P∧Q
+</code></pre>
+<ul>
+<li><p>(s1,h1) ⟂ (s2,h2) if dom(h1) ∩ dom(h2) = ∅</p></li>
+<li><p>(s1,h1) ⊎ (s2,h2)</p>
+<ul>
+<li>l ↦ h1(l) if l ∈ dom(h1)</li>
+<li>l ↦ h2(l) if l ∈ dom(h2)</li>
+<li>partial fn ??</li>
+</ul></li>
+<li><p>(s1,h1) ⊑ (s2,h2) if dom(h1) ⊆ dom(h2)</p>
+<ul>
+<li>∀l ∈ dom(h1), h1(l) = h2(l)</li>
+<li>Notion of sub-heap. For everything in the smaller one, they
+agree</li>
+</ul></li>
+</ul>
+<h2 id="table-of-analogies">Table of analogies</h2>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Heap (seplog)</th>
+<th>Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>⊎</td>
+<td>Disjoint union</td>
+<td>Independent combination</td>
+</tr>
+<tr class="even">
+<td>⊑</td>
+<td>Heap subset</td>
+<td>Sub-probability space</td>
+</tr>
+<tr class="odd">
+<td>⟂</td>
+<td>Heap disjunction</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>ownership</td>
+<td>loc l is in heap</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>—</p>
+<p>(S, (Ω, E, μ)) ⊨ ⊤</p>
+<ul>
+<li></li>
+<li>Ω: Sample space
+<ul>
+<li>Kinda like heap in seplog as in it's ambient, in the bg</li>
+<li>An ambient space with enough room for all the randomness that wish
+to allocate</li>
+</ul></li>
+<li>E: collection of subsets of Ω</li>
+<li>μ: Probability measure
+<ul>
+<li>asigns a probab to each element in E</li>
+<li>OT: σ-algebra</li>
+</ul></li>
+<li>x~Bern 1/2
+<ul>
+<li>x is behaving like a pointer/location</li>
+<li>x is like a fn. x: Ω → {⊤,⊥}</li>
+</ul></li>
+<li>Ω = [0,1]² (unit square)</li>
+<li>Area of ⊤ and ⊥ is one half each</li>
+</ul>
+<pre><code>    Ω
++------+
+|      |
+| 1/2  | ---------&gt; T
+|      |
++------+
+|      |
+| 1/2  | ---------&gt; F
+|      |
++------+
+</code></pre>
+<p>Got to carve some space from Ω that's independent from what's already
+allocated.</p>
+<pre><code>    Ω
++------+------+          (for x)
+|      |      |
+|      |      | ---------&gt; T
+|      |      |
++------+------+
+|      |      |
+|      |      | ---------&gt; F
+|      |      |
++------+------+
+   |      |
+   |      |
+   v      v
+   T      F      (for y)
+</code></pre>
+<p>Statistic independence between Pr of x and y means x ⟂ y if Pr(x=T ∧
+y=T) = Pr(x)*Pr(y)</p>
+<h2 id="independent-combination">Independent combination</h2>
+<p>How to show this models {x~Bern 1/2, y~Bern 1/2}</p>
+<pre><code>    Ω
++------+------+          (for x)
+|      |      |
+|      |      | ---------&gt; T
+|      |      |
++------+------+
+|      |      |
+|      |      | ---------&gt; F
+|      |      |
++------+------+
+   |      |
+   |      |
+   v      v
+   T      F      (for y)
+</code></pre>
+<p>We should be able to split Ω into two independent spaces.</p>
+<ul>
+<li>One where x is Bern(1/2)</li>
+<li>One where y is Bern(1/2)</li>
+</ul>
+<p>Le'ts split the Ω into the two independent spaces.</p>
+<p>For x~Bern 1/2</p>
+<pre><code>    Ω
++-------------+
+|             |
++-------------|
+|             |
++-------------+
+</code></pre>
+<p>For y~Bern 1/2</p>
+<pre><code>    Ω
++------+------+
+|      |      |
+|      |      |
+|      |      |
++------+------+
+</code></pre>
+<pre><code>+-------------+     +------+------+      +----+----+
+|             |     |      |      |      |    |    |
++-------------|  ⋅  |      |      |  =   |    |    |    
+|             |     |      |      |      +----+----+ 
++-------------+     +------+------+      |    |    |
+                     |    |    |
+                     +----+----+
+
+
+(Ω, E1, μ1)  ⋅ (Ω, E2, μ2)  = (Ω, E1⊔E2, ρ)
+</code></pre>
+<ul>
+<li>Ω isn't changing, but the subset of Ω that we are allowed to talk
+about does.</li>
+<li>E1⊔E2 is the smallest σ that contains E1 and E2</li>
+<li>ρ needs to make sense
+<ul>
+<li>∀e1 ∈ E1, e2 ∈ E2, ρ(e1 ∩ e2) = μ1(e1) * μ2(e2)</li>
+</ul></li>
+</ul>
+<p>This was like ⊎ (disjoint union), but for probability.</p>
+<p>(S, (ω, E, μ)) ⊨ x~Bern θ iff</p>
+<ul>
+<li>S'(x=T) ∈ E</li>
+<li>S'(x=F) ∈ E</li>
+<li>S'(T)=θ ???</li>
+</ul>
+<p>Measure theory stuff: The first two items mean x is measurable</p>
+<p>Ownership is measurability.</p>
+<p>—</p>
+<p>These stuff are in close anology with stuff in seplog.</p>
+<p>—</p>
+<p>NQ: Conditional independence</p>
+<h2 id="perspectives-and-future">Perspectives and future</h2>
+<ul>
+<li>Scalability: Rare to find ppl progs &gt;1k lines</li>
+<li>Usability: Error messages, debuggers
+<ul>
+<li>Profilers</li>
+<li>PPLs still used only by domain experts??</li>
+</ul></li>
+<li>Semantics
+<ul>
+<li><code>⟦e⟧ ↦ probability</code> is not easy if there are things like
+higher order fns. TinyPPL was too simple, so it was possible there.</li>
+</ul></li>
+<li>Making PL more compatible with probability stuff</li>
+</ul>
+<p>OT:</p>
+<ul>
+<li>Dirac distribution</li>
+</ul>
+</div>
+</body>
+</html>

@@ -36,17 +36,8 @@
 </header>
 
 <ul>
-    <li>Date created: 09-Jan-2022</li>
     </ul>
 
-<div>
-  <p>
-    Tags: / 
-    <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/coq strings unicode.html">coq strings unicode</a>
-    </code> /
-  <p>
-</div>
 
 
 <div id="description">
@@ -56,14 +47,18 @@ About strings and their representation in Coq..
 <hr/>
 
 <div id="content-container">
-<hr />
-<p>Strings in Coq are represented using terms of type <code>string</code>, like</p>
+<p>Strings in Coq are represented using terms of type
+<code>string</code>, like</p>
 <pre class="coq"><code>Require Import String.
 
 Check &quot;hello&quot;%string.
 </code></pre>
-<p>But the string <code>"hello"</code> shown in this example is just a 'pretty-printed' (using <a href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#string-notations">string notations</a>) version of its Coq representation.</p>
-<p><code>string</code> is actually defined as <em>something</em> like a list of characters.</p>
+<p>But the string <code>"hello"</code> shown in this example is just a
+'pretty-printed' (using <a
+href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#string-notations">string
+notations</a>) version of its Coq representation.</p>
+<p><code>string</code> is actually defined as <em>something</em> like a
+list of characters.</p>
 <pre class="coq"><code>Inductive string : Set :=
 | EmptyString : string
 | String : Ascii.ascii -&gt; string -&gt; string.
@@ -85,14 +80,24 @@ String (Ascii.Ascii true false false false false true true false)
 (* Enable notations while printing *)
 Set Printing Notations.
 </code></pre>
-<p>Here the <code>Ascii.ascii</code> values are byte values representing the characters of the string.</p>
-<p>(The name <code>ascii</code> used for the type <code>Ascii.ascii</code> may be a bit misleading as they are not exactly representing just ASCII values. <a href="https://coq.gitlab.io/zulip-archive/stream/237977-Coq-users/topic/String.20representation.20of.20extended.20ASCII.html">¹⁴</a>)</p>
-<p>The resemblance with the definition of <a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#list"><code>list</code></a> is evident. <code>list</code> looks like</p>
+<p>Here the <code>Ascii.ascii</code> values are byte values representing
+the characters of the string.</p>
+<p>(The name <code>ascii</code> used for the type
+<code>Ascii.ascii</code> may be a bit misleading as they are not exactly
+representing just ASCII values. <a
+href="https://coq.gitlab.io/zulip-archive/stream/237977-Coq-users/topic/String.20representation.20of.20extended.20ASCII.html">¹⁴</a>)</p>
+<p>The resemblance with the definition of <a
+href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#list"><code>list</code></a>
+is evident. <code>list</code> looks like</p>
 <pre class="coq"><code>Inductive list (A : Type) : Type :=
 | nil : list A
 | cons : A -&gt; list A -&gt; list A.
 </code></pre>
-<p><code>EmptyString</code> and <code>String</code> are like the <a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#nil"><code>nil</code></a> and <a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#cons"><code>cons</code></a> respectively of <code>list</code>.</p>
+<p><code>EmptyString</code> and <code>String</code> are like the <a
+href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#nil"><code>nil</code></a>
+and <a
+href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#cons"><code>cons</code></a>
+respectively of <code>list</code>.</p>
 <h2 id="ascii.ascii-type"><code>Ascii.ascii</code> type</h2>
 <p><code>Ascii.ascii</code> is defined as</p>
 <pre class="coq"><code>Inductive ascii : Set :=
@@ -101,22 +106,34 @@ Set Printing Notations.
 
 Arguments Ascii.Ascii (_ _ _ _ _ _ _ _)%bool_scope
 </code></pre>
-<p><code>Ascii.Ascii</code>, the sole constructor of <code>Ascii.ascii</code> (easy to confuse between the two names!), accepts 8 boolean values where each <code>bool</code> represents one bit (<code>true</code> for <code>1</code>) that constitute an 8-bit integer which is the integer value of the character.</p>
-<p>Note that the most-significant-bit (MSB) is the last <code>bool</code> value. ie, the LSB appears first.</p>
-<p>This integer value may be thought of as the value of the character when encoded in UTF-8.</p>
-<p>For example, the letter <code>'A'</code>, with binary value <code>01000001</code> would look like</p>
+<p><code>Ascii.Ascii</code>, the sole constructor of
+<code>Ascii.ascii</code> (easy to confuse between the two names!),
+accepts 8 boolean values where each <code>bool</code> represents one bit
+(<code>true</code> for <code>1</code>) that constitute an 8-bit integer
+which is the integer value of the character.</p>
+<p>Note that the most-significant-bit (MSB) is the last
+<code>bool</code> value. ie, the LSB appears first.</p>
+<p>This integer value may be thought of as the value of the character
+when encoded in UTF-8.</p>
+<p>For example, the letter <code>'A'</code>, with binary value
+<code>01000001</code> would look like</p>
 <pre class="coq"><code>Ascii.Ascii true false false false false false true false.
 </code></pre>
-<p>But remember that ASCII encoding is essentially a 7-bit value and not really of 8-bits.</p>
+<p>But remember that ASCII encoding is essentially a 7-bit value and not
+really of 8-bits.</p>
 <h3 id="a-surprise">A surprise</h3>
-<p>I looked if there's a function to convert an <code>Ascii.Ascii</code> value to a (sort of single-character) <code>string</code>:</p>
+<p>I looked if there's a function to convert an <code>Ascii.Ascii</code>
+value to a (sort of single-character) <code>string</code>:</p>
 <pre class="coq"><code>Search (Ascii.ascii -&gt; string).
 </code></pre>
-<p>This gave no output. So I guess no such function has been loaded as of now. But it's an easy enough function to make:</p>
+<p>This gave no output. So I guess no such function has been loaded as
+of now. But it's an easy enough function to make:</p>
 <pre class="coq"><code>Definition str_of_ascii (a : Ascii.ascii) : string :=
   String a EmptyString.
 </code></pre>
-<p><code>str_of_ascii</code> converts an <code>Ascii.ascii</code> value to a <code>string</code> with just the single <code>Ascii.Ascii</code> value in it.</p>
+<p><code>str_of_ascii</code> converts an <code>Ascii.ascii</code> value
+to a <code>string</code> with just the single <code>Ascii.Ascii</code>
+value in it.</p>
 <p>Trying it out:</p>
 <pre class="coq"><code>Compute str_of_ascii
   (Ascii.Ascii true false false false false false true false).
@@ -131,7 +148,8 @@ Compute str_of_ascii (Ascii.ascii_of_nat 65).
      : string
 *)
 </code></pre>
-<p>I was a bit surprised to find that the string form of 255 wasn't <code>ÿ</code>, whose integer value is 255.</p>
+<p>I was a bit surprised to find that the string form of 255 wasn't
+<code>ÿ</code>, whose integer value is 255.</p>
 <pre class="coq"><code>Compute str_of_ascii (Ascii.ascii_of_nat 255).
 (*
 = String (Ascii.Ascii true true true true true true true true) &quot;&quot;
@@ -162,9 +180,13 @@ Compute &quot;ÿ&quot;%string.
      : string
 *)
 </code></pre>
-<p>Instead of a single <code>Ascii.Ascii</code>, there are two of them!</p>
-<p>I wondered why. I mean, a single <code>Ascii.Ascii</code> denotes 8 bits and can very well represent any value less than 256 by itself. Why did coq use two of them then? Sounded like something unnecessary.</p>
-<p>That is until I got to know that that UTF-8 representation of <code>ÿ</code> required 2 bytes (16 bits).</p>
+<p>Instead of a single <code>Ascii.Ascii</code>, there are two of
+them!</p>
+<p>I wondered why. I mean, a single <code>Ascii.Ascii</code> denotes 8
+bits and can very well represent any value less than 256 by itself. Why
+did coq use two of them then? Sounded like something unnecessary.</p>
+<p>That is until I got to know that that UTF-8 representation of
+<code>ÿ</code> required 2 bytes (16 bits).</p>
 <pre class="ascii"><code>$ unicode ÿ
 
 U+00FF LATIN SMALL LETTER Y WITH DIAERESIS
@@ -176,12 +198,21 @@ Unicode block: 0080..00FF; Latin-1 Supplement
 Bidi: L (Left-to-Right)
 Decomposition: 0079 0308
 </code></pre>
-<p>Notice that the decimal form is <code>255</code> but the hexcode for UTF-8 is <code>c3bf</code>, which is a 2 byte value.</p>
-<p>The reason is that ASCII values are limited to 7 bits. UTF-8 is something quite different that merely happen to use the same values as that of ASCII till 127 (including 127).</p>
+<p>Notice that the decimal form is <code>255</code> but the hexcode for
+UTF-8 is <code>c3bf</code>, which is a 2 byte value.</p>
+<p>The reason is that ASCII values are limited to 7 bits. UTF-8 is
+something quite different that merely happen to use the same values as
+that of ASCII till 127 (including 127).</p>
 <h3 id="about-utf-8">About UTF-8</h3>
-<p>UTF-8 (Unicode Transformation Format - 8 bit) is an encoding defined by unicode that can represent any valid unicode character using 1 to 4 bytes.</p>
-<p>(See <a href="https://www.cl.cam.ac.uk/~mgk25/ucs/utf-8-history.txt">here</a> for the story about UTF-8's origin.)</p>
-<p>UTF-8 is a <em>variable width character encoding</em>. ie, it uses different number of bytes to represent different ranges of characters. 1 or 2 or 3 or 4 bytes are used depending on the character.</p>
+<p>UTF-8 (Unicode Transformation Format - 8 bit) is an encoding defined
+by unicode that can represent any valid unicode character using 1 to 4
+bytes.</p>
+<p>(See <a
+href="https://www.cl.cam.ac.uk/~mgk25/ucs/utf-8-history.txt">here</a>
+for the story about UTF-8's origin.)</p>
+<p>UTF-8 is a <em>variable width character encoding</em>. ie, it uses
+different number of bytes to represent different ranges of characters. 1
+or 2 or 3 or 4 bytes are used depending on the character.</p>
 <table>
 <thead>
 <tr class="header">
@@ -218,7 +249,8 @@ Decomposition: 0079 0308
 </tr>
 </tbody>
 </table>
-<p>The bits marked <code>x</code> are the bits that are actually available to represent the character.</p>
+<p>The bits marked <code>x</code> are the bits that are actually
+available to represent the character.</p>
 <table>
 <thead>
 <tr class="header">
@@ -245,12 +277,18 @@ Decomposition: 0079 0308
 </tr>
 </tbody>
 </table>
-<p>The range of characters that can be represented with 1 byte (effectively 7 bits after accounting for the zero-bit prefix) are the ASCII characters (hence the characters have same integer value in both UTF-8 and ASCII).</p>
+<p>The range of characters that can be represented with 1 byte
+(effectively 7 bits after accounting for the zero-bit prefix) are the
+ASCII characters (hence the characters have same integer value in both
+UTF-8 and ASCII).</p>
 <p>All other characters need at least 2 bytes.</p>
-<p>That's why <code>ÿ</code> needed two <code>Ascii.ascii</code> values:</p>
+<p>That's why <code>ÿ</code> needed two <code>Ascii.ascii</code>
+values:</p>
 <ul>
-<li><code>(Ascii.Ascii true true false false false false true true)</code>: 11000011₂ = 0xc3</li>
-<li><code>(Ascii.Ascii true true true true true true false true)</code>: 01000000₂ = 0x40</li>
+<li><code>(Ascii.Ascii true true false false false false true true)</code>:
+11000011₂ = 0xc3</li>
+<li><code>(Ascii.Ascii true true true true true true false true)</code>:
+01000000₂ = 0x40</li>
 </ul>
 <pre class="coq"><code>Definition strbool (b : bool) : string :=
   match b with
@@ -284,7 +322,8 @@ Compute binstr_of_ascii (get&#39; 1 &quot;ÿ&quot;%string).
 </code></pre>
 <p>Because <code>ÿ</code> is 0xc340.</p>
 <h3 id="ascii.ascii-beyond-255"><code>Ascii.ascii</code> beyond 255</h3>
-<p>While making an <code>Ascii.ascii</code> value, we can use all 8 bits to represent characters.</p>
+<p>While making an <code>Ascii.ascii</code> value, we can use all 8 bits
+to represent characters.</p>
 <pre class="coq"><code>Compute Ascii.ascii_of_nat 0.    (* NUL *)
 (*
 = Ascii.Ascii false false false false false false false false
@@ -297,8 +336,11 @@ Compute Ascii.ascii_of_nat 255.
      : Ascii.ascii
 *)
 </code></pre>
-<p>But the character with the 8-bit value 0xff (ie, 255) is incomplete in UTF-8 as characters which can be represented in just 1-byte start with 0 whereas 255's binary value starts with 1.</p>
-<p>Just for the fun of it, I also tried converting a <code>nat</code> value bigger than 255 to <code>Ascii.ascii</code>:</p>
+<p>But the character with the 8-bit value 0xff (ie, 255) is incomplete
+in UTF-8 as characters which can be represented in just 1-byte start
+with 0 whereas 255's binary value starts with 1.</p>
+<p>Just for the fun of it, I also tried converting a <code>nat</code>
+value bigger than 255 to <code>Ascii.ascii</code>:</p>
 <pre class="coq"><code>Compute Ascii.ascii_of_nat 256.  (* same as ascii_of_nat 0 *)
 (*
 = Ascii.Ascii false false false false false false false false
@@ -307,8 +349,11 @@ Compute Ascii.ascii_of_nat 255.
 </code></pre>
 <p>So no error. Just overflow causing bit patterns to be reused.</p>
 <h2 id="strings-with-quotes">Strings with quotes</h2>
-<p>The default notation for strings needs a pair of double quotes to kick in. But then how would we write string with double quotes in them? For example, a string like <code>hello "hiya" hi</code>?</p>
-<p>We can use <code>""</code> (two double quotes) to stand in for a <em>single</em> literal double quote.</p>
+<p>The default notation for strings needs a pair of double quotes to
+kick in. But then how would we write string with double quotes in them?
+For example, a string like <code>hello "hiya" hi</code>?</p>
+<p>We can use <code>""</code> (two double quotes) to stand in for a
+<em>single</em> literal double quote.</p>
 <pre class="coq"><code>Compute &quot;hello &quot;&quot;hiya&quot;&quot; hi&quot;%string.
 (*
 = &quot;hello &quot;&quot;hiya&quot;&quot; hi&quot;%string
@@ -322,7 +367,8 @@ Compute &quot;&quot;&quot;&quot;%string.  (* a pair of double quotes *)
 *)
 </code></pre>
 <h2 id="multi-line-strings">Multi-line strings</h2>
-<p>We can write strings with newline in them (ie, multi-line strings) by simply writing it one line after the other.</p>
+<p>We can write strings with newline in them (ie, multi-line strings) by
+simply writing it one line after the other.</p>
 <pre class="coq"><code>Definition foo := &quot;a
 b&quot;%string.
 
@@ -333,12 +379,15 @@ b&quot;%string
      : string
 *)
 </code></pre>
-<p>The newline is showing up. Let's confirm by checking the string length:</p>
+<p>The newline is showing up. Let's confirm by checking the string
+length:</p>
 <pre class="coq"><code>Compute length foo.
 (* 3 : nat *)
 </code></pre>
-<p>Sounds about right: 'a', '' and 'b' are the characters present in the string.</p>
-<p>Let see what's the integer value of the second character in the string. Newline character has integer value of 10.</p>
+<p>Sounds about right: 'a', '' and 'b' are the characters present in the
+string.</p>
+<p>Let see what's the integer value of the second character in the
+string. Newline character has integer value of 10.</p>
 <pre class="coq"><code>Compute Ascii.nat_of_ascii
  match (String.get 1 foo) with
  | Some x =&gt; x
@@ -347,14 +396,19 @@ b&quot;%string
 (* 10 : nat *)
 </code></pre>
 <p>Okay, newline is there.</p>
-<p>(<code>String.get i str</code> takes a <code>nat</code> value <code>i</code> and a string <code>str</code> and returns an <code>option Ascii.ascii</code> value denoting the <code>i</code>-th <code>Ascii.ascii</code> value in <code>str</code>, if any.)</p>
+<p>(<code>String.get i str</code> takes a <code>nat</code> value
+<code>i</code> and a string <code>str</code> and returns an
+<code>option Ascii.ascii</code> value denoting the <code>i</code>-th
+<code>Ascii.ascii</code> value in <code>str</code>, if any.)</p>
 <pre class="coq"><code>Check String.get.
 (*
 get
      : nat -&gt; string -&gt; option ascii
 *)
 </code></pre>
-<p>Another way of explicitly specifying a newline character is with its integer value as a string under the <code>char</code> notation scope:</p>
+<p>Another way of explicitly specifying a newline character is with its
+integer value as a string under the <code>char</code> notation
+scope:</p>
 <pre class="coq"><code>Require Import Ascii.
 
 Compute &quot;010&quot;%char.
@@ -363,8 +417,11 @@ Compute &quot;010&quot;%char.
      : ascii
 *)
 </code></pre>
-<h2 id="finding-a-way-to-escape-characters">Finding a way to 'escape' characters</h2>
-<p>In programming languages like C, some special characters can be represented by 'escaping' certain characters. For example, newline can be represented with <code>'\n'</code>.</p>
+<h2 id="finding-a-way-to-escape-characters">Finding a way to 'escape'
+characters</h2>
+<p>In programming languages like C, some special characters can be
+represented by 'escaping' certain characters. For example, newline can
+be represented with <code>'\n'</code>.</p>
 <p>Couldn't find a way to do this sort of 'escaping' in Coq strings.</p>
 <pre class="coq"><code>Compute &quot;a\nb&quot;%string.
 (*
@@ -378,8 +435,10 @@ Compute String.length &quot;a\nb&quot;%string.
      : nat
 *)
 </code></pre>
-<p>The <code>\n</code> was counted as literal <code>\</code> and <code>n</code>.</p>
-<p>It is possible to have a newline made using its <code>Ascii.ascii</code> equivalent though:</p>
+<p>The <code>\n</code> was counted as literal <code>\</code> and
+<code>n</code>.</p>
+<p>It is possible to have a newline made using its
+<code>Ascii.ascii</code> equivalent though:</p>
 <pre class="coq"><code>(* 10 is ASCII value of &#39;\n&#39; *)
 Compute (&quot;a&quot; ++
          String (Ascii.ascii_of_nat 10) EmptyString ++
@@ -390,7 +449,9 @@ b&quot;%string
      : string
 *)
 </code></pre>
-<p>So, as an attempt to get a better idea of coq strings, I made a function <code>fmt</code> to 'escape' newlines in strings so that it is possible to just write '' in the usual notation for strings itself.</p>
+<p>So, as an attempt to get a better idea of coq strings, I made a
+function <code>fmt</code> to 'escape' newlines in strings so that it is
+possible to just write '' in the usual notation for strings itself.</p>
 <pre class="coq"><code>Fixpoint fmt (s : string) : string :=
   match s with
   | EmptyString =&gt; EmptyString
@@ -410,7 +471,9 @@ with fmt_aux (s : string) : string :=
       end
   end.
 </code></pre>
-<p>This function recognizes only the character 'n' for escaping. Escaping starts with a '\'. If the character following '\' is not 'n', that character is simply skipped.</p>
+<p>This function recognizes only the character 'n' for escaping.
+Escaping starts with a '\'. If the character following '\' is not 'n',
+that character is simply skipped.</p>
 <p>Let's try it out with a <code>\n</code> (newline):</p>
 <pre class="coq"><code>Compute fmt &quot;a\nb&quot;.
 (*
@@ -419,7 +482,8 @@ b&quot;%string
      : string
 *)
 </code></pre>
-<p>Seems to be working. Let's try how it works with an unknown character after the <code>\</code> escape:</p>
+<p>Seems to be working. Let's try how it works with an unknown character
+after the <code>\</code> escape:</p>
 <pre class="coq"><code>Compute fmt &quot;a\zb&quot;.
 (*
 = &quot;ab&quot;%string
@@ -429,18 +493,35 @@ b&quot;%string
 <p>Cool, the 'z' that was escaped got skipped.</p>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://coq.inria.fr/library/Coq.Strings.Ascii.html"><a href="https://coq.inria.fr/library/Coq.Strings.Ascii.html">https://coq.inria.fr/library/Coq.Strings.Ascii.html</a></a></li>
-<li><a href="https://coq.inria.fr/library/Coq.Strings.String.html"><a href="https://coq.inria.fr/library/Coq.Strings.String.html">https://coq.inria.fr/library/Coq.Strings.String.html</a></a></li>
-<li><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#list"><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#list">https://coq.inria.fr/library/Coq.Init.Datatypes.html#list</a></a></li>
-<li><a href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#nil"><a href="https://sympa.inria.fr/sympa/arc/coq-club/2013-03/msg00165.html">https://sympa.inria.fr/sympa/arc/coq-club/2013-03/msg00165.html</a></a></li>
-<li><a href="https://stackoverflow.com/questions/14690159/is-ascii-code-in-matter-of-fact-7-bit-or-8-bit"><a href="https://stackoverflow.com/questions/14690159/is-ascii-code-in-matter-of-fact-7-bit-or-8-bit">https://stackoverflow.com/questions/14690159/is-ascii-code-in-matter-of-fact-7-bit-or-8-bit</a></a></li>
-<li><a href="https://en.wikipedia.org/wiki/UTF-8"><a href="https://en.wikipedia.org/wiki/UTF-8">https://en.wikipedia.org/wiki/UTF-8</a></a></li>
-<li><a href="https://www.ietf.org/rfc/rfc3629.txt"><a href="https://www.ietf.org/rfc/rfc3629.txt">https://www.ietf.org/rfc/rfc3629.txt</a></a></li>
-<li><a href="https://www.cl.cam.ac.uk/~mgk25/ucs/utf-8-history.txt"><a href="https://www.cl.cam.ac.uk/~mgk25/ucs/utf-8-history.txt">https://www.cl.cam.ac.uk/~mgk25/ucs/utf-8-history.txt</a></a></li>
-<li><a href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#string-notations"><a href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#string-notations">https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#string-notations</a></a></li>
+<li><a href="https://coq.inria.fr/library/Coq.Strings.Ascii.html"><a
+href="https://coq.inria.fr/library/Coq.Strings.Ascii.html">https://coq.inria.fr/library/Coq.Strings.Ascii.html</a></a></li>
+<li><a href="https://coq.inria.fr/library/Coq.Strings.String.html"><a
+href="https://coq.inria.fr/library/Coq.Strings.String.html">https://coq.inria.fr/library/Coq.Strings.String.html</a></a></li>
+<li><a
+href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#list"><a
+href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#list">https://coq.inria.fr/library/Coq.Init.Datatypes.html#list</a></a></li>
+<li><a
+href="https://coq.inria.fr/library/Coq.Init.Datatypes.html#nil"><a
+href="https://sympa.inria.fr/sympa/arc/coq-club/2013-03/msg00165.html">https://sympa.inria.fr/sympa/arc/coq-club/2013-03/msg00165.html</a></a></li>
+<li><a
+href="https://stackoverflow.com/questions/14690159/is-ascii-code-in-matter-of-fact-7-bit-or-8-bit"><a
+href="https://stackoverflow.com/questions/14690159/is-ascii-code-in-matter-of-fact-7-bit-or-8-bit">https://stackoverflow.com/questions/14690159/is-ascii-code-in-matter-of-fact-7-bit-or-8-bit</a></a></li>
+<li><a href="https://en.wikipedia.org/wiki/UTF-8"><a
+href="https://en.wikipedia.org/wiki/UTF-8">https://en.wikipedia.org/wiki/UTF-8</a></a></li>
+<li><a href="https://www.ietf.org/rfc/rfc3629.txt"><a
+href="https://www.ietf.org/rfc/rfc3629.txt">https://www.ietf.org/rfc/rfc3629.txt</a></a></li>
+<li><a href="https://www.cl.cam.ac.uk/~mgk25/ucs/utf-8-history.txt"><a
+href="https://www.cl.cam.ac.uk/~mgk25/ucs/utf-8-history.txt">https://www.cl.cam.ac.uk/~mgk25/ucs/utf-8-history.txt</a></a></li>
+<li><a
+href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#string-notations"><a
+href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#string-notations">https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#string-notations</a></a></li>
 </ul>
 <p>—</p>
-<p>Update (28-Jul-2022): Had stumbled on <a href="https://github.com/whonore/Coqtail/issues/247">a small bug</a> in coqtail while trying the stuff in this blog post. It has since been <a href="https://github.com/whonore/Coqtail/pull/256">fixed</a> by the maintainer.</p>
+<p>Update (28-Jul-2022): Had stumbled on <a
+href="https://github.com/whonore/Coqtail/issues/247">a small bug</a> in
+coqtail while trying the stuff in this blog post. It has since been <a
+href="https://github.com/whonore/Coqtail/pull/256">fixed</a> by the
+maintainer.</p>
 </div>
 </body>
 </html>

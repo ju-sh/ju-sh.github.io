@@ -45,12 +45,18 @@
 
 <div id="content-container">
 <ul>
-<li>Haskell 2010 report: <a href="https://www.haskell.org/definition/haskell2010.pdf">https://www.haskell.org/definition/haskell2010.pdf</a></li>
+<li>Haskell 2010 report: <a
+href="https://www.haskell.org/definition/haskell2010.pdf">https://www.haskell.org/definition/haskell2010.pdf</a></li>
+<li>A history of haskell 2007: <a
+href="https://dl.acm.org/doi/pdf/10.1145/1238844.1238856">https://dl.acm.org/doi/pdf/10.1145/1238844.1238856</a></li>
 </ul>
 <h2 id="general">General</h2>
 <ul>
-<li>Monad transformers: Takes a monad as argument to return another monad</li>
-<li>Getting rid of quotes in <code>show char</code>: For a <code>c :: Char</code>, use <code>[c] :: String</code> <a href="https://stackoverflow.com/questions/70381553/haskell-instance-show-char-without-single-quotes">ˡ</a></li>
+<li>Monad transformers: Takes a monad as argument to return another
+monad</li>
+<li>Getting rid of quotes in <code>show char</code>: For a
+<code>c :: Char</code>, use <code>[c] :: String</code> <a
+href="https://stackoverflow.com/questions/70381553/haskell-instance-show-char-without-single-quotes">ˡ</a></li>
 </ul>
 <h2 id="predefined-types">Predefined types</h2>
 <ul>
@@ -59,47 +65,55 @@
 <li><code>Int</code>: fixed precision</li>
 <li><code>Integer</code>: arbitrary precision</li>
 </ul></li>
-<li><code>Word</code>: 'an unsigned integral type, with the same size as Int' - Haskell language report 2010 <a href="https://stackoverflow.com/questions/12432154/int-vs-word-in-common-use">ˡ</a></li>
+<li><code>Word</code>: 'an unsigned integral type, with the same size as
+Int' - Haskell language report 2010 <a
+href="https://stackoverflow.com/questions/12432154/int-vs-word-in-common-use">ˡ</a></li>
 </ul>
 <h2 id="bounds-of-a-int">Bounds of a <code>Int</code></h2>
-<p>Bounds can be seen for instances of <code>Bounded</code> type class:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>λ<span class="op">&gt;</span><span class="ot"> minBound ::</span> <span class="dt">Int</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="op">-</span><span class="dv">9223372036854775808</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Int</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="dv">9223372036854775807</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Bool</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="dt">True</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>λ<span class="op">&gt;</span><span class="ot"> minBound ::</span> <span class="dt">Bool</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="dt">False</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Word</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="dv">18446744073709551615</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Float</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a><span class="op">&lt;</span>interactive<span class="op">&gt;:</span><span class="dv">5</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>    • <span class="dt">No</span> <span class="kw">instance</span> for (<span class="dt">Bounded</span> <span class="dt">Float</span>) arising from a use <span class="kw">of</span> ‘maxBound’</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>    • <span class="dt">In</span> the expression<span class="op">:</span><span class="ot"> maxBound ::</span> <span class="dt">Float</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>      <span class="dt">In</span> an equation for ‘it’<span class="op">:</span> it <span class="ot">= maxBound ::</span> <span class="dt">Float</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Integer</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a><span class="op">&lt;</span>interactive<span class="op">&gt;:</span><span class="dv">6</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true"></a>    • <span class="dt">No</span> <span class="kw">instance</span> for (<span class="dt">Bounded</span> <span class="dt">Integer</span>)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true"></a>        arising from a use <span class="kw">of</span> ‘maxBound’</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true"></a>    • <span class="dt">In</span> the expression<span class="op">:</span><span class="ot"> maxBound ::</span> <span class="dt">Integer</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true"></a>      <span class="dt">In</span> an equation for ‘it’<span class="op">:</span> it <span class="ot">= maxBound ::</span> <span class="dt">Integer</span></span></code></pre></div>
+<p>Bounds can be seen for instances of <code>Bounded</code> type
+class:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span><span class="ot"> minBound ::</span> <span class="dt">Int</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">-</span><span class="dv">9223372036854775808</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Int</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dv">9223372036854775807</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Bool</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span><span class="ot"> minBound ::</span> <span class="dt">Bool</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Word</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="dv">18446744073709551615</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Float</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>interactive<span class="op">&gt;:</span><span class="dv">5</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">No</span> <span class="kw">instance</span> for (<span class="dt">Bounded</span> <span class="dt">Float</span>) arising from a use <span class="kw">of</span> ‘maxBound’</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">In</span> the expression<span class="op">:</span><span class="ot"> maxBound ::</span> <span class="dt">Float</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      <span class="dt">In</span> an equation for ‘it’<span class="op">:</span> it <span class="ot">= maxBound ::</span> <span class="dt">Float</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Integer</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>interactive<span class="op">&gt;:</span><span class="dv">6</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">No</span> <span class="kw">instance</span> for (<span class="dt">Bounded</span> <span class="dt">Integer</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        arising from a use <span class="kw">of</span> ‘maxBound’</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">In</span> the expression<span class="op">:</span><span class="ot"> maxBound ::</span> <span class="dt">Integer</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>      <span class="dt">In</span> an equation for ‘it’<span class="op">:</span> it <span class="ot">= maxBound ::</span> <span class="dt">Integer</span></span></code></pre></div>
 <p>Beyonds bounds, value will wrap around:</p>
 <pre><code>λ&gt; (maxBound :: Int) + 1
 -9223372036854775808
 </code></pre>
 <h2 id="tilde-in-type">Tilde in type</h2>
-<p><code>~</code> showing up in a type annoation indicates that two types are equivalent. It is a type constraint that haskell would need to be able to solve inorder for the code to type check.</p>
+<p><code class="verbatim">~</code> showing up in a type annoation
+indicates that two types are equivalent. It is a type constraint that
+haskell would need to be able to solve inorder for the code to type
+check.</p>
 <p>Eg (from a use of megaparsec):</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ot">atom ::</span> (<span class="dt">Token</span> s <span class="op">~</span> <span class="dt">Char</span>, <span class="dt">MonadParsec</span> e s m) <span class="ot">=&gt;</span> m (<span class="dt">Token</span> s)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>atom <span class="ot">=</span> satisfy <span class="fu">isUpper</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">atom ::</span> (<span class="dt">Token</span> s <span class="op">~</span> <span class="dt">Char</span>, <span class="dt">MonadParsec</span> e s m) <span class="ot">=&gt;</span> m (<span class="dt">Token</span> s)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>atom <span class="ot">=</span> satisfy <span class="fu">isUpper</span></span></code></pre></div>
 <h2 id="symbols">Symbols</h2>
 <table>
 <tbody>
@@ -170,7 +184,9 @@
 </tbody>
 </table>
 <h3 id="section"><code>(&gt;&gt;)</code></h3>
-<p><code>a &gt;&gt; b</code> is similar to <code>a &gt;&gt;= b</code> except that the value produced from <code>a</code> is ignored. <a href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-62--62-">ᵈ</a></p>
+<p><code>a &gt;&gt; b</code> is similar to <code>a &gt;&gt;= b</code>
+except that the value produced from <code>a</code> is ignored. <a
+href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-62--62-">ᵈ</a></p>
 <p>Kind of like:</p>
 <table>
 <thead>
@@ -196,10 +212,16 @@
 </table>
 <p>Similar to <code>*&gt;</code> as evident from type.</p>
 <h3 id="section-1"><code>(&lt;&gt;)</code></h3>
-<p>Associative operator associated with a semigroup <a href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Semigroup.html#v:sconcat">ᵈ</a> <a href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#g:9">ᵈ</a>. <a href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--62-">ᵈ</a></p>
+<p>Associative operator associated with a semigroup <a
+href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Semigroup.html#v:sconcat">ᵈ</a>
+<a
+href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#g:9">ᵈ</a>.
+<a
+href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:-60--62-">ᵈ</a></p>
 <p>In the case of list:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>λ<span class="op">&gt;</span> [<span class="dv">1</span>,<span class="dv">2</span>] <span class="op">&lt;&gt;</span> [<span class="dv">3</span>]</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> [<span class="dv">1</span>,<span class="dv">2</span>] <span class="op">&lt;&gt;</span> [<span class="dv">3</span>]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]</span></code></pre></div>
 <p>because list is an instance of <code>Semigroup</code>:</p>
 <pre><code>λ&gt; :i []
 type [] :: * -&gt; *
@@ -224,29 +246,35 @@ instance Traversable [] -- Defined in `Data.Traversable&#39;
 <ul>
 <li>Take the 'shape' of RHS and 'dress' up LHS in that shape.</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t (<span class="op">&lt;$</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="ot">(&lt;$) ::</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> f b <span class="ot">-&gt;</span> f a</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>λ<span class="op">&gt;</span> (<span class="op">&lt;$</span>) <span class="dv">3</span> [<span class="dv">4</span>]</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>[<span class="dv">3</span>]</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>λ<span class="op">&gt;</span> (<span class="op">&lt;$</span>) <span class="dv">3</span> [<span class="dv">3</span>]</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>[<span class="dv">3</span>]</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>λ<span class="op">&gt;</span> (<span class="op">&lt;$</span>) <span class="dt">True</span> [<span class="dt">False</span>]</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>[<span class="dt">True</span>]</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>λ<span class="op">&gt;</span> (<span class="op">&lt;$</span>) <span class="dt">True</span> (<span class="dt">Just</span> <span class="dt">False</span>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a><span class="dt">Just</span> <span class="dt">True</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t (<span class="op">&lt;$</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ot">(&lt;$) ::</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> f b <span class="ot">-&gt;</span> f a</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> (<span class="op">&lt;$</span>) <span class="dv">3</span> [<span class="dv">4</span>]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>]</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> (<span class="op">&lt;$</span>) <span class="dv">3</span> [<span class="dv">3</span>]</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>]</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> (<span class="op">&lt;$</span>) <span class="dt">True</span> [<span class="dt">False</span>]</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>[<span class="dt">True</span>]</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> (<span class="op">&lt;$</span>) <span class="dt">True</span> (<span class="dt">Just</span> <span class="dt">False</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="dt">Just</span> <span class="dt">True</span></span></code></pre></div>
 <p>Also see:</p>
 <ul>
-<li><a href="https://stackoverflow.com/questions/14087881/what-is-the-purpose-of-in-the-functor-class">https://stackoverflow.com/questions/14087881/what-is-the-purpose-of-in-the-functor-class</a></li>
-<li><a href="https://stackoverflow.com/questions/38557100/how-does-function-work-in-the-functor-class">https://stackoverflow.com/questions/38557100/how-does-function-work-in-the-functor-class</a></li>
+<li><a
+href="https://stackoverflow.com/questions/14087881/what-is-the-purpose-of-in-the-functor-class">https://stackoverflow.com/questions/14087881/what-is-the-purpose-of-in-the-functor-class</a></li>
+<li><a
+href="https://stackoverflow.com/questions/38557100/how-does-function-work-in-the-functor-class">https://stackoverflow.com/questions/38557100/how-does-function-work-in-the-functor-class</a></li>
 </ul>
 <p>From the first link:</p>
 <blockquote>
-<p><code>f &lt;$&gt; parser</code> means that you need to parse something and then apply <code>f</code> to the result.</p>
-<p><code>a &lt;$ parser</code> means that you don't need to parse anything (you're not interested in the result) - you only need to recognize, which can be much faster.</p>
+<p><code>f &lt;$&gt; parser</code> means that you need to parse
+something and then apply <code>f</code> to the result.</p>
+<p><code>a &lt;$ parser</code> means that you don't need to parse
+anything (you're not interested in the result) - you only need to
+recognize, which can be much faster.</p>
 </blockquote>
 <h3 id="section-3"><code>.</code></h3>
 <ul>
@@ -255,35 +283,49 @@ instance Traversable [] -- Defined in `Data.Traversable&#39;
 <li>First apply arg2 then use its result on arg1.</li>
 <li>Computation sort of goes from right to left.</li>
 </ul>
-<h3 id="and"><code>&lt;*</code> and <code>*&gt;</code>, <code>&lt;&lt;</code></h3>
+<h3 id="and"><code>&lt;*</code> and <code>*&gt;</code>,
+<code>&lt;&lt;</code></h3>
 <ul>
-<li><code>&lt;*</code> feels like 'ensure RHS is there but return LHS'</li>
+<li><code>&lt;*</code> feels like 'ensure RHS is there but return
+LHS'</li>
 <li><code>*&gt;</code> is the other direction.</li>
 <li><code>&gt;&gt;</code>: like <code>*&gt;</code> but for monads</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t (<span class="op">&lt;*</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="ot">(&lt;*) ::</span> <span class="dt">Applicative</span> f <span class="ot">=&gt;</span> f a <span class="ot">-&gt;</span> f b <span class="ot">-&gt;</span> f a</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>λ<span class="op">&gt;</span> (<span class="op">&lt;*</span>) (<span class="dt">Just</span> <span class="dt">True</span>) (<span class="dt">Just</span> <span class="dt">False</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="dt">Just</span> <span class="dt">True</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>λ<span class="op">&gt;</span> (<span class="op">*&gt;</span>) (<span class="dt">Just</span> <span class="dt">True</span>) (<span class="dt">Just</span> <span class="dt">False</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="dt">Just</span> <span class="dt">False</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a><span class="co">---</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t (<span class="op">&gt;&gt;</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a><span class="ot">(&gt;&gt;) ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> m a <span class="ot">-&gt;</span> m b <span class="ot">-&gt;</span> m b</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a>λ<span class="op">&gt;</span> (<span class="op">&gt;&gt;</span>) (<span class="dt">Just</span> <span class="dt">True</span>) (<span class="dt">Just</span> <span class="dt">False</span>)</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a><span class="dt">Just</span> <span class="dt">False</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t (<span class="op">&lt;*</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ot">(&lt;*) ::</span> <span class="dt">Applicative</span> f <span class="ot">=&gt;</span> f a <span class="ot">-&gt;</span> f b <span class="ot">-&gt;</span> f a</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> (<span class="op">&lt;*</span>) (<span class="dt">Just</span> <span class="dt">True</span>) (<span class="dt">Just</span> <span class="dt">False</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="dt">Just</span> <span class="dt">True</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> (<span class="op">*&gt;</span>) (<span class="dt">Just</span> <span class="dt">True</span>) (<span class="dt">Just</span> <span class="dt">False</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="dt">Just</span> <span class="dt">False</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t (<span class="op">&gt;&gt;</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="ot">(&gt;&gt;) ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> m a <span class="ot">-&gt;</span> m b <span class="ot">-&gt;</span> m b</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> (<span class="op">&gt;&gt;</span>) (<span class="dt">Just</span> <span class="dt">True</span>) (<span class="dt">Just</span> <span class="dt">False</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="dt">Just</span> <span class="dt">False</span></span></code></pre></div>
 <h2 id="infix">Infix</h2>
-<p>Constructors can be made infix too. Just start its name with a <code>:</code>.</p>
+<ul>
+<li>Constructors can be made infix too. Just start its name with a
+<code>:</code>.</li>
+<li>Fixity means precedence
+<ul>
+<li>0 = lowest precedence</li>
+<li>9 = highest precedence</li>
+<li>10 = precedence of function application</li>
+<li>11 = precedence of record syntax</li>
+</ul></li>
+</ul>
 <p>Example:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">data</span> <span class="dt">Re</span> <span class="ot">=</span> <span class="dt">Atom</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>        <span class="op">|</span> <span class="dt">Re</span> <span class="op">:-</span> <span class="dt">Re</span>  <span class="co">-- Concat</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="kw">infixr</span> <span class="dv">6</span> <span class="op">:-</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Re</span> <span class="ot">=</span> <span class="dt">Atom</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>        <span class="op">|</span> <span class="dt">Re</span> <span class="op">:-</span> <span class="dt">Re</span>  <span class="co">-- Concat</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">infixr</span> <span class="dv">6</span> <span class="op">:-</span></span></code></pre></div>
 <ul>
 <li>infixr: right associativity</li>
 <li>infixl: left associativity</li>
@@ -309,9 +351,12 @@ infixr 0 $
 <p>—</p>
 <p>See:</p>
 <ul>
-<li><a href="https://www.haskell.org/onlinereport/decls.html#fixity">https://www.haskell.org/onlinereport/decls.html#fixity</a></li>
-<li><a href="https://wiki.haskell.org/Constructor">https://wiki.haskell.org/Constructor</a></li>
-<li><a href="https://stackoverflow.com/questions/30039123/haskell-why-arent-infix-type-constructors-allowed">https://stackoverflow.com/questions/30039123/haskell-why-arent-infix-type-constructors-allowed</a></li>
+<li><a
+href="https://www.haskell.org/onlinereport/decls.html#fixity">https://www.haskell.org/onlinereport/decls.html#fixity</a></li>
+<li><a
+href="https://wiki.haskell.org/Constructor">https://wiki.haskell.org/Constructor</a></li>
+<li><a
+href="https://stackoverflow.com/questions/30039123/haskell-why-arent-infix-type-constructors-allowed">https://stackoverflow.com/questions/30039123/haskell-why-arent-infix-type-constructors-allowed</a></li>
 </ul>
 <h2 id="list-comprehension">List comprehension</h2>
 <p>Similar to the one in Python.</p>
@@ -338,12 +383,14 @@ infixr 0 $
 [2,3]
 </code></pre>
 <h3 id="take-n-lst">take n lst</h3>
-<p>Get ('takes') the first <code>n</code> number of elements from the argument list</p>
+<p>Get ('takes') the first <code>n</code> number of elements from the
+argument list</p>
 <pre><code>&gt; take 2 [&#39;a&#39;..&#39;e&#39;]
 &quot;ab&quot;
 </code></pre>
 <h3 id="drop-n-lst">drop n lst</h3>
-<p>Create a new list from <code>lst</code>, dropping the first <code>n</code> elements.</p>
+<p>Create a new list from <code>lst</code>, dropping the first
+<code>n</code> elements.</p>
 <pre><code>&gt; drop 6 [1..10]
 [7,8,9,10]
 </code></pre>
@@ -357,7 +404,8 @@ infixr 0 $
 <pre><code>&gt; product [1..3]
 6
 </code></pre>
-<h3 id="span-condition-list"><code>span &lt;condition&gt; &lt;list&gt;</code></h3>
+<h3
+id="span-condition-list"><code>span &lt;condition&gt; &lt;list&gt;</code></h3>
 <pre><code>span :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
 {-
     (a -&gt; Bool) is the condition; which is in effect a function
@@ -366,7 +414,10 @@ infixr 0 $
 </code></pre>
 <p>Splits input list into two parts.</p>
 <p>Returns a tuple of two lists.</p>
-<p>Takes elements from the list, and returns it as the first output list, as long as condition is true. Remaining elements, including the one for which the conditon became false, will be placed in the second output list.</p>
+<p>Takes elements from the list, and returns it as the first output
+list, as long as condition is true. Remaining elements, including the
+one for which the conditon became false, will be placed in the second
+output list.</p>
 <p>Example:</p>
 <pre><code>&gt; span (/=&#39;a&#39;) &quot;helloaworld&quot;
 (&quot;hello&quot;,&quot;awo&quot;)
@@ -380,7 +431,8 @@ infixr 0 $
 &gt; length [3,4]
 2
 </code></pre>
-<h3 id="check-presence-of-a-value-in-the-list">Check presence of a value in the list</h3>
+<h3 id="check-presence-of-a-value-in-the-list">Check presence of a value
+in the list</h3>
 <pre><code>elem &lt;element&gt; &lt;list&gt;
 </code></pre>
 <p>Example:</p>
@@ -389,7 +441,8 @@ True
 &gt; elem &#39;c&#39; &quot;ab&quot;
 False
 </code></pre>
-<h3 id="check-absence-of-a-value-in-the-list">Check absence of a value in the list</h3>
+<h3 id="check-absence-of-a-value-in-the-list">Check absence of a value
+in the list</h3>
 <pre><code>notElem &lt;element&gt; &lt;list&gt;
 </code></pre>
 <p>Opposite of <code>Elem</code>.</p>
@@ -408,13 +461,15 @@ True
 *** Exception: !!: index too large
 </code></pre>
 <h2 id="proxy"><code>Proxy</code></h2>
-<div class="sourceCode" id="cb27"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a><span class="kw">import</span> <span class="dt">Data.Proxy</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Proxy</span></span></code></pre></div>
 <pre><code>Prelude Data.Proxy&gt; :i Proxy
 type role Proxy phantom
 data Proxy (t :: k) = Proxy
 </code></pre>
 <h2 id="type-role">Type role</h2>
-<p><a href="https://downloads.haskell.org/~ghc/7.8.4/docs/html/users_guide/roles.html#">https://downloads.haskell.org/~ghc/7.8.4/docs/html/users_guide/roles.html#</a>:~:text=The%20role%20of%20a%20type,as%20T%20Int%20Bool%20c%20).</p>
+<p><a
+href="https://downloads.haskell.org/~ghc/7.8.4/docs/html/users_guide/roles.html#">https://downloads.haskell.org/~ghc/7.8.4/docs/html/users_guide/roles.html#</a>:~:text=The%20role%20of%20a%20type,as%20T%20Int%20Bool%20c%20).</p>
 <p>3 possible roles:</p>
 <ul>
 <li>nominal: must be same</li>
@@ -424,21 +479,36 @@ data Proxy (t :: k) = Proxy
 <pre><code>type role Set nominal
 type role Ptr representational
 </code></pre>
-<p><code>type role</code> can be used by the compiler to ensure that no type promises are broken.</p>
-<p>Example of use <code>nominal</code> type role: <a href="https://downloads.haskell.org/~ghc/7.8.4/docs/html/users_guide/roles.html">https://downloads.haskell.org/~ghc/7.8.4/docs/html/users_guide/roles.html</a></p>
+<p><code>type role</code> can be used by the compiler to ensure that no
+type promises are broken.</p>
+<p>Example of use <code>nominal</code> type role: <a
+href="https://downloads.haskell.org/~ghc/7.8.4/docs/html/users_guide/roles.html">https://downloads.haskell.org/~ghc/7.8.4/docs/html/users_guide/roles.html</a></p>
 <blockquote>
-<p>As another example, we can consider a type Set a that represents a set of data, ordered according to a's Ord instance. While it wouldnnn generally be type-safe to consider a to beat role representational, it is possible that a newtype and its base type have different orderings encoded in their respective Ord instances. This would lead to misbehavior at runtime. So, the author of the Set datatype would like its parameter to be at role nominal. This would be done with a declaration</p>
+<p>As another example, we can consider a type Set a that represents a
+set of data, ordered according to a's Ord instance. While it wouldnnn
+generally be type-safe to consider a to beat role representational, it
+is possible that a newtype and its base type have different orderings
+encoded in their respective Ord instances. This would lead to
+misbehavior at runtime. So, the author of the Set datatype would like
+its parameter to be at role nominal. This would be done with a
+declaration</p>
 </blockquote>
-<p>Role annotations can't be done for type synonyms (ie, those declared with <code>type</code>). But is possible for <code>newtype</code> I guess.</p>
+<p>Role annotations can't be done for type synonyms (ie, those declared
+with <code>type</code>). But is possible for <code>newtype</code> I
+guess.</p>
 <p>I guess:</p>
 <ul>
-<li>type roles are like 'role of a type argument in the type', not 'role of a type as a whole'</li>
+<li>type roles are like 'role of a type argument in the type', not 'role
+of a type as a whole'</li>
 <li>we can talk about the type role only for the last type argument
 <ul>
-<li>NO I THINK: 'role annotation declaration starts with type role and is followed by one role listing for each parameter of the type'. But yet to find example</li>
+<li>NO I THINK: 'role annotation declaration starts with type role and
+is followed by one role listing for each parameter of the type'. But yet
+to find example</li>
 </ul></li>
 <li>default type role is <code>phantom</code></li>
-<li>In terms of strictness: nominal &gt; representational &gt; phantom</li>
+<li>In terms of strictness: nominal &gt; representational &gt;
+phantom</li>
 </ul>
 <pre><code>  -- 
   type role T3 _ nominal
@@ -449,47 +519,70 @@ type role Ptr representational
 </code></pre>
 <p>From #haskell:</p>
 <blockquote>
-<p>15:48 &lt; int-e&gt; Yes, this is about restricting coercions. To coerce T a to T b, if the argument has a nominal role, a and be must be the same; if it's representational, then a and b must be coercible, and if it's a phantom argument, then you can coerce no matter what the types a and b are.</p>
+<p>15:48 &lt; int-e&gt; Yes, this is about restricting coercions. To
+coerce T a to T b, if the argument has a nominal role, a and be must be
+the same; if it's representational, then a and b must be coercible, and
+if it's a phantom argument, then you can coerce no matter what the types
+a and b are.</p>
 </blockquote>
 <p>Doubts:</p>
 <ul>
-<li>type role T4 nominal; data T4 a = MkT4 (a Int) – OK, but nominal is higher than necessary
+<li>type role T4 nominal; data T4 a = MkT4 (a Int) – OK, but nominal is
+higher than necessary
 <ul>
 <li>Why is representational fine here?</li>
 </ul></li>
 <li></li>
 </ul>
 <h2 id="equality-constraints">Equality constraints</h2>
-<p><a href="https://downloads.haskell.org/~ghc/7.4.1/docs/html/users_guide/equality-constraints.html#">https://downloads.haskell.org/~ghc/7.4.1/docs/html/users_guide/equality-constraints.html#</a>:~:text=where%20we%20require%20that%20the,rank%20types%20are%20otherwise%20enabled</p>
+<p><a
+href="https://downloads.haskell.org/~ghc/7.4.1/docs/html/users_guide/equality-constraints.html#">https://downloads.haskell.org/~ghc/7.4.1/docs/html/users_guide/equality-constraints.html#</a>:~:text=where%20we%20require%20that%20the,rank%20types%20are%20otherwise%20enabled</p>
 <p>Syntax where you see stuff like <code>(a ~ b)</code></p>
 <h2 id="type-coercions">Type coercions</h2>
-<p><code>type role Set nominal</code>, where <code>Set</code> has kind <code>* -&gt; *</code>, prevents coercion of <code>Set a</code> to <code>Set b</code>. (Doubt: Even when <code>a</code> and <code>b</code> are same??)</p>
-<p>Coercion is possible when the compiler is sure that the two types have the same representation. <a href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Coerce.html">https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Coerce.html</a></p>
-<p>See: Zero-cost coercions for Haskell - ICFP 2014 by Breitner, Eisenberg, Jones, Weirich <a href="https://www.seas.upenn.edu/~sweirich/papers/coercible-JFP.pdf">https://www.seas.upenn.edu/~sweirich/papers/coercible-JFP.pdf</a></p>
-<p>Apparently, some definitions related to those from <code>Data.Coerce</code>: <a href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Type-Coercion.html">https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Type-Coercion.html</a></p>
+<p><code>type role Set nominal</code>, where <code>Set</code> has kind
+<code>* -&gt; *</code>, prevents coercion of <code>Set a</code> to
+<code>Set b</code>. (Doubt: Even when <code>a</code> and <code>b</code>
+are same??)</p>
+<p>Coercion is possible when the compiler is sure that the two types
+have the same representation. <a
+href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Coerce.html">https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Coerce.html</a></p>
+<p>See: Zero-cost coercions for Haskell - ICFP 2014 by Breitner,
+Eisenberg, Jones, Weirich <a
+href="https://www.seas.upenn.edu/~sweirich/papers/coercible-JFP.pdf">https://www.seas.upenn.edu/~sweirich/papers/coercible-JFP.pdf</a></p>
+<p>Apparently, some definitions related to those from
+<code>Data.Coerce</code>: <a
+href="https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Type-Coercion.html">https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Type-Coercion.html</a></p>
 <p><code>Data.Tagged</code>: Related to <code>Proxy</code> type?</p>
 <h2 id="bottom">Bottom</h2>
 <ul>
-<li>Written as <code>_|_</code> in haskell documentation (for <code>⊥</code>)</li>
-<li>A value that never finishes computing successfully. Either due to error, or because of infinite loop.</li>
+<li>Written as <code>_|_</code> in haskell documentation (for
+<code>⊥</code>)</li>
+<li>A value that never finishes computing successfully. Either due to
+error, or because of infinite loop.</li>
 <li>Can be a value of any type</li>
-<li><a href="https://wiki.haskell.org/Bottom">https://wiki.haskell.org/Bottom</a></li>
+<li><a
+href="https://wiki.haskell.org/Bottom">https://wiki.haskell.org/Bottom</a></li>
 </ul>
 <h2 id="pragmas">Pragmas</h2>
-<p><a href="https://downloads.haskell.org/~ghc/7.0.3/docs/html/users_guide/pragmas.html">https://downloads.haskell.org/~ghc/7.0.3/docs/html/users_guide/pragmas.html</a></p>
+<p><a
+href="https://downloads.haskell.org/~ghc/7.0.3/docs/html/users_guide/pragmas.html">https://downloads.haskell.org/~ghc/7.0.3/docs/html/users_guide/pragmas.html</a></p>
 <ul>
-<li><code>INLINE</code>, <code>NOINLINE</code>: Control inlining of function definitions
+<li><code>INLINE</code>, <code>NOINLINE</code>: Control inlining of
+function definitions
 <ul>
 <li>Eg: <code>{-# INLINE myfun #-}</code></li>
 </ul></li>
-<li><code>INLINABLE</code>: Suggest inlining while still leaving the final decision to the compiler.</li>
+<li><code>INLINABLE</code>: Suggest inlining while still leaving the
+final decision to the compiler.</li>
 <li><code>ANN</code>: Annotate</li>
 </ul>
 <h3 id="ghcoptions">GHC<sub>OPTIONS</sub></h3>
-<p>Looks like this is for passing options that could be passed down to ghc command.</p>
+<p>Looks like this is for passing options that could be passed down to
+ghc command.</p>
 <p>Eg: Disable a specific warning throughout a file:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a><span class="co">-- For &#39;warning: [-Wpartial-type-signatures]&#39;</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true"></a><span class="ot">{-# OPTIONS_GHC -fno-warn-partial-type-signatures #-}</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- For &#39;warning: [-Wpartial-type-signatures]&#39;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# OPTIONS_GHC -fno-warn-partial-type-signatures #-}</span></span></code></pre></div>
 <h2 id="rewrite-rules">Rewrite rules</h2>
 <ul>
 <li>Specified with <code>RULES</code> pragma</li>
@@ -497,12 +590,15 @@ type role Ptr representational
 <ul>
 <li>Multiple <code>RULES</code> pragma use also possible</li>
 </ul></li>
-<li>'the closing <code>#-}</code> should start in a column to the right of the opening <code>{-#</code>'</li>
-<li>Rules are enabled by <code>-fenable-rewrite-rules</code> (disabled by <code>-fno-enable-rewrite-rules</code>)
+<li>'the closing <code>#-}</code> should start in a column to the right
+of the opening <code>{-#</code>'</li>
+<li>Rules are enabled by <code>-fenable-rewrite-rules</code> (disabled
+by <code>-fno-enable-rewrite-rules</code>)
 <ul>
 <li><code>ghc -O</code> implies <code>-fenable-rewrite-rules</code></li>
 </ul></li>
-<li>Variables used must either be in scope or quantified with a <code>forall</code>
+<li>Variables used must either be in scope or quantified with a
+<code>forall</code>
 <ul>
 <li>Pattern variables: <code>forall</code> quantified variables</li>
 </ul></li>
@@ -510,17 +606,23 @@ type role Ptr representational
 <p>Syntax:</p>
 <pre><code>rule-name [phase-control-number] rewrite-equation
 </code></pre>
-<p>Example<a href="https://downloads.haskell.org/~ghc/7.0.1/docs/html/users_guide/rewrite-rules.html">ˢ</a>:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a><span class="ot">{-# RULES</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a><span class="ot">&quot;map/map&quot;   forall f g xs. map f (map g xs) = map (f.g) xs</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true"></a><span class="ot">  #-}</span></span></code></pre></div>
+<p>Example<a
+href="https://downloads.haskell.org/~ghc/7.0.1/docs/html/users_guide/rewrite-rules.html">ˢ</a>:</p>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# RULES</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ot">&quot;map/map&quot;   forall f g xs. map f (map g xs) = map (f.g) xs</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="ot">  #-}</span></span></code></pre></div>
 <ul>
-<li>To use <code>RULES</code> optimization needs be active =&gt; can't be used from ghci <a href="https://jmtd.net/log/ghc_rewrite_rules/">ʳ</a></li>
+<li>To use <code>RULES</code> optimization needs be active =&gt; can't
+be used from ghci <a
+href="https://jmtd.net/log/ghc_rewrite_rules/">ʳ</a></li>
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://wiki.haskell.org/GHC/Using_rules">https://wiki.haskell.org/GHC/Using_rules</a></li>
-<li><a href="https://jmtd.net/log/ghc_rewrite_rules/">https://jmtd.net/log/ghc_rewrite_rules/</a></li>
+<li><a
+href="https://wiki.haskell.org/GHC/Using_rules">https://wiki.haskell.org/GHC/Using_rules</a></li>
+<li><a
+href="https://jmtd.net/log/ghc_rewrite_rules/">https://jmtd.net/log/ghc_rewrite_rules/</a></li>
 </ul>
 <h2 id="find-size-of-a-value">Find size of a value</h2>
 <p>Use <code>HeapSize</code> module.</p>
@@ -536,17 +638,25 @@ Just 36
 λ&gt; runHeapsize 30 $ recursiveSizeNF (Left True :: Either Bool Bool)
 Just 33
 </code></pre>
-<p><a href="https://hackage.haskell.org/package/heapsize-0.3.0.1/docs/HeapSize.html">https://hackage.haskell.org/package/heapsize-0.3.0.1/docs/HeapSize.html</a></p>
-<h2 id="making-a-read-instance-for-a-class">Making a <code>Read</code> instance for a class</h2>
+<p><a
+href="https://hackage.haskell.org/package/heapsize-0.3.0.1/docs/HeapSize.html">https://hackage.haskell.org/package/heapsize-0.3.0.1/docs/HeapSize.html</a></p>
+<h2 id="making-a-read-instance-for-a-class">Making a <code>Read</code>
+instance for a class</h2>
 <ul>
-<li><a href="https://archive.alvb.in/msc/03_infoafp/papers/2013-01-08_HoorCollege_HaskellDoYouReadMe_dk.pdf">https://archive.alvb.in/msc/03_infoafp/papers/2013-01-08_HoorCollege_HaskellDoYouReadMe_dk.pdf</a></li>
-<li><a href="https://discourse.haskell.org/t/instance-read-a/4367/2">https://discourse.haskell.org/t/instance-read-a/4367/2</a></li>
-<li><a href="https://stackoverflow.com/questions/14006707/making-a-read-instance-in-haskell">https://stackoverflow.com/questions/14006707/making-a-read-instance-in-haskell</a></li>
-<li><a href="http://zvon.org/other/haskell/Outputprelude/Read_c.html">http://zvon.org/other/haskell/Outputprelude/Read_c.html</a></li>
-<li><a href="https://hackage.haskell.org/package/base-4.20.0.1/docs/Text-Read.html">https://hackage.haskell.org/package/base-4.20.0.1/docs/Text-Read.html</a></li>
+<li><a
+href="https://archive.alvb.in/msc/03_infoafp/papers/2013-01-08_HoorCollege_HaskellDoYouReadMe_dk.pdf">https://archive.alvb.in/msc/03_infoafp/papers/2013-01-08_HoorCollege_HaskellDoYouReadMe_dk.pdf</a></li>
+<li><a
+href="https://discourse.haskell.org/t/instance-read-a/4367/2">https://discourse.haskell.org/t/instance-read-a/4367/2</a></li>
+<li><a
+href="https://stackoverflow.com/questions/14006707/making-a-read-instance-in-haskell">https://stackoverflow.com/questions/14006707/making-a-read-instance-in-haskell</a></li>
+<li><a
+href="http://zvon.org/other/haskell/Outputprelude/Read_c.html">http://zvon.org/other/haskell/Outputprelude/Read_c.html</a></li>
+<li><a
+href="https://hackage.haskell.org/package/base-4.20.0.1/docs/Text-Read.html">https://hackage.haskell.org/package/base-4.20.0.1/docs/Text-Read.html</a></li>
 </ul>
 <h2 id="ghci">ghci</h2>
-<p><a href="http://dev.stephendiehl.com/hask/">http://dev.stephendiehl.com/hask/</a></p>
+<p><a
+href="http://dev.stephendiehl.com/hask/">http://dev.stephendiehl.com/hask/</a></p>
 <p>For interactive haskell REPL.</p>
 <table>
 <thead>
@@ -620,185 +730,111 @@ Just 33
 Prelude Data.List&gt; [1,2,3] \\ [2]
 [1,3]
 </code></pre>
-<h2 id="third-party-stuff">Third party stuff</h2>
-<h3 id="parsec">Parsec</h3>
-<ul>
-<li><code>&lt;?&gt;</code>: <code>parser &lt;?&gt; err_msg</code>
-<ul>
-<li><code>err_msg</code> shown when parsing with <code>parser</code> fails</li>
-</ul></li>
-</ul>
-<h3 id="containers">Containers</h3>
-<p><code>Seq</code> (as in list) type from <code>Data.Sequence</code> of <a href="https://hackage.haskell.org/package/containers-0.7/docs/Data-Sequence.html#v:-62--60-">'containers'</a> package.</p>
-<table>
-<tbody>
-<tr class="odd">
-<td><code>&lt;│</code></td>
-<td>Add element to left end of a seq</td>
-<td><code>a -&gt; Seq a -&gt; Seq a</code></td>
-</tr>
-<tr class="even">
-<td><code>│&gt;</code></td>
-<td>Add element to right end of a seq</td>
-<td><code>a -&gt; Seq a -&gt; Seq a</code></td>
-</tr>
-<tr class="odd">
-<td><code>&gt;&lt;</code></td>
-<td>Concatenate two sequnces</td>
-<td><code>Seq a -&gt; Seq a -&gt; Seq a</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="bricks">Bricks</h3>
-<ul>
-<li><code>&lt;+&gt;</code>: Vertical split</li>
-<li><code>&lt;=&gt;</code>: Horizontal split</li>
-<li>microlens is a dependency, so lens can be used</li>
-</ul>
-<p>Timers can be made with <code>BChan</code></p>
-<ul>
-<li>Docs: <a href="https://hackage.haskell.org/package/brick-2.4/docs/Brick-BChan.html">https://hackage.haskell.org/package/brick-2.4/docs/Brick-BChan.html</a></li>
-<li>Eg: <a href="https://github.com/jtdaugherty/brick/blob/master/programs/CustomEventDemo.hs">https://github.com/jtdaugherty/brick/blob/master/programs/CustomEventDemo.hs</a></li>
-</ul>
-<p>More:</p>
-<ul>
-<li><a href="https://samtay.github.io/posts/introduction-to-brick">https://samtay.github.io/posts/introduction-to-brick</a></li>
-</ul>
-<h3 id="lens">Lens</h3>
-<p><a href="https://hackage.haskell.org/package/lens-tutorial-1.0.5/docs/Control-Lens-Tutorial.html">https://hackage.haskell.org/package/lens-tutorial-1.0.5/docs/Control-Lens-Tutorial.html</a></p>
-<ul>
-<li>Accessor notation: <code>^.</code>
-<ul>
-<li><code>val^.attr.subattr</code> is like <code>obj.attr.subattr</code> in Python</li>
-<li>Same as val <code>val ^. (attr . subattr)</code></li>
-<li><code>^.</code> is same as <code>view</code>: <code>x ^. l = view l x</code></li>
-</ul></li>
-<li>Cons:
-<ul>
-<li>Error messages can be confusing</li>
-<li>Increased compile time. To generate lenses.</li>
-</ul></li>
-<li>Packages:
-<ul>
-<li><code>lens</code>: lot of dependencies</li>
-<li><code>microlens</code> or <code>lens-simple</code>: light-weight form of <code>lens</code> with fewer dependencies</li>
-</ul></li>
-</ul>
-<p>—</p>
-<p><code>%=</code>:</p>
-<ul>
-<li>Apply a function to get new state</li>
-<li><a href="https://hackage.haskell.org/package/lens-5.3.2/docs/Control-Lens-Operators.html#v:-37--61-">https://hackage.haskell.org/package/lens-5.3.2/docs/Control-Lens-Operators.html#v:-37--61-</a></li>
-</ul>
-<div class="sourceCode" id="cb36"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> execState (<span class="kw">do</span> _1 <span class="op">%=</span> f;_2 <span class="op">%=</span> g) (a,b)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true"></a>(f a, g b)</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> execState (<span class="kw">do</span> both <span class="op">%=</span> f) (a,b)</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true"></a>(f a, f b)</span></code></pre></div>
-<p><code>.=</code>:</p>
-<ul>
-<li>Assign a new state</li>
-</ul>
-<div class="sourceCode" id="cb37"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> execState (<span class="kw">do</span> _1 <span class="op">.=</span> c;_2 <span class="op">%=</span> d) (a,b)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true"></a>(c, d)</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true"></a></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> execState (<span class="kw">do</span> both <span class="op">%=</span> c) (a,b)</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true"></a>(c, c)</span></code></pre></div>
-<p>—</p>
-<p>More concepts:</p>
-<ul>
-<li>Traversal: getter-setters for a list of fields ??</li>
-<li>Prism</li>
-<li>Iso</li>
-<li>Review</li>
-</ul>
-<p>Functions: re, unto, set, .=,</p>
-<hr />
-<p>One possible use of lens: getters-setters when using nested record types</p>
-<ul>
-<li><code>over</code>: setter</li>
-<li><code>view</code>: getter</li>
-</ul>
-<p>It's <em>like</em> this:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true"></a><span class="kw">data</span> <span class="dt">Lens</span> a b <span class="ot">=</span> <span class="dt">Lens</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true"></a>{<span class="ot"> view ::</span> a <span class="ot">-&gt;</span> b</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true"></a>,<span class="ot"> over ::</span> (b <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> a)</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true"></a>}</span></code></pre></div>
-<hr />
-<p>Create lens for a type with:</p>
-<pre><code>makeLenses &#39;&#39;&lt;bigtype&gt;
-makeLenses &#39;&#39;&lt;smalltype&gt;
-</code></pre>
-<p>This is made possible with TemplateHaskell.</p>
-<p>Field names in the record type should have underscore prefix.</p>
 <h2 id="tricks">'Tricks'</h2>
 <h3 id="avoiding-knownnat">Avoiding <code>KnownNat</code></h3>
 <p>Suppose we need this:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true"></a><span class="ot">foo ::</span> <span class="dt">KnownNat</span> n <span class="ot">=&gt;</span> <span class="dt">Vec</span> n <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Vec</span> n <span class="dt">Bool</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true"></a>foo v <span class="ot">=</span> <span class="fu">repeat</span> <span class="dt">False</span></span></code></pre></div>
-<p>but without <code>KnownNat</code>. <code>repeat</code> needs <code>KnownNat</code>.</p>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ot">foo ::</span> <span class="dt">KnownNat</span> n <span class="ot">=&gt;</span> <span class="dt">Vec</span> n <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Vec</span> n <span class="dt">Bool</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>foo v <span class="ot">=</span> <span class="fu">repeat</span> <span class="dt">False</span></span></code></pre></div>
+<p>but without <code>KnownNat</code>. <code>repeat</code> needs
+<code>KnownNat</code>.</p>
 <p>ie, aim is like this:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true"></a><span class="ot">{-# LANGUAGE PartialTypeSignatures #-}</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true"></a></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true"></a><span class="ot">foo ::</span> <span class="dt">Vec</span> _ <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Vec</span> _ <span class="dt">Bool</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true"></a>foo v <span class="ot">=</span> (<span class="fu">repeat</span> <span class="dt">False</span>)<span class="ot"> ::</span> (typeOf v)</span></code></pre></div>
-<p>Exploit this fact: 'Functor doesn't need <code>KnownNat</code>' (thanks to Rowan Goemans).</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true"></a><span class="ot">foo ::</span> <span class="dt">Vec</span> _ <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Vec</span> _ <span class="dt">Bool</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true"></a>foo v <span class="ot">=</span> <span class="fu">fmap</span> (<span class="fu">const</span> <span class="dt">False</span>) v</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE PartialTypeSignatures #-}</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="ot">foo ::</span> <span class="dt">Vec</span> _ <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Vec</span> _ <span class="dt">Bool</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>foo v <span class="ot">=</span> (<span class="fu">repeat</span> <span class="dt">False</span>)<span class="ot"> ::</span> (typeOf v)</span></code></pre></div>
+<p>Exploit this fact: 'Functor doesn't need <code>KnownNat</code>'
+(thanks to Rowan Goemans).</p>
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ot">foo ::</span> <span class="dt">Vec</span> _ <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Vec</span> _ <span class="dt">Bool</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>foo v <span class="ot">=</span> <span class="fu">fmap</span> (<span class="fu">const</span> <span class="dt">False</span>) v</span></code></pre></div>
 <p>—</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true"></a>λ<span class="op">&gt;</span> (<span class="fu">const</span> <span class="dt">False</span>) <span class="op">&lt;$&gt;</span> [<span class="dv">0</span>,<span class="dv">1</span>]</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true"></a>[<span class="dt">False</span>,<span class="dt">False</span>]</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true"></a></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true"></a>λ<span class="op">&gt;</span> <span class="fu">fmap</span> (<span class="fu">fmap</span> (<span class="fu">const</span> <span class="dt">False</span>)) [[<span class="dv">0</span>,<span class="dv">1</span>], [<span class="dv">2</span>,<span class="dv">3</span>]]</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true"></a>[[<span class="dt">False</span>,<span class="dt">False</span>],[<span class="dt">False</span>,<span class="dt">False</span>]]</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true"></a></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true"></a>λ<span class="op">&gt;</span> (<span class="fu">const</span> <span class="dt">False</span> <span class="op">&lt;$&gt;</span>) <span class="op">&lt;$&gt;</span> [[<span class="dv">0</span>,<span class="dv">1</span>], [<span class="dv">2</span>,<span class="dv">3</span>]]</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true"></a>[[<span class="dt">False</span>,<span class="dt">False</span>],[<span class="dt">False</span>,<span class="dt">False</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> (<span class="fu">const</span> <span class="dt">False</span>) <span class="op">&lt;$&gt;</span> [<span class="dv">0</span>,<span class="dv">1</span>]</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>[<span class="dt">False</span>,<span class="dt">False</span>]</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">fmap</span> (<span class="fu">fmap</span> (<span class="fu">const</span> <span class="dt">False</span>)) [[<span class="dv">0</span>,<span class="dv">1</span>], [<span class="dv">2</span>,<span class="dv">3</span>]]</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>[[<span class="dt">False</span>,<span class="dt">False</span>],[<span class="dt">False</span>,<span class="dt">False</span>]]</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> (<span class="fu">const</span> <span class="dt">False</span> <span class="op">&lt;$&gt;</span>) <span class="op">&lt;$&gt;</span> [[<span class="dv">0</span>,<span class="dv">1</span>], [<span class="dv">2</span>,<span class="dv">3</span>]]</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>[[<span class="dt">False</span>,<span class="dt">False</span>],[<span class="dt">False</span>,<span class="dt">False</span>]]</span></code></pre></div>
+<h2 id="from-haskell-language-report-2010">From Haskell Language report
+2010</h2>
+<blockquote>
+<p>The constructor ":" is reserved solely for list construction; like
+[], it is considered part of the language syntax, and cannot be hidden
+or redefined. It is a right-associative operator, with precedence level
+5</p>
+</blockquote>
 <h2 id="misc">Misc</h2>
 <ul>
-<li>ghc hints: <a href="https://downloads.haskell.org/ghc/latest/docs/users_guide/hints.html">https://downloads.haskell.org/ghc/latest/docs/users_guide/hints.html</a></li>
-<li>Cabal is a library, cabal-install uses it
+<li><p>ghc hints: <a
+href="https://downloads.haskell.org/ghc/latest/docs/users_guide/hints.html">https://downloads.haskell.org/ghc/latest/docs/users_guide/hints.html</a></p></li>
+<li><p>Cabal is a library, cabal-install uses it</p>
 <ul>
-<li><code>cabal.project</code> file is needed if there are multiple sub-packages within the packages, each with a distinct <code>.cabal</code> file</li>
+<li><code>cabal.project</code> file is needed if there are multiple
+sub-packages within the packages, each with a distinct
+<code>.cabal</code> file</li>
 </ul></li>
-<li>hedgehog: apparently better than quickcheck</li>
-<li>Change ghcup installation location: <code>GHCUP_INSTALL_BASE_PREFIX=&lt;path&gt;</code>
+<li><p>hedgehog: apparently better than quickcheck</p></li>
+<li><p>Change ghcup installation location:
+<code>GHCUP_INSTALL_BASE_PREFIX=&lt;path&gt;</code></p>
 <ul>
-<li><a href="https://www.haskell.org/ghcup/guide/#env-variables">https://www.haskell.org/ghcup/guide/#env-variables</a></li>
+<li><a
+href="https://www.haskell.org/ghcup/guide/#env-variables">https://www.haskell.org/ghcup/guide/#env-variables</a></li>
 </ul></li>
-<li><a href="https://downloads.haskell.org/~ghc/7.0.1/docs/html/users_guide/rewrite-rules.html">Tasty</a>: for testing
+<li><p><a
+href="https://downloads.haskell.org/~ghc/7.0.1/docs/html/users_guide/rewrite-rules.html">Tasty</a>:
+for testing</p>
 <ul>
-<li>Needs separate backend, apparently. Hunit, quickcheck available.</li>
+<li>Needs separate backend, apparently. Hunit, quickcheck
+available.</li>
 </ul></li>
-<li>Some humour: <a href="http://web.archive.org/web/20240705080317/www.willamette.edu/~fruehr/haskell/evolution.html">http://web.archive.org/web/20240705080317/www.willamette.edu/~fruehr/haskell/evolution.html</a></li>
+<li><p>Phantom types</p></li>
+<li><p>Some humour: <a
+href="http://web.archive.org/web/20240705080317/www.willamette.edu/~fruehr/haskell/evolution.html">http://web.archive.org/web/20240705080317/www.willamette.edu/~fruehr/haskell/evolution.html</a></p></li>
 </ul>
 <h3 id="a-subtlety">A subtlety</h3>
-<p>(From <a href="https://wasp-lang.dev/blog/2021/09/01/haskell-forall-tutorial">here</a>.)</p>
+<p>(From <a
+href="https://wasp-lang.dev/blog/2021/09/01/haskell-forall-tutorial">here</a>.)</p>
 <p>Following function won't type check.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true"></a><span class="ot">f ::</span> [a] <span class="ot">-&gt;</span> [a]</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true"></a>f xs <span class="ot">=</span> ys <span class="op">++</span> ys</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true"></a>  <span class="kw">where</span><span class="ot"> ys ::</span> [a]</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true"></a>        ys <span class="ot">=</span> <span class="fu">reverse</span> xs</span></code></pre></div>
-<p>This is because the <code>a</code> in <code>f</code> and the one in <code>ys</code> are not considered the same. This function is same as:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true"></a><span class="ot">f ::</span> [a] <span class="ot">-&gt;</span> [a]</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true"></a>f xs <span class="ot">=</span> ys <span class="op">++</span> ys</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true"></a>  <span class="kw">where</span><span class="ot"> ys ::</span> [b]</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true"></a>        ys <span class="ot">=</span> <span class="fu">reverse</span> xs</span></code></pre></div>
-<p>Meaning can be made clear to compiler by having a universal quantification over <code>a</code>.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true"></a><span class="ot">{-# LANGUAGE ScopedTypeVariables #-}</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true"></a></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true"></a><span class="ot">f ::</span> <span class="kw">forall</span> a<span class="op">.</span> [a] <span class="ot">-&gt;</span> [a]</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true"></a>f xs <span class="ot">=</span> ys <span class="op">++</span> ys</span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true"></a>  <span class="kw">where</span><span class="ot"> ys ::</span> [a]</span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true"></a>        ys <span class="ot">=</span> <span class="fu">reverse</span> xs</span></code></pre></div>
-<p>With the <code>forall</code>, the type variable bound by <code>a</code> ranges throughout the entire defintion of <code>f</code>. This way, haskell would know that the <code>a</code> used in both locations are the same.</p>
-<p>The same function could be written without <code>forall</code> as well. Using a pattern type signature like this<a href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/scoped_type_variables.html#extension-ScopedTypeVariables">ʳ</a>:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true"></a><span class="ot">{-# LANGUAGE ScopedTypeVariables #-}</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true"></a></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true"></a><span class="ot">f ::</span> [a] <span class="ot">-&gt;</span> [a]</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true"></a>f (<span class="ot">xs ::</span> [aa]) <span class="ot">=</span> ys <span class="op">++</span> ys</span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true"></a>  <span class="kw">where</span><span class="ot"> ys ::</span> [aa]</span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true"></a>        ys <span class="ot">=</span> <span class="fu">reverse</span> xs</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ot">f ::</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>f xs <span class="ot">=</span> ys <span class="op">++</span> ys</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span><span class="ot"> ys ::</span> [a]</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>        ys <span class="ot">=</span> <span class="fu">reverse</span> xs</span></code></pre></div>
+<p>This is because the <code>a</code> in <code>f</code> and the one in
+<code>ys</code> are not considered the same. This function is same
+as:</p>
+<div class="sourceCode" id="cb41"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ot">f ::</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>f xs <span class="ot">=</span> ys <span class="op">++</span> ys</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span><span class="ot"> ys ::</span> [b]</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>        ys <span class="ot">=</span> <span class="fu">reverse</span> xs</span></code></pre></div>
+<p>Meaning can be made clear to compiler by having a universal
+quantification over <code>a</code>.</p>
+<div class="sourceCode" id="cb42"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE ScopedTypeVariables #-}</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="ot">f ::</span> <span class="kw">forall</span> a<span class="op">.</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>f xs <span class="ot">=</span> ys <span class="op">++</span> ys</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span><span class="ot"> ys ::</span> [a]</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>        ys <span class="ot">=</span> <span class="fu">reverse</span> xs</span></code></pre></div>
+<p>With the <code>forall</code>, the type variable bound by
+<code>a</code> ranges throughout the entire defintion of <code>f</code>.
+This way, haskell would know that the <code>a</code> used in both
+locations are the same.</p>
+<p>The same function could be written without <code>forall</code> as
+well. Using a pattern type signature like this<a
+href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/scoped_type_variables.html#extension-ScopedTypeVariables">ʳ</a>:</p>
+<div class="sourceCode" id="cb43"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE ScopedTypeVariables #-}</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="ot">f ::</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>f (<span class="ot">xs ::</span> [aa]) <span class="ot">=</span> ys <span class="op">++</span> ys</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span><span class="ot"> ys ::</span> [aa]</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>        ys <span class="ot">=</span> <span class="fu">reverse</span> xs</span></code></pre></div>
 <h2 id="tools">Tools</h2>
 <ul>
 <li>ormolu: automatic code formatter</li>

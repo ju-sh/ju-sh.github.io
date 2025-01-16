@@ -44,7 +44,8 @@
 <hr/>
 
 <div id="content-container">
-<p>Writing down answers from the <em>Types and Programming Languages</em> book.</p>
+<p>Writing down answers from the <em>Types and Programming
+Languages</em> book.</p>
 <h2 id="section">5.2.1</h2>
 <pre class="ulc"><code>{- logical or -}
 or = λa. λb. a tru b
@@ -135,7 +136,9 @@ and = λa. a fls tru
 </ol>
 <h2 id="section-3">13.1.1</h2>
 <h3 id="question">Question</h3>
-<p>Draw a similar diagram showing the effects of evaluating the expressions <code>a = {ref 0, ref 0}</code> and <code>b = (λx: Ref Nat. {x, x}) (ref 0)</code>.</p>
+<p>Draw a similar diagram showing the effects of evaluating the
+expressions <code>a = {ref 0, ref 0}</code> and
+<code>b = (λx: Ref Nat. {x, x}) (ref 0)</code>.</p>
 <h3 id="answer">Answer</h3>
 <p><code>a = {ref 0, ref 0}</code></p>
 <pre><code>
@@ -147,7 +150,8 @@ a = { _, _}
     +---+---+
 
 </code></pre>
-<p>where the two elements of the record point to different memory locations.</p>
+<p>where the two elements of the record point to different memory
+locations.</p>
 <p>And</p>
 <p><code>b = (λx: Ref Nat. {x, x}) (ref 0)</code></p>
 <pre><code>
@@ -161,10 +165,12 @@ b = { _, _}
       +---+
 
 </code></pre>
-<p>where both elements of the record point to the same memory location.</p>
+<p>where both elements of the record point to the same memory
+location.</p>
 <h2 id="section-4">15.2.1</h2>
 <h3 id="question-1">Question</h3>
-<p>Draw a derivation showing that <code>{x:Nat, y:Nat, z:Nat}</code> is a subtype of <code>{y:Nat}</code>.</p>
+<p>Draw a derivation showing that <code>{x:Nat, y:Nat, z:Nat}</code> is
+a subtype of <code>{y:Nat}</code>.</p>
 <h3 id="answer-1">Answer</h3>
 <table>
 <tbody>
@@ -194,7 +200,8 @@ b = { _, _}
 y:_ -&gt; _
 z:_
 </code></pre>
-<p><code>y</code> has to return something which <code>x z</code> can accept</p>
+<p><code>y</code> has to return something which <code>x z</code> can
+accept</p>
 <pre><code>x:A -&gt; X -&gt; _
 y:A -&gt; X
 z:A
@@ -215,7 +222,8 @@ z:A
 <li>{X=Nat,Y=X→X}: {X=Nat, Y=Nat→Nat}</li>
 <li>{Nat→Nat=X→Y}: {X↦Nat, Y↦Nat}
 <ul>
-<li>Just constraints. So types can appear in LHS as well. I guess LHS and RHS swapping doesn't make a difference.</li>
+<li>Just constraints. So types can appear in LHS as well. I guess LHS
+and RHS swapping doesn't make a difference.</li>
 </ul></li>
 <li>{Nat=Nat→Y}: No unifier possible.</li>
 <li>{Y=Y→Nat}: No unifier possible.
@@ -224,7 +232,8 @@ z:A
 </ul></li>
 <li>{X→Y=Y→Z, Z=U→W}: {X:U→W, Y:U→W, Z:U→W}
 <ul>
-<li>Had got this wrong. Nothing stopping us from assigning the same type to all types!</li>
+<li>Had got this wrong. Nothing stopping us from assigning the same type
+to all types!</li>
 </ul></li>
 <li>{}: Nothing</li>
 </ul>

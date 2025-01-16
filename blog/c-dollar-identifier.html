@@ -36,57 +36,56 @@
 </header>
 
 <ul>
-    <li>Date created: 11-Sep-2017</li>
-      <li>Last updated: 26-Jun-2021</li>
-  </ul>
+    </ul>
 
-<div>
-  <p>
-    Tags: / 
-    <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/c.html">c</a>
-    </code> /
-  <p>
-</div>
 
 
 <div id="description">
-About some C compilers allowing identifiers with a ~$~ sign in them.
+About some C compilers allowing identifiers with a <code>$</code> sign
+in them.
 </div>
 
 <hr/>
 
 <div id="content-container">
-<p><sub><sup><a href="../misc/old-blog.html">From my old blog</a>.</sup></sub></p>
-<hr />
-<p>As mentioned in C standards (see <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf">here</a>, for a draft version of C99, under section 6.4.2), a valid C identifier</p>
+<p><sub><sup><a href="../misc/old-blog.html">From my old
+blog</a>.</sup></sub></p>
+<p>As mentioned in C standards (see <a
+href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf">here</a>,
+for a draft version of C99, under section 6.4.2), a valid C
+identifier</p>
 <blockquote>
-<p>… is a sequence of non-digit characters (including the underscore <code>_</code> ,the lowercase and uppercase Latin letters, and other characters) and digits …</p>
+<p>… is a sequence of non-digit characters (including the underscore
+<code>_</code> ,the lowercase and uppercase Latin letters, and other
+characters) and digits …</p>
 </blockquote>
-<p>That means a <code>$</code> sign cannot appear anywhere in an identifier.</p>
-<p>Yet some compilers allow variable names having <code>$</code> via extensions.</p>
+<p>That means a <code>$</code> sign cannot appear anywhere in an
+identifier.</p>
+<p>Yet some compilers allow variable names having <code>$</code> via
+extensions.</p>
 <p>(So yeah, this is not standard C and therefore is not portable.)</p>
 <p>Consider the following program:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="dt">int</span> fn$a$()</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>{</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Executed!&quot;</span>);</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>}</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="dt">int</span> main()</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>{</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>    <span class="dt">int</span> $id=<span class="dv">3</span>;</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">%d&quot;</span>, $id); </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>    fn$a$();</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fn$a$<span class="op">()</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">Executed!&quot;</span><span class="op">);</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> $id<span class="op">=</span><span class="dv">3</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n%d</span><span class="st">&quot;</span><span class="op">,</span> $id<span class="op">);</span> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    fn$a$<span class="op">();</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>It has two identifiers with '$' in them:</p>
 <ul>
 <li>integer variable <code>$id</code></li>
 <li>function named <code>fn$a$</code>.</li>
 </ul>
-<p>But will still compile without errors in both gcc (6.3.0) and clang (4.0.1) using default flag values.</p>
+<p>But will still compile without errors in both gcc (6.3.0) and clang
+(4.0.1) using default flag values.</p>
 <p>And print</p>
 <pre><code>3
 Executed!
@@ -95,9 +94,12 @@ Executed!
 <p>Interesting isn't it? :-)</p>
 <h2 id="see-more">See more</h2>
 <ul>
-<li><a href="https://stackoverflow.com/questions/7926394/in-variable-name">https://stackoverflow.com/questions/7926394/in-variable-name</a></li>
-<li><a href="https://stackoverflow.com/questions/5845299/why-is-it-bad-to-start-a-variable-name-with-a-dollar-sign-in-c-java-and-simila">https://stackoverflow.com/questions/5845299/why-is-it-bad-to-start-a-variable-name-with-a-dollar-sign-in-c-java-and-simila</a></li>
-<li><a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf">http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf</a></li>
+<li><a
+href="https://stackoverflow.com/questions/7926394/in-variable-name">https://stackoverflow.com/questions/7926394/in-variable-name</a></li>
+<li><a
+href="https://stackoverflow.com/questions/5845299/why-is-it-bad-to-start-a-variable-name-with-a-dollar-sign-in-c-java-and-simila">https://stackoverflow.com/questions/5845299/why-is-it-bad-to-start-a-variable-name-with-a-dollar-sign-in-c-java-and-simila</a></li>
+<li><a
+href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf">http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf</a></li>
 </ul>
 </div>
 </body>

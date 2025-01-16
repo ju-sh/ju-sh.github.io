@@ -46,8 +46,12 @@
 <div id="content-container">
 <p>Info on some haskell packages.</p>
 <ul>
-<li><em>Hedgehog</em></li>
-<li><em>Megaparsec</em></li>
+<li><span class="spurious-link"
+target="*Hedgehog"><em>Hedgehog</em></span></li>
+<li><span class="spurious-link"
+target="*Megaparsec"><em>Megaparsec</em></span></li>
+<li><span class="spurious-link" target="*Lens"><em>Lens</em></span></li>
+<li>and more</li>
 </ul>
 <hr />
 <h1 id="hedgehog">Hedgehog</h1>
@@ -57,16 +61,26 @@
 <ul>
 <li><code>type Gen = GenT Identity</code></li>
 </ul></li>
-<li><code>MonadGen</code>: Class of monads which can generate input data for tests</li>
+<li><code>MonadGen</code>: Class of monads which can generate input data
+for tests</li>
+<li>Get samples: <code>Gen.sample</code></li>
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://hackage.haskell.org/package/hedgehog-1.5/docs/Hedgehog.html">https://hackage.haskell.org/package/hedgehog-1.5/docs/Hedgehog.html</a></li>
-<li><a href="https://hackage.haskell.org/package/hedgehog-1.5/docs/Hedgehog-Gen.html">https://hackage.haskell.org/package/hedgehog-1.5/docs/Hedgehog-Gen.html</a></li>
-<li><a href="https://hackage.haskell.org/package/hedgehog-1.5/docs/Hedgehog-Range.html">https://hackage.haskell.org/package/hedgehog-1.5/docs/Hedgehog-Range.html</a></li>
+<li><a
+href="https://hackage.haskell.org/package/hedgehog-1.5/docs/Hedgehog.html">https://hackage.haskell.org/package/hedgehog-1.5/docs/Hedgehog.html</a></li>
+<li><a
+href="https://hackage.haskell.org/package/hedgehog-1.5/docs/Hedgehog-Gen.html">https://hackage.haskell.org/package/hedgehog-1.5/docs/Hedgehog-Gen.html</a></li>
+<li><a
+href="https://hackage.haskell.org/package/hedgehog-1.5/docs/Hedgehog-Range.html">https://hackage.haskell.org/package/hedgehog-1.5/docs/Hedgehog-Range.html</a></li>
 </ul>
+<hr />
+<pre><code>λ&gt; :t G.int $ R.constant 0 10
+G.int $ R.constant 0 10 :: MonadGen m =&gt; m Int
+</code></pre>
 <h1 id="megaparsec">Megaparsec</h1>
-<p>Monad transformer: Think of it as a function taking a monad and returning another monad.</p>
+<p>Monad transformer: Think of it as a function taking a monad and
+returning another monad.</p>
 <ul>
 <li>ParsecT err inp m res: monad transformer
 <ul>
@@ -76,21 +90,24 @@
 <li>res: result type</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="dt">Parsec</span> e inp res <span class="ot">=</span> <span class="dt">ParsecT</span> e inp <span class="dt">Identity</span> res</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="co">-- Parser res = Parsec Void Text res</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="kw">type</span> <span class="dt">Parser</span> <span class="ot">=</span> <span class="dt">Parsec</span> <span class="dt">Void</span> <span class="dt">Text</span></span></code></pre></div>
-<p><code>Parser a</code> means a parser whose result after successful parsing is of type <code>a</code>.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Parsec</span> e inp res <span class="ot">=</span> <span class="dt">ParsecT</span> e inp <span class="dt">Identity</span> res</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Parser res = Parsec Void Text res</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Parser</span> <span class="ot">=</span> <span class="dt">Parsec</span> <span class="dt">Void</span> <span class="dt">Text</span></span></code></pre></div>
+<p><code>Parser a</code> means a parser whose result after successful
+parsing is of type <code>a</code>.</p>
 <hr />
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">import</span> <span class="dt">Data.Void</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="co">--                         +-- Input type</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co">--                         |</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="co">--                         v</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="kw">type</span> <span class="dt">Parser</span> <span class="ot">=</span> <span class="dt">Parsec</span> <span class="dt">Void</span> <span class="dt">Text</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="co">--                    ^</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="co">--                    |</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="co">--                Error component</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Void</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">--                         +-- Input type</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">--                         |</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">--                         v</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Parser</span> <span class="ot">=</span> <span class="dt">Parsec</span> <span class="dt">Void</span> <span class="dt">Text</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">--                    ^</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">--                    |</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">--                Error component</span></span></code></pre></div>
 <h2 id="info">Info</h2>
 <ul>
 <li><code>Parsec</code>: non-transformer version of <code>ParsecT</code>
@@ -112,21 +129,189 @@
 <h2 id="operator-table">Operator table</h2>
 <ul>
 <li>A nested list</li>
-<li>Items in the same level have equal precedence in the inner lists</li>
-<li>Elements that appear earlier in the outer list have more precedence</li>
+<li>Items in the same level have equal precedence in the inner
+lists</li>
+<li>Elements that appear earlier in the outer list have more
+precedence</li>
 </ul>
-<p>From <a href="https://markkarpov.com/tutorial/megaparsec.html">https://markkarpov.com/tutorial/megaparsec.html</a>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">data</span> <span class="dt">Operator</span> m a</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>  <span class="ot">=</span> <span class="dt">InfixN</span>  (m (a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a)) <span class="co">-- ^ Non-associative infix</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>  <span class="op">|</span> <span class="dt">InfixL</span>  (m (a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a)) <span class="co">-- ^ Left-associative infix</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>  <span class="op">|</span> <span class="dt">InfixR</span>  (m (a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a)) <span class="co">-- ^ Right-associative infix</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>  <span class="op">|</span> <span class="dt">Prefix</span>  (m (a <span class="ot">-&gt;</span> a))      <span class="co">-- ^ Prefix</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>  <span class="op">|</span> <span class="dt">Postfix</span> (m (a <span class="ot">-&gt;</span> a))      <span class="co">-- ^ Postfix</span></span></code></pre></div>
+<p>From <a
+href="https://markkarpov.com/tutorial/megaparsec.html">https://markkarpov.com/tutorial/megaparsec.html</a>:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Operator</span> m a</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="ot">=</span> <span class="dt">InfixN</span>  (m (a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a)) <span class="co">-- ^ Non-associative infix</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">InfixL</span>  (m (a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a)) <span class="co">-- ^ Left-associative infix</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">InfixR</span>  (m (a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a)) <span class="co">-- ^ Right-associative infix</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">Prefix</span>  (m (a <span class="ot">-&gt;</span> a))      <span class="co">-- ^ Prefix</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="dt">Postfix</span> (m (a <span class="ot">-&gt;</span> a))      <span class="co">-- ^ Postfix</span></span></code></pre></div>
 <p>See:</p>
 <ul>
-<li><a href="https://hackage.haskell.org/package/parser-combinators-1.3.0/docs/Control-Monad-Combinators-Expr.html">https://hackage.haskell.org/package/parser-combinators-1.3.0/docs/Control-Monad-Combinators-Expr.html</a></li>
-<li><a href="https://hackage.haskell.org/package/megaparsec-5.2.0/docs/Text-Megaparsec-Expr.html">https://hackage.haskell.org/package/megaparsec-5.2.0/docs/Text-Megaparsec-Expr.html</a> (since removed from megaparsec)</li>
+<li><a
+href="https://hackage.haskell.org/package/parser-combinators-1.3.0/docs/Control-Monad-Combinators-Expr.html">https://hackage.haskell.org/package/parser-combinators-1.3.0/docs/Control-Monad-Combinators-Expr.html</a></li>
+<li><a
+href="https://hackage.haskell.org/package/megaparsec-5.2.0/docs/Text-Megaparsec-Expr.html">https://hackage.haskell.org/package/megaparsec-5.2.0/docs/Text-Megaparsec-Expr.html</a>
+(since removed from megaparsec)</li>
 </ul>
+<h1 id="lens">Lens</h1>
+<p><a
+href="https://hackage.haskell.org/package/lens-tutorial-1.0.5/docs/Control-Lens-Tutorial.html">https://hackage.haskell.org/package/lens-tutorial-1.0.5/docs/Control-Lens-Tutorial.html</a></p>
+<ul>
+<li>Accessor notation: <code>^.</code>
+<ul>
+<li><code>val^.attr.subattr</code> is like <code>obj.attr.subattr</code>
+in Python</li>
+<li>Same as val <code>val ^. (attr . subattr)</code></li>
+<li><code>^.</code> is same as <code>view</code>:
+<code>x ^. l = view l x</code></li>
+</ul></li>
+<li>Cons:
+<ul>
+<li>Error messages can be confusing</li>
+<li>Increased compile time. To generate lenses.</li>
+</ul></li>
+<li>Packages:
+<ul>
+<li><code>lens</code>: lot of dependencies</li>
+<li><code>microlens</code> or <code>lens-simple</code>: light-weight
+form of <code>lens</code> with fewer dependencies</li>
+</ul></li>
+</ul>
+<p>—</p>
+<p><code>%=</code>:</p>
+<ul>
+<li>Apply a function to get new state</li>
+<li><a
+href="https://hackage.haskell.org/package/lens-5.3.2/docs/Control-Lens-Operators.html#v:-37--61-">https://hackage.haskell.org/package/lens-5.3.2/docs/Control-Lens-Operators.html#v:-37--61-</a></li>
+</ul>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> execState (<span class="kw">do</span> _1 <span class="op">%=</span> f;_2 <span class="op">%=</span> g) (a,b)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>(f a, g b)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> execState (<span class="kw">do</span> both <span class="op">%=</span> f) (a,b)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>(f a, f b)</span></code></pre></div>
+<p><code>.=</code>:</p>
+<ul>
+<li>Assign a new state</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> execState (<span class="kw">do</span> _1 <span class="op">.=</span> c;_2 <span class="op">%=</span> d) (a,b)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>(c, d)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> execState (<span class="kw">do</span> both <span class="op">%=</span> c) (a,b)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>(c, c)</span></code></pre></div>
+<p>—</p>
+<p>More concepts:</p>
+<ul>
+<li>Traversal: getter-setters for a list of fields ??</li>
+<li>Prism</li>
+<li>Iso</li>
+<li>Review</li>
+</ul>
+<p>Functions: re, unto, set, .=,</p>
+<hr />
+<p>One possible use of lens: getters-setters when using nested record
+types</p>
+<ul>
+<li><code>over</code>: setter</li>
+<li><code>view</code>: getter</li>
+</ul>
+<p>It's <em>like</em> this:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Lens</span> a b <span class="ot">=</span> <span class="dt">Lens</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>{<span class="ot"> view ::</span> a <span class="ot">-&gt;</span> b</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>,<span class="ot"> over ::</span> (b <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> a)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<hr />
+<p>Create lens for a type with:</p>
+<pre><code>makeLenses &#39;&#39;&lt;bigtype&gt;
+makeLenses &#39;&#39;&lt;smalltype&gt;
+</code></pre>
+<p>This is made possible with TemplateHaskell.</p>
+<p>Field names in the record type should have underscore prefix.</p>
+<h1 id="containers">Containers</h1>
+<p><code>Seq</code> (as in list) type from <code>Data.Sequence</code> of
+<span class="spurious-link" target="c1"><em>'containers'</em></span>
+package.</p>
+<ul>
+<li><a
+href="https://hackage.haskell.org/package/containers-0.7/docs/Data-Sequence.html#v:-62--60-">https://hackage.haskell.org/package/containers-0.7/docs/Data-Sequence.html#v:-62--60-</a></li>
+</ul>
+<table>
+<tbody>
+<tr class="odd">
+<td><code>&lt;│</code></td>
+<td>Add element to left end of a seq</td>
+<td><code>a -&gt; Seq a -&gt; Seq a</code></td>
+</tr>
+<tr class="even">
+<td><code>│&gt;</code></td>
+<td>Add element to right end of a seq</td>
+<td><code>a -&gt; Seq a -&gt; Seq a</code></td>
+</tr>
+<tr class="odd">
+<td><code>&gt;&lt;</code></td>
+<td>Concatenate two sequnces</td>
+<td><code>Seq a -&gt; Seq a -&gt; Seq a</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="bricks">Bricks</h1>
+<p>A package for making TUIs.</p>
+<ul>
+<li><code>&lt;+&gt;</code>: Vertical split</li>
+<li><code>&lt;=&gt;</code>: Horizontal split</li>
+<li>microlens is a dependency, so lens can be used</li>
+</ul>
+<p>Timers can be made with <code>BChan</code></p>
+<ul>
+<li>Docs: <a
+href="https://hackage.haskell.org/package/brick-2.4/docs/Brick-BChan.html">https://hackage.haskell.org/package/brick-2.4/docs/Brick-BChan.html</a></li>
+<li>Eg: <a
+href="https://github.com/jtdaugherty/brick/blob/master/programs/CustomEventDemo.hs">https://github.com/jtdaugherty/brick/blob/master/programs/CustomEventDemo.hs</a></li>
+</ul>
+<p>More:</p>
+<ul>
+<li><a
+href="https://samtay.github.io/posts/introduction-to-brick">https://samtay.github.io/posts/introduction-to-brick</a></li>
+</ul>
+<h1 id="parsec">Parsec</h1>
+<ul>
+<li><code>&lt;?&gt;</code>: <code>parser &lt;?&gt; err_msg</code>
+<ul>
+<li><code>err_msg</code> shown when parsing with <code>parser</code>
+fails</li>
+</ul></li>
+</ul>
+<h1 id="darcs">Darcs</h1>
+<p><a
+href="https://darcs.net/QuickStart">https://darcs.net/QuickStart</a></p>
+<p>Focus is on 'changes' rather than 'snapshots'.</p>
+<ul>
+<li>Init: darcs init</li>
+<li>Clone a repo: darcs clone ..</li>
+<li>Record (ie, commit): darcs record -m "commit message"</li>
+<li>Show untracked files: darcs whatsnew -l</li>
+<li>Show untracked changes in tracked files: darcs whatsnew</li>
+<li>Add a file to repo: darcs add &lt;filename&gt;</li>
+<li>Push: darcs push</li>
+<li>'Uncommit' a record, while preserving working copy: darcs
+unrecord</li>
+</ul>
+<p>–</p>
+<p>Git analogues:</p>
+<table>
+<thead>
+<tr class="header">
+<th>git</th>
+<th>darcs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>commit</td>
+<td>record</td>
+</tr>
+</tbody>
+</table>
 </div>
 </body>
 </html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Coalgebraic Semantics</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Coalgebraic Semantics</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<p>Based on vidoes of <a
+href="https://www.cs.uoregon.edu/research/summerschool/summer19/topics.php#Silva">lectures</a>
+by Alexandra Silva at OPLSS-2019.</p>
+<p>Mistakes my own.</p>
+<h1 id="l1">L1</h1>
+<p>Coinduction: Same thing but infinite number of times.</p>
+<ul>
+<li>Inductive: constructors</li>
+<li>Coinductive: destructors
+<ul>
+<li>Destructors are a way of observing the infinite sequence.</li>
+</ul></li>
+</ul>
+<p>Set of infinite sequences over a set A:</p>
+<pre><code>A^ω = {σ | σ: ℕ → A}
+</code></pre>
+<pre><code>σ = (σ0, σ1, σ2, ...)
+head(σ) = σ0
+tail(σ) = (σ1, σ2, ...)
+
+tail(σ)(n) = (σn+1, σn+2, ...) = ∀n,σ(n+1)
+</code></pre>
+<p>Using these destructors, let's try defining a few functions:</p>
+<pre><code>even: A^ω → A^ω
+even(σ)(n) = ∀n,σ(2n)
+
+odd: A^ω → A^ω
+odd(σ)(n) = ∀n,σ(2n+1)
+</code></pre>
+<p>Let's try a merge. As in</p>
+<pre><code>merge: A^ω * A^ω → A^ω
+(σ0, σ1, ..) * (τ0, τ1, ..) ↦ (σ0, τ0, σ1, τ1, ..)
+</code></pre>
+<p>Got to be like:</p>
+<pre><code>merge: A^ω * A^ω → A^ω
+merge(σ,τ)(n) = σ(n/2) if n is even
+               | τ((n-1)/2) if n is odd
+</code></pre>
+<p>Or to be define more mathematically (inductively??), in terms of
+<code>hd</code> and <code>tl</code>,</p>
+<pre><code>hd(merge(σ,τ)) = hd(σ)
+tl(merge(σ,τ)) = merge(τ, tl(σ))
+</code></pre>
+<p>Wow.. we can define functions operating with infinite streams just by
+having destructors which can be used to observe the stream at various
+points.</p>
+<p>Some more stuff:</p>
+<pre><code>hd(even(σ)) = hd(σ)
+tl(even(σ)) = odd(tl(σ))
+            = even(tl(tl(σ)))
+
+
+hd(odd(σ)) = hd(tl(σ))
+tl(odd(σ)) = even(tl(tl(tl(σ))))
+             tl(even(tl(σ)))
+</code></pre>
+<p>The following should be true:</p>
+<pre><code>merge(even(σ), odd(σ)) = σ
+even(merge(σ,τ)) = σ
+odd(merge(σ,τ)) = τ
+</code></pre>
+<p>so we need to prove that</p>
+<pre><code>∀n∈ℕ, lhs(n) = rhs(n)
+</code></pre>
+<p>Starting with <code>merge(even(σ), odd(σ)) = σ</code>,</p>
+<pre><code>∀n∈ℕ, ρ(n) = σ(n)
+
+where
+
+ρ = merge(even(σ), odd(σ))
+
+Induction.
+
+ρ(0) = hd(ρ)
+     = hd(merge(even(σ), odd(σ)))
+     = hd(even(σ))
+     = hd(σ)
+     = σ(0)
+
+We got induction hypothesis as:
+
+ρ(n) = merge(even(σ), odd(σ))(n)
+
+Now for the induction step,
+
+ρ(n+1) = tl(ρ)(n)
+       = tl(merge(even(σ), odd(σ))(n)
+       = merge(odd(σ), tl(even(σ)))(n)
+       = merge(odd(σ), tl(odd(tl(σ))))(n)
+       = merge(even(tl(σ)), tl(odd(tl(σ))))(n)
+       ...
+       = tl(ρ)(n)
+       = ρ(n+1)
+</code></pre>
+<p>ie, we need to come back where we started. But how to close the gap?
+Non-trivially.</p>
+<p>—</p>
+<p>Let's try proving</p>
+<pre><code>even(merge(σ,τ)) = σ
+
+Let ρ = even(merge(σ,τ))
+
+ρ(0) = hd(ρ)
+     = hd(even(merge(σ,τ)))
+     = hd(merge(σ,τ))
+     = hd(σ)
+     = σ(0)
+
+IH is: ρ(n) = σ(n)
+
+Induction step:
+
+ρ(n+1) = even(merge(σ,τ))(n+1)
+       = merge(σ,τ)(2(n+1))
+
+       = tl(even(merge(σ,τ)))(n)
+       = odd(tl(even(merge(σ,τ))))(n)
+       = ...
+       = σ(n+1)
+</code></pre>
+<p>What we had been trying was <strong>bisimulation</strong>.</p>
+<p>A relation R ⊆ A<sup>ω</sup> x A<sup>ω</sup> is a bisimulation if ∀
+(σ,τ) ∈ R:</p>
+<ul>
+<li>σ(0) = τ(0)</li>
+<li>(tl(σ), tl(τ)) ∈ R</li>
+</ul>
+<p>(we can't say equality for the tail parts. so we say that in terms of
+R itself.)</p>
+<p><strong>Coinduction</strong>:</p>
+<pre><code>σ ~ τ  =&gt; σ = τ
+</code></pre>
+<p>where <code>σ ~ τ</code> means that there is a bisumulation relation
+<code>R</code> such that <code>(σ,τ) ∈ R</code>.</p>
+<p>Dexter Kozen quote:</p>
+<blockquote>
+<p>A proof is valid by induction if you have a good reason for the proof
+to be valid.</p>
+<p>A proof is valid by coinduction if you don't have any good reason for
+the proof not to be valid.</p>
+</blockquote>
+<p>This is so because in a proof by coinduction, we are trying to see if
+there are counter-examples.</p>
+<p>In coinduction, we try to show that there is no good reason to say
+that the statement is invalid.</p>
+<h1 id="l2">L2</h1>
+<p>A DFA is a pair <code>S, &lt;o,t&gt;)</code> where:</p>
+<ul>
+<li><code>S</code>: set of state</li>
+<li><code>o: S → 2</code>: output function
+<ul>
+<li>Tells if a state is a final state</li>
+<li>The <code>2</code> is like <code>𝔹</code>. It's just
+<code>{0,1}</code>.</li>
+<li>For <code>F ⊆ S</code>, <code>o_F</code> is the characteristic
+function of the set <code>F</code> of final states.</li>
+</ul></li>
+<li><code>t: S → Sᴬ</code>: next state function
+<ul>
+<li>Tells what are the next state(s)</li>
+<li>Transition function. When I get a value in <code>a:A</code> while at
+a state <code>s∈S</code>, <code>s:Sᴬ</code> is the next state (since
+it's a DFA, only one next state).</li>
+<li><code>A</code> is the alphabet. ie, a finite set of terminal
+symbols.</li>
+</ul></li>
+</ul>
+<p>Note that we didn't say anything about the initial state.</p>
+<p>—</p>
+<ul>
+<li><code>A*</code> can be defined as an inductive type.</li>
+<li><code>2^(A*)</code> can be defined as a coinductive type. ??</li>
+</ul>
+<p>A word <code>w ∈ A*</code> is accepted at a state <code>s ∈ S</code>
+if:</p>
+<ul>
+<li><code>w=ε</code> and <code>o(s)=1</code></li>
+<li><code>w=au</code> and <code>u</code> is accepted by the state
+<code>t(s)(a)</code></li>
+</ul>
+<p>Another way to define word acceptance:</p>
+<p>If we have:</p>
+<p>t:S⨯A → S</p>
+<p>we can inductively extend it to:</p>
+<p>t̂:S⨯(A*) → S t̂(s)(ε) = s (no change in state. DFA =&gt; no
+ε-transitions) t̂(s)(au) = t̂[t(s)(a)][u]</p>
+<p>Then we can say that <code>w</code> is accepted by a state
+<code>s</code> if <code>o(t̂(s)(w))</code> is 1.</p>
+</div>
+</body>
+</html>

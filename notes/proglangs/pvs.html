@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>PVS theorem prover</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">PVS theorem prover</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<h2 id="general">General</h2>
+<ul>
+<li><code>-</code>: antecedent</li>
+<li><code>+</code>: consequent</li>
+<li>PVS specifications are packaged as theories.</li>
+</ul>
+<h2 id="emacs">Emacs</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Description</th>
+<th>Command</th>
+<th>Key binding</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Start proof</td>
+<td><code>M-x pr</code></td>
+<td><code>C-c p</code></td>
+</tr>
+<tr class="even">
+<td>Type check</td>
+<td><code>M-x typecheck</code></td>
+<td><code>C-c C-t</code></td>
+</tr>
+<tr class="odd">
+<td>Show TCCs</td>
+<td><code>M-x show-tccs</code></td>
+<td><code>C-c C-q s</code></td>
+</tr>
+<tr class="even">
+<td>Quit</td>
+<td><code>M-x exit-pvs</code></td>
+<td><code>C-x C-c</code></td>
+</tr>
+<tr class="odd">
+<td>Suspend PVS</td>
+<td><code>M-x suspend-pvs</code></td>
+<td><code>C-x C-z</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="recovering-from-errors">Recovering from errors</h2>
+<p><code>(restart)</code> may be helpful.</p>
+<ul>
+<li><code>fail</code></li>
+<li><code>undo</code></li>
+<li><code>postpone</code></li>
+<li><code>skip</code></li>
+</ul>
+<h2 id="logic-of-pvs">Logic of PVS</h2>
+<p>PVS uses sequent calculus.</p>
+<p>Inference rules are of the form:</p>
+<pre><code> Γ₁ ⊢ Δ₁     ...    Γₙ ⊢ Δₙ
+----------------------------
+            Γ ⊢ Δ
+</code></pre>
+<p>Given a leaf node of a proof tree with <code>Γ ⊢ Δ</code>, this rule
+allows adding <code>n</code> children to that node (making it a non-leaf
+node).</p>
+<p>Structural rules:</p>
+<pre><code>    A,A,Γ ⊢ Δ                    Γ ⊢ A,A,Δ
+---------------- c⊢          ----------------- ⊢c              
+     A,Γ ⊢ Δ                      Γ ⊢ A,Δ
+
+
+
+  Γ₁,A,B,Γ₂ ⊢ Δ                Γ ⊢ Δ₁,A,B,Δ₂
+---------------- x⊢          ----------------- ⊢x              
+  Γ₁,B,A,Γ₂ ⊢ Δ                Γ ⊢ Δ₁,B,A,Δ₂
+
+
+
+Propositional rules:
+
+    A,B,Γ ⊢ Δ                  Γ ⊢ A,Δ     Γ ⊢ B,Δ
+---------------- ∧⊢          ----------------------- ⊢∧              
+  A ∧ B,Γ  ⊢ Δ                     Γ ⊢ A ∧ B,Δ     
+
+
+
+  A,Γ ⊢ Δ   B,Γ ⊢ Δ           Γ ⊢ A,Δ     Γ ⊢ B,Δ
+--------------------- ∨⊢     ----------------------- ⊢∨              
+    A ∨ B,Γ ⊢ Δ                   Γ ⊢ A ∧ B,Δ     
+</code></pre>
+<h2 id="more-stuff">More stuff</h2>
+<ul>
+<li>Primitive proof rules</li>
+<li>Proof strategies: In Coq, similar purpose is served by user-defined
+rules with Ltac.</li>
+</ul>
+<h2 id="keywords-for-symbols">Keywords for symbols</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Keyword</th>
+<th>Symbol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>NOT</code></td>
+<td>¬</td>
+</tr>
+<tr class="even">
+<td><code>AND</code>, <code>&amp;</code></td>
+<td>∧</td>
+</tr>
+<tr class="odd">
+<td><code>OR</code></td>
+<td>∨</td>
+</tr>
+<tr class="even">
+<td><code>IMPLIES</code>, <code>=&gt;</code></td>
+<td>→</td>
+</tr>
+<tr class="odd">
+<td><code>IFF</code>, <code>&lt;=&gt;</code></td>
+<td>↔︎</td>
+</tr>
+<tr class="even">
+<td><code>FORALL</code></td>
+<td>∀</td>
+</tr>
+<tr class="odd">
+<td><code>EXISTS</code></td>
+<td>∃</td>
+</tr>
+<tr class="even">
+<td><code>LAMBDA</code></td>
+<td>λ</td>
+</tr>
+<tr class="odd">
+<td><code>=/</code></td>
+<td>≠</td>
+</tr>
+</tbody>
+</table>
+<p>And <code>WHEN</code> is same as <code>IMPLIES</code> with the order
+of operands reversed.</p>
+<p>These symbols are simply textual replacements.</p>
+<p>So <code>λn:n</code> is not same as <code>λ n: n</code>. Former would
+give error as they expand like:</p>
+<table>
+<thead>
+<tr class="header">
+<th>With symbols</th>
+<th>Expanded form</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>λn: n</code></td>
+<td><code>LAMBDAn: n</code></td>
+</tr>
+<tr class="even">
+<td><code>λ n: n</code></td>
+<td><code>LAMBDA n: n</code></td>
+</tr>
+</tbody>
+</table>
+<p>And pvs would flag the <code>LAMBDAn</code> part as a syntax
+error.</p>
+<h2 id="strategy-application-stuff">Strategy application stuff</h2>
+<p>a strategy invoked with a <code>$</code> suffix means that the
+strategy will be executed with the expanded internal steps still
+visible. Useful for debugging.</p>
+<ul>
+<li><code>*</code> suffix: repeatedly apply strategy</li>
+<li><code>!</code> suffix: use generated names</li>
+<li><code>!!</code> suffix:</li>
+<li><code>+</code> suffix:</li>
+<li>no suffix: use specified names</li>
+</ul>
+<h2 id="naming-convention">Naming convention</h2>
+<p>From prover-guide section 4.13:</p>
+<p>Deprecated form:</p>
+<ul>
+<li>"name": lazy</li>
+<li>("name"): eager</li>
+<li>(("name")): macro</li>
+</ul>
+<p>New form:</p>
+<ul>
+<li>"name": lazy</li>
+<li>"name!": eager</li>
+<li>"name!!": macro</li>
+</ul>
+<p>Both forms still work, but can't be mixed.</p>
+<h2 id="a-proof-with-tccs">A proof with TCCs</h2>
+<p>Sum of first n natural numbers</p>
+<pre class="pvs"><code>sumn: THEORY
+BEGIN
+  n: VAR nat
+  sum(n): RECURSIVE nat =
+    (IF n = 0 THEN
+       0
+     ELSE
+       n + sum(n-1)
+     ENDIF)
+    MEASURE (LAMBDA n: n)
+
+  nnatsum: THEOREM
+    sum(n) = (n * (n+1)) / 2
+END sumn
+</code></pre>
+<p>Proof?:</p>
+<pre><code>(induct &quot;n&quot;)
+(expand &quot;sum&quot;)
+(skolem!)
+(flatten)
+(expand &quot;sum&quot; +)
+(assert)
+</code></pre>
+<h2 id="rules-and-strategies">Rules and strategies</h2>
+<p>User guides the proof construction process via rules and
+strategies.</p>
+<p>Some rules:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Rule</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>flatten</code></td>
+<td>disjunctive simplification.</td>
+</tr>
+<tr class="even">
+<td><code>split</code></td>
+<td>conjunctive splitting.</td>
+</tr>
+<tr class="odd">
+<td><code>skolem</code></td>
+<td>eliminating universal-strength quantifiers.</td>
+</tr>
+<tr class="even">
+<td><code>inst</code></td>
+<td>instantiating existential-strength quantifiers.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>skolem</code> introduces Skolem constants for universal
+strength quantifiers.</li>
+<li><code>inst</code> instantiates a Skolem constant for existential
+strength quantifiers.</li>
+</ul>
+<p>If we got a sequent like <code>⊢ (a → b)</code>, <code>flatten</code>
+can make it <code>a ⊢ b</code>.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><code>auto-rewrite</code></td>
+<td>installing rewrite rules for use during simplification.</td>
+</tr>
+<tr class="even">
+<td><code>simplify</code></td>
+<td>simplification using rewriting and ground decision procedures</td>
+</tr>
+</tbody>
+</table>
+<p>Import system is there (<code>IMPORTING</code>), but not going into
+that.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Haskell: Package management</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Haskell: Package management</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<p>Usually done with cabal or stack.</p>
+<h2 id="cabal">cabal</h2>
+<p><a
+href="https://cabal.readthedocs.io/en/latest/cabal-commands.html">https://cabal.readthedocs.io/en/latest/cabal-commands.html</a></p>
+<ul>
+<li>Install a package: <code>cabal install</code></li>
+<li>Update package index (ie, list of available packages):
+<code>cabal update</code></li>
+<li>Upgrade cabal itself: <code>cabal install cabal-install</code>
+(Unverified)</li>
+<li>Build project: <code>cabal build</code></li>
+<li>Build and run project: <code>cabal run</code></li>
+<li>Open a REPL for the built project: <code>cabal repl</code></li>
+<li>Open a REPL with some packages available:
+<ul>
+<li><code>cabal repl --build-depends package1, package2</code></li>
+<li><code>cabal repl -b package1, package2</code></li>
+</ul></li>
+<li>Start a new project interactively: <code>cabal init -i</code></li>
+<li>Build haddock documentation: <code>cabal haddock</code></li>
+<li>Download a package without adding it to a project:
+<code>cabal get &lt;package-name&gt;</code></li>
+<li>List all installed packages: <code>cabal list --installed</code>
+<ul>
+<li>Also <code>ghc-pkg list</code></li>
+<li><a
+href="https://stackoverflow.com/questions/36953396/how-to-list-all-the-installed-packages-and-their-version-with-cabal">https://stackoverflow.com/questions/36953396/how-to-list-all-the-installed-packages-and-their-version-with-cabal</a></li>
+</ul></li>
+</ul>
+<p>—</p>
+<p>Example use:</p>
+<pre><code>cabal init -i
+# Edit &lt;name&gt;.cabal:
+#  - include dependencies in build-depends (seperated by commas)
+cabal build
+</code></pre>
+<h3 id="install-an-executable-tool">Install an executable tool</h3>
+<pre><code>cabal install --install-method=copy &lt;package-name&gt;
+</code></pre>
+<p>The executable will be at <code
+class="verbatim">~/.cabal/bin/</code></p>
+<p>Eg:</p>
+<pre><code>cabal install --install-method=copy pandoc
+# Executable would be at ~/.cabal/bin/pandoc
+</code></pre>
+<h3 id="tests">Tests</h3>
+<ul>
+<li>Install dependencies for testing:
+<code>cabal install --enable-tests</code></li>
+<li>Run tests: <code>cabal test</code></li>
+</ul>
+<p>See:</p>
+<ul>
+<li><a
+href="https://functional.works-hub.com/learn/basic-unit-testing-in-haskell-using-hunit-and-cabal-29e47">https://functional.works-hub.com/learn/basic-unit-testing-in-haskell-using-hunit-and-cabal-29e47</a></li>
+<li><a
+href="http://gbacon.blogspot.com/2009/06/setting-up-simple-test-with-cabal.html">http://gbacon.blogspot.com/2009/06/setting-up-simple-test-with-cabal.html</a></li>
+<li><a
+href="https://jade.fyi/blog/cabal-test-dev-trick/">https://jade.fyi/blog/cabal-test-dev-trick/</a></li>
+<li><a
+href="https://yanhan.github.io/posts/2013-12-22-cabal-installing-test-dependencies/">https://yanhan.github.io/posts/2013-12-22-cabal-installing-test-dependencies/</a></li>
+<li><a
+href="https://discourse.haskell.org/t/help-setting-up-cabal-project-with-hunit-tests/2306/5">https://discourse.haskell.org/t/help-setting-up-cabal-project-with-hunit-tests/2306/5</a></li>
+</ul>
+<h3 id="new-package-example">New package example</h3>
+<pre><code>cabal init
+cabal update
+cabal configure
+cabal install
+cabal build
+cabal exec ghci
+</code></pre>
+</div>
+</body>
+</html>

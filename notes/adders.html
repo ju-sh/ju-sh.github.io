@@ -36,7 +36,6 @@
 </header>
 
 <ul>
-    <li>Date created: May-2021</li>
     </ul>
 
 
@@ -166,20 +165,27 @@
 <h2 id="multi-bit-adders">Multi-bit adders</h2>
 <p>An n-bit adder is made using n 1-bit full adders.</p>
 <h3 id="ripple-carry-adder">Ripple carry adder</h3>
-<p>Carry-out of i-th full adder is given as the carry-in of the i+1-st full adder.</p>
+<p>Carry-out of i-th full adder is given as the carry-in of the i+1-st
+full adder.</p>
 <p>The carry signal 'ripples' through the full adders.</p>
 <ul>
 <li>Simple design</li>
-<li>Slower (since each full adder must wait for the carry out from the previous full adder before starting work).</li>
+<li>Slower (since each full adder must wait for the carry out from the
+previous full adder before starting work).</li>
 </ul>
 <p>To add n-bit numbers, we need n stages of full adders.</p>
 <ul>
 <li>cinᵢ: Carry-in of i-the full adder</li>
 <li>coutᵢ: Carry-out of i-the full adder</li>
 </ul>
-<p>cout of previous full adder becomes cin of next full adder. ie, cinᵢ₊₁ = coutᵢ</p>
-<p>Time required for addition in a ripple carry adder = propagation delay of the carry to ripple through the different stage of the overall adder.</p>
-<p>The first carry value (which should be part of input) is sometimes called <em>forced carry</em>. And the last carry value (which is part of output) is also known as <em>overflow carry</em>.</p>
+<p>cout of previous full adder becomes cin of next full adder. ie,
+cinᵢ₊₁ = coutᵢ</p>
+<p>Time required for addition in a ripple carry adder = propagation
+delay of the carry to ripple through the different stage of the overall
+adder.</p>
+<p>The first carry value (which should be part of input) is sometimes
+called <em>forced carry</em>. And the last carry value (which is part of
+output) is also known as <em>overflow carry</em>.</p>
 <pre><code>aₙ₋₁ bₙ₋₁   coutₙ₋₁     a₁  b₁   cout₀    a₀  b₀ cin₀
   |  |  +-----+          |  |  +-----+     |  |  |        
   |  |  V     |          |  |  |     |     |  |  |        
@@ -211,8 +217,11 @@ coutᵢ = dᵢ + tᵢ.cinᵢ
 sᵢ    = aᵢ ⊕ bᵢ ⊕ cinᵢ
 </code></pre>
 <h3 id="carry-save-adder">Carry save adder</h3>
-<p>Instead of delaying execution by waiting for every previous full adder's carry out to be calculated, we store (ie, 'save') the carry-out of every full adder.</p>
-<p>The actual result is calculated by applying the effect all carry out values at the end.</p>
+<p>Instead of delaying execution by waiting for every previous full
+adder's carry out to be calculated, we store (ie, 'save') the carry-out
+of every full adder.</p>
+<p>The actual result is calculated by applying the effect all carry out
+values at the end.</p>
 <h2 id="single-bit-subtractors">Single bit subtractors</h2>
 <h3 id="half-subtractor">Half subtractor</h3>
 <table>

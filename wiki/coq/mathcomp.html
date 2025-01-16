@@ -44,7 +44,8 @@
 <hr/>
 
 <div id="content-container">
-<p>mathcomp is consists of many 'parts'. Including:<a href="https://proofassistants.stackexchange.com/questions/1276/explanation-of-coq-math-comp-repositories">ˡ</a>:</p>
+<p>mathcomp is consists of many 'parts'. Including:<a
+href="https://proofassistants.stackexchange.com/questions/1276/explanation-of-coq-math-comp-repositories">ˡ</a>:</p>
 <ul>
 <li>mathcomp-algebra</li>
 <li>mathcomp-character</li>
@@ -54,26 +55,36 @@
 </ul>
 <h2 id="general">General</h2>
 <ul>
-<li><p><code>case eqn:H</code>: to remember the relation even after a case split</p></li>
-<li><p><code>&lt;name&gt;.+1</code>: <code>S</code> for <code>nat</code></p>
+<li><p><code>case eqn:H</code>: to remember the relation even after a
+case split</p></li>
+<li><p><code>&lt;name&gt;.+1</code>: <code>S</code> for
+<code>nat</code></p>
 <ul>
-<li>ie, <code>n.+1</code> just another notation for writing <code>S n</code></li>
-<li>This is probably because <code>1</code> by itself could mean the <code>1</code> of a ring.</li>
+<li>ie, <code>n.+1</code> just another notation for writing
+<code>S n</code></li>
+<li>This is probably because <code>1</code> by itself could mean the
+<code>1</code> of a ring.</li>
 <li>Eg: <code>Compute 3.+1. (* = 4 : nat *)</code></li>
-<li><code>.+2</code>, <code>.+3</code> and <code>.4</code> also available.</li>
+<li><code>.+2</code>, <code>.+3</code> and <code>.4</code> also
+available.</li>
 </ul></li>
 <li><p><code>&lt;name&gt;.*2</code>: double a <code>nat</code></p>
 <ul>
-<li>Only <code>n.*2</code> would work. <code>n.*3</code> is syntax error.</li>
+<li>Only <code>n.*2</code> would work. <code>n.*3</code> is syntax
+error.</li>
 <li>Eg: <code>Compute 3.*2.  (* = 6%N : nat *)</code></li>
-<li>Eg: <code>Compute 3.*3.  (* Syntax Error: Lexer: Undefined token *)</code></li>
+<li>Eg:
+<code>Compute 3.*3.  (* Syntax Error: Lexer: Undefined token *)</code></li>
 </ul></li>
-<li><p><code>&lt;name&gt;./2</code>: halve a <code>nat</code> (floor)</p></li>
-<li><p><code>&lt;name&gt;^3</code>: exponentiation for <code>nat</code></p>
+<li><p><code>&lt;name&gt;./2</code>: halve a <code>nat</code>
+(floor)</p></li>
+<li><p><code>&lt;name&gt;^3</code>: exponentiation for
+<code>nat</code></p>
 <ul>
 <li>Looks like it's a ring operation for other types</li>
 </ul></li>
-<li><p><code>&lt;name&gt;.1</code> and <code>&lt;name&gt;.2</code>: first and second elements of the tuple named <code>name</code></p></li>
+<li><p><code>&lt;name&gt;.1</code> and <code>&lt;name&gt;.2</code>:
+first and second elements of the tuple named <code>name</code></p></li>
 <li><p><code>&lt;n&gt;.-tuple</code>:</p>
 <ul>
 <li>where <code>n</code> is a number</li>
@@ -84,7 +95,8 @@
 <ul>
 <li>ie, function whose domain is a finite type.</li>
 </ul></li>
-<li><p><code>\sum_ (low &lt;= i &lt; high)</code>: Represents ∀i:ℕ, i ∈ [low, high), Σ i</p>
+<li><p><code>\sum_ (low &lt;= i &lt; high)</code>: Represents ∀i:ℕ, i ∈
+[low, high), Σ i</p>
 <ul>
 <li>ie, sum of all natural numbers from low and upto high.</li>
 </ul></li>
@@ -102,15 +114,22 @@
 <li>Eg: <code>Compute 3 ^ 4.  (* = 81 : nat *)</code></li>
 </ul></li>
 <li><p><code>n`!</code>: factorial (ie, n!)</p></li>
-<li><p><code>[seq x &lt;- lst | condition]</code>: notation for <code>filter (fun x =&gt; condition) lst</code></p>
+<li><p><code>[seq x &lt;- lst | condition]</code>: notation for
+<code>filter (fun x =&gt; condition) lst</code></p>
 <ul>
-<li>Forget the <code>seq</code> in the beginning and then it might look better.</li>
+<li>Forget the <code>seq</code> in the beginning and then it might look
+better.</li>
 </ul></li>
-<li><p><code>[seq x' | x &lt;- lst]</code>: notation for <code>map (fun x =&gt; x') lst</code></p></li>
-<li><p><code>=1</code> (infix): <code>eqfun</code> (1-arg functional extensionality)</p></li>
-<li><p><code>=2</code> (infix): <code>eqrel</code> (2-arg functional extensionality)</p></li>
-<li><p><code>=i</code> (infix): <code>eq_mem</code> (extensional equality)</p></li>
-<li><p><code>=P</code> (infix): reflection involving <code>bool</code></p>
+<li><p><code>[seq x' | x &lt;- lst]</code>: notation for
+<code>map (fun x =&gt; x') lst</code></p></li>
+<li><p><code>=1</code> (infix): <code>eqfun</code> (1-arg functional
+extensionality)</p></li>
+<li><p><code>=2</code> (infix): <code>eqrel</code> (2-arg functional
+extensionality)</p></li>
+<li><p><code>=i</code> (infix): <code>eq_mem</code> (extensional
+equality)</p></li>
+<li><p><code>=P</code> (infix): reflection involving
+<code>bool</code></p>
 <ul>
 <li><code>Notation "x =P y" := (eqP : Bool.reflect (eq x y) (eq_op x y)) : eq_scope</code></li>
 </ul></li>
@@ -120,24 +139,30 @@
 </ul></li>
 <li><p><code>elim/&lt;ind_principle&gt;:</code></p>
 <ul>
-<li>where the <code>/&lt;ind_principle&gt;</code> is optional. It can be given if an induction principle other than the default one is to be used.</li>
+<li>where the <code>/&lt;ind_principle&gt;</code> is optional. It can be
+given if an induction principle other than the default one is to be
+used.</li>
 </ul></li>
 </ul>
 <h2 id="finset">finset</h2>
-<p><a href="https://github.com/math-comp/math-comp/blob/master/mathcomp/ssreflect/finset.v">https://github.com/math-comp/math-comp/blob/master/mathcomp/ssreflect/finset.v</a></p>
+<p><a
+href="https://github.com/math-comp/math-comp/blob/master/mathcomp/ssreflect/finset.v">https://github.com/math-comp/math-comp/blob/master/mathcomp/ssreflect/finset.v</a></p>
 <ul>
-<li>Set membership indicated by a finite function (<code>ffun pred T</code>)</li>
+<li>Set membership indicated by a finite function
+(<code>ffun pred T</code>)</li>
 <li>Sets are defined only on finite types.</li>
 <li>Empty boolean set??: <code>[set: bool]</code></li>
 <li>For set equality proofs, use <code>apply/setP</code></li>
-<li>To change from <code>x \in s = false</code> to <code>x \notin s</code>, use <code>apply/negbTE</code></li>
+<li>To change from <code>x \in s = false</code> to
+<code>x \notin s</code>, use <code>apply/negbTE</code></li>
 </ul>
 <pre class="coq"><code>Inductive set_type (T: finType): predArgType :=
 | FinSet: {ffun pred T} -&gt; set_type T.           
 </code></pre>
 <p>Essentially just the characteristic function of the set.</p>
 <ul>
-<li><code>mem A</code>: <em>the</em> predicate corresponding to <code>A</code> (from finset.v)</li>
+<li><code>mem A</code>: <em>the</em> predicate corresponding to
+<code>A</code> (from finset.v)</li>
 <li><code>setX</code>: Cartesian product</li>
 <li><code>cover</code>: 'flatten' a set of sets</li>
 </ul>
@@ -287,7 +312,8 @@ Check snd @: eg : {set unit}.
 <ul>
 <li>'functions with finite domain':
 <ul>
-<li><a href="https://github.com/math-comp/math-comp/blob/master/mathcomp/ssreflect/finfun.v">https://github.com/math-comp/math-comp/blob/master/mathcomp/ssreflect/finfun.v</a></li>
+<li><a
+href="https://github.com/math-comp/math-comp/blob/master/mathcomp/ssreflect/finfun.v">https://github.com/math-comp/math-comp/blob/master/mathcomp/ssreflect/finfun.v</a></li>
 <li>f(x) ∉ {∞, -∞}</li>
 </ul></li>
 </ul>
@@ -301,9 +327,11 @@ Check snd @: eg : {set unit}.
 </code></pre>
 <ul>
 <li><code>injective f</code>: f x = f y -&gt; x = y</li>
-<li><code>f ^~ y\</code>: essentially a means to flip the argument order of a 2-argument function
+<li><code class="verbatim">f ^~ y\</code>: essentially a means to flip
+the argument order of a 2-argument function
 <ul>
-<li><code>f ^~ y :</code> fun x <code>&gt; f x y</code></li>
+<li><code class="verbatim">f ^~ y :</code> fun x <code
+class="verbatim">&gt; f x y</code></li>
 </ul></li>
 </ul>
 <h2 id="pred">pred</h2>
@@ -311,17 +339,21 @@ Check snd @: eg : {set unit}.
 <ul>
 <li><code>pred1</code>
 <ul>
-<li><code>pred1 a</code> is <code>fun (a:A) (b:A): bool := eqb a b</code></li>
-<li><code>pred2</code>, <code>pred3</code>, <code>pred4</code> also available</li>
+<li><code>pred1 a</code> is
+<code>fun (a:A) (b:A): bool := eqb a b</code></li>
+<li><code>pred2</code>, <code>pred3</code>, <code>pred4</code> also
+available</li>
 </ul></li>
 <li><code>predC1 p</code>: ¬p
 <ul>
-<li><code>predC1 a</code> is <code>fun (a:A) (b:A): bool := negb (eqb a b)</code></li>
+<li><code>predC1 a</code> is
+<code>fun (a:A) (b:A): bool := negb (eqb a b)</code></li>
 </ul></li>
 <li><code>predU p q</code>: p ∪ q</li>
 <li><code>predD p q</code>: p \ q</li>
 </ul>
-<p><code>in</code> is usually associated with iteration. <code>\in</code> indicates membership.</p>
+<p><code>in</code> is usually associated with iteration.
+<code>\in</code> indicates membership.</p>
 <h2 id="ssrbool">ssrbool</h2>
 <ul>
 <li><code>rel</code>: Type of a kind of relations
@@ -336,7 +368,8 @@ Check snd @: eg : {set unit}.
 <li>f is applied first, then g is applied</li>
 </ul></li>
 </ul>
-<h2 id="phantom-types"><span class="todo TODO">TODO</span> Phantom types</h2>
+<h2 id="phantom-types"><span class="todo TODO">TODO</span> Phantom
+types</h2>
 <p>Mathcomp book: 6.10.1</p>
 <h2 id="some-notations">Some notations</h2>
 <ul>
@@ -363,7 +396,8 @@ Check snd @: eg : {set unit}.
 <ul>
 <li><code>[pred x:T | condition]</code>: unary boolean predicates
 <ul>
-<li>Accept a value of type <code>T</code> and give bool result of the <code>condition</code></li>
+<li>Accept a value of type <code>T</code> and give bool result of the
+<code>condition</code></li>
 <li>Like <code>P: T -&gt; bool</code></li>
 </ul></li>
 </ul>
@@ -441,37 +475,45 @@ Check snd @: eg : {set unit}.
 </tbody>
 </table>
 <ul>
-<li><code>last</code>: Get last element of <code>x::l</code> with <code>last x l</code>
+<li><code>last</code>: Get last element of <code>x::l</code> with
+<code>last x l</code>
 <ul>
 <li>last: A -&gt; seq A -&gt; A</li>
 <li>Clever way to ensure the list is non-empty..</li>
 </ul></li>
-<li><code>flatten</code>: 'flatten' a list of lists to a simple list</li>
+<li><code>flatten</code>: 'flatten' a list of lists to a simple
+list</li>
 </ul>
 <h2 id="fintype">finType</h2>
 <ul>
-<li><code>enum</code>: <em>like</em> <code>forall A:finType, list A</code></li>
+<li><code>enum</code>: <em>like</em>
+<code>forall A:finType, list A</code></li>
 </ul>
 <h2 id="eqtype">eqType</h2>
 <p>Types with decidable equality.</p>
 <ul>
-<li><a href="https://github.com/math-comp/math-comp/blob/master/mathcomp/ssreflect/eqtype.v">https://github.com/math-comp/math-comp/blob/master/mathcomp/ssreflect/eqtype.v</a></li>
+<li><a
+href="https://github.com/math-comp/math-comp/blob/master/mathcomp/ssreflect/eqtype.v">https://github.com/math-comp/math-comp/blob/master/mathcomp/ssreflect/eqtype.v</a></li>
 </ul>
 <p>Subtypes:</p>
 <ul>
 <li><code>subType P</code>: like <code>x: T | P x</code></li>
 <li><code>insub x: T -&gt; option S</code>
 <ul>
-<li>Value corresponding to <code>x:T</code> in another type <code>S</code> which is a subtype of <code>T</code>, if it exists.</li>
+<li>Value corresponding to <code>x:T</code> in another type
+<code>S</code> which is a subtype of <code>T</code>, if it exists.</li>
 </ul></li>
 <li><code>insubd x: T -&gt; S</code>
 <ul>
-<li>Similar to <code>insub</code> except that a default value is given if there's no possible projection in the subtype.</li>
+<li>Similar to <code>insub</code> except that a default value is given
+if there's no possible projection in the subtype.</li>
 </ul></li>
 <li><code>Sub x Px</code>: Generic constructor for a subtype</li>
-<li><code>\val</code>: Generic injection from a subtype to the supertype</li>
+<li><code>\val</code>: Generic injection from a subtype to the
+supertype</li>
 </ul>
-<h2 id="same-as-in-standard-coq-but-renamed">Same as in standard coq but 'renamed'</h2>
+<h2 id="same-as-in-standard-coq-but-renamed">Same as in standard coq but
+'renamed'</h2>
 <table>
 <thead>
 <tr class="header">
@@ -522,7 +564,8 @@ Compute getX (Point 1 2 3).
 <ol>
 <li><p>Definition and notations</p>
 <p>A special form of <code>foldr</code>.</p>
-<p>The name is 'big op' because it's used to represent operations commonly denoted using upper case Greek letters. Like Σ, Π, etc.</p>
+<p>The name is 'big op' because it's used to represent operations
+commonly denoted using upper case Greek letters. Like Σ, Π, etc.</p>
 <p>Takes following arguments:</p>
 <table>
 <tbody>
@@ -555,8 +598,10 @@ Compute getX (Point 1 2 3).
 <p>Steps:</p>
 <ol>
 <li>Take elements of <code>r</code> that satisfy <code>P</code></li>
-<li>Use <code>F</code> to convert these elements to type <code>R</code></li>
-<li>Use <code>op</code> to combine with accumulator value to get new accumulator.</li>
+<li>Use <code>F</code> to convert these elements to type
+<code>R</code></li>
+<li>Use <code>op</code> to combine with accumulator value to get new
+accumulator.</li>
 </ol>
 <p>Notations:</p>
 <table>
@@ -610,20 +655,36 @@ Compute getX (Point 1 2 3).
 </tr>
 </tbody>
 </table>
-<p><code>i &lt;-r | P</code> means 'from <code>r</code>, take elements that satisfy <code>P</code>.</p>
+<p><code>i &lt;-r | P</code> means 'from <code>r</code>, take elements
+that satisfy <code>P</code>.</p>
 <p>—</p>
-<p><code>\sum_</code> is defined in terms of <code>\big[ _ / _]</code>, which in turn is defined using <code>bigop</code>.</p>
+<p><code>\sum_</code> is defined in terms of <code>\big[ _ / _]</code>,
+which in turn is defined using <code>bigop</code>.</p>
 <ul>
-<li><p><a href="https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/mathcomp/ssreflect/bigop.v#L629">https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/mathcomp/ssreflect/bigop.v#L629</a></p></li>
-<li><p><a href="https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/mathcomp/ssreflect/bigop.v#L662">https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/mathcomp/ssreflect/bigop.v#L662</a></p></li>
-<li><p><code>\big [ op / idx ]_ ( i &lt;- r | P ) F</code> is <code>(bigop idx r (fun i =&gt; BigBody i op P%B F))</code></p></li>
-<li><p><code>\sum_ ( i &lt;- r | P ) F</code> is <code>(\big[+%N/0%N]_(i &lt;- r | P%B) F%N)</code></p></li>
+<li><p><a
+href="https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/mathcomp/ssreflect/bigop.v#L629">https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/mathcomp/ssreflect/bigop.v#L629</a></p></li>
+<li><p><a
+href="https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/mathcomp/ssreflect/bigop.v#L662">https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/mathcomp/ssreflect/bigop.v#L662</a></p></li>
+<li><p><code>\big [ op / idx ]_ ( i &lt;- r | P ) F</code> is
+<code>(bigop idx r (fun i =&gt; BigBody i op P%B F))</code></p></li>
+<li><p><code>\sum_ ( i &lt;- r | P ) F</code> is
+<code>(\big[+%N/0%N]_(i &lt;- r | P%B) F%N)</code></p></li>
 </ul>
-<p>As for <code>Bigbody</code>, it's apparently just a wrapper. From <a href="https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/mathcomp/ssreflect/bigop.v#L580C1-L585C76">mathcomp source</a>:</p>
+<p>As for <code>Bigbody</code>, it's apparently just a wrapper. From <a
+href="https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/mathcomp/ssreflect/bigop.v#L580C1-L585C76">mathcomp
+source</a>:</p>
 <blockquote>
-<p>The bigbody wrapper is a workaround for a quirk of the Coq pretty-printer, which would fail to redisplay the  notation when the &lt;general<sub>term</sub>&gt; or &lt;condition&gt; do not depend on the bound index. The <code>BigBody</code> constructor packages both in in a term in which i occurs; it also depends on the iterated &lt;op&gt;, as this can give more information on the expected type of the &lt;general<sub>term</sub>&gt;, thus allowing for the insertion of coercions.</p>
+<p>The bigbody wrapper is a workaround for a quirk of the Coq
+pretty-printer, which would fail to redisplay the notation when the
+&lt;general<sub>term</sub>&gt; or &lt;condition&gt; do not depend on the
+bound index. The <code>BigBody</code> constructor packages both in in a
+term in which i occurs; it also depends on the iterated &lt;op&gt;, as
+this can give more information on the expected type of the
+&lt;general<sub>term</sub>&gt;, thus allowing for the insertion of
+coercions.</p>
 </blockquote>
-<p>The general form for iterated operators is <a href="https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/mathcomp/ssreflect/bigop.v#L44C2-L44C2">ʳ</a>:</p>
+<p>The general form for iterated operators is <a
+href="https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/mathcomp/ssreflect/bigop.v#L44C2-L44C2">ʳ</a>:</p>
 <pre><code>&lt;bigop&gt;_&lt;range&gt; &lt;general_term&gt;
 </code></pre>
 <p>—</p></li>
@@ -637,7 +698,8 @@ Compute getX (Point 1 2 3).
 </code></pre>
 <p>—</p>
 <p><code>index_iota</code>:</p>
-<p>Similar to <code>iota</code>, except that instead of number of elements, upper limit (exclusive) is taken as argument.</p>
+<p>Similar to <code>iota</code>, except that instead of number of
+elements, upper limit (exclusive) is taken as argument.</p>
 <pre class="coq"><code>Compute index_iota 2 8.
 (* = [:: 2; 3; 4; 5; 6; 7] : seq nat *)
 
@@ -654,46 +716,66 @@ Compute index_iota 2 5.
 <ul>
 <li>decompose to first element and remaining</li>
 </ul></li>
-<li><code>big_mkcond</code>: move filter <code>P</code> 'into the generic term'</li>
-<li><code>big_cat</code>: bigop involving concatenation of two sequences</li>
+<li><code>big_mkcond</code>: move filter <code>P</code> 'into the
+generic term'</li>
+<li><code>big_cat</code>: bigop involving concatenation of two
+sequences</li>
 <li><code>big_ord0</code>: base case</li>
 </ul></li>
 </ol>
 <h3 id="ordinal"><code>ordinal</code></h3>
 <ul>
-<li><p><code>'I_n</code>: <code>nat</code> numbers less than <code>n</code>. Notation for <code>ordinal n</code>.</p></li>
-<li><p><code>ord_enum: nat -&gt; seq</code>: enumerate all elements of type <code>'I_n</code></p></li>
+<li><p><code>'I_n</code>: <code>nat</code> numbers less than
+<code>n</code>. Notation for <code>ordinal n</code>.</p></li>
+<li><p><code>ord_enum: nat -&gt; seq</code>: enumerate all elements of
+type <code>'I_n</code></p></li>
 <li><p><code>lift: 'I_n -&gt; 'I_n.-1 -&gt; 'I_n</code></p></li>
 <li><p><code>unlift: 'I_n -&gt; 'I_n -&gt; option 'I_n.-1</code></p></li>
-<li><p><code>lshift: 'I_m -&gt; 'I_(m+n)</code>: Shift to left, making space in right</p></li>
-<li><p><code>rshift: 'I_n -&gt; 'I_(m+n)</code>: Shift to right, making space in left</p></li>
+<li><p><code>lshift: 'I_m -&gt; 'I_(m+n)</code>: Shift to left, making
+space in right</p></li>
+<li><p><code>rshift: 'I_n -&gt; 'I_(m+n)</code>: Shift to right, making
+space in left</p></li>
 </ul>
 <h3 id="tuple">tuple</h3>
-<p><code>n.-tuple</code> is essentially a <code>seq</code> with a proof that its length is less than <code>n</code>.</p>
+<p><code>n.-tuple</code> is essentially a <code>seq</code> with a proof
+that its length is less than <code>n</code>.</p>
 <ul>
 <li><code>n.-tuple</code> is notation for <code>tuple_of n</code></li>
 <li><code>[tuple]</code>: empty tuple</li>
-<li><code>[tuple x1; x2; ... ; xn]</code>: a value of type <code>n.-tuple</code></li>
-<li><code>tval</code>: get <code>seq</code> component of <code>n.-tuple</code></li>
+<li><code>[tuple x1; x2; ... ; xn]</code>: a value of type
+<code>n.-tuple</code></li>
+<li><code>tval</code>: get <code>seq</code> component of
+<code>n.-tuple</code></li>
 </ul>
 <h3 id="matrix"><code>matrix</code></h3>
 <ul>
-<li><p><code>fun_of_matrix</code>: get function that makes the matrix</p></li>
-<li><p><code>'M[R]_ (rows, cols)</code>: type of <code>rows x cols</code> matrix with elements of type <code>R</code>.</p></li>
-<li><p><code>'M[R]_ n</code>: type of square matrix of size <code>n</code> with elements of type <code>R</code>.</p></li>
-<li><p><code>\matrix_ (i, j) E</code>: make a <code>matrix</code> value from a function.</p>
+<li><p><code>fun_of_matrix</code>: get function that makes the
+matrix</p></li>
+<li><p><code>'M[R]_ (rows, cols)</code>: type of
+<code>rows x cols</code> matrix with elements of type
+<code>R</code>.</p></li>
+<li><p><code>'M[R]_ n</code>: type of square matrix of size
+<code>n</code> with elements of type <code>R</code>.</p></li>
+<li><p><code>\matrix_ (i, j) E</code>: make a <code>matrix</code> value
+from a function.</p>
 <ul>
-<li><code>E</code> is like a function that takes row and column indices and returns cell values.</li>
+<li><code>E</code> is like a function that takes row and column indices
+and returns cell values.</li>
 </ul></li>
-<li><p><code>\matrix_ (i &lt; m, j &lt; n) E</code>: similar to <code>\matrix_ (i, j)</code> but with additional constraints.</p>
+<li><p><code>\matrix_ (i &lt; m, j &lt; n) E</code>: similar to
+<code>\matrix_ (i, j)</code> but with additional constraints.</p>
 <ul>
-<li>Eg: <code>Definition diagonal := \matrix_ (i &lt; 3, j &lt; 3) if i==j then 1 else 0.</code></li>
+<li>Eg:
+<code>Definition diagonal := \matrix_ (i &lt; 3, j &lt; 3) if i==j then 1 else 0.</code></li>
 </ul></li>
-<li><p><code>\tr m</code>: find trace (ie, sum of main diagonal) of a square matrix <code>m</code>.</p></li>
-<li><p><code>M^T</code> or <code>trmx M</code>: transpose of a matrix <code>M</code></p></li>
+<li><p><code>\tr m</code>: find trace (ie, sum of main diagonal) of a
+square matrix <code>m</code>.</p></li>
+<li><p><code>M^T</code> or <code>trmx M</code>: transpose of a matrix
+<code>M</code></p></li>
 <li><p><code>addmx</code>: matrix addition</p></li>
 <li><p><code>*m</code>: matrix multiplication (infix operator)</p></li>
-<li><p><code>a%:M</code>: scalar matrix with <code>a</code>-s on main diagonal.</p>
+<li><p><code>a%:M</code>: scalar matrix with <code>a</code>-s on main
+diagonal.</p>
 <ul>
 <li>ie, <code>1%:M</code> would be identity matrix.</li>
 </ul></li>
@@ -703,12 +785,15 @@ Compute index_iota 2 5.
 <ul>
 <li><code>'M_(2,3)</code>: 2x3 matrix of unknown type</li>
 <li><code>'M[int]_(2,3)</code>: 2x3 matrix of <code>int</code> type</li>
-<li><code>'M_n</code>: type of square matrix of size n (element type implicit)
+<li><code>'M_n</code>: type of square matrix of size n (element type
+implicit)
 <ul>
 <li><code>'M[bool]_3</code>: bool square matrix of size 3</li>
 </ul></li>
-<li><code>'rV_2</code>: row vector of size 2 (element type implicit)</li>
-<li><code>'cV_2</code>: column vector of size 2 (element type implicit)</li>
+<li><code>'rV_2</code>: row vector of size 2 (element type
+implicit)</li>
+<li><code>'cV_2</code>: column vector of size 2 (element type
+implicit)</li>
 </ul>
 <p>Submatrices:</p>
 <ul>
@@ -721,7 +806,8 @@ Compute index_iota 2 5.
 <ul>
 <li><code>row_mx Ml Mr</code>: stack Ml and Mr horizontally</li>
 <li><code>col_mx Mu Md</code>: stack Mu and Md vertically</li>
-<li><code>block_mx Mul Mur Mdl Mdr</code>: make a matrix with 4 other matrices</li>
+<li><code>block_mx Mul Mur Mdl Mdr</code>: make a matrix with 4 other
+matrices</li>
 </ul>
 <pre class="coq"><code>Check matrix bool 3 4.
 (* &#39;M_(3, 4) : predArgType *)
@@ -754,7 +840,8 @@ Example eg7: &#39;rV_2 :=
 </ul></li>
 </ol>
 <h3 id="seq"><code>seq</code></h3>
-<p><code>seq</code> seems to be simply notation for <code>list</code>.</p>
+<p><code>seq</code> seems to be simply notation for
+<code>list</code>.</p>
 <pre class="coq"><code>Print seq.
 (* Notation seq := list *)
 
@@ -774,28 +861,36 @@ fun l : seq nat =&gt; [:: 1, 2, 3 &amp; l]
      : seq nat -&gt; seq nat
 *)
 </code></pre>
-<p>Infinite sequence has an <code>&amp;</code> at its end and its elements are separated by a <code>,</code> instead of <code>;</code>.</p>
+<p>Infinite sequence has an <code>&amp;</code> at its end and its
+elements are separated by a <code>,</code> instead of
+<code>;</code>.</p>
 <p>—</p>
 <h3 id="algebra-ssralg">algebra (<code>ssralg</code>)</h3>
-<p><a href="https://math-comp.github.io/htmldoc/mathcomp.algebra.ssralg.html">https://math-comp.github.io/htmldoc/mathcomp.algebra.ssralg.html</a></p>
+<p><a
+href="https://math-comp.github.io/htmldoc/mathcomp.algebra.ssralg.html">https://math-comp.github.io/htmldoc/mathcomp.algebra.ssralg.html</a></p>
 <ul>
 <li><code>comSemiRingType</code>: Commutative semiring
 <ul>
 <li>Only in mathcomp2</li>
 </ul></li>
 <li><code>nmodType</code>: Structure for additive Abelian monoid</li>
-<li><code>zmodType</code>: Structure for additive Abelian groups (ie, <code>nmodType</code> with additive inverses)</li>
+<li><code>zmodType</code>: Structure for additive Abelian groups (ie,
+<code>nmodType</code> with additive inverses)</li>
 </ul>
 <h3 id="fintype-1">finType</h3>
 <ul>
 <li><code>ord0</code>: smallest element of a 'I<sub>n</sub>.+1</li>
 <li><code>ord_max</code>: largest element of a 'I<sub>n</sub>.+1</li>
-<li><code>lift</code>: lift a 'I<sub>n</sub> to 'I<sub>n</sub>.+1 (ie, make the type 'wider' by one)</li>
-<li><code>unlift</code>: 'I<sub>n</sub> to 'I<sub>n</sub>.-1 <em>if possible</em> (ie, make the type 'narrower by one)</li>
+<li><code>lift</code>: lift a 'I<sub>n</sub> to 'I<sub>n</sub>.+1 (ie,
+make the type 'wider' by one)</li>
+<li><code>unlift</code>: 'I<sub>n</sub> to 'I<sub>n</sub>.-1 <em>if
+possible</em> (ie, make the type 'narrower by one)</li>
 </ul>
 <h2 id="locking-and-unlocking">Locking and unlocking</h2>
-<p><a href="https://coq.inria.fr/refman/proof-engine/ssreflect-proof-language.html#locking-unlocking">https://coq.inria.fr/refman/proof-engine/ssreflect-proof-language.html#locking-unlocking</a></p>
-<p>Controls unfolding during a <code>simpl</code> in proofs. To prevent large terms showing all at once.</p>
+<p><a
+href="https://coq.inria.fr/refman/proof-engine/ssreflect-proof-language.html#locking-unlocking">https://coq.inria.fr/refman/proof-engine/ssreflect-proof-language.html#locking-unlocking</a></p>
+<p>Controls unfolding during a <code>simpl</code> in proofs. To prevent
+large terms showing all at once.</p>
 <ul>
 <li>Unfold locked term: <code>rewrite unlock</code></li>
 </ul>
@@ -819,12 +914,14 @@ unlock_with:
 </code></pre>
 <h2 id="proof-mode">Proof mode</h2>
 <ul>
-<li><code>/&lt;lemma-name&gt;</code>: simplify with <code>&lt;lemma-name&gt;</code> and then use.</li>
+<li><code>/&lt;lemma-name&gt;</code>: simplify with
+<code>&lt;lemma-name&gt;</code> and then use.</li>
 <li><code>//</code>: simplify beforehand
 <ul>
 <li>Equivalent to <code>try done.</code></li>
 </ul></li>
-<li><code>/=</code>: invokes the <code>simpl</code> tactic <a href="https://coq.inria.fr/library/Coq.ssr.ssreflect.html">ʳ</a></li>
+<li><code>/=</code>: invokes the <code>simpl</code> tactic <a
+href="https://coq.inria.fr/library/Coq.ssr.ssreflect.html">ʳ</a></li>
 <li><code>//=</code>: <code>//</code> followed by <code>/=</code>
 <ul>
 <li>Equivalent to <code>simpl; try done.</code></li>
@@ -836,20 +933,27 @@ unlock_with:
 <li>Useful for forward reasoning.</li>
 </ul></li>
 <li><code>move</code>: move assumption to and from stack</li>
-<li><code>rewrite -&lt;lemma-name&gt;</code>: rewrite from right to left (the minus changes the direction)</li>
-<li><code>rewrite !&lt;lemma-name&gt;</code>: rewrite all occurrences (without the <code>!</code>, only 1st occurrence is rewritten)</li>
+<li><code>rewrite -&lt;lemma-name&gt;</code>: rewrite from right to left
+(the minus changes the direction)</li>
+<li><code>rewrite !&lt;lemma-name&gt;</code>: rewrite all occurrences
+(without the <code>!</code>, only 1st occurrence is rewritten)</li>
 <li>Can rewrite with multiple theorems at once.</li>
-<li><code>move=&gt; -&gt;.</code> is same as <code>move=&gt; H; rewrite H.</code></li>
-<li><code>{-2}n</code> capture all occurrences of <code>n</code> except the second
+<li><code>move=&gt; -&gt;.</code> is same as
+<code>move=&gt; H; rewrite H.</code></li>
+<li><code>{-2}n</code> capture all occurrences of <code>n</code> except
+the second
 <ul>
-<li>Example: <code>rewrite {3}/foo.</code> (rewrite only 3th instance of <code>foo</code>)</li>
+<li>Example: <code>rewrite {3}/foo.</code> (rewrite only 3th instance of
+<code>foo</code>)</li>
 </ul></li>
 </ul>
 <h3 id="rewrite"><code>rewrite</code></h3>
 <p>Perhaps most useful part of ssreflect usage.</p>
 <ul>
-<li><code>rewrite /&lt;definition&gt;</code> is same as <code>unfold &lt;definition&gt;</code></li>
-<li><code>rewrite -/&lt;definition&gt;</code> is same as <code>fold &lt;definition&gt;</code></li>
+<li><code>rewrite /&lt;definition&gt;</code> is same as
+<code>unfold &lt;definition&gt;</code></li>
+<li><code>rewrite -/&lt;definition&gt;</code> is same as
+<code>fold &lt;definition&gt;</code></li>
 </ul>
 <h3 id="tactics-and-tacticals">Tactics and tacticals</h3>
 <ul>
@@ -860,7 +964,8 @@ unlock_with:
 <ul>
 <li><code>do 1? &lt;tactic&gt;</code>: at most once</li>
 <li><code>do 2! &lt;tactic&gt;</code>: exactly twice</li>
-<li><code>do ! &lt;tactic&gt;</code>: as many times as possible, but at least once</li>
+<li><code>do ! &lt;tactic&gt;</code>: as many times as possible, but at
+least once</li>
 </ul></li>
 </ul>
 <h3 id="unlock-lemma"><code>unlock</code> lemma</h3>
@@ -871,12 +976,14 @@ unlock : forall (T : Type) (x : T) (C : unlockable x),
   unlocked C = x
 *)
 </code></pre>
-<p>From <a href="https://www.math.nagoya-u.ac.jp/~garrigue/lecture/2017_AW/mathcomp-1.6/htmldoc/mathcomp.ssreflect.ssreflect.html">https://www.math.nagoya-u.ac.jp/~garrigue/lecture/2017_AW/mathcomp-1.6/htmldoc/mathcomp.ssreflect.ssreflect.html</a>:</p>
+<p>From <a
+href="https://www.math.nagoya-u.ac.jp/~garrigue/lecture/2017_AW/mathcomp-1.6/htmldoc/mathcomp.ssreflect.ssreflect.html">https://www.math.nagoya-u.ac.jp/~garrigue/lecture/2017_AW/mathcomp-1.6/htmldoc/mathcomp.ssreflect.ssreflect.html</a>:</p>
 <blockquote>
 <p>unlockable v == interface for sealed constant definitions of v.</p>
 </blockquote>
 <h2 id="naming-conventions">Naming conventions</h2>
-<p>Made uniformly in mathcomp. Makes it way easier to remember: <a href="https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/CONTRIBUTING.md#naming-conventions-for-lemmas-non-exhaustive">https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/CONTRIBUTING.md#naming-conventions-for-lemmas-non-exhaustive</a></p>
+<p>Made uniformly in mathcomp. Makes it way easier to remember: <a
+href="https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/CONTRIBUTING.md#naming-conventions-for-lemmas-non-exhaustive">https://github.com/math-comp/math-comp/blob/mathcomp-2.0.0/CONTRIBUTING.md#naming-conventions-for-lemmas-non-exhaustive</a></p>
 <ul>
 <li>reflection view lemmas end with a 'P'.
 <ul>
@@ -906,8 +1013,10 @@ unlock : forall (T : Type) (x : T) (C : unlockable x),
 <h2 id="ssreflect">ssreflect</h2>
 <p>Some tutorials:</p>
 <ul>
-<li><a href="https://jfr.unibo.it/article/download/1979/1358/4452">https://jfr.unibo.it/article/download/1979/1358/4452</a></li>
-<li><a href="https://inria.hal.science/inria-00407778/document">https://inria.hal.science/inria-00407778/document</a></li>
+<li><a
+href="https://jfr.unibo.it/article/download/1979/1358/4452">https://jfr.unibo.it/article/download/1979/1358/4452</a></li>
+<li><a
+href="https://inria.hal.science/inria-00407778/document">https://inria.hal.science/inria-00407778/document</a></li>
 </ul>
 <pre class="coq"><code>Inductive reflect (P: Prop): bool -&gt; Type :=
 | Reflect_true : P -&gt; reflect P true
@@ -919,7 +1028,8 @@ unlock : forall (T : Type) (x : T) (C : unlockable x),
 <ul>
 <li><code>by []</code> is equivalent to <code>done</code> tactic.</li>
 </ul>
-<p>Given a value of <code>reflect P b</code>, these are useful to 'project' components:</p>
+<p>Given a value of <code>reflect P b</code>, these are useful to
+'project' components:</p>
 <ul>
 <li>elimT: .. reflect P b -&gt; b -&gt; P</li>
 <li>introT: .. reflect P b -&gt; P -&gt; b</li>
@@ -932,16 +1042,22 @@ unlock : forall (T : Type) (x : T) (C : unlockable x),
 </code></pre>
 <p>Links:</p>
 <ul>
-<li>Uses HB and mathcomp2 now: <a href="https://github.com/math-comp/dioid/blob/master/complete_dioid.v">https://github.com/math-comp/dioid/blob/master/complete_dioid.v</a></li>
+<li>Uses HB and mathcomp2 now: <a
+href="https://github.com/math-comp/dioid/blob/master/complete_dioid.v">https://github.com/math-comp/dioid/blob/master/complete_dioid.v</a></li>
 </ul>
 <h2 id="hierarchy-builder-hb">Hierarchy builder (HB)</h2>
 <p>References:</p>
 <ul>
-<li><a href="https://perso.crans.org/cohen/JFLA23/hb.pdf">https://perso.crans.org/cohen/JFLA23/hb.pdf</a> (slides from 2023)</li>
-<li><a href="https://inria.hal.science/hal-02478907v6/document">https://inria.hal.science/hal-02478907v6/document</a> (paper)</li>
+<li><a
+href="https://perso.crans.org/cohen/JFLA23/hb.pdf">https://perso.crans.org/cohen/JFLA23/hb.pdf</a>
+(slides from 2023)</li>
+<li><a
+href="https://inria.hal.science/hal-02478907v6/document">https://inria.hal.science/hal-02478907v6/document</a>
+(paper)</li>
 </ul>
 <h3 id="primitives-in-hb">Primitives in HB</h3>
-<p><a href="https://perso.crans.org/cohen/JFLA23/hb.pdf">https://perso.crans.org/cohen/JFLA23/hb.pdf</a></p>
+<p><a
+href="https://perso.crans.org/cohen/JFLA23/hb.pdf">https://perso.crans.org/cohen/JFLA23/hb.pdf</a></p>
 <ul>
 <li><code>HB.mixin</code></li>
 <li><code>HB.factory</code></li>
@@ -1013,7 +1129,8 @@ HB: GRing.ComSemiRing is inherited by:
 *)
 </code></pre>
 <h3 id="hb.howto"><code>HB.howto</code></h3>
-<p>Shows possible ways in which a structure can be attained for a type.</p>
+<p>Shows possible ways in which a structure can be attained for a
+type.</p>
 <pre class="coq"><code>(* Show how to make [option] type a commutative semiring *)
 HB.howto option comSemiRingType.
 (*
@@ -1033,37 +1150,55 @@ HB: solutions (use &#39;HB.about F.Build&#39; to see the arguments of each facto
 </ul>
 <h2 id="symbol"><code>:&gt;</code> symbol</h2>
 <p>Coq syntax.</p>
-<p><a href="https://stackoverflow.com/questions/51404367/the-coq-symbol">https://stackoverflow.com/questions/51404367/the-coq-symbol</a></p>
+<p><a
+href="https://stackoverflow.com/questions/51404367/the-coq-symbol">https://stackoverflow.com/questions/51404367/the-coq-symbol</a></p>
 <h2 id="focusing-on-subgoals">Focusing on subgoals</h2>
-<p>Unlike usual coq, by default, mathcomp makes doesn't focus on subgoal when we use bullets.</p>
-<p>We can use <a href="https://coq.inria.fr/doc/V8.18.0/refman/proofs/writing-proofs/proof-mode.html#coq:tacn.{">focus brackets</a> (ie, a <code>{</code> , <code>}</code> pair). A <code>{</code> focuses on first sub-goal.</p>
-<p>Could also focus on n-th subgoal with <code>n-{ &lt;tactics&gt; }</code>.</p>
-<p>Another way is to change <a href="https://coq.inria.fr/doc/V8.18.0/refman/proofs/writing-proofs/proof-mode.html#coq:opt.Bullet-Behavior">the setting</a> with</p>
+<p>Unlike usual coq, by default, mathcomp makes doesn't focus on subgoal
+when we use bullets.</p>
+<p>We can use <a
+href="https://coq.inria.fr/doc/V8.18.0/refman/proofs/writing-proofs/proof-mode.html#coq:tacn.{">focus
+brackets</a> (ie, a <code>{</code> , <code>}</code> pair). A
+<code>{</code> focuses on first sub-goal.</p>
+<p>Could also focus on n-th subgoal with
+<code>n-{ &lt;tactics&gt; }</code>.</p>
+<p>Another way is to change <a
+href="https://coq.inria.fr/doc/V8.18.0/refman/proofs/writing-proofs/proof-mode.html#coq:opt.Bullet-Behavior">the
+setting</a> with</p>
 <pre><code>Set Bullet Behavior &quot;Strict Subproofs&quot;.
 </code></pre>
 <p>Don't use <code>Focus</code>. It's deprecated.</p>
 <p>–</p>
-<p>Info thanks to <a href="https://coq.zulipchat.com/#narrow/stream/237664-math-comp-users/topic/.E2.9C.94.20all_ssreflect.3A.20Focusing.20on.20sub-goal">this</a> discussion.</p>
+<p>Info thanks to <a
+href="https://coq.zulipchat.com/#narrow/stream/237664-math-comp-users/topic/.E2.9C.94.20all_ssreflect.3A.20Focusing.20on.20sub-goal">this</a>
+discussion.</p>
 <h2 id="info">Info</h2>
 <ul>
-<li><code>fold</code> / <code>unfold</code> is usually not needed with ssreflect because <code>rewrite</code> handles that as well (among many other things with its numerous flags).
+<li><code>fold</code> / <code>unfold</code> is usually not needed with
+ssreflect because <code>rewrite</code> handles that as well (among many
+other things with its numerous flags).
 <ul>
-<li><a href="https://coq.inria.fr/refman/proof-engine/ssreflect-proof-language.html#rewriting-ssr">https://coq.inria.fr/refman/proof-engine/ssreflect-proof-language.html#rewriting-ssr</a></li>
+<li><a
+href="https://coq.inria.fr/refman/proof-engine/ssreflect-proof-language.html#rewriting-ssr">https://coq.inria.fr/refman/proof-engine/ssreflect-proof-language.html#rewriting-ssr</a></li>
 </ul></li>
-<li>Usage with nix: <a href="https://github.com/math-comp/math-comp/wiki/Using-nix/">https://github.com/math-comp/math-comp/wiki/Using-nix/</a></li>
+<li>Usage with nix: <a
+href="https://github.com/math-comp/math-comp/wiki/Using-nix/">https://github.com/math-comp/math-comp/wiki/Using-nix/</a></li>
 <li><code>eqn</code> is same as <code>Nat.eqb</code></li>
 </ul>
 <h2 id="doubts">Doubts</h2>
-<ul>
-<li>[ ] program obligation not applicable to mathcomp?</li>
-<li>[X] <code>refine</code> not applicable to mathcomp? It is</li>
-<li>[ ] <code>under</code> tactic</li>
-<li>[ ] <code>[]</code> in <code>rewrite</code>. To override default inferred args?</li>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />program obligation not
+applicable to mathcomp?</li>
+<li><input type="checkbox" disabled="" checked="" /><code>refine</code>
+not applicable to mathcomp? It is</li>
+<li><input type="checkbox" disabled="" /><code>under</code> tactic</li>
+<li><input type="checkbox" disabled="" /><code>[]</code> in
+<code>rewrite</code>. To override default inferred args?</li>
 </ul>
 <h2 id="resources">Resources</h2>
 <ul>
 <li>mathcomp book</li>
-<li><a href="https://ilyasergey.net/util/ssreflect-manual.pdf">ssreflect manual</a></li>
+<li><a href="https://ilyasergey.net/util/ssreflect-manual.pdf">ssreflect
+manual</a></li>
 </ul>
 </div>
 </body>

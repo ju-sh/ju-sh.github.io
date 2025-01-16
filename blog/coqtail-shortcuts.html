@@ -36,54 +36,58 @@
 </header>
 
 <ul>
-    <li>Date created: 10-Sep-2021</li>
     </ul>
 
-<div>
-  <p>
-    Tags: / 
-    <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/coq nvim vim.html">coq nvim vim</a>
-    </code> /
-  <p>
-</div>
 
 
 <div id="description">
-A couple of shortcut key bindings that I use with nvim and Coqtail, a vim plugin to use coq interactively.
+A couple of shortcut key bindings that I use with nvim and Coqtail, a
+vim plugin to use coq interactively.
 </div>
 
 <hr/>
 
 <div id="content-container">
-<hr />
-<p>Of the <a href="https://coq.inria.fr/user-interfaces.html">user interfaces</a> available for coq, I use:</p>
+<p>Of the <a href="https://coq.inria.fr/user-interfaces.html">user
+interfaces</a> available for coq, I use:</p>
 <ul>
 <li>Coqtail with vim/nvim</li>
 <li>Proof General with emacs</li>
 </ul>
-<p>No offense to emacs users, but I found it difficult to get used to the emacs way of doing things (except for table editing in org-mode, which I use often) and would rather stick with (n)vim.</p>
-<p>That means <a href="https://github.com/whonore/Coqtail">Coqtail</a> is the obvious choice.</p>
+<p>No offense to emacs users, but I found it difficult to get used to
+the emacs way of doing things (except for table editing in org-mode,
+which I use often) and would rather stick with (n)vim.</p>
+<p>That means <a href="https://github.com/whonore/Coqtail">Coqtail</a>
+is the obvious choice.</p>
 <p>I altered key bindings for two things in my nvim config:</p>
 <ul>
 <li>running commands line by line</li>
 <li>inserting coq output to source file</li>
 </ul>
 <h2 id="running-commands">Running commands</h2>
-<p>Coqtail is nice (thanks to <a href="https://github.com/whonore">Wolf Honore</a> and others working on it!) but its default shortcuts with the <a href="https://vimhelp.org/map.txt.html#%3CLeader%3E"><code>&lt;leader&gt;</code> key</a> sometimes got in the way for me.</p>
-<p>For example, when I do <code>&lt;leader&gt;cc</code> to start coq via Coqtail, if I'm a bit late to do the <code>cc</code> after the <code>&lt;leader&gt;</code>, the current line is deleted and I got to do undo.</p>
+<p>Coqtail is nice (thanks to <a href="https://github.com/whonore">Wolf
+Honore</a> and others working on it!) but its default shortcuts with the
+<a
+href="https://vimhelp.org/map.txt.html#%3CLeader%3E"><code>&lt;leader&gt;</code>
+key</a> sometimes got in the way for me.</p>
+<p>For example, when I do <code>&lt;leader&gt;cc</code> to start coq via
+Coqtail, if I'm a bit late to do the <code>cc</code> after the
+<code>&lt;leader&gt;</code>, the current line is deleted and I got to do
+undo.</p>
 <p>Similar problems with some other shortcuts like:</p>
 <ul>
 <li><code>&lt;leader&gt;cj</code> for execute next command</li>
 <li><code>&lt;leader&gt;ck</code> for retract one command</li>
 </ul>
-<p>Of course, the maximum delay for the '<code>&lt;leader&gt;</code> shortcuts' can be adjusted but I thought I could try something else.</p>
+<p>Of course, the maximum delay for the '<code>&lt;leader&gt;</code>
+shortcuts' can be adjusted but I thought I could try something else.</p>
 <p>I liked some of the shortcuts of emacs' proofgeneral mode.</p>
 <ul>
 <li><code>C-c C-n</code> for execute next command</li>
 <li><code>C-c C-u</code> for retract one command</li>
 </ul>
-<p>And since vim makes limited use of control key, I thought it would be nice to have a similar key binding in vim with Coqtail. Like</p>
+<p>And since vim makes limited use of control key, I thought it would be
+nice to have a similar key binding in vim with Coqtail. Like</p>
 <ul>
 <li><code>C-n</code> for execute next command</li>
 <li><code>C-p</code> for retract one command</li>
@@ -92,24 +96,35 @@ A couple of shortcut key bindings that I use with nvim and Coqtail, a vim plugin
 <pre class="vimscript"><code>noremap &lt;C-n&gt; :CoqNext&lt;CR&gt;hh  &quot; next line
 noremap &lt;C-p&gt; :CoqUndo&lt;CR&gt;hh  &quot; undo last line
 </code></pre>
-<p>I couldn't yet figure out why, but it seems that the <code>&lt;CR&gt;</code> at the end of the above two lines somehow causes the cursor to advance by two characters horizonatally. Hence the <code>hh</code> at the end to move the cursor back left by two character positions.</p>
-<p>(I didn't delve into this, but please tell me if you know why this happens.)</p>
-<h3 id="some-alternative-key-bindings">Some alternative key bindings</h3>
+<p>I couldn't yet figure out why, but it seems that the
+<code>&lt;CR&gt;</code> at the end of the above two lines somehow causes
+the cursor to advance by two characters horizonatally. Hence the
+<code>hh</code> at the end to move the cursor back left by two character
+positions.</p>
+<p>(I didn't delve into this, but please tell me if you know why this
+happens.)</p>
+<h3 id="some-alternative-key-bindings">Some alternative key
+bindings</h3>
 <ol>
 <li><p>Change leader key</p>
-<p>The leader key (<code>&lt;Leader&gt;</code>) in nvim can be changed by setting the <code>mapleader</code> variable.</p>
-<p>For example, the following can be used to make Space as leader key:</p>
+<p>The leader key (<code>&lt;Leader&gt;</code>) in nvim can be changed
+by setting the <code>mapleader</code> variable.</p>
+<p>For example, the following can be used to make Space as leader
+key:</p>
 <pre class="vimscript"><code>let g:mapleader = &quot;\&lt;Space&gt;&quot;
 </code></pre>
-<p>(Got to use double quote and the backslash here for space. Single quote doesn't work.)</p>
+<p>(Got to use double quote and the backslash here for space. Single
+quote doesn't work.)</p>
 <p>And then you can do like</p>
 <ul>
 <li><code>Space C-j</code>: execute next command</li>
 <li><code>Space C-k</code>: retract one command</li>
 </ul>
-<p>(Used space as leader key just for example. I don't prefer to have Space as the leader key, though. 😅)</p></li>
+<p>(Used space as leader key just for example. I don't prefer to have
+Space as the leader key, though. 😅)</p></li>
 <li><p>Coqtail variables</p>
-<p>Coqtail also offers the following variables that can be used to set the key prefix just in the context of Coqtail:</p>
+<p>Coqtail also offers the following variables that can be used to set
+the key prefix just in the context of Coqtail:</p>
 <ul>
 <li><code>g:coqtail_map_prefix</code></li>
 <li><code>g:coqtail_imap_prefix</code></li>
@@ -117,13 +132,17 @@ noremap &lt;C-p&gt; :CoqUndo&lt;CR&gt;hh  &quot; undo last line
 <p>We can do</p>
 <pre class="vimscript"><code>let coqtail_map_prefix = &lt;c-c&gt;
 </code></pre>
-<p>Could also make the <code>coqtail_map_prefix</code> as <code>g:coqtail_map_prefix</code>. See <a href="https://vi.stackexchange.com/questions/14190/what-is-the-difference-between-let-mapleader-and-let-gmapleader">this</a> stackoverflow post.</p>
+<p>Could also make the <code>coqtail_map_prefix</code> as
+<code>g:coqtail_map_prefix</code>. See <a
+href="https://vi.stackexchange.com/questions/14190/what-is-the-difference-between-let-mapleader-and-let-gmapleader">this</a>
+stackoverflow post.</p>
 <p>to modify the default shortcuts to things like</p>
 <ul>
 <li><code>C-c C-j</code>: execute next command</li>
 <li><code>C-c C-k</code>: retract one command</li>
 </ul>
-<p>See the Coqtail <a href="https://github.com/whonore/Coqtail/#mappings">README</a>.</p></li>
+<p>See the Coqtail <a
+href="https://github.com/whonore/Coqtail/#mappings">README</a>.</p></li>
 </ol>
 <h2 id="adding-coq-output-as-comment">Adding coq output as comment</h2>
 <p>Coq produces two kinds of output:</p>
@@ -132,10 +151,16 @@ noremap &lt;C-p&gt; :CoqUndo&lt;CR&gt;hh  &quot; undo last line
 <li>Info: Displays informative messages</li>
 </ul>
 <p>('Info' is termed 'response' in emacs proofgeneral mode.)</p>
-<p>Figured it would be nice to have a way to add these output from coq as a comment within the source file itself.</p>
-<p>Like the way <a href="https://github.com/cpitclaudel/alectryon">alectryon</a> does it but within the source itself and not as separate html.</p>
-<p>There is <a href="https://github.com/whonore/Coqtail/issues/200">an open issue</a> at the Coqtail github repo regarding this where they mention a quick way to have this.</p>
-<p>Like placing the following in the <code>.vimrc</code> / <code>init.vim</code> file:</p>
+<p>Figured it would be nice to have a way to add these output from coq
+as a comment within the source file itself.</p>
+<p>Like the way <a
+href="https://github.com/cpitclaudel/alectryon">alectryon</a> does it
+but within the source itself and not as separate html.</p>
+<p>There is <a href="https://github.com/whonore/Coqtail/issues/200">an
+open issue</a> at the Coqtail github repo regarding this where they
+mention a quick way to have this.</p>
+<p>Like placing the following in the <code>.vimrc</code> /
+<code>init.vim</code> file:</p>
 <pre class="vimscript"><code>function! InsertOutput(buffer)
     &quot; Position cursor after last executed line
     CoqJumpToEnd
@@ -154,11 +179,20 @@ endfunction
 let @i = &quot;:call InsertOutput(&#39;Info&#39;)^M&quot;
 let @g = &quot;:call InsertOutput(&#39;Goal&#39;)^M&quot;
 </code></pre>
-<p>(The <code>^M</code> at the end of the last two lines is actually the code for the Enter key. You can type it in vim using its digraph: <code>C-k CR</code>.)</p>
-<p>Thanks to <a href="https://github.com/tomtomjhj">Jaehwang Jerry Jung</a> for suggesting <a href="https://github.com/whonore/Coqtail/issues/39#issuecomment-809908833">this</a>. 🙂</p>
-<p>I inserted the command for that into two of vim registers and execute when needed with <code>@&lt;reg&gt;</code>.</p>
-<p><code>@i</code> to insert 'Info' and <code>@g</code> to insert 'Goal' output.</p>
-<p>But this means you can't use those registers for anything else. There is probably a better way (but am sticking with this till I find one 😊).</p>
+<p>(The <code>^M</code> at the end of the last two lines is actually the
+code for the Enter key. You can type it in vim using its digraph:
+<code>C-k CR</code>.)</p>
+<p>Thanks to <a href="https://github.com/tomtomjhj">Jaehwang Jerry
+Jung</a> for suggesting <a
+href="https://github.com/whonore/Coqtail/issues/39#issuecomment-809908833">this</a>.
+🙂</p>
+<p>I inserted the command for that into two of vim registers and execute
+when needed with <code>@&lt;reg&gt;</code>.</p>
+<p><code>@i</code> to insert 'Info' and <code>@g</code> to insert 'Goal'
+output.</p>
+<p>But this means you can't use those registers for anything else. There
+is probably a better way (but am sticking with this till I find one
+😊).</p>
 <p>An example on doing <code>@i</code>:</p>
 <pre class="src"><code>Check nat. &lt;---
 (*
@@ -167,7 +201,8 @@ nat
      : Set
 #+END_OUTPUT (Info) *)
 </code></pre>
-<p>where the <code>&lt;---</code> represents the last line executed by coq.</p>
+<p>where the <code>&lt;---</code> represents the last line executed by
+coq.</p>
 <p>Another example:</p>
 <pre><code>Theorem plus_0_n : forall (n : nat), 0 + n = n.
 Proof.
@@ -187,9 +222,12 @@ Qed.
 </code></pre>
 <h2 id="some-links">Some links</h2>
 <ul>
-<li><a href="https://github.com/whonore/Coqtail">Coqtail git repo</a></li>
-<li><a href="https://github.com/cpitclaudel/alectryon">Alectryon git repo</a></li>
-<li><a href="https://github.com/whonore/Coqtail/issues/115">Github issue discussing <code>g:coqtail_map_prefix</code></a></li>
+<li><a href="https://github.com/whonore/Coqtail">Coqtail git
+repo</a></li>
+<li><a href="https://github.com/cpitclaudel/alectryon">Alectryon git
+repo</a></li>
+<li><a href="https://github.com/whonore/Coqtail/issues/115">Github issue
+discussing <code>g:coqtail_map_prefix</code></a></li>
 </ul>
 </div>
 </body>

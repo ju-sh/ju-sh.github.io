@@ -57,7 +57,8 @@
 <li>aka Yale format</li>
 </ul></li>
 </ul>
-<p><a href="https://en.wikipedia.org/wiki/Sparse_matrix">https://en.wikipedia.org/wiki/Sparse_matrix</a></p>
+<p><a
+href="https://en.wikipedia.org/wiki/Sparse_matrix">https://en.wikipedia.org/wiki/Sparse_matrix</a></p>
 <h3 id="sparsity-and-density">Sparsity and density</h3>
 <pre><code>             number of zero elements
 Sparsity = ────────────────────────────
@@ -88,14 +89,17 @@ Sparsity + Density = 1
 <h3 id="csr-format">CSR format</h3>
 <ul>
 <li><p>Compressed Storage Row (aka CRS, CSR)</p></li>
-<li><p>Subsequent non-zero elements are in contiguous memory locations <a href="https://netlib.org/linalg/html_templates/node91.html">ʳ</a></p></li>
+<li><p>Subsequent non-zero elements are in contiguous memory locations
+<a
+href="https://netlib.org/linalg/html_templates/node91.html">ʳ</a></p></li>
 <li><p>Matrix <code>M</code> is represented using three vectors.</p>
 <ul>
 <li>values: Non-zero values</li>
 <li>rowIdx: Row index in <code>M</code> of values</li>
 <li>colIdx: Column index in <code>M</code> of values</li>
 </ul></li>
-<li><p>Each of these vectors are of size <code>n</code>, where <code>n</code> is number of non-zero values in <code>M</code></p></li>
+<li><p>Each of these vectors are of size <code>n</code>, where
+<code>n</code> is number of non-zero values in <code>M</code></p></li>
 <li><p>(Indexing starts from 0)</p></li>
 <li><p>Convention: NNZ = number of non-zero values</p></li>
 </ul>
@@ -121,18 +125,22 @@ Sparsity + Density = 1
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://netlib.org/linalg/html_templates/node91.html">https://netlib.org/linalg/html_templates/node91.html</a></li>
-<li><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html</a></li>
+<li><a
+href="https://netlib.org/linalg/html_templates/node91.html">https://netlib.org/linalg/html_templates/node91.html</a></li>
+<li><a
+href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html</a></li>
 </ul>
 <h3 id="csc-format">CSC format</h3>
 <ul>
 <li><p>Compressed Storage Column (aka CSC, CCS)</p></li>
 <li><p>aka Harwell-Boeing sparse matrix format</p></li>
-<li><p>Columns are traversed, column<sub>ptr</sub> is 'compressed'.</p></li>
+<li><p>Columns are traversed, column<sub>ptr</sub> is
+'compressed'.</p></li>
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://netlib.org/linalg/html_templates/node92.html">https://netlib.org/linalg/html_templates/node92.html</a></li>
+<li><a
+href="https://netlib.org/linalg/html_templates/node92.html">https://netlib.org/linalg/html_templates/node92.html</a></li>
 </ul>
 </div>
 </body>
