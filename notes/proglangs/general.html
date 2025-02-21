@@ -494,9 +494,18 @@ ie, all tags needs to be closed.</li>
 /root/node[2]
 </code></pre>
 <h3 id="examples">Examples</h3>
-<p>Get all hrefs from an html file: <code>//@href</code></p>
-<pre><code>xmlstarlet sel -t -v &quot;//@href&quot; ../build/html/blog/index.html
-</code></pre>
+<ul>
+<li>Get all hrefs from an html file: <code>//@href</code>
+<ul>
+<li><code>xmlstarlet sel -t -v "//@href" ../build/html/blog/index.html</code></li>
+</ul></li>
+<li>Extract only the <em>contents</em> of <code>body</code> tag:
+<ul>
+<li><code>xmllint --xpath '/html/body/node()' input.html</code></li>
+<li><code>xmlstarlet sel -t -v '/html/body/node()' make4ht-vPSgKS.html</code>
+(xmlstarlet removed comments, xmllint didn't)</li>
+</ul></li>
+</ul>
 <h2 id="fstar">fstar</h2>
 <p>Theorem prover.</p>
 <ul>
@@ -565,11 +574,11 @@ href="https://hol-theorem-prover.org/cheatsheet.html">https://hol-theorem-prover
 <li>A functional-logic programming language.</li>
 <li>Kind of like some aspects of Prolog and Haskell mixed together</li>
 </ul>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode curry"><code class="sourceCode curry"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ot">lst ::</span> <span class="dt">Data</span> a <span class="fu">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>lst l <span class="fu">|</span> _<span class="fu">:</span>xs <span class="fu">=:=</span> l</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">=</span> xs</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> xs <span class="kw">free</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode curry"><code class="sourceCode curry"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ot">lst ::</span> <span class="dt">Data</span> a <span class="fu">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>lst l <span class="fu">|</span> _<span class="fu">:</span>xs <span class="fu">=:=</span> l</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">=</span> xs</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> xs <span class="kw">free</span></span></code></pre></div>
 <p>The <code>where</code> clause tells that <code>xs</code> does not
 appear in <code>l</code> (is free in <code>l</code>) so that the
 compiler can see that it came out of the blue.</p>
@@ -608,12 +617,12 @@ Execution time: 0.00s / elapsed: 0:00.01
 </ul>
 <p><a
 href="https://curry.pages.ps.informatik.uni-kiel.de/curry-lang.org/">https://curry.pages.ps.informatik.uni-kiel.de/curry-lang.org/</a></p>
-<div class="sourceCode" id="cb17"><pre
-class="sourceCode curry"><code class="sourceCode curry"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ot">endAsStart ::</span> <span class="dt">Data</span> a <span class="fu">=&gt;</span> [a] <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>endAsStart l <span class="fu">|</span> x<span class="fu">:</span>(xs <span class="fu">++</span> [x]) <span class="fu">=:=</span> l </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">=</span> <span class="kw">True</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span> x,xs <span class="kw">free</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>endAsStart&#39;default _ <span class="fu">=</span> <span class="kw">False</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode curry"><code class="sourceCode curry"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ot">endAsStart ::</span> <span class="dt">Data</span> a <span class="fu">=&gt;</span> [a] <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>endAsStart l <span class="fu">|</span> x<span class="fu">:</span>(xs <span class="fu">++</span> [x]) <span class="fu">=:=</span> l </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">=</span> <span class="kw">True</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span> x,xs <span class="kw">free</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>endAsStart&#39;default _ <span class="fu">=</span> <span class="kw">False</span></span></code></pre></div>
 <p>Links:</p>
 <ul>
 <li><a
@@ -681,10 +690,14 @@ though.</li>
 </code></pre>
 <hr />
 <ul>
-<li><p><code>sc_in</code>: input port</p></li>
+<li><p><code>sc_in</code>: input port</p>
+<ul>
+<li>Eg: <code>sc_in&lt;bool&gt;</code>: boolean input</li>
+</ul></li>
 <li><p><code>sc_out</code>: output port</p></li>
 <li><p><code>sc_bit</code>: bit type</p></li>
 <li><p><code>sc_signal</code></p></li>
+<li><p><code>sc_unit&lt;4&gt;</code>: 4-bit vector</p></li>
 <li><p><code>SC_CTOR</code>: constructor</p></li>
 <li><p><code>SC_METHOD</code>: a block with its sensitivity list</p>
 <ul>
@@ -715,6 +728,111 @@ href="https://github.com/intel/systemc-compiler">https://github.com/intel/system
 href="http://www.asic-world.com/systemc/ports_signals5.html#Example_:_Signal_Binding">http://www.asic-world.com/systemc/ports_signals5.html#Example_:_Signal_Binding</a></li>
 <li><a
 href="https://www.learnsystemc.com/basic/module">https://www.learnsystemc.com/basic/module</a></li>
+</ul>
+<h2 id="javascript">Javascript</h2>
+<h3 id="variables-are-global-by-default">Variables are global by
+default</h3>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> val <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Outer val: &quot;</span> <span class="op">+</span> val)<span class="op">;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Inner val: &quot;</span> <span class="op">+</span> val)<span class="op">;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    va1 <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Inner va1: &quot;</span> <span class="op">+</span> va1)<span class="op">;</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Outer va1: &quot;</span> <span class="op">+</span> va1)<span class="op">;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">// Outer val: 1</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">// Inner val: 1</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">// Inner va1: 2</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">// Outer va1: 2</span></span></code></pre></div>
+<p>In the above snippet, <code>va1</code> was not limited to the inner
+scope but became a new global variable.</p>
+<h3 id="concatenation-vs-addition">Concatenation vs addition</h3>
+<ul>
+<li><code>+</code> is string concatenation when one of the operands is a
+string</li>
+<li><code>+</code> is addition when both operands are numbers</li>
+</ul>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> n1 <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> n2 <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> n1n2 <span class="op">=</span> n1<span class="op">+</span>n2</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> s1 <span class="op">=</span> <span class="st">&quot;Hi&quot;</span><span class="op">;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> s2 <span class="op">=</span> <span class="st">&quot;Hello&quot;</span><span class="op">;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> n1s1 <span class="op">=</span> n1<span class="op">+</span>s1<span class="op">;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> s1n1 <span class="op">=</span> s1<span class="op">+</span>n1<span class="op">;</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> s1s2 <span class="op">=</span> s1<span class="op">+</span>s2<span class="op">;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;n1+n2 = &quot;</span> <span class="op">+</span> (n1 <span class="op">+</span> n2))<span class="op">;</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;n1+s1 = &quot;</span> <span class="op">+</span> (n1 <span class="op">+</span> s1))<span class="op">;</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;s1+n1 = &quot;</span> <span class="op">+</span> (s1 <span class="op">+</span> n1))<span class="op">;</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;s1+s2 = &quot;</span> <span class="op">+</span> (s1 <span class="op">+</span> s2))<span class="op">;</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">// n1+n2 = 8</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">// n1+s1 = 3Hi</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co">// s1+n1 = Hi3</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co">// s1+s2 = HiHello</span></span></code></pre></div>
+<h2 id="fortran">Fortran</h2>
+<p><a
+href="https://en.wikibooks.org/wiki/Fortran/Hello_world">https://en.wikibooks.org/wiki/Fortran/Hello_world</a></p>
+<h3 id="general-3">General</h3>
+<ul>
+<li>Case insensitive keywords</li>
+<li>Single line comments start with <code>!</code></li>
+</ul>
+<p>—</p>
+<p>File extension:</p>
+<ul>
+<li><code>.f90</code>: modern fortran</li>
+<li><code>.f95</code>: another</li>
+<li><code>.f77</code>: old fortran
+<ul>
+<li>Needs <code>-ffixed-form</code> in gfortran</li>
+</ul></li>
+<li><code>.for</code></li>
+</ul>
+<p>Compier: gfortran</p>
+<h3 id="f77">F77</h3>
+<ul>
+<li>First 6 columns of each line are 'reserved for special formatting
+purposes like statement numbers and continuation markers'</li>
+<li>ie, most lines needs to prefixed by 6 spaces
+<ul>
+<li><a
+href="http://hpcf-files.umbc.edu/hpcf/hpc-archived/Fortran%2077%20Hello%20World%20Program.php">http://hpcf-files.umbc.edu/hpcf/hpc-archived/Fortran%2077%20Hello%20World%20Program.php</a></li>
+</ul></li>
+<li>Relic of punchcard era where lines had to be of a fixed
+length??</li>
+<li>Max length of line = 72
+<ul>
+<li>Continuation character in column 6 means next line/punchcard can be
+used</li>
+<li><a
+href="https://en.wikibooks.org/wiki/Fortran/Beginning_Fortran">https://en.wikibooks.org/wiki/Fortran/Beginning_Fortran</a></li>
+</ul></li>
+</ul>
+<h2 id="cobol">Cobol</h2>
+<ul>
+<li>An open source compiler: gnucobol
+<ul>
+<li><a
+href="https://gnucobol.sourceforge.io/">https://gnucobol.sourceforge.io/</a></li>
+<li>gnucobol first compiles cobol into C and then to executable</li>
+</ul></li>
+<li>File extension: cob, cbl, etc
+<ul>
+<li><a
+href="https://www.ibm.com/docs/en/developer-for-zos/15.0?topic=importers-cobol-importer-overview">https://www.ibm.com/docs/en/developer-for-zos/15.0?topic=importers-cobol-importer-overview</a></li>
+</ul></li>
+<li>File name should be same as <code>PROGRAM-ID</code> (case
+sensitive)</li>
+</ul>
+<p>Dbts:</p>
+<ul>
+<li>Copy book</li>
+<li>Indexed I/O</li>
 </ul>
 </div>
 </body>

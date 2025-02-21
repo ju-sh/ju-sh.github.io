@@ -50,6 +50,31 @@
 <li>Theory worked on by McBride, Atkey, et al</li>
 </ul></li>
 </ul>
+<h2 id="general">General</h2>
+<ul>
+<li>Packages: <a
+href="https://idris2.readthedocs.io/en/latest/tutorial/packages.html">https://idris2.readthedocs.io/en/latest/tutorial/packages.html</a></li>
+<li>Namespaces: <a
+href="https://idris2.readthedocs.io/en/latest/tutorial/modules.html#explicit-namespaces">https://idris2.readthedocs.io/en/latest/tutorial/modules.html#explicit-namespaces</a>
+<ul>
+<li>Mutliple definitions with same name can be present in the same
+module, but in different namespaces.</li>
+</ul></li>
+<li><code>total</code>: declare that a function is total</li>
+<li><code>mutual</code>: for declaring mutually recursive types</li>
+<li>Anonymous functions. Like
+<ul>
+<li><code>\x =&gt; x</code></li>
+<li><code>\x : Int =&gt; x</code></li>
+</ul></li>
+<li>'Docstrings': Each line starts with <code>|||</code>
+<ul>
+<li><a
+href="https://docs.idris-lang.org/en/latest/reference/documenting.html">https://docs.idris-lang.org/en/latest/reference/documenting.html</a></li>
+</ul></li>
+<li>Search based on types of definitions: <a
+href="https://docs.idris-lang.org/en/latest/reference/type-directed-search.html">https://docs.idris-lang.org/en/latest/reference/type-directed-search.html</a></li>
+</ul>
 <h2 id="implicit-arguments">Implicit arguments</h2>
 <p>From <a
 href="https://idris2.readthedocs.io/en/latest/updates/updates.html">here</a>:</p>
@@ -60,10 +85,16 @@ implicit arguments in types</p>
 <h2 id="dependent-pairs">Dependent pairs</h2>
 <p><a
 href="https://idris2.readthedocs.io/en/latest/tutorial/typesfuns.html#dependent-pairs">https://idris2.readthedocs.io/en/latest/tutorial/typesfuns.html#dependent-pairs</a></p>
-<p>Two values. First value can show up in the second.</p>
+<ul>
+<li>Two values. First value can show up in the second.</li>
+<li>aka Sigma types</li>
+</ul>
 <p>Eg: an implementation of Vector:</p>
 <pre><code>(n:Nat ** Vector n Int)
 </code></pre>
+<p>Another example??<span class="spurious-link"
+target="l4"><em>ˡ</em></span>:
+<code>(n : Nat) * (vars : Vect n String) * ScopedLC vars)</code></p>
 <h2 id="multiplicty">Multiplicty</h2>
 <ul>
 <li>Every variable has a multiplicty associated with it.</li>
@@ -95,15 +126,23 @@ requires two instances of <code>a</code> but only 1 is allowed:</p>
 <p><a
 href="https://idris2.readthedocs.io/en/latest/tutorial/multiplicities.html">https://idris2.readthedocs.io/en/latest/tutorial/multiplicities.html</a></p>
 <h2 id="repl">REPL</h2>
+<p><a
+href="https://docs.idris-lang.org/en/latest/reference/repl.html">https://docs.idris-lang.org/en/latest/reference/repl.html</a></p>
 <ul>
 <li><code>:?</code>: show help</li>
-<li><code>:import</code>: import modules</li>
+<li><code>:import</code> / <code>:module</code>: import modules /
+packages</li>
 <li><code>:t</code>: show type of a value</li>
 <li><code>:ti</code>: show type (including implicit arguments) of a
 value</li>
 </ul>
 <pre><code>λΠ&gt; :doc **
 Used to build dependent pairs together with parentheses
+</code></pre>
+<pre><code>$ rlwrap idris2 -p contrib
+
+λΠ&gt; :import Data.Telescope.Telescope
+Imported module Data.Telescope.Telescope
 </code></pre>
 <h2 id="vim-plugin-idir">vim plugin: idir</h2>
 <ul>
@@ -137,6 +176,114 @@ href="https://www.manning.com/books/type-driven-development-with-idris">https://
 <li>Idris 2 is bootstrapping.</li>
 <li>Idris 2 is way faster.</li>
 </ul>
+<h2 id="category"><code>Category</code></h2>
+<ul>
+<li><p>An interface</p></li>
+<li><p>Part of idris2 standard library</p></li>
+<li><p><a
+href="https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Control.Category.html">https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Control.Category.html</a></p></li>
+<li><p><code>(.)</code>: compose arrows</p>
+<ul>
+<li><code>cat b c -&gt; cat a b -&gt; cat a c</code></li>
+</ul></li>
+<li><p><code>(&gt;&gt;&gt;)</code>: compose with arg order changed
+('flow')</p>
+<ul>
+<li><code>cat a b -&gt; cat b c -&gt; cat a c</code></li>
+</ul></li>
+</ul>
+<h2 id="morphisms"><code>Morphisms</code></h2>
+<ul>
+<li>A record type</li>
+<li><a
+href="https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Morphisms.html">https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Morphisms.html</a></li>
+<li>Looks like it's essentially a wrapper for a function type.</li>
+</ul>
+<pre class="idris2"><code>record Morphism : Type -&gt; Type -&gt; Type
+  Mor : (a -&gt; b) -&gt; Morphism a b
+</code></pre>
+<h3 id="kleislimorphism"><code>Kleislimorphism</code></h3>
+<p><a
+href="https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Morphisms.html#Data.Morphisms.Kleislimorphism">https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Morphisms.html#Data.Morphisms.Kleislimorphism</a></p>
+<ul>
+<li>Normal morphism: <code>a -&gt; b</code></li>
+<li>Kleisli morphism: <code>Monad m =&gt; a -&gt; m b</code></li>
+</ul>
+<p>—</p>
+<pre><code>--                    a -&gt; m b        a       b
+--                       |            |       |  
+--                +------+-----+   +--+-+  +--+-+
+--                |            |   |    |  |    |
+Kleislimorphism : (Type -&gt; Type) -&gt; Type -&gt; Type -&gt; Type
+</code></pre>
+<ul>
+<li>Constructor:
+<code>Kleisli : (a -&gt; m b) -&gt; Kleislimorphism a b</code></li>
+</ul>
+<h2 id="contravariant-functors"><code>Contravariant</code> functors</h2>
+<p><a
+href="https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Contravariant.html#Data.Contravariant.Contravariant">https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Contravariant.html#Data.Contravariant.Contravariant</a></p>
+<pre><code>instance Contravariant : (Type -&gt; Type) -&gt; Type
+    -- Same as `(&gt;$&lt;)`
+    contramap : (a -&gt; b) -&gt; f b -&gt; f a
+    (&gt;$) : 
+</code></pre>
+<h2 id="telescope">Telescope</h2>
+<ul>
+<li>'Variable context in a dependently typed program'</li>
+<li>Three kinds in the <code>contrib</code> package of idris2
+<ul>
+<li>A 'left-nested' sequence of deptype</li>
+<li>A 'right-nested' sequence of deptype</li>
+<li>A tree-shaped sequence of deptype</li>
+</ul></li>
+</ul>
+<pre><code>λΠ&gt; :t Telescope
+Data.Telescope.Telescope.Left.Telescope : Nat -&gt; Type
+Data.Telescope.Telescope.Right.Telescope : Nat -&gt; Type
+Data.Telescope.Telescope.Tree.Telescope : Nat -&gt; Type
+</code></pre>
+<p>—</p>
+<pre><code>-- Left-nested
+-- New values are appended. ie, nesting happens on the left.
+--
+namespace Left
+  data Telescope : Nat -&gt; Type
+    Nil : Telescope 0
+    (-.) : (gamma : Telescope k) -&gt; TypeIn gamma -&gt; Telescope (S k)
+
+--------------------
+
+-- Right-nested
+-- New values are prepended. ie, nesting happens on the right.
+--
+namespace Right
+  data Telescope : Nat -&gt; Type
+    Nil : Telescope 0
+    (.-) : (ty : Type) -&gt; (ty -&gt; Telescope k) -&gt; Telescope (S k)
+
+--------------------
+
+-- Tree-shaped
+--
+namespace Tree
+  data Telescope : Nat -&gt; Type
+    Nil : Telescope 0
+    Elt : Type -&gt; Telescope 1
+    (++) : (gamma : Telescope m) -&gt; (Environment gamma -&gt; Telescope n) -&gt; Telescope (m + n)
+</code></pre>
+<p>See:</p>
+<ul>
+<li><a
+href="https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Data.Telescope.html">https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Data.Telescope.html</a></li>
+<li><a
+href="https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Data.Telescope.Telescope.html">https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Data.Telescope.Telescope.html</a></li>
+</ul>
+<p>—</p>
+<ul>
+<li><code>TypeIn : Telescope k -&gt; Type</code>: A type with
+dependencies in the context represented by the telescope</li>
+</ul>
 <h2 id="misc">Misc</h2>
 <ul>
 <li>Katla: Tool to convert idris code to latex or html
@@ -144,6 +291,7 @@ href="https://www.manning.com/books/type-driven-development-with-idris">https://
 <li><a
 href="https://github.com/idris-community/katla">https://github.com/idris-community/katla</a></li>
 </ul></li>
+<li>idris2doc: generate documentation for idris as html ??</li>
 </ul>
 <h2 id="trivia">Trivia</h2>
 <ul>

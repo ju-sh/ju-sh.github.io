@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Abstract interpretation</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Abstract interpretation</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<ul>
+<li>Foundations laid by the work of Patrick and Radhia Cousot
+<ul>
+<li>Book: <em>Principles of abstract interpretation</em></li>
+<li><a
+href="https://cs.nyu.edu/~pcousot/">https://cs.nyu.edu/~pcousot/</a></li>
+</ul></li>
+<li>A form of static analysis
+<ul>
+<li>Program is not actually run</li>
+</ul></li>
+<li>Examples of absint tools: astrée (used by Airbus)</li>
+<li>Approximate actual program</li>
+<li>Give up some precision in exchange for scalability</li>
+<li>Overapproximation is always safe
+<ul>
+<li>There are no false negatives for errors, only false positives</li>
+<li>If absint finds that a design is error free, that will be
+correct</li>
+<li>If absint finds that a design has error, that is potentially
+correct</li>
+</ul></li>
+</ul>
+<h2 id="galois-connection">Galois connection</h2>
+<p>Abstract and concrete domains are posets.</p>
+<ul>
+<li>Abstract domain: (A, ≼)</li>
+<li>Concrete domain: (C, ⊑)</li>
+<li>α: C → A
+<ul>
+<li>'abstractify'</li>
+</ul></li>
+<li>γ: A → C
+<ul>
+<li>'reify'</li>
+</ul></li>
+</ul>
+<p>The pair (α, γ) constitutes a Galois connection.</p>
+<pre><code>∀P ∈ C, ∀P̅ ∈ A,
+  α(P) ≼ P̅   ↔  P ⊑ γ(P̅)
+</code></pre>
+<p>This is written as:</p>
+<pre><code>        α
+(A, ≼)  ⇆  (C, ⊑)
+        γ
+</code></pre>
+<ul>
+<li>Concrete properties in <code>C</code> are approximated by
+corresponding properties in <code>A</code>.</li>
+</ul>
+</div>
+</body>
+</html>

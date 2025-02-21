@@ -52,21 +52,160 @@
 </ul>
 <h2 id="general">General</h2>
 <ul>
-<li>Comment: semicolon</li>
-<li>Can use any kind of these brackets with the same effect.
+<li><p>Comment: semicolon</p></li>
+<li><p>File extension: rkt</p></li>
+<li><p>Can use any kind of these brackets with the same effect.</p>
 <ul>
 <li>[] or {} or ()</li>
 <li>Use wisely to improve readability</li>
 </ul></li>
-<li>Function call: <code>(fn-name args)</code></li>
-<li>Variable 'call': <code>var-name</code> (ie, no braces)</li>
-<li>'<code>#lang ...</code> is only a shorthand for
-<code>(module name initial-import decl ...)</code>
+<li><p>Function call: <code>(fn-name args)</code></p></li>
+<li><p>Variable 'call': <code>var-name</code> (ie, no braces)</p></li>
+<li><p>'<code>#lang ...</code> is only a shorthand for
+<code>(module name initial-import decl ...)</code></p>
 <ul>
 <li><a
 href="https://elixirforum.com/t/external-dsls/12504/5">https://elixirforum.com/t/external-dsls/12504/5</a></li>
 </ul></li>
+<li><p>Multiple modules can be imported at once</p>
+<ul>
+<li>Eg: <code>(require (for-syntax racket/base))</code></li>
+</ul></li>
+<li><p><code>racket/base</code> is the foundational language</p></li>
+<li><p><code>define-syntax</code>: 'basic tool for introducing a macro'
+ᵇʳ</p>
+<ul>
+<li>accepts a syntax object, returns another syntax object</li>
+</ul></li>
+<li><p><code>syntax-parse</code>: 'most powerful macro-making tool'</p>
+<ul>
+<li><code>syntax-case</code>: a limited form of
+<code>syntax-parse</code> ??</li>
+</ul></li>
+<li><p><code>with-syntax</code>, <code>with-syntax*</code></p></li>
+<li><p>A given lang is inside a directory with its name</p>
+<ul>
+<li>Must have a file <code>main.rkt</code></li>
+<li><code>main.rkt</code> must have a submodule named
+<code>reader</code></li>
+<li><code>reader</code> module must <code>provide</code> a
+<code>read-syntax</code> function</li>
+</ul></li>
 </ul>
+<h2
+id="case-lambda-defining-function-by-cases"><code>case-lambda</code>:
+Defining function by cases</h2>
+<pre class="racket"><code>#lang racket/base
+
+(define f
+  (case-lambda
+    [() 10]             ; no arg
+    [(x) (+ x 1)]       ; one arg
+    [(x y) (list y x)]  ; two arg
+    [r r]))             ; everything else
+
+
+;; case-lambda.rkt&gt; (f)
+;; 10
+;; case-lambda.rkt&gt; (f 10)
+;; 11
+;; case-lambda.rkt&gt; (f 2 3)
+;; &#39;(3 2)
+;; case-lambda.rkt&gt; (f &quot;whatever&quot; &quot;here&quot; &quot;huh&quot;)
+;; &#39;(&quot;whatever&quot; &quot;here&quot; &quot;huh&quot;)
+</code></pre>
+<h2 id="string-formatting">String formatting</h2>
+<p>Use <code>racket/format</code>.</p>
+<ul>
+<li><a
+href="https://stackoverflow.com/questions/32839407/how-to-format-output-using-racket">https://stackoverflow.com/questions/32839407/how-to-format-output-using-racket</a></li>
+<li><a
+href="https://docs.racket-lang.org/reference/strings.html">https://docs.racket-lang.org/reference/strings.html</a></li>
+</ul>
+<pre class="racket"><code>#lang racket/base
+
+(require racket/format)
+
+(~a 12
+  #:align &#39;right
+  #:width 5)
+; &quot;   12&quot;
+
+(~a 12
+  #:align &#39;right
+  #:pad-string &quot;Hi&quot;
+  #:width 5)
+; &quot;HiH12&quot;
+</code></pre>
+<h2 id="data-structure-contracts">Data structure contracts</h2>
+<ul>
+<li><p><a
+href="https://docs.racket-lang.org/reference/contracts.html">https://docs.racket-lang.org/reference/contracts.html</a></p></li>
+<li><p><a
+href="https://docs.racket-lang.org/reference/data-structure-contracts.html">https://docs.racket-lang.org/reference/data-structure-contracts.html</a></p></li>
+<li><p><code>or/c</code></p></li>
+<li><p><code>any/c</code></p></li>
+</ul>
+<h2 id="variable-name-conventions">Variable name conventions</h2>
+<p><a
+href="https://docs.racket-lang.org/reference/reader.html#(part._default-readtable-dispatch">https://docs.racket-lang.org/reference/reader.html#(part._default-readtable-dispatch</a>)</p>
+<p>Many of the conventions are from Scheme.</p>
+<ul>
+<li>Question mark at end of a function means that it is a function
+returning a bool (predicate)
+<ul>
+<li>Eg: <code>pair?</code></li>
+<li><a
+href="https://docs.racket-lang.org/reference/notation.html">https://docs.racket-lang.org/reference/notation.html</a></li>
+<li><code>(boolean? #f) ; #t</code></li>
+</ul></li>
+<li>Exclamation mark at end of name: function that mutates.
+<ul>
+<li>For destructive procedures. ie, those that modifies arg
+in-place.</li>
+<li>Eg: <code>set!</code></li>
+</ul></li>
+<li><code>-&gt;</code>: procedures that perform a conversion
+<ul>
+<li>Eg: <code>string-&gt;number</code></li>
+</ul></li>
+<li><code>*</code> for variants
+<ul>
+<li>Eg: <code>let</code> and <code>let*</code></li>
+</ul></li>
+</ul>
+<p>Unknown:</p>
+<ul>
+<li><code>#%name</code>: ??
+<ul>
+<li>Eg: <code>#%module-begin</code></li>
+</ul></li>
+</ul>
+<p>Not sure if the following are followed in racket:</p>
+<ul>
+<li><code>*name*</code>: global mutable variable</li>
+<li><code>+name+</code>: global constants</li>
+<li><code>:</code>: namespaces
+<ul>
+<li>Eg: <code>top:func</code></li>
+</ul></li>
+</ul>
+<p><a
+href="https://justinethier.github.io/cyclone/docs/Scheme-code-conventions.html">https://justinethier.github.io/cyclone/docs/Scheme-code-conventions.html</a></p>
+<h2 id="pattern-macros">Pattern macros</h2>
+<pre class="racket"><code>(define-syntax-rule (swap x y)
+  (let ([tmp x])
+    (set! x y)
+    (set! y tmp)))
+
+
+(let
+  ([a 3] 
+   [b 4])
+  (swap a b)
+  a)
+; &#39;(4 3) instead of &#39;(3 4)
+</code></pre>
 <h2 id="defining-new-language">Defining new language</h2>
 <ul>
 <li><code>provide</code>: mention list of names to export from a file

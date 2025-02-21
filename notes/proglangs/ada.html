@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Ada</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Ada</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<h2 id="general">General</h2>
+<ul>
+<li><p>File extension:</p>
+<ul>
+<li>Source file: <code>.adb</code></li>
+<li>Specification file: <code>.ads</code> (like mli file in ocaml)</li>
+</ul></li>
+<li><p>Attributes of a name are accessed using <code>'</code> (called a
+'tick')</p>
+<ul>
+<li>Eg: <code>Integer'size</code></li>
+</ul></li>
+<li><p>Ada is case insensitive.</p>
+<ul>
+<li>Even for variable names.</li>
+<li>Explains why keywords (but not variable names) in vhdl are case
+insensitive..</li>
+</ul></li>
+<li><p>Comments: starts with <code>--</code></p>
+<ul>
+<li>No way to make multi-line comments.</li>
+<li>This is intentional to avoid problems with nested comments.</li>
+</ul></li>
+<li><p>Functions are called 'subprograms'</p></li>
+<li><p>Apparently, we can't control variance of subtypes in
+ada.</p></li>
+<li><p>Strong typing</p>
+<ul>
+<li>Got to give a type to everything</li>
+<li>No type inference ??
+<ul>
+<li>Quite verbose as a result ??</li>
+</ul></li>
+<li>No implicit type conversion
+<ul>
+<li>Type casts are there though.</li>
+<li>See where VHDL gets it from? 😃</li>
+</ul></li>
+</ul></li>
+<li><p>SPARK</p>
+<ul>
+<li>A subset of ada</li>
+<li>Testing and verification is easier in this??</li>
+</ul></li>
+<li><p>ARM: Ada reference manual</p>
+<ul>
+<li>An ISO standard, that is free. Unlike that of C++.</li>
+</ul></li>
+<li><p>GNAT: ada compiler that is part of gcc</p></li>
+<li><p>gnatmake: basic build manager</p></li>
+<li><p>gprbuild: gnat project manager</p></li>
+<li><p>Alire: a package manager for ada</p></li>
+<li><p>Community: <a
+href="https://groups.google.com/g/comp.lang.ada/">https://groups.google.com/g/comp.lang.ada/</a>
+(looks unmoderated though..)</p></li>
+<li><p>Emacs mode: <a
+href="https://www.gnu.org/software/emacs/manual/html_mono/ada-mode.html">https://www.gnu.org/software/emacs/manual/html_mono/ada-mode.html</a></p></li>
+<li><p><code>limited</code>: makes assignment to declared variable
+impossible</p>
+<ul>
+<li>Kind of like <code>const</code> in cpp.</li>
+</ul></li>
+</ul>
+<h2 id="hello-world">Hello world</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode ada"><code class="sourceCode ada"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">with</span> Ada<span class="op">.</span>Text_IO;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Ada<span class="op">.</span>Text_IO;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">procedure</span> Hello <span class="kw">is</span> <span class="kw">begin</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  Put_Line <span class="op">(</span><span class="st">&quot;Hello world!&quot;</span><span class="op">)</span>;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span> Hello;</span></code></pre></div>
+<p><a
+href="https://gcc.gnu.org/onlinedocs/gnat_ugn/Running-a-Simple-Ada-Program.html">https://gcc.gnu.org/onlinedocs/gnat_ugn/Running-a-Simple-Ada-Program.html</a></p>
+<ul>
+<li><code>with</code>: make a package available to current file</li>
+<li><code>use</code>: opens the namespace ??</li>
+</ul>
+<ul>
+<li>For generating executable, use a builder: <code>gnatmake</code> or
+<code>gprbuild</code></li>
+</ul>
+<h2 id="image-and-value"><code>'Image and ~'Value</code></h2>
+<p>Convert a value to string and vice-versa.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode ada"><code class="sourceCode ada"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">declare</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  X <span class="op">:</span> <span class="dt">Integer</span> <span class="op">:=</span> <span class="dv">10</span>;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">begin</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- &quot;10&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  Put_Line <span class="op">(</span>Integer&#39;Image <span class="op">(</span>X<span class="op">))</span>;</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- 20</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  X <span class="op">:=</span> Integer&#39;Value <span class="op">(</span><span class="st">&quot;20&quot;</span><span class="op">)</span>;</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span></code></pre></div>
+<h2 id="built-in-types">Built-in types</h2>
+<ul>
+<li>Character: char</li>
+<li>Integer: int</li>
+<li>Float: float</li>
+<li>Boolean: bool</li>
+</ul>
+<h2 id="new-types">New types</h2>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode ada"><code class="sourceCode ada"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- A new type. Like {x: Integer | x ∈ [0,23]}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Hours24  <span class="kw">is</span> <span class="kw">new</span> <span class="dt">Integer</span> <span class="kw">range</span> <span class="dv">0</span> <span class="op">..</span> <span class="dv">23</span>;</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- A subtype</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">subtype</span> Hours <span class="kw">is</span> Hours24 <span class="kw">range</span> <span class="dv">0</span> <span class="op">..</span> <span class="dv">11</span>;</span></code></pre></div>
+<h2 id="arrays">Arrays</h2>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode ada"><code class="sourceCode ada"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- a char array of size 10</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Name <span class="op">:</span> <span class="kw">array</span> <span class="op">(</span><span class="dv">0</span> <span class="op">..</span> <span class="dv">9</span><span class="op">)</span> <span class="kw">of</span> <span class="dt">Character</span>;</span></code></pre></div>
+<h2 id="enums">Enums</h2>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode ada"><code class="sourceCode ada"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Day <span class="kw">is</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">(</span>Mon<span class="op">,</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>   Tue<span class="op">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>   Wed<span class="op">,</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>   Thu<span class="op">,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>   Fri<span class="op">,</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>   Sat<span class="op">,</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>   Sun<span class="op">)</span>;</span></code></pre></div>
+<p>Representation clause ?? can be used if needed:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode ada"><code class="sourceCode ada"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> Day <span class="kw">use</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">(</span>Mon <span class="op">=&gt;</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>   Tue <span class="op">=&gt;</span> <span class="dv">11</span><span class="op">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>   Wed <span class="op">=&gt;</span> <span class="dv">12</span><span class="op">,</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>   Thu <span class="op">=&gt;</span> <span class="dv">13</span><span class="op">,</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   Fri <span class="op">=&gt;</span> <span class="dv">14</span><span class="op">,</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>   Sat <span class="op">=&gt;</span> <span class="dv">15</span><span class="op">,</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>   Sun <span class="op">=&gt;</span> <span class="dv">16</span><span class="op">)</span>;</span></code></pre></div>
+<p><a
+href="https://learn.adacore.com/courses/Ada_For_The_CPP_Java_Developer/chapters/05_Type_System.html">https://learn.adacore.com/courses/Ada_For_The_CPP_Java_Developer/chapters/05_Type_System.html</a></p>
+<h2 id="some-info">Some Info</h2>
+<ul>
+<li>Used to be used in defense application in US and Europe earlier
+<ul>
+<li>Used to mandatory for defense contractors</li>
+</ul></li>
+<li>Named after Ada Lovelace.</li>
+<li>Introduced many PL-related concepts
+<ul>
+<li>Influenced design of many languages which are now popular</li>
+<li>Though ada itself never found popularity outside of a very niche
+world</li>
+</ul></li>
+<li>ghdl has a lot of ada code
+<ul>
+<li>One of the few projects that still has significant ada</li>
+</ul></li>
+</ul>
+<h2 id="todo">Todo</h2>
+<ul>
+<li>variant type, union type</li>
+<li>record type</li>
+<li>vectors ??</li>
+<li>loops</li>
+<li>generics library</li>
+<li>stream</li>
+<li>task</li>
+<li>null. Looks like it is a no-op/undefined</li>
+<li>pointers ??</li>
+<li><code>parallel</code> blocks</li>
+<li>concurrency</li>
+<li>garbage collection is optional ??</li>
+<li>Ada type safety can be broken??
+<ul>
+<li><a
+href="https://www.enyo.de/fw/notes/ada-type-safety.html">https://www.enyo.de/fw/notes/ada-type-safety.html</a></li>
+<li><a
+href="https://www.enyo.de/fw/notes/unsafe-rust-type-safety.html">https://www.enyo.de/fw/notes/unsafe-rust-type-safety.html</a></li>
+<li><a
+href="https://users.rust-lang.org/t/if-ada-is-already-very-safe-why-rust/21911/72">https://users.rust-lang.org/t/if-ada-is-already-very-safe-why-rust/21911/72</a></li>
+</ul></li>
+<li>SPARK: <a
+href="https://www.electronicdesign.com/markets/automation/article/21804924/rust-and-spark-software-reliability-for-everyone">https://www.electronicdesign.com/markets/automation/article/21804924/rust-and-spark-software-reliability-for-everyone</a></li>
+</ul>
+</div>
+</body>
+</html>

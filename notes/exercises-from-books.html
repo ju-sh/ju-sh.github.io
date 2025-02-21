@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>TAPL exercises</title>
+  <title>Exercises</title>
   <style>
     body {
       max-width: 38rem;
@@ -32,7 +32,7 @@
 </div>
 
 <header id="title-block-header">
-<h1 class="title">TAPL exercises</h1>
+<h1 class="title">Exercises</h1>
 </header>
 
 <ul>
@@ -44,8 +44,10 @@
 <hr/>
 
 <div id="content-container">
-<p>Writing down answers from the <em>Types and Programming
-Languages</em> book.</p>
+<p>I doubt I'll ever get around to doing all the exercises in any of the
+books I like, but I want a way to remember the the solutions that I
+could figure out.</p>
+<h1 id="tapl---benjamin-pierce">TAPL - Benjamin Pierce</h1>
 <h2 id="section">5.2.1</h2>
 <pre class="ulc"><code>{- logical or -}
 or = λa. λb. a tru b
@@ -71,7 +73,7 @@ and = λa. λb. a b fls
 | fls | fls | fls fls fls = fls |
 -}
 </code></pre>
-<pre class="ulc" data-EX-5=".2.1:"><code>{- logical not -}
+<pre class="utlc" data-EX-5=".2.1:"><code>{- logical not -}
 and = λa. a fls tru
 
 {-
@@ -112,29 +114,44 @@ and = λa. a fls tru
 </tr>
 </tbody>
 </table>
-<h2 id="section-2"><span class="done DONE">DONE</span> 6.2.2</h2>
-<ol>
-<li>↑² (λ.λ. 1 (0 2))
-<ul>
-<li>↑²₀ (λ.λ. 1 (0 2))</li>
-<li>λ. ↑²₁(λ. 1 (0 2))</li>
-<li>λ. λ. ↑²₂(1 (0 2))</li>
-<li>λ. λ. (↑²₂ 1) (↑²₂ (0 2))</li>
-<li>λ. λ. 1 (↑²₂ (0 2))</li>
-<li>λ. λ. 1 ((↑²₂ 0) (↑²₂ 2))</li>
-<li>λ. λ. 1 (0 4)</li>
-</ul></li>
-<li>↑² (λ. 0 1 (λ. 0 1 2))
-<ul>
-<li>↑²₀ (λ. 0 1 (λ. 0 1 2))</li>
-<li>λ. ↑²₁ (0 1 (λ. 0 1 2))</li>
-<li>λ. [↑²₁ (0 1)] [↑²₁ ((λ. 0 1 2))]</li>
-<li>λ. (0 3) [↑²₁ ((λ. 0 1 2))]</li>
-<li>λ. (0 3) (λ. [↑²₂ (0 1 2)])</li>
-<li>λ. (0 3) (λ. (0 1 4))</li>
-</ul></li>
-</ol>
-<h2 id="section-3">13.1.1</h2>
+<h2 id="section-2">6.2.2</h2>
+<pre><code>-- Exercise: 6.2.2
+-- Part 1
+shift(2) (λ.λ. 1 (0 2))
+= λ. shift(2, 1) (λ. 1 (0 2))
+= λ. λ. shift(2, 2) (1 (0 2))
+= λ. λ. 1 (0 4)
+
+-- Part 2
+shift(2) (λ. 0 1 (λ. 0 1 2))
+= λ. shift(2,1) (0 1 (λ. 0 1 2))
+= λ. 0 3 (λ. shift(2,2) (0 1 2))
+= λ. 0 3 (λ. 0 1 4)
+</code></pre>
+<hr />
+<pre><code>1. ↑² (λ.λ. 1 (0 2))
+   - ↑²₀ (λ.λ. 1 (0 2))
+   - λ. ↑²₁(λ. 1 (0 2))
+   - λ. λ. ↑²₂(1 (0 2))
+   - λ. λ. (↑²₂ 1) (↑²₂ (0 2))
+   - λ. λ. 1 (↑²₂ (0 2))
+   - λ. λ. 1 ((↑²₂ 0) (↑²₂ 2))
+   - λ. λ. 1 (0 4)
+
+2. ↑² (λ. 0 1 (λ. 0 1 2))
+   - ↑²₀ (λ. 0 1 (λ. 0 1 2))
+   - λ. ↑²₁ (0 1 (λ. 0 1 2))
+   - λ. [↑²₁ (0 1)] [↑²₁ ((λ. 0 1 2))]
+   - λ. (0 3) [↑²₁ ((λ. 0 1 2))]
+   - λ. (0 3) (λ. [↑²₂ (0 1 2)])
+   - λ. (0 3) (λ. (0 1 4))
+</code></pre>
+<h2 id="section-3">6.2.5</h2>
+<h3 id="b-a-b-λx.-λy.-b">1. <code>[b ↦ a] (b (λx. λy. b))</code></h3>
+<p>Γ = {a, b}</p>
+<p>Nameless form: Γ = {1, 0}</p>
+<p>[0 ↦ 1] 0 (λ. λ. 1</p>
+<h2 id="section-4">13.1.1</h2>
 <h3 id="question">Question</h3>
 <p>Draw a similar diagram showing the effects of evaluating the
 expressions <code>a = {ref 0, ref 0}</code> and
@@ -167,7 +184,7 @@ b = { _, _}
 </code></pre>
 <p>where both elements of the record point to the same memory
 location.</p>
-<h2 id="section-4">15.2.1</h2>
+<h2 id="section-5">15.2.1</h2>
 <h3 id="question-1">Question</h3>
 <p>Draw a derivation showing that <code>{x:Nat, y:Nat, z:Nat}</code> is
 a subtype of <code>{y:Nat}</code>.</p>
@@ -192,7 +209,8 @@ a subtype of <code>{y:Nat}</code>.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="section-5"><span class="done DONE">DONE</span> 22.2.3</h2>
+<h2 id="section-6">22.2.3</h2>
+<h2 id="section-7"><span class="done DONE">DONE</span> 22.2.3</h2>
 <pre><code>λx:X. λy:Y. λz:Z. (x z) (y z)
 </code></pre>
 <p>Type of bound variables are like:</p>
@@ -217,7 +235,7 @@ z:A
 <li>{A↦bool, X↦bool, B↦bool}</li>
 <li>{A↦bool, X↦nat, B↦string}</li>
 </ul>
-<h2 id="section-6"><span class="done DONE">DONE</span> 22.4.3</h2>
+<h2 id="section-8"><span class="done DONE">DONE</span> 22.4.3</h2>
 <ul>
 <li>{X=Nat,Y=X→X}: {X=Nat, Y=Nat→Nat}</li>
 <li>{Nat→Nat=X→Y}: {X↦Nat, Y↦Nat}
@@ -237,6 +255,45 @@ to all types!</li>
 </ul></li>
 <li>{}: Nothing</li>
 </ul>
+<h1 id="string-diagrams---ralf-hinze-dan-marsden">String diagrams - Ralf
+Hinze, Dan Marsden</h1>
+<h2 id="section-9"><span class="done DONE">DONE</span> 1.3</h2>
+<p>Category whose objects ∈ ℕ, and morphisms are nxm matrices.</p>
+<ul>
+<li>Obj ∈ ℕ</li>
+<li>Arr ∈ nxm matrix</li>
+<li><code>∘</code>: matrix multiplication</li>
+<li>Identity arrow: Identity matrix</li>
+</ul>
+<pre><code>(c * b) * a = c * (b * a)
+id * a = a = a * id
+</code></pre>
+<h1 id="principles-of-abstract-interpretation---cousot">Principles of
+abstract interpretation - Cousot</h1>
+<h2 id="galois-connection-for-n-x-n-x"><span
+class="done DONE">DONE</span> 11.2 Galois connection for
+<code>n ≤⌊x⌋⇔ n ≤ x</code></h2>
+<p>Let</p>
+<ul>
+<li>α x = ⌊x⌋</li>
+<li>γ x = x</li>
+<li>≼ = ≤</li>
+<li>⊑ = ≤</li>
+</ul>
+<pre><code>∀ x y ∈ ℕ,
+  ⌊x⌋ ≼ y   ↔   x ⊑ y
+</code></pre>
+<p>So,</p>
+<pre><code>  ⌊x⌋ ≼ y
+=&gt;  x ≤ y
+
+   x ⊑ y
+=&gt; x ≤ y
+
+LHS ↔ RHS
+∎
+</code></pre>
+<p>∴ The Galois connection is <code>(⌊x⌋, x)</code>.</p>
 </div>
 </body>
 </html>

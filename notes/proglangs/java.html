@@ -341,6 +341,17 @@ JVM
 </ul></li>
 <li><a href="https://github.com/Frege/frege/">Frege</a>: A haskell-like
 language for JVM (development has stalled)</li>
+<li>There was a bug in the binary search implementation of
+java.util.Arrays
+<ul>
+<li>Because of overflow in <code>int mid = (low + high)/2</code>.</li>
+<li>Change it to <code>int mid = low + (high - low)/2</code> to avoid
+the overflow.</li>
+<li><a
+href="https://research.google/blog/extra-extra-read-all-about-it-nearly-all-binary-searches-and-mergesorts-are-broken/">https://research.google/blog/extra-extra-read-all-about-it-nearly-all-binary-searches-and-mergesorts-are-broken/</a></li>
+<li><a
+href="https://thebittheories.com/the-curious-case-of-binary-search-the-famous-bug-that-remained-undetected-for-20-years-973e89fc212">https://thebittheories.com/the-curious-case-of-binary-search-the-famous-bug-that-remained-undetected-for-20-years-973e89fc212</a></li>
+</ul></li>
 </ul>
 </div>
 </body>

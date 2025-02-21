@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Isabelle</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Isabelle</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<p><a
+href="https://isabelle.in.tum.de/documentation.html">https://isabelle.in.tum.de/documentation.html</a></p>
+<ul>
+<li><p>Comments: <code>(* .... *)</code></p>
+<ul>
+<li>Like sml</li>
+</ul></li>
+<li><p>Launch editor: <code>isabelle jedit</code></p></li>
+<li><p>An example isabelle project: <a
+href="https://github.com/WasmCert/WasmCert-Isabelle/">https://github.com/WasmCert/WasmCert-Isabelle/</a></p></li>
+<li><p>Has HOL, FOL, ZFC</p></li>
+<li><p><a
+href="https://isabelle.in.tum.de/doc/tutorial.pdf">https://isabelle.in.tum.de/doc/tutorial.pdf</a></p></li>
+<li><p>User plugin location: <code
+class="verbatim">~/.isabelle/Isabelle2024/jedit</code></p></li>
+<li><p>Structured Isar proofs: <a
+href="https://courses.grainger.illinois.edu/cs576/sp2015/doc/isar-overview.pdf">https://courses.grainger.illinois.edu/cs576/sp2015/doc/isar-overview.pdf</a></p></li>
+<li><p><code>sledgehammer</code> tactic</p>
+<ul>
+<li>Capable of invoking external ATPs to try and figure out proofs</li>
+<li><code>metis</code> tactic: for using proof discovered by
+<code>sledgehammer</code> ??</li>
+</ul></li>
+<li><p>An example proof: <a
+href="https://github.com/hwayne/lets-prove-leftpad/tree/master/isabelle">https://github.com/hwayne/lets-prove-leftpad/tree/master/isabelle</a></p></li>
+<li><p><code>type_synonym</code>: For type aliases</p>
+<ul>
+<li>Eg: <code>type_synonym 'a infmatrix = "nat ⇒ nat ⇒ 'a"</code></li>
+<li>Eg: <code>type_synonym mem = "(mem_rep × nat option)"</code></li>
+</ul></li>
+<li><p><code>(nat ⇒ nat ⇒ 'a::zero)</code> is like
+<code>Zero a =&gt; nat -&gt; nat -&gt; a)</code> in Haskell</p>
+<ul>
+<li>ie, <code>::</code> here indicates a type class constraint</li>
+</ul></li>
+<li><p>`~=`: not equal to</p></li>
+<li><p>Isar: a proof language</p>
+<ul>
+<li>Like ltac in Coq</li>
+<li>'Intelligible Semi-Automated Reasoning'</li>
+<li><a
+href="https://isabelle.in.tum.de/dist/Isabelle2024/doc/isar-ref.pdf">https://isabelle.in.tum.de/dist/Isabelle2024/doc/isar-ref.pdf</a></li>
+</ul></li>
+<li><p><code>∧ a b ⟦ A1; A2 ⟧</code> means <code>a</code>,
+<code>b</code> are parameters and <code>A1</code>, <code>A2</code> are
+assumptions</p></li>
+<li><p>Default associativity of addition is left (unlike coq? where it
+is right)</p></li>
+<li><p>Variable used in <code>class</code> <em>has</em> to be
+<code>'a</code> ??</p>
+<ul>
+<li>Can't be just <code>α</code></li>
+</ul></li>
+<li><p>Eisbach: a collection of tools for defining new proof methods</p>
+<ul>
+<li><a
+href="https://isabelle.in.tum.de/dist/Isabelle2024/doc/eisbach.pdf">https://isabelle.in.tum.de/dist/Isabelle2024/doc/eisbach.pdf</a></li>
+<li><code>method</code> command</li>
+</ul></li>
+<li><p>Matrices (extractable): <a
+href="https://www.isa-afp.org/browser_info/current/AFP/Jordan_Normal_Form/document.pdf">https://www.isa-afp.org/browser_info/current/AFP/Jordan_Normal_Form/document.pdf</a></p>
+<ul>
+<li><a
+href="http://cl-informatik.uibk.ac.at/software/ceta/">http://cl-informatik.uibk.ac.at/software/ceta/</a></li>
+<li><a
+href="https://isabelle.in.tum.de/library/HOL/HOL-Matrix_LP/Matrix.html">https://isabelle.in.tum.de/library/HOL/HOL-Matrix_LP/Matrix.html</a></li>
+</ul></li>
+<li><p>Isabelle Archive of Formal Proofs (Isabelle AFP)</p></li>
+<li><p>Explicitly open or close a block: <code>{</code> and
+<code>}</code></p>
+<ul>
+<li>Focus on next block: <code>next</code></li>
+</ul></li>
+<li><p>Inner and outer syntax</p></li>
+<li><p><code>typedecl</code>: declare a type but without its
+definition</p>
+<ul>
+<li>Might be useful for axioms</li>
+<li>Eg: <code>typedecl 'a set</code></li>
+<li><a
+href="https://isabelle.in.tum.de/library/HOL/HOL/Set.html#Set.disjnt%7Cconst">https://isabelle.in.tum.de/library/HOL/HOL/Set.html#Set.disjnt|const</a></li>
+</ul></li>
+<li><p><code>axiomatization</code></p>
+<ul>
+<li>introduce multiple constants along with their axiomatic
+properties</li>
+<li>Note: best not used unless you really know what you are doing</li>
+</ul></li>
+<li><p>Inner syntax: the HOL syntax (when using Isabelle/HOL)</p>
+<ul>
+<li>Would be within double quotes</li>
+<li>For a single identifier this quotes aren't necessary</li>
+</ul></li>
+<li><p>Outer syntax: the theory language</p>
+<ul>
+<li>Eg: <code>begin</code>, <code>end</code>, <code>theory</code>,
+etc</li>
+</ul></li>
+<li><p>Like in Coq, <code>theorem</code> and <code>lemma</code> have the
+same effect.</p></li>
+<li><p><code>hide_const</code>: hide a constant to avoid namespace
+pollution ??</p>
+<ul>
+<li><code>hide_const f</code>: hides <code>f</code> completely</li>
+<li><code>hide_const (open) f</code>: hides <code>f</code>, but it is
+still accessible like <code>A.f</code></li>
+<li>Similarly: <code>hide_class</code>, <code>hide_fact</code>,
+<code>hide_type</code></li>
+</ul></li>
+<li><p>Stuff available from <code>Main</code>: <a
+href="https://isabelle.in.tum.de/dist/Isabelle2024/doc/main.pdf">https://isabelle.in.tum.de/dist/Isabelle2024/doc/main.pdf</a></p></li>
+</ul>
+<p>Coq analogues:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Isabelle</th>
+<th>Coq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Isar</td>
+<td>Ltac</td>
+</tr>
+<tr class="even">
+<td>locale</td>
+<td>Section</td>
+</tr>
+<tr class="odd">
+<td>Proof methods</td>
+<td>Tactics</td>
+</tr>
+<tr class="even">
+<td><code>==&gt;</code></td>
+<td><code>-&gt;</code> (implication)</td>
+</tr>
+<tr class="odd">
+<td><code>=&gt;</code></td>
+<td><code>-&gt;</code> (arrow)</td>
+</tr>
+<tr class="even">
+<td><code>value</code></td>
+<td><code>Compute</code></td>
+</tr>
+<tr class="odd">
+<td><code>sorry</code></td>
+<td><code>admit</code></td>
+</tr>
+<tr class="even">
+<td><code>oops</code></td>
+<td><code>give_up</code></td>
+</tr>
+<tr class="odd">
+<td><code>x:xs</code></td>
+<td><code>x # xs</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="proof-methods">Proof methods</h2>
+<ul>
+<li><p><code>auto</code> is 'overeager'</p></li>
+<li><p>Functionality of <code>auto</code> includes that of
+<code>simp</code></p></li>
+<li><p><code>simp</code> acts on current sub-goal only</p></li>
+<li><p><code>simp_all</code> and <code>auto</code> acts on all
+sub-goals</p></li>
+<li><p><code>simp add: name</code> allows <code>simp</code> to simplfiy
+<code>name</code> as well</p></li>
+<li><p>Example of a case split:
+<code>simp split: nat.split</code></p></li>
+<li><p>Like in ssreflect, <code>by proof-method</code> is short for
+<code>apply proof-method; done</code></p></li>
+<li><p><code>blast</code>: a complete proof procedure for first order
+logic</p></li>
+<li><p><code>metis</code>: for using proofs discovered via
+<code>sledgehammer</code></p>
+<ul>
+<li>Lemmas given as arguments to <code>metis</code> allows Isabelle to
+independently verify the proof as it doesn't trust third party solvers
+used by <code>sledgehammer</code></li>
+</ul></li>
+<li><p><code>fastforce</code>: ??</p></li>
+<li><p>Backchain (backward reasoning): Use <code>rule</code> with
+<code>apply</code></p>
+<ul>
+<li><code>apply (rule name)</code></li>
+</ul></li>
+<li><p><code>method_setup</code>: for creating custom proof methods</p>
+<ul>
+<li>Involves sml ??</li>
+</ul></li>
+</ul>
+<p>Default names:</p>
+<ul>
+<li>Definition of a function <code>f</code> is <code>f_def</code>
+<ul>
+<li>ζ-reduction possible via using <code>Let_def</code></li>
+</ul></li>
+<li><code>case_name_unfold</code>
+<ul>
+<li>Eg: <code>case_prod_unfold</code></li>
+</ul></li>
+<li><code>class_name_def</code>
+<ul>
+<li>Eg: <code>monoid_prod_def</code></li>
+</ul></li>
+</ul>
+<h2 id="notations">Notations</h2>
+<ul>
+<li>Precendence ∈ [0, 1000]
+<ul>
+<li>Higher the value, higher the precedence</li>
+<li>Very low and very high values are reserved for meta-logic</li>
+<li>HOL usually ∈ [10, 100]</li>
+<li>Custom notations could be ∈ [100, 900]</li>
+</ul></li>
+</ul>
+<h3 id="notation"><code>notation</code></h3>
+<p>Associate a mixfix notation with a predefined definition.</p>
+<p>Example from the isabelle tutorial:</p>
+<pre><code>definition xor :: &quot;bool =&gt; bool =&gt; bool&quot; (infixl &quot;[+]&quot; 60)
+where &quot;A [+] B = (A ∧ ¬B) ∨ (¬A ∧ B)&quot;
+
+notation (xsymbols) xor (infixl &quot;±&quot; 60)
+</code></pre>
+<p>where <code>xsymbols</code> is an optional argument?? called the
+'print mode specification' which is used when pretty-printing.</p>
+<h3 id="abbreviation"><code>abbreviation</code></h3>
+<p>Kind of like a more complex form of <code>notation</code>.</p>
+<ul>
+<li>Useful to assign an alias for a long expression.</li>
+<li>Will be expanded to its definition before it is ever used</li>
+<li><code>print__abbrevs</code>: print all abbreviations in the current
+context</li>
+</ul>
+<h3 id="mixfix-notations">Mixfix notations</h3>
+<ul>
+<li>Mixfix notations are defined using underscore though they render as
+a hyphen in documentation.
+<ul>
+<li><a
+href="https://stackoverflow.com/questions/65757547/isabelle-too-many-precedences-in-mixfix-annotation">https://stackoverflow.com/questions/65757547/isabelle-too-many-precedences-in-mixfix-annotation</a></li>
+</ul></li>
+</ul>
+<pre><code>class group = monoid +
+  fixes inverse :: ‹&#39;a ⇒ &#39;a› (‹(_÷)› [1000] 999)
+  assumes invl: ‹x÷ ⊗ x = 𝟭›
+</code></pre>
+<h2 id="isabelle-document-processor">Isabelle document processor</h2>
+<ul>
+<li>% becomes λ</li>
+<li>Session: set of files/theories being used as input for printing
+output</li>
+<li>Ignore a span of line(s): Put it between <code>*&lt;*</code> and
+<code>*&gt;*</code></li>
+<li><code>oops</code> is often made to render as <code>...</code> via
+latex macros</li>
+</ul>
+<p>—</p>
+<p>Markup commands:</p>
+<ul>
+<li>chapter</li>
+<li>section</li>
+<li>subsection</li>
+<li>subsubsection</li>
+<li>paragraph</li>
+<li>subparagraph</li>
+<li>text</li>
+<li>txt</li>
+<li>text<sub>raw</sub></li>
+</ul>
+<p>—</p>
+<p>Anti-quotations</p>
+<ul>
+<li>theory</li>
+<li>thm</li>
+<li>lemma</li>
+<li>prop</li>
+<li>term</li>
+<li>term<sub>type</sub></li>
+<li>typeof</li>
+<li>const</li>
+<li>abbrev</li>
+<li>typ</li>
+<li>type</li>
+<li>class</li>
+<li>text</li>
+<li>goals</li>
+<li>subgoals</li>
+<li>prf</li>
+<li>full<sub>prf</sub></li>
+<li>ML</li>
+<li>ML<sub>op</sub></li>
+<li>ML<sub>type</sub></li>
+<li>ML<sub>structure</sub></li>
+<li>ML<sub>functor</sub></li>
+<li>emph</li>
+<li>bold</li>
+<li>verbatim</li>
+<li>file</li>
+<li>url</li>
+<li>cite</li>
+<li>rail: 'railroad diagrams'</li>
+</ul>
+<h2 id="evaluate-a-term">Evaluate a term</h2>
+<p>Use <code>value</code> to compute. Like <code>Compute</code> of
+Coq.</p>
+<pre class="isabelle"><code>datatype onat = Zero | Succ onat
+
+fun oadd :: &quot;onat ⇒ onat ⇒ onat&quot; where
+  &quot;oadd Zero n = n&quot; |
+  &quot;oadd (Succ m) n = Succ (oadd m n)&quot;
+
+value &quot;oadd Zero (Succ Zero)&quot;
+(*
+&quot;Succ Zero&quot;
+  :: &quot;onat&quot;
+ *)
+</code></pre>
+<h2 id="jedit-stuff">Jedit stuff</h2>
+<p><a
+href="https://isabelle.in.tum.de/dist/doc/jedit.pdf">https://isabelle.in.tum.de/dist/doc/jedit.pdf</a></p>
+<ul>
+<li><code>[|</code>, <code>|]</code> to make <code>⟦</code>,
+<code>⟧</code></li>
+<li><code>&amp; tab</code>, or <code>\&lt;and&gt; tab</code> for
+<code>∧</code></li>
+<li>Type <code>"</code> to choose <code>‹ .. ›</code>
+<ul>
+<li>Recently used 'cartouches' will show up first</li>
+<li>Use arrow keys to choose, tab to select</li>
+</ul></li>
+<li>Indent/unindent a block of lines: Shift-Arrow or
+Ctrl-Shift-Arrow</li>
+<li>Comment a block of lines:
+<ul>
+<li>C-e C-k: As single line comments</li>
+<li>C-e C-c: As one multiline comment</li>
+<li>Looks like there is no way to toggle without a plugin (TextTools
+plugin)</li>
+<li><a
+href="https://www.jedit.org/users-guide/commenting.html">https://www.jedit.org/users-guide/commenting.html</a></li>
+</ul></li>
+<li>Undo: C-z</li>
+<li>Redo: C-e C-z</li>
+<li>Select a rectangular text block: Alt-Left click
+<ul>
+<li><a
+href="https://community.jedit.org/?q=node/view/4439">https://community.jedit.org/?q=node/view/4439</a></li>
+</ul></li>
+<li><code>C-e Up</code>: superscript</li>
+<li><code>C-e Down</code>: subscript</li>
+<li><code>C-e Left</code>: italic</li>
+<li><code>C-e Right</code>: bold</li>
+<li>Folding:
+<ul>
+<li>Expand completely: <code>M-S-Ret</code></li>
+<li><a
+href="https://www.jedit.org/users-guide/folding.html">https://www.jedit.org/users-guide/folding.html</a></li>
+</ul></li>
+</ul>
+<p>Examples of 'cartouches' (ie, the special symbols, I guess):</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><code>\&lt;open&gt;</code></td>
+<td><code>‹</code></td>
+</tr>
+<tr class="even">
+<td><code>\&lt;one&gt;</code></td>
+<td><code>𝟭</code></td>
+</tr>
+</tbody>
+</table>
+<p>Other editors:</p>
+<ul>
+<li>vscode: <code>isabelle vscode</code> (WIP as of Jan 2025)
+<ul>
+<li><a
+href="https://github.com/seL4/isabelle/blob/master/src/Tools/VSCode/extension/README.md">https://github.com/seL4/isabelle/blob/master/src/Tools/VSCode/extension/README.md</a></li>
+</ul></li>
+</ul>
+<h2 id="classes">Classes</h2>
+<p><a
+href="https://isabelle.in.tum.de/doc/classes.pdf">https://isabelle.in.tum.de/doc/classes.pdf</a></p>
+<ul>
+<li>Like haskell type classes ???</li>
+<li>Locale with exactly one type variable</li>
+</ul>
+<h2 id="record-type">Record type</h2>
+<p>Example:</p>
+<pre><code>record tg =
+  tg_mut :: mut
+  tg_t :: t
+</code></pre>
+<h2 id="locale">Locale</h2>
+<ul>
+<li><p>A way of having modularity</p></li>
+<li><p>Part of the isar proof language</p></li>
+<li><p>Locales are like <code>Section</code>-s in Coq ???</p>
+<ul>
+<li>Also, <code>sublocale</code></li>
+<li><a
+href="https://isabelle.in.tum.de/dist/Isabelle2024/doc/locales.pdf">https://isabelle.in.tum.de/dist/Isabelle2024/doc/locales.pdf</a></li>
+</ul></li>
+<li><p>Like contexts 'that have been made persistent'</p></li>
+<li><p><code>fixes x ∷ τ (mx)</code>: declare local var <code>x</code>
+of type <code>τ</code> and a mixfix annotation <code>mx</code></p></li>
+<li><p><code>constrains x ∷ τ</code>: introduce a type constraint
+<code>τ</code> on local var <code>x</code></p>
+<ul>
+<li>This is deprecated. Use <code>for</code> inside a <code>fixes</code>
+clause instead.</li>
+</ul></li>
+<li><p><code>assumes</code>: introduce local assumptions</p></li>
+<li><p><code>defines</code>: add definition of a previously declared
+name</p></li>
+</ul>
+<h2 id="lifting-and-transfer">Lifting and transfer</h2>
+<p><a
+href="https://www21.in.tum.de/%7Ekuncar/documents/huffman-kuncar-cpp2013.pdf">https://www21.in.tum.de/%7Ekuncar/documents/huffman-kuncar-cpp2013.pdf</a></p>
+<ul>
+<li><p>Via Quotient and Lifting packages</p></li>
+<li><p><code>setup-lifting</code>, <code>lift-definition</code></p></li>
+<li><p>Coercion functions:</p>
+<ul>
+<li>Convert from abstract to raw type: <code>Rep</code> (to an arbitrary
+element in the equivalence class)</li>
+<li>Convert from raw to abstract type: <code>Abs</code></li>
+<li>The equivalence relation R may be a partial relation</li>
+</ul></li>
+<li><p><code>quotient_type</code>: Generates a new type with
+<code>Rep</code> and <code>Abs</code> functions when given a raw type
+and an equivalence relation</p>
+<ul>
+<li>Each element corresponds to an equivalence class in the equivalence
+relation</li>
+</ul></li>
+<li><p><code>quotient_definition</code>: Create a function on abstract
+type given function on raw type and the quotient type</p></li>
+<li><p><code>descending</code>, <code>lifting</code></p></li>
+</ul>
+<h2 id="bundled-declarations-isar">Bundled declarations (Isar)</h2>
+<ul>
+<li><code>bundle</code></li>
+<li><code>unbundle</code></li>
+<li><code>include</code></li>
+<li><code>includes</code></li>
+<li><code>including</code></li>
+</ul>
+<h2 id="prove-mode-and-state-mode">Prove mode and state mode ??</h2>
+<p>A class instance can be defined in more than one way, apparently.</p>
+<pre><code>theory Example
+  imports Main
+begin
+  class semigroup =
+    fixes sgop :: ‹&#39;a ⇒ &#39;a ⇒ &#39;a› (infixl ‹⊗› 70)
+    assumes assoc : ‹(x ⊗ y) ⊗ z = x ⊗ (y ⊗ z)›
+
+  class monoid = semigroup +
+    fixes unit :: ‹&#39;a› (‹𝟭›)
+    assumes unitl : ‹unit ⊗ x = x›
+      and unitr : ‹x ⊗ unit = x›
+
+  instantiation prod :: (semigroup, semigroup) semigroup
+  begin
+    definition sgop_prod :: &quot;&#39;a × &#39;b ⇒ &#39;a × &#39;b ⇒ &#39;a × &#39;b&quot; where
+      &quot;sgop_prod x y =
+        (case x of (a1, b1) ⇒
+          (case y of (a2, b2) ⇒ (a1 ⊗ a2, b1 ⊗ b2)))&quot;
+
+    instance proof
+      fix p q r :: ‹&#39;a::semigroup × &#39;b::semigroup›
+      show ‹(p ⊗ q) ⊗ r = p ⊗ (q ⊗ r)› 
+        unfolding sgop_prod_def
+        unfolding case_prod_unfold
+        by (simp add: assoc)
+    qed
+
+  end
+</code></pre>
+<p>The instance for pair semigroup could also have been done (outside of
+prove mode??) like:</p>
+<pre><code>instance
+  apply (standard)
+  apply (simp add: sgop_prod_def)
+  apply (simp add: case_prod_unfold)
+  apply (simp add: assoc)
+done
+</code></pre>
+<h2 id="old-style-datatypes">'Old-style datatypes'</h2>
+<ul>
+<li>We probably needn't worry about it.</li>
+<li>New <code>datatype</code> declarations are at least as capable as
+the 'old datatypes'.</li>
+<li>Theories use <code>datatype_compat</code> to make new datatypes
+compatible with old datatype machinery</li>
+</ul>
+<p>From <a
+href="https://isabelle.in.tum.de/library/Doc/Datatypes/Datatypes.html">https://isabelle.in.tum.de/library/Doc/Datatypes/Datatypes.html</a>:</p>
+<blockquote>
+<p>'<code>datatype_compat</code> command registers new-style datatypes
+as old-style datatypes and invokes the old-style plugins'</p>
+</blockquote>
+<h2 id="annotations">Annotations</h2>
+<p>Use <code>(nonexhaustive)</code> annotation to say that a function is
+not total. For example:</p>
+<ul>
+<li><a
+href="https://isabelle.in.tum.de/library/HOL/HOL/List.html">https://isabelle.in.tum.de/library/HOL/HOL/List.html</a></li>
+</ul>
+<pre><code>primrec (nonexhaustive) last :: &quot;&#39;a list ⇒ &#39;a&quot; where
+  &quot;last (x # xs) = (if xs = [] then x else last xs)&quot;
+</code></pre>
+<h2 id="code-gen">Code gen</h2>
+<p><a
+href="https://isabelle.in.tum.de/doc/codegen.pdf">https://isabelle.in.tum.de/doc/codegen.pdf</a></p>
+<ul>
+<li>Executable specifications can be converted to programs
+<ul>
+<li><a
+href="https://isabelle.in.tum.de/website-Isabelle2016-1/dist/Isabelle2016-1/doc/codegen.pdf">https://isabelle.in.tum.de/website-Isabelle2016-1/dist/Isabelle2016-1/doc/codegen.pdf</a></li>
+<li><a
+href="https://isabelle.in.tum.de/library/HOL/HOL-Matrix_LP/Matrix.html">https://isabelle.in.tum.de/library/HOL/HOL-Matrix_LP/Matrix.html</a></li>
+<li><a
+href="https://www.isa-afp.org/entries/Linear_Programming.html">https://www.isa-afp.org/entries/Linear_Programming.html</a></li>
+</ul></li>
+<li>Eg: sml, haskell, ocaml, scala</li>
+</ul>
+</div>
+</body>
+</html>

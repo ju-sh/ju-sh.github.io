@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Statistics and probability</title>
+  <title>Statistics</title>
   <style>
     body {
       max-width: 38rem;
@@ -32,7 +32,7 @@
 </div>
 
 <header id="title-block-header">
-<h1 class="title">Statistics and probability</h1>
+<h1 class="title">Statistics</h1>
 </header>
 
 <ul>
@@ -153,98 +153,6 @@ coefficient</strong></p>
 <p>A process where next state depends only the current state.</p>
 <p>'Future is independent of the past' in some sense. <a
 href="https://stats.libretexts.org/Bookshelves/Probability_Theory/Probability_Mathematical_Statistics_and_Stochastic_Processes_(Siegrist)/16%3A_Markov_Processes/16.01%3A_Introduction_to_Markov_Processes">ˡ</a></p>
-<h2 id="probability-distribution-models">Probability distribution
-models</h2>
-<h3 id="poisson-distribution">Poisson distribution</h3>
-<p>Same event that happens multiple times over a time interval.</p>
-<ul>
-<li>Discrete</li>
-<li>Parameter: mean/expectation (λ)</li>
-</ul>
-<p>Probability of k events (probability density/mass function):</p>
-<pre><code>        λᵏ.e⁻ᵏ
-P(k) = ───────
-         k!
-</code></pre>
-<p>Poisson density function is not continuous. It's defined only for
-integer values of <code>k</code>.</p>
-<p>See: <a
-href="https://brilliant.org/wiki/poisson-distribution/">https://brilliant.org/wiki/poisson-distribution/</a></p>
-<h3 id="gamma-distribution">Gamma distribution</h3>
-<ul>
-<li>Parameters
-<ul>
-<li>Shape parameter k</li>
-<li>Rate parameter θ</li>
-</ul></li>
-</ul>
-<p>DBT: Mean is past the midpoint in the graph always??</p>
-<h3 id="normal-distribution">Normal distribution</h3>
-<ul>
-<li>aka Gaussian distribution</li>
-<li>Bell shaped curve</li>
-<li>Continuous ??</li>
-</ul>
-<h3 id="categorical-distribution">Categorical distribution</h3>
-<ul>
-<li><p>Discrete</p></li>
-<li><p>Doesn't have anything to do with category theory</p></li>
-<li><p>Value of random variable is from one among a set of predefined
-categories <a
-href="https://www.statology.org/categorical-distribution/">ʳ</a></p></li>
-<li><p>Each category has an associated probability</p></li>
-<li><p>A generalization of Bernoulli distribution ?? <a
-href="https://stats.stackexchange.com/questions/113377/what-is-meant-by-categorical-distribution">ʳ</a></p></li>
-</ul>
-<p>Examples:</p>
-<ul>
-<li>Rolling of a 6-faced die.
-<ul>
-<li>Each category has equal probability: 1/6</li>
-</ul></li>
-<li>Coin toss</li>
-<li>Selecting marbles from an urn <a
-href="https://www.statology.org/categorical-distribution/">ʳ</a>
-<ul>
-<li>Suppose urn has 5 red, 3 green and 2 blue marbles</li>
-<li>Probabilities of categories are like:
-<ul>
-<li>Red: 5/10</li>
-<li>Green: 3/10</li>
-<li>Blue: 2/10</li>
-</ul></li>
-</ul></li>
-</ul>
-<h3 id="more">More</h3>
-<ul>
-<li>Exponential
-<ul>
-<li>For between 2 occurrences of a same event??</li>
-</ul></li>
-<li>Erlang</li>
-<li>Binomial</li>
-<li>Bernoulli</li>
-<li>Uniform distribution</li>
-</ul>
-<h2 id="bayes-theorem">Bayes' theorem</h2>
-<p>Derivation<a
-href="http://www.hep.upenn.edu/~johnda/Papers/Bayes.pdf">ʳ</a>:</p>
-<p><code>P(A ∩ B)</code> is the probability of A times probablity of B
-given that A has already happened.</p>
-<pre><code>P(A ∩ B) = P(A) * P(B/A)
-</code></pre>
-<p>It could also be defined as the probability of B times probablity of
-A given that B has already happened.</p>
-<pre><code>P(A ∩ B) = P(B) * P(A/B)
-</code></pre>
-<p>Equating the two,</p>
-<pre><code>P(A) * P(B/A) = P(B) * P(A/B)
-
-
-                 P(A) * P(B/A)
- =&gt;    P(A/B) = ──────────────
-                     P(B)
-</code></pre>
 <h2 id="monte-carlo-methods">Monte Carlo methods</h2>
 <p><a
 href="https://cermics.enpc.fr/~bl/Halmstad/monte-carlo/lecture-1.pdf">https://cermics.enpc.fr/~bl/Halmstad/monte-carlo/lecture-1.pdf</a></p>
@@ -324,19 +232,7 @@ href="https://en.wikipedia.org/wiki/Gamma_function">ʷ</a>:</p>
 </tr>
 </tbody>
 </table>
-<h2 id="central-limit-theorem">Central limit theorem</h2>
-<p>Given a collection of points (of any probability distribution. Need
-not be normal), if we select k number of points repeatedly with
-replacement (ie, the k points are considered to be 'put back' after each
-trial), the mean value of the trials will be normally distributed.</p>
-<p>See:</p>
-<ul>
-<li><a
-href="https://www.scribbr.com/statistics/central-limit-theorem/">https://www.scribbr.com/statistics/central-limit-theorem/</a></li>
-<li><a
-href="https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_probability/BS704_Probability12.html">https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_probability/BS704_Probability12.html</a></li>
-</ul>
-<h2 id="more-1">More</h2>
+<h2 id="more">More</h2>
 <ul>
 <li>Range: Difference between largest and smallest values in the
 sample.</li>

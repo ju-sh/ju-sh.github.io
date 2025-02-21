@@ -87,8 +87,50 @@ straight lines</li>
 </ul></li>
 <li><p>Support vector machines (SVM): Can do linear
 classification</p></li>
-<li><p>Q-Learning</p></li>
+<li><p>Forecasting algorithms</p>
+<ul>
+<li>ARIMA (Auto-regressive integrated moving average)</li>
+<li>SARIMA (Seasonal auto-regressive integrated moving average)</li>
+</ul></li>
+<li><p>Autoregression</p></li>
+<li><p>Moving average</p></li>
 </ul>
+<h2 id="reinforcement-learning">Reinforcement learning</h2>
+<ul>
+<li><p>Value iteration</p></li>
+<li><p>Q-Learning</p></li>
+<li><p>Policy (π)</p>
+<ul>
+<li>Are probabilities of 'transitions'</li>
+<li>P(s'|s, a): probability of going to s' from s by taking action
+a</li>
+<li>Expected utility of a π</li>
+<li>Probabilistic =&gt; need not take the same path every time for the
+same π</li>
+<li>π<sup>*</sup>: optimal policy
+<ul>
+<li>Policy with maximum expected utility</li>
+</ul></li>
+</ul></li>
+<li><p>Discounted rewards</p>
+<ul>
+<li>Discount factor = γ</li>
+</ul></li>
+<li><p>R(s): reward associated with state s</p></li>
+<li><p>Markov process</p>
+<ul>
+<li>Next state is independent of history</li>
+</ul></li>
+<li><p>MDP: Markov decision process</p></li>
+</ul>
+<p>—</p>
+<p>Bellmann equation for utility</p>
+<pre><code>U(s) = R(s) + γ max [P(s&#39;|s, a) * U(s&#39;)]
+                a∈A
+</code></pre>
+<p>This essentially says this:</p>
+<pre><code>Utility of a state = Reward of that state + Utility of next state
+</code></pre>
 <h2 id="sketching">Sketching</h2>
 <p>From <a
 href="https://www.sketchingbigdata.org/fall20/lec/notes.pdf">here</a>:</p>

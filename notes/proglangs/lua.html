@@ -46,6 +46,7 @@
 <div id="content-container">
 <ul>
 <li>String to number: <code>tonumber()</code></li>
+<li>Book: <em>Programming in Lua</em> - Roberto Ierusalimschy</li>
 </ul>
 <h2 id="chained-assignment">Chained assignment</h2>
 <p>This doesn't seem to be possible in lua.</p>
@@ -77,7 +78,7 @@ class="sourceCode lua"><code class="sourceCode lua"><span id="cb4-1"><a href="#c
 <p>They are sort of always there, unless they are <code>nil</code>.</p>
 <h2 id="tables">Tables</h2>
 <p>The <em>only</em> built-in data structure available in lua.</p>
-<p>Quite flexible though.</p>
+<p>Quite flexible though. Tables could be termed the 'heart' of lua.</p>
 <ul>
 <li>Insert new element: table.insert(&lt;table-var&gt;,
 &lt;elem/key&gt;)</li>
@@ -196,6 +197,48 @@ class="sourceCode lua"><code class="sourceCode lua"><span id="cb14-1"><a href="#
 <h2 id="linters">Linters</h2>
 <p><a
 href="https://github.com/lunarmodules/luacheck">https://github.com/lunarmodules/luacheck</a></p>
+<h2 id="general">General</h2>
+<ul>
+<li><p><code>os.getenv "ROOTDIR" or "out"</code>: results in value of
+shell variable <code>$ROOTDIR</code> or the string
+<code>"out"</code></p>
+<ul>
+<li><a
+href="https://www.lua.org/pil/22.2.html">https://www.lua.org/pil/22.2.html</a></li>
+</ul></li>
+<li><p><code>os.date("!%Y-%m-%d %T")</code>: get current date</p>
+<ul>
+<li><a
+href="https://www.lua.org/pil/22.1.html">https://www.lua.org/pil/22.1.html</a></li>
+</ul></li>
+<li><p><code>string.format()</code>: like python's
+<code>str.format()</code></p>
+<ul>
+<li><a
+href="https://www.lua.org/pil/20.html">https://www.lua.org/pil/20.html</a></li>
+</ul></li>
+<li><p><code>math.sqrt(4)</code></p></li>
+<li><p>Chunk: a sequence of statements</p>
+<ul>
+<li>Could be an entire file.</li>
+<li>Could be a single line in an interactive session.</li>
+</ul></li>
+<li><p>Launch repl with <code>lua</code> command</p></li>
+<li><p>Emacs mode: <a
+href="https://github.com/immerrr/lua-mode">https://github.com/immerrr/lua-mode</a></p>
+<ul>
+<li>Also see: <a
+href="https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-lua.html">https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-lua.html</a></li>
+</ul></li>
+</ul>
+<h2 id="importing-libraries">Importing libraries</h2>
+<ul>
+<li>Libraries are like tables.</li>
+<li><code>require</code> them and bind it to a variable</li>
+<li>Table attributes are the definitions provided by the library</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> <span class="va">filter</span> <span class="op">=</span> <span class="fu">require</span> <span class="st">&quot;make4ht-filter&quot;</span></span></code></pre></div>
 <h2 id="package-management">Package management</h2>
 <ul>
 <li>luarocks: Like pip for python</li>

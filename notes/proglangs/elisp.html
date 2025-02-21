@@ -87,6 +87,19 @@ href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Signaling-Errors
 code</li>
 </ul></li>
 </ul>
+<h2 id="temporary-files-and-buffers">Temporary files and buffers</h2>
+<ul>
+<li>Create a temporary file: <code>(make-temp-file "foo")</code>
+<ul>
+<li>By default, Creates a file with <code>"foo"</code> prefix in
+<code>/tmp/</code> and returns its path as string.</li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Unique-File-Names.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Unique-File-Names.html</a></li>
+<li>DBT: Would this file get deleted automatically after use ??</li>
+</ul></li>
+<li><code>(with-temp-file outfile body)</code>: create new buffer,
+evaluate body there and write to outfile ??</li>
+</ul>
 <h2 id="regions">Regions</h2>
 <ul>
 <li><code>(use-region-p)</code>: returns <code>t</code> if a region is
@@ -651,8 +664,16 @@ interactively:</h2>
 <pre><code>for list_elem in list_name:
   operation(list_elem)
 </code></pre>
-<h2 id="append-a-string-to-a-file">Append a string to a file</h2>
-<p>Use <code>write-region</code>.</p>
+<h2 id="write-part-of-a-buffer-to-a-file">Write part of a buffer to a
+file</h2>
+<pre class="elisp"><code>; Overwrite
+(write-region (point-min) (point-max) &quot;outfilename&quot;)
+
+; Append
+(write-region (point-min) (point-max) &quot;outfilename&quot; t)
+(write-region (point-min) (point-max) &quot;outfilename&quot; &#39;append)
+</code></pre>
+<p>Append a string to a file with <code>write-region</code>:</p>
 <pre class="elisp"><code>(write-region &lt;string&gt; nil &lt;filename&gt; &#39;append)
 </code></pre>
 <p><a
@@ -714,31 +735,31 @@ href="http://web.archive.org/web/20160712150651/https://cl-cookbook.sourceforge.
 href="https://www.emacswiki.org/emacs/NavigatingParentheses">https://www.emacswiki.org/emacs/NavigatingParentheses</a></li>
 </ul>
 <h2 id="handling-time-and-date">Handling time and date</h2>
-<div class="sourceCode" id="cb29" data-org-language="lisp"><pre
-class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>(current-time)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">; (26423 47784 405993 901000)</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>(decode-time)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co">; (42 48 2 16 11 2024 6 nil 19800)</span></span></code></pre></div>
+<div class="sourceCode" id="cb30" data-org-language="lisp"><pre
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>(current-time)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co">; (26423 47784 405993 901000)</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>(decode-time)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">; (42 48 2 16 11 2024 6 nil 19800)</span></span></code></pre></div>
 <ul>
 <li>format-time-string: formats current datetime if no datetime argument
 is given</li>
 </ul>
-<div class="sourceCode" id="cb30" data-org-language="lisp"><pre
-class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>(format-time-string <span class="st">&quot;%Y-%m-%d&quot;</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;2024-11-16&quot;</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>(format-time-string <span class="st">&quot;%Y-%m-%d&quot;</span> (decode-time))</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;1970-01-07&quot;</span></span></code></pre></div>
 <div class="sourceCode" id="cb31" data-org-language="lisp"><pre
-class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>(decode-time)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co">; (59 6 3 16 11 2024 6 nil 19800)</span></span>
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>(format-time-string <span class="st">&quot;%Y-%m-%d&quot;</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;2024-11-16&quot;</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>(encode-time (decode-time))</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co">; (26423 48961)</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>(format-time-string <span class="st">&quot;%Y-%m-%d&quot;</span> (encode-time (decode-time)))</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co">; &quot;2024-11-16&quot;</span></span></code></pre></div>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>(format-time-string <span class="st">&quot;%Y-%m-%d&quot;</span> (decode-time))</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;1970-01-07&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb32" data-org-language="lisp"><pre
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>(decode-time)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">; (59 6 3 16 11 2024 6 nil 19800)</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>(encode-time (decode-time))</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co">; (26423 48961)</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>(format-time-string <span class="st">&quot;%Y-%m-%d&quot;</span> (encode-time (decode-time)))</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co">; &quot;2024-11-16&quot;</span></span></code></pre></div>
 <p>See:</p>
 <ul>
 <li><a
@@ -758,18 +779,18 @@ href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Conversion.
 </ul></li>
 <li><code>cdr</code>: tail of list</li>
 </ul>
-<div class="sourceCode" id="cb32" data-org-language="lisp"><pre
-class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">car</span> &#39;(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>))</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">; 0</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>(<span class="kw">car</span> <span class="kw">nil</span>)</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co">; nil</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>(<span class="kw">cdr</span> &#39;(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>))</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co">; (1 2 3)</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>(<span class="kw">cdr</span> (<span class="kw">cdr</span> &#39;(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>)))</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co">; (2 3)</span></span></code></pre></div>
+<div class="sourceCode" id="cb33" data-org-language="lisp"><pre
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">car</span> &#39;(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">; 0</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>(<span class="kw">car</span> <span class="kw">nil</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co">; nil</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>(<span class="kw">cdr</span> &#39;(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>))</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co">; (1 2 3)</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>(<span class="kw">cdr</span> (<span class="kw">cdr</span> &#39;(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>)))</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="co">; (2 3)</span></span></code></pre></div>
 <ul>
 <li><code>nthcdr</code> repeats <code>cdr</code> function <code>n</code>
 times</li>
@@ -778,9 +799,34 @@ times</li>
 <ul>
 <li>Indexing starts from zero.</li>
 </ul>
-<div class="sourceCode" id="cb33" data-org-language="lisp"><pre
-class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">nth</span> <span class="dv">2</span> &#39;(<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>))</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">; 3</span></span></code></pre></div>
+<div class="sourceCode" id="cb34" data-org-language="lisp"><pre
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">nth</span> <span class="dv">2</span> &#39;(<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>))</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">; 3</span></span></code></pre></div>
+<h2 id="file-paths">File paths</h2>
+<pre class="elisp"><code>(file-name-directory &quot;/home/user/Desktop/file.ext&quot;)
+; &quot;/home/user/Desktop/&quot;
+
+(file-name-nondirectory &quot;/home/user/Desktop/file.ext&quot;)
+; &quot;file.ext&quot;
+
+(file-name-extension &quot;/home/user/Desktop/file.ext&quot;)
+; &quot;ext&quot;
+
+; Change extension
+(file-name-with-extension &quot;/home/user/Desktop/file.oldext&quot; &quot;newext&quot;)
+; &quot;/home/user/Desktop/file.newext&quot;
+
+; Path without extension
+(file-name-sans-extension &quot;/home/user/Desktop/file.ext&quot;)
+; &quot;/home/user/Desktop/file&quot;
+</code></pre>
+<p>See:</p>
+<ul>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Name-Components.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Name-Components.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Directory-Names.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Directory-Names.html</a></li>
+</ul>
 <h2 id="let-expressions"><code>let</code> expressions</h2>
 <p>See: <a
 href="https://www.gnu.org/software/emacs/manual/html_node/eintr/let.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/let.html</a></p>
@@ -886,6 +932,13 @@ style guide</a></li>
 href="https://www.gnu.org/software/emacs/manual/html_node/cl/">https://www.gnu.org/software/emacs/manual/html_node/cl/</a></li>
 <li><a
 href="https://www.gnu.org/software/emacs/manual/pdf/eintr.pdf">https://www.gnu.org/software/emacs/manual/pdf/eintr.pdf</a></li>
+</ul>
+<h1 id="common-lisp-1">Common lisp</h1>
+<ul>
+<li>Run lisp from a file: <code>sbcl --script inp.lisp</code></li>
+<li>Load lisp from file and start repl:
+<code>sbcl --load inp.lisp</code></li>
+<li><code>(print)</code>: print strings</li>
 </ul>
 </div>
 </body>

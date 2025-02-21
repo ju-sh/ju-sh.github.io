@@ -351,9 +351,41 @@ available</li>
 </ul></li>
 <li><code>predU p q</code>: p ∪ q</li>
 <li><code>predD p q</code>: p \ q</li>
+<li><code>predI</code></li>
+<li><code>xpredI p1 p2 x</code>: <code>p1 x &amp;&amp; p2 x</code></li>
+<li><code>pred A</code>: Type of predicates on <code>A</code>
+<ul>
+<li>ie, <code>pred A : Type -&gt; Type := A -&gt; bool</code></li>
+</ul></li>
+<li><code>pred0b p</code>: says that there is no element <code>x</code>
+for which <code>p x</code> is true.</li>
 </ul>
 <p><code>in</code> is usually associated with iteration.
 <code>\in</code> indicates membership.</p>
+<p>—</p>
+<ul>
+<li><code>mem_pred</code>: a variant type whose only constructor needs a
+<code>pred</code>.</li>
+</ul>
+<pre class="coq"><code>Variant mem_pred (T : Type) : Type := 
+| Mem : pred T -&gt; mem_pred T.
+</code></pre>
+<ul>
+<li><code>simpl_fun a b</code>: a variant type whose only constructor
+needs a function of type <code>a -&gt; b</code>.
+<ul>
+<li><code>simpl_pred a</code> is <code>simpl_fun a bool</code></li>
+</ul></li>
+</ul>
+<pre class="coq"><code>Variant simpl_fun (a b : Type) : Type :=
+| SimplFun : (a -&gt; b) -&gt; simpl_fun a b.
+</code></pre>
+<h3 id="disjoint">disjoint</h3>
+<p>Definition says that the number of elements for which the
+characteristic functions of both <code>A</code> and <code>B</code> is
+<code>true</code> is zero.</p>
+<pre class="coq"><code>Definition disjoint T (A B : mem_pred _) := @pred0b T (predI A B).
+</code></pre>
 <h2 id="ssrbool">ssrbool</h2>
 <ul>
 <li><code>rel</code>: Type of a kind of relations

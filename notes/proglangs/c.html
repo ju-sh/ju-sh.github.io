@@ -247,10 +247,7 @@ href="https://en.cppreference.com/w/c/io/fprintf">https://en.cppreference.com/w/
 </ul>
 <h2 id="interesting-behavior-and-facts">Interesting behavior and
 facts</h2>
-<p>In my UG days, I spent a lot of time with the C programming language.
-Had forgotten most of it.</p>
-<p>But now (Feb 2023) I'm a TA for a lab course using C. Noting down
-stuff that I came across again..</p>
+<p>Undefined behaviour means that compiler can do whatever it likes.</p>
 <h3 id="no-evaluation-within-sizeof">No evaluation within
 <code>sizeof</code></h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
@@ -293,29 +290,51 @@ on architecture and compiler.</p>
 <li><code>(a++ + (++a))</code></li>
 </ul>
 <p>(Thanks to Kevin for reminding me about this.)</p>
+<p>—</p>
+<p>Similarly, the following are also invoke undefined behaviour due to
+multiple sequence points.</p>
+<ul>
+<li><code>i = i++</code></li>
+<li><code>i = ++i</code></li>
+<li><code>printf("%d %d", i++, i++)</code></li>
+</ul>
+<p>See:</p>
+<ul>
+<li><a
+href="https://stackoverflow.com/questions/26894509/c-why-does-i-i-invoke-undefined-behaviour">https://stackoverflow.com/questions/26894509/c-why-does-i-i-invoke-undefined-behaviour</a></li>
+<li><a
+href="https://stackoverflow.com/questions/4968854/is-the-behaviour-of-i-i-really-undefined">https://stackoverflow.com/questions/4968854/is-the-behaviour-of-i-i-really-undefined</a></li>
+<li><a
+href="https://stackoverflow.com/questions/22616986/order-of-evaluation-of-arguments-in-function-calling">https://stackoverflow.com/questions/22616986/order-of-evaluation-of-arguments-in-function-calling</a></li>
+</ul>
+<h3 id="order-of-function-arg-eval">Order of function arg eval</h3>
+<p>Order of function argument evaluation is not defined in the C
+standard.</p>
+<p>The following snippet could print "HiHello" or "HelloHi".</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>f<span class="op">(</span>printf<span class="op">(</span><span class="st">&quot;Hi&quot;</span><span class="op">),</span> printf<span class="op">(</span><span class="st">&quot;Hello&quot;</span><span class="op">));</span></span></code></pre></div>
 <h3 id="calling-main-from-main">Calling <code>main</code> from
 <code>main</code></h3>
 <p>Looks like this is possible in C (gcc).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ctr <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>ctr<span class="op">&gt;</span><span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;Hi</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        ctr<span class="op">--;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        main<span class="op">();</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span></code></pre></div>
-<p>Apparently, C++ standard prohibits this but gcc allows it.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ctr <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>ctr<span class="op">&gt;</span><span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;Hi</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        ctr<span class="op">--;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        main<span class="op">();</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span></code></pre></div>
+<p>Apparently, C++ standard prohibits this though gcc allows it.</p>
 <ul>
 <li><a
 href="https://stackoverflow.com/questions/2532912/call-main-itself-in-c">https://stackoverflow.com/questions/2532912/call-main-itself-in-c</a></li>
@@ -330,28 +349,28 @@ href="https://stackoverflow.com/questions/2532912/call-main-itself-in-c">https:/
 </thead>
 <tbody>
 <tr class="odd">
-<td>&lt;:</td>
-<td>[</td>
+<td><code>&lt;:</code></td>
+<td><code>[</code></td>
 </tr>
 <tr class="even">
-<td>:&gt;</td>
-<td>]</td>
+<td><code>:&gt;</code></td>
+<td><code>]</code></td>
 </tr>
 <tr class="odd">
-<td>&lt;%</td>
-<td>{</td>
+<td><code>&lt;%</code></td>
+<td><code>{</code></td>
 </tr>
 <tr class="even">
-<td>%&gt;</td>
-<td>}</td>
+<td><code>%&gt;</code></td>
+<td><code>}</code></td>
 </tr>
 <tr class="odd">
-<td>%:</td>
-<td>#</td>
+<td><code>%:</code></td>
+<td><code>#</code></td>
 </tr>
 <tr class="even">
-<td>%:%:</td>
-<td>##</td>
+<td><code>%:%:</code></td>
+<td><code>##</code></td>
 </tr>
 </tbody>
 </table>
@@ -370,40 +389,40 @@ today.</li>
 </thead>
 <tbody>
 <tr class="odd">
-<td>??=</td>
-<td>#</td>
+<td><code>??=</code></td>
+<td><code class="verbatim">#</code></td>
 </tr>
 <tr class="even">
-<td>??(</td>
-<td>[</td>
+<td><code>??(</code></td>
+<td><code class="verbatim">[</code></td>
 </tr>
 <tr class="odd">
-<td>??/</td>
-<td>\</td>
+<td><code>??/</code></td>
+<td><code class="verbatim">\</code></td>
 </tr>
 <tr class="even">
-<td>??)</td>
-<td>]</td>
+<td><code>??)</code></td>
+<td><code class="verbatim">]</code></td>
 </tr>
 <tr class="odd">
-<td>??'</td>
-<td>^</td>
+<td><code>??'</code></td>
+<td><code class="verbatim">^</code></td>
 </tr>
 <tr class="even">
-<td>??&lt;</td>
-<td>{</td>
+<td><code>??&lt;</code></td>
+<td><code class="verbatim">{</code></td>
 </tr>
 <tr class="odd">
-<td>??!</td>
-<td></td>
+<td><code>??!</code></td>
+<td><code class="verbatim">│</code></td>
 </tr>
 <tr class="even">
-<td>??&gt;</td>
-<td>}</td>
+<td><code>??&gt;</code></td>
+<td><code class="verbatim">}</code></td>
 </tr>
 <tr class="odd">
-<td>??-</td>
-<td>~</td>
+<td><code>??-</code></td>
+<td><code class="verbatim">~</code></td>
 </tr>
 </tbody>
 </table>
@@ -415,15 +434,50 @@ today.</li>
 <li>Check if a macro is not defined: <code>#ifndef</code></li>
 <li>Conditions: <code>#if</code>, <code>#elif</code>,
 <code>#else</code>, <code>#endif</code></li>
-<li>Concatenation of <code>a</code> and <code>b</code>:
+<li>Token concatenation of <code>a</code> and <code>b</code>:
 <code>a##b</code></li>
+<li>Stringification of <code>a</code>: <code>#a</code></li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Check if a macro is defined</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef NAME</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  print<span class="op">(</span><span class="st">&quot;NAME is defined</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  print<span class="op">(</span><span class="st">&quot;NAME is not defined</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Check if a macro is defined</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef NAME</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  print<span class="op">(</span><span class="st">&quot;NAME is defined</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  print<span class="op">(</span><span class="st">&quot;NAME is not defined</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span></code></pre></div>
+<h2 id="often-ignored-error-checking">Often ignored error checking</h2>
+<ul>
+<li>Return value of malloc, printf, scanf</li>
+<li>strcat, sprintnf, strcpy, etc</li>
+<li>strtoint</li>
+</ul>
+<h2 id="more">More</h2>
+<ul>
+<li>Bit field packing
+<ul>
+<li><a
+href="https://www.gnu.org/software/c-intro-and-ref/manual/html_node/Bit-Field-Packing.html">https://www.gnu.org/software/c-intro-and-ref/manual/html_node/Bit-Field-Packing.html</a></li>
+</ul></li>
+<li>Div by zero gives INF for float. Segfault for int</li>
+<li>Original C compiler was 1-pass. That's why it mandated separate
+function declaration and definition</li>
+<li><code>malloc</code> can return pointer to a smaller memory area even
+if the requested amount of memory isn't available.
+<ul>
+<li><p>Overcommit. Kernel overcommits by default</p></li>
+<li><p>sysctl vm.overcommit<sub>memory</sub></p>
+<pre><code>$ sudo sysctl vm.overcommit_memory
+vm.overcommit_memory = 0
+</code></pre></li>
+</ul></li>
+</ul>
+<ul>
+<li>Heap is part of process' address space, which is part of virtual
+memory
+<ul>
+<li>Virtual memory <em>could be thought of</em> RAM + Swap (not the same
+though??)</li>
+</ul></li>
+</ul>
 </div>
 </body>
 </html>

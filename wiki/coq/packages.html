@@ -382,6 +382,129 @@ Default Proof Mode &quot;Ltac2&quot;.
 <li>Panics: Non-backtracking exceptions</li>
 <li>There are also 'backtracking primitives'</li>
 </ul>
+<h1 id="iris">iris</h1>
+<ul>
+<li><a
+href="https://iris-project.org/tutorial-material.html">https://iris-project.org/tutorial-material.html</a></li>
+<li><a
+href="https://iris-project.org/tutorial-pdfs/iris-lecture-notes.pdf">https://iris-project.org/tutorial-pdfs/iris-lecture-notes.pdf</a></li>
+<li>Setting up editor: <a
+href="https://gitlab.mpi-sws.org/iris/iris/-/blob/master/docs/editor.md">https://gitlab.mpi-sws.org/iris/iris/-/blob/master/docs/editor.md</a>
+<ul>
+<li>Many iris operators needs special characters.</li>
+</ul></li>
+</ul>
+<p>—</p>
+<ul>
+<li>Seperation logic
+<ul>
+<li>Notion of resource ownership</li>
+<li>Facts + resource ownership</li>
+</ul></li>
+<li>Concurrent seperation logic</li>
+<li>PCM: Partial Commutative Monoids</li>
+<li>HeapLang: an ML-like language that comes with iris ??</li>
+<li>Resource algebras</li>
+<li>Ghost state</li>
+</ul>
+<ul>
+<li><code>{P} e {v.Q}_ε</code>
+<ul>
+<li>P is pre-condition</li>
+<li>e is an expression resulting in a value v</li>
+<li>Q is a post-condition that is a predicate which holds for v</li>
+<li>Currently active invariant is written as subscript</li>
+</ul></li>
+<li><code>l ↦ v</code>: 'points-to' predicate
+<ul>
+<li>Think of them as heap fragments</li>
+<li>asserts ownership of a singleton heap mapping <code>l</code> to
+<code>v</code>.</li>
+</ul></li>
+<li><code>iProp Σ</code>: Type of propositions
+<ul>
+<li>where <code>Σ: gFunctors</code> indicates available resources that
+is part of current context</li>
+</ul></li>
+<li><code>∗</code> is not idempotent
+<ul>
+<li>ie, <code>P ⊢ P * P</code> needn't be true</li>
+<li>NOTE: This is not asterisk ('*')</li>
+</ul></li>
+<li><code>iSplitL H</code>: <code>H</code> is given to left subgoal,
+rest to the right subgoal
+<ul>
+<li>Vice-versa for <code>iSplitR</code></li>
+</ul></li>
+<li><code>-∗</code>: 'magic wand' operator
+<ul>
+<li>aka 'wand'</li>
+<li><code>P -∗ Q</code> is equivalent to <code>P ⊢ Q</code></li>
+<li>NOTE: the <code>∗</code> is NOT asterisk!</li>
+</ul></li>
+<li><code>iFrame</code>
+<ul>
+<li><a
+href="https://gitlab.mpi-sws.org/iris/iris/-/blob/master/docs/proof_mode.md?ref_type=heads#separation-logic-specific-tactics">https://gitlab.mpi-sws.org/iris/iris/-/blob/master/docs/proof_mode.md?ref_type=heads#separation-logic-specific-tactics</a></li>
+<li>'pairs up hypotheses with pieces of separation sequence'</li>
+</ul></li>
+<li><code>⊣⊢</code>: bi-entailment
+<ul>
+<li>Like 'iff'</li>
+<li><code>P ⊣⊢ Q</code> means <code>(P -∗ Q) ∧ (Q -∗ P)</code></li>
+</ul></li>
+</ul>
+<h2 id="dbt">Dbt</h2>
+<ul>
+<li>Is there an <code>iCheck</code> to see types of terms?</li>
+</ul>
+<h2 id="iris-proof-mode-ipm">Iris Proof Mode (IPM)</h2>
+<ul>
+<li>Involves an extra context named <strong>spatial
+context</strong></li>
+<li>This is in addition to the 'normal' context, called non-spatial
+context in iris.</li>
+</ul>
+<ul>
+<li>iris tactics tailored to work also with spatial context start with
+<code>i</code>
+<ul>
+<li>Eg: <code>iIntros "H"</code> instead of <code>intros H</code></li>
+<li>Eg: <code>iApply "H"</code> instead of <code>apply H</code></li>
+</ul></li>
+<li>Start IPM: ~iStartProof
+<ul>
+<li>Many iris tactics will automatically start IPM though.</li>
+</ul></li>
+<li><a
+href="https://github.com/izgzhen/iris-coq/blob/master/ProofMode.md">https://github.com/izgzhen/iris-coq/blob/master/ProofMode.md</a></li>
+</ul>
+<h2 id="rules">Rules</h2>
+<pre><code>P1 ⊢ Q1      P2 ⊢ Q2
+----------------------
+  P1 ∗ P2 ⊢ Q1 ∗ Q2
+</code></pre>
+<pre><code>  {P} e {w. Q}
+---------------- Frame rule
+{P*R} e {w. Q*R}
+
+
+------------------ Val
+{True} v {w. w==v}
+
+
+---------------------- Alloc
+{True} ref(v) {l. l↦v}
+
+
+------------------------ Load
+{l↦v} !l {w. w==v * l↦v}
+
+
+--------------- Store
+{l↦v} l←w {l↦w}
+
+</code></pre>
 <h1 id="more-packages">More packages</h1>
 <ul>
 <li><p>mathcomp 2.0:</p>
