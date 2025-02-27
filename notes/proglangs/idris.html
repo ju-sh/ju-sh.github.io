@@ -52,13 +52,10 @@
 </ul>
 <h2 id="general">General</h2>
 <ul>
-<li>Packages: <a
-href="https://idris2.readthedocs.io/en/latest/tutorial/packages.html">https://idris2.readthedocs.io/en/latest/tutorial/packages.html</a></li>
-<li>Namespaces: <a
-href="https://idris2.readthedocs.io/en/latest/tutorial/modules.html#explicit-namespaces">https://idris2.readthedocs.io/en/latest/tutorial/modules.html#explicit-namespaces</a>
+<li>Packages: <a href="https://idris2.readthedocs.io/en/latest/tutorial/packages.html">https://idris2.readthedocs.io/en/latest/tutorial/packages.html</a></li>
+<li>Namespaces: <a href="https://idris2.readthedocs.io/en/latest/tutorial/modules.html#explicit-namespaces">https://idris2.readthedocs.io/en/latest/tutorial/modules.html#explicit-namespaces</a>
 <ul>
-<li>Mutliple definitions with same name can be present in the same
-module, but in different namespaces.</li>
+<li>Mutliple definitions with same name can be present in the same module, but in different namespaces.</li>
 </ul></li>
 <li><code>total</code>: declare that a function is total</li>
 <li><code>mutual</code>: for declaring mutually recursive types</li>
@@ -69,22 +66,17 @@ module, but in different namespaces.</li>
 </ul></li>
 <li>'Docstrings': Each line starts with <code>|||</code>
 <ul>
-<li><a
-href="https://docs.idris-lang.org/en/latest/reference/documenting.html">https://docs.idris-lang.org/en/latest/reference/documenting.html</a></li>
+<li><a href="https://docs.idris-lang.org/en/latest/reference/documenting.html">https://docs.idris-lang.org/en/latest/reference/documenting.html</a></li>
 </ul></li>
-<li>Search based on types of definitions: <a
-href="https://docs.idris-lang.org/en/latest/reference/type-directed-search.html">https://docs.idris-lang.org/en/latest/reference/type-directed-search.html</a></li>
+<li>Search based on types of definitions: <a href="https://docs.idris-lang.org/en/latest/reference/type-directed-search.html">https://docs.idris-lang.org/en/latest/reference/type-directed-search.html</a></li>
 </ul>
 <h2 id="implicit-arguments">Implicit arguments</h2>
-<p>From <a
-href="https://idris2.readthedocs.io/en/latest/updates/updates.html">here</a>:</p>
+<p>From <a href="https://idris2.readthedocs.io/en/latest/updates/updates.html">here</a>:</p>
 <blockquote>
-<p>names which begin with a lower case letter are automatically bound as
-implicit arguments in types</p>
+<p>names which begin with a lower case letter are automatically bound as implicit arguments in types</p>
 </blockquote>
 <h2 id="dependent-pairs">Dependent pairs</h2>
-<p><a
-href="https://idris2.readthedocs.io/en/latest/tutorial/typesfuns.html#dependent-pairs">https://idris2.readthedocs.io/en/latest/tutorial/typesfuns.html#dependent-pairs</a></p>
+<p><a href="https://idris2.readthedocs.io/en/latest/tutorial/typesfuns.html#dependent-pairs">https://idris2.readthedocs.io/en/latest/tutorial/typesfuns.html#dependent-pairs</a></p>
 <ul>
 <li>Two values. First value can show up in the second.</li>
 <li>aka Sigma types</li>
@@ -92,14 +84,11 @@ href="https://idris2.readthedocs.io/en/latest/tutorial/typesfuns.html#dependent-
 <p>Eg: an implementation of Vector:</p>
 <pre><code>(n:Nat ** Vector n Int)
 </code></pre>
-<p>Another example??<span class="spurious-link"
-target="l4"><em>ˡ</em></span>:
-<code>(n : Nat) * (vars : Vect n String) * ScopedLC vars)</code></p>
+<p>Another example??<em>ˡ</em>: <code>(n : Nat) * (vars : Vect n String) * ScopedLC vars)</code></p>
 <h2 id="multiplicty">Multiplicty</h2>
 <ul>
 <li>Every variable has a multiplicty associated with it.</li>
-<li>Courtesy of Quantitative Type theory (QTT) on which idris2 is
-based.</li>
+<li>Courtesy of Quantitative Type theory (QTT) on which idris2 is based.</li>
 <li>A concept apparently not there in idris1??</li>
 </ul>
 <p>Values:</p>
@@ -118,23 +107,18 @@ based.</li>
 <li>No multiplicity annotation =&gt; unrestricted</li>
 <li>Implicit argument =&gt; 0</li>
 </ul>
-<p>Fun fact: Following is a function that cannot be realized as it
-requires two instances of <code>a</code> but only 1 is allowed:</p>
+<p>Fun fact: Following is a function that cannot be realized as it requires two instances of <code>a</code> but only 1 is allowed:</p>
 <ul>
 <li>duplicate : (1 x:a) -&gt; (a, a)</li>
 </ul>
-<p><a
-href="https://idris2.readthedocs.io/en/latest/tutorial/multiplicities.html">https://idris2.readthedocs.io/en/latest/tutorial/multiplicities.html</a></p>
+<p><a href="https://idris2.readthedocs.io/en/latest/tutorial/multiplicities.html">https://idris2.readthedocs.io/en/latest/tutorial/multiplicities.html</a></p>
 <h2 id="repl">REPL</h2>
-<p><a
-href="https://docs.idris-lang.org/en/latest/reference/repl.html">https://docs.idris-lang.org/en/latest/reference/repl.html</a></p>
+<p><a href="https://docs.idris-lang.org/en/latest/reference/repl.html">https://docs.idris-lang.org/en/latest/reference/repl.html</a></p>
 <ul>
 <li><code>:?</code>: show help</li>
-<li><code>:import</code> / <code>:module</code>: import modules /
-packages</li>
+<li><code>:import</code> / <code>:module</code>: import modules / packages</li>
 <li><code>:t</code>: show type of a value</li>
-<li><code>:ti</code>: show type (including implicit arguments) of a
-value</li>
+<li><code>:ti</code>: show type (including implicit arguments) of a value</li>
 </ul>
 <pre><code>λΠ&gt; :doc **
 Used to build dependent pairs together with parentheses
@@ -146,10 +130,8 @@ Imported module Data.Telescope.Telescope
 </code></pre>
 <h2 id="vim-plugin-idir">vim plugin: idir</h2>
 <ul>
-<li>Plugin seems not so maintained: <a
-href="https://github.com/edwinb/idris2-vim">https://github.com/edwinb/idris2-vim</a></li>
-<li>This is for idris1 apparently: <a
-href="https://github.com/idris-hackers/idris-vim">https://github.com/idris-hackers/idris-vim</a></li>
+<li>Plugin seems not so maintained: <a href="https://github.com/edwinb/idris2-vim">https://github.com/edwinb/idris2-vim</a></li>
+<li>This is for idris1 apparently: <a href="https://github.com/idris-hackers/idris-vim">https://github.com/idris-hackers/idris-vim</a></li>
 </ul>
 <table>
 <tbody>
@@ -166,8 +148,7 @@ href="https://github.com/idris-hackers/idris-vim">https://github.com/idris-hacke
 <p>Book: Type driven development with Idirs</p>
 <ul>
 <li>Uses idris 1.</li>
-<li><a
-href="https://www.manning.com/books/type-driven-development-with-idris">https://www.manning.com/books/type-driven-development-with-idris</a></li>
+<li><a href="https://www.manning.com/books/type-driven-development-with-idris">https://www.manning.com/books/type-driven-development-with-idris</a></li>
 </ul>
 <h2 id="idris1-vs-idris2">Idris1 vs Idris2</h2>
 <ul>
@@ -180,14 +161,12 @@ href="https://www.manning.com/books/type-driven-development-with-idris">https://
 <ul>
 <li><p>An interface</p></li>
 <li><p>Part of idris2 standard library</p></li>
-<li><p><a
-href="https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Control.Category.html">https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Control.Category.html</a></p></li>
+<li><p><a href="https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Control.Category.html">https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Control.Category.html</a></p></li>
 <li><p><code>(.)</code>: compose arrows</p>
 <ul>
 <li><code>cat b c -&gt; cat a b -&gt; cat a c</code></li>
 </ul></li>
-<li><p><code>(&gt;&gt;&gt;)</code>: compose with arg order changed
-('flow')</p>
+<li><p><code>(&gt;&gt;&gt;)</code>: compose with arg order changed ('flow')</p>
 <ul>
 <li><code>cat a b -&gt; cat b c -&gt; cat a c</code></li>
 </ul></li>
@@ -195,16 +174,14 @@ href="https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Control.Cat
 <h2 id="morphisms"><code>Morphisms</code></h2>
 <ul>
 <li>A record type</li>
-<li><a
-href="https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Morphisms.html">https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Morphisms.html</a></li>
+<li><a href="https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Morphisms.html">https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Morphisms.html</a></li>
 <li>Looks like it's essentially a wrapper for a function type.</li>
 </ul>
 <pre class="idris2"><code>record Morphism : Type -&gt; Type -&gt; Type
   Mor : (a -&gt; b) -&gt; Morphism a b
 </code></pre>
 <h3 id="kleislimorphism"><code>Kleislimorphism</code></h3>
-<p><a
-href="https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Morphisms.html#Data.Morphisms.Kleislimorphism">https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Morphisms.html#Data.Morphisms.Kleislimorphism</a></p>
+<p><a href="https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Morphisms.html#Data.Morphisms.Kleislimorphism">https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Morphisms.html#Data.Morphisms.Kleislimorphism</a></p>
 <ul>
 <li>Normal morphism: <code>a -&gt; b</code></li>
 <li>Kleisli morphism: <code>Monad m =&gt; a -&gt; m b</code></li>
@@ -217,12 +194,10 @@ href="https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Morphisms
 Kleislimorphism : (Type -&gt; Type) -&gt; Type -&gt; Type -&gt; Type
 </code></pre>
 <ul>
-<li>Constructor:
-<code>Kleisli : (a -&gt; m b) -&gt; Kleislimorphism a b</code></li>
+<li>Constructor: <code>Kleisli : (a -&gt; m b) -&gt; Kleislimorphism a b</code></li>
 </ul>
 <h2 id="contravariant-functors"><code>Contravariant</code> functors</h2>
-<p><a
-href="https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Contravariant.html#Data.Contravariant.Contravariant">https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Contravariant.html#Data.Contravariant.Contravariant</a></p>
+<p><a href="https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Contravariant.html#Data.Contravariant.Contravariant">https://www.idris-lang.org/docs/idris2/0.6.0/base_docs/docs/Data.Contravariant.html#Data.Contravariant.Contravariant</a></p>
 <pre><code>instance Contravariant : (Type -&gt; Type) -&gt; Type
     -- Same as `(&gt;$&lt;)`
     contramap : (a -&gt; b) -&gt; f b -&gt; f a
@@ -274,22 +249,18 @@ namespace Tree
 </code></pre>
 <p>See:</p>
 <ul>
-<li><a
-href="https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Data.Telescope.html">https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Data.Telescope.html</a></li>
-<li><a
-href="https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Data.Telescope.Telescope.html">https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Data.Telescope.Telescope.html</a></li>
+<li><a href="https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Data.Telescope.html">https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Data.Telescope.html</a></li>
+<li><a href="https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Data.Telescope.Telescope.html">https://www.idris-lang.org/docs/idris2/0.6.0/contrib_docs/docs/Data.Telescope.Telescope.html</a></li>
 </ul>
 <p>—</p>
 <ul>
-<li><code>TypeIn : Telescope k -&gt; Type</code>: A type with
-dependencies in the context represented by the telescope</li>
+<li><code>TypeIn : Telescope k -&gt; Type</code>: A type with dependencies in the context represented by the telescope</li>
 </ul>
 <h2 id="misc">Misc</h2>
 <ul>
 <li>Katla: Tool to convert idris code to latex or html
 <ul>
-<li><a
-href="https://github.com/idris-community/katla">https://github.com/idris-community/katla</a></li>
+<li><a href="https://github.com/idris-community/katla">https://github.com/idris-community/katla</a></li>
 </ul></li>
 <li>idris2doc: generate documentation for idris as html ??</li>
 </ul>

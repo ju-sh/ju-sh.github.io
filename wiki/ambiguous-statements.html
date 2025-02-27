@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Tag: org-mode</title>
+  <title>Examples of ambigous statements</title>
   <style>
     body {
       max-width: 38rem;
@@ -32,7 +32,7 @@
 </div>
 
 <header id="title-block-header">
-<h1 class="title">Tag: org-mode</h1>
+<h1 class="title">Examples of ambigous statements</h1>
 </header>
 
 <ul>
@@ -44,8 +44,29 @@
 <hr/>
 
 <div id="content-container">
+<h2 id="comments-in-programs">Comments in programs</h2>
+<pre><code>a = 3 + 2;
+//This line is fine
+b = a++ + +a;
+// This line is erroneous
+c = a++ + +a;
+</code></pre>
+<p>Question: To which line is <code>// This line is erroneous</code> referring to?</p>
 <ul>
-<li><code>19-Feb-2022</code>: <a href="https://ju-sh.github.io/blog/org-beamer.html">Beamer slides from org file</a></li>
+<li>ie, are the comments referring to the line above or the one after it?</li>
+</ul>
+<h2 id="options">Options</h2>
+<blockquote>
+<p>Client: This is the specification, it explains everything.<br />
+The specification:</p>
+<p>Two Zero Two Four</p>
+</blockquote>
+<p>Could be any of these. Which one though?</p>
+<ul>
+<li>2024</li>
+<li>0044</li>
+<li>0024</li>
+<li>2044</li>
 </ul>
 </div>
 </body>

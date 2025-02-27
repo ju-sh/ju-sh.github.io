@@ -46,14 +46,11 @@
 <div id="content-container">
 <p>References:</p>
 <ul>
-<li><a
-href="https://wiki.haskell.org/Template_Haskell">https://wiki.haskell.org/Template_Haskell</a></li>
-<li><a
-href="https://web.archive.org/web/20170331032455/www.hyperedsoftware.com/blog/entries/first-stab-th.html">https://web.archive.org/web/20170331032455/www.hyperedsoftware.com/blog/entries/first-stab-th.html</a></li>
+<li><a href="https://wiki.haskell.org/Template_Haskell">https://wiki.haskell.org/Template_Haskell</a></li>
+<li><a href="https://web.archive.org/web/20170331032455/www.hyperedsoftware.com/blog/entries/first-stab-th.html">https://web.archive.org/web/20170331032455/www.hyperedsoftware.com/blog/entries/first-stab-th.html</a></li>
 </ul>
 <hr />
-<p><code>Q</code>, the <strong>quotation monad</strong>, seems to be the
-main thing.</p>
+<p><code>Q</code>, the <strong>quotation monad</strong>, seems to be the main thing.</p>
 <ul>
 <li>VarP: variable type??</li>
 <li>LamE: lambda</li>
@@ -71,8 +68,7 @@ main thing.</p>
 <li>Import with: <code>import Language.Haskell.TH.Syntax</code></li>
 <li><code>Lift</code> typeclass
 <ul>
-<li><code>derive Lift</code> possible with <code>DeriveLift</code> ghc
-extension</li>
+<li><code>derive Lift</code> possible with <code>DeriveLift</code> ghc extension</li>
 </ul></li>
 <li>'Lift' =&gt; quote, 'splice' =&gt; unquote</li>
 <li>Normal splicing: <code>$name</code></li>
@@ -83,17 +79,15 @@ extension</li>
 <p>(E: Expresssion, P: Pattern, L: Literal?, T: type?)</p>
 <p>ExpQ is an alias for <code>Q Exp</code></p>
 <p>Example use:</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Clash.Prelude</span> <span class="dt">Language.Haskell.TH</span><span class="op">&gt;</span> runQ [<span class="op">|</span> \x <span class="ot">-&gt;</span> <span class="dv">1</span> <span class="op">|</span>]</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">LamE</span> [<span class="dt">VarP</span> x_0] (<span class="dt">LitE</span> (<span class="dt">IntegerL</span> <span class="dv">1</span>))</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">Clash.Prelude</span> <span class="dt">Language.Haskell.TH</span><span class="op">&gt;</span> <span class="op">:</span>t it</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ot">it ::</span> <span class="dt">Language.Haskell.TH.Exp</span></span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Prelude</span><span class="op">&gt;</span> <span class="op">:</span>set <span class="op">-</span><span class="dt">XTemplateHaskell</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">Prelude</span><span class="op">&gt;</span> <span class="kw">import</span> <span class="dt">Language.Haskell.TH.Syntax</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">Prelude</span> <span class="dt">Language.Haskell.TH.Syntax</span><span class="op">&gt;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="dt">Clash.Prelude</span> <span class="dt">Language.Haskell.TH</span><span class="op">&gt;</span> runQ [<span class="op">|</span> \x <span class="ot">-&gt;</span> <span class="dv">1</span> <span class="op">|</span>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="dt">LamE</span> [<span class="dt">VarP</span> x_0] (<span class="dt">LitE</span> (<span class="dt">IntegerL</span> <span class="dv">1</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="dt">Clash.Prelude</span> <span class="dt">Language.Haskell.TH</span><span class="op">&gt;</span> <span class="op">:</span>t it</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="ot">it ::</span> <span class="dt">Language.Haskell.TH.Exp</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="dt">Prelude</span><span class="op">&gt;</span> <span class="op">:</span>set <span class="op">-</span><span class="dt">XTemplateHaskell</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="dt">Prelude</span><span class="op">&gt;</span> <span class="kw">import</span> <span class="dt">Language.Haskell.TH.Syntax</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="dt">Prelude</span> <span class="dt">Language.Haskell.TH.Syntax</span><span class="op">&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a></span></code></pre></div>
 <h2 id="quoting-with-quotes">Quoting with quotes</h2>
 <p>Non-type values can be quoted with one single quote:</p>
 <pre><code>Prelude Language.Haskell.TH.Syntax&gt; :t &#39;id
@@ -124,14 +118,12 @@ Prelude Language.Haskell.TH.Syntax&gt; &#39;Bool
 <li>InfixE: Infix expression</li>
 <li>IntegerL: Integer literal</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Prelude</span> <span class="dt">Language.Haskell.TH.Syntax</span><span class="op">&gt;</span> <span class="op">:</span>t <span class="dt">LamE</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dt">LamE</span><span class="ot"> ::</span> [<span class="dt">Pat</span>] <span class="ot">-&gt;</span> <span class="dt">Exp</span> <span class="ot">-&gt;</span> <span class="dt">Exp</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dt">Prelude</span> <span class="dt">Language.Haskell.TH.Syntax</span><span class="op">&gt;</span> <span class="op">:</span>t <span class="dt">VarP</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dt">VarP</span><span class="ot"> ::</span> <span class="dt">Name</span> <span class="ot">-&gt;</span> <span class="dt">Pat</span></span></code></pre></div>
-<p>The TemplateHaskell extension got to enable for some stuff to
-work:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="dt">Prelude</span> <span class="dt">Language.Haskell.TH.Syntax</span><span class="op">&gt;</span> <span class="op">:</span>t <span class="dt">LamE</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="dt">LamE</span><span class="ot"> ::</span> [<span class="dt">Pat</span>] <span class="ot">-&gt;</span> <span class="dt">Exp</span> <span class="ot">-&gt;</span> <span class="dt">Exp</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="dt">Prelude</span> <span class="dt">Language.Haskell.TH.Syntax</span><span class="op">&gt;</span> <span class="op">:</span>t <span class="dt">VarP</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="dt">VarP</span><span class="ot"> ::</span> <span class="dt">Name</span> <span class="ot">-&gt;</span> <span class="dt">Pat</span></span></code></pre></div>
+<p>The TemplateHaskell extension got to enable for some stuff to work:</p>
 <pre><code>Prelude Language.Haskell.TH.Syntax&gt; runQ [e| Just x |]
 &lt;interactive&gt;:20:18: error: parse error on input ‘]’
 
@@ -154,18 +146,14 @@ AppE (ConE GHC.Maybe.Just) (UnboundVarE x)
 </ul>
 <h2 id="info">Info</h2>
 <ul>
-<li>The <code>[| ... |]</code> brackets are known as 'Oxford brackets'.
-It reifies haskell (ie, concrete haskell syntax -&gt; AST)</li>
-<li>The <code>$( ... )</code> does the de-reification. In TH parlance,
-it's called <strong>splicing</strong>.
+<li>The <code>[| ... |]</code> brackets are known as 'Oxford brackets'. It reifies haskell (ie, concrete haskell syntax -&gt; AST)</li>
+<li>The <code>$( ... )</code> does the de-reification. In TH parlance, it's called <strong>splicing</strong>.
 <ul>
-<li>We can't splice a function defined in the same file??. Importing
-from other files is okay, though.</li>
+<li>We can't splice a function defined in the same file??. Importing from other files is okay, though.</li>
 </ul></li>
 </ul>
 <h2 id="some-syntax">Some Syntax</h2>
-<p>From <a
-href="https://markkarpov.com/tutorial/th.html">https://markkarpov.com/tutorial/th.html</a>:</p>
+<p>From <a href="https://markkarpov.com/tutorial/th.html">https://markkarpov.com/tutorial/th.html</a>:</p>
 <table>
 <tbody>
 <tr class="odd">
@@ -206,11 +194,10 @@ href="https://markkarpov.com/tutorial/th.html">https://markkarpov.com/tutorial/t
 </tbody>
 </table>
 <h2 id="misc">Misc</h2>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="kw">import</span> <span class="dt">Language.Haskell.TH</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> a <span class="ot">=</span> mkName <span class="st">&quot;hi&quot;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t a</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ot">a ::</span> <span class="dt">Name</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>λ<span class="op">&gt;</span> <span class="kw">import</span> <span class="dt">Language.Haskell.TH</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>λ<span class="op">&gt;</span> a <span class="ot">=</span> mkName <span class="st">&quot;hi&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t a</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="ot">a ::</span> <span class="dt">Name</span></span></code></pre></div>
 </div>
 </body>
 </html>

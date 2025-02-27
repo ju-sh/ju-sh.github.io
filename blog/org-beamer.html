@@ -36,8 +36,17 @@
 </header>
 
 <ul>
+    <li>Date created: 19-Feb-2022</li>
     </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/emacs org-mode tex.html">emacs org-mode tex</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
@@ -47,44 +56,24 @@ Making beamer presentation slides as pdf from org files in emacs..
 <hr/>
 
 <div id="content-container">
-<p>Beamer is a great way to make slides for presentations. It relieves
-us of the burden of worrying about the exact placement of elements
-present in the slides.</p>
-<p>But LaTeX commands can get in the way of the actual content while we
-are making the slides (especially when you are in a hurry to finish it).
-Org mode of emacs is a cool way to make notes in an organized way that
-lets us focus on the content. Writing the initial draft of the
-presentation in org mode, then converting it to a beamer tex file and
-finally adding finishing touches can greatly accelerate the time in
-which the presentation can be created.</p>
-<p>This post gives a broad outline of how to get started with using org
-mode for writing beamer presentations.</p>
+<p>Beamer is a great way to make slides for presentations. It relieves us of the burden of worrying about the exact placement of elements present in the slides.</p>
+<p>But LaTeX commands can get in the way of the actual content while we are making the slides (especially when you are in a hurry to finish it). Org mode of emacs is a cool way to make notes in an organized way that lets us focus on the content. Writing the initial draft of the presentation in org mode, then converting it to a beamer tex file and finally adding finishing touches can greatly accelerate the time in which the presentation can be created.</p>
+<p>This post gives a broad outline of how to get started with using org mode for writing beamer presentations.</p>
 <p>Versions of software used:</p>
 <ul>
 <li>emacs: 27.2</li>
 <li>org-mode: 9.4.4</li>
 </ul>
 <h2 id="setting-up-org-file">Setting up org file</h2>
-<p>We can use the <a
-href="https://orgmode.org/manual/Export-Settings.html">export
-options</a> to do stuff like setting the theme used for the beamer
-presentation.</p>
+<p>We can use the <a href="https://orgmode.org/manual/Export-Settings.html">export options</a> to do stuff like setting the theme used for the beamer presentation.</p>
 <p>For example, we can use the 'Berlin' theme with</p>
 <pre><code>#+LATEX_HEADER: \mode&lt;beamer&gt;{\usetheme{Berlin}}
 </code></pre>
-<p>Things we include in <code>LATEX_HEADER</code> (and
-<code>LATEX_HEADER_EXTRA</code>) will get appended to the preamble of
-the tex file.</p>
-<p><code>LATEX_HEADER</code> can we specified more than once if we got
-multiple lines to include.</p>
-<p>Note: Export option names are case insensitive.
-<code>#+LATEX_HEADER</code> and <code>#+latex_header</code> are
-same.</p>
-<p>We can use other export options like <code>TITLE</code>,
-<code>AUTHOR</code>, <code>DATE</code> whose purposes are evident from
-their names.</p>
-<p>I use something like this as a template for the presentations that I
-make in org mode for use with beamer:</p>
+<p>Things we include in <code>LATEX_HEADER</code> (and <code>LATEX_HEADER_EXTRA</code>) will get appended to the preamble of the tex file.</p>
+<p><code>LATEX_HEADER</code> can we specified more than once if we got multiple lines to include.</p>
+<p>Note: Export option names are case insensitive. <code>#+LATEX_HEADER</code> and <code>#+latex_header</code> are same.</p>
+<p>We can use other export options like <code>TITLE</code>, <code>AUTHOR</code>, <code>DATE</code> whose purposes are evident from their names.</p>
+<p>I use something like this as a template for the presentations that I make in org mode for use with beamer:</p>
 <pre><code>#+TITLE: My org-beamer presentation
 #+AUTHOR: My name
 #+EMAIL:  my@email.com
@@ -95,20 +84,12 @@ make in org mode for use with beamer:</p>
 #+LATEX_HEADER: \mode&lt;beamer&gt;{\usetheme{Berlin}}
 #+LATEX_HEADER: \AtBeginSection[]{\begin{frame}&lt;beamer&gt;\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
 </code></pre>
-<p><code>H: 2</code> was given as an option to mention the number of
-heading levels to export. Headings with level greater than 2 will be
-exported differently (I didn't want too many levels. Cleaner that
-way).</p>
+<p><code>H: 2</code> was given as an option to mention the number of heading levels to export. Headings with level greater than 2 will be exported differently (I didn't want too many levels. Cleaner that way).</p>
 <h2 id="exporting-to-pdf">Exporting to pdf</h2>
-<p>Org-export to pdf for beamer presentations is done by <a
-href="https://git.savannah.gnu.org/cgit/emacs/org-mode.git/tree/lisp/ox-beamer.el">ox-beamer</a>.
-It's the beamer backend for the org-export engine (ox stands for
-org-export, I guess). So load it by adding the following to the emacs
-config file:</p>
+<p>Org-export to pdf for beamer presentations is done by <a href="https://git.savannah.gnu.org/cgit/emacs/org-mode.git/tree/lisp/ox-beamer.el">ox-beamer</a>. It's the beamer backend for the org-export engine (ox stands for org-export, I guess). So load it by adding the following to the emacs config file:</p>
 <pre class="elisp"><code>(require &#39;ox-beamer)
 </code></pre>
-<p>Now upon <code>C-c C-e</code> for exporting from an org file, we
-should see a few option with '(Beamer)' as well.</p>
+<p>Now upon <code>C-c C-e</code> for exporting from an org file, we should see a few option with '(Beamer)' as well.</p>
 <pre><code>[l] Export to LaTeX
     [L] As LaTeX buffer           [l] As LaTeX file
     [p] As PDF file               [o] As PDF file and open
@@ -116,22 +97,13 @@ should see a few option with '(Beamer)' as well.</p>
     [P] As PDF file (Beamer)      [O] As PDF file and open (Beamer)
 </code></pre>
 <p>The Beamer options would not show up if ox-beamer isn't there.</p>
-<p>Note that the key combination to export an org file to beamer pdf is
-<code>C-c C-e l P</code> (upper case 'P') and not
-<code>C-c C-e l p</code> (which is for exporting to non-beamer pdf).</p>
-<h2 id="configuring-command-for-pdf-generation">Configuring command for
-pdf generation</h2>
-<p>The variable that has the command used for producing pdf from org
-files is <code>org-latex-pdf-process</code>. In old versions of emacs
-this was <code>org-latex-to-pdf</code> (notice the extra 'to' in the
-name)<a href="https://tex.stackexchange.com/a/385282">¹</a>. There are
-many old blog posts mentioning this older variable name. I got confused
-at first.</p>
+<p>Note that the key combination to export an org file to beamer pdf is <code>C-c C-e l P</code> (upper case 'P') and not <code>C-c C-e l p</code> (which is for exporting to non-beamer pdf).</p>
+<h2 id="configuring-command-for-pdf-generation">Configuring command for pdf generation</h2>
+<p>The variable that has the command used for producing pdf from org files is <code>org-latex-pdf-process</code>. In old versions of emacs this was <code>org-latex-to-pdf</code> (notice the extra 'to' in the name)<a href="https://tex.stackexchange.com/a/385282">¹</a>. There are many old blog posts mentioning this older variable name. I got confused at first.</p>
 <p>I'm using xelatex with latexmk:</p>
 <pre class="elisp"><code>(setq org-latex-pdf-process (list &quot;latexmk -xelatex %f&quot;))
 </code></pre>
-<p>By default the pdflatex is used. We can set xelatex as the default
-latex compiler with</p>
+<p>By default the pdflatex is used. We can set xelatex as the default latex compiler with</p>
 <pre class="elisp"><code>(setq org-latex-compiler &quot;xelatex&quot;)
 </code></pre>
 <p>and then if we export the org file as beamer latex, it will show</p>
@@ -139,24 +111,12 @@ latex compiler with</p>
 </code></pre>
 <p>at the beginning, instead of naming 'pdflatex'.</p>
 <h2 id="latex-classes">Latex classes</h2>
-<p><code>LATEX_CLASS</code> export option is used to choose the class
-that we would choose using <code>\documentclass</code> in the tex
-source. For me, I didn't have to specify
-<code>#+LATEX_CLASS: beamer</code> but in the output tex file it was
-showing up as <code>\documentclass[presentation]{beamer}</code>.</p>
-<p>(I tried using <code>#+LATEX_CLASS: report</code> and the tex file
-got <code>\documentclass[11pt]{report}</code>.)</p>
-<p>We can make our own latex class to control how our org file's
-contents get inserted into the corresponding latex file.</p>
-<p>The name of such custom-made latex classes should be included in the
-<code>org-latex-classes</code> variable before using it with
-<code>LATEX_CLASS</code>. <a
-href="https://orgmode.org/manual/LaTeX-header-and-sectioning.html">⁴</a></p>
-<p>'beamer' is defined as a latex class that is added to
-<code>org-latex-classes</code> by ox-beamer itself. <a
-href="https://git.savannah.gnu.org/cgit/emacs/org-mode.git/tree/lisp/ox-beamer.el?h=release_9.4.4#n37">⁶</a></p>
-<p>Current value of <code>org-latex-classes</code> can be found out like
-any other variable in emacs. Following are two ways:</p>
+<p><code>LATEX_CLASS</code> export option is used to choose the class that we would choose using <code>\documentclass</code> in the tex source. For me, I didn't have to specify <code>#+LATEX_CLASS: beamer</code> but in the output tex file it was showing up as <code>\documentclass[presentation]{beamer}</code>.</p>
+<p>(I tried using <code>#+LATEX_CLASS: report</code> and the tex file got <code>\documentclass[11pt]{report}</code>.)</p>
+<p>We can make our own latex class to control how our org file's contents get inserted into the corresponding latex file.</p>
+<p>The name of such custom-made latex classes should be included in the <code>org-latex-classes</code> variable before using it with <code>LATEX_CLASS</code>. <a href="https://orgmode.org/manual/LaTeX-header-and-sectioning.html">⁴</a></p>
+<p>'beamer' is defined as a latex class that is added to <code>org-latex-classes</code> by ox-beamer itself. <a href="https://git.savannah.gnu.org/cgit/emacs/org-mode.git/tree/lisp/ox-beamer.el?h=release_9.4.4#n37">⁶</a></p>
+<p>Current value of <code>org-latex-classes</code> can be found out like any other variable in emacs. Following are two ways:</p>
 <ul>
 <li><code>M-x describe-variable org-latex-classes</code></li>
 <li><code>C-h v org-latex-classes</code></li>
@@ -171,21 +131,13 @@ any other variable in emacs. Following are two ways:</p>
     (&quot;\\subsection{%s}&quot; . &quot;\\subsection*{%s}&quot;)
     (&quot;\\subsubsection{%s}&quot; . &quot;\\subsubsection*{%s}&quot;))))
 </code></pre>
-<p>Here, contents of <code>[DEFAULT-PACKAGES]</code>,
-<code>[PACKAGES]</code> are determined by
-<code>org-latex-default-packages-alist</code>,
-<code>org-latex-packages-alist</code> respectively.</p>
-<p>The last three lines specify how to treat heading levels 1,2 and 3
-respectively.</p>
+<p>Here, contents of <code>[DEFAULT-PACKAGES]</code>, <code>[PACKAGES]</code> are determined by <code>org-latex-default-packages-alist</code>, <code>org-latex-packages-alist</code> respectively.</p>
+<p>The last three lines specify how to treat heading levels 1,2 and 3 respectively.</p>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://orgmode.org/worg/exporters/beamer/tutorial.html"><a
-href="https://orgmode.org/worg/exporters/beamer/tutorial.html">https://orgmode.org/worg/exporters/beamer/tutorial.html</a></a></li>
-<li><a
-href="https://orgmode.org/manual/LaTeX-header-and-sectioning.html"><a
-href="https://orgmode.org/manual/LaTeX-header-and-sectioning.html">https://orgmode.org/manual/LaTeX-header-and-sectioning.html</a></a></li>
-<li><a href="https://orgmode.org/manual/Export-Settings.html"><a
-href="https://orgmode.org/manual/Export-Settings.html">https://orgmode.org/manual/Export-Settings.html</a></a></li>
+<li><a href="https://orgmode.org/worg/exporters/beamer/tutorial.html"><a href="https://orgmode.org/worg/exporters/beamer/tutorial.html">https://orgmode.org/worg/exporters/beamer/tutorial.html</a></a></li>
+<li><a href="https://orgmode.org/manual/LaTeX-header-and-sectioning.html"><a href="https://orgmode.org/manual/LaTeX-header-and-sectioning.html">https://orgmode.org/manual/LaTeX-header-and-sectioning.html</a></a></li>
+<li><a href="https://orgmode.org/manual/Export-Settings.html"><a href="https://orgmode.org/manual/Export-Settings.html">https://orgmode.org/manual/Export-Settings.html</a></a></li>
 </ul>
 </div>
 </body>

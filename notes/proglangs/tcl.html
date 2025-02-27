@@ -47,8 +47,7 @@
 <ul>
 <li><p>Originally seemed to have meant 'Tool Command Language'.</p></li>
 <li><p>Popular with EDA tools</p></li>
-<li><p><a
-href="https://wiki.tcl-lang.org/page/Tcl+Tutorial+Lesson+0">https://wiki.tcl-lang.org/page/Tcl+Tutorial+Lesson+0</a></p></li>
+<li><p><a href="https://wiki.tcl-lang.org/page/Tcl+Tutorial+Lesson+0">https://wiki.tcl-lang.org/page/Tcl+Tutorial+Lesson+0</a></p></li>
 <li><p>tclsh: a simple tcl interpreter</p></li>
 </ul>
 <h2 id="comments">Comments</h2>
@@ -56,127 +55,102 @@ href="https://wiki.tcl-lang.org/page/Tcl+Tutorial+Lesson+0">https://wiki.tcl-lan
 <li>Starts with <code>#</code>.</li>
 <li>Hacky way to have multi-line comment also possible.</li>
 </ul>
-<p><a
-href="https://wiki.tcl-lang.org/page/comment">https://wiki.tcl-lang.org/page/comment</a></p>
+<p><a href="https://wiki.tcl-lang.org/page/comment">https://wiki.tcl-lang.org/page/comment</a></p>
 <h2 id="file-operations">File operations</h2>
 <ul>
-<li>Delete a file (non-existant file won't cause error):
-<code>file delete file1 file2</code>
+<li>Delete a file (non-existant file won't cause error): <code>file delete file1 file2</code>
 <ul>
-<li><a
-href="https://stackoverflow.com/questions/65260147/tcl-delete-file">https://stackoverflow.com/questions/65260147/tcl-delete-file</a></li>
+<li><a href="https://stackoverflow.com/questions/65260147/tcl-delete-file">https://stackoverflow.com/questions/65260147/tcl-delete-file</a></li>
 </ul></li>
-<li>Delete a directory:
-<code>file delete -force &lt;dirname&gt;</code></li>
+<li>Delete a directory: <code>file delete -force &lt;dirname&gt;</code></li>
 </ul>
 <h2 id="command-line-arguments">Command line arguments</h2>
-<p><a
-href="https://stackoverflow.com/questions/24376421/passing-arguments-from-command-line-into-a-tcl-script">https://stackoverflow.com/questions/24376421/passing-arguments-from-command-line-into-a-tcl-script</a></p>
+<p><a href="https://stackoverflow.com/questions/24376421/passing-arguments-from-command-line-into-a-tcl-script">https://stackoverflow.com/questions/24376421/passing-arguments-from-command-line-into-a-tcl-script</a></p>
 <ul>
 <li><p><code>argc</code>: number of command line arguments</p></li>
 <li><p><code>argv</code>: command line arguments</p>
 <ul>
 <li>first argument: <code>lindex $argv 0</code></li>
 </ul></li>
-<li><p><code>argv0</code>: name of script (as in
-<code>$argv0</code>)</p></li>
+<li><p><code>argv0</code>: name of script (as in <code>$argv0</code>)</p></li>
 <li><p>indexing a list: <code>lindex</code></p></li>
 </ul>
 <h2 id="printing-puts">Printing (<code>puts</code>)</h2>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode tcl"><code class="sourceCode tcl"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A newline is added by default</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>% <span class="kw">puts</span> <span class="st">&quot;hello world&quot;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>hello world</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Use -nonewline to skip the new line</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>% <span class="kw">puts</span><span class="ot"> -nonewline</span> <span class="st">&quot;hello world&quot;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>hello world%</span></code></pre></div>
-<p>See: <a
-href="https://wiki.tcl-lang.org/page/Tcl+cheat+sheet">https://wiki.tcl-lang.org/page/Tcl+cheat+sheet</a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode tcl"><code class="sourceCode tcl"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co"># A newline is added by default</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>% <span class="kw">puts</span> <span class="st">&quot;hello world&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>hello world</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="co"># Use -nonewline to skip the new line</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>% <span class="kw">puts</span><span class="ot"> -nonewline</span> <span class="st">&quot;hello world&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>hello world%</span></code></pre></div>
+<p>See: <a href="https://wiki.tcl-lang.org/page/Tcl+cheat+sheet">https://wiki.tcl-lang.org/page/Tcl+cheat+sheet</a></p>
 <h2 id="procedures-proc">Procedures (<code>proc</code>)</h2>
 <p>This is how new commands are made in tcl.</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode tcl"><code class="sourceCode tcl"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> say_hello <span class="kw">{}</span> <span class="kw">{</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">puts</span> <span class="st">&quot;Hello!&quot;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>% say_hello</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>Hello!</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode tcl"><code class="sourceCode tcl"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">proc</span> say_hello <span class="kw">{}</span> <span class="kw">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  <span class="kw">puts</span> <span class="st">&quot;Hello!&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="kw">}</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>% say_hello</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>Hello!</span></code></pre></div>
 <p>Or with an argument:</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode tcl"><code class="sourceCode tcl"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> say_hello <span class="ot">name</span> <span class="kw">{</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">puts</span> <span class="st">&quot;Hello </span><span class="dt">$</span><span class="st">name!&quot;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>% say_hello <span class="st">&quot;Jack&quot;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>Hello Jack!</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode tcl"><code class="sourceCode tcl"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">proc</span> say_hello <span class="ot">name</span> <span class="kw">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>  <span class="kw">puts</span> <span class="st">&quot;Hello </span><span class="dt">$</span><span class="st">name!&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="kw">}</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>% say_hello <span class="st">&quot;Jack&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>Hello Jack!</span></code></pre></div>
 <p>Or with multiple arguments:</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode tcl"><code class="sourceCode tcl"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> say_hello <span class="kw">{</span>fname lname<span class="kw">}</span> <span class="kw">{</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">puts</span> <span class="st">&quot;Hello </span><span class="dt">$</span><span class="st">fname </span><span class="dt">$</span><span class="st">lname!&quot;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>% say_hello <span class="st">&quot;Jack&quot;</span> <span class="st">&quot;Sparrow&quot;</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>Hello Jack Sparrow!</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode tcl"><code class="sourceCode tcl"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">proc</span> say_hello <span class="kw">{</span>fname lname<span class="kw">}</span> <span class="kw">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  <span class="kw">puts</span> <span class="st">&quot;Hello </span><span class="dt">$</span><span class="st">fname </span><span class="dt">$</span><span class="st">lname!&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="kw">}</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>% say_hello <span class="st">&quot;Jack&quot;</span> <span class="st">&quot;Sparrow&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>Hello Jack Sparrow!</span></code></pre></div>
 <p>See:</p>
 <ul>
-<li><a
-href="https://www.gibbard.me/tcl_script_cheatsheet/">https://www.gibbard.me/tcl_script_cheatsheet/</a></li>
-<li><a
-href="https://wiki.tcl-lang.org/page/Tcl+Tutorial+Lesson+11">https://wiki.tcl-lang.org/page/Tcl+Tutorial+Lesson+11</a></li>
+<li><a href="https://www.gibbard.me/tcl_script_cheatsheet/">https://www.gibbard.me/tcl_script_cheatsheet/</a></li>
+<li><a href="https://wiki.tcl-lang.org/page/Tcl+Tutorial+Lesson+11">https://wiki.tcl-lang.org/page/Tcl+Tutorial+Lesson+11</a></li>
 </ul>
 <h2 id="xilinix-vivado">Xilinix Vivado</h2>
 <ul>
-<li>Launch (no gui, but with tcl prompt):
-<code>vivado -mode tcl</code></li>
-<li>launch in batch mode (no gui, no tcl prompt):
-<code>vivado -mode batch -source filename.tcl</code></li>
+<li>Launch (no gui, but with tcl prompt): <code>vivado -mode tcl</code></li>
+<li>launch in batch mode (no gui, no tcl prompt): <code>vivado -mode batch -source filename.tcl</code></li>
 <li>tcl console:
 <ul>
 <li><code>start_gui</code></li>
 <li><code>stop_gui</code></li>
 </ul></li>
-<li><a
-href="https://www.adiuvoengineering.com/post/microzed-chronicles-scripting-vivado">https://www.adiuvoengineering.com/post/microzed-chronicles-scripting-vivado</a></li>
-<li><a
-href="https://byu-cpe.github.io/ComputingBootCamp/tutorials/vivado_tcl/">https://byu-cpe.github.io/ComputingBootCamp/tutorials/vivado_tcl/</a></li>
-<li><a
-href="https://support.xilinx.com/s/question/0D52E00006jDbmJSAS/synthesis-and-implementation-from-command-line?language=en_US">https://support.xilinx.com/s/question/0D52E00006jDbmJSAS/synthesis-and-implementation-from-command-line?language=en_US</a></li>
-<li><a
-href="https://support.xilinx.com/s/question/0D52E00006hpiWYSAY/runing-synthesis-using-tcl?language=en_US">https://support.xilinx.com/s/question/0D52E00006hpiWYSAY/runing-synthesis-using-tcl?language=en_US</a></li>
+<li><a href="https://www.adiuvoengineering.com/post/microzed-chronicles-scripting-vivado">https://www.adiuvoengineering.com/post/microzed-chronicles-scripting-vivado</a></li>
+<li><a href="https://byu-cpe.github.io/ComputingBootCamp/tutorials/vivado_tcl/">https://byu-cpe.github.io/ComputingBootCamp/tutorials/vivado_tcl/</a></li>
+<li><a href="https://support.xilinx.com/s/question/0D52E00006jDbmJSAS/synthesis-and-implementation-from-command-line?language=en_US">https://support.xilinx.com/s/question/0D52E00006jDbmJSAS/synthesis-and-implementation-from-command-line?language=en_US</a></li>
+<li><a href="https://support.xilinx.com/s/question/0D52E00006hpiWYSAY/runing-synthesis-using-tcl?language=en_US">https://support.xilinx.com/s/question/0D52E00006hpiWYSAY/runing-synthesis-using-tcl?language=en_US</a></li>
 <li>vivado design suite tcl command reference guide</li>
-<li><a
-href="https://github.com/byu-cpe/BYU-Computing-Tutorials/wiki/TclVivado">https://github.com/byu-cpe/BYU-Computing-Tutorials/wiki/TclVivado</a></li>
-<li>An official tcl vivado reference guide: <a
-href="https://docs.amd.com/v/u/2019.2-English/ug835-vivado-tcl-commands">https://docs.amd.com/v/u/2019.2-English/ug835-vivado-tcl-commands</a></li>
+<li><a href="https://github.com/byu-cpe/BYU-Computing-Tutorials/wiki/TclVivado">https://github.com/byu-cpe/BYU-Computing-Tutorials/wiki/TclVivado</a></li>
+<li>An official tcl vivado reference guide: <a href="https://docs.amd.com/v/u/2019.2-English/ug835-vivado-tcl-commands">https://docs.amd.com/v/u/2019.2-English/ug835-vivado-tcl-commands</a></li>
 </ul>
 <p>—</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode tcl"><code class="sourceCode tcl"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># https://github.com/ATaylorCEngFIET/mz_428/blob/master/project/project-flow.tcl</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># https://www.adiuvoengineering.com/post/microzed-chronicles-scripting-vivado</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># start_gui</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>create_project hello /media/julinusername/zwei/data/vivado_projs/hello<span class="ot"> -part</span> xc7k160tffv676<span class="dv">-1</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>add_files<span class="ot"> -norecurse</span> /home/julinusername/verilog/Demo.topEntity/topEntity.v</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>set_property top topEntity <span class="kw">[</span>current_fileset<span class="kw">]</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>update_compile_order<span class="ot"> -fileset</span> sources_1</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>launch_runs synth_1<span class="ot"> -jobs</span> <span class="dv">8</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>wait_on_run synth_1</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>launch_runs impl_1<span class="ot"> -jobs</span> <span class="dv">8</span><span class="ot"> -to_step</span> write_bitstream</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>wait_on_run impl_1</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode tcl"><code class="sourceCode tcl"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="co"># https://github.com/ATaylorCEngFIET/mz_428/blob/master/project/project-flow.tcl</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="co"># https://www.adiuvoengineering.com/post/microzed-chronicles-scripting-vivado</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="co"># start_gui</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>create_project hello /media/julinusername/zwei/data/vivado_projs/hello<span class="ot"> -part</span> xc7k160tffv676<span class="dv">-1</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>add_files<span class="ot"> -norecurse</span> /home/julinusername/verilog/Demo.topEntity/topEntity.v</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>set_property top topEntity <span class="kw">[</span>current_fileset<span class="kw">]</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>update_compile_order<span class="ot"> -fileset</span> sources_<span class="dv">1</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a>launch_runs synth_<span class="dv">1</span><span class="ot"> -jobs</span> <span class="dv">8</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a>wait_on_run synth_<span class="dv">1</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a>launch_runs impl_<span class="dv">1</span><span class="ot"> -jobs</span> <span class="dv">8</span><span class="ot"> -to_step</span> write_bitstream</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a>wait_on_run impl_<span class="dv">1</span></span></code></pre></div>
 <h2 id="trivia">Trivia</h2>
 <ul>
 <li>stooop: a single file sourcable library
 <ul>
-<li><a
-href="https://wiki.tcl-lang.org/page/stooop">https://wiki.tcl-lang.org/page/stooop</a></li>
+<li><a href="https://wiki.tcl-lang.org/page/stooop">https://wiki.tcl-lang.org/page/stooop</a></li>
 </ul></li>
 </ul>
 <h2 id="references">References</h2>
 <ul>
-<li><a
-href="https://wiki.tcl-lang.org/page/Tcl+cheat+sheet">https://wiki.tcl-lang.org/page/Tcl+cheat+sheet</a></li>
-<li><a
-href="http://www.cheat-sheets.org/saved-copy/TclTk_quickref.pdf">http://www.cheat-sheets.org/saved-copy/TclTk_quickref.pdf</a></li>
+<li><a href="https://wiki.tcl-lang.org/page/Tcl+cheat+sheet">https://wiki.tcl-lang.org/page/Tcl+cheat+sheet</a></li>
+<li><a href="http://www.cheat-sheets.org/saved-copy/TclTk_quickref.pdf">http://www.cheat-sheets.org/saved-copy/TclTk_quickref.pdf</a></li>
 </ul>
 </div>
 </body>

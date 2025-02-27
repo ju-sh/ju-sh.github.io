@@ -44,22 +44,19 @@
 <hr/>
 
 <div id="content-container">
-<h1 id="quantifying-complexity">Quantifying complexity <span class="tag"
-data-tag-name="W1L7"><span class="smallcaps">W1L7</span></span></h1>
+<h1 id="quantifying-complexity">Quantifying complexity <span class="tag" data-tag-name="W1L7"><span class="smallcaps">W1L7</span></span></h1>
 <h2 id="big-o">Big-O</h2>
 <ul>
 <li>Upper bound (weak version)</li>
 <li>Indicates worst case complexity</li>
 </ul>
 <p>f(x) is O(g(n)) if 'after some time', g(n) dominates f(x).</p>
-<p>After some time in the sense there exists constants <code>n₀</code>
-and <code>c</code> such that</p>
+<p>After some time in the sense there exists constants <code>n₀</code> and <code>c</code> such that</p>
 <pre><code>∀n ≥ n₀,
   f(x) ≤ n₀ + c.g(n) 
 </code></pre>
 <p>The relation between f(n) and g(n) doesn't matter when n&lt;n₀.</p>
-<p>For n≥n₀, f(n) is always 'below' (with respect to y axis) c.g(n) in a
-graph plot.</p>
+<p>For n≥n₀, f(n) is always 'below' (with respect to y axis) c.g(n) in a graph plot.</p>
 <h3 id="a-small-proof">A small proof</h3>
 <p>If:</p>
 <ul>
@@ -70,8 +67,7 @@ graph plot.</p>
 <ul>
 <li>f₁ + f₂ ≤ O( max(g₁, g₂) )</li>
 </ul>
-<p>ie, the least efficient phase in an algorithm determines the upper
-bound of the whole algorithm.</p>
+<p>ie, the least efficient phase in an algorithm determines the upper bound of the whole algorithm.</p>
 <p>Proof:</p>
 <p>We know that:</p>
 <ul>
@@ -109,11 +105,9 @@ means
   f(n) ≥ n₀ + c.g(n)
 </code></pre>
 <p>All sorting algorithms are Ω(n.logn)</p>
-<p>No algorithm can do better (at least not on a classical
-computer).</p>
+<p>No algorithm can do better (at least not on a classical computer).</p>
 <h2 id="θ-tight-bound">Θ: Tight bound</h2>
-<p>Algorithm with Θ bound found means asymptotically most efficient
-found! Because we can't do any better. It's a tight bound.</p>
+<p>Algorithm with Θ bound found means asymptotically most efficient found! Because we can't do any better. It's a tight bound.</p>
 <pre><code>f = Θ(g)
 
 means
@@ -125,23 +119,20 @@ means
 <ul>
 <li>n(n-1)/2 is Θ(n²)</li>
 </ul>
-<h1 id="analysis-of-merge-sort">Analysis of merge sort <span class="tag"
-data-tag-name="W2L6"><span class="smallcaps">W2L6</span></span></h1>
+<h1 id="analysis-of-merge-sort">Analysis of merge sort <span class="tag" data-tag-name="W2L6"><span class="smallcaps">W2L6</span></span></h1>
 <p>Merge operation:</p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Merges two lists</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Input lists are assumed to be sorted</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ot">merge ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>merge l [] <span class="ot">=</span> l</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>merge [] l <span class="ot">=</span> l</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>merge l1<span class="op">@</span>(a<span class="op">:</span>aa) l2<span class="op">@</span>(b<span class="op">:</span>bb)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> a <span class="op">&lt;</span> b <span class="ot">=</span> a <span class="op">:</span> (merge aa l2)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> b <span class="op">:</span> (merge l1 bb)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> merge [<span class="dv">11</span>,<span class="dv">22</span>,<span class="dv">33</span>] [<span class="dv">12</span>,<span class="dv">21</span>,<span class="dv">30</span>]  </span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- [11,12,21,22,30,33]</span></span></code></pre></div>
-<p>If <code>length l1 == n</code> and <code>length l2 == m</code>, then
-max number of steps = <code>m + n</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="co">-- | Merges two lists</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="co">-- Input lists are assumed to be sorted</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="ot">merge ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>merge l [] <span class="ot">=</span> l</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>merge [] l <span class="ot">=</span> l</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>merge l1<span class="op">@</span>(a<span class="op">:</span>aa) l2<span class="op">@</span>(b<span class="op">:</span>bb)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>  <span class="op">|</span> a <span class="op">&lt;</span> b <span class="ot">=</span> a <span class="op">:</span> (merge aa l2)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> b <span class="op">:</span> (merge l1 bb)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>a <span class="ot">=</span> merge [<span class="dv">11</span>,<span class="dv">22</span>,<span class="dv">33</span>] [<span class="dv">12</span>,<span class="dv">21</span>,<span class="dv">30</span>]  </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a><span class="co">-- [11,12,21,22,30,33]</span></span></code></pre></div>
+<p>If <code>length l1 == n</code> and <code>length l2 == m</code>, then max number of steps = <code>m + n</code></p>
 <p>Obviously,</p>
 <pre><code>   n+m ≤ 2*max(n,m)
 =&gt; n+m = O(max(n,m))
@@ -157,8 +148,7 @@ max number of steps = <code>m + n</code></p>
           v       
   2 instances of same problems but with input size halved
 </code></pre>
-<p>For simpler calculation, assume <code>n=2ᵏ</code> for some
-<code>k</code>.</p>
+<p>For simpler calculation, assume <code>n=2ᵏ</code> for some <code>k</code>.</p>
 <pre><code>T(1) = 1   -- Only one element =&gt; element already sorted
 T(n) = 2T(n/2) + n
      = 2[2T(n/4) + (n/2)] + n       = 2²T(n/2²) + 2n
@@ -167,84 +157,74 @@ T(n) = 2T(n/2) + n
      =  ....     
      = 2ʲT(n/2ʲ) + jn
 </code></pre>
-<h2 id="list-difference"><span class="todo TODO">TODO</span> List
-difference</h2>
+<h2 id="list-difference"><span class="todo TODO">TODO</span> List difference</h2>
 <p>Incomplete..</p>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- hand-rolled `elem`</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ot">myElem ::</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>myElem a (x<span class="op">:</span>xs)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> a<span class="op">==</span>x <span class="ot">=</span> <span class="dt">True</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> myElem a xs</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>myElem _ [] <span class="ot">=</span> <span class="dt">False</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Find &#39;difference&#39; between two lists</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="ot">listDiff ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]  </span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>listDiff (x<span class="op">:</span>xs) ys</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> myElem x ys <span class="ot">=</span> listDiff xs ys</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> x<span class="op">:</span>listDiff xs ys</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>listDiff xs _ <span class="ot">=</span> xs</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">--listDiff xs [] = xs</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">--listDiff [] ys = []</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> listDiff [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>] [<span class="dv">2</span>,<span class="dv">3</span>]  </span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]</span></code></pre></div>
-<h2 id="merge-unique"><span class="todo TODO">TODO</span> Merge
-unique</h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="co">-- hand-rolled `elem`</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="ot">myElem ::</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>myElem a (x<span class="op">:</span>xs)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>  <span class="op">|</span> a<span class="op">==</span>x <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> myElem a xs</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>myElem _ [] <span class="ot">=</span> <span class="dt">False</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a><span class="co">-- | Find &#39;difference&#39; between two lists</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a><span class="ot">listDiff ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]  </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a>listDiff (x<span class="op">:</span>xs) ys</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a>  <span class="op">|</span> myElem x ys <span class="ot">=</span> listDiff xs ys</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a>  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> x<span class="op">:</span>listDiff xs ys</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a>listDiff xs _ <span class="ot">=</span> xs</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a><span class="co">--listDiff xs [] = xs</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true"></a><span class="co">--listDiff [] ys = []</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true"></a>λ<span class="op">&gt;</span> listDiff [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>] [<span class="dv">2</span>,<span class="dv">3</span>]  </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true"></a>[<span class="dv">1</span>]</span></code></pre></div>
+<h2 id="merge-unique"><span class="todo TODO">TODO</span> Merge unique</h2>
 <p>Doesn't work…</p>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Merge, but elements of result should all be unique</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ot">mergeUniq ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>mergeUniq l1<span class="op">@</span>(x<span class="op">:</span>xs) l2<span class="op">@</span>(y<span class="op">:</span>ys)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> x<span class="op">&lt;</span>y <span class="ot">=</span> x<span class="op">:</span>mergeUniq xs l2</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> x<span class="op">==</span>y <span class="ot">=</span> mergeUniq xs ys</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> x<span class="op">&gt;</span>y <span class="ot">=</span> y<span class="op">:</span>mergeUniq l1 ys</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>mergeUniq [] l <span class="ot">=</span> l</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>mergeUniq l [] <span class="ot">=</span> l</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> mergeUniq [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>] [<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>]  </span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="co">-- | Merge, but elements of result should all be unique</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="ot">mergeUniq ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>mergeUniq l1<span class="op">@</span>(x<span class="op">:</span>xs) l2<span class="op">@</span>(y<span class="op">:</span>ys)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>  <span class="op">|</span> x<span class="op">&lt;</span>y <span class="ot">=</span> x<span class="op">:</span>mergeUniq xs l2</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a>  <span class="op">|</span> x<span class="op">==</span>y <span class="ot">=</span> mergeUniq xs ys</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a>  <span class="op">|</span> x<span class="op">&gt;</span>y <span class="ot">=</span> y<span class="op">:</span>mergeUniq l1 ys</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a>mergeUniq [] l <span class="ot">=</span> l</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a>mergeUniq l [] <span class="ot">=</span> l</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true"></a>a <span class="ot">=</span> mergeUniq [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>] [<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>]  </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true"></a>[<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>]</span></code></pre></div>
 <h2 id="list-intersection">List intersection</h2>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Find common elements of two lists</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ot">intersect ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>intersect (x<span class="op">:</span>xs) l2<span class="op">@</span>(y<span class="op">:</span>ys)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> x<span class="op">&lt;</span>y <span class="ot">=</span> intersect xs l2</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> x<span class="op">==</span>y <span class="ot">=</span> x<span class="op">:</span>intersect xs ys</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> intersect xs ys</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>intersect [] _ <span class="ot">=</span> []</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>intersect _ [] <span class="ot">=</span> []</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> intersect [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>] [<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]  </span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,<span class="dv">3</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="co">-- | Find common elements of two lists</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="ot">intersect ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>intersect (x<span class="op">:</span>xs) l2<span class="op">@</span>(y<span class="op">:</span>ys)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a>  <span class="op">|</span> x<span class="op">&lt;</span>y <span class="ot">=</span> intersect xs l2</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>  <span class="op">|</span> x<span class="op">==</span>y <span class="ot">=</span> x<span class="op">:</span>intersect xs ys</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a>  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> intersect xs ys</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>intersect [] _ <span class="ot">=</span> []</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a>intersect _ [] <span class="ot">=</span> []</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a>λ<span class="op">&gt;</span> intersect [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>] [<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]  </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a>[<span class="dv">2</span>,<span class="dv">3</span>]</span></code></pre></div>
 <p>O(n+m)</p>
 <h1 id="quicksort">Quicksort</h1>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ot">quick ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>quick (pivot<span class="op">:</span>lst) <span class="ot">=</span> left <span class="op">++</span> [pivot] <span class="op">++</span> right</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> left <span class="ot">=</span> quick <span class="op">$</span> <span class="fu">filter</span> (\x <span class="ot">-&gt;</span> x<span class="op">&lt;</span>pivot) lst</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        right <span class="ot">=</span> quick <span class="op">$</span> <span class="fu">filter</span> (\x <span class="ot">-&gt;</span> x<span class="op">&gt;</span>pivot) lst</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>quick [] <span class="ot">=</span> []</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Data.List has</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">--   partition :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> quick [<span class="dv">11</span>,<span class="dv">102</span>,<span class="dv">13</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">10</span>]</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- [0,1,10,11,13,102]</span></span></code></pre></div>
-<h1 id="p-and-np">P and NP <span class="tag" data-tag-name="W8L7"><span
-class="smallcaps">W8L7</span></span></h1>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="ot">quick ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>quick (pivot<span class="op">:</span>lst) <span class="ot">=</span> left <span class="op">++</span> [pivot] <span class="op">++</span> right</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a>  <span class="kw">where</span> left <span class="ot">=</span> quick <span class="op">$</span> <span class="fu">filter</span> (\x <span class="ot">-&gt;</span> x<span class="op">&lt;</span>pivot) lst</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>        right <span class="ot">=</span> quick <span class="op">$</span> <span class="fu">filter</span> (\x <span class="ot">-&gt;</span> x<span class="op">&gt;</span>pivot) lst</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a>quick [] <span class="ot">=</span> []</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a><span class="co">-- Data.List has</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a><span class="co">--   partition :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a>λ<span class="op">&gt;</span> quick [<span class="dv">11</span>,<span class="dv">102</span>,<span class="dv">13</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">10</span>]</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true"></a><span class="co">-- [0,1,10,11,13,102]</span></span></code></pre></div>
+<h1 id="p-and-np">P and NP <span class="tag" data-tag-name="W8L7"><span class="smallcaps">W8L7</span></span></h1>
 <p>NP:</p>
 <ul>
 <li>'Non-deterministic polynomial' time</li>
 <li>Given a solution, its correctness can be checked in P-time</li>
-<li>Eg: Prime factorisation, SAT, travelling salesman, vertex cover,
-independent set</li>
+<li>Eg: Prime factorisation, SAT, travelling salesman, vertex cover, independent set</li>
 </ul>
-<h1 id="asymptotic-analysis">Asymptotic analysis <span class="tag"
-data-tag-name="OLD"><span class="smallcaps">OLD</span></span></h1>
+<h1 id="asymptotic-analysis">Asymptotic analysis <span class="tag" data-tag-name="OLD"><span class="smallcaps">OLD</span></span></h1>
 <p>Running time of an algorithm is usually a complex expression.</p>
 <p>It is more worthwhile to have an estimate.</p>
-<p>By considering only the highest order term of the expression for the
-running time of the algorithm.</p>
+<p>By considering only the highest order term of the expression for the running time of the algorithm.</p>
 <p>Because the highest order term dominates for large inputs.</p>
 <h1 id="conventions">Conventions</h1>
 <ul>
@@ -253,8 +233,7 @@ running time of the algorithm.</p>
 <h1 id="doubts">Doubts</h1>
 <ul>
 <li>A problem of complexity O(n!)</li>
-<li>Boolean circuits, register machines for proof of Cook-Levin
-theorem</li>
+<li>Boolean circuits, register machines for proof of Cook-Levin theorem</li>
 <li>Example of NP Hard problems</li>
 </ul>
 </div>

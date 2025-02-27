@@ -44,10 +44,7 @@
 <hr/>
 
 <div id="content-container">
-<p>Notes that I made from <a
-href="https://iitpkd.ac.in/people/ppk">Piyush sir</a>'s <a
-href="https://bitbucket.org/piyush-kurur/ppt/">Programs, proofs and
-types</a> course (Aug-Nov 2022).</p>
+<p>Notes that I made from <a href="https://iitpkd.ac.in/people/ppk">Piyush sir</a>'s <a href="https://bitbucket.org/piyush-kurur/ppt/">Programs, proofs and types</a> course (Aug-Nov 2022).</p>
 <p>Uses Coq.</p>
 <hr />
 <h2 id="type-hierarchy">Type hierarchy</h2>
@@ -66,9 +63,7 @@ bool    nat            True  False
 <p>But we can have proof of <code>False -&gt; False</code>.</p>
 <pre><code>not {A:Type} (A:Prop) := (A -&gt; False) : Prop
 </code></pre>
-<p>Because <code>False -&gt; False</code> is the type of a function
-which gives a way to produce a proof of <code>False</code> <em>if</em>
-we give it a proof of <code>False</code>.</p>
+<p>Because <code>False -&gt; False</code> is the type of a function which gives a way to produce a proof of <code>False</code> <em>if</em> we give it a proof of <code>False</code>.</p>
 <p>But we can never have <code>False</code> value.</p>
 <pre><code>A -&gt; ~~A
 A -&gt; ~(~A)
@@ -108,33 +103,22 @@ A -&gt; (A-&gt;False) -&gt; False
 <p>as in</p>
 <pre><code>λ(A:Prop). λ(x:A). λ(f:~A). f x
 </code></pre>
-<p><strong>NB</strong>: We can't prove <code
-class="verbatim">~~A -&gt; A</code></p>
+<p><strong>NB</strong>: We can't prove <code>~~A -&gt; A</code></p>
 <p>Why?</p>
 <p>(A-&gt;False) -&gt; False -&gt; A</p>
 <p>Cannot prove Godelian probl</p>
-<p><code>intuition</code> tactic would make short work of the whole
-thing in this case.</p>
+<p><code>intuition</code> tactic would make short work of the whole thing in this case.</p>
 <p>Riemann hypothesis Fermat's last theorem</p>
 <h2 id="aug-2022-1"><span class="done DONE">DONE</span> 31-Aug-2022</h2>
 <p>There may be props where law of excluded middle is provable.</p>
-<p>LEM ok in classical logic, not in intutionistic (aka constructive)
-logic.</p>
-<p>Conjectures can be made like <code>A \/ ~A</code> whose proof we
-can't have (yet).</p>
+<p>LEM ok in classical logic, not in intutionistic (aka constructive) logic.</p>
+<p>Conjectures can be made like <code>A \/ ~A</code> whose proof we can't have (yet).</p>
 <p>True, False</p>
 <p>or True (True -&gt; False) or False (False -&gt; False)</p>
 <p>:DBT: Can we make T→F? :DBT: Obj of type F→F? id</p>
 <hr />
 <p>Pausing logic, starting deptypes.</p>
-<p>:DBT: Inductive principle of bool :DBT: Inductive principle of nat
-:DBT: Would it make any difference if <code>nat:Type</code> instead of
-<code>nat:Set</code>? :DBT: Definition of CoC/CIC :DBT: Definition of
-N,Z,R in coq :DBT: Definition of complex nos? :DBT: patmat and addition
-of n in utlc :DBT: How does the fixpoint work for a simple recursive
-function in coq? ie, what's the signficance of <code>Fixpoint</code>.
-:DBT: que le paradox utlc originale :DBT: que le paradox type:type dans
-coq?</p>
+<p>:DBT: Inductive principle of bool :DBT: Inductive principle of nat :DBT: Would it make any difference if <code>nat:Type</code> instead of <code>nat:Set</code>? :DBT: Definition of CoC/CIC :DBT: Definition of N,Z,R in coq :DBT: Definition of complex nos? :DBT: patmat and addition of n in utlc :DBT: How does the fixpoint work for a simple recursive function in coq? ie, what's the signficance of <code>Fixpoint</code>. :DBT: que le paradox utlc originale :DBT: que le paradox type:type dans coq?</p>
 <pre><code>nat_rec = 
 fun P : nat -&gt; Set =&gt; nat_rect P
      : forall P : nat -&gt; Set,
@@ -162,8 +146,7 @@ end
   end.
 </code></pre>
 <p>May the types guide you.</p>
-<p><strong>NB</strong>: Getting the type right doesn't mean that the
-program is necessarily correct. Types only guide us.</p>
+<p><strong>NB</strong>: Getting the type right doesn't mean that the program is necessarily correct. Types only guide us.</p>
 <h2 id="sep-2022"><span class="done DONE">DONE</span> 02-Sep-2022</h2>
 <h3 id="implicit-arguments">Implicit arguments</h3>
 <p>Eg:</p>
@@ -172,13 +155,9 @@ Compute id1 nat 3.
 Compute id1 bool true.
 Compute id1 _ true.
 </code></pre>
-<p>:DBT: Maximal vs minimal expansion ({}, []) :DBT: Type unification
-problem. General unification problem is undecidable. First order
-unification is decidable/solvable.</p>
+<p>:DBT: Maximal vs minimal expansion ({}, []) :DBT: Type unification problem. General unification problem is undecidable. First order unification is decidable/solvable.</p>
 <p>Compose fn g.f = f(g(x))</p>
-<p>Unification variables = like 'holes' for gallina. Type inference
-based on the unification constraints. Unification variable generated for
-every hole (ie, <code>_</code>). that needs to be figured out</p>
+<p>Unification variables = like 'holes' for gallina. Type inference based on the unification constraints. Unification variable generated for every hole (ie, <code>_</code>). that needs to be figured out</p>
 <pre><code>id _ 42
 id ?A 42
 
@@ -187,17 +166,14 @@ Coq also knows that 42:nat.
 
 So ?A is nat.
 </code></pre>
-<p>Gallina type inference not as powerful as sml. But still quite
-capable.</p>
+<p>Gallina type inference not as powerful as sml. But still quite capable.</p>
 <pre><code>id _ (fun x =&gt; x+1)
 id _ (fun x:_ =&gt; x+1)
 </code></pre>
 <p>Type checking + inference</p>
-<p>:DBT: Underscore can fill non-type variables as well. <em>ou ça?</em>
-:DBT: que Arguments autre implicit args?</p>
+<p>:DBT: Underscore can fill non-type variables as well. <em>ou ça?</em> :DBT: que Arguments autre implicit args?</p>
 <h3 id="implicit-args-in-coq">Implicit args in coq</h3>
-<p>Definition id {A:Type} (a:A):A := a. Definition id [A:Type] (a:A):A
-:= a. Arguments id [A] _.</p>
+<p>Definition id {A:Type} (a:A):A := a. Definition id [A:Type] (a:A):A := a. Arguments id [A] _.</p>
 <p>id 42 is sort of internally expanded to use holes.</p>
 <blockquote>
 <p>Java: you got babysit the compiler</p>
@@ -207,21 +183,17 @@ id _ (fun x:_ =&gt; x+1)
 </blockquote>
 <p>Necessary but not that interesting.</p>
 <blockquote>
-<p>Compiler should be smart enough to figure out the 'boring' types by
-itself.</p>
+<p>Compiler should be smart enough to figure out the 'boring' types by itself.</p>
 </blockquote>
 <p>Example: compose fn</p>
-<p><code>@</code> can be used to get an explict arg version of a
-variable made with implicit args.</p>
+<p><code>@</code> can be used to get an explict arg version of a variable made with implicit args.</p>
 <p>Or just for a few implicit args like</p>
 <pre class="coq"><code>id (A:=nat)
 (* Order or args is irrelevant here (the &#39;partial&#39; way), unlike in the case of @ *)
 </code></pre>
 <p>:DBT: Templating fnal prog in cpp</p>
 <blockquote>
-<p>You could have no bugs if haven't got any code. Little code =&gt;
-less bugs So find ways to write as less as possible. But then again, you
-would need a smart enough compiler.</p>
+<p>You could have no bugs if haven't got any code. Little code =&gt; less bugs So find ways to write as less as possible. But then again, you would need a smart enough compiler.</p>
 <p>Less code -&gt; less bugs -&gt; less maintenance</p>
 </blockquote>
 <p>Implicit args gives us a chance to not write code. :)</p>
@@ -233,22 +205,19 @@ would need a smart enough compiler.</p>
 <p>id</p>
 <p>Is it</p>
 <ul>
-<li>@id _: needs only 1 arg</li>
-<li>@id: needs 2 args</li>
+<li><span class="citation" data-cites="id">@id</span> _: needs only 1 arg</li>
+<li><span class="citation" data-cites="id">@id</span>: needs 2 args</li>
 </ul>
 <p>where ls:list nat</p>
-<p>map id ls: forall {A B:Type}, (A -&gt; B) -&gt; list A -&gt; list
-B</p>
+<p>map id ls: forall {A B:Type}, (A -&gt; B) -&gt; list A -&gt; list B</p>
 <ul>
-<li>map (@id _) ls: maximal insertion. Implicit args inserted even when
-no subsequent args are given. Well sort of. That's the idea.</li>
-<li>map (@id) ls: minimal insertion. In this case, an error.
+<li>map (<span class="citation" data-cites="id">@id</span> _) ls: maximal insertion. Implicit args inserted even when no subsequent args are given. Well sort of. That's the idea.</li>
+<li>map (<span class="citation" data-cites="id">@id</span>) ls: minimal insertion. In this case, an error.
 <ul>
-<li>map (@id nat) ls: works</li>
+<li>map (<span class="citation" data-cites="id">@id</span> nat) ls: works</li>
 </ul></li>
 </ul>
-<p>:DBT: maximal vs minimal insertion when implicit and explicit args
-are mixed.</p>
+<p>:DBT: maximal vs minimal insertion when implicit and explicit args are mixed.</p>
 <pre class="coq"><code>Set Implicit Arguments.
 (* May not be a great idea *)
 </code></pre>
@@ -259,10 +228,7 @@ are mixed.</p>
 | nil : list A
 | cons : A -&gt; list A -&gt; list A.
 </code></pre>
-<p>:DBT: Why <code>Set</code> for <code>list</code> won't work? :DBT:
-Why didn't coq stdlib declare <code>A</code> as implicit in the def
-itself instead of in <code>Arguments</code>. ANS: because we need to use
-the <code>A</code> in <code>nil</code>.</p>
+<p>:DBT: Why <code>Set</code> for <code>list</code> won't work? :DBT: Why didn't coq stdlib declare <code>A</code> as implicit in the def itself instead of in <code>Arguments</code>. ANS: because we need to use the <code>A</code> in <code>nil</code>.</p>
 <p>Head function of <code>list A</code>:</p>
 <pre class="coq"><code>Definition hdList {A:Type} (l: list A) : option A :=
   match l with
@@ -270,16 +236,11 @@ the <code>A</code> in <code>nil</code>.</p>
   | cons x _ =&gt; Some x
   end.
 </code></pre>
-<p>We need to handle the <code>nil</code> case as well since Gallina
-functions need to be total. Because if it wasn't, we can prove anything.
-But in a theorem we can't leave out some branch. ie, we can skip some
-cases. Not good. :DBT: How non-total (ie, partial) function.</p>
+<p>We need to handle the <code>nil</code> case as well since Gallina functions need to be total. Because if it wasn't, we can prove anything. But in a theorem we can't leave out some branch. ie, we can skip some cases. Not good. :DBT: How non-total (ie, partial) function.</p>
 <p>Throwing exceptions is also making the function partial.</p>
-<p>:DBT: No infinite loop in coq. If infinite loop, we can prove False.
-<em>Comment</em>?</p>
+<p>:DBT: No infinite loop in coq. If infinite loop, we can prove False. <em>Comment</em>?</p>
 <p>Every coq program should terminate.</p>
-<p>Decidable type checking + infinite loops not possible in a proof
-assistant. Got to sacrifice somewhere.</p>
+<p>Decidable type checking + infinite loops not possible in a proof assistant. Got to sacrifice somewhere.</p>
 <p>Either use <code>option</code> or use a default value.</p>
 <pre class="coq"><code>Definition hdList&#39; {A:Type} (l: list A) : option A :=
   match l with
@@ -293,20 +254,14 @@ assistant. Got to sacrifice somewhere.</p>
 <p>list 2 bool =&gt;</p>
 <p>Parametrized on both bool and 2.</p>
 <p>Type depends not just on bool, but also on 2.</p>
-<p>:DBT: Don't do Import Vector. Use Require Import Vector.
-<em>Porqoui</em>? <code>Require</code> makes that file available if
-present in standard path. Doesn't make everything in it visible.
-<code>Require Import</code> makes it avaialbe <em>and</em> makes
-<em>everything in it</em> visible.</p>
-<p><code>Vector.t</code>'s definition is <em>similar</em> to tha of
-<code>list</code>.</p>
+<p>:DBT: Don't do Import Vector. Use Require Import Vector. <em>Porqoui</em>? <code>Require</code> makes that file available if present in standard path. Doesn't make everything in it visible. <code>Require Import</code> makes it avaialbe <em>and</em> makes <em>everything in it</em> visible.</p>
+<p><code>Vector.t</code>'s definition is <em>similar</em> to tha of <code>list</code>.</p>
 <pre class="coq"><code>Inductive t (A:Type) : nat -&gt; Type :=
 | nil : t A 0
 | cons : A -&gt; forall n:nat, A t n -&gt; A t (S n).
 (* Args of [cons]: A:Type (t), A (cons) n, 
 </code></pre>
-<p><code>t</code> gives <strong>type families</strong>. For every
-natural number, there's a type.</p>
+<p><code>t</code> gives <strong>type families</strong>. For every natural number, there's a type.</p>
 <ul>
 <li><code>Vector.t bool 0</code></li>
 <li><code>Vector.t bool 1</code></li>
@@ -316,10 +271,8 @@ natural number, there's a type.</p>
 <ul>
 <li>forall n:nat, A -&gt; A t n -&gt; A t (S n).</li>
 <li>A -&gt; forall n:nat, A t n -&gt; A t (S n).</li>
-<li>ANS: Not much difference really. Just being stringent. The arg order
-of <code>cons</code> would change though.</li>
-<li><strong>ANY POSSIBILITY OF ERRORS, THOUGH? ANY
-ADVANTAGE?</strong></li>
+<li>ANS: Not much difference really. Just being stringent. The arg order of <code>cons</code> would change though.</li>
+<li><strong>ANY POSSIBILITY OF ERRORS, THOUGH? ANY ADVANTAGE?</strong></li>
 </ul>
 <p><code>Vector.t</code> makes <code>head</code> possible</p>
 <pre class="coq"><code>Definition vectorHead {A:Type} {n:nat} (v:Vector.t A (S n)) : A :=
@@ -331,9 +284,7 @@ ADVANTAGE?</strong></li>
 
 Compute vectorHead (Vector.cons _ 3 _ (Vector.nil _)).
 </code></pre>
-<p>:DBT: What can be done for old coq versions to make coq believe that
-<code>vectorHead</code> is total? Newer versions can do figure it out
-for themselves.</p>
+<p>:DBT: What can be done for old coq versions to make coq believe that <code>vectorHead</code> is total? Newer versions can do figure it out for themselves.</p>
 <p><code>vectorHead</code> definition as made by coq looks like:</p>
 <pre class="coq"><code>vectorHead = 
 fun (A : Type) (n : nat) (v : Vector.t A (S n)) =&gt;
@@ -365,8 +316,7 @@ Arguments vectorHead {A}%type_scope {n}%nat_scope
 <li><code>A (Vector.t)</code></li>
 </ul></li>
 </ul>
-<p>Deptypes =&gt; can put code invariants right there in the type.
-Malformed data can be made inexpressible.</p>
+<p>Deptypes =&gt; can put code invariants right there in the type. Malformed data can be made inexpressible.</p>
 <p>A type that can have arity 1/2/3.</p>
 <pre class="coq"><code>Inductive op:Set :=
 | Plus
@@ -376,10 +326,8 @@ Inductive Exp:Set :=
 | Const: nat -&gt; Exp
 | App: op -&gt; list Expr -&gt; Expr.
 </code></pre>
-<p>Here, unary operations can be applied to n-terms. Well typed, but
-wrong.</p>
-<p>Right expressions would still be okay though. But it would allow
-wrong ones as well.</p>
+<p>Here, unary operations can be applied to n-terms. Well typed, but wrong.</p>
+<p>Right expressions would still be okay though. But it would allow wrong ones as well.</p>
 <pre class="coq"><code>Inductive op:nat-&gt;Type :=
 | Plus: op 2
 | Unary: op  1.
@@ -390,18 +338,12 @@ Inductive Exp:Set :=
     op n -&gt; Vector.t Expr n -&gt; Expr.
 </code></pre>
 <p>Now, it looks right.</p>
-<p>Without making any proof, we can be sure that malformed expression
-can't be there since they simply can't be expressed. Simply can't be
-made. If it can't be made, it can't be wrong. <em>ça va</em>?</p>
+<p>Without making any proof, we can be sure that malformed expression can't be there since they simply can't be expressed. Simply can't be made. If it can't be made, it can't be wrong. <em>ça va</em>?</p>
 <p>This illustrates one of the motiviations for having deptypes.</p>
-<p>:DBT: (Other) motivations for deptypes. :DBT: Motivation for deptypes
-from logic side.</p>
-<p>All the type checking is done at compile time. Without even running
-it.</p>
-<p>:DBT: Set vs Type. What makes a type 'Large non-propositional
-inductive type'.</p>
-<p>Either the compiler catches the error or the runtime does it.
-Compiler doing it is better for us. :-)</p>
+<p>:DBT: (Other) motivations for deptypes. :DBT: Motivation for deptypes from logic side.</p>
+<p>All the type checking is done at compile time. Without even running it.</p>
+<p>:DBT: Set vs Type. What makes a type 'Large non-propositional inductive type'.</p>
+<p>Either the compiler catches the error or the runtime does it. Compiler doing it is better for us. :-)</p>
 <h3 id="predicates">Predicates</h3>
 <p>Logic motivation of deptypes.</p>
 <p>Type families.</p>
@@ -414,15 +356,12 @@ Compiler doing it is better for us. :-)</p>
 </ul>
 <p>P is a predicate on <code>nat</code>.</p>
 <p>Its truth <em>depends on</em> the <code>nat</code> value it gets.</p>
-<p><code>P</code> is not Prop, but nat-&gt;Prop But <code>P n</code> is
-a Prop.</p>
-<p><code>P n</code> are type families. <em>Comme</em>
-<code>Vector.t A n</code> Every n is associated with a type.</p>
+<p><code>P</code> is not Prop, but nat-&gt;Prop But <code>P n</code> is a Prop.</p>
+<p><code>P n</code> are type families. <em>Comme</em> <code>Vector.t A n</code> Every n is associated with a type.</p>
 <p>:DBT: Proof of 2&lt;34.</p>
 <p>Bottom line: We need deptypes for predicates.</p>
 <h2 id="sep-2022-2"><span class="done DONE">DONE</span> 07-Sep-2022</h2>
-<p>Connection between logical world idea and computer programming
-world.</p>
+<p>Connection between logical world idea and computer programming world.</p>
 <ul>
 <li>Programming construct ↔︎ logical idea</li>
 </ul>
@@ -445,26 +384,22 @@ world.</p>
 <p>Mathematical statements correspond to types.</p>
 <p>Math stmts need not be true</p>
 <p>2&gt;5</p>
-<p>Type system designed in such a way that it should be impossible to
-create a value of type 2&gt;5.</p>
+<p>Type system designed in such a way that it should be impossible to create a value of type 2&gt;5.</p>
 <p>:DBT: Is it possible to prove that 2&gt;5 is false?</p>
 <p>Prop-Type separation useful for extraction.</p>
 <p>(Type families.</p>
 <p>eg: nat-&gt;Type</p>
 <p>for every nat, there's a type.)</p>
 <p>Predicate themselves can't be true/false. Needs a value as arg.</p>
-<p>∀x. φ(x): φ(x) is true for every single x ∃x. φ(x): φ(x) is true for
-at least one x</p>
+<p>∀x. φ(x): φ(x) is true for every single x ∃x. φ(x): φ(x) is true for at least one x</p>
 <pre><code>P: nat -&gt; Prop
 
 (forall x:nat, P x) : Prop
 (exists x:nat, P x) : Prop
 </code></pre>
 <p>How to prove a Prop involving <code>forall</code>?</p>
-<p>ie, if <code>P:nat-&gt;Prop</code>, prove <code>P 0</code>,
-<code>P 1</code>, <code>P ∞</code> :DBT: Induction??</p>
-<p>:DBT: Difference <code>forall x:nat, P x</code> and
-<code>nat -&gt; Prop</code>? Or <code>fun x:nat =&gt; P x</code>?</p>
+<p>ie, if <code>P:nat-&gt;Prop</code>, prove <code>P 0</code>, <code>P 1</code>, <code>P ∞</code> :DBT: Induction??</p>
+<p>:DBT: Difference <code>forall x:nat, P x</code> and <code>nat -&gt; Prop</code>? Or <code>fun x:nat =&gt; P x</code>?</p>
 <p>Dependently type functions. Return type depends on input.</p>
 <pre><code>f:nat -&gt; A 
 
@@ -476,20 +411,14 @@ f:forall x:nat, P x
 f 0 : P 0
 f 1 : P 1
 </code></pre>
-<p>Types are not just sets. Thanks to deptypes. :DBT: But we can
-simulate it in set theory.</p>
+<p>Types are not just sets. Thanks to deptypes. :DBT: But we can simulate it in set theory.</p>
 <pre><code>f:forall x:nat, P x
 </code></pre>
-<p>Give me a nat x, and I would give you a <em>proof</em> of
-<code>P x</code>.</p>
-<p>This is why it can be said that <code>forall x:A, B</code> is a
-generalization of <code>A -&gt; B</code>.</p>
-<p>:DBT: You wouldn't have stumbled upon this in the type world if we
-didn't look at it from the logic side. <em>Comment</em>?</p>
-<p>:DBT: Continuation. I thought it was about passing args. Apparently
-not.</p>
-<p>Constructive logic + continuation = classical logic (ie, boolean
-logic)</p>
+<p>Give me a nat x, and I would give you a <em>proof</em> of <code>P x</code>.</p>
+<p>This is why it can be said that <code>forall x:A, B</code> is a generalization of <code>A -&gt; B</code>.</p>
+<p>:DBT: You wouldn't have stumbled upon this in the type world if we didn't look at it from the logic side. <em>Comment</em>?</p>
+<p>:DBT: Continuation. I thought it was about passing args. Apparently not.</p>
+<p>Constructive logic + continuation = classical logic (ie, boolean logic)</p>
 <blockquote>
 <p>Sign of a good design.</p>
 <p>It works in places you wouldn't even have expected it to work.</p>
@@ -497,17 +426,14 @@ logic)</p>
 <p>P: A -&gt; Type</p>
 <p>if P was an identity fn.?? As in,</p>
 <p>P a = B</p>
-<p>:DBT: How is this? <code>A -&gt; B</code> same as
-<code>forall a:A, P a</code></p>
-<p>Look at function involving vector. Eg: tail function accepts
-<code>t n</code> and gives <code>t (S n)</code>.</p>
+<p>:DBT: How is this? <code>A -&gt; B</code> same as <code>forall a:A, P a</code></p>
+<p>Look at function involving vector. Eg: tail function accepts <code>t n</code> and gives <code>t (S n)</code>.</p>
 <p>:DBT: <em>Comment</em>?</p>
 <blockquote>
 <p>Polymorphism = monomorphism + deptypes</p>
 <p>where the morphism is dependent.</p>
 </blockquote>
-<p><code>list</code> in coq gives type family as well. Not over
-<code>A</code>, but over <code>Type</code> (for some Typeᵢ).</p>
+<p><code>list</code> in coq gives type family as well. Not over <code>A</code>, but over <code>Type</code> (for some Typeᵢ).</p>
 <h3 id="proof-of-exists">Proof of <code>exists</code></h3>
 <p>(forall x:nat, P x is the proof of ∀x, P x.)</p>
 <p>Got to be a constructive proof.</p>
@@ -516,10 +442,8 @@ logic)</p>
 <p>exists x:A, P x</p>
 <p>So, a proof of exists is a dependent tuple</p>
 <p>(x:A, prf:P x)</p>
-<p>Note that the type of prf depends on the <em>value</em> of x. Hence
-the dependence mentioned above.</p>
-<p>Turns out that we can make exists if we have forall and inductive
-types. :DBT: <em>Comment</em>?</p>
+<p>Note that the type of prf depends on the <em>value</em> of x. Hence the dependence mentioned above.</p>
+<p>Turns out that we can make exists if we have forall and inductive types. :DBT: <em>Comment</em>?</p>
 <p>So exists is not considered 'core' in coq.</p>
 <pre><code>Ob:Senator:Man:Human
 </code></pre>
@@ -560,8 +484,7 @@ Fixpoint eq (n m:nat) : Prop :=
 
 Arguments refl {n}.
 </code></pre>
-<p>Here, we give a way to prove eq n m when n==m. But <em>no way</em> to
-prove unequal numbers.</p>
+<p>Here, we give a way to prove eq n m when n==m. But <em>no way</em> to prove unequal numbers.</p>
 <pre><code>eq (2+3) 5
 reduction
 eq 5 5
@@ -569,9 +492,7 @@ refl.
 </code></pre>
 <p>:DBT: Both functional and inductive way have their own benefits.</p>
 <p>General equality can be proven via eqI.</p>
-<p>The function version needed to 'look within' the values (a match is
-done). And in this case works only for nat. Whereas <code>eqI</code>
-works for any type. But <code>eq</code> is not generic.</p>
+<p>The function version needed to 'look within' the values (a match is done). And in this case works only for nat. Whereas <code>eqI</code> works for any type. But <code>eq</code> is not generic.</p>
 <p>:DBT: A boolean version is also there. Find out.</p>
 <p>:DBT: Proofs that can't be proven. Gödelian world. Incomplete.</p>
 <p>The eqI or the eq that we defined got to be trusted, though.</p>
@@ -598,19 +519,15 @@ works for any type. But <code>eq</code> is not generic.</p>
 <pre class="coq"><code>Inductive eq : nat -&gt; nat -&gt; Prop :=
 | eq_refl : forall n:nat, eq n n.
 </code></pre>
-<p>eqP 2 3 is False. False is a type. If we can produce a value of type
-<code>False</code>, then we can say 2 and 3 a e same.</p>
+<p>eqP 2 3 is False. False is a type. If we can produce a value of type <code>False</code>, then we can say 2 and 3 a e same.</p>
 <p><code>eq</code> can be made more general.</p>
 <pre class="coq"><code>Inductive eq {A:Type}: A -&gt; A -&gt; Prop :=
 | eq_refl : forall a:A, eq a a.
 Arguments eq_refl {A}.
 </code></pre>
-<p><code>eqP</code> <em>looks inside</em> or inspects the values. So
-can't be general.</p>
-<p>:DBT: <code>eqP</code> is <em>mostly</em> useless. Where is it
-useful?</p>
-<p>Checking equality is a decidability problem. General eq is
-undecidable.</p>
+<p><code>eqP</code> <em>looks inside</em> or inspects the values. So can't be general.</p>
+<p>:DBT: <code>eqP</code> is <em>mostly</em> useless. Where is it useful?</p>
+<p>Checking equality is a decidability problem. General eq is undecidable.</p>
 <p>eq<sub>refl</sub> A a fun range depends on A and a.</p>
 <p>arrow is a special lesser version of <code>forall</code>.</p>
 <blockquote>
@@ -633,26 +550,20 @@ Compute eq_refl2 3.
  : eq2 3 3
 *)
 </code></pre>
-<p>Here we made the <code>a</code> a parameter instead of an index…
-Oh..</p>
+<p>Here we made the <code>a</code> a parameter instead of an index… Oh..</p>
 <p>We fixed the <code>a</code>.</p>
-<p>So, parameter available for all constructors since it's fixed in the
-type itself.</p>
-<p>:DBT: Coq's eq is like this. Any benefit in making <code>a</code>
-parameter instead of index?</p>
+<p>So, parameter available for all constructors since it's fixed in the type itself.</p>
+<p>:DBT: Coq's eq is like this. Any benefit in making <code>a</code> parameter instead of index?</p>
 <pre><code>forall a:A, pf:a=a, pf = eq_refl (A:=A) (a:=a)
 </code></pre>
 <p>(You might want this to be provable)</p>
 <p>Equality type paths in topology homotopy</p>
-<p>Types as topologies Values as points Equality =&gt; paths in
-topology</p>
+<p>Types as topologies Values as points Equality =&gt; paths in topology</p>
 <blockquote>
-<p>Rules of the game =&gt; axioms There's no one type theory. There's no
-one mathematics.</p>
+<p>Rules of the game =&gt; axioms There's no one type theory. There's no one mathematics.</p>
 </blockquote>
 <h2 id="sep-2022-4"><span class="done DONE">DONE</span> 14-Sep-2022</h2>
-<p><code>eq_refl</code> isn't the 'only way' in which we can prove
-equality.</p>
+<p><code>eq_refl</code> isn't the 'only way' in which we can prove equality.</p>
 <p>Well, not <code>eq_refl</code> <em>alone</em>.</p>
 <p>Eg: eq (n+0) n</p>
 <pre class="coq"><code>Definition rightidentity&#39; (n:nat) : n+0=n :=
@@ -661,26 +572,19 @@ equality.</p>
    (fun (n0 : nat) (IHn : n0 + 0 = n0) =&gt;
     eq_ind_r (fun n1 : nat =&gt; S n1 = S n0) eq_refl IHn) n) n.
 </code></pre>
-<p>:DBT: Why coq can see <code>0+n</code> is <code>n</code> but not
-<code>n+0</code> is <code>n</code>? I guess it's because of the way
-<code>Nat.add</code> is defined?</p>
+<p>:DBT: Why coq can see <code>0+n</code> is <code>n</code> but not <code>n+0</code> is <code>n</code>? I guess it's because of the way <code>Nat.add</code> is defined?</p>
 <p>:DBT: Unset printing notations only for a specific notation.</p>
 <p>:DBT: C'est un bon opaque, transparent exemple.</p>
-<p><code>nat_ind</code> denotes the principal of mathematical induction
-for <code>nat</code>.</p>
-<p>If we evalute this, it would end up being <code>eq_refl</code>
-nevertheless.</p>
+<p><code>nat_ind</code> denotes the principal of mathematical induction for <code>nat</code>.</p>
+<p>If we evalute this, it would end up being <code>eq_refl</code> nevertheless.</p>
 <h2 id="sep-2022-5"><span class="done DONE">DONE</span> 16-Sep-2022</h2>
 <ul>
 <li>PL world: AST</li>
 <li>Compilers world: Parse tree</li>
 </ul>
-<p>programs could be thought of as an abstract object. With many
-representations. Including string repr.</p>
-<p>(Eg: nat is an abstract idea. Binary is a repr, decimal is a
-repr)</p>
-<p>Ambiguous grammars. Eg 2 + 3 * 4 can have two parse different
-trees.</p>
+<p>programs could be thought of as an abstract object. With many representations. Including string repr.</p>
+<p>(Eg: nat is an abstract idea. Binary is a repr, decimal is a repr)</p>
+<p>Ambiguous grammars. Eg 2 + 3 * 4 can have two parse different trees.</p>
 <pre><code>Front-end:
 String -&gt; AST(src)
      |
@@ -701,45 +605,29 @@ AST(src) -&gt; String
 <h2 id="sep-2022-6"><span class="done DONE">DONE</span> 19-Sep-2022</h2>
 <p>Tactics.</p>
 <p>Tactic lang not part of TCB (trusted kernel).</p>
-<p>Term made by tactics are type checked by coq before being
-accepted.</p>
-<p>Tactic can be buggy but errors introduced by it would be caught by
-coq's type checker.</p>
+<p>Term made by tactics are type checked by coq before being accepted.</p>
+<p>Tactic can be buggy but errors introduced by it would be caught by coq's type checker.</p>
 <pre class="coq"><code>Theorem foo : 2=2.
 Proof.
   exact 42.
 </code></pre>
-<p>We used <code>exact</code> here to say that this is the proof, but
-coq's type checker caught it.</p>
-<p>We can make tactics as complicated as we want. Makes it
-convenient.</p>
+<p>We used <code>exact</code> here to say that this is the proof, but coq's type checker caught it.</p>
+<p>We can make tactics as complicated as we want. Makes it convenient.</p>
 <p>∵ coq would never accept an incorrect proof.</p>
 <p>(So, it's convenient to have ltac outside the trusted kernel.)</p>
 <p>But we trust the correctness of Gallina's type checker.</p>
-<p>Bugs in tactics doesn't affect correctness of terms, because they are
-filtered by the type checker.</p>
-<p>Tactics are sort of like automated ways to form terms. <em>C'est
-tout</em>.</p>
+<p>Bugs in tactics doesn't affect correctness of terms, because they are filtered by the type checker.</p>
+<p>Tactics are sort of like automated ways to form terms. <em>C'est tout</em>.</p>
 <p>A couple of syntactical stuff for ltac tactics:</p>
 <ul>
-<li><code>tac1. tac2</code>: tac1 applied first, bunch of goals may be
-generated, one goal is focused automatically, apply tac2 to this focused
-goal.</li>
-<li><code>tac1; tac2</code>: tac1 applied first, bunch of goals may be
-generated, apply tac2 to each of these goals.</li>
+<li><code>tac1. tac2</code>: tac1 applied first, bunch of goals may be generated, one goal is focused automatically, apply tac2 to this focused goal.</li>
+<li><code>tac1; tac2</code>: tac1 applied first, bunch of goals may be generated, apply tac2 to each of these goals.</li>
 </ul>
-<p>One almost never need to have a 'dot' at the end of an ltac
-definition.</p>
-<p><code>match</code> in ltac and gallina are different things though
-they look similar.</p>
-<p>We can even write tactics which does decision procedures and use
-ocaml if needed.</p>
-<p>Unlike Gallina's <code>match</code>, ltac <code>match</code> can
-backtrack. If one tactic fails, it backtracks and tries the next match
-pattern.</p>
-<p>Gallina's match is a declarative match whereas ltac's is sort of
-imperative ('do this if this') with side effects ∵ it manipulates
-goal</p>
+<p>One almost never need to have a 'dot' at the end of an ltac definition.</p>
+<p><code>match</code> in ltac and gallina are different things though they look similar.</p>
+<p>We can even write tactics which does decision procedures and use ocaml if needed.</p>
+<p>Unlike Gallina's <code>match</code>, ltac <code>match</code> can backtrack. If one tactic fails, it backtracks and tries the next match pattern.</p>
+<p>Gallina's match is a declarative match whereas ltac's is sort of imperative ('do this if this') with side effects ∵ it manipulates goal</p>
 <pre class="ltac"><code>match goal with
 | _ =&gt; intro.
 | patt2 =&gt; intros.
@@ -749,11 +637,9 @@ end
 <p>Syntax to match against:</p>
 <pre><code>[ hypotheses |- goal ]
 </code></pre>
-<p>Tactics are usually best kept general. More specific you make them,
-less places you can use them at.</p>
+<p>Tactics are usually best kept general. More specific you make them, less places you can use them at.</p>
 <p>:DBT: How to control name of induction hypothesis?</p>
-<p>First wrote the tactics manually, saw the patterns and made a tactic
-with those patterns =&gt; automation.</p>
+<p>First wrote the tactics manually, saw the patterns and made a tactic with those patterns =&gt; automation.</p>
 <p>:HW: Try commutativity with ltac</p>
 <h2 id="sep-2022-7"><span class="done DONE">DONE</span> 21-Sep-2022</h2>
 <p>Still Ltac.</p>
@@ -762,15 +648,11 @@ with those patterns =&gt; automation.</p>
 <hr />
 <p>Correct by construction stuff.</p>
 <p>Eg: head function of <code>Vector.t</code>.</p>
-<p>Best way to prove is being in a situation where you needn't prove
-anything. Proof is built-in to the type. The invariant is built-in. Eg:
-agda ML tree example</p>
-<p>Coq forces us to be correct (total functions) so we can't write a
-function of type</p>
+<p>Best way to prove is being in a situation where you needn't prove anything. Proof is built-in to the type. The invariant is built-in. Eg: agda ML tree example</p>
+<p>Coq forces us to be correct (total functions) so we can't write a function of type</p>
 <pre class="coq"><code>hd: list A -&gt; A
 </code></pre>
-<p><code>list A -&gt; option A</code> or
-<code>A -&gt; list A -&gt; A</code> are possible though.</p>
+<p><code>list A -&gt; option A</code> or <code>A -&gt; list A -&gt; A</code> are possible though.</p>
 <pre class="coq"><code>(* &#39;Safe&#39; variant of [hd] *)
 Definition hd {A:Type} (l:list A) : option A :=
   match l with
@@ -788,8 +670,7 @@ Definition hd {A:Type} (l:list A) : option A :=
   end.
 </code></pre>
 <p>where the <code>hd</code> always returns <code>None</code>.</p>
-<p>The spec (ie, type) doesn't completely capture the semantics of
-<code>hd</code>. 'Not correct by construction. Semantically.'</p>
+<p>The spec (ie, type) doesn't completely capture the semantics of <code>hd</code>. 'Not correct by construction. Semantically.'</p>
 <blockquote>
 <p>The spec should be simple enough.</p>
 <p>We should be able to trust the spec.</p>
@@ -797,18 +678,14 @@ Definition hd {A:Type} (l:list A) : option A :=
 <p>Could've been</p>
 <pre class="coq"><code>hd {A:Type} (l:list A) (pf: l≠nil) : A :=
 </code></pre>
-<p>This is better but still not good enough ∵ although now we are sure
-that <code>hd</code> would return a value in l, it needn't be its first
-element.</p>
-<p>And to top if off, we still got to take care of pattern match of nil.
-We know l can't be nil, but still got to handle the nil case.</p>
+<p>This is better but still not good enough ∵ although now we are sure that <code>hd</code> would return a value in l, it needn't be its first element.</p>
+<p>And to top if off, we still got to take care of pattern match of nil. We know l can't be nil, but still got to handle the nil case.</p>
 <pre class="coq"><code>Fail Definition hd2 {A:Type} (l:list A) (pf: l &lt;&gt; nil) : A :=
   match l with
   | cons x xs =&gt; x
   end.
 </code></pre>
-<p>(We could've given a default but that could get 'even more
-complicated'.)</p>
+<p>(We could've given a default but that could get 'even more complicated'.)</p>
 <p>Coq couldn't recognize the fact that l can't be nil.</p>
 <pre><code>l &lt;&gt; nil
 
@@ -817,14 +694,11 @@ or
 nil -&gt; False
 </code></pre>
 <h2 id="sep-2022-8"><span class="done DONE">DONE</span> 26-Sep-2022</h2>
-<p>If you use proof mode to write code, probably <code>Defined</code>
-would be what you need.</p>
-<p>Proof mode used to do computation =&gt; <code>Defined</code>. Not
-<code>Qed</code>. Usually.</p>
+<p>If you use proof mode to write code, probably <code>Defined</code> would be what you need.</p>
+<p>Proof mode used to do computation =&gt; <code>Defined</code>. Not <code>Qed</code>. Usually.</p>
 <hr />
 <p>Convoy pattern.</p>
-<p>Convoy of args: because index used instead of parameter in
-<code>hd</code> definition.</p>
+<p>Convoy of args: because index used instead of parameter in <code>hd</code> definition.</p>
 <h3 id="general-match">General <code>match</code></h3>
 <pre class="coq"><code>match exp as T in x0 x1 .. xn
       return ret_type
@@ -836,8 +710,7 @@ match .... end
 </code></pre>
 <p><code>ret_type</code> is depdnent on the bound variables.</p>
 <p>Dependent type.</p>
-<p>On each branch of the <code>match</code>, the return type is
-computed.</p>
+<p>On each branch of the <code>match</code>, the return type is computed.</p>
 <pre><code>match l as l0 return (l0&lt;&gt;nil -&gt; A) with
 </code></pre>
 <table>
@@ -1017,13 +890,10 @@ Definition hd_subset {A:Type} (l: {l&#39;:list A | length l&#39; &gt; 0}) : A :=
 </code></pre>
 <h2 id="sep-2022-9"><span class="done DONE">DONE</span> 28-Sep-2022</h2>
 <p>Gallina's type system is too simple??</p>
-<p>We want the trusted code base to be simple enough to be trustable.
-The type checker.</p>
+<p>We want the trusted code base to be simple enough to be trustable. The type checker.</p>
 <p>Type inference may not work always.</p>
-<p>match's <code>as</code> used to be required in earlier coq. Now it
-will figure it out.</p>
-<p><code>as</code> is needed if the discriminee is not a simple variable
-and is a complex expression.</p>
+<p>match's <code>as</code> used to be required in earlier coq. Now it will figure it out.</p>
+<p><code>as</code> is needed if the discriminee is not a simple variable and is a complex expression.</p>
 <h3 id="purpose-of-prop">Purpose of <code>Prop</code></h3>
 <pre><code>Prop      Set 
    \     /
@@ -1034,11 +904,9 @@ and is a complex expression.</p>
      ...
 </code></pre>
 <p>Proof irrelevance.</p>
-<p>For a hd taking first element by using a proof that it isn't empty,
-as far the code is concerned, the proof is irrevelant.</p>
+<p>For a hd taking first element by using a proof that it isn't empty, as far the code is concerned, the proof is irrevelant.</p>
 <blockquote>
-<p>I don't care what exactly is the proof, but I care that there is a
-proof.</p>
+<p>I don't care what exactly is the proof, but I care that there is a proof.</p>
 <p>That such a term exists.</p>
 </blockquote>
 <p>Computationally proofs cost you some resources.</p>
@@ -1062,18 +930,15 @@ Require Import Extraction.
 Extraction hd6.
 </code></pre>
 <p>This gives:</p>
-<div class="sourceCode" id="cb54"><pre
-class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">(** val hd6 : &#39;a1 list -&gt; &#39;a1 **)</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> hd6 = <span class="kw">function</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>| Nil -&gt; <span class="kw">assert</span> <span class="kw">false</span> <span class="co">(* absurd case *)</span></span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>| Cons (x, _) -&gt; x</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true"></a><span class="co">(** val hd6 : &#39;a1 list -&gt; &#39;a1 **)</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true"></a><span class="kw">let</span> hd6 = <span class="kw">function</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true"></a>| Nil -&gt; <span class="kw">assert</span> <span class="kw">false</span> <span class="co">(* absurd case *)</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true"></a>| Cons (x, _) -&gt; x</span></code></pre></div>
 <p><em>Regarde</em>, Proof terms disappeared!</p>
-<p>The <code>assert false</code> indicates that <code>hd6</code> is not
-meant to deal with empty lists.</p>
+<p>The <code>assert false</code> indicates that <code>hd6</code> is not meant to deal with empty lists.</p>
 <p>:DBT: not just for functions, also for types</p>
-<p>Likewise with <code>sig</code> (existential?? or subset type) defined
-like:</p>
+<p>Likewise with <code>sig</code> (existential?? or subset type) defined like:</p>
 <pre class="coq"><code>Inductive sig (A : Type) (P : A -&gt; Prop) : Type :=
     exist : forall x : A, P x -&gt; {x : A | P x}
 (* Subset of A where P is provable *)
@@ -1084,8 +949,7 @@ Arguments exist [A]%type_scope _%function_scope
 </code></pre>
 <p><code>sig</code> tags a value with a proof.</p>
 <p>Every <code>A:Prop</code> will be erased upon extraction.</p>
-<p>match on Prop should be Prop. So can be done only on
-<code>False</code>??</p>
+<p>match on Prop should be Prop. So can be done only on <code>False</code>??</p>
 <p>:DBT: <code>ex</code> proof in Prop world.</p>
 <pre class="coq"><code>Print ex.
 (*
@@ -1096,22 +960,13 @@ Arguments ex [A]%type_scope _%function_scope
 Arguments ex_intro [A]%type_scope _%function_scope
 *)
 </code></pre>
-<p>Keeping track of proof terms is gonna cost us. So erase it if it
-won't be used.</p>
-<h2 id="sep-2022-10"><span class="done DONE">DONE</span>
-30-Sep-2022</h2>
-<p>Prop: universe of logical propositions. proof irrelevant type. As in
-computationally irrelevant.</p>
-<p>Used to check correctness at compile time. But irrelevant at run
-time.</p>
-<p>64bit processor has only one type. 64bit words (ie, bits). The
-<code>int</code>, <code>bool</code>, etc are 'erased' by the
-compiler.</p>
-<p><code>match</code> on <code>Prop</code> must always return a
-<code>Prop</code>.</p>
-<p>∵ that value will depend on a <code>Prop</code> which would get
-erased later. thereby making a computationally relevant value from a
-computationally irrelevant value.</p>
+<p>Keeping track of proof terms is gonna cost us. So erase it if it won't be used.</p>
+<h2 id="sep-2022-10"><span class="done DONE">DONE</span> 30-Sep-2022</h2>
+<p>Prop: universe of logical propositions. proof irrelevant type. As in computationally irrelevant.</p>
+<p>Used to check correctness at compile time. But irrelevant at run time.</p>
+<p>64bit processor has only one type. 64bit words (ie, bits). The <code>int</code>, <code>bool</code>, etc are 'erased' by the compiler.</p>
+<p><code>match</code> on <code>Prop</code> must always return a <code>Prop</code>.</p>
+<p>∵ that value will depend on a <code>Prop</code> which would get erased later. thereby making a computationally relevant value from a computationally irrelevant value.</p>
 <p>:DBT: Can we patmat on <code>Prop</code> vals?</p>
 <pre class="coq"><code>Inductive foo:Prop:=
 | Foo1
@@ -1135,8 +990,7 @@ is not allowed on a predicate in sort Set
 because proofs can be eliminated only to build proofs.
 *)
 </code></pre>
-<p>But this Prop Type separation also means that we often have repeat
-stuff.</p>
+<p>But this Prop Type separation also means that we often have repeat stuff.</p>
 <p>For example:</p>
 <table>
 <thead>
@@ -1156,19 +1010,16 @@ stuff.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="type-with-both-type-and-prop-components">Type with both Type and
-Prop components</h3>
+<h3 id="type-with-both-type-and-prop-components">Type with both Type and Prop components</h3>
 <p>Π-types: the family of dependent types (named by Martin Löf).</p>
 <p>Eg:</p>
 <pre class="coq"><code>forall (x:A) (B:A-&gt;Prop), B x
 </code></pre>
 <blockquote>
-<p>If we have proof x of A, then we got a 'recipe' for the proof of B
-x.</p>
+<p>If we have proof x of A, then we got a 'recipe' for the proof of B x.</p>
 </blockquote>
 <p>A*B =&gt; 2 indices. 0 and 1.</p>
-<p>Π type is like big fat product type (ie, tuple). Which indexed by the
-value of a:A.</p>
+<p>Π type is like big fat product type (ie, tuple). Which indexed by the value of a:A.</p>
 <p>(This is just the intuition.)</p>
 <p>:DBT: Will this tuple be of infinite length?</p>
 <p>Eg:</p>
@@ -1181,10 +1032,8 @@ x:A
 </code></pre>
 <p>Comme un database: Student, rno, mark</p>
 <p>Stock set theory (or any set theory??) doesn't have deptypes</p>
-<p>In classical logic, we only need one of ∃ and ∀, and the other can be
-defined in terms of the other.</p>
-<p>Similar to Π-type, there is Σ-type. ie, there exists deptype
-style.</p>
+<p>In classical logic, we only need one of ∃ and ∀, and the other can be defined in terms of the other.</p>
+<p>Similar to Π-type, there is Σ-type. ie, there exists deptype style.</p>
 <pre><code>A:Type
 B:A -&gt; Prop
 
@@ -1197,11 +1046,8 @@ x:A
 <pre class="coq"><code>Inductive ex (A : Type) (P : A -&gt; Prop) : Prop :=
 | ex_intro : forall x : A, P x -&gt; exists y, P y
 </code></pre>
-<p>(don't be confused by the forall here, even when we are dealing with
-ex. It's like A -&gt; P x -&gt; exists y, P y). :DBT: From where did the
-y come from?</p>
-<p>NB: <code>forall</code> is built-in. No separate inductive for
-that.</p>
+<p>(don't be confused by the forall here, even when we are dealing with ex. It's like A -&gt; P x -&gt; exists y, P y). :DBT: From where did the y come from?</p>
+<p>NB: <code>forall</code> is built-in. No separate inductive for that.</p>
 <p>An example usage:</p>
 <pre class="coq"><code>Goal 
   exists x:nat, x &gt; 2.
@@ -1211,13 +1057,10 @@ Proof.
 Qed.
 </code></pre>
 <p>:DBT: sigma type and sum type are same?</p>
-<p>ex: sigma type. as if there is a constructor for each component of
-the disjoint sum.</p>
+<p>ex: sigma type. as if there is a constructor for each component of the disjoint sum.</p>
 <h2 id="oct-2022"><span class="done DONE">DONE</span> 07-Oct-2022</h2>
-<p>Advantage of sig over ex is that we can do patmat returning non-Prop
-with sig.</p>
-<p>sig A P is essentially A upon extraction. Because it is essentially a
-subset of A.</p>
+<p>Advantage of sig over ex is that we can do patmat returning non-Prop with sig.</p>
+<p>sig A P is essentially A upon extraction. Because it is essentially a subset of A.</p>
 <p>equivalent types but no equal.</p>
 <p>{l:list A | l &lt;&gt; nil} and {l:list A | length l &gt; 0}</p>
 <p>which is the type of non-empty lists.</p>
@@ -1252,8 +1095,7 @@ subset of A.</p>
 <p>lly,</p>
 <p>Σ</p>
 <p>P 0 + P 1 + … + P n + … (0, p₀:P 0) (1, p₁:P 1)</p>
-<p>Could <em>think</em> of the '0' in (0,p0:P 0) as a tag/'constructor'.
-These are disjoint. Independent of each other.</p>
+<p>Could <em>think</em> of the '0' in (0,p0:P 0) as a tag/'constructor'. These are disjoint. Independent of each other.</p>
 <p>'<strong>Constructor names</strong>' come from A. ie, i:A&gt;</p>
 <p>:DBT: Tagged union</p>
 <p>:INFO: exists is just a notation for ex type.</p>
@@ -1296,13 +1138,9 @@ A         B
 <li>if else</li>
 <li>left right</li>
 </ul>
-<p>So we usually make the first constructor something that would be sort
-of 'true'. Most obvious use case of this is bool.</p>
-<p>One constructor taking two args, we can directly do
-<code>let (a, b) = value</code>. Most obvious use case of this is
-tuple.</p>
-<p>:DBT: sumbool and sumor and variants of sum type.
-<em>Comment</em>?</p>
+<p>So we usually make the first constructor something that would be sort of 'true'. Most obvious use case of this is bool.</p>
+<p>One constructor taking two args, we can directly do <code>let (a, b) = value</code>. Most obvious use case of this is tuple.</p>
+<p>:DBT: sumbool and sumor and variants of sum type. <em>Comment</em>?</p>
 <h3 id="sumbool">sumbool</h3>
 <pre class="coq"><code>Fixpoint eqb (n m:nat) : bool :=
   match n, m with
@@ -1317,10 +1155,8 @@ eq_spec2 : forall n m:nat, n&lt;&gt;m -&gt; eqb n m = false
 </code></pre>
 <p>Both should hold at the same time.</p>
 <p><code>eq_dec</code> comes with proof, unlike bool.</p>
-<p><code>eq_dec nat</code> is
-<code>forall n m:nat, {x=y} + {x&lt;&gt;y}</code></p>
-<p><code>eq_dec</code> is correct by construction. Type system
-guarantees its correctness.</p>
+<p><code>eq_dec nat</code> is <code>forall n m:nat, {x=y} + {x&lt;&gt;y}</code></p>
+<p><code>eq_dec</code> is correct by construction. Type system guarantees its correctness.</p>
 <p>Extraction sumbool and you get bool.</p>
 <p>These are the two advantages of sumbool over bool.</p>
 <pre class="coq"><code>Definition fgHelper {A B C D:Prop} (f:A-&gt;C) (g:B-&gt;D)
@@ -1380,19 +1216,16 @@ is not allowed on a predicate in sort Set
 because proofs can be eliminated only to build proofs.
 *)
 </code></pre>
-<p>Had this been allowed, we would've been taking computational info
-from a Prop.</p>
+<p>Had this been allowed, we would've been taking computational info from a Prop.</p>
 <p>—</p>
 <pre class="coq"><code>forall x:T, B
 </code></pre>
 <p>is <em>similar</em> to</p>
 <pre class="coq"><code>T -&gt; B
 </code></pre>
-<p>but in the former, the type <code>B</code> depends on
-<code>x</code>.</p>
+<p>but in the former, the type <code>B</code> depends on <code>x</code>.</p>
 <p>:DBT: Comment est elim</p>
-<p>sumbool vs bool. bool <strong>boolean blindness</strong>. sumor vs
-option.</p>
+<p>sumbool vs bool. bool <strong>boolean blindness</strong>. sumor vs option.</p>
 <pre class="coq"><code>Definition sumbool2bool {A B:Prop} (x:{A} + {B}): bool :=
   match x with
   | left _ =&gt; true
@@ -1459,24 +1292,17 @@ Compute lsthd (nil).
 </code></pre>
 <p>An anecdote:</p>
 <blockquote>
-<p>If an organization offered a million dollars to the guy who writes a
-definiton for the following spec:</p>
+<p>If an organization offered a million dollars to the guy who writes a definiton for the following spec:</p>
 <pre><code>hd {A:Type} (l:list A): option A
 </code></pre>
-<p>the guy could just make <code>hd</code> return <code>None</code> at
-all times and the spec is complete. Because no proof is involved. Onus
-is on the user to prove that the list is indeed empty.</p>
+<p>the guy could just make <code>hd</code> return <code>None</code> at all times and the spec is complete. Because no proof is involved. Onus is on the user to prove that the list is indeed empty.</p>
 <p>On the other hand if the spec had been:</p>
 <pre><code>hd {A:Type} (l:list A): A + {l=nil}
 </code></pre>
-<p>the guy would have had to make <code>hd</code> more correct. Because
-if he saying that no head element is there since the list is empty, he
-would also have to produce a proof saying that the list is indeed
-empty.</p>
+<p>the guy would have had to make <code>hd</code> more correct. Because if he saying that no head element is there since the list is empty, he would also have to produce a proof saying that the list is indeed empty.</p>
 </blockquote>
 <h3 id="boolean-blindness">Boolean blindness</h3>
-<p>If you write a function returning a bool judging whether two
-<code>nat</code> values are the same like:</p>
+<p>If you write a function returning a bool judging whether two <code>nat</code> values are the same like:</p>
 <pre class="coq"><code>Fixpoint eqb (a b:nat):bool :=
   match a,b with
   | O, O =&gt; true
@@ -1484,11 +1310,8 @@ empty.</p>
   | _, _ =&gt; false
   end.
 </code></pre>
-<p>How would you prove that this function is correct? You would have to
-take this function's word for it because it offers no proof of the
-correctness of its judgement.</p>
-<p>As in if a=b, a proof saying <code>eq a b</code> or if it isn't a
-proof saying, <code>eq a b -&gt; False</code>.</p>
+<p>How would you prove that this function is correct? You would have to take this function's word for it because it offers no proof of the correctness of its judgement.</p>
+<p>As in if a=b, a proof saying <code>eq a b</code> or if it isn't a proof saying, <code>eq a b -&gt; False</code>.</p>
 <p>Compare this with:</p>
 <pre class="coq"><code>Fixpoint eqbb (a b:nat) : {a=b} + {a&lt;&gt;b}.
 refine(                                  
@@ -1505,13 +1328,10 @@ refine(
 Qed.                                     
 </code></pre>
 <p>Oops…</p>
-<p>It didn't go through <a
-href="https://stackoverflow.com/questions/66430212/theorem-induction-vs-fixpoint-destruct-in-coq">¹</a>.</p>
+<p>It didn't go through <a href="https://stackoverflow.com/questions/66430212/theorem-induction-vs-fixpoint-destruct-in-coq">¹</a>.</p>
 <pre><code>Cannot guess decreasing argument of fix.
 </code></pre>
-<p>An article by Robert Harper: <a
-href="https://existentialtype.wordpress.com/2011/03/15/boolean-blindness/">Boolean
-blindness</a></p>
+<p>An article by Robert Harper: <a href="https://existentialtype.wordpress.com/2011/03/15/boolean-blindness/">Boolean blindness</a></p>
 <h2 id="oct-2022-3"><span class="done DONE">DONE</span> 14-Oct-2022</h2>
 <pre class="coq"><code>hd : forall {A:Type} (l:list A), A + {l=nil}.
 </code></pre>
@@ -1519,39 +1339,31 @@ blindness</a></p>
 <pre class="coq"><code>hd : forall {A:Type} (l:list A), option A
 </code></pre>
 <p>the latter could trivially satisfied by giving None all the time.</p>
-<p>Purpose of a spec is to rule out invalid programs. Restricting the
-kind of programs that are acceptable.</p>
-<p>A class of undesirable programs have been rule out, but not all of
-them.</p>
+<p>Purpose of a spec is to rule out invalid programs. Restricting the kind of programs that are acceptable.</p>
+<p>A class of undesirable programs have been rule out, but not all of them.</p>
 <p>For example, the former could be satisfied by list.last.</p>
 <p>Totally complete spec could turn out to be too much work.</p>
 <ul>
 <li>sumbool is à la bool: after extraction sumbool ≡ bool</li>
 <li>sumor is à la option: after extraction sumor ≡ option</li>
 </ul>
-<p>Extraction erasure =&gt; no overhead when extracted program is
-run.</p>
+<p>Extraction erasure =&gt; no overhead when extracted program is run.</p>
 <pre class="coq"><code>eqdec (n m:nat) : {n=m} + {n&lt;&gt;m}.
 </code></pre>
-<p>is correct by construction. We can't do anything else. No leeway to
-do anything else.</p>
+<p>is correct by construction. We can't do anything else. No leeway to do anything else.</p>
 <p>Construction itself is a proof of its correctness.</p>
 <p>If we had done</p>
 <pre class="coq"><code>eqb (n m :nat ): bool
 </code></pre>
-<p>we would've to give sepearate proof proving soundness and
-completeness.</p>
+<p>we would've to give sepearate proof proving soundness and completeness.</p>
 <pre class="coq"><code>eqb_soundness (n m:nat), eqb n m = true =&gt; n = m
 eqb_completeness (n m:nat), eqb n m = false =&gt; n &lt;&gt; m
 </code></pre>
 <p>Either of these alone won't do the trick.</p>
-<p>∵ <code>eqb_soundness</code> could be made trivial if
-<code>eqb</code> always returned <code>true</code>.</p>
+<p>∵ <code>eqb_soundness</code> could be made trivial if <code>eqb</code> always returned <code>true</code>.</p>
 <h3 id="qed-vs-defined">Qed vs Defined</h3>
-<p>Defined =&gt; a simpl,etc would expand it. Exploding terms. Qed =&gt;
-Only interested in the truth value. Not gonna unravel the term.</p>
-<p>Too large proof terms expanded =&gt; could be computationally
-inefficient if we just are bothered about its truth value.</p>
+<p>Defined =&gt; a simpl,etc would expand it. Exploding terms. Qed =&gt; Only interested in the truth value. Not gonna unravel the term.</p>
+<p>Too large proof terms expanded =&gt; could be computationally inefficient if we just are bothered about its truth value.</p>
 <table>
 <tbody>
 <tr class="odd">
@@ -1566,8 +1378,7 @@ inefficient if we just are bothered about its truth value.</p>
 </table>
 <p>General advice:</p>
 <ul>
-<li>use proof mode only when you need to fill in Prop values. ie,
-computationally irrelevant terms.</li>
+<li>use proof mode only when you need to fill in Prop values. ie, computationally irrelevant terms.</li>
 <li></li>
 </ul>
 <blockquote>
@@ -1644,22 +1455,19 @@ Arguments hd1 {A}%type_scope _%list_scope
 </code></pre>
 <h2 id="oct-2022-4"><span class="done DONE">DONE</span> 17-Oct-2022</h2>
 <h3 id="sectioning-in-coq">Sectioning in coq</h3>
-<p><a
-href="https://coq.inria.fr/refman/language/core/sections.html">https://coq.inria.fr/refman/language/core/sections.html</a></p>
+<p><a href="https://coq.inria.fr/refman/language/core/sections.html">https://coq.inria.fr/refman/language/core/sections.html</a></p>
 <ul>
 <li>Context</li>
 <li>Variable</li>
 <li>Parameter</li>
 </ul>
-<p>Sectioning and module system are part of the vernacular language.
-Gallina is quite simple (∵ type checker better be simple).</p>
+<p>Sectioning and module system are part of the vernacular language. Gallina is quite simple (∵ type checker better be simple).</p>
 <p>All this code eventually boils down to Gallina.</p>
 <p>:DBT: Difference between Parameter and Variable.</p>
 <p>Few advantages:</p>
 <ul>
 <li>Can put away common arguments.</li>
-<li>coqdoc documentation. If the common args are put away commonly, we
-can give appropriate documentation.
+<li>coqdoc documentation. If the common args are put away commonly, we can give appropriate documentation.
 <ul>
 <li><code>(** docstring *)</code></li>
 </ul></li>
@@ -1692,9 +1500,7 @@ map
 <li>Can make arguments implicit as well.</li>
 <li>Can have multiple args in the same line.</li>
 <li>Context is a relatively new vernacular command.</li>
-<li>Disadvantage is that if there are multiple definitions where the
-variable is implicit for some and explicit for some, it may not be
-convenient.</li>
+<li>Disadvantage is that if there are multiple definitions where the variable is implicit for some and explicit for some, it may not be convenient.</li>
 </ul>
 <pre class="coq"><code>Section mapcontext.
   Context {A B:Type} (f:A-&gt;B).
@@ -1721,15 +1527,12 @@ where
 ?B : [ |- Type]
 *)
 </code></pre>
-<p>We cannot make <code>l</code> as well a section variable because it
-changes as <code>map</code> recurses. On the other hand, <code>f</code>
-remains constant.</p>
+<p>We cannot make <code>l</code> as well a section variable because it changes as <code>map</code> recurses. On the other hand, <code>f</code> remains constant.</p>
 <p>:DBT: This. l is an index??</p>
 <blockquote>
 <p>Set up the context to say multiple things about the same objects.</p>
 </blockquote>
-<p>Only the section arguments which were actually used would become part
-of definition.</p>
+<p>Only the section arguments which were actually used would become part of definition.</p>
 <pre class="coq"><code>  Definition singleton (a:A) := cons a nil.
   Check singleton.
   (*
@@ -1762,9 +1565,7 @@ App
 If e e1 e2: e:𝔹 and e1 e2:same type
 </code></pre>
 <h2 id="oct-2022-5"><span class="done DONE">DONE</span> 19-Oct-2022</h2>
-<p>Section doesn't always enhance readability. Sometimes it's difficult
-to figure what are the arguments needed by a function without doing a
-check on it.</p>
+<p>Section doesn't always enhance readability. Sometimes it's difficult to figure what are the arguments needed by a function without doing a check on it.</p>
 <hr />
 <p>Typed version of the toy verified compiler for a stack machine.</p>
 <ul>
@@ -1826,12 +1627,9 @@ Fixpoint expDenote {t:type} (e:exp t) : typeDenote t :=
   end.
 
 </code></pre>
-<p>Expression is correct by construction. Well typed by
-construction.</p>
-<p>Constraints are captured as additional parameters to the expression
-type.</p>
-<h3 id="maximal-vs-minimally-inserted-implicit-args">Maximal vs
-minimally inserted implicit args</h3>
+<p>Expression is correct by construction. Well typed by construction.</p>
+<p>Constraints are captured as additional parameters to the expression type.</p>
+<h3 id="maximal-vs-minimally-inserted-implicit-args">Maximal vs minimally inserted implicit args</h3>
 <ul>
 <li>Maximal: Binop =&gt; Binop _ _ _
 <ul>
@@ -1872,8 +1670,7 @@ with
 <pre class="coq"><code>match op in Binop t t t&#39;
   return typeDenote t -&gt; typeDenote t -&gt;
 </code></pre>
-<p>Higher order unification problem 2 terms got to make them of same
-type</p>
+<p>Higher order unification problem 2 terms got to make them of same type</p>
 <ul>
 <li>first order : only on terms
 <ul>
@@ -1884,23 +1681,18 @@ type</p>
 <li>generally undecidable</li>
 </ul></li>
 </ul>
-<p>:DBT: So there are cases where higher order unificaion problem is
-decidable? An example?</p>
+<p>:DBT: So there are cases where higher order unificaion problem is decidable? An example?</p>
 <p>Unification variables.</p>
-<p>Unification constraints generated. generally unsolvalbe. So give some
-hints to Gallina by means of the generalized match.</p>
+<p>Unification constraints generated. generally unsolvalbe. So give some hints to Gallina by means of the generalized match.</p>
 <p>Solve for a, b, c. which changes in each branch.</p>
 <p>TODO: read one rule of patt matching in CPDT</p>
 <h2 id="oct-2022-6"><span class="done DONE">DONE</span> 21-Oct-2022</h2>
 <p>Unification problems:</p>
 <p>unif algo of gallina will always be incomplete</p>
-<p>f(x1, y1, g(y2,y3) = f(h(a), y1, g(y2, y3)) 1st order unification ∵
-function symbols (f and g) are fixed.</p>
-<p>f(x1, y1, g(y2,y3) = g(x1, y1, g(y2, y3)) 2nd order unification ∵
-equivalence of 2 funs has to be figured out.</p>
+<p>f(x1, y1, g(y2,y3) = f(h(a), y1, g(y2, y3)) 1st order unification ∵ function symbols (f and g) are fixed.</p>
+<p>f(x1, y1, g(y2,y3) = g(x1, y1, g(y2, y3)) 2nd order unification ∵ equivalence of 2 funs has to be figured out.</p>
 <h2 id="oct-2022-7"><span class="done DONE">DONE</span> 26-Oct-2022</h2>
-<p>Shallow embedding: 'reuse' type of meta language (Gallina)
-itself.</p>
+<p>Shallow embedding: 'reuse' type of meta language (Gallina) itself.</p>
 <p>Has pros and cons.</p>
 <pre class="coq"><code>Inductive exp : Type -&gt; Type :=
 | const : forall (T:Type) (t:T), exp T.
@@ -1914,16 +1706,13 @@ Check const nat 3.
 | nil : t A 0
 | cons : forall n:nat, A -&gt; t A n -&gt; t A (S n).
 </code></pre>
-<p>Instead of length, we are interested in the types of the individual
-elements.</p>
+<p>Instead of length, we are interested in the types of the individual elements.</p>
 <p>hlist will be parameterised by a <em>list of types</em>.</p>
 <h2 id="oct-2022-8"><span class="done DONE">DONE</span> 31-Oct-2022</h2>
 <p>:DBT: Ltac tactic capable of accepting args: ANS: Yes!</p>
 <h2 id="nov-2022"><span class="done DONE">DONE</span> 02-Nov-2022</h2>
-<p>No need of <code>option stack</code> output as in the case of untyped
-stack machine. Because the types guarantee the correctness.</p>
-<p>Rules out erroneous programs. Errors like underflow, etc cannot
-happen.</p>
+<p>No need of <code>option stack</code> output as in the case of untyped stack machine. Because the types guarantee the correctness.</p>
+<p>Rules out erroneous programs. Errors like underflow, etc cannot happen.</p>
 <blockquote>
 <p>It will never execute if the input stack is of wrong type.</p>
 </blockquote>
@@ -1967,15 +1756,11 @@ Inductive instr : tstack -&gt; tstack -&gt; Type :=
 </code></pre>
 <h2 id="nov-2022-1"><span class="done DONE">DONE</span> 04-Nov-2022</h2>
 <p>Proof by reflection. A family of techniques.</p>
-<p>Reflection as in 'reflect about your thought process'. 'Look into
-yourself'. As in introspection.</p>
-<p>We have some domain A:Type, And some operations on A, and some
-properties about these operations We wanna prove some theorems about
-these.</p>
+<p>Reflection as in 'reflect about your thought process'. 'Look into yourself'. As in introspection.</p>
+<p>We have some domain A:Type, And some operations on A, and some properties about these operations We wanna prove some theorems about these.</p>
 <p>A typical example:</p>
 <p>a = b</p>
-<p>where a and b are expression over type A. Involves operations on A as
-well.</p>
+<p>where a and b are expression over type A. Involves operations on A as well.</p>
 <p>ring tactic uses proof by reflection under the hood.</p>
 <pre class="coq"><code>Require Import Arith.
 
@@ -2036,10 +1821,8 @@ Proof.
 Abort.
 </code></pre>
 <p>Automation is a reason why we go after proof by reflection.</p>
-<p>Design an inductive type that captures the expressions on which you
-need to prove the theorem.</p>
-<p>(The <code>ring</code> tactic can deal with multi-variant
-polynomials.)</p>
+<p>Design an inductive type that captures the expressions on which you need to prove the theorem.</p>
+<p>(The <code>ring</code> tactic can deal with multi-variant polynomials.)</p>
 <pre><code>               reify
    +-------------&gt;---------------+
    |                             |
@@ -2069,25 +1852,18 @@ Original                       Other type (Concrete repr)
   (Plus (Const a) (Const b))
   (Plus (Const a) (Const b))
 </code></pre>
-<p>Second component: <code>norm</code> Often a tactic? A normalization
-procedure is involved.</p>
+<p>Second component: <code>norm</code> Often a tactic? A normalization procedure is involved.</p>
 <p>Eg: (a+b)² = a² + 2ab + b²</p>
 <p>Only then can we find if two expressions are equivalent.</p>
-<p>Third component is a function that gives semantics. A denote fn. This
-does the unreification. Usually a Gallina function.</p>
+<p>Third component is a function that gives semantics. A denote fn. This does the unreification. Usually a Gallina function.</p>
 <p>Fourth step: prove correctness of normalization.</p>
 <p>ie,</p>
 <pre><code>∀p:Poly R, denote p = denote (norm p)
 </code></pre>
-<p>(norm function could've been id fn, the smemnatic correctness lemma
-would've been satisfied. But not useful..)</p>
-<p>norm: domain. equivalence classes. There may be multiple
-represenations of the same polynomial. The norm function should ideally
-map all elements in the same equivalence class to the same point (ie,
-the same normal form).</p>
+<p>(norm function could've been id fn, the smemnatic correctness lemma would've been satisfied. But not useful..)</p>
+<p>norm: domain. equivalence classes. There may be multiple represenations of the same polynomial. The norm function should ideally map all elements in the same equivalence class to the same point (ie, the same normal form).</p>
 <pre><code></code></pre>
-<p>Finally, after proving everything, we need to unreify. This has to be
-a tactic.</p>
+<p>Finally, after proving everything, we need to unreify. This has to be a tactic.</p>
 <pre class="coq"><code>Ltac ring :=
   match goal with
   | ?x = ?y =&gt;
@@ -2105,12 +1881,8 @@ a tactic.</p>
 
       (* If x and y were equivlant, LHS and RHS would end up being the same by now. Making the proof trivial. *)
 </code></pre>
-<p>:DBT: ✓ reification is usually done by ltac. Is there other way?
-Yeah, ocaml plugins. (It just got to be in the 'meta-level' where it can
-look at the terms of Gallina itself.) <code>ring</code> probably uses
-it.</p>
-<p>Proof by reflection means reify and reflect on the 'concrete
-form'.</p>
+<p>:DBT: ✓ reification is usually done by ltac. Is there other way? Yeah, ocaml plugins. (It just got to be in the 'meta-level' where it can look at the terms of Gallina itself.) <code>ring</code> probably uses it.</p>
+<p>Proof by reflection means reify and reflect on the 'concrete form'.</p>
 <p>Advantages:</p>
 <ul>
 <li>Automation possible.</li>
@@ -2145,9 +1917,7 @@ Proof.
   (* LARGE proof term!! *)
 Qed.
 </code></pre>
-<p>For <code>bool</code>, it is an (efficient) decision procedure. Which
-is much simpler than the huge proof terms. Because computation is
-involved.</p>
+<p>For <code>bool</code>, it is an (efficient) decision procedure. Which is much simpler than the huge proof terms. Because computation is involved.</p>
 <pre class="coq"><code>Fixpoint evenb&#39; (n:nat) : bool :=
   match n with
   | O =&gt; true
@@ -2169,8 +1939,7 @@ Compute evenb 30.
 <p>In ssreflect, there's <code>reflect</code>.</p>
 <pre class="coq"><code>refelct P b
 </code></pre>
-<p>says that the <code>Prop</code> <code>P</code> is equivalent to the
-<code>b</code> which is decision procedure.</p>
+<p>says that the <code>Prop</code> <code>P</code> is equivalent to the <code>b</code> which is decision procedure.</p>
 <pre class="coq"><code>Axiom evenb_even: forall n:nat, evenb n = true -&gt; even n.
 
 Goal
@@ -2185,9 +1954,7 @@ Proof.
   (* Simpler proof term! *)
 Qed.
 </code></pre>
-<p>Note the importance of making <code>evenb_even opaque</code>. If it
-was made with <code>Defined</code>, the <code>simpl</code> would've done
-the old thing and made a giant proof term.</p>
+<p>Note the importance of making <code>evenb_even opaque</code>. If it was made with <code>Defined</code>, the <code>simpl</code> would've done the old thing and made a giant proof term.</p>
 <pre class="coq"><code>Lemma evenb_even1: forall n:nat, evenb n = true -&gt; even n.
 Proof.
   intros n H.
@@ -2201,19 +1968,15 @@ Proof.
 (* We need: evenb (S n) = true *)
 Abort.
 </code></pre>
-<h3 id="proof-by-reflection-tautology">Proof by reflection:
-Tautology</h3>
+<h3 id="proof-by-reflection-tautology">Proof by reflection: Tautology</h3>
 <blockquote>
 <p>reification is opposite of abstraction.</p>
 </blockquote>
-<p>Abstract object we got as a formula like <code>True \/ True</code>,
-which is a meta-language object. So we cannot use a Gallina function to
-do the reification. But we can using ltac.</p>
+<p>Abstract object we got as a formula like <code>True \/ True</code>, which is a meta-language object. So we cannot use a Gallina function to do the reification. But we can using ltac.</p>
 <blockquote>
 <p><strong>ltac is a typeless language.</strong></p>
 </blockquote>
-<p>ltac has <code>constr:expr</code> because it needs to look at terms
-while also being able to construct terms.</p>
+<p>ltac has <code>constr:expr</code> because it needs to look at terms while also being able to construct terms.</p>
 <p>Let's try the tautology prover example from CPDT:</p>
 <pre class="coq"><code>(* Tautology prover *)
 
@@ -2345,8 +2108,7 @@ Pure Gallina won&#39;t make it.
 Metacoq would work as well. We basically just need a way to examine at the meta-level. A way to construct the syntax of coq itself.
 </code></pre>
 <h3 id="monoid-simplification">Monoid simplification</h3>
-<p>Another proof by reflection example. Similar to ring tactic, but we
-don't need to resort to ocaml.</p>
+<p>Another proof by reflection example. Similar to ring tactic, but we don't need to resort to ocaml.</p>
 <blockquote>
 <p>Reiterating some of the advantages of proof by reflection:</p>
 <ul>
@@ -2354,8 +2116,7 @@ don't need to resort to ocaml.</p>
 <li>tactics faster</li>
 </ul>
 </blockquote>
-<p>A monoid is a set A, together with a binary operation <code>*</code>
-on A such that:</p>
+<p>A monoid is a set A, together with a binary operation <code>*</code> on A such that:</p>
 <ul>
 <li><code>*</code> is associative
 <ul>
@@ -2367,8 +2128,7 @@ on A such that:</p>
 <li>∀a∈A, a * i = a (right identity)</li>
 </ul></li>
 </ul>
-<p>Essentially, a monoid is like group with the need for an inverse
-element.</p>
+<p>Essentially, a monoid is like group with the need for an inverse element.</p>
 <p>Equivalence of left and right identity lemmas:</p>
 <pre><code>If we got left and right identity lemmas, we can prove that left and right identiy are the same element.
 
@@ -2630,11 +2390,8 @@ End monoid.
 <h2 id="nov-2022-4"><span class="done DONE">DONE</span> 11-Nov-2022</h2>
 <p>Monoid expression example continued..</p>
 <p>Again, we look at this because</p>
-<p>Ring more complex than monoid primarily because of commutativity.
-Normalization function (<code>flatten</code> in the case of monoid)
-would become more complex then.</p>
-<p>Normalization function: Map all elements of the same equivalence
-class to a same value.</p>
+<p>Ring more complex than monoid primarily because of commutativity. Normalization function (<code>flatten</code> in the case of monoid) would become more complex then.</p>
+<p>Normalization function: Map all elements of the same equivalence class to a same value.</p>
 <pre><code>+--------------------+
 |                    |
 |                    |
@@ -2648,8 +2405,7 @@ class to a same value.</p>
 |                    |
 +--------------------+
 </code></pre>
-<p>Equivalence classes that capture when two expressions are
-equivalent.</p>
+<p>Equivalence classes that capture when two expressions are equivalent.</p>
 <p>The properties of monoids mean that we can prove stuff like:</p>
 <pre><code>2 * (3 * 4) = (2 * 3) * 4 
 </code></pre>
@@ -2663,23 +2419,15 @@ equivalent.</p>
 </code></pre>
 <p>Because when monoid is still general, that's all we can say.</p>
 <p>But when we know that the set is ℕ, we have more info.</p>
-<p>What have previously been distinct separate equiv classes may now
-turn out to be the same (sort of merged together).</p>
+<p>What have previously been distinct separate equiv classes may now turn out to be the same (sort of merged together).</p>
 <p>Equiv classes of 2 + 2 and 4 are same if the set is ℕ.</p>
-<p>Normalizaton function 'preserves' the equivalence classes. For all
-elements in an equiv class, there will be only one element.</p>
-<p>Identity is essentially a form of normalization, but not useful
-because it doesn't add anything to it. That's okay, because it doesn't
-lead to incorrect proofs. Just won't be able to prove anything
-useful.</p>
-<p>How good the tactic is determined by how capable the normalization
-function is.</p>
+<p>Normalizaton function 'preserves' the equivalence classes. For all elements in an equiv class, there will be only one element.</p>
+<p>Identity is essentially a form of normalization, but not useful because it doesn't add anything to it. That's okay, because it doesn't lead to incorrect proofs. Just won't be able to prove anything useful.</p>
+<p>How good the tactic is determined by how capable the normalization function is.</p>
 <p>If the normalization is capable of reducing</p>
 <pre><code>(a + b)² to a² + 2ab + b²
 </code></pre>
-<p>Commutative monoid: Commutativity complicates things. Because the
-number of possibilities blow up! <code>n!</code> ways. The normalization
-has to take these into account if it's to be capable.</p>
+<p>Commutative monoid: Commutativity complicates things. Because the number of possibilities blow up! <code>n!</code> ways. The normalization has to take these into account if it's to be capable.</p>
 <p>Okay, coming back to our monoid tactic.</p>
 <p>Eg:</p>
 <pre><code>e1 = x.(y.z)
@@ -2747,21 +2495,14 @@ y[x/t] = y                (if y≠x)
 (λx.e)[x/t] = λx.e
 (λx.e)[y/t] = λx.(e[y/t])  (if y≠x)
 </code></pre>
-<p>Variable names doesn't matter, it's the binding structure that
-matters.</p>
-<p>Name conflicts are a bother. Make sure that the binding structure
-never changes.</p>
-<p>Free variable capture problem: Free variables accidently becoming
-bound variables.</p>
+<p>Variable names doesn't matter, it's the binding structure that matters.</p>
+<p>Name conflicts are a bother. Make sure that the binding structure never changes.</p>
+<p>Free variable capture problem: Free variables accidently becoming bound variables.</p>
 <p>λx. (x (λt. x t))</p>
-<p>Problems like this is why substitution, despite being quite simple,
-can get incredible complex to implement.</p>
-<p><strong>α-conversion</strong> (or α-reduction): change the name of
-variable. To avoid free variable capture.</p>
+<p>Problems like this is why substitution, despite being quite simple, can get incredible complex to implement.</p>
+<p><strong>α-conversion</strong> (or α-reduction): change the name of variable. To avoid free variable capture.</p>
 <p><strong>β-reduction</strong></p>
-<p>Upon seeing an 'abstraction application', we can replace all
-occurrences of the variable bound by that abstraction with the term
-being applied.</p>
+<p>Upon seeing an 'abstraction application', we can replace all occurrences of the variable bound by that abstraction with the term being applied.</p>
 <p>(λx.e) M ≡ e[x/M]</p>
 <p>This is what gives meaning to the entire lambda calculus.</p>
 <blockquote>
@@ -2775,8 +2516,7 @@ being applied.</p>
 <p>Now β-reduce.</p>
 <p>(λy. t)</p>
 <p>So yeah, substitution is tricky to implement.</p>
-<p>We can't just blindly substitute. Easy to get it wrong while
-implementing a lambda calculus interpreter.</p>
+<p>We can't just blindly substitute. Easy to get it wrong while implementing a lambda calculus interpreter.</p>
 <blockquote>
 <p>Binding is always local.</p>
 </blockquote>
@@ -2794,8 +2534,7 @@ implementing a lambda calculus interpreter.</p>
 | Abs: nat -&gt; term -&gt; term.
 </code></pre>
 <h2 id="nov-2022-7"><span class="done DONE">DONE</span> 18-Nov-2022</h2>
-<p>First order representation of (untyped) lambda calculus
-continued..</p>
+<p>First order representation of (untyped) lambda calculus continued..</p>
 <p>First order because variable can be 'quantified'.</p>
 <p>Advantage:</p>
 <ul>
@@ -2806,29 +2545,22 @@ continued..</p>
 <li>'Equivalent terms aren't equal'.
 <ul>
 <li>Eg: λx.x and λy.y are equivalent, but not equal.</li>
-<li>Checking if two terms are equivalent upto α-conversion is not
-trivial.</li>
-<li>∵ α-reduction stuff, variables and reductions has to be carefully
-handled.</li>
-<li>Variable are for our convenience. It by itself has no meaning.
-Merely represents binding structure.</li>
+<li>Checking if two terms are equivalent upto α-conversion is not trivial.</li>
+<li>∵ α-reduction stuff, variables and reductions has to be carefully handled.</li>
+<li>Variable are for our convenience. It by itself has no meaning. Merely represents binding structure.</li>
 </ul></li>
 <li>β-reduction is error-prone.
 <ul>
 <li>Because of <strong>variable capture</strong>.</li>
 <li>Variable binding site can get changed if erroneous.</li>
 <li>Binding state changes =&gt; term meaning changes =&gt; error.</li>
-<li>Free variables shouldn't become bound nor should bound variables
-become bound.</li>
+<li>Free variables shouldn't become bound nor should bound variables become bound.</li>
 </ul></li>
-<li>Slow: Need for α-reduction and associated problems means lot of
-extra computation.</li>
+<li>Slow: Need for α-reduction and associated problems means lot of extra computation.</li>
 </ul>
-<p>α-conversion changes bound variable without changing the meaning of
-the term (ie, the binding structure).</p>
+<p>α-conversion changes bound variable without changing the meaning of the term (ie, the binding structure).</p>
 <p>We are currently interested in variable bindings.</p>
-<p>Use of <strong>de-Bruijn</strong> indices can avoid the need for
-α-conversion.</p>
+<p>Use of <strong>de-Bruijn</strong> indices can avoid the need for α-conversion.</p>
 <p>Eg: <code>λx. x (λy.y x)</code> is <code>λ.1 (λ.1 2)</code></p>
 <p>de-Bruijn index means:</p>
 <ul>
@@ -2845,17 +2577,13 @@ the term (ie, the binding structure).</p>
 <li>Used in compiler internals.</li>
 </ul>
 <p>:HW: Typed version of de-Bruijn in CPDT</p>
-<p>:DBT: de-Bruijn indicing starts from 0 or 1 usually. :DBT: de-Bruijn
-indicing when there are free variables.</p>
+<p>:DBT: de-Bruijn indicing starts from 0 or 1 usually. :DBT: de-Bruijn indicing when there are free variables.</p>
 <h3 id="hoas">HOAS</h3>
 <p>Higher Order Abstract Syntax.</p>
-<p>Can't be done in Coq because it cannot represent non-terminating
-terms??</p>
+<p>Can't be done in Coq because it cannot represent non-terminating terms??</p>
 <p>Haskell can do it though.</p>
-<p><code>λx.e</code> means function mapping <code>x</code> to
-<code>e</code>.</p>
-<p>Use the meta-language function to represent this =&gt; HOAS. Makes
-things much simpler.</p>
+<p><code>λx.e</code> means function mapping <code>x</code> to <code>e</code>.</p>
+<p>Use the meta-language function to represent this =&gt; HOAS. Makes things much simpler.</p>
 <pre class="coq"><code>Inductive expr : Type :=
 | App: expr -&gt; expr -&gt; expr
 | Abs: (expr -&gt; expr) -&gt; expr.
@@ -2870,8 +2598,7 @@ things much simpler.</p>
 Abs (fun x =&gt; x) (Abs (fun y =&gt; x)
  *)
 </code></pre>
-<p>We are accessing a meta language construct from object language
-construct, where:</p>
+<p>We are accessing a meta language construct from object language construct, where:</p>
 <ul>
 <li>object language: UTLC</li>
 <li>meta language: Gallina</li>
@@ -2886,11 +2613,9 @@ construct, where:</p>
   |
 negative occurrence
 </code></pre>
-<p>Negative occurrence =&gt; it's not clear how you get the starting
-element of the inductive type.</p>
+<p>Negative occurrence =&gt; it's not clear how you get the starting element of the inductive type.</p>
 <p>So it's not well formed.</p>
-<p>Non-terminating =&gt; proof can be done by infinitely deferring
-things.</p>
+<p>Non-terminating =&gt; proof can be done by infinitely deferring things.</p>
 <p>—</p>
 <p>A fixed type T</p>
 <p>F A =</p>
@@ -2912,8 +2637,7 @@ F A -------&gt; F B
 g* = fun t2a =&gt; g ∘ t2a
 </code></pre>
 <p>—</p>
-<p>F is covariant. Change A then it varies in that way itself. Covariant
-functor?</p>
+<p>F is covariant. Change A then it varies in that way itself. Covariant functor?</p>
 <p>Positive.</p>
 <p>On the other hand,</p>
 <pre><code>H: A -&gt; T 
@@ -2949,12 +2673,9 @@ fun b2t =&gt; b2t ∘ ? (f or g??)
 <li>most of headache about managing variables avoided.</li>
 </ul>
 <p>:DBT: What about open terms?</p>
-<p>No need of α-reduction Beta reduction: simple, efficient. Because
-it's all functions.</p>
-<p>All is good, except for one problem. What problem?? <strong>Exotic
-terms</strong>.</p>
-<p>Like in the case of de-Bruijn indices, no straightforward way to
-represent free variables.</p>
+<p>No need of α-reduction Beta reduction: simple, efficient. Because it's all functions.</p>
+<p>All is good, except for one problem. What problem?? <strong>Exotic terms</strong>.</p>
+<p>Like in the case of de-Bruijn indices, no straightforward way to represent free variables.</p>
 <p>β-reduction could be like:</p>
 <pre><code>Fixpoint beta (e:term): term :=
   match e with
@@ -2968,10 +2689,8 @@ represent free variables.</p>
       end
   end.
 </code></pre>
-<p>Efficient because we use the function call mechanism of the
-meta-languages.</p>
-<h3 id="detour-ski-combinator-calculus">Detour: SKI combinator
-calculus</h3>
+<p>Efficient because we use the function call mechanism of the meta-languages.</p>
+<h3 id="detour-ski-combinator-calculus">Detour: SKI combinator calculus</h3>
 <p>Only closed terms.</p>
 <table>
 <thead>
@@ -2999,8 +2718,7 @@ calculus</h3>
 </tr>
 </tbody>
 </table>
-<p>For example, <code>K</code> of SKI combinator calculus could be
-expressed in HOAS as:</p>
+<p>For example, <code>K</code> of SKI combinator calculus could be expressed in HOAS as:</p>
 <pre class="coq"><code>(Abs (fun x =&gt;
   (Abs (fun y =&gt;
     (Abs (fun z =&gt;
@@ -3010,12 +2728,9 @@ expressed in HOAS as:</p>
 </code></pre>
 <p>We use lambda of meta lang to capture lambda of object lang.</p>
 <h2 id="nov-2022-8"><span class="done DONE">DONE</span> 21-Nov-2022</h2>
-<p>HOAS uses metalanguage's abstraction to have object language's
-abstraction. Substitution simplified. No explicit name =&gt; no name
-collisions. Fast/efficient.</p>
+<p>HOAS uses metalanguage's abstraction to have object language's abstraction. Substitution simplified. No explicit name =&gt; no name collisions. Fast/efficient.</p>
 <p>Exotic terms. Abs: (E -&gt; E) -&gt; E</p>
-<p>We meant for just textual substitution but the function can be
-general. Can do anything. ∵ it can inspect E. Can inspect the x in</p>
+<p>We meant for just textual substitution but the function can be general. Can do anything. ∵ it can inspect E. Can inspect the x in</p>
 <pre><code>λx.  x ≡
 fun x:E =&gt; rv
     ^
@@ -3023,12 +2738,9 @@ fun x:E =&gt; rv
  Can inspect this x
 </code></pre>
 <p>Should not look at the argument x.</p>
-<p>The (E -&gt; E) can capture more things than that we want. Including
-things that are not in lambda calculus.</p>
-<p>inspect arg =&gt; dependiing on the val it can do different things.
-Which is not simple textual replacement.</p>
-<p>Fully abstract =&gt; bijection?? HOAS =&gt; not full abstraction and
-we lose associated proofs??</p>
+<p>The (E -&gt; E) can capture more things than that we want. Including things that are not in lambda calculus.</p>
+<p>inspect arg =&gt; dependiing on the val it can do different things. Which is not simple textual replacement.</p>
+<p>Fully abstract =&gt; bijection?? HOAS =&gt; not full abstraction and we lose associated proofs??</p>
 <p>Eg: β-reduction could be made an infinite loop.</p>
 <p>HOAS can still represent all closed lambda calculus terms.</p>
 <p>PHOAS doesn't have these problems.</p>
@@ -3053,8 +2765,7 @@ we lose associated proofs??</p>
 <p>Why do we say that the only value of the type</p>
 <p>∀A:Type, A -&gt; A</p>
 <p>is the identity function?</p>
-<p>Because we don't know what A is. That's because we can't inspect the
-A value. It's abstract as far the function is concerned.</p>
+<p>Because we don't know what A is. That's because we can't inspect the A value. It's abstract as far the function is concerned.</p>
 <pre class="coq"><code>Inductive term (V:Type) : Type :=
 | Var: V -&gt; term V
 | App: term V -&gt; term V -&gt; term V
@@ -3081,8 +2792,7 @@ Abs (fun x:V =&gt;
 Definition id := fun V:Type =&gt;
   Abs (fun x:V =&gt; Var x)
 </code></pre>
-<p>We can't inspect x. Because we don't know of what type it is. This
-eliminates the exotic term problem of HOAS.</p>
+<p>We can't inspect x. Because we don't know of what type it is. This eliminates the exotic term problem of HOAS.</p>
 <h3 id="stlc-in-phoas">STLC in PHOAS</h3>
 <pre class="coq"><code>Inductive type: Set :=
 | Bool: type
@@ -3094,30 +2804,22 @@ Inductive term (V:type -&gt; Type) : type -&gt; Type :=
 | App: forall t:type, term V t -&gt; term V t -&gt; term V t
 | Abs: forall t:type, (V t -&gt; term V t) -&gt; term V t.
 </code></pre>
-<p><strong>Choose V carefully</strong>. Depending on what you want to do
-with the terms. Thoughtful choice of V can make work lot enjoyable.</p>
+<p><strong>Choose V carefully</strong>. Depending on what you want to do with the terms. Thoughtful choice of V can make work lot enjoyable.</p>
 <p>V=nat, easy way to find number of variables in an expression??</p>
-<p>PHOAS can be converted to LC. So if not anything, whatever you can do
-in LC you can do in PHOAS. Usually more.</p>
+<p>PHOAS can be converted to LC. So if not anything, whatever you can do in LC you can do in PHOAS. Usually more.</p>
 <h2 id="nov-2022-9"><span class="done DONE">DONE</span> 23-Nov-2022</h2>
 <p>Semantics =&gt; we are just giving a meaning.</p>
-<p>For example, consider non-Euclidean geometry. Suppose all axioms of
-Euclidean geometry except the parallel axiom holds.</p>
-<p>Parallel axiom: Given a line and a point in a plane, there can be
-only one line passing through the given point that is parallel to the
-given line.?????</p>
+<p>For example, consider non-Euclidean geometry. Suppose all axioms of Euclidean geometry except the parallel axiom holds.</p>
+<p>Parallel axiom: Given a line and a point in a plane, there can be only one line passing through the given point that is parallel to the given line.?????</p>
 <p>Consider a spherical surface. A sphere.</p>
 <p>Suppose:</p>
 <ul>
 <li>point = antipodal points on sphere
 <ul>
-<li>ie, points which are diametrically opposite to each other on the
-sphere.</li>
-<li>Any line segment joining a pair of antipodal points would be a
-diameter of the sphere.</li>
+<li>ie, points which are diametrically opposite to each other on the sphere.</li>
+<li>Any line segment joining a pair of antipodal points would be a diameter of the sphere.</li>
 </ul></li>
-<li>line = great circles passing through the pair of antipodal
-points.</li>
+<li>line = great circles passing through the pair of antipodal points.</li>
 </ul>
 <pre class="coq"><code>(*
 object lang: STLC
@@ -3233,8 +2935,7 @@ Compute countHelper (IDNat (fun _ =&gt; unit)).
 :HW: give Semantics
 *)
 </code></pre>
-<h2 id="nov-2022-10"><span class="done DONE">DONE</span>
-25-Nov-2022</h2>
+<h2 id="nov-2022-10"><span class="done DONE">DONE</span> 25-Nov-2022</h2>
 <p>Continuing…</p>
 <pre class="coq"><code>(* (λx:Nat. x) 42 *)
 
@@ -3247,15 +2948,12 @@ App
 </code></pre>
 <p>Parametricity of V prevents inspection.</p>
 <p>semantics Sth —————-&gt; domain ∩ exotic</p>
-<p>We can't prove that this doesn't have exotic terms from within
-coq.</p>
-<p>We can't prove sth about the metalanguage from within the meta
-language. ∵ Gödel's incompleteness theorem.</p>
+<p>We can't prove that this doesn't have exotic terms from within coq.</p>
+<p>We can't prove sth about the metalanguage from within the meta language. ∵ Gödel's incompleteness theorem.</p>
 <p>Polymorphism:</p>
 <ul>
 <li>not just makes code reuse easier.</li>
-<li>includes some restriction that can be used when reasoning about such
-functions.</li>
+<li>includes some restriction that can be used when reasoning about such functions.</li>
 </ul>
 <p>PHOAS:</p>
 <ul>
@@ -3320,13 +3018,10 @@ Definition Semantics {t:type} (E: Term t) : typeDenote t :=
 </code></pre>
 <p>We can give semantics only to closed terms. Free vars =&gt; Nada!</p>
 <blockquote>
-<p>follow the types and you'll see the code writes itself! That's how
-you know that you're on the right path.</p>
+<p>follow the types and you'll see the code writes itself! That's how you know that you're on the right path.</p>
 </blockquote>
-<p>Choose the V wisely. C'est votre choice. Depending on what you want,
-choose V.</p>
-<h2 id="nov-2022-11"><span class="done DONE">DONE</span>
-28-Nov-2022</h2>
+<p>Choose the V wisely. C'est votre choice. Depending on what you want, choose V.</p>
+<h2 id="nov-2022-11"><span class="done DONE">DONE</span> 28-Nov-2022</h2>
 <p>Function that does constant folding. And prove its correctness.</p>
 <p>Program Definition. Kinda like <code>refine</code> tactic.</p>
 <p>Tip:</p>
@@ -3335,8 +3030,7 @@ choose V.</p>
 </blockquote>
 <p>Fnal extensionality</p>
 <p>∀x, f(x) = g(x)</p>
-<h2 id="nov-2022-12"><span class="done DONE">DONE</span>
-30-Nov-2022</h2>
+<h2 id="nov-2022-12"><span class="done DONE">DONE</span> 30-Nov-2022</h2>
 <pre class="coq"><code>Require Import FunctionalExtensionality.
 Require Import Coq.Program.Equality.
 

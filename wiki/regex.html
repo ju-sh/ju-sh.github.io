@@ -44,8 +44,7 @@
 <hr/>
 
 <div id="content-container">
-<h2 id="glushkovs-nfa-construction-algorithm">Glushkov's NFA
-construction algorithm</h2>
+<h2 id="glushkovs-nfa-construction-algorithm">Glushkov's NFA construction algorithm</h2>
 <ul>
 <li>Input = r'</li>
 <li>r: r' with unique position labels asssigned to each of its atoms
@@ -53,12 +52,9 @@ construction algorithm</h2>
 <li>The set of these labels is <code>pos</code></li>
 <li>Each <code>i ∈ pos</code> represents an atom in <code>r</code></li>
 </ul></li>
-<li>first(i): Set of atom-positions that can be matched right after the
-atom at position <code>i</code></li>
-<li>last(i): Set of atom-positions in <code>r</code> that will be
-last</li>
-<li><code>follow(i)</code>, set of atoms in <code>r</code> that can be
-matched right after the atom at position <code>i</code>.</li>
+<li>first(i): Set of atom-positions that can be matched right after the atom at position <code>i</code></li>
+<li>last(i): Set of atom-positions in <code>r</code> that will be last</li>
+<li><code>follow(i)</code>, set of atoms in <code>r</code> that can be matched right after the atom at position <code>i</code>.</li>
 </ul>
 <pre><code>first(ε) = ∅
 

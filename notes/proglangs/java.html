@@ -47,68 +47,49 @@
 <ul>
 <li>String concatenation: <code>+</code>
 <ul>
-<li>Eg: <code>System.out.println("Hell" + 0 + " world");</code> prints
-<code>Hell0 world</code></li>
+<li>Eg: <code>System.out.println("Hell" + 0 + " world");</code> prints <code>Hell0 world</code></li>
 </ul></li>
-<li>There is no <code>const</code> keyword, <code>final</code> can be
-used to declare constant 'variables'.</li>
+<li>There is no <code>const</code> keyword, <code>final</code> can be used to declare constant 'variables'.</li>
 <li>Boolean type is <code>boolean</code> in Java, not bool.</li>
-<li><code>default</code> in function signature: To mention that this
-definition is the default implementation of this function
+<li><code>default</code> in function signature: To mention that this definition is the default implementation of this function
 <ul>
 <li>Can be used inside an <code>interface</code>.</li>
-<li><a
-href="https://stackoverflow.com/questions/31578427/what-is-the-purpose-of-the-default-keyword-in-java">https://stackoverflow.com/questions/31578427/what-is-the-purpose-of-the-default-keyword-in-java</a></li>
+<li><a href="https://stackoverflow.com/questions/31578427/what-is-the-purpose-of-the-default-keyword-in-java">https://stackoverflow.com/questions/31578427/what-is-the-purpose-of-the-default-keyword-in-java</a></li>
 </ul></li>
-<li><code>volatile</code>: used to indicate that a variable may be used
-by mutliple threads ??</li>
+<li><code>volatile</code>: used to indicate that a variable may be used by mutliple threads ??</li>
 <li>Type casting: Syntax is like in C</li>
-<li><code>javap name.class</code>: tries to convert a class file back to
-java file ??</li>
+<li><code>javap name.class</code>: tries to convert a class file back to java file ??</li>
 </ul>
 <p>API:</p>
 <ul>
-<li>Streams: <a
-href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/stream/Stream.html">https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/stream/Stream.html</a></li>
-<li>Regex patterns: <a
-href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html">https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html</a></li>
-<li>Optional values: <a
-href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html</a></li>
+<li>Streams: <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/stream/Stream.html">https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/stream/Stream.html</a></li>
+<li>Regex patterns: <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html">https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html</a></li>
+<li>Optional values: <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html</a></li>
 </ul>
-<h2 id="pattern-matching-switch-case">Pattern matching
-(switch-case)</h2>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span><span class="op">(</span>exp<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> One <span class="op">-&gt;</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> Two <span class="op">-&gt;</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">default</span> <span class="op">-&gt;</span> <span class="dv">3</span><span class="op">;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h2 id="pattern-matching-switch-case">Pattern matching (switch-case)</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">switch</span>(exp) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  <span class="kw">case</span> One -&gt; <span class="dv">1</span>;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  <span class="kw">case</span> Two -&gt; <span class="dv">2</span>;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>  <span class="kw">default</span> -&gt; <span class="dv">3</span>;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>}</span></code></pre></div>
 <p>See:</p>
 <ul>
-<li><a
-href="https://www.infoq.com/articles/pattern-matching-for-switch/">https://www.infoq.com/articles/pattern-matching-for-switch/</a></li>
-<li><a
-href="https://docs.oracle.com/en/java/javase/18/language/pattern-matching-switch-expressions-and-statements.html">https://docs.oracle.com/en/java/javase/18/language/pattern-matching-switch-expressions-and-statements.html</a></li>
+<li><a href="https://www.infoq.com/articles/pattern-matching-for-switch/">https://www.infoq.com/articles/pattern-matching-for-switch/</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/18/language/pattern-matching-switch-expressions-and-statements.html">https://docs.oracle.com/en/java/javase/18/language/pattern-matching-switch-expressions-and-statements.html</a></li>
 </ul>
 <h2 id="method-references">Method references</h2>
-<p><a
-href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html</a></p>
+<p><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html</a></p>
 <p>Example in above link:</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode java"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Arrays</span><span class="op">.</span><span class="fu">sort</span><span class="op">(</span>rosterAsArray<span class="op">,</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">(</span>a<span class="op">,</span> b<span class="op">)</span> <span class="op">-&gt;</span> Person<span class="op">.</span><span class="fu">compareByAge</span><span class="op">(</span>a<span class="op">,</span> b<span class="op">)</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="bu">Arrays</span>.<span class="fu">sort</span>(rosterAsArray,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>    (a, b) -&gt; Person.<span class="fu">compareByAge</span>(a, b)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>);</span></code></pre></div>
 <p>can be achieved with</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Arrays</span><span class="op">.</span><span class="fu">sort</span><span class="op">(</span>rosterAsArray<span class="op">,</span> Person<span class="op">::</span>compareByAge<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="bu">Arrays</span>.<span class="fu">sort</span>(rosterAsArray, Person::compareByAge);</span></code></pre></div>
 <p>ie, kind of like the usual way of using functions in Haskell.</p>
 <h2 id="interface">Interface</h2>
 <ul>
 <li>Like module type in ocaml (or signature in sml)</li>
-<li><code>default</code> methods: 'A default method is a public
-non-abstract instance method, that is, a non-static method with a body,
-declared in an interface type.'<a
-href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/reflect/Method.html">ʳ</a></li>
+<li><code>default</code> methods: 'A default method is a public non-abstract instance method, that is, a non-static method with a body, declared in an interface type.'<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/reflect/Method.html">ʳ</a></li>
 </ul>
 <h2 id="functional-interface">Functional interface</h2>
 <ul>
@@ -116,63 +97,48 @@ href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/ref
 <li>An interface with exactly one abstract method</li>
 <li>Useful for functional programming style. How??</li>
 </ul>
-<p>The value would take the role of the function that was left
-abstract.</p>
+<p>The value would take the role of the function that was left abstract.</p>
 <p>Can think of functions more like values ??</p>
 <ul>
-<li>Eg: <code>String concat(String s)</code> vs
-<code>Function&lt;String, String&gt; concat</code></li>
+<li>Eg: <code>String concat(String s)</code> vs <code>Function&lt;String, String&gt; concat</code></li>
 </ul>
 <p>See:</p>
 <ul>
-<li><a
-href="https://herovired.com/learning-hub/blogs/functional-interface-in-java/">https://herovired.com/learning-hub/blogs/functional-interface-in-java/</a></li>
-<li><a
-href="https://www.freecodecamp.org/news/functional-programming-in-java/">https://www.freecodecamp.org/news/functional-programming-in-java/</a></li>
-<li><a
-href="https://www.scaler.com/topics/functional-interface-in-java/">https://www.scaler.com/topics/functional-interface-in-java/</a></li>
+<li><a href="https://herovired.com/learning-hub/blogs/functional-interface-in-java/">https://herovired.com/learning-hub/blogs/functional-interface-in-java/</a></li>
+<li><a href="https://www.freecodecamp.org/news/functional-programming-in-java/">https://www.freecodecamp.org/news/functional-programming-in-java/</a></li>
+<li><a href="https://www.scaler.com/topics/functional-interface-in-java/">https://www.scaler.com/topics/functional-interface-in-java/</a></li>
 </ul>
 <h2 id="in-identifiers"><code>$</code> in identifiers</h2>
-<p><code>$</code> is allowed in identifiers, but it is meant to be used
-selectively by convention.</p>
+<p><code>$</code> is allowed in identifiers, but it is meant to be used selectively by convention.</p>
 <p>TL;DR: Better not use it.</p>
 <p>From oracle website:</p>
 <blockquote>
-<p>The $ character should be used only in mechanically generated source
-code or, rarely, to access pre-existing names on legacy systems.</p>
+<p>The $ character should be used only in mechanically generated source code or, rarely, to access pre-existing names on legacy systems.</p>
 </blockquote>
 <p>See:</p>
 <ul>
-<li><a
-href="https://docs.oracle.com/javase/specs/jls/se7/html/jls-3.html#jls-3.8">https://docs.oracle.com/javase/specs/jls/se7/html/jls-3.html#jls-3.8</a></li>
-<li><a
-href="https://stackoverflow.com/questions/14056918/when-should-i-use-the-dollar-symbol-in-a-variable-name">https://stackoverflow.com/questions/14056918/when-should-i-use-the-dollar-symbol-in-a-variable-name</a></li>
+<li><a href="https://docs.oracle.com/javase/specs/jls/se7/html/jls-3.html#jls-3.8">https://docs.oracle.com/javase/specs/jls/se7/html/jls-3.html#jls-3.8</a></li>
+<li><a href="https://stackoverflow.com/questions/14056918/when-should-i-use-the-dollar-symbol-in-a-variable-name">https://stackoverflow.com/questions/14056918/when-should-i-use-the-dollar-symbol-in-a-variable-name</a></li>
 </ul>
 <h2 id="generics">Generics</h2>
 <ul>
-<li><code>?</code>: Used as an unknown/any type in generic
-functions</li>
+<li><code>?</code>: Used as an unknown/any type in generic functions</li>
 <li><code>&lt;? super R&gt;</code>: A class which is a super class of R
 <ul>
 <li>This class would have lesser or equal amount of features as R</li>
 <li><code>R &lt;: ?</code></li>
-<li><a
-href="https://docs.oracle.com/javase/tutorial/java/generics/lowerBounded.html">https://docs.oracle.com/javase/tutorial/java/generics/lowerBounded.html</a></li>
+<li><a href="https://docs.oracle.com/javase/tutorial/java/generics/lowerBounded.html">https://docs.oracle.com/javase/tutorial/java/generics/lowerBounded.html</a></li>
 </ul></li>
-<li><code>&lt;? extends T&gt;</code>: A class which is derived from
-class T
+<li><code>&lt;? extends T&gt;</code>: A class which is derived from class T
 <ul>
 <li>This class would have more or equal amount of features as T</li>
 <li><code>? &lt;: T</code></li>
-<li><a
-href="https://stackoverflow.com/questions/4343202/difference-between-super-t-and-extends-t-in-java">https://stackoverflow.com/questions/4343202/difference-between-super-t-and-extends-t-in-java</a></li>
-<li><a
-href="https://docs.oracle.com/javase/tutorial/java/generics/upperBounded.html">https://docs.oracle.com/javase/tutorial/java/generics/upperBounded.html</a></li>
+<li><a href="https://stackoverflow.com/questions/4343202/difference-between-super-t-and-extends-t-in-java">https://stackoverflow.com/questions/4343202/difference-between-super-t-and-extends-t-in-java</a></li>
+<li><a href="https://docs.oracle.com/javase/tutorial/java/generics/upperBounded.html">https://docs.oracle.com/javase/tutorial/java/generics/upperBounded.html</a></li>
 </ul></li>
 </ul>
 <h2 id="function-interfaces">Function interfaces</h2>
-<p><a
-href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html</a></p>
+<p><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html</a></p>
 <table>
 <thead>
 <tr class="header">
@@ -208,34 +174,25 @@ href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/fun
 <li><code>andThen</code>: goes from left to right</li>
 <li><code>compose</code>: goes from right to left</li>
 </ul>
-<p>These two are apparently the same, but with argument order
-reversed.</p>
+<p>These two are apparently the same, but with argument order reversed.</p>
 <ul>
-<li><a
-href="https://stackoverflow.com/questions/43849066/java-8-functions-compose-and-andthen">https://stackoverflow.com/questions/43849066/java-8-functions-compose-and-andthen</a></li>
+<li><a href="https://stackoverflow.com/questions/43849066/java-8-functions-compose-and-andthen">https://stackoverflow.com/questions/43849066/java-8-functions-compose-and-andthen</a></li>
 <li><code>a.andThen(b)</code> is same as <code>b.compose(a)</code></li>
 </ul>
-<p>I guess <code>g.compose(f)</code> is there to be more in line of what
-we mean when we say <code>g ∘ f</code> in theory. ie, first do
-<code>f</code> and then do <code>g</code>.</p>
-<p>While writing in Java, often the <code>andThen</code> version is more
-convenient.</p>
+<p>I guess <code>g.compose(f)</code> is there to be more in line of what we mean when we say <code>g ∘ f</code> in theory. ie, first do <code>f</code> and then do <code>g</code>.</p>
+<p>While writing in Java, often the <code>andThen</code> version is more convenient.</p>
 <h2 id="record-class">Record class</h2>
 <p>See:</p>
 <ul>
-<li><a
-href="https://docs.oracle.com/en/java/javase/17/language/records.html">https://docs.oracle.com/en/java/javase/17/language/records.html</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/17/language/records.html">https://docs.oracle.com/en/java/javase/17/language/records.html</a></li>
 </ul>
-<h2 id="sealed-classes-and-interfaces">Sealed classes and
-interfaces</h2>
+<h2 id="sealed-classes-and-interfaces">Sealed classes and interfaces</h2>
 <p>Enforces a form of subtyping ??</p>
 <p>See:</p>
 <ul>
-<li><a
-href="https://docs.oracle.com/en/java/javase/21/language/sealed-classes-and-interfaces.html">https://docs.oracle.com/en/java/javase/21/language/sealed-classes-and-interfaces.html</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/21/language/sealed-classes-and-interfaces.html">https://docs.oracle.com/en/java/javase/21/language/sealed-classes-and-interfaces.html</a></li>
 </ul>
-<h2 id="wrapper-classes-for-primitive-types">Wrapper classes for
-primitive types</h2>
+<h2 id="wrapper-classes-for-primitive-types">Wrapper classes for primitive types</h2>
 <p>There are 8 primitive data types in Java. Some of them:</p>
 <table>
 <thead>
@@ -267,64 +224,50 @@ primitive types</h2>
 </tr>
 </tbody>
 </table>
-<p><a
-href="https://en.wikipedia.org/wiki/Primitive_wrapper_class_in_Java">https://en.wikipedia.org/wiki/Primitive_wrapper_class_in_Java</a></p>
-<h2 id="double-cannot-be-converted-to-float">'double cannot be converted
-to float'</h2>
+<p><a href="https://en.wikipedia.org/wiki/Primitive_wrapper_class_in_Java">https://en.wikipedia.org/wiki/Primitive_wrapper_class_in_Java</a></p>
+<h2 id="double-cannot-be-converted-to-float">'double cannot be converted to float'</h2>
 <ul>
-<li>Float numbers are by default <code>double</code>, not
-<code>float</code></li>
+<li>Float numbers are by default <code>double</code>, not <code>float</code></li>
 <li>Eg: 3.14 is <code>Double</code></li>
 </ul>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode java"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Double</span> dD <span class="op">=</span> <span class="fl">3.14</span><span class="op">;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dD<span class="op">.</span><span class="fu">floatValue</span><span class="op">();</span> <span class="co">// is type Float</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> dd <span class="op">=</span> <span class="fl">3.14</span><span class="op">;:</span>w</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="dt">float</span><span class="op">)</span> dd<span class="op">;</span> <span class="co">// is type Float ??</span></span></code></pre></div>
-<p><a
-href="https://stackoverflow.com/questions/32837783/convert-double-to-float-in-java">https://stackoverflow.com/questions/32837783/convert-double-to-float-in-java</a></p>
-<h2 id="a-sub-set-of-built-in-exceptions">A sub-set of built-in
-exceptions</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="bu">Double</span> dD = <span class="fl">3.</span><span class="dv">14</span>;</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>dD.<span class="fu">floatValue</span>(); <span class="co">// is type Float</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="dt">double</span> dd = <span class="fl">3.</span><span class="dv">14</span>;:w</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>(<span class="dt">float</span>) dd; <span class="co">// is type Float ??</span></span></code></pre></div>
+<p><a href="https://stackoverflow.com/questions/32837783/convert-double-to-float-in-java">https://stackoverflow.com/questions/32837783/convert-double-to-float-in-java</a></p>
+<h2 id="a-sub-set-of-built-in-exceptions">A sub-set of built-in exceptions</h2>
 <ul>
 <li>NoSuchElementException</li>
 </ul>
-<p><a
-href="https://programming.guide/java/list-of-java-exceptions.html">https://programming.guide/java/list-of-java-exceptions.html</a></p>
+<p><a href="https://programming.guide/java/list-of-java-exceptions.html">https://programming.guide/java/list-of-java-exceptions.html</a></p>
 <h2 id="find-size-of-an-object">Find size of an object</h2>
 <ul>
 <li>Use jol: A tool associated with openJDK
 <ul>
-<li><a
-href="https://github.com/openjdk/jol">https://github.com/openjdk/jol</a></li>
+<li><a href="https://github.com/openjdk/jol">https://github.com/openjdk/jol</a></li>
 </ul></li>
 <li>Could also use <code>java.lang.instrument</code> package.
 <ul>
-<li><a
-href="https://stackoverflow.com/questions/52353/how-to-determine-the-size-of-an-object-in-java">https://stackoverflow.com/questions/52353/how-to-determine-the-size-of-an-object-in-java</a></li>
+<li><a href="https://stackoverflow.com/questions/52353/how-to-determine-the-size-of-an-object-in-java">https://stackoverflow.com/questions/52353/how-to-determine-the-size-of-an-object-in-java</a></li>
 </ul></li>
 </ul>
 <h2 id="packaging">Packaging</h2>
 <ul>
 <li>MANIFEST.MF file
 <ul>
-<li><a
-href="https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html">https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html</a></li>
+<li><a href="https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html">https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html</a></li>
 </ul></li>
 </ul>
 <h2 id="remarks">Remarks</h2>
 <ul>
-<li>Every (non-primitive) type in java is inhabited by
-<code>null</code>.
+<li>Every (non-primitive) type in java is inhabited by <code>null</code>.
 <ul>
-<li>This means that <code>void</code> is actually like
-<code>unit</code>.</li>
+<li>This means that <code>void</code> is actually like <code>unit</code>.</li>
 </ul></li>
 <li>Primitive types are unboxed. Can't be <code>null</code>.</li>
-<li>Java has no union types like in C. Java doesn't offer that level of
-fine grained control over memory allocation, apparently.</li>
-<li>There is no way to have type aliases. But can have derived class as
-a work-around.</li>
+<li>Java has no union types like in C. Java doesn't offer that level of fine grained control over memory allocation, apparently.</li>
+<li>There is no way to have type aliases. But can have derived class as a work-around.</li>
 </ul>
 <p>Doubts:</p>
 <ul>
@@ -333,24 +276,18 @@ a work-around.</li>
 </ul>
 <h2 id="misc">Misc</h2>
 <ul>
-<li><a href="https://www.benf.org/other/cfr/">CFR</a>: A decompiler for
-JVM
+<li><a href="https://www.benf.org/other/cfr/">CFR</a>: A decompiler for JVM
 <ul>
 <li>Class files can be converted to Java</li>
 <li>Even for other languages that target JVM. Like Scala, Frege.</li>
 </ul></li>
-<li><a href="https://github.com/Frege/frege/">Frege</a>: A haskell-like
-language for JVM (development has stalled)</li>
-<li>There was a bug in the binary search implementation of
-java.util.Arrays
+<li><a href="https://github.com/Frege/frege/">Frege</a>: A haskell-like language for JVM (development has stalled)</li>
+<li>There was a bug in the binary search implementation of java.util.Arrays
 <ul>
 <li>Because of overflow in <code>int mid = (low + high)/2</code>.</li>
-<li>Change it to <code>int mid = low + (high - low)/2</code> to avoid
-the overflow.</li>
-<li><a
-href="https://research.google/blog/extra-extra-read-all-about-it-nearly-all-binary-searches-and-mergesorts-are-broken/">https://research.google/blog/extra-extra-read-all-about-it-nearly-all-binary-searches-and-mergesorts-are-broken/</a></li>
-<li><a
-href="https://thebittheories.com/the-curious-case-of-binary-search-the-famous-bug-that-remained-undetected-for-20-years-973e89fc212">https://thebittheories.com/the-curious-case-of-binary-search-the-famous-bug-that-remained-undetected-for-20-years-973e89fc212</a></li>
+<li>Change it to <code>int mid = low + (high - low)/2</code> to avoid the overflow.</li>
+<li><a href="https://research.google/blog/extra-extra-read-all-about-it-nearly-all-binary-searches-and-mergesorts-are-broken/">https://research.google/blog/extra-extra-read-all-about-it-nearly-all-binary-searches-and-mergesorts-are-broken/</a></li>
+<li><a href="https://thebittheories.com/the-curious-case-of-binary-search-the-famous-bug-that-remained-undetected-for-20-years-973e89fc212">https://thebittheories.com/the-curious-case-of-binary-search-the-famous-bug-that-remained-undetected-for-20-years-973e89fc212</a></li>
 </ul></li>
 </ul>
 </div>

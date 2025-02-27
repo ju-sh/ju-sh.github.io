@@ -90,18 +90,15 @@ G⟦⋅⟧ = {∅}
 <ul>
 <li>Termination of STLC (unary)</li>
 <li>type safety/soundness (unary)</li>
-<li>Program equivalence (a relational, binary property. Not unary
-property which is a property about a single program)
+<li>Program equivalence (a relational, binary property. Not unary property which is a property about a single program)
 <ul>
 <li>That two given programs do the same thing</li>
-<li>Binary logical relations: Programs in even two different languages.
-As in source to target language. Low-high level equiv.</li>
+<li>Binary logical relations: Programs in even two different languages. As in source to target language. Low-high level equiv.</li>
 <li>Useful to prove compiler correctness</li>
 </ul></li>
 <li>Representation independence.
 <ul>
-<li>Data structure itself doesn't matter for correctness. Only interface
-does.</li>
+<li>Data structure itself doesn't matter for correctness. Only interface does.</li>
 <li>Existential type. Interfaces are like that??</li>
 </ul></li>
 <li>Parametricity.
@@ -110,8 +107,7 @@ does.</li>
 </ul></li>
 </ul></li>
 </ul>
-<p>Observational equiv. Output program of the compiler is related to the
-input program.</p>
+<p>Observational equiv. Output program of the compiler is related to the input program.</p>
 <hr />
 <ul>
 <li>Unary logical relations</li>
@@ -131,12 +127,8 @@ e := x
 v := true | false
    | λx:τ. e
 </code></pre>
-<p>Remark: λ comes in e and v. e is specified, then we say what are the
-vals. and λ is a val. Choice of values are important when designing
-lang. Eg: (e1, e2) itself could be considered val. But we could also
-have said only (v1,v2) can be a value.</p>
-<p>Value lambda is an e suspended computations. Cannot be run till
-applied.</p>
+<p>Remark: λ comes in e and v. e is specified, then we say what are the vals. and λ is a val. Choice of values are important when designing lang. Eg: (e1, e2) itself could be considered val. But we could also have said only (v1,v2) can be a value.</p>
+<p>Value lambda is an e suspended computations. Cannot be run till applied.</p>
 <p>Operational semantics (call-by-value, left-to-right evaluation):</p>
 <p>Evaluation context.</p>
 <ul>
@@ -214,16 +206,13 @@ E[e] ↦ E[e&#39;]
 <p>How to prove type soundness.</p>
 <p>Type soundness</p>
 <ul>
-<li>not just progress and preservation. That's just a technique to show
-type soundness. Not type soundness itself.</li>
+<li>not just progress and preservation. That's just a technique to show type soundness. Not type soundness itself.</li>
 <li>Well typed programs don't go wrong - Milner
 <ul>
-<li>If we can type check a program, ie, build a typing derivation for
-it, it is a well-typed program. Type safety.</li>
+<li>If we can type check a program, ie, build a typing derivation for it, it is a well-typed program. Type safety.</li>
 <li>Going wrong: Getting stuck without arriving at a value
 <ul>
-<li>Not a value, but still cannot go another step =&gt; not well
-typed</li>
+<li>Not a value, but still cannot go another step =&gt; not well typed</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -233,11 +222,9 @@ typed</li>
  val(e&#39;) or       (ie, already a value)
  ∃e&#39;&#39;, e&#39; ↦ e&#39;&#39;   (ie, one more step possible)
 </code></pre>
-<p>What if e'' is a stuck term? That scenario is ruled out because the
-base condition says it should end up being a value.</p>
+<p>What if e'' is a stuck term? That scenario is ruled out because the base condition says it should end up being a value.</p>
 <ul>
-<li>Progress: If you have a well-typed program, then it is either a
-value or it is possible to take another step
+<li>Progress: If you have a well-typed program, then it is either a value or it is possible to take another step
 <ul>
 <li><code>if ⊢ e:τ, then val(e) or ∃e', e ↦ e'</code></li>
 </ul></li>
@@ -247,27 +234,20 @@ value or it is possible to take another step
 </ul></li>
 </ul>
 <p>DBT: For subtypes the above two need to be generalized.</p>
-<p>For the type soundness proof, we can ping-pong between these two
-lemmas.</p>
+<p>For the type soundness proof, we can ping-pong between these two lemmas.</p>
 <ul>
 <li>If it's a value, it is well typed (Progress)</li>
 <li>If it's not a value, it can take a step (Progress)</li>
 <li>If it takes a step, its type is preserved (Preservation)</li>
 </ul>
 <p>This is a syntactic way of proving type soundness.</p>
-<p>Progress and preservation is just one technique, although the most
-popular one, to prove type soundness.</p>
-<p>This lecture series will show how to prove type soundness
-<em>semantically</em>. Using logical relations.</p>
+<p>Progress and preservation is just one technique, although the most popular one, to prove type soundness.</p>
+<p>This lecture series will show how to prove type soundness <em>semantically</em>. Using logical relations.</p>
 <p>—</p>
-<p>DBT: From 80s till mid 2000s everyone used progress and preservation
-for type soundness proofs. What happened then?</p>
-<p>In the 1980s, people used to prove type soundness using denotational
-semantics.</p>
-<p>1990s, Andrew Wright and Matthias Felleisen[1]. Beginning of a proof
-method to prove soundness without using denotational semantics.</p>
-<p>Denosem =&gt; give a mathematical interpreation to program and make
-sure everything is consistent.</p>
+<p>DBT: From 80s till mid 2000s everyone used progress and preservation for type soundness proofs. What happened then?</p>
+<p>In the 1980s, people used to prove type soundness using denotational semantics.</p>
+<p>1990s, Andrew Wright and Matthias Felleisen[1]. Beginning of a proof method to prove soundness without using denotational semantics.</p>
+<p>Denosem =&gt; give a mathematical interpreation to program and make sure everything is consistent.</p>
 <p>80s: deno sem. math interp to progs 94: Andrew wright.</p>
 <ul>
 <li><p>Progress lemma: Either val or can take a step</p>
@@ -275,13 +255,11 @@ sure everything is consistent.</p>
 <li><p>Preservation lemma: take a step and type doesn't change</p>
 <p>⊢e:τ and ⊢e ↦ e', then ⊢e':τ</p></li>
 </ul>
-<p>This is synatically proving type correctenss. This lecture series
-about proving this semantically. Using logrels.</p>
+<p>This is synatically proving type correctenss. This lecture series about proving this semantically. Using logrels.</p>
 <p>—</p>
 <p><strong>Logical relations</strong></p>
 <p>Setting up relations that let us prove some property of interest.</p>
-<p>We will be looking at type soundness of STLC. That means showing
-absence of stuck terms.</p>
+<p>We will be looking at type soundness of STLC. That means showing absence of stuck terms.</p>
 <p>Pₜ(e)</p>
 <ul>
 <li>P: Property of interest</li>
@@ -289,8 +267,7 @@ absence of stuck terms.</p>
 <li>t: type</li>
 </ul>
 <p>Set of programs indexed by the different types of the language.</p>
-<p>STLC that we consider =&gt; types are just bool and functions. Unary
-relations. More types =&gt; more relations</p>
+<p>STLC that we consider =&gt; types are just bool and functions. Unary relations. More types =&gt; more relations</p>
 <p>For binary relations, it would be like: Rₜ(e1, e2)</p>
 <p>–</p>
 <p>Unary relation:</p>
@@ -306,31 +283,26 @@ relations. More types =&gt; more relations</p>
 <p>Our type soundness theorem for STLC:</p>
 <pre><code>⋅⊢e: τ then safe(e)
 </code></pre>
-<p>ie, if <code>e</code> has a type <code>τ</code>, then <code>e</code>
-is type safe</p>
+<p>ie, if <code>e</code> has a type <code>τ</code>, then <code>e</code> is type safe</p>
 <p>where <code>safe</code> is defined as</p>
 <pre><code>safe(e) ≝ ∀e&#39;, if e↦*e&#39; then val(e&#39;) or ∃e&#39;&#39;, e&#39;↦e&#39;&#39;
 </code></pre>
 <p>—</p>
 <p>Now to define the relations.</p>
-<p>We could define relations on expressions. But let's try a more common
-style.</p>
+<p>We could define relations on expressions. But let's try a more common style.</p>
 <p>DBT: Why is the other style more common?</p>
 <p>2 parts:</p>
 <ul>
-<li>Relation on values saying when they belong to the relation. ie, when
-are values safe.
+<li>Relation on values saying when they belong to the relation. ie, when are values safe.
 <ul>
 <li>Values are closed values.</li>
 </ul></li>
 <li>Then, we say when are expressions safe.
 <ul>
-<li>Expression can have free variables. ie, an environment need to be
-considered.</li>
+<li>Expression can have free variables. ie, an environment need to be considered.</li>
 </ul></li>
 </ul>
-<p>— Value relation: What are all the sets of values v such that v
-behaves like something of type τ and doesn't get stuck.</p>
+<p>— Value relation: What are all the sets of values v such that v behaves like something of type τ and doesn't get stuck.</p>
 <pre><code>V⟦τ⟧: set of all values which can be of type τ and don&#39;t get stuck
  = {v | .. }
 
@@ -340,38 +312,31 @@ V⟦τ1→τ2⟧ = {λx.τ1. e | ... }
   ∀v ∈ V⟦τ1⟧
   e[v/x] ∈ E⟦τ2⟧
 </code></pre>
-<p>This has to behave like a τ1→τ2 even when we put it in a different
-program. So just checking if it's a value isn't enough.</p>
+<p>This has to behave like a τ1→τ2 even when we put it in a different program. So just checking if it's a value isn't enough.</p>
 <p>Amal gave this example: <code>λx:bool. x true</code></p>
-<p>Also, λ is already a value. Could've stopped here, but that would
-mean getting stuck.</p>
+<p>Also, λ is already a value. Could've stopped here, but that would mean getting stuck.</p>
 <p>Logical relations give a stronger induction principle.</p>
-<p>We got to eliminate stuff like <code>true false</code> which isn't
-even a proper function application??.</p>
+<p>We got to eliminate stuff like <code>true false</code> which isn't even a proper function application??.</p>
 <p>irreducible: cannot take another redn.</p>
 <ul>
 <li>either stuck or a value</li>
 </ul>
-<p>Note that V⟦τ1→τ2⟧ doesn't ask for a typing derivation. It only asks
-whether it behaves as expected.</p>
+<p>Note that V⟦τ1→τ2⟧ doesn't ask for a typing derivation. It only asks whether it behaves as expected.</p>
 <p>—</p>
 <p>Expression type</p>
-<p><code>E[τ]</code> is a relation indicating the family of expressions
-which behave like a <code>τ</code>.</p>
+<p><code>E[τ]</code> is a relation indicating the family of expressions which behave like a <code>τ</code>.</p>
 <pre><code>E[τ] = {e | ∀e&#39;, e ↦* e&#39; ∧ irred(e&#39;) ∧ e&#39; ∈ V⟦τ⟧}
 
 where
 
 irred(e) ≝ ∄e&#39;, e ↦* e&#39;
 </code></pre>
-<p>irred(e) means e cannot take another step. Which means it's either
-stuck or is a value.</p>
+<p>irred(e) means e cannot take another step. Which means it's either stuck or is a value.</p>
 <p>Question: what if <code>e</code> diverges?</p>
 <ul>
 <li>For STLC, it's okay. Because every well typed term terminates.
 <ul>
-<li>Once we add recursive types, I guess some modifications are
-due.</li>
+<li>Once we add recursive types, I guess some modifications are due.</li>
 </ul></li>
 <li>STLC cannot type check the Ω combinator.</li>
 </ul>
@@ -379,45 +344,33 @@ due.</li>
 <ul>
 <li>Ω = (λx. x x)(λx. x x)</li>
 </ul>
-<p>Question: Example of a term which is <em>not</em> syntactically
-well-typed but still belongs to the relation?</p>
+<p>Question: Example of a term which is <em>not</em> syntactically well-typed but still belongs to the relation?</p>
 <ul>
 <li>Consider rust code marked unsafe.
 <ul>
-<li>Programmer say, I know what I'm doing. A too rich type system would
-only annoy the programmer.</li>
+<li>Programmer say, I know what I'm doing. A too rich type system would only annoy the programmer.</li>
 </ul></li>
 <li>Syntactically not possible, but can be safe.</li>
-<li>Safe at boundaries, but internally not sound as per type
-checker</li>
+<li>Safe at boundaries, but internally not sound as per type checker</li>
 <li>Standard library uses unsafe code too.</li>
 </ul>
-<p>Semantic type sounndess using logrel stuff method doesn't need the
-program to finish running. Doesn't need a complete derivation tree
-??</p>
-<p>Can't limit ourselves to proofs about closed terms. We need open
-progs as well ∵ of the λ typing rule</p>
+<p>Semantic type sounndess using logrel stuff method doesn't need the program to finish running. Doesn't need a complete derivation tree ??</p>
+<p>Can't limit ourselves to proofs about closed terms. We need open progs as well ∵ of the λ typing rule</p>
 <p>Semantics type soundness theorem: ⋅⊢ e:τ then safe(e)</p>
 <p>⊢ : syntactically well-typed ⊨ : semantically well-typed</p>
 <p>For open progs, G = Substitution for assignments</p>
 <p>G[⋅] = {∅} G[Γ,x:τ] = { γ[x↦v] | γ ∈ G[Γ] ∧ v ∈ V[τ]}</p>
 <p>γ is value assignments to variables. Eg: γ = {x1↦v1, x2↦v2, …}</p>
 <p>Γ ⊨ e:τ =def ∀γ∈G[Γ], γ(e) ∈ E[τ]</p>
-<p>Logrel: If you give me input of desired relation, I'll give you
-output of desired relation</p>
+<p>Logrel: If you give me input of desired relation, I'll give you output of desired relation</p>
 <p>Fundamental property of logical relations</p>
 <ul>
 <li>aka basic lemma</li>
 </ul>
 <p>Adequacy of a logrel</p>
 <p>—</p>
-<ol>
-<li>⋅↦e:τ =&gt; ⋅ ⊨ e:τ</li>
-</ol>
-<p><del>A) ⋅↦e:τ =&gt; e ∈ E[τ]</del></p>
-<ol>
-<li>⋅⊨</li>
-</ol>
+<p>A) ⋅↦e:τ =&gt; ⋅ ⊨ e:τ <del>A) ⋅↦e:τ =&gt; e ∈ E[τ]</del></p>
+<p>B) ⋅⊨</p>
 <p>B should be trivial if the logrel was built properly</p>
 <p>Case 1: ¬irred(e)</p>
 <p>Then</p>
@@ -438,15 +391,12 @@ output of desired relation</p>
 <ul>
 <li>FP: Fundamental property
 <ul>
-<li>If a term is syntactically well-typed then it is semantically
-well-typed</li>
+<li>If a term is syntactically well-typed then it is semantically well-typed</li>
 </ul></li>
 </ul>
-<p>behaviour: what happens when we run it? compositionality building
-blocks</p>
+<p>behaviour: what happens when we run it? compositionality building blocks</p>
 <p>Granularity of type ??</p>
-<p>Add new types -&gt; we will have new typing rules (intro, elim), then
-got to show that those rules are sound too.</p>
+<p>Add new types -&gt; we will have new typing rules (intro, elim), then got to show that those rules are sound too.</p>
 <p>logrel comes into play after a type system is already there.</p>
 <p>FP:</p>
 <p>Γ,x:τ implicitly means x ∈¬ Γ (TAPL)</p>
@@ -456,8 +406,7 @@ got to show that those rules are sound too.</p>
 <li>not Turing complete</li>
 </ul>
 <p>Let's allow non-terminating progs =&gt; Add recursive types</p>
-<p>unit type useful for stuff like repring nil of lists and leaf of
-tree</p>
+<p>unit type useful for stuff like repring nil of lists and leaf of tree</p>
 <pre><code>type tree = Leaf
           | Node of int * tree * tree
 </code></pre>
@@ -489,8 +438,7 @@ intlist = μα. 1 + (int * α)
 <p>Let's try to type check the Ω-combinator.</p>
 <p>Ω = (λx. x x) (λx. x x)</p>
 <p>Without rectypes, x could be τ1 → τ2 or τ.</p>
-<p>self application part (x x): <code>(unfold x) x</code> rectype in neg
-pos!</p>
+<p>self application part (x x): <code>(unfold x) x</code> rectype in neg pos!</p>
 <p>We have type rules. Now need eval rules??</p>
 <pre><code>V := fold V
    | ...
@@ -514,25 +462,20 @@ E := fold E
 <li>∵ of cycles in heap</li>
 </ul>
 <p>Step-indexing Logrel indexed by a natural number</p>
-<p>Now induction is done on step count instead of the structure of
-type.</p>
+<p>Now induction is done on step count instead of the structure of type.</p>
 <p>gas is similar concept but for synactic-oriented stuff</p>
 <p>—</p>
 <p>Vₖ</p>
-<p>Each redn step of the opsem = 1 step Kinda like possible worlds
-model. monotonicity</p>
+<p>Each redn step of the opsem = 1 step Kinda like possible worlds model. monotonicity</p>
 <h1 id="d3">D3</h1>
-<p>Step indexing paper (proof carrying code): 2001 TOPLAS Appel +
-McCallester 2004: Ahmed PhD on mutable refs</p>
-<p>iris: step indexing fold case of fundamental property from last
-day:</p>
+<p>Step indexing paper (proof carrying code): 2001 TOPLAS Appel + McCallester 2004: Ahmed PhD on mutable refs</p>
+<p>iris: step indexing fold case of fundamental property from last day:</p>
 <p>Reminder: Γ⊢e:τ =&gt; Γ⊨e:τ</p>
 <p>Γ⊢e: τ[μα.τ/α]</p>
 <hr />
 <p>HW: Same for step-indexed λ</p>
 <p>—</p>
-<p>monotonicity: if a val behaves like some type τ for k steps, then it
-has to behave like τ itself for &lt;k steps too.</p>
+<p>monotonicity: if a val behaves like some type τ for k steps, then it has to behave like τ itself for &lt;k steps too.</p>
 <ul>
 <li>aka downward closed</li>
 <li>v ∈ Vₖ[τ] =&gt; ∀j≤k. v ∈ Vⱼ[τ]</li>
@@ -544,12 +487,10 @@ has to behave like τ itself for &lt;k steps too.</p>
 <ul>
 <li>by means of invariants while running the prog</li>
 </ul>
-<p>memory location info not needed for prog-preservation approach for
-type safety, but not here ???</p>
+<p>memory location info not needed for prog-preservation approach for type safety, but not here ???</p>
 <hr />
 <p>Mutable references.</p>
-<p>STLC with allocation and stuff: type of reference/pointer to a value
-of τ read/write from refs</p>
+<p>STLC with allocation and stuff: type of reference/pointer to a value of τ read/write from refs</p>
 <pre><code>τ := 1 | bool | τ1→τ2
    | ref τ    (type of ref to some mem loc which has a value of type τ)
 
@@ -582,8 +523,7 @@ v := true | false | () | λx. ?
 </code></pre>
 <p>—</p>
 <p>f(x: ref bool, y: ref bool) { free x; !y }</p>
-<p>Aliasing problem. 2 ptrs pointing to same location. Freeing one would
-cause problem for others. What can type system do to prevent this?</p>
+<p>Aliasing problem. 2 ptrs pointing to same location. Freeing one would cause problem for others. What can type system do to prevent this?</p>
 <p>Reason why once allocated, type can't be changed.</p>
 <p>rust handles aliasing nicely ??</p>
 <p>This lang is non-terminating. Loops possible. Eg:</p>
@@ -596,8 +536,7 @@ f tt
 <p>Infinite loop.</p>
 <p>ie, STLC + refs =&gt; inf loop possible.</p>
 <p>f = λz.</p>
-<p>Type preserving updates. aka strong updates. GC is like refreshing
-mem so that it can be used for other types afterwards.</p>
+<p>Type preserving updates. aka strong updates. GC is like refreshing mem so that it can be used for other types afterwards.</p>
 <p>Review of what seen so far:</p>
 <ul>
 <li>Day1: Type = {I ∈ P(Closed vals)}</li>
@@ -620,11 +559,9 @@ mem so that it can be used for other types afterwards.</p>
 Γ ⊢ e1:=e2: 1
 </code></pre>
 <p>ie, 2 elim rules for ref</p>
-<p>ψ location to type mappings New locations can come in, but their type
-shouldn't change =&gt; type preserving updates</p>
+<p>ψ location to type mappings New locations can come in, but their type shouldn't change =&gt; type preserving updates</p>
 <h1 id="d4">D4</h1>
-<p>ψ = mapping from locations to semantic types (not syntactic types) =
-{l1↦V[τ1], l2↦V[τ2], ..} = store typing</p>
+<p>ψ = mapping from locations to semantic types (not syntactic types) = {l1↦V[τ1], l2↦V[τ2], ..} = store typing</p>
 <p>S = mapping from locations to vals</p>
 <p>Type world circularity Stratification to avoid circularity</p>
 <p>—</p>
@@ -640,10 +577,7 @@ shouldn't change =&gt; type preserving updates</p>
 <p>Our logrel was unary??? Binary also possible.</p>
 <h1 id="re-1">Re</h1>
 <h1 id="references">References</h1>
-<p>[1]: Wright, A.K. and Felleisen, M., <strong>1994</strong>. A
-syntactic approach to type soundness. Information and computation,
-115(1), pp.38-94.<a
-href="https://www.cse.chalmers.se/edu/year/2018/course/DAT350/WrightFelleisen.pdf">ʰ</a></p>
+<p>[1]: Wright, A.K. and Felleisen, M., <strong>1994</strong>. A syntactic approach to type soundness. Information and computation, 115(1), pp.38-94.<a href="https://www.cse.chalmers.se/edu/year/2018/course/DAT350/WrightFelleisen.pdf">ʰ</a></p>
 </div>
 </body>
 </html>

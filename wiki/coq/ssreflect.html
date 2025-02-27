@@ -47,8 +47,7 @@
 <p>Part of coq stdlib. No need of mathcomp</p>
 <h2 id="general">General</h2>
 <ul>
-<li><code>do n! tac</code> apply the tactic <code>tac</code>,
-<code>n</code> times.</li>
+<li><code>do n! tac</code> apply the tactic <code>tac</code>, <code>n</code> times.</li>
 </ul>
 <h3 id="multipliers">Multipliers</h3>
 <table>
@@ -72,8 +71,7 @@
 </tbody>
 </table>
 <h2 id="ssrfun">ssrfun</h2>
-<p><a
-href="https://coq.inria.fr/doc/V8.18.0/stdlib/Coq.ssr.ssrfun.html">https://coq.inria.fr/doc/V8.18.0/stdlib/Coq.ssr.ssrfun.html</a></p>
+<p><a href="https://coq.inria.fr/doc/V8.18.0/stdlib/Coq.ssr.ssrfun.html">https://coq.inria.fr/doc/V8.18.0/stdlib/Coq.ssr.ssrfun.html</a></p>
 <ul>
 <li><code>left_id</code>, <code>right_id</code></li>
 <li><code>left_zero</code>, <code>right_zero</code></li>
@@ -90,45 +88,35 @@ href="https://coq.inria.fr/doc/V8.18.0/stdlib/Coq.ssr.ssrfun.html">https://coq.i
 </ul>
 <h2 id="ssrbool">ssrbool</h2>
 <ul>
-<li><code>xpredT</code>: Notation for identity function for
-<code>true</code>
+<li><code>xpredT</code>: Notation for identity function for <code>true</code>
 <ul>
 <li>As in a predicate that's always true.</li>
 </ul></li>
-<li><code>a \in P</code>: P is a predicate and <code>P a</code>
-holds.</li>
+<li><code>a \in P</code>: P is a predicate and <code>P a</code> holds.</li>
 <li><code>a \notin P</code>: opposite of <code>a \in P</code></li>
-<li><code>predD P Q</code>: elements which are satisfied by
-<code>P</code> but not by <code>Q</code>
+<li><code>predD P Q</code>: elements which are satisfied by <code>P</code> but not by <code>Q</code>
 <ul>
 <li>As in <code>P \ Q</code>, like set difference.</li>
 <li>Underlying function is <code>xpredD</code>.</li>
 <li>Mathcomp syntax: <code>[predD P &amp; Q]</code></li>
 </ul></li>
 </ul>
-<h2 id="clear-switchᵈ">Clear switch<a
-href="https://coq.inria.fr/doc/V8.19.0/refman/proof-engine/ssreflect-proof-language.html#clear-switch">ᵈ</a></h2>
-<p>Introduction with curly braces means at the end of that tactic, the
-introduced variable will disappear from the set of hypotheses.</p>
+<h2 id="clear-switchᵈ">Clear switch<a href="https://coq.inria.fr/doc/V8.19.0/refman/proof-engine/ssreflect-proof-language.html#clear-switch">ᵈ</a></h2>
+<p>Introduction with curly braces means at the end of that tactic, the introduced variable will disappear from the set of hypotheses.</p>
 <h2 id="rewrite">rewrite</h2>
 <p>Probably the most useful tactic.</p>
 <p>Tips:</p>
 <ul>
-<li>rewrite within an assumption <code>H</code> as well as the goal:
-<code>rewrite in H *</code></li>
+<li>rewrite within an assumption <code>H</code> as well as the goal: <code>rewrite in H *</code></li>
 </ul>
-<h3 id="occurrence-selection-ᵈ">Occurrence selection <a
-href="https://coq.inria.fr/doc/V8.19.0/refman/proof-engine/ssreflect-proof-language.html#occurrence-selection">ᵈ</a></h3>
+<h3 id="occurrence-selection-ᵈ">Occurrence selection <a href="https://coq.inria.fr/doc/V8.19.0/refman/proof-engine/ssreflect-proof-language.html#occurrence-selection">ᵈ</a></h3>
 <ul>
-<li><code>rewrite {2}&lt;name&gt;</code>: rewrite only 2nd occurrance of
-<code>name</code></li>
-<li><code>rewrites {-2}&lt;name&gt;</code>: rewrite all occurrances of
-<code>name</code> except the 2nd one</li>
+<li><code>rewrite {2}&lt;name&gt;</code>: rewrite only 2nd occurrance of <code>name</code></li>
+<li><code>rewrites {-2}&lt;name&gt;</code>: rewrite all occurrances of <code>name</code> except the 2nd one</li>
 </ul>
 <h2 id="some-reflecting-examples">Some 'reflecting' examples</h2>
 <ul>
-<li><code>case/exists_inP</code> is same as
-<code>move/exists_inP =&gt; x; case: x</code></li>
+<li><code>case/exists_inP</code> is same as <code>move/exists_inP =&gt; x; case: x</code></li>
 </ul>
 <h3 id="andp"><code>andP</code></h3>
 <pre class="coq"><code>Require Import ssreflect ssrbool.
@@ -157,8 +145,7 @@ H : True
 true /\ true
 *)
 </code></pre>
-<h3 id="exists_inp-move"><code>exists_inP</code>
-(<code>move</code>)</h3>
+<h3 id="exists_inp-move"><code>exists_inP</code> (<code>move</code>)</h3>
 <p>One with mathcomp:</p>
 <pre><code>Check exists_inP.
 (*
@@ -197,8 +184,7 @@ P1, P2 : &#39;I_3 -&gt; bool
 True
 *)
 </code></pre>
-<h3 id="exists_inp-case"><code>exists_inP</code>
-(<code>case</code>)</h3>
+<h3 id="exists_inp-case"><code>exists_inP</code> (<code>case</code>)</h3>
 <pre><code>[exists (dst | true), accept eps dst l] -&gt; s :: l \in nilp (T:=A)
 </code></pre>
 <pre><code>case/exists_inP.
@@ -207,8 +193,7 @@ True
 </code></pre>
 <h2 id="misc">Misc</h2>
 <ul>
-<li>An ssreflect library is being developed for Lean as well: <a
-href="https://github.com/verse-lab/lean-ssr/tree/master">https://github.com/verse-lab/lean-ssr/tree/master</a></li>
+<li>An ssreflect library is being developed for Lean as well: <a href="https://github.com/verse-lab/lean-ssr/tree/master">https://github.com/verse-lab/lean-ssr/tree/master</a></li>
 <li>odflt: option default</li>
 </ul>
 </div>

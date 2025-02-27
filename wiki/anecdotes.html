@@ -44,20 +44,14 @@
 <hr/>
 
 <div id="content-container">
-<p>Stories that I cooked up or found online that are of potential use in
-explaining PL concepts.</p>
-<h2 id="infinite-loop-can-prove-any-theorems">Infinite loop can prove
-any theorems</h2>
-<p>In the cafeteria, often the size/quantity of food served would be
-less than what we are paying for.</p>
+<p>Stories that I cooked up or found online that are of potential use in explaining PL concepts.</p>
+<h2 id="infinite-loop-can-prove-any-theorems">Infinite loop can prove any theorems</h2>
+<p>In the cafeteria, often the size/quantity of food served would be less than what we are paying for.</p>
 <ul>
-<li>If we ask the people serving the food, they will say the manager
-told them to serve only that much.</li>
-<li>If we ask the manager, he would blame the people serving the food
-saying they are new and are still learning.</li>
+<li>If we ask the people serving the food, they will say the manager told them to serve only that much.</li>
+<li>If we ask the manager, he would blame the people serving the food saying they are new and are still learning.</li>
 </ul>
-<p>To whom is the blame assigned in effect? No-one. Everyone gets
-scot-free.</p>
+<p>To whom is the blame assigned in effect? No-one. Everyone gets scot-free.</p>
 <p>Proven by infinite loop!</p>
 <p>—</p>
 <pre><code>Guy1: Who are you?
@@ -65,14 +59,12 @@ Guy2: (Gesturing to the one beside him) I&#39;m his friend.
 Guy1: Who is he?
 Guy2: He&#39;s my friend.
 </code></pre>
-<p>You don't get an answer. It's a loop. Still it <em>looks</em>
-sound.</p>
+<p>You don't get an answer. It's a loop. Still it <em>looks</em> sound.</p>
 <p>—</p>
 <p>Here's another one:</p>
 <pre class="coq"><code>Fixpoint absurdity : False := absurdity.
 </code></pre>
-<p><code>absurdity</code> is kind of appealing to itself to say that
-it's correct.</p>
+<p><code>absurdity</code> is kind of appealing to itself to say that it's correct.</p>
 <p>Of course, coq doesn't allow this.</p>
 <h2 id="types">Types</h2>
 <table>
@@ -101,15 +93,11 @@ it's correct.</p>
 <pre><code>Mother (opening the refridgerator): Oh, we are running low on milk.
 Mother (to her son): Go to the store for me, would you?
 </code></pre>
-<p>Son understands that his mother means for him to go to the grocery
-shop and buy a few packets of milk. That's because he is a human.</p>
-<p>If the son was a machine was a machine name SON instead of a human,
-it could've been interpreted differently.</p>
+<p>Son understands that his mother means for him to go to the grocery shop and buy a few packets of milk. That's because he is a human.</p>
+<p>If the son was a machine was a machine name SON instead of a human, it could've been interpreted differently.</p>
 <p>SON could've</p>
 <ul>
-<li>gone upto the grocery store's doorstep (so that we can't say that it
-didn't go to the shop) and come back empty handed (or never came back at
-all).</li>
+<li>gone upto the grocery store's doorstep (so that we can't say that it didn't go to the shop) and come back empty handed (or never came back at all).</li>
 <li>gone to a jewellery store and came back
 <ul>
 <li>because Mother didn't say what store</li>
@@ -119,18 +107,14 @@ all).</li>
 <pre><code>Go to the grocery store, buy 2 packets of milk, come back home and put the milk packets in the refridgerator.
 </code></pre>
 <p>The level of detail depends on the guarantees that we want.</p>
-<p>Even at this point, nothing stops SON from taking the milk back out
-from the refridgerator right after keeping it inside (and thus
-fulfilling the contract).</p>
+<p>Even at this point, nothing stops SON from taking the milk back out from the refridgerator right after keeping it inside (and thus fulfilling the contract).</p>
 <p>—</p>
 <h3 id="ambiguity">Ambiguity</h3>
 <p>Within a reasonable amount of time.</p>
 <p>But what is reasonable?</p>
 <p>—</p>
 <p>An example:</p>
-<p>Python string formatting mini-language is given by a sort of grammar:
-<a
-href="https://docs.python.org/3/library/string.html#formatspec">https://docs.python.org/3/library/string.html#formatspec</a></p>
+<p>Python string formatting mini-language is given by a sort of grammar: <a href="https://docs.python.org/3/library/string.html#formatspec">https://docs.python.org/3/library/string.html#formatspec</a></p>
 <pre><code>format_spec     ::=  [[fill]align][sign][&quot;z&quot;][&quot;#&quot;][&quot;0&quot;][width][grouping_option][&quot;.&quot; precision][type]
 fill            ::=  &lt;any character&gt;
 align           ::=  &quot;&lt;&quot; | &quot;&gt;&quot; | &quot;=&quot; | &quot;^&quot;
@@ -144,8 +128,7 @@ type            ::=  &quot;b&quot; | &quot;c&quot; | &quot;d&quot; | &quot;e&quo
 <p>If we follow this grammar, we can have</p>
 <pre><code>.precision d
 </code></pre>
-<p>which isn't actually possible in Python because precision cannot be
-used if type is <code>int</code>.</p>
+<p>which isn't actually possible in Python because precision cannot be used if type is <code>int</code>.</p>
 <h2 id="bindings-in-real-life">Bindings in real life</h2>
 <p>In natural languages.</p>
 <pre><code>It&#39;s here.
@@ -153,45 +136,29 @@ used if type is <code>int</code>.</p>
 <p>is like</p>
 <pre><code>λ &#39;it. λ &#39;here. =&gt; &#39;it is &#39;here
 </code></pre>
-<h2 id="difference-between-weak-and-strong-until-in-ltl">Difference
-between weak and strong until in LTL</h2>
-<p>Consider a speaker is faced with a question that he finds difficult
-to answer. He tell the person who asked the question that he'll answer
-the question once he finishes the talk.</p>
+<h2 id="difference-between-weak-and-strong-until-in-ltl">Difference between weak and strong until in LTL</h2>
+<p>Consider a speaker is faced with a question that he finds difficult to answer. He tell the person who asked the question that he'll answer the question once he finishes the talk.</p>
 <p>noanswer U talkover</p>
-<p>Suppose the speaker managed his talk such that he finished his talk
-with no time for question.</p>
-<p>Under weak until, the promise is upheld. But not for strong
-until.</p>
-<h2 id="law-of-excluded-middle-in-intuitionistic-logic">Law of excluded
-middle in Intuitionistic logic</h2>
-<p>Two inverted bowls: A and B We are told that there is a marble
-underneath one of them: A ∨ B From this can we tell which bowl has the
-marble?</p>
+<p>Suppose the speaker managed his talk such that he finished his talk with no time for question.</p>
+<p>Under weak until, the promise is upheld. But not for strong until.</p>
+<h2 id="law-of-excluded-middle-in-intuitionistic-logic">Law of excluded middle in Intuitionistic logic</h2>
+<p>Two inverted bowls: A and B We are told that there is a marble underneath one of them: A ∨ B From this can we tell which bowl has the marble?</p>
 <p>No.</p>
 <p>That's where constructive logic differs from classical logic.</p>
 <h2 id="gcd">GCD</h2>
-<p>My friend and I are drinking tea. I finished my cup. Friend is still
-drinking. To keep him company, I refill my glass. He finished, but now
-I'm still drinking, so he refills as well. This goes on.</p>
-<p>How many times should I refill my glass till we can both finish our
-cups at the same time?</p>
-<p>Another scenario: There are only ₹101 and ₹11 currency notes. I need
-to pay exactly ₹100 to my friend. He can return money as well. Is it
-possible to pay the ₹100 with just ₹101 and ₹11 notes?</p>
+<p>My friend and I are drinking tea. I finished my cup. Friend is still drinking. To keep him company, I refill my glass. He finished, but now I'm still drinking, so he refills as well. This goes on.</p>
+<p>How many times should I refill my glass till we can both finish our cups at the same time?</p>
+<p>Another scenario: There are only ₹101 and ₹11 currency notes. I need to pay exactly ₹100 to my friend. He can return money as well. Is it possible to pay the ₹100 with just ₹101 and ₹11 notes?</p>
 <h2 id="complete-but-vacuous-spec">Complete but vacuous spec</h2>
 <p>Apparently a sign at a diner:</p>
 <pre><code>  Kids eat free
 No minors allowed
 </code></pre>
-<h2 id="language-in-which-you-cant-lie">Language in which you can't
-lie</h2>
-<p>(Got this thought from the wikipedia page for the <em>Eragon</em>
-books.)</p>
+<h2 id="language-in-which-you-cant-lie">Language in which you can't lie</h2>
+<p>(Got this thought from the wikipedia page for the <em>Eragon</em> books.)</p>
 <ul>
 <li>Define what truth is, using types.</li>
-<li>Then the resulting language will be a language in which it is
-impossible to lie.</li>
+<li>Then the resulting language will be a language in which it is impossible to lie.</li>
 </ul>
 <h2 id="paradoxes">Paradoxes</h2>
 <ul>

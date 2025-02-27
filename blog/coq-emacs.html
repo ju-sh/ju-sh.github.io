@@ -36,54 +36,52 @@
 </header>
 
 <ul>
-    </ul>
+    <li>Date created: Feb-2021</li>
+      <li>Last updated: 01-Oct-2021</li>
+  </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/installation coq emacs.html">installation coq emacs</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
-An experience setting up emacs with Proof General for using coq
-interactively.
+An experience setting up emacs with Proof General for using coq interactively.
 </div>
 
 <hr/>
 
 <div id="content-container">
-<p>Proof general mode of emacs, together with the company-coq package
-can be used as an interface for coq as mentioned <a
-href="https://coq.inria.fr/user-interfaces.html">here</a>.</p>
+<p>Proof general mode of emacs, together with the company-coq package can be used as an interface for coq as mentioned <a href="https://coq.inria.fr/user-interfaces.html">here</a>.</p>
 <h2 id="emacs-file">.emacs file</h2>
 <p>Add the following to your `.emacs` file.</p>
 <pre class="elisp"><code>(require &#39;package)
 (add-to-list &#39;package-archives &#39;(&quot;melpa&quot; . &quot;https://melpa.org/packages/&quot;) t)
 (package-initialize)
 </code></pre>
-<p>(Source: <a
-href="https://github.com/ProofGeneral/PG#installing-proof-general">Proof
-General github page</a>)</p>
+<p>(Source: <a href="https://github.com/ProofGeneral/PG#installing-proof-general">Proof General github page</a>)</p>
 <h2 id="edit-gpg.conf">Edit gpg.conf</h2>
-<p>Go to `~/.emacs.d/elpa/gnupg/` directory (make it if it doesn't
-exist) and open the gpg.conf file.</p>
+<p>Go to `~/.emacs.d/elpa/gnupg/` directory (make it if it doesn't exist) and open the gpg.conf file.</p>
 <p>Add the following to it.</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">keyserver</span> hkp://keys.gnupg.net:80</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ex">keyserver</span> hkp://keys.gnupg.net:80</span></code></pre></div>
 <h2 id="receive-gpg-keys">Receive gpg keys</h2>
 <p>Run</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gpg</span> <span class="at">--homedir</span> ~/.emacs.d/elpa/gnupg <span class="at">--receive-keys</span> 066DAFCB81E42C40</span></code></pre></div>
-<h2 id="install-the-packages-inside-emacs">Install the packages inside
-emacs</h2>
-<p>Finally, open up emacs and run (to update the list of packages, I
-guess)</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ex">gpg</span> --homedir ~/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40</span></code></pre></div>
+<h2 id="install-the-packages-inside-emacs">Install the packages inside emacs</h2>
+<p>Finally, open up emacs and run (to update the list of packages, I guess)</p>
 <pre><code>M-x package-refresh-contents
 </code></pre>
 <p>Then, install the packages with</p>
 <pre><code>M-x package-install RET proof-general 
 M-x package-install RET company-coq
 </code></pre>
-<p><a href="https://github.com/cpitclaudel/company-coq">company-coq</a>
-extends the proof general's coq mode.</p>
-<h2 id="versions-of-software-involved">Versions of software
-involved</h2>
+<p><a href="https://github.com/cpitclaudel/company-coq">company-coq</a> extends the proof general's coq mode.</p>
+<h2 id="versions-of-software-involved">Versions of software involved</h2>
 <ul>
 <li>Coq: 8.12.0</li>
 <li>Emacs: 25.2.2</li>
@@ -92,12 +90,9 @@ involved</h2>
 </ul>
 <h2 id="references">References</h2>
 <ul>
-<li><a
-href="https://github.com/ProofGeneral/PG#installing-proof-general">https://github.com/ProofGeneral/PG#installing-proof-general</a></li>
-<li><a
-href="https://coq.inria.fr/user-interfaces.html">https://coq.inria.fr/user-interfaces.html</a></li>
-<li><a
-href="https://github.com/cpitclaudel/company-coq">https://github.com/cpitclaudel/company-coq</a></li>
+<li><a href="https://github.com/ProofGeneral/PG#installing-proof-general">https://github.com/ProofGeneral/PG#installing-proof-general</a></li>
+<li><a href="https://coq.inria.fr/user-interfaces.html">https://coq.inria.fr/user-interfaces.html</a></li>
+<li><a href="https://github.com/cpitclaudel/company-coq">https://github.com/cpitclaudel/company-coq</a></li>
 </ul>
 </div>
 </body>

@@ -46,46 +46,30 @@
 <div id="content-container">
 <p>Info on some python packages.</p>
 <ul>
-<li><span class="spurious-link"
-target="*numpy"><em>numpy</em></span></li>
-<li><span class="spurious-link"
-target="*Pandas"><em>pandas</em></span></li>
-<li><span class="spurious-link"
-target="*scipy"><em>scipy</em></span></li>
-<li><span class="spurious-link"
-target="*networkx"><em>networkx</em></span></li>
-<li><span class="spurious-link"
-target="*BeautifulSoup4"><em>BeautifulSoup4</em></span></li>
-<li><span class="spurious-link"
-target="*conda"><em>conda</em></span></li>
-<li><span class="spurious-link" target="*More packages"><em>More
-packages</em></span></li>
+<li><em>numpy</em></li>
+<li><em>pandas</em></li>
+<li><em>scipy</em></li>
+<li><em>networkx</em></li>
+<li><em>BeautifulSoup4</em></li>
+<li><em>conda</em></li>
+<li><em>More packages</em></li>
 </ul>
 <hr />
 <h1 id="numpy">numpy</h1>
 <ul>
-<li>Create array:
-<code>np.array([(1.5,2,3), (4,5,6)], dtype = float)</code></li>
+<li>Create array: <code>np.array([(1.5,2,3), (4,5,6)], dtype = float)</code></li>
 <li>Shape: <code>arr.shape</code></li>
-<li>1-D arrays can be made from list generator:
-<code>np.fromiter(list_gen)</code> (UNVERIFIED)</li>
+<li>1-D arrays can be made from list generator: <code>np.fromiter(list_gen)</code> (UNVERIFIED)</li>
 <li>Infinity: <code>np.inf</code></li>
-<li>Identity matrix: <code>np.identity(n)</code> (where <code>n</code>
-is number of rows)</li>
-<li>Add two matrices: <code>np.add(m1, m2)</code> or just
-<code>m1 + m2</code></li>
-<li>Broadcasting: <a
-href="https://numpy.org/devdocs/user/basics.broadcasting.html">https://numpy.org/devdocs/user/basics.broadcasting.html</a></li>
+<li>Identity matrix: <code>np.identity(n)</code> (where <code>n</code> is number of rows)</li>
+<li>Add two matrices: <code>np.add(m1, m2)</code> or just <code>m1 + m2</code></li>
+<li>Broadcasting: <a href="https://numpy.org/devdocs/user/basics.broadcasting.html">https://numpy.org/devdocs/user/basics.broadcasting.html</a></li>
 <li>Default <code>dtype</code> is <code>float</code></li>
-<li>Create empty (ie, with garbage values) matrix:
-<code>np.empty(&lt;shape&gt;)</code></li>
-<li>Create array full of constant values:
-<code>np.full(&lt;shape&gt;, val)</code></li>
-<li><code>np.dot</code> and <code>matmul</code> (<code>@</code>) aren't
-the same
+<li>Create empty (ie, with garbage values) matrix: <code>np.empty(&lt;shape&gt;)</code></li>
+<li>Create array full of constant values: <code>np.full(&lt;shape&gt;, val)</code></li>
+<li><code>np.dot</code> and <code>matmul</code> (<code>@</code>) aren't the same
 <ul>
-<li><a
-href="https://stackoverflow.com/questions/34142485/difference-between-numpy-dot-and-python-3-5-matrix-multiplication">https://stackoverflow.com/questions/34142485/difference-between-numpy-dot-and-python-3-5-matrix-multiplication</a></li>
+<li><a href="https://stackoverflow.com/questions/34142485/difference-between-numpy-dot-and-python-3-5-matrix-multiplication">https://stackoverflow.com/questions/34142485/difference-between-numpy-dot-and-python-3-5-matrix-multiplication</a></li>
 </ul></li>
 <li>np.resize and var.resize behaves slightly different, apparently</li>
 <li>np.newaxis is actually an alias for <code>None</code> ??</li>
@@ -96,8 +80,7 @@ href="https://stackoverflow.com/questions/34142485/difference-between-numpy-dot-
 <li>C-order: ??</li>
 </ul>
 <h2 id="axis-parameter">Axis parameter</h2>
-<p><a
-href="https://stackoverflow.com/questions/48200911/very-basic-numpy-array-dimension-visualization">https://stackoverflow.com/questions/48200911/very-basic-numpy-array-dimension-visualization</a></p>
+<p><a href="https://stackoverflow.com/questions/48200911/very-basic-numpy-array-dimension-visualization">https://stackoverflow.com/questions/48200911/very-basic-numpy-array-dimension-visualization</a></p>
 <ul>
 <li>nth axis =&gt; nth index</li>
 <li>'order of indexing into the array'</li>
@@ -124,53 +107,46 @@ array([[1, 0, 1, 0],
        [3, 0, 3, 0]])
 </code></pre>
 <h2 id="matrix-creation">Matrix creation</h2>
-<h3 id="create-a-vectormatrix-of-all-zeros">Create a vector/matrix of
-all zeros</h3>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>array([<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>])</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).shape</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>(<span class="dv">3</span>,)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>array([[<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>]])</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>).shape</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span>, <span class="dv">3</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">###</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.zeros((<span class="dv">1</span>,<span class="dv">3</span>))</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>array([[<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>]])</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.zeros((<span class="dv">1</span>,<span class="dv">3</span>)).shape</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span>, <span class="dv">3</span>)</span></code></pre></div>
-<p><a
-href="https://numpy.org/doc/stable/reference/generated/numpy.zeros.html">https://numpy.org/doc/stable/reference/generated/numpy.zeros.html</a></p>
-<h3 id="make-a-matrix-by-giving-all-values-explicitly">Make a matrix by
-giving all values explicitly</h3>
+<h3 id="create-a-vectormatrix-of-all-zeros">Create a vector/matrix of all zeros</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>array([<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>])</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).shape</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>(<span class="dv">3</span>,)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>array([[<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>]])</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>).shape</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>(<span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a><span class="co">###</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros((<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>array([[<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>]])</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros((<span class="dv">1</span>,<span class="dv">3</span>)).shape</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a>(<span class="dv">1</span>, <span class="dv">3</span>)</span></code></pre></div>
+<p><a href="https://numpy.org/doc/stable/reference/generated/numpy.zeros.html">https://numpy.org/doc/stable/reference/generated/numpy.zeros.html</a></p>
+<h3 id="make-a-matrix-by-giving-all-values-explicitly">Make a matrix by giving all values explicitly</h3>
 <pre><code>&gt;&gt;&gt; np.array([[0, 1], [0, 0]])
 array([[0, 1],
        [0, 0]])
 </code></pre>
-<h3 id="create-a-matrix-out-of-a-constant">Create a matrix out of a
-constant</h3>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">2</span>,<span class="dv">2</span>), <span class="dv">3</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>array([[<span class="dv">3</span>, <span class="dv">3</span>],</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       [<span class="dv">3</span>, <span class="dv">3</span>]])</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">2</span>,<span class="dv">2</span>), np.inf)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>array([[inf, inf],</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>       [inf, inf]])</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">3</span>,<span class="dv">2</span>), [<span class="dv">1</span>,<span class="dv">2</span>])</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>array([[<span class="dv">1</span>, <span class="dv">2</span>],</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>       [<span class="dv">1</span>, <span class="dv">2</span>],</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>       [<span class="dv">1</span>, <span class="dv">2</span>]])</span></code></pre></div>
-<p><a
-href="https://numpy.org/doc/stable/reference/generated/numpy.full.html">https://numpy.org/doc/stable/reference/generated/numpy.full.html</a></p>
+<h3 id="create-a-matrix-out-of-a-constant">Create a matrix out of a constant</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">2</span>,<span class="dv">2</span>), <span class="dv">3</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>array([[<span class="dv">3</span>, <span class="dv">3</span>],</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>       [<span class="dv">3</span>, <span class="dv">3</span>]])</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">2</span>,<span class="dv">2</span>), np.inf)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>array([[inf, inf],</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>       [inf, inf]])</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">3</span>,<span class="dv">2</span>), [<span class="dv">1</span>,<span class="dv">2</span>])</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>array([[<span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>       [<span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>       [<span class="dv">1</span>, <span class="dv">2</span>]])</span></code></pre></div>
+<p><a href="https://numpy.org/doc/stable/reference/generated/numpy.full.html">https://numpy.org/doc/stable/reference/generated/numpy.full.html</a></p>
 <h2 id="matrix-multiplication">Matrix multiplication</h2>
 <ul>
 <li>Multipy vector with matrix: <code>np.dot</code></li>
@@ -187,8 +163,7 @@ href="https://numpy.org/doc/stable/reference/generated/numpy.full.html">https://
 ...
 -2.0000000000000004
 </code></pre>
-<p><a
-href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.det.html">https://numpy.org/doc/stable/reference/generated/numpy.linalg.det.html</a></p>
+<p><a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.det.html">https://numpy.org/doc/stable/reference/generated/numpy.linalg.det.html</a></p>
 <h2 id="eigen-values-of-a-matrix">Eigen values of a matrix</h2>
 <pre><code>&gt;&gt;&gt; np.linalg.eigvals(np.array([[1,2],
 ...                             [3,4]]))
@@ -199,14 +174,12 @@ array([-0.37228132,  5.37228132])
 &gt;&gt;&gt; np.prod(np.linalg.eigvals(np.array([[1,2],[3,4]])))
 -1.9999999999999998
 </code></pre>
-<p><a
-href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.eigvals.html">https://numpy.org/doc/stable/reference/generated/numpy.linalg.eigvals.html</a></p>
+<p><a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.eigvals.html">https://numpy.org/doc/stable/reference/generated/numpy.linalg.eigvals.html</a></p>
 <h2 id="reading-from-csv">Reading from csv</h2>
 <ul>
 <li>np.loadtxt: usable when there are no missing values</li>
 <li>np.genfromtxt: usable even when there are missing values</li>
-<li><a
-href="https://numpy.org/doc/stable/user/how-to-io.html">https://numpy.org/doc/stable/user/how-to-io.html</a></li>
+<li><a href="https://numpy.org/doc/stable/user/how-to-io.html">https://numpy.org/doc/stable/user/how-to-io.html</a></li>
 </ul>
 <h2 id="doubts">Doubts</h2>
 <ul>
@@ -217,12 +190,9 @@ href="https://numpy.org/doc/stable/user/how-to-io.html">https://numpy.org/doc/st
 <ul>
 <li>Pacakges for type hints:
 <ul>
-<li><a
-href="https://github.com/ramonhagenaars/nptyping">https://github.com/ramonhagenaars/nptyping</a></li>
-<li><a
-href="https://pypi.org/project/numpy-typing/">https://pypi.org/project/numpy-typing/</a></li>
-<li><a
-href="https://numpy.org/doc/stable/reference/typing.html">https://numpy.org/doc/stable/reference/typing.html</a></li>
+<li><a href="https://github.com/ramonhagenaars/nptyping">https://github.com/ramonhagenaars/nptyping</a></li>
+<li><a href="https://pypi.org/project/numpy-typing/">https://pypi.org/project/numpy-typing/</a></li>
+<li><a href="https://numpy.org/doc/stable/reference/typing.html">https://numpy.org/doc/stable/reference/typing.html</a></li>
 </ul></li>
 </ul>
 <h2 id="theory">Theory</h2>
@@ -231,30 +201,24 @@ href="https://numpy.org/doc/stable/reference/typing.html">https://numpy.org/doc/
 </ul>
 <h1 id="pandas">Pandas</h1>
 <ul>
-<li><p>Convert a 2D frame to a 1D frame (ie, DataFrame to Series):
-<code>df.stack()</code></p></li>
-<li><p>Read from csv with first column as row index:
-<code>pd.read_csv("~/b.csv", index_col=0)</code></p></li>
+<li><p>Convert a 2D frame to a 1D frame (ie, DataFrame to Series): <code>df.stack()</code></p></li>
+<li><p>Read from csv with first column as row index: <code>pd.read_csv("~/b.csv", index_col=0)</code></p></li>
 <li><p>Write csv: <code>df.to_csv("~/out.csv")</code></p></li>
-<li><p>Index using number instead of names:
-<code>iloc[0]</code></p></li>
+<li><p>Index using number instead of names: <code>iloc[0]</code></p></li>
 <li><p>Column names: <code>df.columns</code></p></li>
 <li><p>Row names: <code>df.index</code></p></li>
 <li><p>Use <code>pd.read_csv()</code></p>
 <ul>
-<li><a
-href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html">https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html</a></li>
+<li><a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html">https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html</a></li>
 </ul></li>
-<li><p>Convert a <code>Series</code> to <code>np.array</code>:
-<code>to_numpy()</code></p></li>
+<li><p>Convert a <code>Series</code> to <code>np.array</code>: <code>to_numpy()</code></p></li>
 <li><p>level??</p></li>
 <li><p>axis</p>
 <ul>
 <li>0: stacking one on top of another</li>
 </ul></li>
 </ul>
-<h2 id="merge-two-series-to-make-a-dataframe">Merge two
-<code>Series</code> to make a <code>DataFrame</code></h2>
+<h2 id="merge-two-series-to-make-a-dataframe">Merge two <code>Series</code> to make a <code>DataFrame</code></h2>
 <pre><code>&gt;&gt;&gt; pd.concat([s1, s2], axis=1)
 
 &gt;&gt;&gt; pd.concat([s1, s2], axis=1).columns
@@ -274,26 +238,22 @@ RangeIndex(start=0, stop=16, step=1)
 </code></pre>
 <h1 id="scipy">scipy</h1>
 <h2 id="sparse-matrix">Sparse matrix</h2>
-<p><a
-href="https://docs.scipy.org/doc/scipy/reference/sparse.html">https://docs.scipy.org/doc/scipy/reference/sparse.html</a></p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> scipy</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> X <span class="op">=</span> scipy.sparse.csr_matrix(<span class="fl">1.</span><span class="op">/</span><span class="fl">2.</span><span class="op">*</span>np.array([[<span class="fl">0.</span>,<span class="fl">1.</span>],[<span class="fl">1.</span>,<span class="fl">0.</span>]]))</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> X</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="dv">2</span><span class="er">x2</span> sparse matrix of <span class="bu">type</span> <span class="st">&#39;&lt;class &#39;</span>numpy.float64<span class="st">&#39;&gt;&#39;</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="dv">2</span> stored elements <span class="kw">in</span> Compressed Sparse Row <span class="bu">format</span><span class="op">&gt;</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span>(X)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">0</span>, <span class="dv">1</span>)        <span class="fl">0.5</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">1</span>, <span class="dv">0</span>)        <span class="fl">0.5</span></span></code></pre></div>
+<p><a href="https://docs.scipy.org/doc/scipy/reference/sparse.html">https://docs.scipy.org/doc/scipy/reference/sparse.html</a></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> scipy</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> X <span class="op">=</span> scipy.sparse.csr_matrix(<span class="fl">1.</span><span class="op">/</span><span class="fl">2.</span><span class="op">*</span>np.array([[<span class="fl">0.</span>,<span class="fl">1.</span>],[<span class="fl">1.</span>,<span class="fl">0.</span>]]))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> X</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="op">&lt;</span>2x2 sparse matrix of <span class="bu">type</span> <span class="st">&#39;&lt;class &#39;</span>numpy.float64<span class="st">&#39;&gt;&#39;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a>        <span class="cf">with</span> <span class="dv">2</span> stored elements <span class="kw">in</span> Compressed Sparse Row <span class="bu">format</span><span class="op">&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span>(X)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a>  (<span class="dv">0</span>, <span class="dv">1</span>)        <span class="fl">0.5</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a>  (<span class="dv">1</span>, <span class="dv">0</span>)        <span class="fl">0.5</span></span></code></pre></div>
 <h2 id="curve-fitting">Curve fitting</h2>
-<p>Find an equation corresponding a function made from a set of data
-points.</p>
+<p>Find an equation corresponding a function made from a set of data points.</p>
 <ul>
-<li><a
-href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html</a></li>
+<li><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html</a></li>
 </ul>
 <h1 id="networkx">networkx</h1>
 <h2 id="graph-attributes">Graph attributes</h2>
@@ -312,40 +272,30 @@ href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_
 <h2 id="add-edges">Add edges</h2>
 <p>Adding edges implicitly adds nodes.</p>
 <ul>
-<li><p>Edges from/to on a node in undirected graphs:
-<code>G.edges(&lt;node&gt;)</code></p></li>
-<li><p>Edges incident on a node in directed graphs:
-<code>G.in_edges(&lt;node&gt;)</code></p></li>
-<li><p>Edges outgoing from a node in directed graphs:
-<code>G.out_edges(&lt;node&gt;)</code></p></li>
-<li><p>Check if an edge exists:
-<code>DiGraph.has_edge(n1, n2)</code></p></li>
-<li><p>Add edge with weight:
-<code>G.add_edge(from, to, weight=&lt;weight&gt;)</code></p></li>
-<li><p>Node attributes: <code>G[&lt;node&gt;]</code> or
-<code>G.nodes[&lt;node&gt;]</code></p></li>
-<li><p>Edge attributes:
-<code>G[n1][n2]['&lt;attr-name&gt;'] = &lt;attr-val&gt;</code></p></li>
+<li><p>Edges from/to on a node in undirected graphs: <code>G.edges(&lt;node&gt;)</code></p></li>
+<li><p>Edges incident on a node in directed graphs: <code>G.in_edges(&lt;node&gt;)</code></p></li>
+<li><p>Edges outgoing from a node in directed graphs: <code>G.out_edges(&lt;node&gt;)</code></p></li>
+<li><p>Check if an edge exists: <code>DiGraph.has_edge(n1, n2)</code></p></li>
+<li><p>Add edge with weight: <code>G.add_edge(from, to, weight=&lt;weight&gt;)</code></p></li>
+<li><p>Node attributes: <code>G[&lt;node&gt;]</code> or <code>G.nodes[&lt;node&gt;]</code></p></li>
+<li><p>Edge attributes: <code>G[n1][n2]['&lt;attr-name&gt;'] = &lt;attr-val&gt;</code></p></li>
 <li><p>Get edge data: <code>G.get_edge_data(n1, n2)</code></p></li>
 </ul>
 <h1 id="beautifulsoup4">BeautifulSoup4</h1>
-<p><a
-href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">https://www.crummy.com/software/BeautifulSoup/bs4/doc/</a></p>
+<p><a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">https://www.crummy.com/software/BeautifulSoup/bs4/doc/</a></p>
 <ul>
 <li>Install: pip3 install BeautifulSoup4</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pathlib</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>html_path <span class="op">=</span> pathlib.Path(<span class="st">&quot;/home/user/Downloads/input.html&quot;</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>htmlstr <span class="op">=</span> html_path.read_text()</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(htmlstr)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>content <span class="op">=</span> soup.find(<span class="bu">id</span><span class="op">=</span><span class="st">&#39;content-container&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="im">import</span> pathlib</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>html_path <span class="op">=</span> pathlib.Path(<span class="st">&quot;/home/user/Downloads/input.html&quot;</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>htmlstr <span class="op">=</span> html_path.read_text()</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>soup <span class="op">=</span> BeautifulSoup(htmlstr)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>content <span class="op">=</span> soup.find(<span class="bu">id</span><span class="op">=</span><span class="st">&#39;content-container&#39;</span>)</span></code></pre></div>
 <h2 id="finding">Finding</h2>
 <ul>
-<li>Find all elements matching class:
-<code>soup.find_all("tagname", class_="classname")</code></li>
+<li>Find all elements matching class: <code>soup.find_all("tagname", class_="classname")</code></li>
 <li>Find by id: <code>soup.find(id='content-container')</code></li>
 </ul>
 <h2 id="children">Children</h2>
@@ -356,20 +306,15 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a h
 </ul>
 <h1 id="conda">conda</h1>
 <ul>
-<li>Create new conda environment:
-<code>conda create -n &lt;env-name&gt; [python=3.6.8] [packages needed]</code></li>
-<li>Activate conda environment:
-<code>conda activate &lt;env-name&gt;</code></li>
+<li>Create new conda environment: <code>conda create -n &lt;env-name&gt; [python=3.6.8] [packages needed]</code></li>
+<li>Activate conda environment: <code>conda activate &lt;env-name&gt;</code></li>
 <li>Install pip to the environment: <code>conda install pip</code>
 <ul>
-<li>conda envs doesn't come with pip by default. Gotta install
-them.</li>
+<li>conda envs doesn't come with pip by default. Gotta install them.</li>
 </ul></li>
 <li>Install git: <code>conda install git</code></li>
-<li>Delete a conda environment:
-<code>conda env remove -n &lt;env-name&gt;</code></li>
-<li>Delete a package installed with conda (not with pip):
-<code>conda remove &lt;package-name&gt;</code></li>
+<li>Delete a conda environment: <code>conda env remove -n &lt;env-name&gt;</code></li>
+<li>Delete a package installed with conda (not with pip): <code>conda remove &lt;package-name&gt;</code></li>
 </ul>
 <h1 id="more-packages">More packages</h1>
 <ul>
@@ -381,8 +326,7 @@ them.</li>
 <li>mypy, pytype: static type checkers</li>
 <li>pytest: unit testing
 <ul>
-<li>Show execution time of tests:
-<code>pytest durations=0  # show tests that ran for more than 0s</code></li>
+<li>Show execution time of tests: <code>pytest durations=0  # show tests that ran for more than 0s</code></li>
 </ul></li>
 </ul>
 </div>

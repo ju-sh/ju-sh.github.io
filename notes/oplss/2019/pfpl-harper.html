@@ -44,9 +44,7 @@
 <hr/>
 
 <div id="content-container">
-<p>Based on vidoes of <a
-href="https://www.cs.uoregon.edu/research/summerschool/summer19/topics.php#Harper">lectures</a>
-by Robert Harper at OPLSS-2019.</p>
+<p>Based on vidoes of <a href="https://www.cs.uoregon.edu/research/summerschool/summer19/topics.php#Harper">lectures</a> by Robert Harper at OPLSS-2019.</p>
 <p>Mistakes my own.</p>
 <h1 id="l1">L1</h1>
 <p>Variable in PL:</p>
@@ -56,10 +54,8 @@ by Robert Harper at OPLSS-2019.</p>
 <li>Something which is yet to be determined.</li>
 <li>Will be filled in later.</li>
 </ul>
-<p>Fun fact: Apparently this concept of variables can be traced back to
-the works of Brahmagupta and Kwarazmi</p>
-<p>Though computer programming in general was heavily influenced by
-mathematics (logic?), general programming ≠ mathematics.</p>
+<p>Fun fact: Apparently this concept of variables can be traced back to the works of Brahmagupta and Kwarazmi</p>
+<p>Though computer programming in general was heavily influenced by mathematics (logic?), general programming ≠ mathematics.</p>
 <p>A programming language:</p>
 <ol>
 <li>Abstract syntax tree</li>
@@ -80,15 +76,11 @@ mathematics (logic?), general programming ≠ mathematics.</p>
 <li>Any univariant polynomial is also a multivariant polynomial</li>
 <li>Any square is also a rectangle</li>
 </ul>
-<p>We make the constraint/type less strict. Hence the name
-'weakening'.</p>
+<p>We make the constraint/type less strict. Hence the name 'weakening'.</p>
 <blockquote>
-<p>The expressive power of a programming language arises from its
-strictures and not from its affordances. Memorize that statement. -
-Robert Harper</p>
+<p>The expressive power of a programming language arises from its strictures and not from its affordances. Memorize that statement. - Robert Harper</p>
 </blockquote>
-<p>Can't compare variables ∵ it's not stable under substitution.
-Contraction rule ??</p>
+<p>Can't compare variables ∵ it's not stable under substitution. Contraction rule ??</p>
 <p>Collatz conjecture: No one knows the termination criterion yet.</p>
 <h2 id="circuit-language">Circuit language</h2>
 <p>Syntax:</p>
@@ -101,8 +93,7 @@ Contraction rule ??</p>
 <ul>
 <li><code>a ̅∨ b = (a ∨ b)'</code></li>
 </ul>
-<p>We need both <code>̅∨₁</code> and <code>̅∨₂</code>. The distinction
-is important:</p>
+<p>We need both <code>̅∨₁</code> and <code>̅∨₂</code>. The distinction is important:</p>
 <ul>
 <li>̅∨₁: Left operand evaluated first</li>
 <li>̅∨₂: Right operand evaluated first</li>
@@ -119,8 +110,7 @@ is important:</p>
 </code></pre>
 <h3 id="semantics-dynamics">Semantics (dynamics):</h3>
 <p>How to evaluate terms.</p>
-<p><code>e ⇓ v</code> where there are no free variables (ie, closed
-terms).</p>
+<p><code>e ⇓ v</code> where there are no free variables (ie, closed terms).</p>
 <pre><code>─────────     ─────────            
  tt ⇓ tt       ff ⇓ ff            
 
@@ -226,8 +216,7 @@ Y = R NOR (S NOR Y)
 <li>Fibrate method? (20:25 lec1)</li>
 <li>Plotkin's PCF
 <ul>
-<li><a
-href="https://en.wikipedia.org/wiki/Programming_Computable_Functions">https://en.wikipedia.org/wiki/Programming_Computable_Functions</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Programming_Computable_Functions">https://en.wikipedia.org/wiki/Programming_Computable_Functions</a></li>
 </ul></li>
 </ul>
 <h1 id="l2">L2</h1>
@@ -240,8 +229,7 @@ href="https://en.wikipedia.org/wiki/Programming_Computable_Functions">https://en
 <ul>
 <li>Because open terms are not evaluated ??</li>
 </ul></li>
-<li>Self-recursion (as in 'short circuiting' in the case of circuits)
-possible</li>
+<li>Self-recursion (as in 'short circuiting' in the case of circuits) possible</li>
 </ul></li>
 </ul>
 <pre><code>λx1:ℕ. λx2:ℕ. if x1 then true else (iszero x2)

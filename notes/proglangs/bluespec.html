@@ -44,8 +44,7 @@
 <hr/>
 
 <div id="content-container">
-<p>Bluespec SystemVerilog (BSV) is different from Bluespec Haskell (BH).
-But both are implementations of Bluespec.</p>
+<p>Bluespec SystemVerilog (BSV) is different from Bluespec Haskell (BH). But both are implementations of Bluespec.</p>
 <ul>
 <li><p>One rule at a time.</p></li>
 <li><p>Higher abstraction level.</p></li>
@@ -57,8 +56,7 @@ But both are implementations of Bluespec.</p>
 <h2 id="interfaces">Interfaces</h2>
 <ul>
 <li>Advertises the outside facing part of a module.</li>
-<li>The methods present in the interface are the only ways of accessing
-the module. Including feeding input and retrieving output.</li>
+<li>The methods present in the interface are the only ways of accessing the module. Including feeding input and retrieving output.</li>
 <li><code>Empty</code>: the (predefined) empty interface</li>
 </ul>
 <h2 id="assignment-operations">Assignment operations</h2>
@@ -91,8 +89,7 @@ the module. Including feeding input and retrieving output.</li>
 </code></pre>
 <p>(Or is it backtick ??)</p>
 <p>Textual replacement, I guess.</p>
-<p>SystemVerilog has this as well<a
-href="https://www.systemverilog.io/verification/macros/">ʳ</a>.</p>
+<p>SystemVerilog has this as well<a href="https://www.systemverilog.io/verification/macros/">ʳ</a>.</p>
 <h2 id="include-external-files">Include external files</h2>
 <p>One of the following syntaxes:</p>
 <ul>
@@ -128,13 +125,9 @@ href="https://www.systemverilog.io/verification/macros/">ʳ</a>.</p>
 </table>
 <h2 id="tuples">Tuples</h2>
 <ul>
-<li>2-tuple (<code>tuple2</code>) to 7-tuple (<code>tuple7</code>)
-available</li>
-<li>Extract particular elements of tuple with <code>tpl_1</code> (like
-<code>fst</code> in sml), <code>tpl_2</code> (like <code>snd</code> in
-sml), …, <code>tpl_7</code>.</li>
-<li>Types are <code>Tuple&lt;n&gt;</code>, constructors are
-<code>tuple(...)</code></li>
+<li>2-tuple (<code>tuple2</code>) to 7-tuple (<code>tuple7</code>) available</li>
+<li>Extract particular elements of tuple with <code>tpl_1</code> (like <code>fst</code> in sml), <code>tpl_2</code> (like <code>snd</code> in sml), …, <code>tpl_7</code>.</li>
+<li>Types are <code>Tuple&lt;n&gt;</code>, constructors are <code>tuple(...)</code></li>
 </ul>
 <pre class="bsv"><code>// Type of tuple of 2 Bit values
 typedef Tuple2 #(Bit #(1), Bit #(1)) B2;
@@ -150,8 +143,7 @@ case (ibi) matches
 endcase
 </code></pre>
 <h2 id="useful-functions">Useful functions</h2>
-<p>Usual functional programming style functions available. Some standard
-libraries may need to be imported for some of them to be used.</p>
+<p>Usual functional programming style functions available. Some standard libraries may need to be imported for some of them to be used.</p>
 <ul>
 <li>zipWith</li>
 <li>map</li>
@@ -163,11 +155,9 @@ libraries may need to be imported for some of them to be used.</p>
 <li><code>-e</code>: specify top-level when linking</li>
 <li><code>-u</code>: specify dependency packages</li>
 <li><code>-show-schedule</code>: show generated schedule</li>
-<li><code>-sched-dot</code>: generate dot file showing the way rules
-were scheduled.
+<li><code>-sched-dot</code>: generate dot file showing the way rules were scheduled.
 <ul>
-<li>Use <code>-info-dir</code> to specify directory to which this dot
-file should be placed.</li>
+<li>Use <code>-info-dir</code> to specify directory to which this dot file should be placed.</li>
 <li>Separate graphs are generated for each module.
 <ul>
 <li><code>&lt;module&gt;_conflict.dot</code></li>
@@ -181,53 +171,35 @@ file should be placed.</li>
 <h2 id="misc">Misc</h2>
 <ul>
 <li><code>?</code>: 'a special don't care value'</li>
-<li>KPNS (shown in some compiler errors): <a
-href="http://csg.csail.mit.edu/6.175/resources/bsv-kpns.pdf">Known
-problems and solutions</a></li>
+<li>KPNS (shown in some compiler errors): <a href="http://csg.csail.mit.edu/6.175/resources/bsv-kpns.pdf">Known problems and solutions</a></li>
 <li>Ternary operator available: <code>((s == 0) ? a : b)</code></li>
-<li><code>begin</code> and <code>end</code> can be used to demarcarte
-code blocks. Like <code>{</code> and <code>}</code> in C.</li>
+<li><code>begin</code> and <code>end</code> can be used to demarcarte code blocks. Like <code>{</code> and <code>}</code> in C.</li>
 <li>bluesim: tool to simulate designs made in bsv</li>
 <li><code>.bs</code>: extension of BSH files (Haskell-like)
 <ul>
-<li>Eg: <a
-href="https://github.com/B-Lang-org/bsc/blob/main/src/Libraries/Base2/Wallace.bs">https://github.com/B-Lang-org/bsc/blob/main/src/Libraries/Base2/Wallace.bs</a></li>
+<li>Eg: <a href="https://github.com/B-Lang-org/bsc/blob/main/src/Libraries/Base2/Wallace.bs">https://github.com/B-Lang-org/bsc/blob/main/src/Libraries/Base2/Wallace.bs</a></li>
 </ul></li>
-<li><code>Action</code>: 'an expression intended to act on the state of
-the circuit'</li>
-<li><code>Integer</code> is unsynthesizable, but is often used for loops
-because the loop would be unrolled in the elaboration phase anyway.</li>
+<li><code>Action</code>: 'an expression intended to act on the state of the circuit'</li>
+<li><code>Integer</code> is unsynthesizable, but is often used for loops because the loop would be unrolled in the elaboration phase anyway.</li>
 <li><code>valueOf</code> and <code>valueof</code> are equivalent.</li>
-<li>'modules and interfaces turn into actual hardware'. They form the
-'heart of BSV'.</li>
+<li>'modules and interfaces turn into actual hardware'. They form the 'heart of BSV'.</li>
 <li>'rules are the fundamental means to express behavior in BSV'</li>
-<li>Use <code>$finish (0);</code> to end a simulation instead of letting
-it loop forever.</li>
-<li><code>scan</code> family of functions applies a function over a
-list, creating a new List result. The scan function is similar to fold,
-but the intermediate results are saved and returned in a list, instead
-of returning just the last result.' <a
-href="http://csg.csail.mit.edu/6.S078/6_S078_2012_www/resources/reference-guide.pdf">ʳ</a>
+<li>Use <code>$finish (0);</code> to end a simulation instead of letting it loop forever.</li>
+<li><code>scan</code> family of functions applies a function over a list, creating a new List result. The scan function is similar to fold, but the intermediate results are saved and returned in a list, instead of returning just the last result.' <a href="http://csg.csail.mit.edu/6.S078/6_S078_2012_www/resources/reference-guide.pdf">ʳ</a>
 <ul>
-<li>Like
-<code>scanl: (a -&gt; b -&gt; a) -&gt; a -&gt; [b] -&gt; [a]</code></li>
+<li>Like <code>scanl: (a -&gt; b -&gt; a) -&gt; a -&gt; [b] -&gt; [a]</code></li>
 </ul></li>
-<li><code>pack</code> and <code>unpack</code> are available if value's
-type belongs to the <code>Bit</code> typeclass.
+<li><code>pack</code> and <code>unpack</code> are available if value's type belongs to the <code>Bit</code> typeclass.
 <ul>
 <li><code>pack</code>: convert to <code>Bit#()</code> form</li>
 <li><code>unpack</code>: convert from <code>Bit#()</code> form</li>
 </ul></li>
-<li>'A module can be annotated with the synthesize attribute' <a
-href="https://web.ece.ucsb.edu/its/bluespec/doc/BSV/user-guide.pdf">ʳ</a>.
-This has the same effect as passing the module name to compiler with the
-<code>-g</code> flag.</li>
+<li>'A module can be annotated with the synthesize attribute' <a href="https://web.ece.ucsb.edu/its/bluespec/doc/BSV/user-guide.pdf">ʳ</a>. This has the same effect as passing the module name to compiler with the <code>-g</code> flag.</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">(</span>* synthesize *<span class="op">)</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> mkFoo <span class="op">(</span>FooIfc<span class="op">);</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">endmodule</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>(* synthesize *)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="kw">module</span> mkFoo (FooIfc);</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>...</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="kw">endmodule</span></span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -248,33 +220,19 @@ class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb6-1"><a 
 </table>
 <h2 id="references-and-links">References and links</h2>
 <ul>
-<li><a
-href="http://csg.csail.mit.edu/6.S078/6_S078_2012_www/resources/reference-guide.pdf">Reference
-guide</a> (2010)</li>
-<li><a
-href="https://web.ece.ucsb.edu/its/bluespec/doc/BSV/user-guide.pdf">User
-guide</a> (2008):</li>
-<li>Wiki: <a
-href="http://wiki.bluespec.com/Home/BSV-Documentation">http://wiki.bluespec.com/Home/BSV-Documentation</a></li>
-<li>BSV by example: <a
-href="http://csg.csail.mit.edu/6.375/6_375_2019_www/resources/bsv_by_example.pdf">http://csg.csail.mit.edu/6.375/6_375_2019_www/resources/bsv_by_example.pdf</a></li>
+<li><a href="http://csg.csail.mit.edu/6.S078/6_S078_2012_www/resources/reference-guide.pdf">Reference guide</a> (2010)</li>
+<li><a href="https://web.ece.ucsb.edu/its/bluespec/doc/BSV/user-guide.pdf">User guide</a> (2008):</li>
+<li>Wiki: <a href="http://wiki.bluespec.com/Home/BSV-Documentation">http://wiki.bluespec.com/Home/BSV-Documentation</a></li>
+<li>BSV by example: <a href="http://csg.csail.mit.edu/6.375/6_375_2019_www/resources/bsv_by_example.pdf">http://csg.csail.mit.edu/6.375/6_375_2019_www/resources/bsv_by_example.pdf</a></li>
 </ul>
 <ul>
-<li><a
-href="https://github.com/B-Lang-org/bsc/discussions/603">https://github.com/B-Lang-org/bsc/discussions/603</a></li>
-<li><a href="https://github.com/CTSRD-CHERI/bluecheck">bluecheck</a>:
-Like Quickcheck, apparently no longer maintained</li>
+<li><a href="https://github.com/B-Lang-org/bsc/discussions/603">https://github.com/B-Lang-org/bsc/discussions/603</a></li>
+<li><a href="https://github.com/CTSRD-CHERI/bluecheck">bluecheck</a>: Like Quickcheck, apparently no longer maintained</li>
 </ul>
 <p>Papers:</p>
 <ul>
-<li>R. Nikhil, "Bluespec System Verilog: efficient, correct RTL from
-high level specifications," Proceedings. Second ACM and IEEE
-International Conference on Formal Methods and Models for Co-Design,
-2004. MEMOCODE '04., San Diego, CA, USA, 2004, pp. 69-70, doi:
-10.1109/MEMCOD.2004.1459818.</li>
-<li>Rishiyur S. Nikhil and Arvind. 2008. What is Bluespec? SIGDA Newsl.
-38, 23 (December 2008), 1. <a
-href="https://doi.org/10.1145/1862867.1862868">https://doi.org/10.1145/1862867.1862868</a></li>
+<li>R. Nikhil, "Bluespec System Verilog: efficient, correct RTL from high level specifications," Proceedings. Second ACM and IEEE International Conference on Formal Methods and Models for Co-Design, 2004. MEMOCODE '04., San Diego, CA, USA, 2004, pp. 69-70, doi: 10.1109/MEMCOD.2004.1459818.</li>
+<li>Rishiyur S. Nikhil and Arvind. 2008. What is Bluespec? SIGDA Newsl. 38, 23 (December 2008), 1. <a href="https://doi.org/10.1145/1862867.1862868">https://doi.org/10.1145/1862867.1862868</a></li>
 </ul>
 </div>
 </body>

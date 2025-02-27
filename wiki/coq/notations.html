@@ -46,11 +46,8 @@
 <div id="content-container">
 <h2 id="info">Info</h2>
 <ul>
-<li>If defined within a section, notation is usable only within that
-section</li>
-<li>Notations in <a
-href="https://coq.inria.fr/refman/language/coq-library.html#init-notations">here</a>
-are reserved and cannot be changed.
+<li>If defined within a section, notation is usable only within that section</li>
+<li>Notations in <a href="https://coq.inria.fr/refman/language/coq-library.html#init-notations">here</a> are reserved and cannot be changed.
 <ul>
 <li>Eg: <code>_ /\ _</code>, <code>_ || _</code></li>
 </ul></li>
@@ -59,36 +56,26 @@ are reserved and cannot be changed.
 <ul>
 <li>Left factorization may be needed to avoid parsing conflicts</li>
 </ul></li>
-<li>'level 200 is the default for inner expressions' <a
-href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html">ʳ</a></li>
-<li>There is a list of predefined notation (with their levels and
-associativity): <a
-href="https://coq.inria.fr/doc/V8.19.0/refman/language/coq-library.html#thecoqlibrary">https://coq.inria.fr/doc/V8.19.0/refman/language/coq-library.html#thecoqlibrary</a></li>
-<li><code>Print Notation "_ :: _"</code>: Show info of a notation,
-including its level and associativity</li>
-<li>'lonely notation': a notation that doesn't have a notation scope
-associated with it.</li>
+<li>'level 200 is the default for inner expressions' <a href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html">ʳ</a></li>
+<li>There is a list of predefined notation (with their levels and associativity): <a href="https://coq.inria.fr/doc/V8.19.0/refman/language/coq-library.html#thecoqlibrary">https://coq.inria.fr/doc/V8.19.0/refman/language/coq-library.html#thecoqlibrary</a></li>
+<li><code>Print Notation "_ :: _"</code>: Show info of a notation, including its level and associativity</li>
+<li>'lonely notation': a notation that doesn't have a notation scope associated with it.</li>
 </ul>
 <h2 id="print-grammar"><code>Print Grammar</code></h2>
 <ul>
-<li>There are grammar entries (courtesy of camlp5). Default one is
-<code>constr</code></li>
+<li>There are grammar entries (courtesy of camlp5). Default one is <code>constr</code></li>
 </ul>
-<p>From <a href="https://camlp5.github.io/doc/html/grammars.html">camlp5
-docs</a>:</p>
+<p>From <a href="https://camlp5.github.io/doc/html/grammars.html">camlp5 docs</a>:</p>
 <blockquote>
-<p>A grammar entry is an abstract value internally containing a stream
-parser</p>
+<p>A grammar entry is an abstract value internally containing a stream parser</p>
 </blockquote>
 <p>—</p>
 <ul>
-<li><code>Print Grammar constr.</code>: Print grammar for the entry
-named <code>constr</code>
+<li><code>Print Grammar constr.</code>: Print grammar for the entry named <code>constr</code>
 <ul>
 <li><code>Print Grammar.</code>: Print whole gramamr</li>
 </ul></li>
-<li><code>Print Custom Grammar &lt;custom-entry-name&gt;</code>: print
-grammar of a custom entry</li>
+<li><code>Print Custom Grammar &lt;custom-entry-name&gt;</code>: print grammar of a custom entry</li>
 </ul>
 <pre><code>Print Grammar constructor.
 (*
@@ -106,12 +93,10 @@ Entry constructor is
 </ul>
 <p>Also see:</p>
 <ul>
-<li><a
-href="https://github.com/coq/coq/blob/master/doc/tools/docgram/fullGrammar">https://github.com/coq/coq/blob/master/doc/tools/docgram/fullGrammar</a></li>
+<li><a href="https://github.com/coq/coq/blob/master/doc/tools/docgram/fullGrammar">https://github.com/coq/coq/blob/master/doc/tools/docgram/fullGrammar</a></li>
 </ul>
 <h2 id="syntax-modifiers">Syntax modifiers</h2>
-<p><a
-href="https://coq.inria.fr/doc/V8.19.0/refman/user-extensions/syntax-extensions.html#grammar-token-syntax_modifier">https://coq.inria.fr/doc/V8.19.0/refman/user-extensions/syntax-extensions.html#grammar-token-syntax_modifier</a></p>
+<p><a href="https://coq.inria.fr/doc/V8.19.0/refman/user-extensions/syntax-extensions.html#grammar-token-syntax_modifier">https://coq.inria.fr/doc/V8.19.0/refman/user-extensions/syntax-extensions.html#grammar-token-syntax_modifier</a></p>
 <ul>
 <li>name: parse something as a single identifier</li>
 <li>pattern:</li>
@@ -119,11 +104,7 @@ href="https://coq.inria.fr/doc/V8.19.0/refman/user-extensions/syntax-extensions.
 <li>ident</li>
 </ul>
 <h2 id="local-attribute"><code>local</code> attribute</h2>
-<p>If <a
-href="https://coq.inria.fr/refman/language/core/modules.html#coq:attr.local"><code>local</code></a>
-<a
-href="https://coq.inria.fr/refman/language/core/basic.html#term-attribute">attribute</a>
-is used, notation is available only within the same module.</p>
+<p>If <a href="https://coq.inria.fr/refman/language/core/modules.html#coq:attr.local"><code>local</code></a> <a href="https://coq.inria.fr/refman/language/core/basic.html#term-attribute">attribute</a> is used, notation is available only within the same module.</p>
 <pre class="coq"><code>Module FooMod.
   #[local] Notation &quot;⊥&quot; := false.
 
@@ -134,21 +115,14 @@ Import FooMod.
 Compute ⊥.
 (* Syntax Error: Lexer: Undefined token *)
 </code></pre>
-<h2 id="reserved-notation"><a
-href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#coq:cmd.Reserved-Notation"><code>Reserved Notation</code></a></h2>
-<p>Same notations may have different meaning in different contexts. But
-they must all have the same precedence and associativity.</p>
+<h2 id="reserved-notation"><a href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#coq:cmd.Reserved-Notation"><code>Reserved Notation</code></a></h2>
+<p>Same notations may have different meaning in different contexts. But they must all have the same precedence and associativity.</p>
 <p>We can 'reserve' notations to ensure that.</p>
-<p><code>Reserved Infix</code> is the same thing except that the
-notation is infix.</p>
-<h2 id="syntax-modifier"><a
-href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#grammar-token-syntax_modifier">Syntax
-modifier</a></h2>
+<p><code>Reserved Infix</code> is the same thing except that the notation is infix.</p>
+<h2 id="syntax-modifier"><a href="https://coq.inria.fr/refman/user-extensions/syntax-extensions.html#grammar-token-syntax_modifier">Syntax modifier</a></h2>
 <ul>
-<li><code>x name</code>: 'parse <code>x</code> as a single
-identifier'</li>
-<li><code>x at level 10</code>: x is parsed as a term at level 10, but
-is actually to be a name</li>
+<li><code>x name</code>: 'parse <code>x</code> as a single identifier'</li>
+<li><code>x at level 10</code>: x is parsed as a term at level 10, but is actually to be a name</li>
 <li>at level</li>
 <li>in custom &lt;custom-entry-name&gt;</li>
 <li>ident</li>
@@ -157,22 +131,17 @@ is actually to be a name</li>
 </ul>
 <p>Other:</p>
 <ul>
-<li><code>p pattern</code>: p is a pattern. Like the kind used in
-pattern matching.</li>
+<li><code>p pattern</code>: p is a pattern. Like the kind used in pattern matching.</li>
 </ul>
 <h2 id="custom-entries">Custom entries</h2>
-<p><code>constr</code>: the predefined grammar entry. As in the default
-interpretation.</p>
+<p><code>constr</code>: the predefined grammar entry. As in the default interpretation.</p>
 <ul>
 <li>ie, the main grammar.</li>
 </ul>
-<p>We can make our own grammar entries via
-<code>Custom Entry</code>.</p>
+<p>We can make our own grammar entries via <code>Custom Entry</code>.</p>
 <ul>
-<li>Print grammar of the custom entry:
-<code>Print Custom Grammar &lt;custom-entry-name&gt;</code></li>
-<li>Print grammar of <code>constr</code>:
-<code>Print Grammar constr</code></li>
+<li>Print grammar of the custom entry: <code>Print Custom Grammar &lt;custom-entry-name&gt;</code></li>
+<li>Print grammar of <code>constr</code>: <code>Print Grammar constr</code></li>
 </ul>
 <h2 id="precedence">Precedence</h2>
 <p>Lower the precedence level, higher the precedence.</p>
@@ -182,9 +151,7 @@ interpretation.</p>
 <li>Least precedence: 200 (for coq)</li>
 </ul>
 <h2 id="examples">Examples</h2>
-<p><a
-href="https://coq.inria.fr/doc/V8.19.0/refman/user-extensions/syntax-extensions.html#notations-with-recursive-patterns">Documentation</a>
-mentions this example of having left-associative tuples:</p>
+<p><a href="https://coq.inria.fr/doc/V8.19.0/refman/user-extensions/syntax-extensions.html#notations-with-recursive-patterns">Documentation</a> mentions this example of having left-associative tuples:</p>
 <pre class="coq"><code>Notation &quot;( x , y , .. , z )&quot; := (pair .. (pair x y) .. z) (at level 0).
 
 Set Printing Parentheses.
@@ -198,15 +165,12 @@ Set Printing Parentheses.
 Check (1,2,3).
 (* (1, (2, 3)) : nat * (nat * nat) *)
 </code></pre>
-<p>Thanks to <a
-href="https://coq.zulipchat.com/#narrow/stream/423352-Coq-Notation-system">https://coq.zulipchat.com/#narrow/stream/423352-Coq-Notation-system</a></p>
+<p>Thanks to <a href="https://coq.zulipchat.com/#narrow/stream/423352-Coq-Notation-system">https://coq.zulipchat.com/#narrow/stream/423352-Coq-Notation-system</a></p>
 <h2 id="todo">Todo</h2>
-<ul class="task-list">
-<li><input type="checkbox" disabled="" />Tactic notation</li>
-<li><input type="checkbox" disabled="" />Number notation: can be used to
-change how numbers are parsed</li>
-<li><input type="checkbox" disabled="" />String notation: can be used to
-change how strings are parsed</li>
+<ul>
+<li>[ ] Tactic notation</li>
+<li>[ ] Number notation: can be used to change how numbers are parsed</li>
+<li>[ ] String notation: can be used to change how strings are parsed</li>
 </ul>
 </div>
 </body>

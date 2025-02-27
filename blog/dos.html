@@ -36,8 +36,17 @@
 </header>
 
 <ul>
+    <li>Date created: 28-Mar-2021</li>
     </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/dos windows terminal.html">dos windows terminal</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
@@ -144,16 +153,13 @@ An overview of DOS commands for a Linux user.
 </tr>
 </tbody>
 </table>
-<p>Options in DOS start with <code>/</code> as in <code>/a</code>
-instead of <code>-a</code> in Linux.</p>
-<p>Help text of DOS commands is usually obtained using <code>/?</code>,
-like <code>--help</code> in Linux.</p>
+<p>Options in DOS start with <code>/</code> as in <code>/a</code> instead of <code>-a</code> in Linux.</p>
+<p>Help text of DOS commands is usually obtained using <code>/?</code>, like <code>--help</code> in Linux.</p>
 <h2 id="compare-files">Compare files</h2>
 <p>With <code>FC</code> command. As in 'File Compare'.</p>
 <pre class="dos"><code>fc file1.txt file2.txt
 </code></pre>
-<p>Or with <code>COMP</code> command which is a bit different from
-<code>FC</code>.</p>
+<p>Or with <code>COMP</code> command which is a bit different from <code>FC</code>.</p>
 <h2 id="edit">Edit</h2>
 <p>Launch an editor.</p>
 <pre class="dos"><code>edit [file]
@@ -170,10 +176,8 @@ md [dirs]
 <pre class="dos"><code>rmdir [dirs]
 rd [dirs]
 </code></pre>
-<p>Or remove entire directory along with all its sub-directories and
-files with <code>DELTREE</code>:</p>
-<p><code>DELTREE</code> is considered a 'dangerous' command due to the
-possibility of accidental file deletion.</p>
+<p>Or remove entire directory along with all its sub-directories and files with <code>DELTREE</code>:</p>
+<p><code>DELTREE</code> is considered a 'dangerous' command due to the possibility of accidental file deletion.</p>
 <h2 id="navigating-directories">Navigating directories</h2>
 <h3 id="changing-current-directory">Changing current directory</h3>
 <p><code>CD</code> command.</p>
@@ -188,16 +192,14 @@ possibility of accidental file deletion.</p>
 </code></pre>
 <h2 id="help">Help</h2>
 <h3 id="help-option-for-dos-commands">–help option for DOS commands</h3>
-<p>In DOS, <code>/?</code> fulfills the function of <code>--help</code>
-in Linux.</p>
+<p>In DOS, <code>/?</code> fulfills the function of <code>--help</code> in Linux.</p>
 <pre class="dos"><code>cmd /?
 </code></pre>
 <h3 id="help-1">HELP</h3>
 <pre class="dos"><code>HELP &lt;command-name&gt;
 </code></pre>
 <h2 id="command-options">Command options</h2>
-<p>In DOS, options are preceded by a '/' unlike Unix where hyphens are
-used instead.</p>
+<p>In DOS, options are preceded by a '/' unlike Unix where hyphens are used instead.</p>
 <h2 id="change-file-permissions">Change file permissions</h2>
 <p>Use <code>ATTRIB</code> command.</p>
 <ul>
@@ -210,12 +212,10 @@ used instead.</p>
 <li><code>-s</code>: not system file</li>
 <li><code>-a</code>: not archived file</li>
 </ul>
-<p>For example, the following command makes the file
-<code>file.txt</code> 'not hidden' and 'not read-only'.</p>
+<p>For example, the following command makes the file <code>file.txt</code> 'not hidden' and 'not read-only'.</p>
 <pre class="dos"><code>attrib -h -r file.txt
 </code></pre>
-<p>Without any switches, <code>ATTRIB</code> acts something like
-<code>ls -l</code> in Linux.</p>
+<p>Without any switches, <code>ATTRIB</code> acts something like <code>ls -l</code> in Linux.</p>
 <h2 id="comments">Comments</h2>
 <p>Two ways:</p>
 <ul>
@@ -228,9 +228,7 @@ used instead.</p>
 :: Another comment
 echo &quot;Hello&quot;
 </code></pre>
-<p>If we need comment after a command, we can use
-<strong><strong>command concatenation character</strong></strong>
-(&amp;) like</p>
+<p>If we need comment after a command, we can use <strong><strong>command concatenation character</strong></strong> (&amp;) like</p>
 <pre class="dos"><code>echo &quot;hello&quot; &amp; REM A comment
 echo &quot;world&quot; &amp; ::  Another comment
 </code></pre>
@@ -259,8 +257,7 @@ echo &quot;world&quot; &amp; ::  Another comment
 <p>Displays search path for executable files.</p>
 <p>Like displaying or setting <code>$PATH</code> in Linux.</p>
 <h2 id="pause-command">PAUSE command</h2>
-<p>Suspends execution and by default, displays a "Press any key to
-continue . . ." message, till a key is pressed.</p>
+<p>Suspends execution and by default, displays a "Press any key to continue . . ." message, till a key is pressed.</p>
 <h2 id="renaming-files">Renaming files</h2>
 <p>Two ways:</p>
 <ul>
@@ -292,15 +289,13 @@ dir *.txt
 </code></pre>
 <p>would match <code>ab.swp</code>, <code>12a.swo</code>, etc.</p>
 <h2 id="date-and-time">Date and time</h2>
-<p>Display current date and prompt for new date value:
-<code>date</code></p>
+<p>Display current date and prompt for new date value: <code>date</code></p>
 <p>Just display current date: <code>date /t</code></p>
 <p>Likewise with time: <code>time</code> and <code>time /t</code>.</p>
 <h2 id="shell">Shell</h2>
 <h3 id="piping-commands">Piping commands</h3>
 <p>Like in Unix.</p>
-<p>For example, the following is like <code>cat file.txt | more</code>
-in Linux:</p>
+<p>For example, the following is like <code>cat file.txt | more</code> in Linux:</p>
 <pre class="dos"><code>type file.txt | more
 </code></pre>
 <h3 id="inputoutput-redirection">Input/output redirection</h3>
@@ -309,22 +304,18 @@ in Linux:</p>
 <p>Todo: <code>XCOPY</code> command.</p>
 <h2 id="less-oftenly-used-commands">Less oftenly used commands</h2>
 <h3 id="change-title-of-dos-window">Change title of DOS window</h3>
-<p>Change title of command prompt window with <code>TITLE</code>
-command.</p>
+<p>Change title of command prompt window with <code>TITLE</code> command.</p>
 <h3 id="get-dos-version">Get DOS version</h3>
 <p><code>VER</code> command.</p>
-<h2 id="some-equivalent-dos-commands">Some 'equivalent' DOS
-commands</h2>
+<h2 id="some-equivalent-dos-commands">Some 'equivalent' DOS commands</h2>
 <h3 id="grep--r"><code>grep -r</code></h3>
 <pre class="dos"><code>dir *.txt /s /b
 </code></pre>
-<p><code>/s</code> look in all sub-directories and <code>/b</code> keeps
-output concise.</p>
+<p><code>/s</code> look in all sub-directories and <code>/b</code> keeps output concise.</p>
 <h2 id="references">References</h2>
 <ul>
 <li>Help output of the commands</li>
-<li><a
-href="https://en.wikipedia.org/wiki/List_of_DOS_commands">https://en.wikipedia.org/wiki/List_of_DOS_commands</a></li>
+<li><a href="https://en.wikipedia.org/wiki/List_of_DOS_commands">https://en.wikipedia.org/wiki/List_of_DOS_commands</a></li>
 </ul>
 </div>
 </body>

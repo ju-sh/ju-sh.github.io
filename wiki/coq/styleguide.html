@@ -45,28 +45,23 @@
 
 <div id="content-container">
 <p>Coq doesn't have an official style guide.</p>
-<p>This is an attempt to write down the style that I follow while
-writing Coq code.</p>
+<p>This is an attempt to write down the style that I follow while writing Coq code.</p>
 <ul>
 <li>Type annotations: Use <code>value: Type</code> format
 <ul>
-<li>Note: Coq standard library seems to favour
-<code>value : Type</code>, which is in line with Agda.</li>
+<li>Note: Coq standard library seems to favour <code>value : Type</code>, which is in line with Agda.</li>
 </ul></li>
 <li>Indendation: 2 spaces per level. Don't use tab.</li>
 <li>All imports should appear at the top of the file</li>
-<li>All <code>Reserved Notation</code> lines should appear on top of the
-file, after the imports</li>
+<li>All <code>Reserved Notation</code> lines should appear on top of the file, after the imports</li>
 <li>Constructor names should start with uppercase</li>
 <li>Type names should start with lowercase.</li>
 <li>Module names should start with uppercase.</li>
-<li>Use <code>Context</code> instead of <code>Variable</code> for
-sections</li>
+<li>Use <code>Context</code> instead of <code>Variable</code> for sections</li>
 </ul>
 <p>Suggestions:</p>
 <ul>
-<li>If there are more than 2 related notations, consider making a
-separate module just for them with its own scope.
+<li>If there are more than 2 related notations, consider making a separate module just for them with its own scope.
 <ul>
 <li>The module name should end with <code>Notations</code>.</li>
 <li>Eg: <code>RegexNotations</code></li>

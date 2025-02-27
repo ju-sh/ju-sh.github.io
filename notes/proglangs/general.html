@@ -62,20 +62,15 @@
 <ul>
 <li><p>File extension: <code>.elf</code></p></li>
 <li><p>Comment (single line): Starts with <code>%</code></p></li>
-<li><p>Comment (multi-line): between <code>%{</code> and
-<code>%}</code></p></li>
+<li><p>Comment (multi-line): between <code>%{</code> and <code>%}</code></p></li>
 <li><p>Coverage check</p></li>
 <li><p>Totality check</p></li>
 <li><p>Adequacy</p></li>
 </ul>
-<h3 id="name-ʳ"><code>%name</code> <a
-href="https://twelf.org/wiki/percent-name/#_top">ʳ</a></h3>
+<h3 id="name-ʳ"><code>%name</code> <a href="https://twelf.org/wiki/percent-name/#_top">ʳ</a></h3>
 <p>Not mandatory, but makes twelf output messages more readable.</p>
-<p>If <code>%name</code> is given for a type, names of variables of that
-type which twelf generates will have the prefix indicated by
-<code>%name</code>.</p>
-<p>Name starts with an uppercase letter. Usually a single letter would
-do, though multi-character prefixes are fine too.</p>
+<p>If <code>%name</code> is given for a type, names of variables of that type which twelf generates will have the prefix indicated by <code>%name</code>.</p>
+<p>Name starts with an uppercase letter. Usually a single letter would do, though multi-character prefixes are fine too.</p>
 <p>For example, with the following definitions,</p>
 <pre><code>nat: type.
 z: nat.
@@ -149,11 +144,9 @@ plus/s: plus (S N1) N2 (S N3) &lt;- plus N1 N2 N3.
 </tbody>
 </table>
 <h3 id="emacs-mode">Emacs mode</h3>
-<p>As of January 2024, twelf.el file for emacs mode needs some brackets
-removed. Other than that, it should work right out of the box.</p>
+<p>As of January 2024, twelf.el file for emacs mode needs some brackets removed. Other than that, it should work right out of the box.</p>
 <p>(Got to set <code>twelf-root</code> variable first.)</p>
-<p>First, twelf-server needs to be started:
-<code>M-x twelf-server</code> (will display a 'Server OK' message).</p>
+<p>First, twelf-server needs to be started: <code>M-x twelf-server</code> (will display a 'Server OK' message).</p>
 <ul>
 <li><code>C-c C-c</code>: Load a configuration file
 <ul>
@@ -162,23 +155,18 @@ removed. Other than that, it should work right out of the box.</p>
 <li><code>C-c C-s</code>: Load an elf file</li>
 <li><code>C-c C-d</code>: Type check a specific declaration</li>
 </ul>
-<p>First run the cfg file. Afterwards individual elf files can be run as
-needed.</p>
+<p>First run the cfg file. Afterwards individual elf files can be run as needed.</p>
 <h3 id="configuration-file">Configuration file</h3>
-<p>All files in a twelf project should be listed in a
-<code>sources.cfg</code> files. Those files are compiled in the order in
-which they are listed.</p>
+<p>All files in a twelf project should be listed in a <code>sources.cfg</code> files. Those files are compiled in the order in which they are listed.</p>
 <h3 id="misc">Misc</h3>
 <ul>
 <li>Wiki Twelf: like twelf literate programming.</li>
 <li>Elf: Predecessor of twelf</li>
 <li>Delphin: a research project which built on twelf</li>
-<li>To have unproven assertions (for experimentation purposes), twelf
-needs to be put to 'unsafe mode'.</li>
+<li>To have unproven assertions (for experimentation purposes), twelf needs to be put to 'unsafe mode'.</li>
 </ul>
 <h2 id="beluga">Beluga</h2>
-<p><a
-href="https://github.com/Beluga-lang/Beluga">https://github.com/Beluga-lang/Beluga</a></p>
+<p><a href="https://github.com/Beluga-lang/Beluga">https://github.com/Beluga-lang/Beluga</a></p>
 <ul>
 <li>File extension: <code>.bel</code></li>
 <li>Comment (single line): Starts with <code>%</code></li>
@@ -195,14 +183,10 @@ href="https://github.com/Beluga-lang/Beluga">https://github.com/Beluga-lang/Belu
 <ul>
 <li>Feels very similar to twelf, but has major differences.</li>
 </ul></li>
-<li>Boxing: Data is embedded into computations with
-<code>[ |- stuff ]</code>.</li>
-<li>Data and values live at different levels. So 'boxing' and 'unboxing'
-needed.
+<li>Boxing: Data is embedded into computations with <code>[ |- stuff ]</code>.</li>
+<li>Data and values live at different levels. So 'boxing' and 'unboxing' needed.
 <ul>
-<li>'Boxing is necessary to ensure we are working with pure data;
-unboxing is necessary for inspecting what the data looks like' <a
-href="http://complogic.cs.mcgill.ca/tutorial.pdf">ʳ</a></li>
+<li>'Boxing is necessary to ensure we are working with pure data; unboxing is necessary for inspecting what the data looks like' <a href="http://complogic.cs.mcgill.ca/tutorial.pdf">ʳ</a></li>
 </ul></li>
 </ul>
 <h3 id="variables">Variables:</h3>
@@ -276,8 +260,7 @@ href="http://complogic.cs.mcgill.ca/tutorial.pdf">ʳ</a></li>
 <ul>
 <li>For interactive theorem proving with commands.</li>
 <li>Bundled with beluga.</li>
-<li><a
-href="https://beluga-lang.readthedocs.io/en/latest/getting-started.html">https://beluga-lang.readthedocs.io/en/latest/getting-started.html</a></li>
+<li><a href="https://beluga-lang.readthedocs.io/en/latest/getting-started.html">https://beluga-lang.readthedocs.io/en/latest/getting-started.html</a></li>
 </ul>
 <p>Example:</p>
 <pre><code>$ harpoon --sig hello.bel
@@ -289,15 +272,12 @@ Configuring theorem #1
 <h2 id="awk">awk</h2>
 <p>Reference:</p>
 <ul>
-<li><em>The AWK programming language</em> - Alfred Aho, Brian Kernighan,
-Peter J. Weinberger</li>
-<li><a
-href="https://www.gnu.org/software/gawk/manual/gawk.html">https://www.gnu.org/software/gawk/manual/gawk.html</a></li>
+<li><em>The AWK programming language</em> - Alfred Aho, Brian Kernighan, Peter J. Weinberger</li>
+<li><a href="https://www.gnu.org/software/gawk/manual/gawk.html">https://www.gnu.org/software/gawk/manual/gawk.html</a></li>
 </ul>
 <p>Line number starts from 0.</p>
 <h3 id="predefined-variables">Predefined variables</h3>
-<p><a
-href="https://www.gnu.org/software/gawk/manual/gawk.html#Built_002din-Variables">https://www.gnu.org/software/gawk/manual/gawk.html#Built_002din-Variables</a></p>
+<p><a href="https://www.gnu.org/software/gawk/manual/gawk.html#Built_002din-Variables">https://www.gnu.org/software/gawk/manual/gawk.html#Built_002din-Variables</a></p>
 <ul>
 <li>NR: line/record number (from all files)</li>
 <li>FNR: line number (from current file)</li>
@@ -316,22 +296,17 @@ href="https://www.gnu.org/software/gawk/manual/gawk.html#Built_002din-Variables"
 </ul>
 <h3 id="positional-specifier">Positional specifier</h3>
 <p>Follwing two statements have the same effect:</p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode awk"><code class="sourceCode awk"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">printf</span> <span class="st">&quot;%s %s</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="st">&quot;hello&quot;</span><span class="op">,</span> <span class="st">&quot;world&quot;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">printf</span> <span class="st">&quot;%2$s %1$s</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="st">&quot;world&quot;</span><span class="op">,</span> <span class="st">&quot;hello&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode awk"><code class="sourceCode awk"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">printf</span> <span class="st">&quot;%s %s</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="st">&quot;hello&quot;</span>, <span class="st">&quot;world&quot;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="kw">printf</span> <span class="st">&quot;%2$s %1$s</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="st">&quot;world&quot;</span>, <span class="st">&quot;hello&quot;</span></span></code></pre></div>
 <p>and prints 'hello world'.</p>
-<h3 id="appending-to-a-string-variable">Appending to a string
-variable</h3>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="st">&#39;a&#39;</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;BEGIN {a=&quot;1&quot;} /.+/ {a=a$0} END{print a}&#39;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">1a</span></span></code></pre></div>
+<h3 id="appending-to-a-string-variable">Appending to a string variable</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>$ <span class="bu">echo</span> <span class="st">&#39;a&#39;</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;BEGIN {a=&quot;1&quot;} /.+/ {a=a$0} END{print a}&#39;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="ex">1a</span></span></code></pre></div>
 <h3 id="awk-function">awk function</h3>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode awk"><code class="sourceCode awk"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="op">&lt;</span>name<span class="op">&gt;</span> <span class="op">{</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p><a
-href="https://faculty.cs.niu.edu/~berezin/330/N/awk-fun.html">https://faculty.cs.niu.edu/~berezin/330/N/awk-fun.html</a></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode awk"><code class="sourceCode awk"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">function</span> <span class="op">&lt;</span>name<span class="op">&gt;</span> {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>}</span></code></pre></div>
+<p><a href="https://faculty.cs.niu.edu/~berezin/330/N/awk-fun.html">https://faculty.cs.niu.edu/~berezin/330/N/awk-fun.html</a></p>
 <h3 id="arithmetic">Arithmetic</h3>
 <ul>
 <li>Integer division: <code>int()</code></li>
@@ -342,19 +317,15 @@ href="https://faculty.cs.niu.edu/~berezin/330/N/awk-fun.html">https://faculty.cs
 <li>sub</li>
 <li>gsub</li>
 </ul>
-<p><a
-href="https://www.gnu.org/software/gawk/manual/html_node/String-Functions.html">https://www.gnu.org/software/gawk/manual/html_node/String-Functions.html</a></p>
+<p><a href="https://www.gnu.org/software/gawk/manual/html_node/String-Functions.html">https://www.gnu.org/software/gawk/manual/html_node/String-Functions.html</a></p>
 <h3 id="matching-non-empty-lines">Matching non-empty lines</h3>
 <p>A trick:</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode awk"><code class="sourceCode awk"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span> <span class="op">{</span> <span class="op">&lt;</span>code<span class="op">&gt;</span> <span class="op">}</span></span></code></pre></div>
-<p>This works because <code>length</code> of empty line gives
-<code>0</code>, which is considered as false value.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode awk"><code class="sourceCode awk"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="fu">length</span> { <span class="op">&lt;</span>code<span class="op">&gt;</span> }</span></code></pre></div>
+<p>This works because <code>length</code> of empty line gives <code>0</code>, which is considered as false value.</p>
 <p>Thanks to tirnanog from #awk.</p>
 <h3 id="tips">Tips</h3>
 <ul>
-<li><code>print ""</code>: outputs a blank line (with
-<code>\n</code>?)</li>
+<li><code>print ""</code>: outputs a blank line (with <code>\n</code>?)</li>
 <li>Indexing starts from 1</li>
 <li>Formatting functions: <code>sprintf</code>, <code>printf</code></li>
 </ul>
@@ -381,24 +352,20 @@ class="sourceCode awk"><code class="sourceCode awk"><span id="cb9-1"><a href="#c
 <pre><code>(define-fun b () Bool)
 </code></pre>
 <h2 id="julia">Julia</h2>
-<p><a
-href="https://computationalthinking.mit.edu/Fall24/installation/">https://computationalthinking.mit.edu/Fall24/installation/</a></p>
+<p><a href="https://computationalthinking.mit.edu/Fall24/installation/">https://computationalthinking.mit.edu/Fall24/installation/</a></p>
 <h3 id="general">General</h3>
 <ul>
 <li>Import package: <code>using pkgname</code></li>
 <li>Packages for drawing plots:
 <ul>
-<li>plots.jl: <a
-href="https://docs.juliaplots.org/stable/">https://docs.juliaplots.org/stable/</a>
+<li>plots.jl: <a href="https://docs.juliaplots.org/stable/">https://docs.juliaplots.org/stable/</a>
 <ul>
 <li>PGFPlots backend can be used for plots to be used in latex</li>
 <li>Unicodeplots: plots as text</li>
 <li>plotly: plots for webpages</li>
 </ul></li>
-<li><a
-href="https://discourse.julialang.org/t/comparison-of-plotting-packages/99860/2">https://discourse.julialang.org/t/comparison-of-plotting-packages/99860/2</a></li>
-<li><code>LatexStrings</code> can be used to write labels in latex
-syntax</li>
+<li><a href="https://discourse.julialang.org/t/comparison-of-plotting-packages/99860/2">https://discourse.julialang.org/t/comparison-of-plotting-packages/99860/2</a></li>
+<li><code>LatexStrings</code> can be used to write labels in latex syntax</li>
 </ul></li>
 </ul>
 <h3 id="package-management">Package management</h3>
@@ -416,10 +383,8 @@ syntax</li>
 <ul>
 <li><code>yosys&gt;</code>: Entire design selected</li>
 <li><code>yosys*&gt;</code>: Only a part of design selected</li>
-<li><code>yosys [modname]&gt;</code>: Entire module named
-<code>modname</code> selected</li>
-<li><code>yosys [modname]*&gt;</code>: Only a part of module named
-<code>modname</code> selected</li>
+<li><code>yosys [modname]&gt;</code>: Entire module named <code>modname</code> selected</li>
+<li><code>yosys [modname]*&gt;</code>: Only a part of module named <code>modname</code> selected</li>
 </ul>
 <h3 id="commands">Commands</h3>
 <ul>
@@ -433,9 +398,7 @@ syntax</li>
 <ul>
 <li>Can do <code>cd ..</code> to back to topmost level ??</li>
 </ul></li>
-<li><a
-href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/sta.html"><code>sta</code></a>:
-perform static timing analysis</li>
+<li><a href="https://yosyshq.readthedocs.io/projects/yosys/en/latest/cmd/sta.html"><code>sta</code></a>: perform static timing analysis</li>
 <li><code>clean</code></li>
 <li><code>difflibmap</code></li>
 <li>check</li>
@@ -448,15 +411,12 @@ perform static timing analysis</li>
 <h2 id="xpath">xpath</h2>
 <p>Resources:</p>
 <ul>
-<li><a
-href="https://developer.mozilla.org/en-US/docs/Web/XPath/Snippets">https://developer.mozilla.org/en-US/docs/Web/XPath/Snippets</a></li>
-<li><a
-href="https://www.w3schools.com/xml/xpath_syntax.asp">https://www.w3schools.com/xml/xpath_syntax.asp</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/XPath/Snippets">https://developer.mozilla.org/en-US/docs/Web/XPath/Snippets</a></li>
+<li><a href="https://www.w3schools.com/xml/xpath_syntax.asp">https://www.w3schools.com/xml/xpath_syntax.asp</a></li>
 </ul>
 <p>xmlstarlet is a tool that can handle xpath.</p>
 <ul>
-<li>html can be used as input but it (probably) needs to be xml-like.
-ie, all tags needs to be closed.</li>
+<li>html can be used as input but it (probably) needs to be xml-like. ie, all tags needs to be closed.</li>
 </ul>
 <table>
 <tbody>
@@ -502,21 +462,17 @@ ie, all tags needs to be closed.</li>
 <li>Extract only the <em>contents</em> of <code>body</code> tag:
 <ul>
 <li><code>xmllint --xpath '/html/body/node()' input.html</code></li>
-<li><code>xmlstarlet sel -t -v '/html/body/node()' make4ht-vPSgKS.html</code>
-(xmlstarlet removed comments, xmllint didn't)</li>
+<li><code>xmlstarlet sel -t -v '/html/body/node()' make4ht-vPSgKS.html</code> (xmlstarlet removed comments, xmllint didn't)</li>
 </ul></li>
 </ul>
 <h2 id="fstar">fstar</h2>
 <p>Theorem prover.</p>
 <ul>
-<li><a
-href="https://www.fstar-lang.org/tutorial/proof-oriented-programming-in-fstar.pdf">Proof-oriented
-programming in F*/</a></li>
+<li><a href="https://www.fstar-lang.org/tutorial/proof-oriented-programming-in-fstar.pdf">Proof-oriented programming in F*/</a></li>
 </ul>
 <h3 id="general-1">General</h3>
 <ul>
-<li>Low*: A subset of F* that can be compiled down to C (using <a
-href="https://github.com/FStarLang/karamel">KaRaMeL</a>)
+<li>Low*: A subset of F* that can be compiled down to C (using <a href="https://github.com/FStarLang/karamel">KaRaMeL</a>)
 <ul>
 <li>Low* is a DSL (shallow) within F*</li>
 </ul></li>
@@ -541,8 +497,7 @@ href="https://github.com/FStarLang/karamel">KaRaMeL</a>)
 <li>File extension: <code>.fst</code></li>
 <li>Each file must be a module, apparently</li>
 </ul>
-<h3 id="emacs-mode-fstar-mode.el">Emacs mode: <a
-href="https://github.com/FStarLang/fstar-mode.el">fstar-mode.el</a></h3>
+<h3 id="emacs-mode-fstar-mode.el">Emacs mode: <a href="https://github.com/FStarLang/fstar-mode.el">fstar-mode.el</a></h3>
 <ul>
 <li>C-c v: Load entire buffer for type checking</li>
 </ul>
@@ -552,14 +507,12 @@ href="https://github.com/FStarLang/fstar-mode.el">fstar-mode.el</a></h3>
 <li>C-c C-u: Previous line</li>
 </ul>
 <h2 id="hol4">HOL4</h2>
-<p>HOL4 theorem prover: <a
-href="https://hol-theorem-prover.org/cheatsheet.html">https://hol-theorem-prover.org/cheatsheet.html</a></p>
+<p>HOL4 theorem prover: <a href="https://hol-theorem-prover.org/cheatsheet.html">https://hol-theorem-prover.org/cheatsheet.html</a></p>
 <p>File extension: <code>.sml</code></p>
 <ul>
 <li><code>&gt;&gt;</code> ?</li>
 <li><code>rw</code>: rewrite ?</li>
-<li><code>tac1 &gt;&gt; tac2</code>: apply <code>tac1</code>, then use
-<code>tac2</code> on all generated goals
+<li><code>tac1 &gt;&gt; tac2</code>: apply <code>tac1</code>, then use <code>tac2</code> on all generated goals
 <ul>
 <li>Like <code>tac1; tac2</code> in coq</li>
 </ul></li>
@@ -574,17 +527,13 @@ href="https://hol-theorem-prover.org/cheatsheet.html">https://hol-theorem-prover
 <li>A functional-logic programming language.</li>
 <li>Kind of like some aspects of Prolog and Haskell mixed together</li>
 </ul>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode curry"><code class="sourceCode curry"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ot">lst ::</span> <span class="dt">Data</span> a <span class="fu">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>lst l <span class="fu">|</span> _<span class="fu">:</span>xs <span class="fu">=:=</span> l</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">=</span> xs</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> xs <span class="kw">free</span></span></code></pre></div>
-<p>The <code>where</code> clause tells that <code>xs</code> does not
-appear in <code>l</code> (is free in <code>l</code>) so that the
-compiler can see that it came out of the blue.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode curry"><code class="sourceCode curry"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="ot">lst ::</span> <span class="dt">Data</span> a <span class="fu">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>lst l <span class="fu">|</span> _<span class="fu">:</span>xs <span class="fu">=:=</span> l</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a>      <span class="fu">=</span> xs</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>  <span class="kw">where</span> xs <span class="kw">free</span></span></code></pre></div>
+<p>The <code>where</code> clause tells that <code>xs</code> does not appear in <code>l</code> (is free in <code>l</code>) so that the compiler can see that it came out of the blue.</p>
 <p><code>=:=</code> is an equation invoking unification.</p>
-<p>Used KICS2 v3.1 for the above snippet. <a
-href="https://www-ps.informatik.uni-kiel.de/kics2/Manual.pdf">https://www-ps.informatik.uni-kiel.de/kics2/Manual.pdf</a></p>
+<p>Used KICS2 v3.1 for the above snippet. <a href="https://www-ps.informatik.uni-kiel.de/kics2/Manual.pdf">https://www-ps.informatik.uni-kiel.de/kics2/Manual.pdf</a></p>
 <p><code>lst [1,2,3]</code> gave this:</p>
 <pre><code>-------------------------------------
 Executing with KiCS2 3.1 /all-values:
@@ -596,8 +545,7 @@ KiCS2 compilation time: 1.19s / elapsed: 0:01.48
 GHC compilation time: 1.64s / elapsed: 0:02.46
 Execution time: 0.00s / elapsed: 0:00.01
 </code></pre>
-<p>Looks like <code>lst []</code> simply doesn't result in any value
-instead of giving error as in Haskell:</p>
+<p>Looks like <code>lst []</code> simply doesn't result in any value instead of giving error as in Haskell:</p>
 <pre><code>-------------------------------------
 Executing with KiCS2 3.1 /all-values:
 -------------------------------------
@@ -615,37 +563,27 @@ Execution time: 0.00s / elapsed: 0:00.01
 <li>KICS2: Haskell target</li>
 <li>PAKCS: Prolog target</li>
 </ul>
-<p><a
-href="https://curry.pages.ps.informatik.uni-kiel.de/curry-lang.org/">https://curry.pages.ps.informatik.uni-kiel.de/curry-lang.org/</a></p>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode curry"><code class="sourceCode curry"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ot">endAsStart ::</span> <span class="dt">Data</span> a <span class="fu">=&gt;</span> [a] <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>endAsStart l <span class="fu">|</span> x<span class="fu">:</span>(xs <span class="fu">++</span> [x]) <span class="fu">=:=</span> l </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">=</span> <span class="kw">True</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span> x,xs <span class="kw">free</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>endAsStart&#39;default _ <span class="fu">=</span> <span class="kw">False</span></span></code></pre></div>
+<p><a href="https://curry.pages.ps.informatik.uni-kiel.de/curry-lang.org/">https://curry.pages.ps.informatik.uni-kiel.de/curry-lang.org/</a></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode curry"><code class="sourceCode curry"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="ot">endAsStart ::</span> <span class="dt">Data</span> a <span class="fu">=&gt;</span> [a] <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a>endAsStart l <span class="fu">|</span> x<span class="fu">:</span>(xs <span class="fu">++</span> [x]) <span class="fu">=:=</span> l </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a>      <span class="fu">=</span> <span class="kw">True</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a> <span class="kw">where</span> x,xs <span class="kw">free</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a>endAsStart&#39;default _ <span class="fu">=</span> <span class="kw">False</span></span></code></pre></div>
 <p>Links:</p>
 <ul>
-<li><a
-href="https://www-ps.informatik.uni-kiel.de/kics2/Manual.pdf">https://www-ps.informatik.uni-kiel.de/kics2/Manual.pdf</a></li>
-<li><a
-href="https://www.informatik.uni-kiel.de/~curry/tutorial/tutorial.pdf">https://www.informatik.uni-kiel.de/~curry/tutorial/tutorial.pdf</a></li>
-<li><a
-href="https://www.informatik.uni-kiel.de/~pakcs/">https://www.informatik.uni-kiel.de/~pakcs/</a></li>
-<li><a
-href="https://old.reddit.com/r/haskell/comments/dn1yx5/curry_is_a_functionallogic_pl_and_heres_a_crazy/">https://old.reddit.com/r/haskell/comments/dn1yx5/curry_is_a_functionallogic_pl_and_heres_a_crazy/</a></li>
+<li><a href="https://www-ps.informatik.uni-kiel.de/kics2/Manual.pdf">https://www-ps.informatik.uni-kiel.de/kics2/Manual.pdf</a></li>
+<li><a href="https://www.informatik.uni-kiel.de/~curry/tutorial/tutorial.pdf">https://www.informatik.uni-kiel.de/~curry/tutorial/tutorial.pdf</a></li>
+<li><a href="https://www.informatik.uni-kiel.de/~pakcs/">https://www.informatik.uni-kiel.de/~pakcs/</a></li>
+<li><a href="https://old.reddit.com/r/haskell/comments/dn1yx5/curry_is_a_functionallogic_pl_and_heres_a_crazy/">https://old.reddit.com/r/haskell/comments/dn1yx5/curry_is_a_functionallogic_pl_and_heres_a_crazy/</a></li>
 </ul>
 <h2 id="nix-language">Nix (language)</h2>
 <p>Language associated with NixOS.</p>
 <p>References:</p>
 <ul>
-<li><a
-href="https://nixos.org/manual/nix/stable/language/index.html">https://nixos.org/manual/nix/stable/language/index.html</a></li>
-<li><a
-href="https://nixos.wiki/wiki/Overview_of_the_Nix_Language">https://nixos.wiki/wiki/Overview_of_the_Nix_Language</a></li>
-<li><a
-href="https://nix.dev/tutorials/first-steps/nix-language">https://nix.dev/tutorials/first-steps/nix-language</a></li>
-<li><a
-href="https://nix.dev/tutorials/nix-language.html">https://nix.dev/tutorials/nix-language.html</a></li>
+<li><a href="https://nixos.org/manual/nix/stable/language/index.html">https://nixos.org/manual/nix/stable/language/index.html</a></li>
+<li><a href="https://nixos.wiki/wiki/Overview_of_the_Nix_Language">https://nixos.wiki/wiki/Overview_of_the_Nix_Language</a></li>
+<li><a href="https://nix.dev/tutorials/first-steps/nix-language">https://nix.dev/tutorials/first-steps/nix-language</a></li>
+<li><a href="https://nix.dev/tutorials/nix-language.html">https://nix.dev/tutorials/nix-language.html</a></li>
 </ul>
 <h3 id="general-2">General</h3>
 <ul>
@@ -653,8 +591,7 @@ href="https://nix.dev/tutorials/nix-language.html">https://nix.dev/tutorials/nix
 <li><p>List elements are separated by a space.</p></li>
 <li><p>Attribute names needn't be within quotes. Can be though.</p></li>
 <li><p>Derivation: A build task in nix</p></li>
-<li><p><code>a.b.c=1</code> means <code>a = {b = {c = 1}}</code>
-??</p></li>
+<li><p><code>a.b.c=1</code> means <code>a = {b = {c = 1}}</code> ??</p></li>
 <li><p>Comments: starts with <code>#</code></p></li>
 <li><p><code>nix-repl</code>: A repl to try out nix expressions</p>
 <ul>
@@ -670,8 +607,7 @@ href="https://nix.dev/tutorials/nix-language.html">https://nix.dev/tutorials/nix
 <h3 id="functions">Functions</h3>
 <ul>
 <li>Functions take only one argument.</li>
-<li>All functions are anonymous. But they can be assigned to a variable
-though.</li>
+<li>All functions are anonymous. But they can be assigned to a variable though.</li>
 </ul>
 <p>Examples:</p>
 <ul>
@@ -710,73 +646,63 @@ though.</li>
 <li><p><code>sc_trace</code></p></li>
 <li><p><code>sc_start</code>: starts simulation</p>
 <ul>
-<li>First call: starts scheduler <a
-href="https://www.asic-world.com/systemc/systemc_time2.html">ˡ</a></li>
+<li>First call: starts scheduler <a href="https://www.asic-world.com/systemc/systemc_time2.html">ˡ</a></li>
 <li>Subsequent calls: resume scheduler</li>
 </ul></li>
 <li><p>sc<sub>main</sub>: like <code>main()</code> in C</p></li>
 </ul>
 <p>—</p>
 <ul>
-<li>Convert synthesizable systemc to systemverilog: <a
-href="https://github.com/intel/systemc-compiler">https://github.com/intel/systemc-compiler</a></li>
+<li>Convert synthesizable systemc to systemverilog: <a href="https://github.com/intel/systemc-compiler">https://github.com/intel/systemc-compiler</a></li>
 </ul>
 <p>—</p>
 <p>Links:</p>
 <ul>
-<li><a
-href="http://www.asic-world.com/systemc/ports_signals5.html#Example_:_Signal_Binding">http://www.asic-world.com/systemc/ports_signals5.html#Example_:_Signal_Binding</a></li>
-<li><a
-href="https://www.learnsystemc.com/basic/module">https://www.learnsystemc.com/basic/module</a></li>
+<li><a href="http://www.asic-world.com/systemc/ports_signals5.html#Example_:_Signal_Binding">http://www.asic-world.com/systemc/ports_signals5.html#Example_:_Signal_Binding</a></li>
+<li><a href="https://www.learnsystemc.com/basic/module">https://www.learnsystemc.com/basic/module</a></li>
 </ul>
 <h2 id="javascript">Javascript</h2>
-<h3 id="variables-are-global-by-default">Variables are global by
-default</h3>
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> val <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Outer val: &quot;</span> <span class="op">+</span> val)<span class="op">;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Inner val: &quot;</span> <span class="op">+</span> val)<span class="op">;</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    va1 <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Inner va1: &quot;</span> <span class="op">+</span> va1)<span class="op">;</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Outer va1: &quot;</span> <span class="op">+</span> va1)<span class="op">;</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">// Outer val: 1</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">// Inner val: 1</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">// Inner va1: 2</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">// Outer va1: 2</span></span></code></pre></div>
-<p>In the above snippet, <code>va1</code> was not limited to the inner
-scope but became a new global variable.</p>
+<h3 id="variables-are-global-by-default">Variables are global by default</h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a><span class="kw">var</span> val <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Outer val: &quot;</span> <span class="op">+</span> val)<span class="op">;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a>{</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Inner val: &quot;</span> <span class="op">+</span> val)<span class="op">;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a>    va1 <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Inner va1: &quot;</span> <span class="op">+</span> va1)<span class="op">;</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a>}</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Outer va1: &quot;</span> <span class="op">+</span> va1)<span class="op">;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true"></a><span class="co">// Outer val: 1</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true"></a><span class="co">// Inner val: 1</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true"></a><span class="co">// Inner va1: 2</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true"></a><span class="co">// Outer va1: 2</span></span></code></pre></div>
+<p>In the above snippet, <code>va1</code> was not limited to the inner scope but became a new global variable.</p>
 <h3 id="concatenation-vs-addition">Concatenation vs addition</h3>
 <ul>
-<li><code>+</code> is string concatenation when one of the operands is a
-string</li>
+<li><code>+</code> is string concatenation when one of the operands is a string</li>
 <li><code>+</code> is addition when both operands are numbers</li>
 </ul>
-<div class="sourceCode" id="cb19"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> n1 <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> n2 <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> n1n2 <span class="op">=</span> n1<span class="op">+</span>n2</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> s1 <span class="op">=</span> <span class="st">&quot;Hi&quot;</span><span class="op">;</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> s2 <span class="op">=</span> <span class="st">&quot;Hello&quot;</span><span class="op">;</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> n1s1 <span class="op">=</span> n1<span class="op">+</span>s1<span class="op">;</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> s1n1 <span class="op">=</span> s1<span class="op">+</span>n1<span class="op">;</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> s1s2 <span class="op">=</span> s1<span class="op">+</span>s2<span class="op">;</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;n1+n2 = &quot;</span> <span class="op">+</span> (n1 <span class="op">+</span> n2))<span class="op">;</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;n1+s1 = &quot;</span> <span class="op">+</span> (n1 <span class="op">+</span> s1))<span class="op">;</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;s1+n1 = &quot;</span> <span class="op">+</span> (s1 <span class="op">+</span> n1))<span class="op">;</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;s1+s2 = &quot;</span> <span class="op">+</span> (s1 <span class="op">+</span> s2))<span class="op">;</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">// n1+n2 = 8</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">// n1+s1 = 3Hi</span></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co">// s1+n1 = Hi3</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co">// s1+s2 = HiHello</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a><span class="kw">var</span> n1 <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a><span class="kw">var</span> n2 <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a><span class="kw">var</span> n1n2 <span class="op">=</span> n1<span class="op">+</span>n2</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true"></a><span class="kw">var</span> s1 <span class="op">=</span> <span class="st">&quot;Hi&quot;</span><span class="op">;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true"></a><span class="kw">var</span> s2 <span class="op">=</span> <span class="st">&quot;Hello&quot;</span><span class="op">;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true"></a><span class="kw">var</span> n1s1 <span class="op">=</span> n1<span class="op">+</span>s1<span class="op">;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true"></a><span class="kw">var</span> s1n1 <span class="op">=</span> s1<span class="op">+</span>n1<span class="op">;</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true"></a><span class="kw">var</span> s1s2 <span class="op">=</span> s1<span class="op">+</span>s2<span class="op">;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;n1+n2 = &quot;</span> <span class="op">+</span> (n1 <span class="op">+</span> n2))<span class="op">;</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;n1+s1 = &quot;</span> <span class="op">+</span> (n1 <span class="op">+</span> s1))<span class="op">;</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;s1+n1 = &quot;</span> <span class="op">+</span> (s1 <span class="op">+</span> n1))<span class="op">;</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;s1+s2 = &quot;</span> <span class="op">+</span> (s1 <span class="op">+</span> s2))<span class="op">;</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true"></a><span class="co">// n1+n2 = 8</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true"></a><span class="co">// n1+s1 = 3Hi</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true"></a><span class="co">// s1+n1 = Hi3</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true"></a><span class="co">// s1+s2 = HiHello</span></span></code></pre></div>
 <h2 id="fortran">Fortran</h2>
-<p><a
-href="https://en.wikibooks.org/wiki/Fortran/Hello_world">https://en.wikibooks.org/wiki/Fortran/Hello_world</a></p>
+<p><a href="https://en.wikibooks.org/wiki/Fortran/Hello_world">https://en.wikibooks.org/wiki/Fortran/Hello_world</a></p>
 <h3 id="general-3">General</h3>
 <ul>
 <li>Case insensitive keywords</li>
@@ -796,38 +722,30 @@ href="https://en.wikibooks.org/wiki/Fortran/Hello_world">https://en.wikibooks.or
 <p>Compier: gfortran</p>
 <h3 id="f77">F77</h3>
 <ul>
-<li>First 6 columns of each line are 'reserved for special formatting
-purposes like statement numbers and continuation markers'</li>
+<li>First 6 columns of each line are 'reserved for special formatting purposes like statement numbers and continuation markers'</li>
 <li>ie, most lines needs to prefixed by 6 spaces
 <ul>
-<li><a
-href="http://hpcf-files.umbc.edu/hpcf/hpc-archived/Fortran%2077%20Hello%20World%20Program.php">http://hpcf-files.umbc.edu/hpcf/hpc-archived/Fortran%2077%20Hello%20World%20Program.php</a></li>
+<li><a href="http://hpcf-files.umbc.edu/hpcf/hpc-archived/Fortran%2077%20Hello%20World%20Program.php">http://hpcf-files.umbc.edu/hpcf/hpc-archived/Fortran%2077%20Hello%20World%20Program.php</a></li>
 </ul></li>
-<li>Relic of punchcard era where lines had to be of a fixed
-length??</li>
+<li>Relic of punchcard era where lines had to be of a fixed length??</li>
 <li>Max length of line = 72
 <ul>
-<li>Continuation character in column 6 means next line/punchcard can be
-used</li>
-<li><a
-href="https://en.wikibooks.org/wiki/Fortran/Beginning_Fortran">https://en.wikibooks.org/wiki/Fortran/Beginning_Fortran</a></li>
+<li>Continuation character in column 6 means next line/punchcard can be used</li>
+<li><a href="https://en.wikibooks.org/wiki/Fortran/Beginning_Fortran">https://en.wikibooks.org/wiki/Fortran/Beginning_Fortran</a></li>
 </ul></li>
 </ul>
 <h2 id="cobol">Cobol</h2>
 <ul>
 <li>An open source compiler: gnucobol
 <ul>
-<li><a
-href="https://gnucobol.sourceforge.io/">https://gnucobol.sourceforge.io/</a></li>
+<li><a href="https://gnucobol.sourceforge.io/">https://gnucobol.sourceforge.io/</a></li>
 <li>gnucobol first compiles cobol into C and then to executable</li>
 </ul></li>
 <li>File extension: cob, cbl, etc
 <ul>
-<li><a
-href="https://www.ibm.com/docs/en/developer-for-zos/15.0?topic=importers-cobol-importer-overview">https://www.ibm.com/docs/en/developer-for-zos/15.0?topic=importers-cobol-importer-overview</a></li>
+<li><a href="https://www.ibm.com/docs/en/developer-for-zos/15.0?topic=importers-cobol-importer-overview">https://www.ibm.com/docs/en/developer-for-zos/15.0?topic=importers-cobol-importer-overview</a></li>
 </ul></li>
-<li>File name should be same as <code>PROGRAM-ID</code> (case
-sensitive)</li>
+<li>File name should be same as <code>PROGRAM-ID</code> (case sensitive)</li>
 </ul>
 <p>Dbts:</p>
 <ul>

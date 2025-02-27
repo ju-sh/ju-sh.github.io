@@ -32,37 +32,35 @@
 </div>
 
 <header id="title-block-header">
-<h1 class="title">A translation for untyped arithmetic expressions in
-Coq</h1>
+<h1 class="title">A translation for untyped arithmetic expressions in Coq</h1>
 </header>
 
 <ul>
-    </ul>
+    <li>Date created: 31-Dec-2021</li>
+      <li>Last updated: 31-Dec-2021</li>
+  </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/coq.html">coq</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
-Example from CPDT of a translation from a source to language translation
-(untyped).
+Example from CPDT of a translation from a source to language translation (untyped).
 </div>
 
 <hr/>
 
 <div id="content-container">
-<p>A walkthrough of an example from Chapter 2 of <em>Certified
-Programming with Dependent Types</em> by A. Chlipala where terms in one
-language (source language) are converted to terms in another language
-(target language) while preserving their meaning. Both languages are
-untyped.</p>
-<p>Source and target language are defined within coq, along with a
-function to translate source language terms to corresponding terms in
-the target language. Finally, it is proven that the translation is
-correct.</p>
-<p>Thanks a bunch to the people on coq zulip who helped me understand
-this. Mistakes are my own (and as usual, corrections much
-appreciated!).</p>
-<p>(This blog post is quite verbose as output from coq is also included
-in generous measure.)</p>
+<p>A walkthrough of an example from Chapter 2 of <em>Certified Programming with Dependent Types</em> by A. Chlipala where terms in one language (source language) are converted to terms in another language (target language) while preserving their meaning. Both languages are untyped.</p>
+<p>Source and target language are defined within coq, along with a function to translate source language terms to corresponding terms in the target language. Finally, it is proven that the translation is correct.</p>
+<p>Thanks a bunch to the people on coq zulip who helped me understand this. Mistakes are my own (and as usual, corrections much appreciated!).</p>
+<p>(This blog post is quite verbose as output from coq is also included in generous measure.)</p>
 <h2 id="source-language">Source language</h2>
 <p>First, let's define a source language.</p>
 <p>Let's say that it has the following requirements:</p>
@@ -73,16 +71,11 @@ in generous measure.)</p>
 <li>Each operator takes two expressions to return a constant.</li>
 </ul></li>
 </ul>
-<p>Let's define the allowed binary operations (these will be used for
-the target language as well).</p>
+<p>Let's define the allowed binary operations (these will be used for the target language as well).</p>
 <pre class="coq"><code>Inductive binop : Set := Plus | Mult.
 </code></pre>
-<p>ie, the allowed operations are addition (<code>Plus</code>) and
-multiplication (<code>Mult</code>). Remember that these are names that
-we gave and as of now they don't have any meaning. But we'll give them
-meaning (with a <code>binopDenote</code> function).</p>
-<p>(Only addition and multiplication operations are included in the
-source language to keep things simpler.</p>
+<p>ie, the allowed operations are addition (<code>Plus</code>) and multiplication (<code>Mult</code>). Remember that these are names that we gave and as of now they don't have any meaning. But we'll give them meaning (with a <code>binopDenote</code> function).</p>
+<p>(Only addition and multiplication operations are included in the source language to keep things simpler.</p>
 <p>Subtraction of <code>nat</code> could lead to situations like</p>
 <pre class="coq"><code>Compute Nat.sub 2 3.  (* not a negative number *)
 (*
@@ -110,15 +103,12 @@ Plus
      : binop
 *)
 </code></pre>
-<p>Now let's define the type of expressions, which consists of constants
-and binary operations.</p>
+<p>Now let's define the type of expressions, which consists of constants and binary operations.</p>
 <pre class="coq"><code>Inductive exp : Set :=
 | Const : nat -&gt; exp
 | Binop : binop -&gt; exp -&gt; exp -&gt; exp.
 </code></pre>
-<p>Expressions need either be <code>nat</code> constants
-(<code>Const</code>) or a binary operation taking two expressions to
-return an expression.</p>
+<p>Expressions need either be <code>nat</code> constants (<code>Const</code>) or a binary operation taking two expressions to return an expression.</p>
 <pre class="coq"><code>Compute Const 3.
 (*
 = Const 3
@@ -131,17 +121,14 @@ Compute Binop Plus (Const 3) (Const 4).
      : exp
 *)
 </code></pre>
-<p>Okay, time to give meaning (semantics) to what we have defined so far
-(we use <em>denotational semantics</em>). First, let's do it for
-<code>binop</code> via a <code>binopDenote</code> function.</p>
+<p>Okay, time to give meaning (semantics) to what we have defined so far (we use <em>denotational semantics</em>). First, let's do it for <code>binop</code> via a <code>binopDenote</code> function.</p>
 <pre class="coq"><code>Definition binopDenote (op : binop) : nat -&gt; nat -&gt; nat :=
   match op with
   | Plus =&gt; plus  (* Same as Nat.add *)
   | Mult =&gt; mult  (* Same as Nat.mul *)
   end.
 </code></pre>
-<p>We map what we defined for the source language (our object language
-here) to corresponding values in Coq (our meta language).</p>
+<p>We map what we defined for the source language (our object language here) to corresponding values in Coq (our meta language).</p>
 <pre class="coq"><code>(* Just an example. This is not the way this is meant to be used *)
 Compute (binopDenote Plus) 3 4.
 (*
@@ -149,18 +136,14 @@ Compute (binopDenote Plus) 3 4.
      : nat
 *)
 </code></pre>
-<p>We can't use <code>Const</code> values yet as we haven't given
-meaning to <code>exp</code> values at this point. Let's fix that a
-<code>expDenote</code> function.</p>
+<p>We can't use <code>Const</code> values yet as we haven't given meaning to <code>exp</code> values at this point. Let's fix that a <code>expDenote</code> function.</p>
 <pre class="coq"><code>Fixpoint expDenote (e : exp) : nat :=
   match e with
   | Const n =&gt; n
   | Binop op e1 e2 =&gt; (binopDenote op) (expDenote e1) (expDenote e2)
   end.
 </code></pre>
-<p>Since <code>nat</code> is only type of constants in the source
-language, the normalized value of any <code>exp</code> would be a
-<code>nat</code>.</p>
+<p>Since <code>nat</code> is only type of constants in the source language, the normalized value of any <code>exp</code> would be a <code>nat</code>.</p>
 <p>Now we can do</p>
 <pre class="coq"><code>(* 3 + 4 *)
 Compute expDenote (Binop Plus (Const 3) (Const 4)).
@@ -184,27 +167,22 @@ Compute expDenote foo.
      : nat
 *)
 </code></pre>
-<p>Source language has been defined. Let's define the target language
-next.</p>
+<p>Source language has been defined. Let's define the target language next.</p>
 <h2 id="target-language">Target language</h2>
 <p>Let's say that our target language has the following properties:</p>
 <ul>
-<li>Stack based (list of <code>nat</code> values). Consists of a list of
-instructions stored in a stack.</li>
+<li>Stack based (list of <code>nat</code> values). Consists of a list of instructions stored in a stack.</li>
 <li>Binary operations are: <code>Plus</code> and <code>Mult</code>
 <ul>
-<li>Operator takes no operands explicitly. Pops two elements from stack,
-evaluates and pushes result back into stack.</li>
+<li>Operator takes no operands explicitly. Pops two elements from stack, evaluates and pushes result back into stack.</li>
 </ul></li>
 </ul>
-<p>Target language consists of instructions stored in the stack. The
-type of instructions may be defined as</p>
+<p>Target language consists of instructions stored in the stack. The type of instructions may be defined as</p>
 <pre class="coq"><code>Inductive instr : Set :=
 | iConst : nat -&gt; instr
 | iBinop : binop -&gt; instr.
 </code></pre>
-<p><code>iBinop</code> doesn't take operands as parameters as the
-operands will be obtained from the stack during evaluation.</p>
+<p><code>iBinop</code> doesn't take operands as parameters as the operands will be obtained from the stack during evaluation.</p>
 <pre class="coq"><code>Compute iConst 4.
 (*
 = iConst 4
@@ -217,8 +195,7 @@ Compute iBinop Plus.
      : instr
 *)
 </code></pre>
-<p>Type of stack, which is just a list of <code>nat</code> values here,
-may be defined as</p>
+<p>Type of stack, which is just a list of <code>nat</code> values here, may be defined as</p>
 <pre class="coq"><code>Definition stack : Set := list nat.
 </code></pre>
 <p>where the head of the list is the top of the stack.</p>
@@ -229,8 +206,7 @@ may be defined as</p>
      : stack
 *)
 </code></pre>
-<p>Now let's give meaning to <code>instr</code> with a
-<code>instrDenote</code> function.</p>
+<p>Now let's give meaning to <code>instr</code> with a <code>instrDenote</code> function.</p>
 <pre class="coq"><code>Definition instrDenote (i : instr) (s : stack) : option stack :=
  match i with
  | iConst n =&gt; Some (n :: s)
@@ -243,17 +219,9 @@ may be defined as</p>
     end
  end.
 </code></pre>
-<p>If <code>i</code> is a binary operation (<code>iBinop</code>), it is
-executed using operands obtained by popping two values from the stack
-the result of which is pushed back into it. But if <code>i</code> is
-constant (<code>iConst</code>), <code>instrDenote</code> merely pushes
-the constant value into the stack.</p>
-<p>Return type is <code>option stack</code> because sometimes problems
-like stack underflow can happen and it may not be possible to evaluate
-the instruction in which case <code>None</code> is returned.</p>
-<p>We re-use the <code>binop</code> and <code>binopDenote</code> that we
-had defined earlier as it's the same for both source and target
-languages.</p>
+<p>If <code>i</code> is a binary operation (<code>iBinop</code>), it is executed using operands obtained by popping two values from the stack the result of which is pushed back into it. But if <code>i</code> is constant (<code>iConst</code>), <code>instrDenote</code> merely pushes the constant value into the stack.</p>
+<p>Return type is <code>option stack</code> because sometimes problems like stack underflow can happen and it may not be possible to evaluate the instruction in which case <code>None</code> is returned.</p>
+<p>We re-use the <code>binop</code> and <code>binopDenote</code> that we had defined earlier as it's the same for both source and target languages.</p>
 <p>Right, let's give <code>instrDenote</code> a whirl.</p>
 <pre class="coq"><code>Compute instrDenote (iConst 4) []%list.
 (*
@@ -274,10 +242,7 @@ Compute instrDenote (iBinop Plus) [3]%list.
 *)
 </code></pre>
 <p>It seems to be working okay.</p>
-<p>We could use a function to give meaning to a list of instructions all
-at once. As a step towards that, let's define a type, program, which
-represents a list of <code>instr</code> (after all, a program
-<em>is</em> a list of instructions).</p>
+<p>We could use a function to give meaning to a list of instructions all at once. As a step towards that, let's define a type, program, which represents a list of <code>instr</code> (after all, a program <em>is</em> a list of instructions).</p>
 <pre class="coq"><code>Definition prog : Set := list instr.
 </code></pre>
 <p>Small check:</p>
@@ -298,9 +263,7 @@ represents a list of <code>instr</code> (after all, a program
   | _ =&gt; Some s
   end.
 </code></pre>
-<p>In addition to a <code>prog</code> value, <code>progDenote</code>
-takes a <code>stack</code> containing the values that the program might
-need.</p>
+<p>In addition to a <code>prog</code> value, <code>progDenote</code> takes a <code>stack</code> containing the values that the program might need.</p>
 <p>Giving <code>progDenote</code> a whirl,</p>
 <pre class="coq"><code>Compute progDenote [iConst 3; iBinop Plus; iBinop Mult]%list [4; 5]%list.
 (*
@@ -310,8 +273,7 @@ need.</p>
 </code></pre>
 <p>Yep, looks alright.</p>
 <h2 id="translation">Translation</h2>
-<p>We can now make a function to translate (or compile) source language
-terms to equivalent terms in the target language.</p>
+<p>We can now make a function to translate (or compile) source language terms to equivalent terms in the target language.</p>
 <pre class="coq"><code>Fixpoint compile (e : exp) : list instr :=
   match e with
   | Const n =&gt; [iConst n]%list
@@ -400,20 +362,13 @@ Fixpoint compile (e : exp) : list instr :=
   | Binop op e1 e2 =&gt;  (compile e1) ++ (compile e2) ++ [iBinop op]%list
   end.
 </code></pre>
-<h2 id="translation-correctness-proof">Translation correctness
-proof</h2>
-<p>Okay, we now have a way to translate source language terms to target
-language terms. Let's try proving that this translation is correct.</p>
+<h2 id="translation-correctness-proof">Translation correctness proof</h2>
+<p>Okay, we now have a way to translate source language terms to target language terms. Let's try proving that this translation is correct.</p>
 <p>For this, it is sufficient to prove that</p>
 <pre><code>∀ (e : exp) (p : prog) (s : stack),
   progDenote ((compile e) ++ p) s = progDenote p ((expDenote e)::s)
 </code></pre>
-<p>ie, the meaning of a program (ie, <code>list instr</code>) obtained
-by <code>compile</code>-ing an <code>exp</code>, to which another
-program <code>p</code> has been appended, when used with a stack
-<code>s</code> is same as the meaning of <code>p</code> when having the
-same <code>s</code> with the meaning of the same <code>exp</code> pushed
-at the top of it.</p>
+<p>ie, the meaning of a program (ie, <code>list instr</code>) obtained by <code>compile</code>-ing an <code>exp</code>, to which another program <code>p</code> has been appended, when used with a stack <code>s</code> is same as the meaning of <code>p</code> when having the same <code>s</code> with the meaning of the same <code>exp</code> pushed at the top of it.</p>
 <p>Let's try proving that in Coq.</p>
 <pre class="coq"><code>Theorem compile_correct : forall (e : exp) (p : prog) (s : stack),
   progDenote ((compile e) ++ p) s = progDenote p ((expDenote e)::s).
@@ -449,15 +404,9 @@ progDenote p (expDenote (Binop b e1 e2) :: s)
 *)
 </code></pre>
 <p>Now we got two (sub-)goals.</p>
-<p>See how <code>e : exp</code> went away from the
-<code>forall</code>.</p>
-<p>An <code>exp</code> can be one of two things: <code>Const</code> or
-<code>Binop</code>. Hence performing induction on <code>e : exp</code>
-leads to two sub-goals, with each sub-goal having a possible
-<code>exp</code> value.</p>
-<p>When <code>e : exp</code> is replaced with a <code>Const n</code>,So,
-<code>progDenote (compile e ++ p) s = progDenote p (expDenote e :: s)</code>
-changes as follows:</p>
+<p>See how <code>e : exp</code> went away from the <code>forall</code>.</p>
+<p>An <code>exp</code> can be one of two things: <code>Const</code> or <code>Binop</code>. Hence performing induction on <code>e : exp</code> leads to two sub-goals, with each sub-goal having a possible <code>exp</code> value.</p>
+<p>When <code>e : exp</code> is replaced with a <code>Const n</code>,So, <code>progDenote (compile e ++ p) s = progDenote p (expDenote e :: s)</code> changes as follows:</p>
 <pre class="ascii"><code>| Old term                        | New e (e ↦)   | New term                                      |
 |---------------------------------+---------------+-----------------------------------------------|
 | progDenote (compile e ++ p) s = |               | progDenote (compile (Const n) ++ p) s =       |
@@ -479,8 +428,7 @@ forall (p : prog) (s : stack),
 progDenote (compile (Const n) ++ p) s =
 progDenote p (expDenote (Const n) :: s)
 </code></pre>
-<p>First, let's make the variables in the <code>forall</code> quantifier
-free with <code>intros</code>.</p>
+<p>First, let's make the variables in the <code>forall</code> quantifier free with <code>intros</code>.</p>
 <pre class="coq"><code>- intros.
 (*
 1 subgoal
@@ -496,10 +444,8 @@ progDenote (compile (Const n) ++ p) s =
 progDenote p (expDenote (Const n) :: s)
 *)
 </code></pre>
-<p>The <code>unfold</code> tactic can replace 'an identifier with its
-definition'. <code>fold</code> is for the other way around.</p>
-<p>Replacing the occurrences of <code>compile</code> with its
-definitions so that 'coq can see them' with <code>unfold</code>,</p>
+<p>The <code>unfold</code> tactic can replace 'an identifier with its definition'. <code>fold</code> is for the other way around.</p>
+<p>Replacing the occurrences of <code>compile</code> with its definitions so that 'coq can see them' with <code>unfold</code>,</p>
 <pre class="coq"><code>unfold compile.
 (*
 1 subgoal
@@ -514,8 +460,7 @@ s : stack
 progDenote ([iConst n] ++ p) s = progDenote p (expDenote (Const n) :: s)
 *)
 </code></pre>
-<p>The <code>progDenote (compile (Const n) ++ p) s</code> changed to
-<code>progDenote ([iConst n] ++ p) s</code> like</p>
+<p>The <code>progDenote (compile (Const n) ++ p) s</code> changed to <code>progDenote ([iConst n] ++ p) s</code> like</p>
 <pre><code>progDenote (compile (Const n) ++ p) s 
 
 ↓
@@ -547,33 +492,17 @@ s : stack
 progDenote p (n :: s) = progDenote p (n :: s)
 *)
 </code></pre>
-<p><code>simpl</code> was able to make the following changes to the
-goal:</p>
+<p><code>simpl</code> was able to make the following changes to the goal:</p>
 <pre><code>| Old                                     | New                   |
 |-----------------------------------------+-----------------------|
 | progDenote ([iConst n] ++ p) s          | progDenote p (n :: s) |
 | progDenote p (expDenote (Const n) :: s) | progDenote p (n :: s) |
 </code></pre>
-<p>The second change is straightforward as
-<code>expDenote (Const n)</code> evaluates to to <code>n</code>.</p>
-<p>The change to <code>progDenote ([iConst n] ++ p) s</code> is not that
-straightforward. It looks something like a 'partial' evaluation of
-<code>progDenote</code>. <a
-href="https://coq.zulipchat.com/#narrow/stream/237977-Coq-users/topic/CPDT.20stackmachine.20example.20proof">⁵</a></p>
-<p>That's because <a
-href="https://coq.inria.fr/refman/proofs/writing-proofs/equality.html#coq:tacn.simpl"><code>simpl</code></a>
-is not so simple as it sounds. It's sort of a special tactic. As the <a
-href="https://coq.inria.fr/refman/proofs/writing-proofs/equality.html#applying-conversion-rules">docs</a>
-suggest, it is a 'clever' tactic meant to give the <em>most readable
-result</em>. (for example, a goal with a bunch of unfolded fixpoint
-functions isn't so readable but their folded version is.)</p>
-<p><code>simpl</code> 'reduces a term to something still readable
-instead of fully normalizing it'. <a
-href="https://coq.inria.fr/refman/proofs/writing-proofs/equality.html#coq:tacn.simpl">⁷</a>
-(That probably means complicated heuristics to determine what is
-'readable' and what is not.)</p>
-<p>Since by this point, both LHS and RHS of the goal are same, we can
-finish off this sub-goal with</p>
+<p>The second change is straightforward as <code>expDenote (Const n)</code> evaluates to to <code>n</code>.</p>
+<p>The change to <code>progDenote ([iConst n] ++ p) s</code> is not that straightforward. It looks something like a 'partial' evaluation of <code>progDenote</code>. <a href="https://coq.zulipchat.com/#narrow/stream/237977-Coq-users/topic/CPDT.20stackmachine.20example.20proof">⁵</a></p>
+<p>That's because <a href="https://coq.inria.fr/refman/proofs/writing-proofs/equality.html#coq:tacn.simpl"><code>simpl</code></a> is not so simple as it sounds. It's sort of a special tactic. As the <a href="https://coq.inria.fr/refman/proofs/writing-proofs/equality.html#applying-conversion-rules">docs</a> suggest, it is a 'clever' tactic meant to give the <em>most readable result</em>. (for example, a goal with a bunch of unfolded fixpoint functions isn't so readable but their folded version is.)</p>
+<p><code>simpl</code> 'reduces a term to something still readable instead of fully normalizing it'. <a href="https://coq.inria.fr/refman/proofs/writing-proofs/equality.html#coq:tacn.simpl">⁷</a> (That probably means complicated heuristics to determine what is 'readable' and what is not.)</p>
+<p>Since by this point, both LHS and RHS of the goal are same, we can finish off this sub-goal with</p>
 <pre><code>reflexivity.
 </code></pre>
 <p>On to the second sub-goal!</p>
@@ -614,8 +543,7 @@ progDenote (compile (Binop b e1 e2) ++ p) s =
 progDenote p (expDenote (Binop b e1 e2) :: s)
 *)
 </code></pre>
-<p>Replacing <code>compile</code> with its definitions using
-<code>unfold</code>,</p>
+<p>Replacing <code>compile</code> with its definitions using <code>unfold</code>,</p>
 <pre class="coq"><code>unfold compile.
 (*
 1 subgoal
@@ -645,11 +573,8 @@ progDenote
 progDenote p (expDenote (Binop b e1 e2) :: s)
 *)
 </code></pre>
-<p><code>e0</code> and <code>e3</code> are names chosen by coq (since
-<code>e1</code> and <code>e2</code> are names that are already
-used).</p>
-<p><code>progDenote (compile (Binop b e1 e2) ++ p) s</code> changed
-as</p>
+<p><code>e0</code> and <code>e3</code> are names chosen by coq (since <code>e1</code> and <code>e2</code> are names that are already used).</p>
+<p><code>progDenote (compile (Binop b e1 e2) ++ p) s</code> changed as</p>
 <pre><code>progDenote (compile (Binop b e1 e2) ++ p) s
 
 ↓
@@ -687,15 +612,9 @@ progDenote (
   p) s
 </code></pre>
 <p>Now, we <code>fold compile</code> back up.</p>
-<p>It might seem pointless at first to do a <code>fold</code> right
-after a <code>unfold</code> on the same function and one may feel
-tempted to compare it with something like <code>-2 + 2</code> of basic
-arithmetic, something that changes nothing, but it isn't so.</p>
-<p>Because here, <code>unfold</code> revealed what <code>compile</code>
-is made up of, allowing coq to see deep into the definition of
-<code>compile</code> itself.</p>
-<p>If we do <code>fold</code> on <code>compile</code> now, coq will
-readily change the goal to</p>
+<p>It might seem pointless at first to do a <code>fold</code> right after a <code>unfold</code> on the same function and one may feel tempted to compare it with something like <code>-2 + 2</code> of basic arithmetic, something that changes nothing, but it isn't so.</p>
+<p>Because here, <code>unfold</code> revealed what <code>compile</code> is made up of, allowing coq to see deep into the definition of <code>compile</code> itself.</p>
+<p>If we do <code>fold</code> on <code>compile</code> now, coq will readily change the goal to</p>
 <pre><code>progDenote ((compile e1 ++ compile e2 ++ [iBinop b]) ++ p) s =
 progDenote p (expDenote (Binop b e1 e2) :: s)
 </code></pre>
@@ -719,8 +638,7 @@ progDenote ((compile e1 ++ compile e2 ++ [iBinop b]) ++ p) s =
 progDenote p (expDenote (Binop b e1 e2) :: s)
 *)
 </code></pre>
-<p>The definitions of <code>compile</code> merely got replaced by the
-name <code>compile</code>.</p>
+<p>The definitions of <code>compile</code> merely got replaced by the name <code>compile</code>.</p>
 <p>Unfolding <code>expDenote</code> next,</p>
 <pre class="coq"><code>unfold expDenote.
 (*
@@ -809,9 +727,7 @@ progDenote ((compile e1 ++ compile e2 ++ [iBinop b]) ++ p) s =
 progDenote p (binopDenote b (expDenote e1) (expDenote e2) :: s)
 *)
 </code></pre>
-<p>Now we need the help of a proof that attests to the associativity
-property of list concatenation. Coq has a lemma for that built-in,
-<code>app_assoc_reverse</code>, which is defined as:</p>
+<p>Now we need the help of a proof that attests to the associativity property of list concatenation. Coq has a lemma for that built-in, <code>app_assoc_reverse</code>, which is defined as:</p>
 <pre class="coq"><code>app_assoc_reverse
      : forall (A : Type) (l m n : list A), (l ++ m) ++ n = l ++ m ++ n
 </code></pre>
@@ -879,10 +795,7 @@ progDenote ([iBinop b] ++ p) (expDenote e2 :: expDenote e1 :: s) =
 progDenote p (binopDenote b (expDenote e1) (expDenote e2) :: s)
 *)
 </code></pre>
-<p>Unfolding only the first <code>progDenote</code> (the one in the LHS
-of goal), evaluating and folding it back up (not really necessary, just
-so that it will look nice. In fact, the proof can finish at this point
-with a <code>reflexivity</code>) and finally finishing off the goal,</p>
+<p>Unfolding only the first <code>progDenote</code> (the one in the LHS of goal), evaluating and folding it back up (not really necessary, just so that it will look nice. In fact, the proof can finish at this point with a <code>reflexivity</code>) and finally finishing off the goal,</p>
 <pre class="coq"><code>unfold progDenote at 1.
 (*
 1 subgoal
@@ -937,30 +850,19 @@ reflexivity.
 All goals completed.
 *)
 </code></pre>
-<p>And we're done! We've proven that the translation is indeed
-correct.</p>
+<p>And we're done! We've proven that the translation is indeed correct.</p>
 <h2 id="references">References</h2>
 <ul>
-<li><a
-href="http://adam.chlipala.net/cpdt/html/Cpdt.StackMachine.html"><a
-href="http://adam.chlipala.net/cpdt/html/Cpdt.StackMachine.html">http://adam.chlipala.net/cpdt/html/Cpdt.StackMachine.html</a></a></li>
-<li><a
-href="https://coq.inria.fr/refman/proofs/writing-proofs/equality.html#coq:tacn.fold"><code>fold</code>
-tactic documentation</a></li>
-<li><a
-href="https://coq.inria.fr/refman/proofs/writing-proofs/equality.html#coq:tacn.unfold"><code>unfold</code>
-tactic documentation</a></li>
-<li><a href="https://pjreddie.com/coq-tactics/#unfold"><a
-href="https://pjreddie.com/coq-tactics/#unfold">https://pjreddie.com/coq-tactics/#unfold</a></a></li>
-<li><a
-href="https://stackoverflow.com/questions/63209983/does-using-the-unfold-tactic-followed-by-fold-in-coq-do-anything">https://stackoverflow.com/questions/63209983/does-using-the-unfold-tactic-followed-by-fold-in-coq-do-anything</a></li>
-<li><a
-href="https://stackoverflow.com/questions/45427869/rewrite-single-occurence-in-ltac">https://stackoverflow.com/questions/45427869/rewrite-single-occurence-in-ltac</a></li>
+<li><a href="http://adam.chlipala.net/cpdt/html/Cpdt.StackMachine.html"><a href="http://adam.chlipala.net/cpdt/html/Cpdt.StackMachine.html">http://adam.chlipala.net/cpdt/html/Cpdt.StackMachine.html</a></a></li>
+<li><a href="https://coq.inria.fr/refman/proofs/writing-proofs/equality.html#coq:tacn.fold"><code>fold</code> tactic documentation</a></li>
+<li><a href="https://coq.inria.fr/refman/proofs/writing-proofs/equality.html#coq:tacn.unfold"><code>unfold</code> tactic documentation</a></li>
+<li><a href="https://pjreddie.com/coq-tactics/#unfold"><a href="https://pjreddie.com/coq-tactics/#unfold">https://pjreddie.com/coq-tactics/#unfold</a></a></li>
+<li><a href="https://stackoverflow.com/questions/63209983/does-using-the-unfold-tactic-followed-by-fold-in-coq-do-anything">https://stackoverflow.com/questions/63209983/does-using-the-unfold-tactic-followed-by-fold-in-coq-do-anything</a></li>
+<li><a href="https://stackoverflow.com/questions/45427869/rewrite-single-occurence-in-ltac">https://stackoverflow.com/questions/45427869/rewrite-single-occurence-in-ltac</a></li>
 </ul>
 <h2 id="proof-steps">Proof steps</h2>
 <p>An overview of the proof steps along with the changing goals.</p>
-<p>Second column has the goal after applying the tactic in the first
-column of the corresponding row.</p>
+<p>Second column has the goal after applying the tactic in the first column of the corresponding row.</p>
 <pre><code>| Step                       | Goal                                                                     |
 |----------------------------+--------------------------------------------------------------------------|
 |                            | 1 subgoal                                                                |

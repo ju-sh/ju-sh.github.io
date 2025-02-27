@@ -32,8 +32,7 @@
 </div>
 
 <header id="title-block-header">
-<h1 class="title"><code>Ind</code>-s and <code>Rec</code>-s of
-types</h1>
+<h1 class="title"><code>Ind</code>-s and <code>Rec</code>-s of types</h1>
 </header>
 
 <ul>
@@ -45,8 +44,7 @@ types</h1>
 <hr/>
 
 <div id="content-container">
-<p>When we define an inductive type in Coq, a few things other than the
-type and its constructors get defined.</p>
+<p>When we define an inductive type in Coq, a few things other than the type and its constructors get defined.</p>
 <pre class="coq"><code>Inductive type := Ttype.
 
 (* type is defined *)
@@ -55,8 +53,7 @@ type and its constructors get defined.</p>
 (* type_rec is defined *)
 (* type_sind is defined *)
 </code></pre>
-<p>These are the induction principle of the type tailored to Prop, Set,
-Type and SProp.</p>
+<p>These are the induction principle of the type tailored to Prop, Set, Type and SProp.</p>
 <p>For example, in the case of <code>nat</code>:</p>
 <pre><code>Check nat_ind.
 (*
@@ -123,10 +120,7 @@ nat_sind
        P 0 -&gt;
        (forall n : nat, P n -&gt; P (S n)) -&gt; forall n : nat, P n
 </code></pre>
-<p>If a proposition <code>P</code> holds over <code>0</code> (which is
-the base case for <code>nat</code>), and if know that <code>P</code>
-holds for <code>n+1</code> if it holds for any <code>n</code>, then
-<code>P</code> is true for all <code>nat</code>.</p>
+<p>If a proposition <code>P</code> holds over <code>0</code> (which is the base case for <code>nat</code>), and if know that <code>P</code> holds for <code>n+1</code> if it holds for any <code>n</code>, then <code>P</code> is true for all <code>nat</code>.</p>
 <p>And in the case of <code>list</code>:</p>
 <pre><code>list_ind
      : forall (A : Type) (P : list A -&gt; Prop),
@@ -138,16 +132,13 @@ holds for <code>n+1</code> if it holds for any <code>n</code>, then
 <p>If:</p>
 <ul>
 <li><code>P</code> holds for empty list</li>
-<li><code>P</code> holds for x::l provided <code>P</code> holds for a
-list <code>l</code></li>
+<li><code>P</code> holds for x::l provided <code>P</code> holds for a list <code>l</code></li>
 </ul>
 <p>then:</p>
 <ul>
 <li><code>P</code> holds for every list</li>
 </ul>
-<p>By the way, the <code>ind</code>-s and <code>rec</code>-s won't get
-defined when we make a coinductive type. Because they are potentially
-infinite.</p>
+<p>By the way, the <code>ind</code>-s and <code>rec</code>-s won't get defined when we make a coinductive type. Because they are potentially infinite.</p>
 <pre><code>CoInductive t A :=
 | CNil: t A
 | CCons: A -&gt; t A -&gt; t A.
@@ -156,8 +147,7 @@ infinite.</p>
 </code></pre>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://coq.inria.fr/tutorial/2-induction"><a
-href="https://coq.inria.fr/tutorial/2-induction">https://coq.inria.fr/tutorial/2-induction</a></a>
+<li><a href="https://coq.inria.fr/tutorial/2-induction"><a href="https://coq.inria.fr/tutorial/2-induction">https://coq.inria.fr/tutorial/2-induction</a></a>
 <ul>
 <li>This is an old tutorial. So <code>sind</code> is not mentioned.</li>
 </ul></li>

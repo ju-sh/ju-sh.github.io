@@ -45,8 +45,7 @@
 
 <div id="content-container">
 <h1 id="preliminaries">Preliminaries</h1>
-<h2 id="combinational-vs-sequential-circuits">Combinational vs
-sequential circuits</h2>
+<h2 id="combinational-vs-sequential-circuits">Combinational vs sequential circuits</h2>
 <table>
 <thead>
 <tr class="header">
@@ -79,10 +78,8 @@ sequential circuits</h2>
 <ul>
 <li>To avoid situations like reading and writing happening at once.</li>
 </ul></li>
-<li>Needed to make the hardware behaviour predictable (and thus make it
-reliable).</li>
-<li><strong>Edge-triggered clocking</strong>: state changes happen on
-clock edges.
+<li>Needed to make the hardware behaviour predictable (and thus make it reliable).</li>
+<li><strong>Edge-triggered clocking</strong>: state changes happen on clock edges.
 <ul>
 <li>ie, during transition from low → high or high → low.</li>
 </ul></li>
@@ -91,19 +88,14 @@ clock edges.
 <ul>
 <li>A RISC architecture with many similarities with RISC-V.</li>
 <li>Microprocessor without Interlocked Pipeline Stages (MIPS).</li>
-<li>Assembly instructions are written using a different notation (uses
-<code>$</code> sign).</li>
+<li>Assembly instructions are written using a different notation (uses <code>$</code> sign).</li>
 <li>Like RISC-V, has optional extensions.</li>
-<li>Development has ceased by 2021 as the MIPS company is transitioning
-to RISC-V instead (<a
-href="https://www.eejournal.com/article/wait-what-mips-becomes-risc-v/">announcement
-in March 2021</a>).</li>
+<li>Development has ceased by 2021 as the MIPS company is transitioning to RISC-V instead (<a href="https://www.eejournal.com/article/wait-what-mips-becomes-risc-v/">announcement in March 2021</a>).</li>
 </ul>
 <h1 id="risc">RISC</h1>
 <ul>
 <li>All instructions are of same length.</li>
-<li>But that means different instruction formats (distinguished
-implicitly by opcode ranges)
+<li>But that means different instruction formats (distinguished implicitly by opcode ranges)
 <ul>
 <li>R-type (register type)</li>
 <li>I-type (immediate? type)</li>
@@ -119,15 +111,12 @@ implicitly by opcode ranges)
 <li>Number of general purpose registers: 32</li>
 <li>Size of registers: 64 bits</li>
 <li>Register names: starts with 'x' (eg: x0, x1, x26, x31, etc)</li>
-<li>Little endian (ie, least significant part is obtained on
-'indexing')</li>
+<li>Little endian (ie, least significant part is obtained on 'indexing')</li>
 <li>Memory addresses refers to <strong>byte addresses</strong>.</li>
 </ul>
 <ul>
-<li><strong>Sequential doubleword addresses differ by 8 instead of
-1.</strong></li>
-<li>Stack pointer always point to the last location that <em>was</em>
-used (not to be used).</li>
+<li><strong>Sequential doubleword addresses differ by 8 instead of 1.</strong></li>
+<li>Stack pointer always point to the last location that <em>was</em> used (not to be used).</li>
 </ul>
 <h2 id="design-principles">Design principles</h2>
 <ul>
@@ -137,8 +126,7 @@ used (not to be used).</li>
 <h2 id="instructions">Instructions</h2>
 <ul>
 <li>Arithmetic instructions can operate using 2 registers.</li>
-<li>Data transfer instruction can read/write using 1 register but cannot
-operate on them.</li>
+<li>Data transfer instruction can read/write using 1 register but cannot operate on them.</li>
 <li>R-type, I-type</li>
 </ul>
 <h2 id="a-list-of-instructions">A list of instructions</h2>
@@ -292,42 +280,28 @@ operate on them.</li>
 </table>
 <ul>
 <li><p>Each register is a 64-bit register.</p></li>
-<li><p>There are 32 general purpose registers: <code>x0</code> to
-<code>x31</code>?</p></li>
+<li><p>There are 32 general purpose registers: <code>x0</code> to <code>x31</code>?</p></li>
 <li><p><code>x0</code>: hardwired to be always zero.</p>
 <ul>
 <li>Useful for initializing variables. Like:
 <ul>
-<li><code>add x5 x0 x0</code>: initialize <code>x5</code> to
-<code>0</code></li>
-<li><code>addi x5 x0 2</code>: initialize <code>x5</code> to
-<code>2</code></li>
+<li><code>add x5 x0 x0</code>: initialize <code>x5</code> to <code>0</code></li>
+<li><code>addi x5 x0 2</code>: initialize <code>x5</code> to <code>2</code></li>
 </ul></li>
 <li>Useful for copying value in a register to another.
 <ul>
-<li><code>add x5 x7 x0</code>: copy value in <code>x7</code> to
-<code>x5</code></li>
+<li><code>add x5 x7 x0</code>: copy value in <code>x7</code> to <code>x5</code></li>
 </ul></li>
-<li>Any attempt to change the value in <code>x0</code> would simply be
-ignored.</li>
+<li>Any attempt to change the value in <code>x0</code> would simply be ignored.</li>
 </ul></li>
 </ul>
-<h2 id="risc-v-calling-conventions-for-registers">RISC-V calling
-conventions for registers</h2>
-<p>Reference: <a
-href="https://riscv.org/wp-content/uploads/2015/01/riscv-calling.pdf"><a
-href="https://riscv.org/wp-content/uploads/2015/01/riscv-calling.pdf">https://riscv.org/wp-content/uploads/2015/01/riscv-calling.pdf</a></a></p>
+<h2 id="risc-v-calling-conventions-for-registers">RISC-V calling conventions for registers</h2>
+<p>Reference: <a href="https://riscv.org/wp-content/uploads/2015/01/riscv-calling.pdf"><a href="https://riscv.org/wp-content/uploads/2015/01/riscv-calling.pdf">https://riscv.org/wp-content/uploads/2015/01/riscv-calling.pdf</a></a></p>
 <ul>
-<li><code>x10</code> to <code>x17</code>: used for parameter
-passing</li>
-<li><code>x1</code>: return address for procedures [²]<a href="#fn1"
-class="footnote-ref" id="fnref1"
-role="doc-noteref"><sup>1</sup></a></li>
-<li><code>x5</code> to <code>x7</code> and <code>x28</code> to
-<code>x31</code>: temporary registers (not preserved by the callee)</li>
-<li><code>x8</code> to <code>x9</code> and <code>x18</code> to
-<code>x27</code>: saved registers? (callee, ie called fn, maintains
-original value when returning)</li>
+<li><code>x10</code> to <code>x17</code>: used for parameter passing</li>
+<li><code>x1</code>: return address for procedures [²]<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li><code>x5</code> to <code>x7</code> and <code>x28</code> to <code>x31</code>: temporary registers (not preserved by the callee)</li>
+<li><code>x8</code> to <code>x9</code> and <code>x18</code> to <code>x27</code>: saved registers? (callee, ie called fn, maintains original value when returning)</li>
 </ul>
 <table>
 <thead>
@@ -420,8 +394,7 @@ original value when returning)</li>
 <li>S-type: Store</li>
 <li>SB-type: Branch</li>
 <li>U-type: lui ??</li>
-<li>UJ-type: <code>jal</code> is the only instruction with this
-format</li>
+<li>UJ-type: <code>jal</code> is the only instruction with this format</li>
 </ul>
 <pre><code>      31                25 24 20 19    15 14    12 11                7 6      0 
 ┌────┬────────────────────┬─────┬────────┬────────┬───────────────────┬────────┐
@@ -439,17 +412,13 @@ format</li>
 └────┴────────────────────────────────────────────┴───────────────────┴────────┘
 </code></pre>
 <ul>
-<li><p>immediate[0] is implicitly <code>0</code> in B-type
-instructions</p>
+<li><p>immediate[0] is implicitly <code>0</code> in B-type instructions</p>
 <ul>
-<li><a
-href="https://stackoverflow.com/questions/77262729/how-do-i-concatenate-immediate-value-of-type-b-risc-v-instruction">https://stackoverflow.com/questions/77262729/how-do-i-concatenate-immediate-value-of-type-b-risc-v-instruction</a></li>
-<li><a
-href="https://www.reddit.com/r/RISCV/comments/187gflo/i_have_a_question_about_sbformat/">https://www.reddit.com/r/RISCV/comments/187gflo/i_have_a_question_about_sbformat/</a></li>
+<li><a href="https://stackoverflow.com/questions/77262729/how-do-i-concatenate-immediate-value-of-type-b-risc-v-instruction">https://stackoverflow.com/questions/77262729/how-do-i-concatenate-immediate-value-of-type-b-risc-v-instruction</a></li>
+<li><a href="https://www.reddit.com/r/RISCV/comments/187gflo/i_have_a_question_about_sbformat/">https://www.reddit.com/r/RISCV/comments/187gflo/i_have_a_question_about_sbformat/</a></li>
 </ul></li>
 <li><p>Branching only possible to even addresses</p></li>
-<li><p>Note :: Memory operands appear only in load and store
-instructions in RISC-V</p></li>
+<li><p>Note :: Memory operands appear only in load and store instructions in RISC-V</p></li>
 </ul>
 <h2 id="i-type-instruction-format">I-type instruction format</h2>
 <table>
@@ -519,46 +488,31 @@ instructions in RISC-V</p></li>
 </tbody>
 </table>
 <h1 id="instructions-1">Instructions</h1>
-<p>RV32I instructions (v2.2): <a
-href="https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf">https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf</a>
-<a
-href="https://mark.theis.site/riscv/">https://mark.theis.site/riscv/</a></p>
+<p>RV32I instructions (v2.2): <a href="https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf">https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf</a> <a href="https://mark.theis.site/riscv/">https://mark.theis.site/riscv/</a></p>
 <h1 id="notes">Notes</h1>
 <ul>
-<li><strong><strong>Instructions</strong></strong>: Words in the
-computer's language</li>
-<li><strong><strong>ISA</strong></strong> (Instruction Set
-Architecture): Vocabulary of the computer's language</li>
+<li><strong><strong>Instructions</strong></strong>: Words in the computer's language</li>
+<li><strong><strong>ISA</strong></strong> (Instruction Set Architecture): Vocabulary of the computer's language</li>
 </ul>
-<p>Goal of this language: Make it easy to build hardware and compiler
-while maximizing performance and minimising cost and energy</p>
+<p>Goal of this language: Make it easy to build hardware and compiler while maximizing performance and minimising cost and energy</p>
 <ul>
-<li><strong><strong>Spilling registers</strong></strong>: process of
-putting less frequently used data from registers into memory.</li>
-<li><strong><strong>Leaf procedure</strong></strong>: A procedure that
-doesn't call other procedures.
+<li><strong><strong>Spilling registers</strong></strong>: process of putting less frequently used data from registers into memory.</li>
+<li><strong><strong>Leaf procedure</strong></strong>: A procedure that doesn't call other procedures.
 <ul>
-<li>Attention must be paid when using new registers for non-leaf
-procedures. Conflict over the use of register may arise between the
-procedures called by the non-leaf procedure.</li>
+<li>Attention must be paid when using new registers for non-leaf procedures. Conflict over the use of register may arise between the procedures called by the non-leaf procedure.</li>
 <li>Recursive functions are non-leaf procedures.</li>
 </ul></li>
 <li>Memory addresses in RISC-V refers to bye address.</li>
-<li><strong><strong>Pseudo instructions</strong></strong>: instructions
-that need not be available in the hardware but is still offered by the
-assembler for convenience.
+<li><strong><strong>Pseudo instructions</strong></strong>: instructions that need not be available in the hardware but is still offered by the assembler for convenience.
 <ul>
-<li>Eg: <code>li</code> instruction (load immediate) (in lieu of
-<code>lui</code>?)</li>
+<li>Eg: <code>li</code> instruction (load immediate) (in lieu of <code>lui</code>?)</li>
 </ul></li>
 <li>Unconditional jump can be done with: <code>jal x0, Label</code></li>
-<li>Calling a function can be done with: <code>jal x1, fn_name</code>
-where <code>x1</code> has the return address.</li>
+<li>Calling a function can be done with: <code>jal x1, fn_name</code> where <code>x1</code> has the return address.</li>
 <li>Returning from a function can be done with: <code>jalr</code>.</li>
 </ul>
 <h1 id="usual-memory-layout">Usual memory layout</h1>
-<p>As per commonly followed conventions, stack grows 'downwards' and
-heap grows 'upwards'.</p>
+<p>As per commonly followed conventions, stack grows 'downwards' and heap grows 'upwards'.</p>
 <pre class="comment"><code>     |             |
      +-------------+
 SP → |             | 0000 003f ffff fff0
@@ -582,16 +536,12 @@ PC → |    Text     | 0000 0000 0040 0000
      +-------------+ 0000 0000 0000 0000
 </code></pre>
 <h1 id="immediate-values">Immediate values</h1>
-<p>Immediate value for instructions are limited to 12 bit values. If we
-need 32 bit value, we can use a combination of <code>lui</code> and
-<code>addi</code>.</p>
+<p>Immediate value for instructions are limited to 12 bit values. If we need 32 bit value, we can use a combination of <code>lui</code> and <code>addi</code>.</p>
 <ul>
 <li>Use <code>lui</code> to load upper 20 bits (bit 31 to bit 12).</li>
-<li>And add the remaining 12 bits to it with the usual
-<code>addi</code>.</li>
+<li>And add the remaining 12 bits to it with the usual <code>addi</code>.</li>
 </ul>
-<p>But this works properly only for positive numbers as <strong>sign
-extension</strong> comes to play.</p>
+<p>But this works properly only for positive numbers as <strong>sign extension</strong> comes to play.</p>
 <h1 id="data-paths">Data paths</h1>
 <h1 id="computational-efficiency">Computational efficiency</h1>
 <h2 id="execution-time-et">Execution time (ET)</h2>
@@ -606,8 +556,7 @@ extension</strong> comes to play.</p>
 <li>CPI: Clock cycles per instruction</li>
 <li>T: Clock period (ie, 1/ν)</li>
 </ul>
-<p>IC, CPI and T have an orthogonal relationship. We can't decrease one
-while keeping the other two same.</p>
+<p>IC, CPI and T have an orthogonal relationship. We can't decrease one while keeping the other two same.</p>
 <p>Decrease in one might lead to increase in the other two.</p>
 <p>Ideally we would like all three to be minimized. But can't do it.</p>
 <h2 id="performance">Performance</h2>
@@ -620,11 +569,8 @@ while keeping the other two same.</p>
 <ul>
 <li>Expresses the law of diminshing returns.</li>
 </ul>
-<p>Speedup via parallelism is limited by that component of the
-application which cannot be enhanced (ie, the sequential component).</p>
-<p>If a fraction <code>(1-E)</code> of the execution time <code>E</code>
-of an application cannot be enhanced for parallel implementation, then
-speedup is limited by a factor of <code>1 / (1-E)</code>.</p>
+<p>Speedup via parallelism is limited by that component of the application which cannot be enhanced (ie, the sequential component).</p>
+<p>If a fraction <code>(1-E)</code> of the execution time <code>E</code> of an application cannot be enhanced for parallel implementation, then speedup is limited by a factor of <code>1 / (1-E)</code>.</p>
 <h1 id="power-consumption">Power consumption</h1>
 <h1 id="datapath">Datapath</h1>
 <ul>
@@ -633,21 +579,16 @@ speedup is limited by a factor of <code>1 / (1-E)</code>.</p>
 </ul>
 <h2 id="single-cycle-datapath">Single cycle datapath</h2>
 <ul>
-<li>Everything that needs to be done is done in the same clock
-cycle.</li>
+<li>Everything that needs to be done is done in the same clock cycle.</li>
 <li>Clock frequency will be low, as clock period is more. (bad)</li>
 <li>But CPI is also low (=1 ?) (good)</li>
 </ul>
-<h2 id="multi-cycle-datapath"><span class="todo TODO">TODO</span> Multi
-cycle datapath</h2>
+<h2 id="multi-cycle-datapath"><span class="todo TODO">TODO</span> Multi cycle datapath</h2>
 <h2 id="register-file">Register file</h2>
 <ul>
-<li>All 32 general purpose registers of the processor are stored in a
-structure called a register file.</li>
-<li>Any register in it can be accessed by specifying its number
-(<strong>register number</strong>).</li>
-<li>Register number input here is just 5 bits (2⁵ = 32) and is not 64
-bits wide.</li>
+<li>All 32 general purpose registers of the processor are stored in a structure called a register file.</li>
+<li>Any register in it can be accessed by specifying its number (<strong>register number</strong>).</li>
+<li>Register number input here is just 5 bits (2⁵ = 32) and is not 64 bits wide.</li>
 </ul>
 <h2 id="program-counter-pc">Program Counter (PC)</h2>
 <p>PC = PC + 4 (ie, 4 bytes = 32b)</p>
@@ -683,8 +624,7 @@ bits wide.</li>
 <li>Keep the main memory and cache always upto date (consistent).</li>
 <li>Write all changes to cache to main memory as soon as it happens
 <ul>
-<li>ie, always write the data into both the main memory and the
-cache.</li>
+<li>ie, always write the data into both the main memory and the cache.</li>
 </ul></li>
 <li>Frequent main memory accesses =&gt; slower</li>
 </ul>
@@ -695,51 +635,40 @@ cache.</li>
 </ul>
 <h1 id="virtual-memory">Virtual memory</h1>
 <ul>
-<li><p>Simply put, main memory acting like a cache for secondary
-memory.</p>
+<li><p>Simply put, main memory acting like a cache for secondary memory.</p>
 <ul>
 <li>manages caching between main memory and secondary memory.</li>
 </ul></li>
 <li><p>main memory aka <strong>physical memory</strong>.</p></li>
 <li><p>page :: a virtual memory block</p></li>
 <li><p>page fault :: a virtual memory miss</p></li>
-<li><p>Virtual memory =&gt; <strong>virtual address</strong>. Translated
-to a <strong>physical address</strong>.</p>
+<li><p>Virtual memory =&gt; <strong>virtual address</strong>. Translated to a <strong>physical address</strong>.</p>
 <ul>
-<li>This translation = <strong>address mapping</strong> or address
-translation.</li>
+<li>This translation = <strong>address mapping</strong> or address translation.</li>
 </ul></li>
-<li><p>Managed by the <strong>MMU</strong> (Memory Management Unit) and
-not the OS.</p>
+<li><p>Managed by the <strong>MMU</strong> (Memory Management Unit) and not the OS.</p>
 <ul>
 <li>OS kicks to handle page faults.</li>
 </ul></li>
-<li><p>Mapping between virtual addresses and physical addresses is fully
-associative. ie, virtual pages can be placed anywhere in the main
-memory.</p></li>
-<li><p>thrashing :: if the program is constantly swapping pages between
-main and secondary memories.</p></li>
+<li><p>Mapping between virtual addresses and physical addresses is fully associative. ie, virtual pages can be placed anywhere in the main memory.</p></li>
+<li><p>thrashing :: if the program is constantly swapping pages between main and secondary memories.</p></li>
 </ul>
 <h2 id="advantages">Advantages</h2>
 <ul>
-<li>Allows a single program to expand its address space beyond the
-limits of the main memory.</li>
-<li>Allows sharing of main memory between different processes in a
-secure manner.</li>
+<li>Allows a single program to expand its address space beyond the limits of the main memory.</li>
+<li>Allows sharing of main memory between different processes in a secure manner.</li>
 </ul>
 <h2 id="virtual-address">Virtual address</h2>
 <ul>
 <li>Virtual page number</li>
 <li>Page offset</li>
 </ul>
-<h2 id="translation-lookaside-buffer-tlb">Translation Lookaside Buffer
-(TLB)</h2>
+<h2 id="translation-lookaside-buffer-tlb">Translation Lookaside Buffer (TLB)</h2>
 <ul>
 <li>Helps in translating virtual addresses to physical addresses.</li>
 <li>A special cache. Keeps track of recently used translations.
 <ul>
-<li>Simply loads physical address and protection tags from the (last
-level) page table.</li>
+<li>Simply loads physical address and protection tags from the (last level) page table.</li>
 </ul></li>
 <li>Effectively a 'translation cache'.</li>
 <li>When TLB is there, it is consulted before page register.
@@ -750,8 +679,7 @@ level) page table.</li>
 <ul>
 <li>valid bit</li>
 <li>dirty bit</li>
-<li>reference bit :: useful when LRU page replacement algorithm is used.
-Helps to find entries which were recently referenced/used.</li>
+<li>reference bit :: useful when LRU page replacement algorithm is used. Helps to find entries which were recently referenced/used.</li>
 </ul></li>
 </ul>
 <h3 id="handling-tlb-miss">Handling TLB miss</h3>
@@ -760,47 +688,35 @@ Helps to find entries which were recently referenced/used.</li>
 <li>Page is in memory =&gt; Just add the 'translation' entry to TLB</li>
 <li>Page not in memory =&gt; page fault. Transfer control to OS.
 <ul>
-<li>TLB miss or page fault exception should be asserted by the end of
-the clock cycle where the memory access occurs. So that the next cycle
-can make amends instead of fruitlessly continuing execution.</li>
+<li>TLB miss or page fault exception should be asserted by the end of the clock cycle where the memory access occurs. So that the next cycle can make amends instead of fruitlessly continuing execution.</li>
 </ul></li>
 </ul>
-<p><strong>RISC-V</strong> has two registers for handling
-exceptions:</p>
+<p><strong>RISC-V</strong> has two registers for handling exceptions:</p>
 <dl>
 <dt>SEPC</dt>
-<dd>
-Supervisor Exception Program Counter
+<dd>Supervisor Exception Program Counter
 </dd>
 <dt>SCAUSE</dt>
-<dd>
-Supervisor exception cause
+<dd>Supervisor exception cause
 </dd>
 </dl>
 <h1 id="pipelining">Pipelining</h1>
 <ul>
-<li>Exploits parallelism between instructions in a sequential
-instruction stream.</li>
+<li>Exploits parallelism between instructions in a sequential instruction stream.</li>
 <li>Improves instruction throughput.
 <ul>
 <li>Doesn't decrease execution time of individual instructions.</li>
 </ul></li>
-<li>Pipelined datapath has multiple <strong>stages</strong>, each of
-which operate concurrently.
+<li>Pipelined datapath has multiple <strong>stages</strong>, each of which operate concurrently.
 <ul>
-<li>if each stage takes same time (ideal conditions), speedup = number
-of stages.</li>
+<li>if each stage takes same time (ideal conditions), speedup = number of stages.</li>
 </ul></li>
-<li>Duration of a clock cycle must be duration of the longest pipeline
-stage.</li>
-<li>Fundamentally invisible to the programmer (unlike in the case of
-multiprocessor systems).
+<li>Duration of a clock cycle must be duration of the longest pipeline stage.</li>
+<li>Fundamentally invisible to the programmer (unlike in the case of multiprocessor systems).
 <ul>
-<li>Needn't adjust the program to make use of a pipelined
-architecture.</li>
+<li>Needn't adjust the program to make use of a pipelined architecture.</li>
 </ul></li>
-<li>Processor with pipelining is a <strong>scalar processor</strong>.
-??</li>
+<li>Processor with pipelining is a <strong>scalar processor</strong>. ??</li>
 </ul>
 <h2 id="risc-v-pipeline-stages">RISC-V pipeline stages</h2>
 <p>RISC-V instruction set was designed to be pipelined.</p>
@@ -820,8 +736,7 @@ architecture.</li>
 <li>Access operand in data memory if needed.</li>
 <li>Write results back into a register if needed.</li>
 </ol>
-<p>ie, the datapath is separated into 5 pieces, with each corresponding
-to a pipeline stage.</p>
+<p>ie, the datapath is separated into 5 pieces, with each corresponding to a pipeline stage.</p>
 <h2 id="risc-v-1">RISC-V</h2>
 <p>RISC-V instruction set was designed to be pipelined.</p>
 <p>A RISC-V instruction takes 5 steps:</p>
@@ -835,22 +750,16 @@ to a pipeline stage.</p>
 <p>ie, RISC-V pipeline consists of <em>5 stages</em>.</p>
 <p>Thankfully, in RISC-V:</p>
 <ul>
-<li>instructions are all of the same length (32b). Much easier to do
-pipelining.
+<li>instructions are all of the same length (32b). Much easier to do pipelining.
 <ul>
-<li>en fait, x86 translate their instructions into regular instructions
-similar to RISC-V instructions.</li>
+<li>en fait, x86 translate their instructions into regular instructions similar to RISC-V instructions.</li>
 </ul></li>
 <li>only few instruction formats.</li>
-<li>source and destination register fields are located in the same place
-in every instruction</li>
-<li>only load/store instruction have operands in memory =&gt; we can use
-execute stage (stage 3) to calculate memory address. (TODO: What's the
-advantage?)</li>
+<li>source and destination register fields are located in the same place in every instruction</li>
+<li>only load/store instruction have operands in memory =&gt; we can use execute stage (stage 3) to calculate memory address. (TODO: What's the advantage?)</li>
 </ul>
 <h1 id="pipeline-hazards">Pipeline hazards</h1>
-<p>Situations where the next instruction in the pipeline cannot execute
-in the next clock cycle.</p>
+<p>Situations where the next instruction in the pipeline cannot execute in the next clock cycle.</p>
 <p>Hazards may be classified as:</p>
 <ul>
 <li>Structural hazards</li>
@@ -859,22 +768,17 @@ in the next clock cycle.</p>
 </ul>
 <h2 id="structural-hazards">Structural hazards</h2>
 <ul>
-<li>Hardware can't support instruction combination that we wish to
-execute in the same clock cycle.
+<li>Hardware can't support instruction combination that we wish to execute in the same clock cycle.
 <ul>
-<li>ie, a planned instruction can't execute in the proper clock cycle
-because the hardware doesn't support the combination of instructions
-that are set to execute.</li>
+<li>ie, a planned instruction can't execute in the proper clock cycle because the hardware doesn't support the combination of instructions that are set to execute.</li>
 <li>eg: A functional unit that is needed is not available.</li>
 </ul></li>
 </ul>
 <h2 id="data-hazards">Data hazards</h2>
 <ul>
-<li>Pipeline is stalled because one step of an instruction instruction
-cannot execute till one step of a previous instruction finishes.
+<li>Pipeline is stalled because one step of an instruction instruction cannot execute till one step of a previous instruction finishes.
 <ul>
-<li>due to dependence of an instruction on an earlier instruction that
-is still in the pipeline.</li>
+<li>due to dependence of an instruction on an earlier instruction that is still in the pipeline.</li>
 </ul></li>
 </ul>
 <pre class="risc-v"><code>-- a RAW dependency
@@ -894,8 +798,7 @@ sub x8, x5, x8
 <h3 id="forwarding-aka-bypassing">Forwarding (aka bypassing)</h3>
 <ul>
 <li>A way to get around data hazards.</li>
-<li>A bypass by which result can be given to next instruction as soon as
-the result is formed.</li>
+<li>A bypass by which result can be given to next instruction as soon as the result is formed.</li>
 <li>Extra hardware involved.</li>
 </ul>
 <pre class="risc-v"><code>add x1, x2, x3
@@ -911,11 +814,9 @@ IF ID EX MEM WB
 <h4 id="raw-read-after-write">RAW (Read After Write)</h4>
 <ul>
 <li>True dependence aka flow dependence</li>
-<li>next instruction cannot execute till previous instruction has
-produced results.
+<li>next instruction cannot execute till previous instruction has produced results.
 <ul>
-<li>Register value is being read to get the value written to it by the
-previous instruction.</li>
+<li>Register value is being read to get the value written to it by the previous instruction.</li>
 </ul></li>
 </ul>
 <pre class="risc-v"><code>add x5, x6, x7   -- new value written to x5
@@ -924,21 +825,18 @@ sub x1, x5, x2   -- new value of x5 is being used
 <h4 id="waw-write-after-write">WAW (Write After Write)</h4>
 <ul>
 <li>Output dependence</li>
-<li>next instruction cannot write its output till a previous instruction
-has written its output.</li>
+<li>next instruction cannot write its output till a previous instruction has written its output.</li>
 </ul>
 <h4 id="war-write-after-read">WAR (Write After Read)</h4>
 <ul>
 <li>Anti-dependence.</li>
-<li>Next instruction cannot write its results till a previous
-instruction has read its input.</li>
+<li>Next instruction cannot write its results till a previous instruction has read its input.</li>
 </ul>
 <pre class="risc-v"><code></code></pre>
 <h2 id="control-hazards">Control hazards</h2>
 <ul>
 <li>aka <strong>branch hazard</strong>.</li>
-<li>arises from the need to make a decision based on the results of one
-instruction while others are executing.</li>
+<li>arises from the need to make a decision based on the results of one instruction while others are executing.</li>
 </ul>
 <h3 id="branch-prediction">Branch prediction</h3>
 <ul>
@@ -948,11 +846,9 @@ instruction while others are executing.</li>
 <li>Static branch prediction</li>
 <li>Dynamic branch prediction</li>
 </ul></li>
-<li>Disadvantage: wrong prediction =&gt; got to rollback the wrong
-course of action.
+<li>Disadvantage: wrong prediction =&gt; got to rollback the wrong course of action.
 <ul>
-<li>This problem is particularly relevant in the case of long
-pipelines.</li>
+<li>This problem is particularly relevant in the case of long pipelines.</li>
 </ul></li>
 </ul>
 <table>
@@ -989,62 +885,45 @@ pipelines.</li>
 <ul>
 <li>Another way to handle control hazards.</li>
 <li>Delayed decision.</li>
-<li>Execution of the part after a branch is delayed till the result of
-branching instruction is known.
+<li>Execution of the part after a branch is delayed till the result of branching instruction is known.
 <ul>
-<li>Meanwhile, an independent instruction will be executed (in
-<strong>delay slot</strong>).</li>
-<li>ie, next sequential execution is always executed. During this time,
-result of the branching instruction may be calculated.</li>
-<li>Effectively, the branching occurs one instruction <em>after</em> the
-branch instruction.</li>
-<li>Assembler/compiler?? arranges it this way. Programmer don't have to
-worry about it. ie, this is <em>static</em>.</li>
+<li>Meanwhile, an independent instruction will be executed (in <strong>delay slot</strong>).</li>
+<li>ie, next sequential execution is always executed. During this time, result of the branching instruction may be calculated.</li>
+<li>Effectively, the branching occurs one instruction <em>after</em> the branch instruction.</li>
+<li>Assembler/compiler?? arranges it this way. Programmer don't have to worry about it. ie, this is <em>static</em>.</li>
 </ul></li>
 <li>MIPS does this.</li>
 </ul>
 <h1 id="multiple-issue">Multiple issue</h1>
 <ul>
-<li>Replicate internal components of the computer so that multiple
-instructions can be launched/issued.</li>
-<li>Another way (apart from simple pipelining) to increase
-parallelism.</li>
+<li>Replicate internal components of the computer so that multiple instructions can be launched/issued.</li>
+<li>Another way (apart from simple pipelining) to increase parallelism.</li>
 <li>Launch multiple instructions in every pipeline-stage.
 <ul>
-<li>There will be multiple sets of the pipeline. A replication of
-hardware, so that multiple 'pipelines' are being run
-simultaneously.</li>
+<li>There will be multiple sets of the pipeline. A replication of hardware, so that multiple 'pipelines' are being run simultaneously.</li>
 </ul></li>
 <li>Using this, it is possible to make CPI &lt; 1
 <ul>
 <li>ie, instruction execution rate can exceed the clock rate.</li>
-<li>Another metric, <strong>IPC</strong> (Instruction per clock cycle)
-instead of CPI, can also be used.</li>
+<li>Another metric, <strong>IPC</strong> (Instruction per clock cycle) instead of CPI, can also be used.</li>
 <li>Even moderate designs aim for a peak IPC of 2.</li>
 </ul></li>
-<li>Classification of multiple issue designs commonly made based on the
-division of work between:
+<li>Classification of multiple issue designs commonly made based on the division of work between:
 <ul>
 <li>compiler (ie, static)</li>
 <li>hardware (ie, dynamic)</li>
 </ul></li>
 <li>Eg: Static multiple issue and dynamic multiple issue</li>
-<li>Dynamic multiple issue processors are known as <strong>Super-scalar
-processors</strong> aka superscalars.</li>
+<li>Dynamic multiple issue processors are known as <strong>Super-scalar processors</strong> aka superscalars.</li>
 </ul>
-<h2 id="types-of-multiple-issue-processors">Types of multiple issue
-processors</h2>
+<h2 id="types-of-multiple-issue-processors">Types of multiple issue processors</h2>
 <ul>
 <li>Many types of multiple issue processors are there.
 <ul>
-<li>Differs in terms of the division of work between the compiler and
-processor</li>
-<li>Decisions made statically compiler itself: <strong>Static multiple
-issue</strong>.</li>
-<li>Decisions made dynamically at run-time: <strong>Dynamic multiple
-issue</strong>.</li>
-<li>Usually practical multiple issue processors are a blend of static
-and dynamic.</li>
+<li>Differs in terms of the division of work between the compiler and processor</li>
+<li>Decisions made statically compiler itself: <strong>Static multiple issue</strong>.</li>
+<li>Decisions made dynamically at run-time: <strong>Dynamic multiple issue</strong>.</li>
+<li>Usually practical multiple issue processors are a blend of static and dynamic.</li>
 </ul></li>
 </ul>
 <table>
@@ -1089,101 +968,79 @@ and dynamic.</li>
 </tr>
 </tbody>
 </table>
-<h2 id="static-multi-issue-processors">Static multi issue
-processors</h2>
+<h2 id="static-multi-issue-processors">Static multi issue processors</h2>
 <ul>
-<li>Compiler usually does something to handle control and data hazards
-as well.
+<li>Compiler usually does something to handle control and data hazards as well.
 <ul>
-<li>Like code rescheduling to reduce hazards, and static branch
-prediction.</li>
+<li>Like code rescheduling to reduce hazards, and static branch prediction.</li>
 </ul></li>
 </ul>
-<h2 id="dynamic-multi-issue-processors">Dynamic multi issue
-processors</h2>
+<h2 id="dynamic-multi-issue-processors">Dynamic multi issue processors</h2>
 <ul>
-<li>Dynamic multi issue processors are often termed
-<strong>superscalars</strong>.</li>
+<li>Dynamic multi issue processors are often termed <strong>superscalars</strong>.</li>
 </ul>
 <h3 id="dynamic-pipeline-scheduling">Dynamic pipeline scheduling</h3>
 <ul>
 <li>In the context of dynamic multi issue processors.</li>
 <li>Commit unit ::</li>
-<li>Reorder buffer :: Buffer in the commit unit that stores the result
-until it is safe to write to memory or register file.
+<li>Reorder buffer :: Buffer in the commit unit that stores the result until it is safe to write to memory or register file.
 <ul>
-<li>Also provides operands needed by other instructions (data) dependent
-on already executed but uncommitted instructions.</li>
+<li>Also provides operands needed by other instructions (data) dependent on already executed but uncommitted instructions.</li>
 </ul></li>
 <li>Reservation stations :: buffer associated with a FU.
 <ul>
 <li>Holds operands and operator.</li>
-<li>As soon as all operands and operator are available and FU is ready
-to execute, result is calculated.</li>
+<li>As soon as all operands and operator are available and FU is ready to execute, result is calculated.</li>
 </ul></li>
 </ul>
-<h2 id="factors-to-consider-in-multiple-issue-designs">Factors to
-consider in multiple-issue designs</h2>
+<h2 id="factors-to-consider-in-multiple-issue-designs">Factors to consider in multiple-issue designs</h2>
 <ul>
 <li>Packaging instructions into <strong>issue slots</strong>.</li>
 <li>Dealing with data and control hazards.</li>
 </ul>
 <h1 id="speculative-execution">Speculative execution</h1>
 <ul>
-<li>Compiler or proecessor 'guesses' about the properites of an
-instruction.</li>
+<li>Compiler or proecessor 'guesses' about the properites of an instruction.</li>
 </ul>
 <h2 id="out-of-order-execution">Out-of-order execution</h2>
 <ul>
-<li>Instructions can be executed in a different order than the one in
-which they were fetched.</li>
-<li>Processor executes instructions in an order that preserves the data
-flow order of the program.</li>
+<li>Instructions can be executed in a different order than the one in which they were fetched.</li>
+<li>Processor executes instructions in an order that preserves the data flow order of the program.</li>
 </ul>
 <pre><code>In-order issue → Out-of-order execution → In-order commit
 </code></pre>
-<h1 id="ways-to-improve-pipeline-efficiency">Ways to improve pipeline
-efficiency</h1>
+<h1 id="ways-to-improve-pipeline-efficiency">Ways to improve pipeline efficiency</h1>
 <h2 id="loop-unrolling">Loop unrolling</h2>
 <ul>
-<li>A technique employable by the compiler to enhance possibility of
-parallelism.</li>
-<li>Body of loop is 'unrolled' to have more ILP (instruction level
-parallelism) available by overlapping instructions from different
-iterations.</li>
+<li>A technique employable by the compiler to enhance possibility of parallelism.</li>
+<li>Body of loop is 'unrolled' to have more ILP (instruction level parallelism) available by overlapping instructions from different iterations.</li>
 <li>Disadvantage :: More register resources needed.
 <ul>
 <li>More <em>register pressure</em>.</li>
 <li>Increase in concurrency demands more resources.</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Following loop:</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i<span class="op">&lt;</span><span class="dv">16</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  c<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> b<span class="op">[</span>i<span class="op">];</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">// could be unrolled once to make it</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i<span class="op">&lt;</span><span class="dv">16</span><span class="op">;</span> i<span class="op">+=</span><span class="dv">2</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  c<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> b<span class="op">[</span>i<span class="op">];</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  c<span class="op">[</span>i<span class="op">+</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> a<span class="op">[</span>i<span class="op">+</span><span class="dv">1</span><span class="op">]</span> <span class="op">+</span> b<span class="op">[</span>i<span class="op">+</span><span class="dv">1</span><span class="op">]</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="co">// Following loop:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>; i&lt;<span class="dv">16</span>; ++i) {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>  c[i] = a[i] + b[i];</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>}</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a><span class="co">// could be unrolled once to make it</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a><span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>; i&lt;<span class="dv">16</span>; i+=<span class="dv">2</span>) {</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a>  c[i] = a[i] + b[i];</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a>  c[i+<span class="dv">1</span>] = a[i+<span class="dv">1</span>] + b[i+<span class="dv">1</span>]</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a>}</span></code></pre></div>
 <h2 id="register-renaming">Register renaming</h2>
 <ul>
-<li>Eliminates dependencies that aren't true dependencies (ie, RAW data
-dependencies).</li>
-<li>For instructions that can be made independent if different register
-was used.
+<li>Eliminates dependencies that aren't true dependencies (ie, RAW data dependencies).</li>
+<li>For instructions that can be made independent if different register was used.
 <ul>
-<li>Because they just look like they are dependent but aren't actually
-so.</li>
-<li>This is because of <strong>name dependence</strong> or
-<strong>antidependence</strong>.</li>
+<li>Because they just look like they are dependent but aren't actually so.</li>
+<li>This is because of <strong>name dependence</strong> or <strong>antidependence</strong>.</li>
 <li>No data values flow between the antidepedent instructions.</li>
-<li>Because the 'dependence' is forced purely by the reuse of a
-name.</li>
+<li>Because the 'dependence' is forced purely by the reuse of a name.</li>
 </ul></li>
-<li>Register renaming eliminates name dependencies while preserving true
-dependencies.</li>
+<li>Register renaming eliminates name dependencies while preserving true dependencies.</li>
 <li>Disadvantage :: More register resources needed.</li>
 </ul>
 <pre class="risc-v"><code>-- WAR data dependency here
@@ -1225,43 +1082,32 @@ sd x5, 16(x0)
 </code></pre>
 <h1 id="new-terms">New terms</h1>
 <h2 id="latency-of-an-instruction">Latency of an instruction</h2>
-<p>Essentially time taken to finish executing that instruction. ie, its
-execution time.</p>
+<p>Essentially time taken to finish executing that instruction. ie, its execution time.</p>
 <h2 id="nops">nops</h2>
 <ul>
 <li>An instruction that does nothing. Just filler.</li>
 <li>No operation.</li>
 <li>Does not change state.</li>
 <li>Acts essentially like a stall/bubble in the pipeline.</li>
-<li>Not counted while calculating CPI or IPC as it plays no role in
-enhancing performance.</li>
+<li>Not counted while calculating CPI or IPC as it plays no role in enhancing performance.</li>
 </ul>
 <h2 id="pc-relative-addressing">PC relative addressing</h2>
 <ul>
 <li>Addressing scheme where: address = PC + constant</li>
-<li>RISC-V uses PC-relative addressing for both conditional branches and
-jumps as the destination instruction tends to be located close by.</li>
+<li>RISC-V uses PC-relative addressing for both conditional branches and jumps as the destination instruction tends to be located close by.</li>
 </ul>
 <h2 id="epic">EPIC</h2>
 <p>Explicitly Parallel Instruction Computing</p>
 <h2 id="vliw">VLIW</h2>
 <ul>
 <li>Very Large Instruction Word</li>
-<li>An ISA that launches many operations (that are defined to be
-independent) in a single 'wide' instruction.</li>
-<li>Multiple (independent) instructions are bundled together into a long
-instruction.</li>
+<li>An ISA that launches many operations (that are defined to be independent) in a single 'wide' instruction.</li>
+<li>Multiple (independent) instructions are bundled together into a long instruction.</li>
 </ul>
 <h1 id="examples">Examples</h1>
-<h2 id="execution-time">Execution time <span class="tag"
-data-tag-name="PERFORMANCE"><span
-class="smallcaps">PERFORMANCE</span></span></h2>
+<h2 id="execution-time">Execution time <span class="tag" data-tag-name="PERFORMANCE"><span class="smallcaps">PERFORMANCE</span></span></h2>
 <h3 id="problem-statement">Problem statement</h3>
-<p>Consider a program comprising of 100 instructions which runs in two
-different machines 𝑀1 and 𝑀2. Each instruction takes 2 clock cycles in
-𝑀1 and 1 clock cycle in 𝑀2. The clock period of 𝑀1 and 𝑀2 are 20
-nanosecond (ns) and 30ns, respectively. Find the execution times of the
-program in both machines. Which machine has better performance?</p>
+<p>Consider a program comprising of 100 instructions which runs in two different machines 𝑀1 and 𝑀2. Each instruction takes 2 clock cycles in 𝑀1 and 1 clock cycle in 𝑀2. The clock period of 𝑀1 and 𝑀2 are 20 nanosecond (ns) and 30ns, respectively. Find the execution times of the program in both machines. Which machine has better performance?</p>
 <h3 id="solution">Solution</h3>
 <p>ET = IC * CPI * T</p>
 <table>
@@ -1292,19 +1138,9 @@ program in both machines. Which machine has better performance?</p>
 </tbody>
 </table>
 <p>∴ M2 is faster.</p>
-<h2 id="non-leaf-procedures-max-element-of-array">Non-leaf procedures:
-Max element of array <span class="tag" data-tag-name="ASSEMBLY"><span
-class="smallcaps">ASSEMBLY</span></span></h2>
+<h2 id="non-leaf-procedures-max-element-of-array">Non-leaf procedures: Max element of array <span class="tag" data-tag-name="ASSEMBLY"><span class="smallcaps">ASSEMBLY</span></span></h2>
 <h3 id="problem">Problem</h3>
-<p>Write a non-leaf RISC-V procedure, "Maximum" to find the maximum
-number from an array of integers. The address of the first element of
-the array is stored in register X5 and the size of the array, ‘ASize’ is
-stored in register X6. "Maximum" calls a leaf procedure ‘max-2’. The
-function ‘max-2’ takes two values from the registers X10 and X11 and
-returns the greater value through register X10. Eventually, the maximum
-value in the array is stored in the memory location 0x3345A204. Kindly
-state your assumptions clearly, for instance specify register that will
-hold index or temporary value.</p>
+<p>Write a non-leaf RISC-V procedure, "Maximum" to find the maximum number from an array of integers. The address of the first element of the array is stored in register X5 and the size of the array, ‘ASize’ is stored in register X6. "Maximum" calls a leaf procedure ‘max-2’. The function ‘max-2’ takes two values from the registers X10 and X11 and returns the greater value through register X10. Eventually, the maximum value in the array is stored in the memory location 0x3345A204. Kindly state your assumptions clearly, for instance specify register that will hold index or temporary value.</p>
 <h3 id="risc-v-assembly">RISC-V assembly</h3>
 <pre class="riscv-asm"><code># max-2
 max2:
@@ -1357,17 +1193,15 @@ loop:
   # Store result
   sd x30, 0(x31)
 </code></pre>
-<h2 id="non-leaf-procedures-factorial">Non-leaf procedures: Factorial
-<span class="tag" data-tag-name="ASSEMBLY"><span
-class="smallcaps">ASSEMBLY</span></span></h2>
+<h2 id="non-leaf-procedures-factorial">Non-leaf procedures: Factorial <span class="tag" data-tag-name="ASSEMBLY"><span class="smallcaps">ASSEMBLY</span></span></h2>
 <h3 id="c-program">C program</h3>
-<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> <span class="dt">int</span> fact <span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> <span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> f<span class="op">;</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> n <span class="op">*</span> fact<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="dt">long</span> <span class="dt">long</span> <span class="dt">int</span> fact (<span class="dt">long</span> <span class="dt">long</span> <span class="dt">int</span> n) {</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a>    <span class="cf">if</span> (n &lt; <span class="dv">1</span>) {</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a>        <span class="cf">return</span> f;</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a>    } <span class="cf">else</span> {</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a>        <span class="cf">return</span> n * fact(n - <span class="dv">1</span>);</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a>    }</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a>}</span></code></pre></div>
 <h3 id="risc-v-assembly-1">RISC-V assembly</h3>
 <p>Own attempt. May be wrong.</p>
 <pre class="riscv-asm"><code>fact:
@@ -1387,30 +1221,18 @@ recurse:
 over:
     jalr x0, 0(x1)           # return from fact() to caller function
 </code></pre>
-<h2 id="procedure-calls">Procedure calls <span class="tag"
-data-tag-name="PERFORMANCE"><span
-class="smallcaps">PERFORMANCE</span></span></h2>
+<h2 id="procedure-calls">Procedure calls <span class="tag" data-tag-name="PERFORMANCE"><span class="smallcaps">PERFORMANCE</span></span></h2>
 <h3 id="problem-statement-1">Problem statement</h3>
-<p>After graduating, you are asked to become the lead computer designer
-at Intel.</p>
-<p>Your study of usage of high-level language constructs suggests that
-procedure calls are one of the most expensive operations.</p>
-<p>You have invented a scheme that reduces the loads and stores normally
-associated with procedure calls and returns.</p>
-<p>The first thing you do is run some experiments with and without this
-optimization.</p>
-<p>Your experiments use the same state-of-the-art optimizing compiler
-that will be used with either version of the computer. These experiments
-reveal the following information:</p>
+<p>After graduating, you are asked to become the lead computer designer at Intel.</p>
+<p>Your study of usage of high-level language constructs suggests that procedure calls are one of the most expensive operations.</p>
+<p>You have invented a scheme that reduces the loads and stores normally associated with procedure calls and returns.</p>
+<p>The first thing you do is run some experiments with and without this optimization.</p>
+<p>Your experiments use the same state-of-the-art optimizing compiler that will be used with either version of the computer. These experiments reveal the following information:</p>
 <ul>
 <li>The clock rate of the unoptimized version is 5% higher.</li>
-<li>Thirty percent of the instructions in the unoptimized version are
-loads or stores.</li>
-<li>The optimized version executes two-thirds as many loads and stores
-as the unoptimized version. For all other instructions the dynamic
-execution counts are unchanged.</li>
-<li>All instructions (including load and store) take one clock
-cycle.</li>
+<li>Thirty percent of the instructions in the unoptimized version are loads or stores.</li>
+<li>The optimized version executes two-thirds as many loads and stores as the unoptimized version. For all other instructions the dynamic execution counts are unchanged.</li>
+<li>All instructions (including load and store) take one clock cycle.</li>
 </ul>
 <p>Which is faster? Justify your decision quantitatively.</p>
 <h3 id="solution-1">Solution</h3>
@@ -1452,32 +1274,22 @@ cycle.</li>
 </table>
 <h1 id="references">References</h1>
 <ul>
-<li><em>Computer organization and design: The hardware-software
-interface (RISC-V Edition)</em> by David A. Patterson, John L.
-Hennessy</li>
-<li><em>Computer organization: A quantitative analysis</em> 2nd edition
-(or later) by David A. Patterson, John L. Hennessy</li>
+<li><em>Computer organization and design: The hardware-software interface (RISC-V Edition)</em> by David A. Patterson, John L. Hennessy</li>
+<li><em>Computer organization: A quantitative analysis</em> 2nd edition (or later) by David A. Patterson, John L. Hennessy</li>
 </ul>
 <h1 id="doubts">Doubts</h1>
 <h2 id="unaddressed">Unaddressed</h2>
 <ul>
 <li><p>2.4: First commercial computer was a decimal computer?</p></li>
-<li><p>Is <code>li</code> (load immediate) a RISC-V instruction?
-Mentioned in page 136 but not in the reference card.</p></li>
-<li><p>Which RISC-V assembler is being talked about in section 2.12
-(page 124)</p></li>
-<li><p>Any difference between <code>li x5 100</code> and
-<code>addi x5 x0 100</code> performance-wise? (though <code>li</code> is
-a pseudo-instruction)</p></li>
-<li><p>Why the <code>0(x23)</code> needed even when the offset is zero?
-Is it mandatory for some instructions like
-<code>ld x6, 0(x5)</code>?</p></li>
+<li><p>Is <code>li</code> (load immediate) a RISC-V instruction? Mentioned in page 136 but not in the reference card.</p></li>
+<li><p>Which RISC-V assembler is being talked about in section 2.12 (page 124)</p></li>
+<li><p>Any difference between <code>li x5 100</code> and <code>addi x5 x0 100</code> performance-wise? (though <code>li</code> is a pseudo-instruction)</p></li>
+<li><p>Why the <code>0(x23)</code> needed even when the offset is zero? Is it mandatory for some instructions like <code>ld x6, 0(x5)</code>?</p></li>
 <li><p>Class: ALU does 64b but then why registers only 32b?</p></li>
 </ul>
 <h2 id="datapaths">Datapaths</h2>
 <h3 id="waw">WAW</h3>
-<p>Why does it matter? Write after write means that the first write can
-simply be ignored, right?</p>
+<p>Why does it matter? Write after write means that the first write can simply be ignored, right?</p>
 <pre><code>-- d&#39;accord matters here
 add x1, x2, x3
 add x1, x1, x4
@@ -1486,29 +1298,13 @@ add x1, x1, x4
 add x1, x4, x4
 </code></pre>
 <h3 id="beq">beq</h3>
-<p>I found this sentence under the section 'Reducing the delay of
-branches' in Chapter 4 ('The processor') in the Hennessy Patterson
-RISC-V book (page 309): 'Equality can be tested by XORing individual bit
-positions of two registers and ORing the XORed result.'</p>
+<p>I found this sentence under the section 'Reducing the delay of branches' in Chapter 4 ('The processor') in the Hennessy Patterson RISC-V book (page 309): 'Equality can be tested by XORing individual bit positions of two registers and ORing the XORed result.'</p>
 <p>Why is an OR operation needed as well? Isn't XOR result enough?</p>
-<h3
-id="structural-hazards-not-a-problem-in-multiple-issue-designs">Structural
-hazards not a problem in multiple issue designs?</h3>
-<p>In the textbook it is mentioned (page 322) that one of the 'two
-primary and distinct responsibilities must be dealt with in a
-multiple-issue pipeline' is 'dealing with data and control hazards'.
-Strucutural hazard is not mentioned there. Does that mean structural
-hazards are not much of a problem in multiple issue designs?</p>
-<p>The other factor to be dealt with was 'packaging instructions into
-issue slots'. Does that part take care of structural hazards?</p>
+<h3 id="structural-hazards-not-a-problem-in-multiple-issue-designs">Structural hazards not a problem in multiple issue designs?</h3>
+<p>In the textbook it is mentioned (page 322) that one of the 'two primary and distinct responsibilities must be dealt with in a multiple-issue pipeline' is 'dealing with data and control hazards'. Strucutural hazard is not mentioned there. Does that mean structural hazards are not much of a problem in multiple issue designs?</p>
+<p>The other factor to be dealt with was 'packaging instructions into issue slots'. Does that part take care of structural hazards?</p>
 <h3 id="branch-delay">Branch delay</h3>
-<p>In the static-prediction - delayed branch slide (slide number 44 in
-pdf), how does the processor know that an instruction is a branch
-instruction before decoding it? Doesn't it need to wait till instruction
-decode stage to know what kind of an instruction it is? In the diagram,
-the independent instruction (that runs in the branch delay slot) starts
-right after the branch instruction's Instruction Fetch stage (together
-with the branch instruction's ID stage).</p>
+<p>In the static-prediction - delayed branch slide (slide number 44 in pdf), how does the processor know that an instruction is a branch instruction before decoding it? Doesn't it need to wait till instruction decode stage to know what kind of an instruction it is? In the diagram, the independent instruction (that runs in the branch delay slot) starts right after the branch instruction's Instruction Fetch stage (together with the branch instruction's ID stage).</p>
 <h2 id="risc-v-extensions">RISC-V extensions</h2>
 <ul>
 <li>M: Multiply instructions</li>
@@ -1516,72 +1312,30 @@ with the branch instruction's ID stage).</p>
 </ul>
 <h2 id="memory-hierarchy">Memory hierarchy</h2>
 <ul>
-<li><p>p371: "SRAMs typically use 6-8 transistors per bit to prevent the
-information from being disturbed when read". Why this
-disturbance?</p></li>
-<li><p>[INFORMAL] p373: harddsik: 'entire drive is permanently sealed to
-control the en inside the drive': does that mean that if you open in it
-ourselves, it will no longer function if we put it back
-together.</p></li>
-<li><p>p374: all disk heads will be on the same track. Why this
-restriction? Any advantage?</p></li>
-<li><p>p375: does the speed at which the disks rotate have any bearing
-on its efficiency?</p></li>
-<li><p>Difference between l1/l2/l3 caches. Technology is different as
-wel?</p>
+<li><p>p371: "SRAMs typically use 6-8 transistors per bit to prevent the information from being disturbed when read". Why this disturbance?</p></li>
+<li><p>[INFORMAL] p373: harddsik: 'entire drive is permanently sealed to control the en inside the drive': does that mean that if you open in it ourselves, it will no longer function if we put it back together.</p></li>
+<li><p>p374: all disk heads will be on the same track. Why this restriction? Any advantage?</p></li>
+<li><p>p375: does the speed at which the disks rotate have any bearing on its efficiency?</p></li>
+<li><p>Difference between l1/l2/l3 caches. Technology is different as wel?</p>
 <ul>
 <li>What are caches usually made of anyway? SRAM?</li>
 </ul></li>
-<li><p>Cache miss =&gt; Instruct main memory for a read is same as a
-complete load instruction (maybe without instruction decode
-phase)?</p></li>
-<li><p>p400: Set associativity for caches with content addressible
-memories upto how much? Book says 8 and above.</p></li>
-<li><p>Increase in block size of cache means: advntge: more cache hits
-disadvntge: increase in miss penalty; any other disadvantages like more
-complex hardware maybe?</p></li>
-<li><p>What's the reason for using $ sign to denote cache? Is it really
-because it sounds like 'cash' or is there another reason?</p></li>
-<li><p>Regarding the section on VMs in textbook (p416): if we are
-running a single VM in our laptop, how does the hypervisor act? Does it
-manage both the host OS (our computer's os) and the guest OS (os used in
-the VM)? Or does the hypervisor play a greater role only when multiple
-guest VMs are running? Is hypervisor something that's part of the
-hardware or something that's software? What does enabling virtualization
-in the BIOS mean? Is it same as enabling hypervisor or something?
-Hypervisor sort of translates the instructions issued by the guest
-systems to that of host and maps the hardware to be used by the guests
-to actual hardware of the host, right?</p></li>
-<li><p>Are the secondary storage in smart phones flash memory? Is it so
-even in the old Nokia phones (with a physical keypad and all)? Or did
-they start being used in phones only after smart phones were made? Is
-this the kind of memory used even in small devices which can store just
-a few numbers like a glucose meter or a similar device being able to
-remember the last few measurements?</p></li>
-<li><p>p421: Virtual memory: RISC-V has 64 bit address but upper 16 bits
-are not used. Virtual address is 48bits. Why upper bits not used? (It
-later says that RISC-V also supports 39b and 57b virtual address spaces
-as well)</p></li>
-<li><p>Virtual memory: Which component does the virtual to physical
-address translation? How does it manage if we expand the physical memory
-by replacing the RAM with one of a higher capacity? Range of physical
-addresses would change right? So the addressing mapping part would also
-need to change.</p></li>
-<li><p>Virtual 'memory: A page fault to disk would result in millions of
-clock cycles to process'. Why would it need that many cycles? Does a
-typical harddisk access really take that long? And is an SSD faster than
-an HDD because the number of cycles needed for SSD is lesser?</p></li>
-<li><p>DONE p385: how many clock cycles or part of a clock cycle would
-it take to service a cache miss? So if the pipeline must stall? It's not
-stalling for just a few pipeline stages, but for entire clocks?</p></li>
-<li><p>DONE p385: Cache miss okay. But what's a write-miss? What could
-be missed when writing?</p></li>
+<li><p>Cache miss =&gt; Instruct main memory for a read is same as a complete load instruction (maybe without instruction decode phase)?</p></li>
+<li><p>p400: Set associativity for caches with content addressible memories upto how much? Book says 8 and above.</p></li>
+<li><p>Increase in block size of cache means: advntge: more cache hits disadvntge: increase in miss penalty; any other disadvantages like more complex hardware maybe?</p></li>
+<li><p>What's the reason for using $ sign to denote cache? Is it really because it sounds like 'cash' or is there another reason?</p></li>
+<li><p>Regarding the section on VMs in textbook (p416): if we are running a single VM in our laptop, how does the hypervisor act? Does it manage both the host OS (our computer's os) and the guest OS (os used in the VM)? Or does the hypervisor play a greater role only when multiple guest VMs are running? Is hypervisor something that's part of the hardware or something that's software? What does enabling virtualization in the BIOS mean? Is it same as enabling hypervisor or something? Hypervisor sort of translates the instructions issued by the guest systems to that of host and maps the hardware to be used by the guests to actual hardware of the host, right?</p></li>
+<li><p>Are the secondary storage in smart phones flash memory? Is it so even in the old Nokia phones (with a physical keypad and all)? Or did they start being used in phones only after smart phones were made? Is this the kind of memory used even in small devices which can store just a few numbers like a glucose meter or a similar device being able to remember the last few measurements?</p></li>
+<li><p>p421: Virtual memory: RISC-V has 64 bit address but upper 16 bits are not used. Virtual address is 48bits. Why upper bits not used? (It later says that RISC-V also supports 39b and 57b virtual address spaces as well)</p></li>
+<li><p>Virtual memory: Which component does the virtual to physical address translation? How does it manage if we expand the physical memory by replacing the RAM with one of a higher capacity? Range of physical addresses would change right? So the addressing mapping part would also need to change.</p></li>
+<li><p>Virtual 'memory: A page fault to disk would result in millions of clock cycles to process'. Why would it need that many cycles? Does a typical harddisk access really take that long? And is an SSD faster than an HDD because the number of cycles needed for SSD is lesser?</p></li>
+<li><p>DONE p385: how many clock cycles or part of a clock cycle would it take to service a cache miss? So if the pipeline must stall? It's not stalling for just a few pipeline stages, but for entire clocks?</p></li>
+<li><p>DONE p385: Cache miss okay. But what's a write-miss? What could be missed when writing?</p></li>
 </ul>
-<section id="footnotes" class="footnotes footnotes-end-of-document"
-role="doc-endnotes">
+<section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><pre class="example"><code>Page 102   
+<li id="fn1" role="doc-endnote"><pre class="example"><code>Page 102   
 </code></pre>
 <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></li>
 </ol>
