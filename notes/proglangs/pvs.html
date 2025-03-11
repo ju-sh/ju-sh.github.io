@@ -102,7 +102,9 @@
 ----------------------------
             Γ ⊢ Δ
 </code></pre>
-<p>Given a leaf node of a proof tree with <code>Γ ⊢ Δ</code>, this rule allows adding <code>n</code> children to that node (making it a non-leaf node).</p>
+<p>Given a leaf node of a proof tree with <code>Γ ⊢ Δ</code>, this rule
+allows adding <code>n</code> children to that node (making it a non-leaf
+node).</p>
 <p>Structural rules:</p>
 <pre><code>    A,A,Γ ⊢ Δ                    Γ ⊢ A,A,Δ
 ---------------- c⊢          ----------------- ⊢c              
@@ -131,7 +133,8 @@ Propositional rules:
 <h2 id="more-stuff">More stuff</h2>
 <ul>
 <li>Primitive proof rules</li>
-<li>Proof strategies: In Coq, similar purpose is served by user-defined rules with Ltac.</li>
+<li>Proof strategies: In Coq, similar purpose is served by user-defined
+rules with Ltac.</li>
 </ul>
 <h2 id="keywords-for-symbols">Keywords for symbols</h2>
 <table>
@@ -180,9 +183,11 @@ Propositional rules:
 </tr>
 </tbody>
 </table>
-<p>And <code>WHEN</code> is same as <code>IMPLIES</code> with the order of operands reversed.</p>
+<p>And <code>WHEN</code> is same as <code>IMPLIES</code> with the order
+of operands reversed.</p>
 <p>These symbols are simply textual replacements.</p>
-<p>So <code>λn:n</code> is not same as <code>λ n: n</code>. Former would give error as they expand like:</p>
+<p>So <code>λn:n</code> is not same as <code>λ n: n</code>. Former would
+give error as they expand like:</p>
 <table>
 <thead>
 <tr class="header">
@@ -201,9 +206,12 @@ Propositional rules:
 </tr>
 </tbody>
 </table>
-<p>And pvs would flag the <code>LAMBDAn</code> part as a syntax error.</p>
+<p>And pvs would flag the <code>LAMBDAn</code> part as a syntax
+error.</p>
 <h2 id="strategy-application-stuff">Strategy application stuff</h2>
-<p>a strategy invoked with a <code>$</code> suffix means that the strategy will be executed with the expanded internal steps still visible. Useful for debugging.</p>
+<p>a strategy invoked with a <code>$</code> suffix means that the
+strategy will be executed with the expanded internal steps still
+visible. Useful for debugging.</p>
 <ul>
 <li><code>*</code> suffix: repeatedly apply strategy</li>
 <li><code>!</code> suffix: use generated names</li>
@@ -252,7 +260,8 @@ END sumn
 (assert)
 </code></pre>
 <h2 id="rules-and-strategies">Rules and strategies</h2>
-<p>User guides the proof construction process via rules and strategies.</p>
+<p>User guides the proof construction process via rules and
+strategies.</p>
 <p>Some rules:</p>
 <table>
 <thead>
@@ -281,10 +290,13 @@ END sumn
 </tbody>
 </table>
 <ul>
-<li><code>skolem</code> introduces Skolem constants for universal strength quantifiers.</li>
-<li><code>inst</code> instantiates a Skolem constant for existential strength quantifiers.</li>
+<li><code>skolem</code> introduces Skolem constants for universal
+strength quantifiers.</li>
+<li><code>inst</code> instantiates a Skolem constant for existential
+strength quantifiers.</li>
 </ul>
-<p>If we got a sequent like <code>⊢ (a → b)</code>, <code>flatten</code> can make it <code>a ⊢ b</code>.</p>
+<p>If we got a sequent like <code>⊢ (a → b)</code>, <code>flatten</code>
+can make it <code>a ⊢ b</code>.</p>
 <table>
 <tbody>
 <tr class="odd">
@@ -297,7 +309,8 @@ END sumn
 </tr>
 </tbody>
 </table>
-<p>Import system is there (<code>IMPORTING</code>), but not going into that.</p>
+<p>Import system is there (<code>IMPORTING</code>), but not going into
+that.</p>
 </div>
 </body>
 </html>

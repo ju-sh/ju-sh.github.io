@@ -36,17 +36,8 @@
 </header>
 
 <ul>
-    <li>Date created: 25-Aug-2021</li>
     </ul>
 
-<div>
-  <p>
-    Tags: / 
-    <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/haskell.html">haskell</a>
-    </code> /
-  <p>
-</div>
 
 
 <div id="description">
@@ -58,19 +49,33 @@ Create a simple function in Haskell to generate the Fibonacci series.
 <div id="content-container">
 <p>(Based on a class taught by a teacher of mine.)</p>
 <h2 id="nifty-features-of-haskell">Nifty features of Haskell</h2>
-<p>Haskell is a <strong><strong>purely functional</strong></strong> programming language.</p>
-<p>There are no statements. Only expressions. For a discussion about the difference between the two, see <a href="https://www.haskellforall.com/2013/07/statements-vs-expressions.html">here</a>.</p>
-<p>This means a function cannot change the value of any of its parameters. They can only return values.</p>
-<p>There are <strong><strong>no side effects</strong></strong>. Each expression is sort of self-contained. Whatever happens in an expression cannot affect other unrelated expressions.</p>
-<p>So it's possible, and often helpful, to think of a Haskell program as simply a set of equations.</p>
-<p>(No wonder mathematicians like functional programming languages like Haskell :D)</p>
-<p>We can 'store equations' into variables in a sense. This is possible Haskell does <a href="https://wiki.haskell.org/Lazy_evaluation">lazy evaluation</a>. The equation won't be evaluated till it is needed.</p>
-<h2 id="a-few-handy-functions-in-haskell">A few handy functions in Haskell</h2>
-<p>Let's see a few built-in functions in Haskell which can help us in our venture.</p>
+<p>Haskell is a <strong><strong>purely functional</strong></strong>
+programming language.</p>
+<p>There are no statements. Only expressions. For a discussion about the
+difference between the two, see <a
+href="https://www.haskellforall.com/2013/07/statements-vs-expressions.html">here</a>.</p>
+<p>This means a function cannot change the value of any of its
+parameters. They can only return values.</p>
+<p>There are <strong><strong>no side effects</strong></strong>. Each
+expression is sort of self-contained. Whatever happens in an expression
+cannot affect other unrelated expressions.</p>
+<p>So it's possible, and often helpful, to think of a Haskell program as
+simply a set of equations.</p>
+<p>(No wonder mathematicians like functional programming languages like
+Haskell :D)</p>
+<p>We can 'store equations' into variables in a sense. This is possible
+Haskell does <a href="https://wiki.haskell.org/Lazy_evaluation">lazy
+evaluation</a>. The equation won't be evaluated till it is needed.</p>
+<h2 id="a-few-handy-functions-in-haskell">A few handy functions in
+Haskell</h2>
+<p>Let's see a few built-in functions in Haskell which can help us in
+our venture.</p>
 <h3 id="zipwith"><code>zipWith</code></h3>
 <pre><code>zipWith :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c]
 </code></pre>
-<p>Combines two lists by applying a function to their elements position-wise. The size of the resultant list is min(len(list1, list2)).</p>
+<p>Combines two lists by applying a function to their elements
+position-wise. The size of the resultant list is min(len(list1,
+list2)).</p>
 <p>Examples:</p>
 <pre><code>&gt; zipWith (+) [1,2,3] [1,2]
 [2,4]
@@ -101,7 +106,8 @@ Create a simple function in Haskell to generate the Fibonacci series.
 <h3 id="take"><code>take</code></h3>
 <pre><code>take :: Int -&gt; [a] -&gt; [a]
 </code></pre>
-<p>Accepts an integer (<code>n</code>) along with a list and returns the first <code>n</code> elements of the list.</p>
+<p>Accepts an integer (<code>n</code>) along with a list and returns the
+first <code>n</code> elements of the list.</p>
 <pre><code>&gt; take 2 [1,2,3,4]
 [1,2]
 &gt; take 3 [1,2,3,4]
@@ -109,13 +115,20 @@ Create a simple function in Haskell to generate the Fibonacci series.
 &gt; take 10 [1..100]
 [1,2,3,4,5,6,7,8,9,10]
 </code></pre>
-<h2 id="equation-for-fibonacci-series">'Equation' for Fibonacci series</h2>
-<p>Now that we have seen the built-in Haskell functions we'll use, let's make the Fibonacci series.</p>
+<h2 id="equation-for-fibonacci-series">'Equation' for Fibonacci
+series</h2>
+<p>Now that we have seen the built-in Haskell functions we'll use, let's
+make the Fibonacci series.</p>
 <p>The 'equation' for the Fibonacci series may be written as:</p>
 <pre><code>fibo = 1 : 1 : zipWith (+) fibo (tail fibo)
 </code></pre>
-<p>Here, a list is being made. The first two elements are explicitly given (<code>1</code> and <code>1</code>) and the remaining elements are found based on that.</p>
-<p>The <code>zipWith (+) fibo (tail fibo)</code> part basically takes two 'copies' (not really copies) of <code>fibo</code>, removes the first element from one of them with <code>tail fibo</code> and adds elements of <code>fibo</code> and <code>tail fibo</code> position-wise.</p>
+<p>Here, a list is being made. The first two elements are explicitly
+given (<code>1</code> and <code>1</code>) and the remaining elements are
+found based on that.</p>
+<p>The <code>zipWith (+) fibo (tail fibo)</code> part basically takes
+two 'copies' (not really copies) of <code>fibo</code>, removes the first
+element from one of them with <code>tail fibo</code> and adds elements
+of <code>fibo</code> and <code>tail fibo</code> position-wise.</p>
 <p>The result is the list of Fibonacci numbers.</p>
 <p>It works something like this:</p>
 <pre><code>fibo     : 1 1 ...  |  1 1 2 ...  |  1 1 2 3 ...  |  1 1 2 3 5 ...
@@ -123,12 +136,15 @@ tail fibo: 1 ...    |  1 2 ...    |  1 2 3 ...    |  1 2 3 5 ...
           --------- →  ---------- →  ------------ → --------------
 zipWith  : 2        |  2 3        |  2 3 5        |  2 3 5 8      
 </code></pre>
-<p><code>fibo</code> denotes the infinite list of Fibonacci numbers. But thanks to lazy evaluation, its expansion is done only to the extent that is asked for.</p>
+<p><code>fibo</code> denotes the infinite list of Fibonacci numbers. But
+thanks to lazy evaluation, its expansion is done only to the extent that
+is asked for.</p>
 <p>Getting the first 10 Fibonacci numbers is as easy doing:</p>
 <pre><code>&gt; take 10 fibo
 [1,1,2,3,5,8,13,21,34,55]
 </code></pre>
-<p>And we can use list indexing syntax of Haskell (ie, <code>!!</code>) to get the <code>i</code>-th Fibonacci number.</p>
+<p>And we can use list indexing syntax of Haskell (ie, <code>!!</code>)
+to get the <code>i</code>-th Fibonacci number.</p>
 <pre><code>fibo !! i
 </code></pre>
 <p>where indexing starts from zero.</p>
@@ -144,13 +160,19 @@ zipWith  : 2        |  2 3        |  2 3 5        |  2 3 5 8
 <p>Neat, isn't it? And this is basically just a single-line program!</p>
 <h2 id="some-links">Some links</h2>
 <ul>
-<li><a href="http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibtable.html">http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibtable.html</a></li>
-<li><a href="https://www.haskellforall.com/2013/07/statements-vs-expressions.html">https://www.haskellforall.com/2013/07/statements-vs-expressions.html</a></li>
-<li><a href="https://wiki.haskell.org/Functional_programming">https://wiki.haskell.org/Functional_programming</a></li>
-<li><a href="https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html#g:16">https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html#g:16</a></li>
-<li><a href="https://wiki.haskell.org/Lazy_evaluation">https://wiki.haskell.org/Lazy_evaluation</a></li>
+<li><a
+href="http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibtable.html">http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibtable.html</a></li>
+<li><a
+href="https://www.haskellforall.com/2013/07/statements-vs-expressions.html">https://www.haskellforall.com/2013/07/statements-vs-expressions.html</a></li>
+<li><a
+href="https://wiki.haskell.org/Functional_programming">https://wiki.haskell.org/Functional_programming</a></li>
+<li><a
+href="https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html#g:16">https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html#g:16</a></li>
+<li><a
+href="https://wiki.haskell.org/Lazy_evaluation">https://wiki.haskell.org/Lazy_evaluation</a></li>
 <li><a href="https://www.haskell.org/">https://www.haskell.org/</a></li>
-<li><a href="https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Pure">https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Pure</a></li>
+<li><a
+href="https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Pure">https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Pure</a></li>
 </ul>
 </div>
 </body>

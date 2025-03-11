@@ -36,28 +36,24 @@
 </header>
 
 <ul>
-    <li>Date created: 15-May-2022</li>
     </ul>
 
-<div>
-  <p>
-    Tags: / 
-    <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/coq.html">coq</a>
-    </code> /
-  <p>
-</div>
 
 
 <div id="description">
-A description of what I did when I first tried to obtain the constructors of a Coq Inductive type using Template-Coq but without using TemplateMonad.
+A description of what I did when I first tried to obtain the
+constructors of a Coq Inductive type using Template-Coq but without
+using TemplateMonad.
 </div>
 
 <hr/>
 
 <div id="content-container">
-<p>Quite a crude way. There got to be better and elegant ways. This post is sort of a note to my future self.</p>
-<p><code>TemplateMonad</code> seems to be the right way to do this, but in this post it is not used. Maybe it'll help appreciate the utility of <code>TemplateMonad</code>.</p>
+<p>Quite a crude way. There got to be better and elegant ways. This post
+is sort of a note to my future self.</p>
+<p><code>TemplateMonad</code> seems to be the right way to do this, but
+in this post it is not used. Maybe it'll help appreciate the utility of
+<code>TemplateMonad</code>.</p>
 <p>Versions of software used:</p>
 <ul>
 <li>Coq: 8.12.2</li>
@@ -70,8 +66,11 @@ A description of what I did when I first tried to obtain the constructors of a C
 | g : nat -&gt; C
 | b : bool -&gt; nat -&gt; C.
 </code></pre>
-<p>And I needed to find a way to extract the constructors of this type as an AST (abstract syntax tree).</p>
-<p>Template-Coq, which is part of the <a href="https://github.com/MetaCoq/metacoq/">MetaCoq</a> project, allows us to do this.</p>
+<p>And I needed to find a way to extract the constructors of this type
+as an AST (abstract syntax tree).</p>
+<p>Template-Coq, which is part of the <a
+href="https://github.com/MetaCoq/metacoq/">MetaCoq</a> project, allows
+us to do this.</p>
 <p>So the aim is to get a result like</p>
 <pre class="coq"><code>[(&quot;r&quot;, astof(C));
  (&quot;g&quot;, astof(nat -&gt; C));
@@ -83,7 +82,9 @@ A description of what I did when I first tried to obtain the constructors of a C
 <li>Unquoting: Reified syntax → concrete syntax</li>
 </ul>
 <p>We're gonna need the quoting part.</p>
-<p>Let's start. First, we 'quote' <code>C</code> recursively (the non-recursive quoting doesn't give as much level of detail) and store its AST form in <code>qC</code>:</p>
+<p>Let's start. First, we 'quote' <code>C</code> recursively (the
+non-recursive quoting doesn't give as much level of detail) and store
+its AST form in <code>qC</code>:</p>
 <pre class="coq"><code>From MetaCoq.Template Require Import utils All.
 Require Import List String.
 Import ListNotations MonadNotation.
@@ -175,12 +176,15 @@ tInd {| inductive_mind := (MPfile [&quot;myfilename&quot;], &quot;C&quot;); indu
      : program
 </code></pre>
 <p>where <code>"myfilename"</code> is the name of the source file.</p>
-<p>Quite verbose, yes, but it's the AST of the Coq source, after all.</p>
-<p>This quoted term that we got is of type <code>program</code> which is defined like</p>
+<p>Quite verbose, yes, but it's the AST of the Coq source, after
+all.</p>
+<p>This quoted term that we got is of type <code>program</code> which is
+defined like</p>
 <pre class="coq"><code>(* metacoq/template-coq/theories/Environment.v *)
 Definition program : Type := global_env * term.
 </code></pre>
-<p>So here, the <code>global_env</code> term is (skipping most parts of as it has already been mentioned):</p>
+<p>So here, the <code>global_env</code> term is (skipping most parts of
+as it has already been mentioned):</p>
 <pre class="coq"><code>[(MPfile [&quot;myfilename&quot;], &quot;C&quot;,
   InductiveDecl
     {|
@@ -225,17 +229,21 @@ Definition program : Type := global_env * term.
      : term
 </code></pre>
 <p>The constructors seem to be in the <code>global_env</code> term.</p>
-<p>Let's get the <code>global_env</code> term from the <code>program</code> value:</p>
+<p>Let's get the <code>global_env</code> term from the
+<code>program</code> value:</p>
 <pre class="coq"><code>Definition aux1 (p : program) : global_env := fst p.
 Compute aux1 qC.
 </code></pre>
-<p>Within the <code>global_env</code> term, the constructors appears to be in the <code>ind_bodies</code> field of the <code>inductiveDecl</code> record.</p>
+<p>Within the <code>global_env</code> term, the constructors appears to
+be in the <code>ind_bodies</code> field of the
+<code>inductiveDecl</code> record.</p>
 <p><code>global_env</code> is defined like:</p>
 <pre class="coq"><code>(* metacoq/template-coq/theories/Environment.v *)
 Definition global_env : Type := list (kername * global_decl).
 </code></pre>
 <p>We need the first value in this list.</p>
-<p>Could use <code>List.hd</code> for that, but since <code>List.hd</code> is defined like</p>
+<p>Could use <code>List.hd</code> for that, but since
+<code>List.hd</code> is defined like</p>
 <pre class="coq"><code>(* theories/Lists/List.v *)
 Definition hd (A : Type) (default:A) (l:list A) :=
   match l with
@@ -243,7 +251,9 @@ Definition hd (A : Type) (default:A) (l:list A) :=
   | x :: _ =&gt; x
   end.
 </code></pre>
-<p>in a way that requires a default value, we need a default <code>(kername * global_decl)</code> value (the 'quest' to find default values is included at the end of this post as an addendum).</p>
+<p>in a way that requires a default value, we need a default
+<code>(kername * global_decl)</code> value (the 'quest' to find default
+values is included at the end of this post as an addendum).</p>
 <pre class="coq"><code>Definition default_global_decl : global_decl :=
   ConstantDecl (Build_constant_body
     (tVar &quot;&quot;%string)
@@ -257,7 +267,9 @@ Definition default_kername : kername :=
 Definition default_kg : (kername * global_decl) :=
   (default_kername, default_global_decl).
 </code></pre>
-<p>Okay, now that we have got a default <code>(kername * global_decl)</code> as <code>default_kg</code>, let's get the first <code>(kername * global_decl)</code>.</p>
+<p>Okay, now that we have got a default
+<code>(kername * global_decl)</code> as <code>default_kg</code>, let's
+get the first <code>(kername * global_decl)</code>.</p>
 <pre class="coq"><code>Definition aux2 (g : global_env) : (kername * global_decl) :=
   List.hd default_kg g.
 
@@ -301,7 +313,11 @@ Compute aux2 (aux1 qC).
 <pre class="coq"><code>(* template-coq/theories/BasicAst.v *)
 Definition kername : Set := modpath × ident.
 </code></pre>
-<p>So the <code>(kername * global_decl)</code> is actually <code>(modpath * ident) * global_decl</code> which may also be written like <code>modpath * ident * global_decl</code> as coq tuples associate to the left such that <code>(1, 2, 3)</code> and <code>((1, 2), 3)</code> are same.</p>
+<p>So the <code>(kername * global_decl)</code> is actually
+<code>(modpath * ident) * global_decl</code> which may also be written
+like <code>modpath * ident * global_decl</code> as coq tuples associate
+to the left such that <code>(1, 2, 3)</code> and
+<code>((1, 2), 3)</code> are same.</p>
 <pre class="coq"><code>Check (1,2,3).
 (* (1, 2, 3) : (nat × nat) × nat *)
 
@@ -312,10 +328,12 @@ Check ((1,2),3).
 <ul>
 <li><code>MPfile ["three"]</code> is the <code>modpath</code></li>
 <li><code>"C"</code> is the <code>ident</code></li>
-<li>The remaining <code>InductiveDecl</code> is the <code>global_decl~</code></li>
+<li>The remaining <code>InductiveDecl</code> is the
+<code>global_decl~</code></li>
 </ul>
 <p>The constructors are in the <code>global_decl</code> part.</p>
-<p>Making a function <code>aux3</code> to get the <code>global_decl</code>,</p>
+<p>Making a function <code>aux3</code> to get the
+<code>global_decl</code>,</p>
 <pre class="coq"><code>Definition aux3 (kg : kername * global_decl) : global_decl := snd kg.
 Compute aux3 (aux2 (aux1 qC)).
 (*
@@ -377,7 +395,10 @@ Compute aux3 (aux2 (aux1 qC)).
      : global_decl
 *)
 </code></pre>
-<p>The constructors are inside the <code>ind_bodies</code> field of the <code>mutual_inductive_body</code> argument to <code>InductiveDecl</code>. <code>ind_bodies</code> has a <code>list one_inductive_body</code>.</p>
+<p>The constructors are inside the <code>ind_bodies</code> field of the
+<code>mutual_inductive_body</code> argument to
+<code>InductiveDecl</code>. <code>ind_bodies</code> has a
+<code>list one_inductive_body</code>.</p>
 <pre class="coq"><code>Definition aux4 (g : global_decl) : list one_inductive_body := 
   match g with
   | ConstantDecl _ =&gt; []%list
@@ -428,7 +449,9 @@ Compute aux4 (aux3 (aux2 (aux1 qC))).
      : list one_inductive_body
 *)
 </code></pre>
-<p>Now we are quite close to constructors, which are inside the <code>ind_ctors</code> field of the <code>one_inductive_body</code> values.</p>
+<p>Now we are quite close to constructors, which are inside the
+<code>ind_ctors</code> field of the <code>one_inductive_body</code>
+values.</p>
 <pre class="coq"><code>Definition aux5 (oibs : list one_inductive_body)
   : list (list (ident * term * nat)) :=
   map (fun o:one_inductive_body =&gt; o.(ind_ctors)) oibs.
@@ -494,7 +517,9 @@ Compute aux qC.
 *)
 </code></pre>
 <p>Which is what we were after.</p>
-<p>(Just for fun's sake, let me try <a href="https://github.com/jwiegley/coq-haskell/blob/a6baf6e2f53e53ee91bbfc8904b718ef90bf5c6b/src/Prelude.v#L21">this</a> notation here.</p>
+<p>(Just for fun's sake, let me try <a
+href="https://github.com/jwiegley/coq-haskell/blob/a6baf6e2f53e53ee91bbfc8904b718ef90bf5c6b/src/Prelude.v#L21">this</a>
+notation here.</p>
 <pre class="coq"><code>Notation &quot;f $ x&quot; := (f x)
   (at level 60, right associativity, only parsing).
 
@@ -508,22 +533,36 @@ Definition aux&#39; (p : program) : list (list (ident * term * nat)) :=
 
 Compute aux&#39; qC.
 </code></pre>
-<p>But I had been <a href="https://coq.gitlab.io/zulip-archive/stream/237977-Coq-users/topic/.E2.9C.94.20Is.20there.20a.20way.20to.20avoid.20too.20many.20parenthesis.3F.html">warned</a> that this can cause scope inference to break.</p>
+<p>But I had been <a
+href="https://coq.gitlab.io/zulip-archive/stream/237977-Coq-users/topic/.E2.9C.94.20Is.20there.20a.20way.20to.20avoid.20too.20many.20parenthesis.3F.html">warned</a>
+that this can cause scope inference to break.</p>
 <p>Okay, side-mission over.)</p>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://metacoq.github.io/">https://metacoq.github.io/</a></li>
-<li><a href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/examples/add_constructor.v"><a href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/examples/add_constructor.v">https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/examples/add_constructor.v</a></a></li>
-<li><a href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/Environment.v"><a href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/Environment.v">https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/Environment.v</a></a></li>
-<li><a href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/BasicAst.v"><a href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/BasicAst.v">https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/BasicAst.v</a></a></li>
-<li><a href="https://hal.inria.fr/hal-02167423">The MetaCoq Project</a> paper</li>
+<li><a
+href="https://metacoq.github.io/">https://metacoq.github.io/</a></li>
+<li><a
+href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/examples/add_constructor.v"><a
+href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/examples/add_constructor.v">https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/examples/add_constructor.v</a></a></li>
+<li><a
+href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/Environment.v"><a
+href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/Environment.v">https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/Environment.v</a></a></li>
+<li><a
+href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/BasicAst.v"><a
+href="https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/BasicAst.v">https://github.com/MetaCoq/metacoq/blob/v1.0-beta1-8.12/template-coq/theories/BasicAst.v</a></a></li>
+<li><a href="https://hal.inria.fr/hal-02167423">The MetaCoq Project</a>
+paper</li>
 </ul>
-<h2 id="addendum-dummydefault-values">Addendum: Dummy/default values</h2>
+<h2 id="addendum-dummydefault-values">Addendum: Dummy/default
+values</h2>
 <p>For use with <code>List.hd</code> which requires a default value.</p>
-<p>Being unfamiliar with the Template-Coq types when I used it for the first time, I found it helpful to write them down.</p>
-<p>Still not sure if this was necessary, but as of writing this post, I don't know of any other way.</p>
+<p>Being unfamiliar with the Template-Coq types when I used it for the
+first time, I found it helpful to write them down.</p>
+<p>Still not sure if this was necessary, but as of writing this post, I
+don't know of any other way.</p>
 <h3 id="ident"><code>ident</code></h3>
-<p><code>ident</code> is same as <code>string</code> and represents an identifier.</p>
+<p><code>ident</code> is same as <code>string</code> and represents an
+identifier.</p>
 <pre class="coq"><code>(* template-coq/theories/BasicAst.v *)
 Definition ident : Set := string.
 </code></pre>
@@ -548,7 +587,8 @@ MPfile [] : modpath
 <pre class="coq"><code>(* template-coq/theories/BasicAst.v *)
 Definition kername : Set := modpath × ident.
 </code></pre>
-<p>Using dummy <code>modpath</code> and <code>ident</code> values (where <code>ident</code> is same as <code>string</code>),</p>
+<p>Using dummy <code>modpath</code> and <code>ident</code> values (where
+<code>ident</code> is same as <code>string</code>),</p>
 <pre class="coq"><code>Check (MPfile []%list, &quot;&quot;%string) : kername.
 (*
 (MPfile [], &quot;&quot;) : kername
@@ -577,7 +617,8 @@ Definition dirpath : Set := list ident.
   (* Represents declaration of inductive types, probably *)
   | InductiveDecl : mutual_inductive_body -&gt; global_decl.
 </code></pre>
-<p>Simplest constructor is <code>ConstantDecl</code>, let's go with that.</p>
+<p>Simplest constructor is <code>ConstantDecl</code>, let's go with
+that.</p>
 <p>Using a dummy <code>constant_body</code> value,</p>
 <pre class="coq"><code>Check ConstantDecl (Build_constant_body (tVar &quot;&quot;%string) None
   (Monomorphic_ctx ((LevelSet.Mkt []%list), (ConstraintSet.Mkt []%list)) : universes_decl)) : global_decl.
@@ -608,8 +649,10 @@ global_decl
   cst_universes : universes_decl
 }.
 </code></pre>
-<p>Simplest <code>option</code> value is, of course, <code>None</code>.</p>
-<p>Using dummy <code>universe_decl</code> and <code>terms</code> values with this,</p>
+<p>Simplest <code>option</code> value is, of course,
+<code>None</code>.</p>
+<p>Using dummy <code>universe_decl</code> and <code>terms</code> values
+with this,</p>
 <pre class="coq"><code>Check Build_constant_body (tVar &quot;&quot;%string) None
   (Monomorphic_ctx ((LevelSet.Mkt []%list), (ConstraintSet.Mkt []%list)) : universes_decl) : constant_body.
 (*
@@ -671,7 +714,9 @@ tVar &quot;&quot; : term
     Monomorphic_ctx : ContextSet.t -&gt; universes_decl
   | Polymorphic_ctx : AUContext.t -&gt; universes_decl
 </code></pre>
-<p>Let's go with <code>Monomorphic_ctx</code> (because monomorphic got to be simpler than polymorphic, right?). Using a dummy <code>ContextSet.t</code> value,</p>
+<p>Let's go with <code>Monomorphic_ctx</code> (because monomorphic got
+to be simpler than polymorphic, right?). Using a dummy
+<code>ContextSet.t</code> value,</p>
 <pre class="coq"><code>Check Monomorphic_ctx ((LevelSet.Mkt []%list), (ConstraintSet.Mkt []%list)) : universes_decl.
 (*
 Monomorphic_ctx
@@ -690,7 +735,8 @@ universes_decl
 ContextSet.t = LevelSet.t × ConstraintSet.t
      : Type
 </code></pre>
-<p>Using dummy <code>LevelSet.t</code> and <code>ConstraintSet.t</code> values,</p>
+<p>Using dummy <code>LevelSet.t</code> and <code>ConstraintSet.t</code>
+values,</p>
 <pre class="coq"><code>Check ((LevelSet.Mkt []%list), (ConstraintSet.Mkt []%list)) : ContextSet.t.
 (*
 ({| LevelSet.this := []; LevelSet.is_ok := LevelSet.Raw.empty_ok |},
@@ -726,7 +772,8 @@ LevelSet.t
 
 Arguments LevelSet.Mkt _ {is_ok}.
 </code></pre>
-<p><code>is_ok</code> is implicit. Using a random <code>LevelSet.Raw.t</code>,</p>
+<p><code>is_ok</code> is implicit. Using a random
+<code>LevelSet.Raw.t</code>,</p>
 <pre class="coq"><code>Check LevelSet.Mkt []%list : LevelSet.t_.
 (*
 {| LevelSet.this := []; LevelSet.is_ok := LevelSet.Raw.empty_ok |}
@@ -770,7 +817,8 @@ ConstraintSet.t
 
 Arguments ConstraintSet.Mkt _ {is_ok}
 </code></pre>
-<p><code>is_ok</code> is implicit. Using a dummy <code>ConstraintSet.Raw.t</code>,</p>
+<p><code>is_ok</code> is implicit. Using a dummy
+<code>ConstraintSet.Raw.t</code>,</p>
 <pre class="coq"><code>Check ConstraintSet.Mkt []%list : ConstraintSet.t_.
 (*
 {|
@@ -872,7 +920,8 @@ InProp : sort_family
 
 Arguments Build_one_inductive_body _ _ _ (_ _)%list_scope
 </code></pre>
-<p>Using dummy <code>ident</code>, <code>term</code> and <code>sort_family</code> values,</p>
+<p>Using dummy <code>ident</code>, <code>term</code> and
+<code>sort_family</code> values,</p>
 <pre class="coq"><code>Check Build_one_inductive_body &quot;None&quot;%string (tVar &quot;None&quot;%string) InProp []%list []%list.
 (*
 {|

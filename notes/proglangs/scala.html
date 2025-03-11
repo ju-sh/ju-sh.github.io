@@ -49,25 +49,31 @@
 <li>Scala 3
 <ul>
 <li>Both Scala-3 and Scala-2 have stuff which are not in each other</li>
-<li>DOT (Dependent Object Types), a core calculus of depenedent path types, is the core of Scala 3</li>
-<li>dotty: name of scala 3 language while it was being developed <a href="https://stackoverflow.com/questions/51530856/what-exactly-is-dotty">ʳ</a></li>
+<li>DOT (Dependent Object Types), a core calculus of depenedent path
+types, is the core of Scala 3</li>
+<li>dotty: name of scala 3 language while it was being developed <a
+href="https://stackoverflow.com/questions/51530856/what-exactly-is-dotty">ʳ</a></li>
 </ul></li>
 <li>Targets JVM</li>
 <li>Can use java libraries</li>
 <li>sbt: build tool</li>
 <li>Tasty file: Typed Abstract Syntax Tree
 <ul>
-<li><a href="https://docs.scala-lang.org/scala3/guides/tasty-overview.html">https://docs.scala-lang.org/scala3/guides/tasty-overview.html</a></li>
+<li><a
+href="https://docs.scala-lang.org/scala3/guides/tasty-overview.html">https://docs.scala-lang.org/scala3/guides/tasty-overview.html</a></li>
 <li><code>scalac -decompile foo.tasty</code></li>
 </ul></li>
 <li>Can write eDSLs in scala
 <ul>
-<li><a href="https://typelevel.org/blog/2016/10/26/edsls-part-2.html">https://typelevel.org/blog/2016/10/26/edsls-part-2.html</a></li>
+<li><a
+href="https://typelevel.org/blog/2016/10/26/edsls-part-2.html">https://typelevel.org/blog/2016/10/26/edsls-part-2.html</a></li>
 </ul></li>
 <li><code>Tuple2</code> is a class, <code>Tuple</code> is a trait
 <ul>
-<li><a href="https://www.scala-lang.org/api/current/scala/Tuple2.html">https://www.scala-lang.org/api/current/scala/Tuple2.html</a></li>
-<li><a href="https://www.scala-lang.org/api/current/scala/Tuple.html">https://www.scala-lang.org/api/current/scala/Tuple.html</a></li>
+<li><a
+href="https://www.scala-lang.org/api/current/scala/Tuple2.html">https://www.scala-lang.org/api/current/scala/Tuple2.html</a></li>
+<li><a
+href="https://www.scala-lang.org/api/current/scala/Tuple.html">https://www.scala-lang.org/api/current/scala/Tuple.html</a></li>
 </ul></li>
 </ul>
 <h2 id="general">General</h2>
@@ -81,22 +87,27 @@
 <h2 id="type-annotations">Type annotations</h2>
 <p>Apparently, explicit type annotations are discouraged??</p>
 <ul>
-<li><a href="https://docs.scala-lang.org/style/types.html">https://docs.scala-lang.org/style/types.html</a></li>
+<li><a
+href="https://docs.scala-lang.org/style/types.html">https://docs.scala-lang.org/style/types.html</a></li>
 </ul>
 <h2 id="conventions">Conventions</h2>
 <ul>
 <li>Names use camelCase</li>
 <li>Acronyms considered normal words (eg: html instead of HTML)</li>
 </ul>
-<p><a href="https://docs.scala-lang.org/style/naming-conventions.html">https://docs.scala-lang.org/style/naming-conventions.html</a></p>
+<p><a
+href="https://docs.scala-lang.org/style/naming-conventions.html">https://docs.scala-lang.org/style/naming-conventions.html</a></p>
 <h2 id="hello-world">Hello world</h2>
 <ul>
-<li>'main' function is marked as entry point with <code>@main</code> annotation</li>
-<li><code>String*</code> indicates variable number of <code>String</code> arguments</li>
+<li>'main' function is marked as entry point with <code>@main</code>
+annotation</li>
+<li><code>String*</code> indicates variable number of
+<code>String</code> arguments</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode scala"><code class="sourceCode scala"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co">// Filename: hi.scala</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>@main <span class="kw">def</span> <span class="fu">hi</span>(args: String*): Unit =</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  <span class="fu">println</span>(<span class="st">&quot;Hello world!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode scala"><code class="sourceCode scala"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Filename: hi.scala</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>@main <span class="kw">def</span> <span class="fu">hi</span><span class="op">(</span>args<span class="op">:</span> <span class="ex">String</span><span class="op">*):</span> <span class="bu">Unit</span> <span class="op">=</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">println</span><span class="op">(</span><span class="st">&quot;Hello world!&quot;</span><span class="op">)</span></span></code></pre></div>
 <p>Compilation:</p>
 <pre><code>$ scalac --version
 Scala compiler version 3.3.1 -- Copyright 2002-2023, LAMP/EPFL
@@ -113,34 +124,42 @@ Hello world!
 </code></pre>
 <p>See:</p>
 <ul>
-<li><a href="https://docs.scala-lang.org/scala3/book/taste-hello-world.html">https://docs.scala-lang.org/scala3/book/taste-hello-world.html</a></li>
-<li><a href="https://docs.scala-lang.org/scala3/book/methods-main-methods.html">https://docs.scala-lang.org/scala3/book/methods-main-methods.html</a></li>
-<li><a href="https://docs.scala-lang.org/tutorials/scala-for-java-programmers.html#running-hello-world">https://docs.scala-lang.org/tutorials/scala-for-java-programmers.html#running-hello-world</a></li>
+<li><a
+href="https://docs.scala-lang.org/scala3/book/taste-hello-world.html">https://docs.scala-lang.org/scala3/book/taste-hello-world.html</a></li>
+<li><a
+href="https://docs.scala-lang.org/scala3/book/methods-main-methods.html">https://docs.scala-lang.org/scala3/book/methods-main-methods.html</a></li>
+<li><a
+href="https://docs.scala-lang.org/tutorials/scala-for-java-programmers.html#running-hello-world">https://docs.scala-lang.org/tutorials/scala-for-java-programmers.html#running-hello-world</a></li>
 </ul>
 <h2 id="case-class"><code>case class</code></h2>
 <ul>
 <li>Useful for pattern matching</li>
-<li>When two case class values are compared, their structure is compared (not whether they are the same object, unlike I guess normal classes).</li>
+<li>When two case class values are compared, their structure is compared
+(not whether they are the same object, unlike I guess normal
+classes).</li>
 </ul>
-<p><a href="https://docs.scala-lang.org/tour/case-classes.html">https://docs.scala-lang.org/tour/case-classes.html</a></p>
+<p><a
+href="https://docs.scala-lang.org/tour/case-classes.html">https://docs.scala-lang.org/tour/case-classes.html</a></p>
 <h2 id="path-dependent-type">Path-dependent type</h2>
-<p>Example from <a href="https://stackoverflow.com/questions/2693067/what-is-meant-by-scalas-path-dependent-types">here</a>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode scala"><code class="sourceCode scala"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">case</span> <span class="kw">class</span> <span class="fu">Board</span>(width: Int, height: Int) {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>  <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Coord</span>(x: Int, y: Int) {</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>    <span class="fu">require</span>(<span class="dv">0</span> &lt;= x &amp;&amp; x &lt;= width &amp;&amp;</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>            <span class="dv">0</span> &lt;= y &amp;&amp; y &lt;= height)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>  }</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>  <span class="kw">val</span> occupied = scala.<span class="fu">collection</span>.<span class="fu">mutable</span>.<span class="fu">Set</span>[Coord]()</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>}</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>@main <span class="kw">def</span> <span class="fu">eg</span>(args: String*): Unit =</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>  <span class="kw">val</span> b = <span class="fu">Board</span>(<span class="dv">10</span>, <span class="dv">20</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>  <span class="kw">val</span> c1 = b.<span class="fu">Coord</span>(<span class="dv">3</span>, <span class="dv">5</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>  b.<span class="fu">occupied</span> += c1  <span class="co">// Add new coordinate to set of occupied</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a>  <span class="co">// No error</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>  <span class="kw">val</span> c2 = b.<span class="fu">Coord</span>(<span class="dv">11</span>, <span class="dv">20</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>  <span class="co">// Run-time error! Not compile-time... ??</span></span></code></pre></div>
+<p>Example from <a
+href="https://stackoverflow.com/questions/2693067/what-is-meant-by-scalas-path-dependent-types">here</a>:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode scala"><code class="sourceCode scala"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> <span class="kw">class</span> <span class="fu">Board</span><span class="op">(</span>width<span class="op">:</span> <span class="bu">Int</span><span class="op">,</span> height<span class="op">:</span> <span class="bu">Int</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="kw">class</span> <span class="fu">Coord</span><span class="op">(</span>x<span class="op">:</span> <span class="bu">Int</span><span class="op">,</span> y<span class="op">:</span> <span class="bu">Int</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">require</span><span class="op">(</span><span class="dv">0</span> <span class="op">&lt;=</span> x <span class="op">&amp;&amp;</span> x <span class="op">&lt;=</span> width <span class="op">&amp;&amp;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>            <span class="dv">0</span> <span class="op">&lt;=</span> y <span class="op">&amp;&amp;</span> y <span class="op">&lt;=</span> height<span class="op">)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> occupied <span class="op">=</span> scala<span class="op">.</span>collection<span class="op">.</span>mutable<span class="op">.</span><span class="ex">Set</span><span class="op">[</span>Coord<span class="op">]()</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>@main <span class="kw">def</span> <span class="fu">eg</span><span class="op">(</span>args<span class="op">:</span> <span class="ex">String</span><span class="op">*):</span> <span class="bu">Unit</span> <span class="op">=</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> b <span class="op">=</span> <span class="fu">Board</span><span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">)</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> c1 <span class="op">=</span> b<span class="op">.</span><span class="fu">Coord</span><span class="op">(</span><span class="dv">3</span><span class="op">,</span> <span class="dv">5</span><span class="op">)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  b<span class="op">.</span>occupied <span class="op">+=</span> c1  <span class="co">// Add new coordinate to set of occupied</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">// No error</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> c2 <span class="op">=</span> b<span class="op">.</span><span class="fu">Coord</span><span class="op">(</span><span class="dv">11</span><span class="op">,</span> <span class="dv">20</span><span class="op">)</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Run-time error! Not compile-time... ??</span></span></code></pre></div>
 <p>Running this would give error:</p>
 <pre><code>$ scalac pathdeptype.scala; scala eg
 java.lang.IllegalArgumentException: requirement failed
@@ -166,46 +185,65 @@ java.lang.IllegalArgumentException: requirement failed
         at dotty.tools.MainGenericRunner$.main(MainGenericRunner.scala:281)
         at dotty.tools.MainGenericRunner.main(MainGenericRunner.scala)
 </code></pre>
-<p>Type of <code>Coord</code> depends on the <code>Board</code> instance which instantiated the <code>Coord</code>.<br />
+<p>Type of <code>Coord</code> depends on the <code>Board</code> instance
+which instantiated the <code>Coord</code>.<br />
 ie, <code>Coord</code> type depends on <code>Board</code> value.</p>
-<p>The name is 'path-dependent type' because type depends 'selector path' through objects. <a href="https://stackoverflow.com/questions/12935731/any-reason-why-scala-does-not-explicitly-support-dependent-types">ʳ</a></p>
+<p>The name is 'path-dependent type' because type depends 'selector
+path' through objects. <a
+href="https://stackoverflow.com/questions/12935731/any-reason-why-scala-does-not-explicitly-support-dependent-types">ʳ</a></p>
 <p>See:</p>
 <ul>
-<li><a href="https://docs.scala-lang.org/scala3/book/types-dependent-function.html">https://docs.scala-lang.org/scala3/book/types-dependent-function.html</a></li>
-<li><a href="https://docs.scala-lang.org/scala3/reference/new-types/dependent-function-types.html">https://docs.scala-lang.org/scala3/reference/new-types/dependent-function-types.html</a></li>
-<li><a href="https://stackoverflow.com/questions/12935731/any-reason-why-scala-does-not-explicitly-support-dependent-types">https://stackoverflow.com/questions/12935731/any-reason-why-scala-does-not-explicitly-support-dependent-types</a></li>
-<li><a href="https://dev.to/markehammons/a-quick-explanation-of-path-dependent-types-4pki">https://dev.to/markehammons/a-quick-explanation-of-path-dependent-types-4pki</a></li>
-<li><a href="https://www.baeldung.com/scala/path-dependent-types">https://www.baeldung.com/scala/path-dependent-types</a></li>
+<li><a
+href="https://docs.scala-lang.org/scala3/book/types-dependent-function.html">https://docs.scala-lang.org/scala3/book/types-dependent-function.html</a></li>
+<li><a
+href="https://docs.scala-lang.org/scala3/reference/new-types/dependent-function-types.html">https://docs.scala-lang.org/scala3/reference/new-types/dependent-function-types.html</a></li>
+<li><a
+href="https://stackoverflow.com/questions/12935731/any-reason-why-scala-does-not-explicitly-support-dependent-types">https://stackoverflow.com/questions/12935731/any-reason-why-scala-does-not-explicitly-support-dependent-types</a></li>
+<li><a
+href="https://dev.to/markehammons/a-quick-explanation-of-path-dependent-types-4pki">https://dev.to/markehammons/a-quick-explanation-of-path-dependent-types-4pki</a></li>
+<li><a
+href="https://www.baeldung.com/scala/path-dependent-types">https://www.baeldung.com/scala/path-dependent-types</a></li>
 </ul>
 <h2 id="match-..-case"><code>match</code> .. <code>case</code></h2>
-<p>Example from <a href="https://docs.scala-lang.org/scala3/book/methods-main-methods.html">here</a>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode scala"><code class="sourceCode scala"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">val</span> suffix = (age % <span class="dv">100</span>) <span class="kw">match</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>  <span class="kw">case</span> <span class="dv">11</span> | <span class="dv">12</span> | <span class="dv">13</span> =&gt; <span class="st">&quot;th&quot;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>  <span class="kw">case</span> _ =&gt; (age % <span class="dv">10</span>) <span class="kw">match</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>    <span class="kw">case</span> <span class="dv">1</span> =&gt; <span class="st">&quot;st&quot;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>    <span class="kw">case</span> <span class="dv">2</span> =&gt; <span class="st">&quot;nd&quot;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>    <span class="kw">case</span> <span class="dv">3</span> =&gt; <span class="st">&quot;rd&quot;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>    <span class="kw">case</span> _ =&gt; <span class="st">&quot;th&quot;</span></span></code></pre></div>
-<h2 id="predefs-require-assert-etc">Predefs: <code>require</code>, <code>assert</code>, etc</h2>
-<p>Useful to represent invariants that is difficult to represent using types.</p>
+<p>Example from <a
+href="https://docs.scala-lang.org/scala3/book/methods-main-methods.html">here</a>:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode scala"><code class="sourceCode scala"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> suffix <span class="op">=</span> <span class="op">(</span>age <span class="op">%</span> <span class="dv">100</span><span class="op">)</span> <span class="cf">match</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">11</span> <span class="op">|</span> <span class="dv">12</span> <span class="op">|</span> <span class="dv">13</span> <span class="op">=&gt;</span> <span class="st">&quot;th&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> _ <span class="op">=&gt;</span> <span class="op">(</span>age <span class="op">%</span> <span class="dv">10</span><span class="op">)</span> <span class="cf">match</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="dv">1</span> <span class="op">=&gt;</span> <span class="st">&quot;st&quot;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="dv">2</span> <span class="op">=&gt;</span> <span class="st">&quot;nd&quot;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="dv">3</span> <span class="op">=&gt;</span> <span class="st">&quot;rd&quot;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> _ <span class="op">=&gt;</span> <span class="st">&quot;th&quot;</span></span></code></pre></div>
+<h2 id="predefs-require-assert-etc">Predefs: <code>require</code>,
+<code>assert</code>, etc</h2>
+<p>Useful to represent invariants that is difficult to represent using
+types.</p>
 <ul>
-<li><code>require</code>: use to check if caller has adhered to require conditions
+<li><code>require</code>: use to check if caller has adhered to require
+conditions
 <ul>
-<li>If a <code>require</code> fails, pre-condition necessary to use a definition was not satisfied</li>
+<li>If a <code>require</code> fails, pre-condition necessary to use a
+definition was not satisfied</li>
 <li>Think of it as a 400 http bad request response</li>
 </ul></li>
-<li><code>assert</code>: can be used to assert something a function should be doing.
+<li><code>assert</code>: can be used to assert something a function
+should be doing.
 <ul>
 <li>If an assertion fails, function definition itself is wrong</li>
 <li>Think of it as a 500 http response</li>
 </ul></li>
 </ul>
-<p>More: <code>ensuring</code>, <code>assume</code>, <code>implicitly</code></p>
+<p>More: <code>ensuring</code>, <code>assume</code>,
+<code>implicitly</code></p>
 <p>See:</p>
 <ul>
-<li><a href="https://www.scala-lang.org/api/current/scala/Predef$.html">https://www.scala-lang.org/api/current/scala/Predef$.html</a></li>
-<li><a href="https://stackoverflow.com/questions/26140757/what-to-choose-between-require-and-assert-in-scala">https://stackoverflow.com/questions/26140757/what-to-choose-between-require-and-assert-in-scala</a></li>
-<li><a href="https://users.scala-lang.org/t/require-assume-and-ensuring/5552">https://users.scala-lang.org/t/require-assume-and-ensuring/5552</a></li>
+<li><a
+href="https://www.scala-lang.org/api/current/scala/Predef$.html">https://www.scala-lang.org/api/current/scala/Predef$.html</a></li>
+<li><a
+href="https://stackoverflow.com/questions/26140757/what-to-choose-between-require-and-assert-in-scala">https://stackoverflow.com/questions/26140757/what-to-choose-between-require-and-assert-in-scala</a></li>
+<li><a
+href="https://users.scala-lang.org/t/require-assume-and-ensuring/5552">https://users.scala-lang.org/t/require-assume-and-ensuring/5552</a></li>
 </ul>
 <h2 id="more">More</h2>
 <ul>
@@ -216,13 +254,15 @@ ie, <code>Coord</code> type depends on <code>Board</code> value.</p>
 <li>Modifier indicating a class method is static</li>
 </ul></li>
 <li><code>final</code></li>
-<li>Command line argument parsing: <code>scala.util.CommandLineParser</code> ??</li>
+<li>Command line argument parsing:
+<code>scala.util.CommandLineParser</code> ??</li>
 </ul>
 <h2 id="packages-chisel">Packages: chisel</h2>
 <p>An HDL made as a scala eDSL.</p>
 <p>Resources:</p>
 <ul>
-<li>A free book: <a href="http://www.imm.dtu.dk/~masca/chisel-book.pdf">http://www.imm.dtu.dk/~masca/chisel-book.pdf</a></li>
+<li>A free book: <a
+href="http://www.imm.dtu.dk/~masca/chisel-book.pdf">http://www.imm.dtu.dk/~masca/chisel-book.pdf</a></li>
 </ul>
 <p>General:</p>
 <ul>
@@ -231,16 +271,22 @@ ie, <code>Coord</code> type depends on <code>Board</code> value.</p>
 <ul>
 <li>For simple designs. ie, involves only 1 or a few source files.</li>
 <li>Complex designs =&gt; a build tool needed. Eg: sbt, mill</li>
-<li>Warning: It will download a jdk (and other libraries?) compatible with it if it can't find it already installed.</li>
-<li><a href="https://www.chisel-lang.org/docs/installation">https://www.chisel-lang.org/docs/installation</a></li>
-<li><a href="https://scala-cli.virtuslab.org/install/">https://scala-cli.virtuslab.org/install/</a></li>
-<li><a href="https://github.com/yadavan88/ScalaCLI-Cheatsheet">https://github.com/yadavan88/ScalaCLI-Cheatsheet</a></li>
+<li>Warning: It will download a jdk (and other libraries?) compatible
+with it if it can't find it already installed.</li>
+<li><a
+href="https://www.chisel-lang.org/docs/installation">https://www.chisel-lang.org/docs/installation</a></li>
+<li><a
+href="https://scala-cli.virtuslab.org/install/">https://scala-cli.virtuslab.org/install/</a></li>
+<li><a
+href="https://github.com/yadavan88/ScalaCLI-Cheatsheet">https://github.com/yadavan88/ScalaCLI-Cheatsheet</a></li>
 </ul></li>
 </ul>
 <h2 id="emacs">Emacs</h2>
 <ul>
-<li><a href="https://ag91.github.io/blog/2020/10/16/my-emacs-setup-for-scala-development/">https://ag91.github.io/blog/2020/10/16/my-emacs-setup-for-scala-development/</a></li>
-<li><a href="https://scalameta.org/metals/docs/editors/emacs/">https://scalameta.org/metals/docs/editors/emacs/</a></li>
+<li><a
+href="https://ag91.github.io/blog/2020/10/16/my-emacs-setup-for-scala-development/">https://ag91.github.io/blog/2020/10/16/my-emacs-setup-for-scala-development/</a></li>
+<li><a
+href="https://scalameta.org/metals/docs/editors/emacs/">https://scalameta.org/metals/docs/editors/emacs/</a></li>
 </ul>
 </div>
 </body>

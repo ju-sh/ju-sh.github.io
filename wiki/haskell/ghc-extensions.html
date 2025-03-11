@@ -45,71 +45,107 @@
 
 <div id="content-container">
 <p>Haskell98 and Haskell2010 are standards.</p>
-<p>But GHC provides <a href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/table.html">many extensions</a>.</p>
+<p>But GHC provides <a
+href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/table.html">many
+extensions</a>.</p>
 <p>Extensions can be enabled with:</p>
 <ul>
 <li><code>:set -XBinaryLiterals</code> (in ghci)</li>
 <li><code>{-# LANGUAGE BinaryLiterals #-}</code> (in code)</li>
 </ul>
-<h2 id="emptycase"><span class="done DONE">DONE</span> <code>EmptyCase</code></h2>
-<p>Allow to pattern match with <code>case</code> on a type without constructors.</p>
+<h2 id="emptycase"><span class="done DONE">DONE</span>
+<code>EmptyCase</code></h2>
+<p>Allow to pattern match with <code>case</code> on a type without
+constructors.</p>
 <p>Eg:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">data</span> <span class="dt">Void</span> <span class="ot">=</span> <span class="dt">Void</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="ot">f ::</span> <span class="dt">Void</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>f x <span class="ot">=</span> <span class="kw">case</span> x <span class="kw">of</span> { }</span></code></pre></div>
-<h2 id="derivelift"><span class="done DONE">DONE</span> <code>DeriveLift</code></h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Void</span> <span class="ot">=</span> <span class="dt">Void</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ot">f ::</span> <span class="dt">Void</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>f x <span class="ot">=</span> <span class="kw">case</span> x <span class="kw">of</span> { }</span></code></pre></div>
+<h2 id="derivelift"><span class="done DONE">DONE</span>
+<code>DeriveLift</code></h2>
 <ul>
 <li>For TemplateHaskell.</li>
-<li>Allow automatic derivation of <code>Lift</code> class for types via <code>deriving</code> clause</li>
+<li>Allow automatic derivation of <code>Lift</code> class for types via
+<code>deriving</code> clause</li>
 </ul>
-<h2 id="explicitforall"><span class="todo TODO">TODO</span> <code>ExplicitForAll</code></h2>
-<p>Implied by: ScopedTypeVariables, LiberalTypeSynonyms, RankNTypes, ExistentialQuantification</p>
-<p>Even without this extension, there is a <code>forall</code> by default.</p>
-<p>For example, <code>foo :: a -&gt; a</code> really means <code>foo :: forall a. (a -&gt; a)</code> (but the latter makes scoped type variables via <code>ScopedTypeVariables</code> possible).</p>
-<p><code>ExplicitForAll</code> can give more control over this implicit quantification.</p>
-<h2 id="scopedtypevariables"><span class="todo TODO">TODO</span> <code>ScopedTypeVariables</code></h2>
+<h2 id="explicitforall"><span class="todo TODO">TODO</span>
+<code>ExplicitForAll</code></h2>
+<p>Implied by: ScopedTypeVariables, LiberalTypeSynonyms, RankNTypes,
+ExistentialQuantification</p>
+<p>Even without this extension, there is a <code>forall</code> by
+default.</p>
+<p>For example, <code>foo :: a -&gt; a</code> really means
+<code>foo :: forall a. (a -&gt; a)</code> (but the latter makes scoped
+type variables via <code>ScopedTypeVariables</code> possible).</p>
+<p><code>ExplicitForAll</code> can give more control over this implicit
+quantification.</p>
+<h2 id="scopedtypevariables"><span class="todo TODO">TODO</span>
+<code>ScopedTypeVariables</code></h2>
 <ul>
-<li>Allows us to have type annotation in variables made with <code>let</code>.
+<li>Allows us to have type annotation in variables made with
+<code>let</code>.
 <ul>
-<li><a href="https://stackoverflow.com/questions/22436402/how-to-add-type-annotation-in-let-binding">https://stackoverflow.com/questions/22436402/how-to-add-type-annotation-in-let-binding</a></li>
+<li><a
+href="https://stackoverflow.com/questions/22436402/how-to-add-type-annotation-in-let-binding">https://stackoverflow.com/questions/22436402/how-to-add-type-annotation-in-let-binding</a></li>
 </ul></li>
 </ul>
 <p>—</p>
-<p>Allows free variables (introduced with a <code>forall</code>) occuring in the type to be 're-used' in type annotations in the body of a definition ??</p>
+<p>Allows free variables (introduced with a <code>forall</code>)
+occuring in the type to be 're-used' in type annotations in the body of
+a definition ??</p>
 <p>Example from Haskell wiki:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ot">{-# LANGUAGE ScopedTypeVariables #-}</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="ot">f ::</span> <span class="kw">forall</span> a<span class="op">.</span> [a] <span class="ot">-&gt;</span> [a]</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>f xs <span class="ot">=</span> ys <span class="op">++</span> ys</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>     <span class="kw">where</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="ot">       ys ::</span> [a]  <span class="co">-- This `a` is same the one in type of `f&#39;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>       ys <span class="ot">=</span> <span class="fu">reverse</span> xs</span></code></pre></div>
-<p>See: <a href="https://wiki.haskell.org/Scoped_type_variables">https://wiki.haskell.org/Scoped_type_variables</a></p>
-<p>Apparently can help avoid <a href="https://wiki.haskell.org/Monomorphism_restriction">monomorphism restriction</a>.</p>
-<h2 id="unicodesyntax"><span class="done DONE">DONE</span> <code>UnicodeSyntax</code></h2>
-<p>Allows using unicode symbols in place of certain character sequences.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE ScopedTypeVariables #-}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ot">f ::</span> <span class="kw">forall</span> a<span class="op">.</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>f xs <span class="ot">=</span> ys <span class="op">++</span> ys</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>     <span class="kw">where</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ot">       ys ::</span> [a]  <span class="co">-- This `a` is same the one in type of `f&#39;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>       ys <span class="ot">=</span> <span class="fu">reverse</span> xs</span></code></pre></div>
+<p>See: <a
+href="https://wiki.haskell.org/Scoped_type_variables">https://wiki.haskell.org/Scoped_type_variables</a></p>
+<p>Apparently can help avoid <a
+href="https://wiki.haskell.org/Monomorphism_restriction">monomorphism
+restriction</a>.</p>
+<h2 id="unicodesyntax"><span class="done DONE">DONE</span>
+<code>UnicodeSyntax</code></h2>
+<p>Allows using unicode symbols in place of certain character
+sequences.</p>
 <p>Like:</p>
 <ul>
 <li><code>∀</code> instead of <code>forall</code></li>
 <li><code>→</code> instead of <code>-&gt;</code></li>
 </ul>
-<h2 id="standalonederiving"><span class="done DONE">DONE</span> <code>StandaloneDeriving</code></h2>
-<p>Allow a shorter form of instance definition of a type class for an type that has already been defined.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">data</span> <span class="dt">Foo</span> a <span class="ot">=</span> <span class="dt">Bar</span> a <span class="op">|</span> <span class="dt">Baz</span> <span class="dt">String</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="kw">deriving</span> <span class="kw">instance</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> <span class="dt">Eq</span> (<span class="dt">Foo</span> a)</span></code></pre></div>
-<p>For types for which haskell can make the derivation by itself. Otherwise we would have to write the instance definition ourselves.</p>
-<p>Standalone deriving is similar to having a <code>deriving</code> clause made as part of a type's definition, but not exactly same?</p>
+<h2 id="standalonederiving"><span class="done DONE">DONE</span>
+<code>StandaloneDeriving</code></h2>
+<p>Allow a shorter form of instance definition of a type class for an
+type that has already been defined.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Foo</span> a <span class="ot">=</span> <span class="dt">Bar</span> a <span class="op">|</span> <span class="dt">Baz</span> <span class="dt">String</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">deriving</span> <span class="kw">instance</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> <span class="dt">Eq</span> (<span class="dt">Foo</span> a)</span></code></pre></div>
+<p>For types for which haskell can make the derivation by itself.
+Otherwise we would have to write the instance definition ourselves.</p>
+<p>Standalone deriving is similar to having a <code>deriving</code>
+clause made as part of a type's definition, but not exactly same?</p>
 <ul>
-<li>Unlike <code>deriving</code> clause, standalone deriving needn't be in same module as type definition.</li>
+<li>Unlike <code>deriving</code> clause, standalone deriving needn't be
+in same module as type definition.</li>
 </ul>
-<h2 id="magichash"><span class="done DONE">DONE</span> <code>MagicHash</code></h2>
-<p>Allow definition (and use?) of identifiers with a <code>#</code> at its end.</p>
+<h2 id="magichash"><span class="done DONE">DONE</span>
+<code>MagicHash</code></h2>
+<p>Allow definition (and use?) of identifiers with a <code>#</code> at
+its end.</p>
 <p>Like: <code>Word#</code></p>
-<p>Variables with <code>#</code> in end are usually used by internals.</p>
-<p>For example, types with <code>#</code> at its end are <a href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/primitives.html#glasgow-unboxed">unboxed types</a> by convention (not a requirement though).</p>
-<h2 id="binaryliterals"><span class="done DONE">DONE</span> <code>BinaryLiterals</code></h2>
+<p>Variables with <code>#</code> in end are usually used by
+internals.</p>
+<p>For example, types with <code>#</code> at its end are <a
+href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/primitives.html#glasgow-unboxed">unboxed
+types</a> by convention (not a requirement though).</p>
+<h2 id="binaryliterals"><span class="done DONE">DONE</span>
+<code>BinaryLiterals</code></h2>
 <p>Allows use of binary notation to represent integers.</p>
 <pre><code>$ ghci
 GHCi, version 9.4.8: https://www.haskell.org/ghc/  :? for help
@@ -124,44 +160,57 @@ GHCi, version 9.4.8: https://www.haskell.org/ghc/  :? for help
 λ&gt; 0b2031
 &lt;interactive&gt;:4:2: error: Variable not in scope: b2031
 </code></pre>
-<p>(Couldn't get this working in ghci v8.8.4 for some reason. Though <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/binary_literals.html">docs</a> say it is available since v7.10.1)</p>
-<p>Note that octal and hexadecimal notations are supported without any extensions:</p>
+<p>(Couldn't get this working in ghci v8.8.4 for some reason. Though <a
+href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/binary_literals.html">docs</a>
+say it is available since v7.10.1)</p>
+<p>Note that octal and hexadecimal notations are supported without any
+extensions:</p>
 <pre><code>λ&gt; 0x2e
 46
 
 λ&gt; 0o70
 56
 </code></pre>
-<p>Also see: <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/binary_literals.html">link</a></p>
-<h2 id="lexicalnegation"><span class="done DONE">DONE</span> <code>LexicalNegation</code></h2>
-<p>We can't use <code>(-1)</code> to mean a function that decrements argument by one like we do for <code>(+1)</code>.</p>
-<p>This is because, ghc considers the <code>-</code> sybmol to mean unary negation if the expression has nothing on the left side.</p>
+<p>Also see: <a
+href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/binary_literals.html">link</a></p>
+<h2 id="lexicalnegation"><span class="done DONE">DONE</span>
+<code>LexicalNegation</code></h2>
+<p>We can't use <code>(-1)</code> to mean a function that decrements
+argument by one like we do for <code>(+1)</code>.</p>
+<p>This is because, ghc considers the <code>-</code> sybmol to mean
+unary negation if the expression has nothing on the left side.</p>
 <ul>
 <li><code>x = -5</code>: unary</li>
 <li><code>x = 2 - 5</code>: binary</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>λ<span class="op">&gt;</span> (<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="op">-</span><span class="dv">1</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t (<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>(<span class="op">-</span><span class="dv">1</span>)<span class="ot"> ::</span> <span class="dt">Num</span> a <span class="ot">=&gt;</span> a</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>λ<span class="op">&gt;</span> (<span class="op">-</span><span class="dv">1</span>) <span class="dv">3</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a><span class="op">&lt;</span>interactive<span class="op">&gt;:</span><span class="dv">2</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span> [<span class="dt">GHC</span><span class="op">-</span><span class="dv">39999</span>]</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>    • <span class="dt">Could</span> <span class="fu">not</span> deduce ‘<span class="dt">Num</span> t0’</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>      from the context<span class="op">:</span> (<span class="dt">Num</span> t1, <span class="dt">Num</span> (t1 <span class="ot">-&gt;</span> t2))</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> (<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">-</span><span class="dv">1</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t (<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>(<span class="op">-</span><span class="dv">1</span>)<span class="ot"> ::</span> <span class="dt">Num</span> a <span class="ot">=&gt;</span> a</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> (<span class="op">-</span><span class="dv">1</span>) <span class="dv">3</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>interactive<span class="op">&gt;:</span><span class="dv">2</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span> [<span class="dt">GHC</span><span class="op">-</span><span class="dv">39999</span>]</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">Could</span> <span class="fu">not</span> deduce ‘<span class="dt">Num</span> t0’</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>      from the context<span class="op">:</span> (<span class="dt">Num</span> t1, <span class="dt">Num</span> (t1 <span class="ot">-&gt;</span> t2))</span></code></pre></div>
 <p>The other direction is okay though:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>λ<span class="op">&gt;</span> (<span class="dv">1</span><span class="op">-</span>) <span class="dv">4</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="op">-</span><span class="dv">3</span></span></code></pre></div>
-<p>To avoid this problem in the left side, we can use <code>subtract</code>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t <span class="fu">subtract</span> <span class="dv">1</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="fu">subtract</span> <span class="dv">1</span><span class="ot"> ::</span> <span class="dt">Num</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> a</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>λ<span class="op">&gt;</span> <span class="fu">subtract</span> <span class="dv">1</span> <span class="dv">4</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="dv">3</span></span></code></pre></div>
-<p>Also, <code>f -5</code> is considered <code>f - 5</code> by default. Got to say <code>f (-5)</code>.</p>
-<p>We can enable <code>LexicalNegation</code> extension to get around this.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> (<span class="dv">1</span><span class="op">-</span>) <span class="dv">4</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">-</span><span class="dv">3</span></span></code></pre></div>
+<p>To avoid this problem in the left side, we can use
+<code>subtract</code>:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t <span class="fu">subtract</span> <span class="dv">1</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subtract</span> <span class="dv">1</span><span class="ot"> ::</span> <span class="dt">Num</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> a</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">subtract</span> <span class="dv">1</span> <span class="dv">4</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span></span></code></pre></div>
+<p>Also, <code>f -5</code> is considered <code>f - 5</code> by default.
+Got to say <code>f (-5)</code>.</p>
+<p>We can enable <code>LexicalNegation</code> extension to get around
+this.</p>
 <pre><code>λ&gt; :set -XLexicalNegation
 λ&gt; (- 4) 5
 1
@@ -169,17 +218,24 @@ GHCi, version 9.4.8: https://www.haskell.org/ghc/  :? for help
 λ&gt; (+2) -3
 -1
 </code></pre>
-<p>Both of the above statements would have resulted in errors in the absence of extensions.</p>
+<p>Both of the above statements would have resulted in errors in the
+absence of extensions.</p>
 <p>–</p>
-<p>Looks like <code>LexicalNegation</code> can be considered like a superset of the <code>NegativeLiterals</code> extension.</p>
-<h2 id="multiwayif"><span class="todo TODO">TODO</span> <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/multiway_if.html"><code>MultiWayIf</code></a></h2>
-<p>Use guards syntax of pattern matching in <code>if</code> statements.</p>
-<h2 id="typefamilies"><span class="todo TODO">TODO</span> <code>TypeFamilies</code></h2>
+<p>Looks like <code>LexicalNegation</code> can be considered like a
+superset of the <code>NegativeLiterals</code> extension.</p>
+<h2 id="multiwayif"><span class="todo TODO">TODO</span> <a
+href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/multiway_if.html"><code>MultiWayIf</code></a></h2>
+<p>Use guards syntax of pattern matching in <code>if</code>
+statements.</p>
+<h2 id="typefamilies"><span class="todo TODO">TODO</span>
+<code>TypeFamilies</code></h2>
 <p>Kind of like functions at type level.</p>
-<h2 id="datakinds"><span class="todo TODO">TODO</span> <code>DataKinds</code></h2>
+<h2 id="datakinds"><span class="todo TODO">TODO</span>
+<code>DataKinds</code></h2>
 <p><code>DataKinds</code> makes a type and kind.</p>
 <p>Kind is a type of types.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="kw">data</span> <span class="dt">Nat</span> <span class="ot">=</span> <span class="dt">Zero</span> <span class="op">|</span> <span class="dt">Succ</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Nat</span> <span class="ot">=</span> <span class="dt">Zero</span> <span class="op">|</span> <span class="dt">Succ</span></span></code></pre></div>
 <p>makes the following:</p>
 <ul>
 <li><code>Nat</code>: a type</li>
@@ -191,64 +247,79 @@ GHCi, version 9.4.8: https://www.haskell.org/ghc/  :? for help
 </ul>
 <p>–</p>
 <ul>
-<li>Type level data constructors: <code>'Zero</code>, <code>'Succ</code></li>
-<li>Since kinds is a type of types, values of the kind <code>Nat</code> are types.</li>
+<li>Type level data constructors: <code>'Zero</code>,
+<code>'Succ</code></li>
+<li>Since kinds is a type of types, values of the kind <code>Nat</code>
+are types.</li>
 </ul>
-<p>We can skip the apostrophe for type constructors if it can be inferred as being of the kind level at compile time.</p>
-<h2 id="lineartypes"><span class="todo TODO">TODO</span> <code>LinearTypes</code></h2>
+<p>We can skip the apostrophe for type constructors if it can be
+inferred as being of the kind level at compile time.</p>
+<h2 id="lineartypes"><span class="todo TODO">TODO</span>
+<code>LinearTypes</code></h2>
 <p>Linear function: Every argument is used <em>exactly once</em>.</p>
 <ul>
 <li><code>a %1 -&gt; b</code>: a linear function from a to b
 <ul>
-<li><code>a ⊸ b</code>: Same thing with <code>UnicodeSyntax</code> ghc extension enabled</li>
+<li><code>a ⊸ b</code>: Same thing with <code>UnicodeSyntax</code> ghc
+extension enabled</li>
 </ul></li>
 </ul>
-<h2 id="partialtypesignatures"><span class="done DONE">DONE</span> <code>PartialTypeSignatures</code></h2>
+<h2 id="partialtypesignatures"><span class="done DONE">DONE</span>
+<code>PartialTypeSignatures</code></h2>
 <p>Allows us to leave holes in type signature.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="ot">{-# LANGUAGE PartialTypeSignatures #-}</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="ot">v ::</span> <span class="dt">Either</span> _ <span class="dt">Bool</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>v <span class="ot">=</span> <span class="dt">Left</span> <span class="dv">3</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a><span class="co">{-</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a><span class="co">Hi.hs:3:13: warning: [-Wpartial-type-signatures] …</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a><span class="co">    • Found type wildcard ‘_’ standing for ‘Integer’</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true"></a><span class="co">    • In the first argument of ‘Either’, namely ‘_’</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true"></a><span class="co">      In the type ‘Either _ Bool’</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true"></a><span class="co">      In the type signature: v :: Either _ Bool</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true"></a><span class="co">  |</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true"></a><span class="co">-}</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE PartialTypeSignatures #-}</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ot">v ::</span> <span class="dt">Either</span> _ <span class="dt">Bool</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>v <span class="ot">=</span> <span class="dt">Left</span> <span class="dv">3</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">{-</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">Hi.hs:3:13: warning: [-Wpartial-type-signatures] …</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">    • Found type wildcard ‘_’ standing for ‘Integer’</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">    • In the first argument of ‘Either’, namely ‘_’</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">      In the type ‘Either _ Bool’</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">      In the type signature: v :: Either _ Bool</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">  |</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">-}</span></span></code></pre></div>
 <p>Another example with a 3rd party library (clash):</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="kw">import</span> <span class="dt">Clash.Prelude</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="ot">v1 ::</span> <span class="dt">Vec</span> _ <span class="dt">Bool</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a>v1 <span class="ot">=</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>  (<span class="op">:&gt;</span>) <span class="dt">True</span> ((<span class="op">:&gt;</span>) <span class="dt">False</span> ((<span class="op">:&gt;</span>) <span class="dt">True</span> <span class="dt">Nil</span>))</span></code></pre></div>
-<h2 id="noimplicitprelude"><span class="done DONE">DONE</span> <code>NoImplicitPrelude</code></h2>
-<p>GHC implicitly imports <code>Prelude</code> by default. This can be disabled with this extension.</p>
-<h2 id="gadts"><span class="done DONE">DONE</span> <code>GADTs</code></h2>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Clash.Prelude</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ot">v1 ::</span> <span class="dt">Vec</span> _ <span class="dt">Bool</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>v1 <span class="ot">=</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  (<span class="op">:&gt;</span>) <span class="dt">True</span> ((<span class="op">:&gt;</span>) <span class="dt">False</span> ((<span class="op">:&gt;</span>) <span class="dt">True</span> <span class="dt">Nil</span>))</span></code></pre></div>
+<h2 id="noimplicitprelude"><span class="done DONE">DONE</span>
+<code>NoImplicitPrelude</code></h2>
+<p>GHC implicitly imports <code>Prelude</code> by default. This can be
+disabled with this extension.</p>
+<h2 id="gadts"><span class="done DONE">DONE</span>
+<code>GADTs</code></h2>
 <p>Allows to define generalized algebraic data types.</p>
 <ul>
-<li>Implies <code>GADTSyntax</code> and <code>MonoLocalBinds</code>.</li>
+<li>Implies <code>GADTSyntax</code> and
+<code>MonoLocalBinds</code>.</li>
 <li>Allows 'richer types for constructors'</li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="ot">{-# LANGUAGE GADTs #-}</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="kw">data</span> <span class="dt">Literal</span> a <span class="kw">where</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>  <span class="dt">NumLit</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Literal</span> <span class="dt">Int</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a>  <span class="dt">BoolLit</span><span class="ot"> ::</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Literal</span> <span class="dt">Bool</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE GADTs #-}</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Literal</span> a <span class="kw">where</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">NumLit</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Literal</span> <span class="dt">Int</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">BoolLit</span><span class="ot"> ::</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Literal</span> <span class="dt">Bool</span></span></code></pre></div>
 <h2 id="cpp"><span class="todo TODO">TODO</span> <code>CPP</code></h2>
 <ul>
 <li>C pre-processor</li>
-<li><a href="http://blog.haskell-exists.com/yuras/posts/stop-abusing-cpp-in-haskell.html">http://blog.haskell-exists.com/yuras/posts/stop-abusing-cpp-in-haskell.html</a></li>
+<li><a
+href="http://blog.haskell-exists.com/yuras/posts/stop-abusing-cpp-in-haskell.html">http://blog.haskell-exists.com/yuras/posts/stop-abusing-cpp-in-haskell.html</a></li>
 </ul>
 <p>Find macros already defined:</p>
 <pre><code># Some foo.hs file is needed, but it isn&#39;t used...
 $ touch foo.hs
 $ ghc -E -optP-dM -cpp foo.hs
 </code></pre>
-<h2 id="lambdacase"><span class="done DONE">DONE</span> <code>LambdaCase</code></h2>
+<h2 id="lambdacase"><span class="done DONE">DONE</span>
+<code>LambdaCase</code></h2>
 <ul>
 <li>Similar to <code>case</code> but different</li>
 </ul>
@@ -263,7 +334,8 @@ $ ghc -E -optP-dM -cpp foo.hs
 }
 </code></pre>
 <p>—</p>
-<p>Casing on multiple args (scrutinees) also possible with <code>cases</code> (from GHC 9.4.1):</p>
+<p>Casing on multiple args (scrutinees) also possible with
+<code>cases</code> (from GHC 9.4.1):</p>
 <pre><code>\cases { p11 ... pM1 -&gt; e1; ...; p1N ... pMN -&gt; eN }
 </code></pre>
 <p>would be same as a function <code>f</code> like:</p>
@@ -291,31 +363,45 @@ f p1N ... pMN -&gt; eN
 λ&gt; f 2
 &quot;other&quot;
 </code></pre>
-<p>Reference: <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/lambda_case.html">https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/lambda_case.html</a></p>
-<h2 id="arrows"><span class="todo TODO">TODO</span> <a href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/arrows.html#arrow-notation"><code>Arrows</code></a></h2>
+<p>Reference: <a
+href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/lambda_case.html">https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/lambda_case.html</a></p>
+<h2 id="arrows"><span class="todo TODO">TODO</span> <a
+href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/arrows.html#arrow-notation"><code>Arrows</code></a></h2>
 <ul>
 <li>Allows a notation to use <code>Control.Arrow</code></li>
 <li>Arrows: A generalization of monads ??</li>
 </ul>
-<h2 id="existentialquantification"><span class="todo TODO">TODO</span> <code>ExistentialQuantification</code></h2>
-<p><a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/existential_quantification.html">https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/existential_quantification.html</a></p>
-<p>Allows us to use <code>forall</code> in the type of data constructors, where it plays the role of an existential quantification.</p>
+<h2 id="existentialquantification"><span class="todo TODO">TODO</span>
+<code>ExistentialQuantification</code></h2>
+<p><a
+href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/existential_quantification.html">https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/existential_quantification.html</a></p>
+<p>Allows us to use <code>forall</code> in the type of data
+constructors, where it plays the role of an existential
+quantification.</p>
 <p>Example:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a><span class="kw">data</span> <span class="dt">Stream</span> a <span class="ot">=</span> <span class="ot">∃</span>s<span class="op">.</span> <span class="dt">Stream</span> (s <span class="ot">-&gt;</span> <span class="dt">Maybe</span> (s, a))</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Stream</span> a <span class="ot">=</span> ∃s<span class="op">.</span> <span class="dt">Stream</span> (s <span class="ot">-&gt;</span> <span class="dt">Maybe</span> (s, a))</span></code></pre></div>
 <p>is written as</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="ot">{-# LANGUAGE ExistentialQuantification #-}</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a><span class="kw">data</span> <span class="dt">Stream</span> a <span class="ot">=</span> <span class="kw">forall</span> s<span class="op">.</span> <span class="dt">Stream</span> (s <span class="ot">-&gt;</span> <span class="dt">Maybe</span> (s, a))</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE ExistentialQuantification #-}</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Stream</span> a <span class="ot">=</span> <span class="kw">forall</span> s<span class="op">.</span> <span class="dt">Stream</span> (s <span class="ot">-&gt;</span> <span class="dt">Maybe</span> (s, a))</span></code></pre></div>
 <hr />
 <ul>
-<li>Might seem strange that <code>forall</code> is used for <code>∃</code>..</li>
-<li>Because <code>forall</code> is also used to mean universal quantification.</li>
-<li>Apparently, based on the active ghc extensions, <code>forall</code> assumes different meanings.
+<li>Might seem strange that <code>forall</code> is used for
+<code>∃</code>..</li>
+<li>Because <code>forall</code> is also used to mean universal
+quantification.</li>
+<li>Apparently, based on the active ghc extensions, <code>forall</code>
+assumes different meanings.
 <ul>
-<li><a href="https://stackoverflow.com/questions/3071136/what-does-the-forall-keyword-in-haskell-ghc-do">https://stackoverflow.com/questions/3071136/what-does-the-forall-keyword-in-haskell-ghc-do</a></li>
-<li><a href="https://wasp-lang.dev/blog/2021/09/01/haskell-forall-tutorial">https://wasp-lang.dev/blog/2021/09/01/haskell-forall-tutorial</a></li>
+<li><a
+href="https://stackoverflow.com/questions/3071136/what-does-the-forall-keyword-in-haskell-ghc-do">https://stackoverflow.com/questions/3071136/what-does-the-forall-keyword-in-haskell-ghc-do</a></li>
+<li><a
+href="https://wasp-lang.dev/blog/2021/09/01/haskell-forall-tutorial">https://wasp-lang.dev/blog/2021/09/01/haskell-forall-tutorial</a></li>
 </ul></li>
 </ul>
-<p>By default, a <code>forall</code> for universal quantification is implicit in Haskell types.</p>
+<p>By default, a <code>forall</code> for universal quantification is
+implicit in Haskell types.</p>
 <table>
 <thead>
 <tr class="header">
@@ -330,18 +416,28 @@ f p1N ... pMN -&gt; eN
 </tr>
 </tbody>
 </table>
-<p>But <code>forall</code> is not a haskell keyword and it can't be used without extensions.</p>
-<p><code>ExplicitForall</code> extension can be used to write the <code>forall</code> for universal quantification explicitly.</p>
+<p>But <code>forall</code> is not a haskell keyword and it can't be used
+without extensions.</p>
+<p><code>ExplicitForall</code> extension can be used to write the
+<code>forall</code> for universal quantification explicitly.</p>
 <hr />
-<p><code>RankNTypes</code> allows us to 'use <code>forall</code> nested in type signatures, so that it does not apply to the whole type signature but just the part of it'<a href="https://www.schoolofhaskell.com/user/PthariensFlame/guide-to-ghc-extensions/basic-syntax-extensions#binaryliterals">ʳ</a>.</p>
-<h2 id="undecidableinstances"><span class="todo TODO">TODO</span> <code>UndecidableInstances</code></h2>
-<p>Indicate to the compiler that it is okay if the type checker could not terminate.</p>
-<h1 id="rewrite-rules"><span class="todo TODO">TODO</span> REWRITE rules</h1>
-<p><a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/rewrite_rules.html#rewrite-rules">https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/rewrite_rules.html#rewrite-rules</a></p>
+<p><code>RankNTypes</code> allows us to 'use <code>forall</code> nested
+in type signatures, so that it does not apply to the whole type
+signature but just the part of it'<a
+href="https://www.schoolofhaskell.com/user/PthariensFlame/guide-to-ghc-extensions/basic-syntax-extensions#binaryliterals">ʳ</a>.</p>
+<h2 id="undecidableinstances"><span class="todo TODO">TODO</span>
+<code>UndecidableInstances</code></h2>
+<p>Indicate to the compiler that it is okay if the type checker could
+not terminate.</p>
+<h1 id="rewrite-rules"><span class="todo TODO">TODO</span> REWRITE
+rules</h1>
+<p><a
+href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/rewrite_rules.html#rewrite-rules">https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/rewrite_rules.html#rewrite-rules</a></p>
 <ul>
 <li>Pattern types</li>
 </ul>
-<p>Read: A history of haskell 2007: <a href="https://dl.acm.org/doi/pdf/10.1145/1238844.1238856">https://dl.acm.org/doi/pdf/10.1145/1238844.1238856</a></p>
+<p>Read: A history of haskell 2007: <a
+href="https://dl.acm.org/doi/pdf/10.1145/1238844.1238856">https://dl.acm.org/doi/pdf/10.1145/1238844.1238856</a></p>
 </div>
 </body>
 </html>

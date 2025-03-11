@@ -45,7 +45,8 @@
 
 <div id="content-container">
 <h2 id="limits">Limits</h2>
-<p><a href="https://en.cppreference.com/w/c/types/limits">https://en.cppreference.com/w/c/types/limits</a></p>
+<p><a
+href="https://en.cppreference.com/w/c/types/limits">https://en.cppreference.com/w/c/types/limits</a></p>
 <table>
 <thead>
 <tr class="header">
@@ -113,8 +114,11 @@
 </tbody>
 </table>
 <h2 id="scanf"><code>scanf</code></h2>
-<p>Use of <code>scanf()</code> is usually frowned upon as it doesn't give the programmer enough control over what could happen (Eg: buffer overflow attack).</p>
-<p>Yet, it's quite useful to get stuff done quick when you are just messing around with C while learning it.</p>
+<p>Use of <code>scanf()</code> is usually frowned upon as it doesn't
+give the programmer enough control over what could happen (Eg: buffer
+overflow attack).</p>
+<p>Yet, it's quite useful to get stuff done quick when you are just
+messing around with C while learning it.</p>
 <p>In that sense, <code>scanf()</code> is in fact, quite useful.</p>
 <h2 id="format-specifiers">Format specifiers</h2>
 <table>
@@ -218,7 +222,8 @@
 </tr>
 </tbody>
 </table>
-<p>See: <a href="https://en.cppreference.com/w/c/io/fprintf">https://en.cppreference.com/w/c/io/fprintf</a></p>
+<p>See: <a
+href="https://en.cppreference.com/w/c/io/fprintf">https://en.cppreference.com/w/c/io/fprintf</a></p>
 <ul>
 <li>Precision
 <ul>
@@ -240,39 +245,45 @@
 <li>L' stuff as format specifiers.</li>
 </ul></li>
 </ul>
-<h2 id="interesting-behavior-and-facts">Interesting behavior and facts</h2>
+<h2 id="interesting-behavior-and-facts">Interesting behavior and
+facts</h2>
 <p>Undefined behaviour means that compiler can do whatever it likes.</p>
-<h3 id="no-evaluation-within-sizeof">No evaluation within <code>sizeof</code></h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="dt">int</span> main() {</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="dt">int</span> a=<span class="dv">3</span>, b;</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>    b = <span class="kw">sizeof</span>(a=<span class="dv">10</span>);</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>    printf(<span class="st">&quot;a=%d, b=%d</span><span class="sc">\n</span><span class="st">&quot;</span>, a, b);</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    <span class="co">// a=3, b=4</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>    <span class="co">// Value of b is compiler/arch dependent though.</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>}</span></code></pre></div>
+<h3 id="no-evaluation-within-sizeof">No evaluation within
+<code>sizeof</code></h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a<span class="op">=</span><span class="dv">3</span><span class="op">,</span> b<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">=</span><span class="dv">10</span><span class="op">);</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;a=</span><span class="sc">%d</span><span class="st">, b=</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> a<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// a=3, b=4</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Value of b is compiler/arch dependent though.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>(Thanks to Kevin for telling me this.)</p>
 <p>—</p>
-<p>Expression inside <code>sizeof</code> is not evaluated. So the value of <code>a</code> never changed.</p>
-<p>In <code>sizeof(a=10)</code>, type of <code>a=10</code> is looked at. It is found to be <code>int</code>. So essentially, it is same as saying <code>sizeof(int)</code> or <code>sizeof(10)</code>, I guess.</p>
-<p><code>sizeof(int)</code> is usually 4, but can be different depending on architecture and compiler.</p>
+<p>Expression inside <code>sizeof</code> is not evaluated. So the value
+of <code>a</code> never changed.</p>
+<p>In <code>sizeof(a=10)</code>, type of <code>a=10</code> is looked at.
+It is found to be <code>int</code>. So essentially, it is same as saying
+<code>sizeof(int)</code> or <code>sizeof(10)</code>, I guess.</p>
+<p><code>sizeof(int)</code> is usually 4, but can be different depending
+on architecture and compiler.</p>
 <h3 id="multiple-sequence-points">Multiple sequence points</h3>
 <p>Multiple sequence points =&gt; undefined behaviour.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="dt">int</span> main() {</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    <span class="dt">int</span> a=<span class="dv">3</span>;</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>    printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, a++ + ++a);</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>    <span class="co">// 8</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>    <span class="co">// Needn&#39;t be so though. It&#39;s undefined behaviour.</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>    <span class="cf">return</span> <span class="dv">0</span>; </span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a<span class="op">=</span><span class="dv">3</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> a<span class="op">++</span> <span class="op">+</span> <span class="op">++</span>a<span class="op">);</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 8</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Needn&#39;t be so though. It&#39;s undefined behaviour.</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Evaluation could be like:</p>
 <ul>
 <li><code>((a++) + ++a))</code></li>
@@ -280,7 +291,8 @@
 </ul>
 <p>(Thanks to Kevin for reminding me about this.)</p>
 <p>—</p>
-<p>Similarly, the following are also invoke undefined behaviour due to multiple sequence points.</p>
+<p>Similarly, the following are also invoke undefined behaviour due to
+multiple sequence points.</p>
 <ul>
 <li><code>i = i++</code></li>
 <li><code>i = ++i</code></li>
@@ -288,38 +300,44 @@
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://stackoverflow.com/questions/26894509/c-why-does-i-i-invoke-undefined-behaviour">https://stackoverflow.com/questions/26894509/c-why-does-i-i-invoke-undefined-behaviour</a></li>
-<li><a href="https://stackoverflow.com/questions/4968854/is-the-behaviour-of-i-i-really-undefined">https://stackoverflow.com/questions/4968854/is-the-behaviour-of-i-i-really-undefined</a></li>
-<li><a href="https://stackoverflow.com/questions/22616986/order-of-evaluation-of-arguments-in-function-calling">https://stackoverflow.com/questions/22616986/order-of-evaluation-of-arguments-in-function-calling</a></li>
+<li><a
+href="https://stackoverflow.com/questions/26894509/c-why-does-i-i-invoke-undefined-behaviour">https://stackoverflow.com/questions/26894509/c-why-does-i-i-invoke-undefined-behaviour</a></li>
+<li><a
+href="https://stackoverflow.com/questions/4968854/is-the-behaviour-of-i-i-really-undefined">https://stackoverflow.com/questions/4968854/is-the-behaviour-of-i-i-really-undefined</a></li>
+<li><a
+href="https://stackoverflow.com/questions/22616986/order-of-evaluation-of-arguments-in-function-calling">https://stackoverflow.com/questions/22616986/order-of-evaluation-of-arguments-in-function-calling</a></li>
 </ul>
 <h3 id="order-of-function-arg-eval">Order of function arg eval</h3>
-<p>Order of function argument evaluation is not defined in the C standard.</p>
+<p>Order of function argument evaluation is not defined in the C
+standard.</p>
 <p>The following snippet could print "HiHello" or "HelloHi".</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>f(printf(<span class="st">&quot;Hi&quot;</span>), printf(<span class="st">&quot;Hello&quot;</span>));</span></code></pre></div>
-<h3 id="calling-main-from-main">Calling <code>main</code> from <code>main</code></h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>f<span class="op">(</span>printf<span class="op">(</span><span class="st">&quot;Hi&quot;</span><span class="op">),</span> printf<span class="op">(</span><span class="st">&quot;Hello&quot;</span><span class="op">));</span></span></code></pre></div>
+<h3 id="calling-main-from-main">Calling <code>main</code> from
+<code>main</code></h3>
 <p>Looks like this is possible in C (gcc).</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="dt">int</span> ctr = <span class="dv">5</span>;</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="dt">int</span> main() {</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>    <span class="cf">if</span>(ctr&gt;<span class="dv">0</span>) {</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>        printf(<span class="st">&quot;Hi</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>        ctr--;</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>        main();</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>    }</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>}</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a><span class="co">/*</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a><span class="co">Hi</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a><span class="co">Hi</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a><span class="co">Hi</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a><span class="co">Hi</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a><span class="co">Hi</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a><span class="co">*/</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ctr <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>ctr<span class="op">&gt;</span><span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;Hi</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        ctr<span class="op">--;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        main<span class="op">();</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">Hi</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span></code></pre></div>
 <p>Apparently, C++ standard prohibits this though gcc allows it.</p>
 <ul>
-<li><a href="https://stackoverflow.com/questions/2532912/call-main-itself-in-c">https://stackoverflow.com/questions/2532912/call-main-itself-in-c</a></li>
+<li><a
+href="https://stackoverflow.com/questions/2532912/call-main-itself-in-c">https://stackoverflow.com/questions/2532912/call-main-itself-in-c</a></li>
 </ul>
 <h2 id="digraphs">Digraphs</h2>
 <table>
@@ -358,7 +376,8 @@
 </table>
 <h2 id="trigraphs">Trigraphs</h2>
 <ul>
-<li>Used when old keyboards didn't have some of the keys common today.</li>
+<li>Used when old keyboards didn't have some of the keys common
+today.</li>
 <li>Silently changes the tokens, so considered unsavory.</li>
 </ul>
 <table>
@@ -371,39 +390,39 @@
 <tbody>
 <tr class="odd">
 <td><code>??=</code></td>
-<td><code>#</code></td>
+<td><code class="verbatim">#</code></td>
 </tr>
 <tr class="even">
 <td><code>??(</code></td>
-<td><code>[</code></td>
+<td><code class="verbatim">[</code></td>
 </tr>
 <tr class="odd">
 <td><code>??/</code></td>
-<td><code>\</code></td>
+<td><code class="verbatim">\</code></td>
 </tr>
 <tr class="even">
 <td><code>??)</code></td>
-<td><code>]</code></td>
+<td><code class="verbatim">]</code></td>
 </tr>
 <tr class="odd">
 <td><code>??'</code></td>
-<td><code>^</code></td>
+<td><code class="verbatim">^</code></td>
 </tr>
 <tr class="even">
 <td><code>??&lt;</code></td>
-<td><code>{</code></td>
+<td><code class="verbatim">{</code></td>
 </tr>
 <tr class="odd">
 <td><code>??!</code></td>
-<td><code>│</code></td>
+<td><code class="verbatim">│</code></td>
 </tr>
 <tr class="even">
 <td><code>??&gt;</code></td>
-<td><code>}</code></td>
+<td><code class="verbatim">}</code></td>
 </tr>
 <tr class="odd">
 <td><code>??-</code></td>
-<td><code>~</code></td>
+<td><code class="verbatim">~</code></td>
 </tr>
 </tbody>
 </table>
@@ -413,16 +432,18 @@
 <li>Undefine a macro: <code>#undef NAME</code></li>
 <li>Check if a macro is defined: <code>#ifdef</code></li>
 <li>Check if a macro is not defined: <code>#ifndef</code></li>
-<li>Conditions: <code>#if</code>, <code>#elif</code>, <code>#else</code>, <code>#endif</code></li>
-<li>Token concatenation of <code>a</code> and <code>b</code>: <code>a##b</code></li>
+<li>Conditions: <code>#if</code>, <code>#elif</code>,
+<code>#else</code>, <code>#endif</code></li>
+<li>Token concatenation of <code>a</code> and <code>b</code>:
+<code>a##b</code></li>
 <li>Stringification of <code>a</code>: <code>#a</code></li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="co">// Check if a macro is defined</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="pp">#ifdef NAME</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>  print(<span class="st">&quot;NAME is defined</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="pp">#else</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>  print(<span class="st">&quot;NAME is not defined</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a><span class="pp">#endif</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Check if a macro is defined</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef NAME</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  print<span class="op">(</span><span class="st">&quot;NAME is defined</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  print<span class="op">(</span><span class="st">&quot;NAME is not defined</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span></code></pre></div>
 <h2 id="often-ignored-error-checking">Often ignored error checking</h2>
 <ul>
 <li>Return value of malloc, printf, scanf</li>
@@ -433,11 +454,14 @@
 <ul>
 <li>Bit field packing
 <ul>
-<li><a href="https://www.gnu.org/software/c-intro-and-ref/manual/html_node/Bit-Field-Packing.html">https://www.gnu.org/software/c-intro-and-ref/manual/html_node/Bit-Field-Packing.html</a></li>
+<li><a
+href="https://www.gnu.org/software/c-intro-and-ref/manual/html_node/Bit-Field-Packing.html">https://www.gnu.org/software/c-intro-and-ref/manual/html_node/Bit-Field-Packing.html</a></li>
 </ul></li>
 <li>Div by zero gives INF for float. Segfault for int</li>
-<li>Original C compiler was 1-pass. That's why it mandated separate function declaration and definition</li>
-<li><code>malloc</code> can return pointer to a smaller memory area even if the requested amount of memory isn't available.
+<li>Original C compiler was 1-pass. That's why it mandated separate
+function declaration and definition</li>
+<li><code>malloc</code> can return pointer to a smaller memory area even
+if the requested amount of memory isn't available.
 <ul>
 <li><p>Overcommit. Kernel overcommits by default</p></li>
 <li><p>sysctl vm.overcommit<sub>memory</sub></p>
@@ -447,9 +471,11 @@ vm.overcommit_memory = 0
 </ul></li>
 </ul>
 <ul>
-<li>Heap is part of process' address space, which is part of virtual memory
+<li>Heap is part of process' address space, which is part of virtual
+memory
 <ul>
-<li>Virtual memory <em>could be thought of</em> RAM + Swap (not the same though??)</li>
+<li>Virtual memory <em>could be thought of</em> RAM + Swap (not the same
+though??)</li>
 </ul></li>
 </ul>
 </div>

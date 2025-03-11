@@ -1,1 +1,2 @@
+2025-03-11T00:00:00+00:00	Panel discussion - RSD 7 @ IITPKD | https://ju-sh.github.io/blog/panel-rsd7-iitpkd.html
 2024-12-11T00:00:00+00:00	Hardware design with open source tools | https://ju-sh.github.io/blog/open-hw.html

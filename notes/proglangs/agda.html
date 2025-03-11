@@ -46,60 +46,79 @@
 <div id="content-container">
 <h2 id="general">General</h2>
 <ul>
-<li>Absurd pattern: <code>()</code> (kinda like <code>False</code> in Coq)
+<li>Absurd pattern: <code>()</code> (kinda like <code>False</code> in
+Coq)
 <ul>
-<li><a href="https://agda.readthedocs.io/en/v2.6.1/language/function-definitions.html#absurd-patterns">https://agda.readthedocs.io/en/v2.6.1/language/function-definitions.html#absurd-patterns</a></li>
+<li><a
+href="https://agda.readthedocs.io/en/v2.6.1/language/function-definitions.html#absurd-patterns">https://agda.readthedocs.io/en/v2.6.1/language/function-definitions.html#absurd-patterns</a></li>
 </ul></li>
-<li><code>tt</code>: not exactly unit type as in Coq??. It's like the <code>I</code> constructor (of <code>True</code> type) in Coq.</li>
+<li><code>tt</code>: not exactly unit type as in Coq??. It's like the
+<code>I</code> constructor (of <code>True</code> type) in Coq.</li>
 <li>Each file should have module name same as file like in haskell.</li>
 <li>Type names should start with upper-case letter.</li>
 <li>Dotted expression</li>
 <li>No step-by-step evaluation as in Coq.</li>
-<li>The <code>public</code> in <code>open import Universes public</code> allows other module importing this module to access what's imported here
+<li>The <code>public</code> in <code>open import Universes public</code>
+allows other module importing this module to access what's imported here
 <ul>
 <li>Kind of like <code>Export Require Import</code> in Coq</li>
 </ul></li>
 </ul>
 <ul>
 <li>Records need to be opened before they can be used</li>
-<li>Open publicly so that other module importing this module can also use it.</li>
+<li>Open publicly so that other module importing this module can also
+use it.</li>
 <li>Anonymous lambda syntax: <code>λ x -&gt; body</code></li>
 </ul>
 <ul>
 <li>Mixfix notations
 <ul>
-<li>Needs space between symbols. There's no way getting around that apparently..</li>
-<li><a href="https://stackoverflow.com/questions/42725948/get-around-whitespace-requirement-for-mixfix-operators-in-agda">https://stackoverflow.com/questions/42725948/get-around-whitespace-requirement-for-mixfix-operators-in-agda</a></li>
+<li>Needs space between symbols. There's no way getting around that
+apparently..</li>
+<li><a
+href="https://stackoverflow.com/questions/42725948/get-around-whitespace-requirement-for-mixfix-operators-in-agda">https://stackoverflow.com/questions/42725948/get-around-whitespace-requirement-for-mixfix-operators-in-agda</a></li>
 <li><code>3 * 4</code> is fine, but <code>3*4</code> isn't.</li>
 </ul></li>
 <li>'Function' associates to right
 <ul>
-<li><code>A -&gt; B -&gt; C</code> is <code>A -&gt; (B -&gt; C)</code></li>
+<li><code>A -&gt; B -&gt; C</code> is
+<code>A -&gt; (B -&gt; C)</code></li>
 </ul></li>
 <li>Looks like space is needed before <code>:</code> in type annotations
 <ul>
-<li><code>zero: ℕ</code> and <code>zero :ℕ</code> give parse error, <code>zero : ℕ</code> doesn't.</li>
+<li><code>zero: ℕ</code> and <code>zero :ℕ</code> give parse error,
+<code>zero : ℕ</code> doesn't.</li>
 </ul></li>
 <li><code>Set</code> in Agda is like <code>Type</code> in Coq
 <ul>
 <li>This is commonly used as an alias: <code>Type = Set</code></li>
-<li><a href="https://proofassistants.stackexchange.com/questions/4189/why-does-agda-use-set-instead-of-type">https://proofassistants.stackexchange.com/questions/4189/why-does-agda-use-set-instead-of-type</a></li>
+<li><a
+href="https://proofassistants.stackexchange.com/questions/4189/why-does-agda-use-set-instead-of-type">https://proofassistants.stackexchange.com/questions/4189/why-does-agda-use-set-instead-of-type</a></li>
 </ul></li>
 <li>Identifiers:
 <ul>
-<li>These characters cannot be part of an identifier: <code>.;{}()@"</code></li>
-<li><a href="https://agda.readthedocs.io/en/latest/language/lexical-structure.html#keywords-and-special-symbols">https://agda.readthedocs.io/en/latest/language/lexical-structure.html#keywords-and-special-symbols</a></li>
-<li>Also, <code>_|_</code> can't be used because it is used for <code>with</code></li>
+<li>These characters cannot be part of an identifier:
+<code>.;{}()@"</code></li>
+<li><a
+href="https://agda.readthedocs.io/en/latest/language/lexical-structure.html#keywords-and-special-symbols">https://agda.readthedocs.io/en/latest/language/lexical-structure.html#keywords-and-special-symbols</a></li>
+<li>Also, <code>_|_</code> can't be used because it is used for
+<code>with</code></li>
 </ul></li>
-<li>agda seems to have tools to convert agda to haskell, but not much used and hence not too mature.
+<li>agda seems to have tools to convert agda to haskell, but not much
+used and hence not too mature.
 <ul>
-<li><a href="https://agda.readthedocs.io/en/v2.5.2/tools/compilers.html">https://agda.readthedocs.io/en/v2.5.2/tools/compilers.html</a></li>
+<li><a
+href="https://agda.readthedocs.io/en/v2.5.2/tools/compilers.html">https://agda.readthedocs.io/en/v2.5.2/tools/compilers.html</a></li>
 </ul></li>
-<li><code>--without-K</code> and <code>--safe</code> seems like not-so-good-to-use flags.
+<li><code>--without-K</code> and <code>--safe</code> seems like
+not-so-good-to-use flags.
 <ul>
-<li><code>--safe</code> option 'to avoid possible misuses of certain features which could lead to logical inconsistencies' <a href="https://arxiv.org/pdf/2005.07059.pdf">ʳ</a></li>
+<li><code>--safe</code> option 'to avoid possible misuses of certain
+features which could lead to logical inconsistencies' <a
+href="https://arxiv.org/pdf/2005.07059.pdf">ʳ</a></li>
 </ul></li>
-<li><code>--cubical</code>: implements a computational interpretation of HoTT.
+<li><code>--cubical</code>: implements a computational interpretation of
+HoTT.
 <ul>
 <li>Supports univalence.</li>
 </ul></li>
@@ -110,13 +129,15 @@
 <li><code>postulate</code>: like <code>Axiom</code> in Coq
 <ul>
 <li>Signature without definition</li>
-<li><a href="https://agda.readthedocs.io/en/v2.6.20240714/language/postulates.html">https://agda.readthedocs.io/en/v2.6.20240714/language/postulates.html</a></li>
+<li><a
+href="https://agda.readthedocs.io/en/v2.6.20240714/language/postulates.html">https://agda.readthedocs.io/en/v2.6.20240714/language/postulates.html</a></li>
 </ul></li>
 <li>Anonymous functions: <code>\ x -&gt; x</code></li>
 </ul>
 <h2 id="imports-needed">Imports needed</h2>
 <ul>
-<li>List: <code>open import Data.List using ([]; [_]; _++_; List; sum)</code></li>
+<li>List:
+<code>open import Data.List using ([]; [_]; _++_; List; sum)</code></li>
 <li>Nat: <code>open import Data.Nat using (ℕ; _+_)</code></li>
 <li>Bool: <code>open import Data.Bool</code></li>
 </ul>
@@ -124,30 +145,34 @@
 <ul>
 <li>Use <code>mutual</code> keyword</li>
 </ul>
-<p>Example from <a href="https://gist.github.com/bobatkey/72397ea77f047ab7296d17684032723e">here</a>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">mutual</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  <span class="kw">data</span> ty-ctx <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>    ε    <span class="ot">:</span> ty-ctx</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="ot">_</span>,-<span class="ot">_</span> <span class="ot">:</span> <span class="ot">(</span>Δ <span class="ot">:</span> ty-ctx<span class="ot">)</span> <span class="ot">→</span> defn Δ <span class="ot">→</span> ty-ctx</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>  <span class="kw">data</span> defn <span class="ot">:</span> ty-ctx <span class="ot">→</span> <span class="dt">Set</span> <span class="kw">where</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    synonym <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ<span class="ot">}</span> <span class="ot">→</span> ty Δ <span class="ot">→</span> defn Δ</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>    newtype <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ<span class="ot">}</span> <span class="ot">→</span> ty Δ <span class="ot">→</span> defn Δ</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>  <span class="kw">data</span> ty <span class="ot">:</span> ty-ctx <span class="ot">→</span> <span class="dt">Set</span> <span class="kw">where</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>    wk    <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ τ<span class="ot">}</span> <span class="ot">→</span> ty Δ <span class="ot">→</span> ty <span class="ot">(</span>Δ ,- τ<span class="ot">)</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>    defd  <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ τ<span class="ot">}</span> <span class="ot">→</span> ty <span class="ot">(</span>Δ ,- τ<span class="ot">)</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>    bit   <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ<span class="ot">}</span>   <span class="ot">→</span> ty Δ</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>    <span class="ot">_</span>⇒<span class="ot">_</span>  <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ<span class="ot">}</span>   <span class="ot">→</span> ty Δ <span class="ot">→</span> ty Δ <span class="ot">→</span> ty Δ</span></code></pre></div>
+<p>Example from <a
+href="https://gist.github.com/bobatkey/72397ea77f047ab7296d17684032723e">here</a>:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode agda"><code class="sourceCode agda"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mutual</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">data</span> ty-ctx <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    ε    <span class="ot">:</span> ty-ctx</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="ot">_</span>,-<span class="ot">_</span> <span class="ot">:</span> <span class="ot">(</span>Δ <span class="ot">:</span> ty-ctx<span class="ot">)</span> <span class="ot">→</span> defn Δ <span class="ot">→</span> ty-ctx</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">data</span> defn <span class="ot">:</span> ty-ctx <span class="ot">→</span> <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    synonym <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ<span class="ot">}</span> <span class="ot">→</span> ty Δ <span class="ot">→</span> defn Δ</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    newtype <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ<span class="ot">}</span> <span class="ot">→</span> ty Δ <span class="ot">→</span> defn Δ</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">data</span> ty <span class="ot">:</span> ty-ctx <span class="ot">→</span> <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    wk    <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ τ<span class="ot">}</span> <span class="ot">→</span> ty Δ <span class="ot">→</span> ty <span class="ot">(</span>Δ ,- τ<span class="ot">)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    defd  <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ τ<span class="ot">}</span> <span class="ot">→</span> ty <span class="ot">(</span>Δ ,- τ<span class="ot">)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    bit   <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ<span class="ot">}</span>   <span class="ot">→</span> ty Δ</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="ot">_</span>⇒<span class="ot">_</span>  <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>Δ<span class="ot">}</span>   <span class="ot">→</span> ty Δ <span class="ot">→</span> ty Δ <span class="ot">→</span> ty Δ</span></code></pre></div>
 <h2 id="record-type">Record type</h2>
-<p><a href="https://agda.readthedocs.io/en/latest/language/record-types.html">https://agda.readthedocs.io/en/latest/language/record-types.html</a></p>
+<p><a
+href="https://agda.readthedocs.io/en/latest/language/record-types.html">https://agda.readthedocs.io/en/latest/language/record-types.html</a></p>
 <ul>
 <li>Access field of a record by with <code>.fieldname</code></li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">record</span> RecName <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  <span class="kw">field</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>    a <span class="ot">:</span> ℕ</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    b <span class="ot">:</span> 𝔹</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode agda"><code class="sourceCode agda"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">record</span> RecName <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">field</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    a <span class="ot">:</span> ℕ</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    b <span class="ot">:</span> 𝔹</span></code></pre></div>
 <p>—</p>
 <p>'Open' a record to bring their field names into default scope.</p>
 <ul>
@@ -156,19 +181,21 @@
 <pre><code>open RecName
 </code></pre>
 <p>Example from docs:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">record</span> Pair <span class="ot">(</span>A B <span class="ot">:</span> <span class="dt">Set</span><span class="ot">)</span> <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  <span class="kw">field</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>    fst <span class="ot">:</span> A</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>    snd <span class="ot">:</span> B</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>geta <span class="ot">:</span> Pair A B</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode agda"><code class="sourceCode agda"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">record</span> Pair <span class="ot">(</span>A B <span class="ot">:</span> <span class="dt">Set</span><span class="ot">)</span> <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">field</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    fst <span class="ot">:</span> A</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    snd <span class="ot">:</span> B</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>geta <span class="ot">:</span> Pair A B</span></code></pre></div>
 <h2 id="levels">Levels</h2>
 <ul>
 <li>Type: <code>Level</code>
 <ul>
 <li><code>lzero: Level</code>: lowest level</li>
 <li><code>lsuc: Level -&gt; Level</code>: Next level</li>
-<li><code>_⊔_: Level -&gt; Level -&gt; Level</code>: Least upper bound of 2 levels</li>
+<li><code>_⊔_: Level -&gt; Level -&gt; Level</code>: Least upper bound
+of 2 levels</li>
 </ul></li>
 <li><code>Set</code>: Like <code>Type</code> in Coq
 <ul>
@@ -178,12 +205,15 @@
 </ul></li>
 <li><code>0ℓ</code>: Level <code>zero</code>
 <ul>
-<li><a href="https://agda.github.io/agda-stdlib/master/Level.html#521">https://agda.github.io/agda-stdlib/master/Level.html#521</a></li>
+<li><a
+href="https://agda.github.io/agda-stdlib/master/Level.html#521">https://agda.github.io/agda-stdlib/master/Level.html#521</a></li>
 </ul></li>
 </ul>
-<p>Example from <a href="https://arxiv.org/pdf/2005.07059.pdf">docs</a>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">data</span> <span class="ot">_</span>×<span class="ot">_</span> <span class="ot">{</span>n m <span class="ot">:</span> Level<span class="ot">}</span> <span class="ot">(</span>A <span class="ot">:</span> <span class="dt">Set</span> n<span class="ot">)</span> <span class="ot">(</span>B <span class="ot">:</span> <span class="dt">Set</span> m<span class="ot">)</span> <span class="ot">:</span> <span class="dt">Set</span> <span class="ot">(</span>n ⊔ m<span class="ot">)</span> <span class="kw">where</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>   <span class="ot">_</span>,<span class="ot">_</span> <span class="ot">:</span> A <span class="ot">→</span> B <span class="ot">→</span> A × B</span></code></pre></div>
+<p>Example from <a
+href="https://arxiv.org/pdf/2005.07059.pdf">docs</a>:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode agda"><code class="sourceCode agda"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="ot">_</span>×<span class="ot">_</span> <span class="ot">{</span>n m <span class="ot">:</span> Level<span class="ot">}</span> <span class="ot">(</span>A <span class="ot">:</span> <span class="dt">Set</span> n<span class="ot">)</span> <span class="ot">(</span>B <span class="ot">:</span> <span class="dt">Set</span> m<span class="ot">)</span> <span class="ot">:</span> <span class="dt">Set</span> <span class="ot">(</span>n ⊔ m<span class="ot">)</span> <span class="kw">where</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   <span class="ot">_</span>,<span class="ot">_</span> <span class="ot">:</span> A <span class="ot">→</span> B <span class="ot">→</span> A × B</span></code></pre></div>
 <p>Example import:</p>
 <ul>
 <li><code>open import Level using (0ℓ) renaming (suc to lsuc)</code></li>
@@ -191,21 +221,26 @@
 <p>Kinds</p>
 <ul>
 <li><code>Setω</code>: Like type of types</li>
-<li><code>(n : Level) → Set n</code> <em>is</em> a type, but it doesn't have a type without <code>Setω</code>.</li>
-<li><a href="https://agda.readthedocs.io/en/v2.6.0/language/universe-levels.html#expressions-of-kind-set">https://agda.readthedocs.io/en/v2.6.0/language/universe-levels.html#expressions-of-kind-set</a></li>
+<li><code>(n : Level) → Set n</code> <em>is</em> a type, but it doesn't
+have a type without <code>Setω</code>.</li>
+<li><a
+href="https://agda.readthedocs.io/en/v2.6.0/language/universe-levels.html#expressions-of-kind-set">https://agda.readthedocs.io/en/v2.6.0/language/universe-levels.html#expressions-of-kind-set</a></li>
 </ul>
 <h2 id="cubical">Cubical</h2>
 <ul>
 <li>Needs <code>{-# OPTIONS --cubical #-}</code></li>
-<li><code>--without-k</code> disables Streicher's axiom (aka Axiom K), "which we don't want for univalent mathematics"
+<li><code>--without-k</code> disables Streicher's axiom (aka Axiom K),
+"which we don't want for univalent mathematics"
 <ul>
 <li>Makes it constructive-only ??</li>
 </ul></li>
 <li>A library that needs to be installed separately
 <ul>
-<li><a href="https://github.com/agda/cubical">https://github.com/agda/cubical</a></li>
+<li><a
+href="https://github.com/agda/cubical">https://github.com/agda/cubical</a></li>
 </ul></li>
-<li>Installation needed <code>export LC_ALL=C.UTF-8</code> (locale found with <code>locale -a</code>) beforehand.
+<li>Installation needed <code>export LC_ALL=C.UTF-8</code> (locale found
+with <code>locale -a</code>) beforehand.
 <ul>
 <li>C in C.UTF-8 stands for computer</li>
 </ul></li>
@@ -237,7 +272,7 @@
 <td>ℓ-suc</td>
 </tr>
 <tr class="odd">
-<td><span class="underline">⊔</span></td>
+<td><u>⊔</u></td>
 <td>ℓ-max</td>
 </tr>
 </tbody>
@@ -245,15 +280,18 @@
 <p>From <code>Cubical/Core/Primitives.agda</code>.</p>
 <h3 id="interval-type-i">Interval type (<code>I</code>)</h3>
 <ul>
-<li><code>I : IUniv</code>, where <code>IUniv</code> is a special sort (used to be <code>Setω</code> in earlier versions of cubical ??)
+<li><code>I : IUniv</code>, where <code>IUniv</code> is a special sort
+(used to be <code>Setω</code> in earlier versions of cubical ??)
 <ul>
 <li>We cannot pattern match on <code>I</code> values</li>
 <li>Kind of like how we can't pattern match on functions</li>
-<li>A special type. Only type for which transport operation isn't there ??</li>
+<li>A special type. Only type for which transport operation isn't there
+??</li>
 </ul></li>
 <li><code>i : I</code> is indicative of <code>i ∈ [0.0, 1.0]</code>
 <ul>
-<li>Where 0.0 (<code>i0</code>) and 1.0 (<code>i1</code>) are the end points of the interval</li>
+<li>Where 0.0 (<code>i0</code>) and 1.0 (<code>i1</code>) are the end
+points of the interval</li>
 </ul></li>
 <li><code>neg i</code>: symmetry
 <ul>
@@ -271,61 +309,78 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>min ia ib</code></td>
-<td><code>ia ∧ ib</code></td>
+<td><code class="verbatim">min ia ib</code></td>
+<td><code class="verbatim">ia ∧ ib</code></td>
 </tr>
 <tr class="even">
-<td><code>max ia ib</code></td>
-<td><code>ia ∨ ib</code></td>
+<td><code class="verbatim">max ia ib</code></td>
+<td><code class="verbatim">ia ∨ ib</code></td>
 </tr>
 <tr class="odd">
-<td><code>neg i</code></td>
-<td><code>~i</code></td>
+<td><code class="verbatim">neg i</code></td>
+<td><code class="verbatim">~i</code></td>
 </tr>
 </tbody>
 </table>
 <h3 id="path-type">Path type</h3>
 <ul>
-<li>Path over a type <code>A</code> is represented with a function of type <code>I -&gt; A</code></li>
-<li><code>Path A a b</code>: Type of paths between <code>a</code> and <code>b</code>
+<li>Path over a type <code>A</code> is represented with a function of
+type <code>I -&gt; A</code></li>
+<li><code>Path A a b</code>: Type of paths between <code>a</code> and
+<code>b</code>
 <ul>
 <li>where <code>A : Type</code>, <code>a b : A</code></li>
 </ul></li>
 </ul>
-<p>Equality <code>x ≡ y</code> 'consists of a path <code>p : I -&gt; A</code> such that <code>p i0 == x</code> and <code>p i1 == y</code>.</p>
+<p>Equality <code>x ≡ y</code> 'consists of a path
+<code>p : I -&gt; A</code> such that <code>p i0 == x</code> and
+<code>p i1 == y</code>.</p>
 <ul>
 <li>where <code>==</code> is definitional equality</li>
 </ul>
-<p><code>PathP</code> is the primitive notion, not <code>Path</code> (<code>_≡_</code>)</p>
+<p><code>PathP</code> is the primitive notion, not <code>Path</code>
+(<code>_≡_</code>)</p>
 <ul>
 <li>Defined as a <code>postulate</code>.</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">postulate</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  PathP <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>ℓ<span class="ot">}</span> <span class="ot">(</span>A <span class="ot">:</span> I <span class="ot">-&gt;</span> <span class="dt">Set</span> ℓ<span class="ot">)</span> <span class="ot">-&gt;</span> A i0 <span class="ot">-&gt;</span> A i1 <span class="ot">-&gt;</span> <span class="dt">Set</span> ℓ</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode agda"><code class="sourceCode agda"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">postulate</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  PathP <span class="ot">:</span> <span class="ot">∀</span> <span class="ot">{</span>ℓ<span class="ot">}</span> <span class="ot">(</span>A <span class="ot">:</span> I <span class="ot">-&gt;</span> <span class="dt">Set</span> ℓ<span class="ot">)</span> <span class="ot">-&gt;</span> A i0 <span class="ot">-&gt;</span> A i1 <span class="ot">-&gt;</span> <span class="dt">Set</span> ℓ</span></code></pre></div>
 <h3 id="resources">Resources</h3>
 <ul>
-<li><a href="https://martinescardo.github.io/HoTT-UF-in-Agda-Lecture-Notes/">https://martinescardo.github.io/HoTT-UF-in-Agda-Lecture-Notes/</a> (Doesn't use cubical, but builds something similar from scratch)</li>
-<li><a href="https://nextjournal.com/agdacubicold/intro">https://nextjournal.com/agdacubicold/intro</a></li>
+<li><a
+href="https://martinescardo.github.io/HoTT-UF-in-Agda-Lecture-Notes/">https://martinescardo.github.io/HoTT-UF-in-Agda-Lecture-Notes/</a>
+(Doesn't use cubical, but builds something similar from scratch)</li>
+<li><a
+href="https://nextjournal.com/agdacubicold/intro">https://nextjournal.com/agdacubicold/intro</a></li>
 </ul>
 <h2 id="standard-library">Standard library</h2>
 <h3 id="installation">Installation</h3>
-<p>WARNING!: Each agda version will work with only a specific version of standard-library.</p>
+<p>WARNING!: Each agda version will work with only a specific version of
+standard-library.</p>
 <ul>
 <li>Example: agda 2.7.0 works with standard-library 2.1.1</li>
 </ul>
 <p>Standard library need to be installed separately.</p>
 <ul>
-<li><a href="https://agda.readthedocs.io/en/latest/tools/package-system.html">https://agda.readthedocs.io/en/latest/tools/package-system.html</a></li>
-<li><a href="https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/agda.section.md">https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/agda.section.md</a></li>
+<li><a
+href="https://agda.readthedocs.io/en/latest/tools/package-system.html">https://agda.readthedocs.io/en/latest/tools/package-system.html</a></li>
+<li><a
+href="https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/agda.section.md">https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/agda.section.md</a></li>
 </ul>
 <p>—</p>
 <ul>
-<li><code>~/.agda/defaults</code>: list of agda libraries loaded by default
+<li><code class="verbatim">~/.agda/defaults</code>: list of agda
+libraries loaded by default
 <ul>
-<li>All these library names must be mentioned in <code>~/.agda/libraries</code></li>
+<li>All these library names must be mentioned in <code
+class="verbatim">~/.agda/libraries</code></li>
 </ul></li>
-<li><code>~/.agda/libraries</code>: list of paths complete paths to agda-lib files of packages (including the agda-lib file name with extension)</li>
-<li>Default <code>AGDA_DIR</code> in unix: <code>~/.agda</code></li>
+<li><code class="verbatim">~/.agda/libraries</code>: list of paths
+complete paths to agda-lib files of packages (including the agda-lib
+file name with extension)</li>
+<li>Default <code>AGDA_DIR</code> in unix: <code
+class="verbatim">~/.agda</code></li>
 </ul>
 <pre><code>-- ~/.agda/libraries
 --
@@ -340,133 +395,164 @@
 <li><code>_&lt;ᵇ_</code>: a boolean function</li>
 <li><code>_&lt;_</code>: in 'prop-world'</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">open</span> <span class="kw">import</span> Data<span class="ot">.</span>Bool</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="kw">open</span> <span class="kw">import</span> Data<span class="ot">.</span>Nat</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>b <span class="ot">:</span> Bool</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>b <span class="ot">=</span> Data<span class="ot">.</span>Nat<span class="ot">._</span>&lt;ᵇ<span class="ot">_</span> <span class="dv">1</span> <span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode agda"><code class="sourceCode agda"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> <span class="kw">import</span> Data<span class="ot">.</span>Bool</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> <span class="kw">import</span> Data<span class="ot">.</span>Nat</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>b <span class="ot">:</span> Bool</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> Data<span class="ot">.</span>Nat<span class="ot">._</span>&lt;ᵇ<span class="ot">_</span> <span class="dv">1</span> <span class="dv">2</span></span></code></pre></div>
 <h3 id="misc">Misc</h3>
 <ul>
-<li>Empty type: <a href="https://agda.github.io/agda-stdlib/v2.1/Data.Empty.html">https://agda.github.io/agda-stdlib/v2.1/Data.Empty.html</a></li>
+<li>Empty type: <a
+href="https://agda.github.io/agda-stdlib/v2.1/Data.Empty.html">https://agda.github.io/agda-stdlib/v2.1/Data.Empty.html</a></li>
 </ul>
 <h2 id="extraction">'Extraction'</h2>
-<p><a href="https://agda.readthedocs.io/en/latest/language/foreign-function-interface.html">https://agda.readthedocs.io/en/latest/language/foreign-function-interface.html</a></p>
+<p><a
+href="https://agda.readthedocs.io/en/latest/language/foreign-function-interface.html">https://agda.readthedocs.io/en/latest/language/foreign-function-interface.html</a></p>
 <ul>
 <li>'Extraction' to haskell and javascript possible by default.</li>
 <li>Compile with <code>agda --compile input.agda</code>
 <ul>
-<li>Output Haskell source will be in a separate directory, but built executable will be at same level as input agda file.</li>
+<li>Output Haskell source will be in a separate directory, but built
+executable will be at same level as input agda file.</li>
 </ul></li>
 <li>Compile to javascript with: <code>agda --js input.agda</code></li>
 <li>Looks like work is also being done to have a rust backend…
 <ul>
-<li><a href="https://github.com/omelkonian/agda2rust">https://github.com/omelkonian/agda2rust</a></li>
+<li><a
+href="https://github.com/omelkonian/agda2rust">https://github.com/omelkonian/agda2rust</a></li>
 </ul></li>
 </ul>
 <p>—</p>
 <ul>
-<li>For functions: <code>{-# COMPILE GHC &lt;Name&gt; as &lt;HaskellName&gt; #-}</code></li>
-<li>Useful for agda postulates: <code>{-# COMPILE GHC &lt;Name&gt; = type &lt;HaskellType&gt; #-}</code>
+<li>For functions:
+<code>{-# COMPILE GHC &lt;Name&gt; as &lt;HaskellName&gt; #-}</code></li>
+<li>Useful for agda postulates:
+<code>{-# COMPILE GHC &lt;Name&gt; = type &lt;HaskellType&gt; #-}</code>
 <ul>
 <li>ie, for opaque types</li>
 </ul></li>
-<li>For types: <code>{-# COMPILE GHC &lt;Name&gt; = data &lt;HaskellData&gt; (&lt;HsCon1&gt; | .. | &lt;HsConN&gt;) #-}</code>
+<li>For types:
+<code>{-# COMPILE GHC &lt;Name&gt; = data &lt;HaskellData&gt; (&lt;HsCon1&gt; | .. | &lt;HsConN&gt;) #-}</code>
 <ul>
-<li>Provide a mapping from agda type to haskell type along with that of their constructors.</li>
+<li>Provide a mapping from agda type to haskell type along with that of
+their constructors.</li>
 <li>Eg: <code>{-# COMPILE GHC Unit = data () (()) #-}</code></li>
 </ul></li>
-<li>For simple textual replacement: <code>{-# COMPILE GHC &lt;Name&gt; = &lt;HaskellCode&gt; #-}</code>
+<li>For simple textual replacement:
+<code>{-# COMPILE GHC &lt;Name&gt; = &lt;HaskellCode&gt; #-}</code>
 <ul>
-<li>Eg: <code>{-# COMPILE GHC putStr = type Data.Text.IO.putStr #-}</code></li>
+<li>Eg:
+<code>{-# COMPILE GHC putStr = type Data.Text.IO.putStr #-}</code></li>
 </ul></li>
 <li>Expose agda definition to haskell code
 <ul>
 <li><code>{-# COMPILE GHC agdaName as agdaNameInHaskell #-}</code></li>
 </ul></li>
-<li>For javascript extraction, we use <code>JS</code> instead of <code>GHC</code>.</li>
+<li>For javascript extraction, we use <code>JS</code> instead of
+<code>GHC</code>.</li>
 <li>Inline haskell: <code>{-# FOREIGN GHC import Text.Parsec #-}</code>
 <ul>
-<li><a href="https://agda.readthedocs.io/en/latest/language/foreign-function-interface.html#the-foreign-pragma">https://agda.readthedocs.io/en/latest/language/foreign-function-interface.html#the-foreign-pragma</a></li>
+<li><a
+href="https://agda.readthedocs.io/en/latest/language/foreign-function-interface.html#the-foreign-pragma">https://agda.readthedocs.io/en/latest/language/foreign-function-interface.html#the-foreign-pragma</a></li>
 </ul></li>
 </ul>
-<p>A complete example (modified from the <a href="https://agda.readthedocs.io/en/v2.5.2/tools/compilers.html#example">one</a> at an older version of docs):</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="kw">module</span> HelloWorld <span class="kw">where</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="pp">{-# FOREIGN GHC import Data.Text.IO #-}</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="kw">data</span> Unit <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a>  unit <span class="ot">:</span> Unit</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="pp">{-# COMPILE GHC Unit = data () (()) #-}</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a><span class="kw">postulate</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a>  String <span class="ot">:</span> <span class="dt">Set</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a><span class="pp">{-# BUILTIN STRING String #-}</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a><span class="kw">postulate</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a>  IO <span class="ot">:</span> <span class="dt">Set</span> <span class="ot">→</span> <span class="dt">Set</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true"></a><span class="pp">{-# BUILTIN IO IO #-}</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true"></a><span class="pp">{-# COMPILE GHC IO = type IO #-}</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true"></a></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true"></a><span class="kw">postulate</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true"></a>  putStr <span class="ot">:</span> String <span class="ot">→</span> IO Unit</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true"></a></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true"></a><span class="pp">{-# COMPILE GHC putStr = Data.Text.IO.putStr #-}</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true"></a></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true"></a>main <span class="ot">:</span> IO Unit</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true"></a>main <span class="ot">=</span> putStr <span class="st">&quot;Hello, World!&quot;</span></span></code></pre></div>
+<p>A complete example (modified from the <a
+href="https://agda.readthedocs.io/en/v2.5.2/tools/compilers.html#example">one</a>
+at an older version of docs):</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode agda"><code class="sourceCode agda"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> HelloWorld <span class="kw">where</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="pp">{-# FOREIGN GHC import Data.Text.IO #-}</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> Unit <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  unit <span class="ot">:</span> Unit</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="pp">{-# COMPILE GHC Unit = data () (()) #-}</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="kw">postulate</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  String <span class="ot">:</span> <span class="dt">Set</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="pp">{-# BUILTIN STRING String #-}</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="kw">postulate</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  IO <span class="ot">:</span> <span class="dt">Set</span> <span class="ot">→</span> <span class="dt">Set</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="pp">{-# BUILTIN IO IO #-}</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="pp">{-# COMPILE GHC IO = type IO #-}</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="kw">postulate</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  putStr <span class="ot">:</span> String <span class="ot">→</span> IO Unit</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="pp">{-# COMPILE GHC putStr = Data.Text.IO.putStr #-}</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>main <span class="ot">:</span> IO Unit</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> putStr <span class="st">&quot;Hello, World!&quot;</span></span></code></pre></div>
 <p>—</p>
-<p>Compiled Haskell will be in a directory named <code>MAlonzo/</code>:</p>
+<p>Compiled Haskell will be in a directory named
+<code>MAlonzo/</code>:</p>
 <ul>
 <li>MAlonzo is apparently another name for GHC back-end of agda
 <ul>
 <li>Stands for Modified Alonzo</li>
 </ul></li>
-<li><a href="https://wiki.portal.chalmers.se/agda/Docs/MAlonzo">https://wiki.portal.chalmers.se/agda/Docs/MAlonzo</a></li>
-<li><a href="https://www.reddit.com/r/agda/comments/46dwg7/malonzo/">https://www.reddit.com/r/agda/comments/46dwg7/malonzo/</a></li>
-<li>I guess this is the original Alonzo: <a href="https://www.mimuw.edu.pl/~ben/Papers/TYPES07-alonzo.pdf">https://www.mimuw.edu.pl/~ben/Papers/TYPES07-alonzo.pdf</a>
+<li><a
+href="https://wiki.portal.chalmers.se/agda/Docs/MAlonzo">https://wiki.portal.chalmers.se/agda/Docs/MAlonzo</a></li>
+<li><a
+href="https://www.reddit.com/r/agda/comments/46dwg7/malonzo/">https://www.reddit.com/r/agda/comments/46dwg7/malonzo/</a></li>
+<li>I guess this is the original Alonzo: <a
+href="https://www.mimuw.edu.pl/~ben/Papers/TYPES07-alonzo.pdf">https://www.mimuw.edu.pl/~ben/Papers/TYPES07-alonzo.pdf</a>
 <ul>
-<li>'Haskell programs are close to Curry style lambda-calculus. On the other hand, Agda programs are closer to Church style'</li>
+<li>'Haskell programs are close to Curry style lambda-calculus. On the
+other hand, Agda programs are closer to Church style'</li>
 </ul></li>
 </ul>
 <h2 id="pragmas">Pragmas</h2>
 <p>Special comments.</p>
 <p>Example:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="pp">{-# BUILTIN NATURAL ℕ #-}</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode agda"><code class="sourceCode agda"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="pp">{-# BUILTIN NATURAL ℕ #-}</span></span></code></pre></div>
 <p>agda</p>
-<p>associates numbers with elements of the <code>ℕ</code> type. So 2 would implicitly mean <code>suc (suc zero)</code>.</p>
-<p>See: <a href="https://plfa.github.io/Naturals/#a-pragma">https://plfa.github.io/Naturals/#a-pragma</a></p>
+<p>associates numbers with elements of the <code>ℕ</code> type. So 2
+would implicitly mean <code>suc (suc zero)</code>.</p>
+<p>See: <a
+href="https://plfa.github.io/Naturals/#a-pragma">https://plfa.github.io/Naturals/#a-pragma</a></p>
 <p>—</p>
 <ul>
 <li><code>{-# BUILTIN NATURAL ℕ #-}</code>
 <ul>
 <li>Informs agda that ℕ corresponds to natural numbers</li>
-<li>Allows to use numbers instead of constructors (eg: 0 instead of <code>zero</code>)</li>
-<li>Internally allows use of haskell <code>Int</code> (log₂ space) instead of unary nat.</li>
+<li>Allows to use numbers instead of constructors (eg: 0 instead of
+<code>zero</code>)</li>
+<li>Internally allows use of haskell <code>Int</code> (log₂ space)
+instead of unary nat.</li>
 </ul></li>
 <li><code>{-# OPTIONS --exact-split #-}</code>
 <ul>
 <li>Don't allow case overlaps</li>
 </ul></li>
 </ul>
-<h2 id="space-matters-a-set-vs-a-set">Space matters: <code>a : Set</code> vs <code>a: Set</code></h2>
-<p>The space matters. Looks like if we do <code>a: Set</code>, <code>a:</code> will be considered a name.</p>
+<h2 id="space-matters-a-set-vs-a-set">Space matters:
+<code>a : Set</code> vs <code>a: Set</code></h2>
+<p>The space matters. Looks like if we do <code>a: Set</code>,
+<code>a:</code> will be considered a name.</p>
 <p>For example, this works:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="kw">data</span> Type <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>  Nat <span class="ot">:</span> Type</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode agda"><code class="sourceCode agda"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> Type <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  Nat <span class="ot">:</span> Type</span></code></pre></div>
 <p>But this doesn't:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="kw">data</span> Type: <span class="dt">Set</span> <span class="kw">where</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>  Nat <span class="ot">:</span> Type</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="co">{-</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a><span class="co">Missing type signature for data definition Type:</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a><span class="co">when scope checking the declaration</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a><span class="co">  data Type: Set where</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a><span class="co">    Nat : Type</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a><span class="co"> -}</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode agda"><code class="sourceCode agda"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> Type: <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  Nat <span class="ot">:</span> Type</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">{-</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">Missing type signature for data definition Type:</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">when scope checking the declaration</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">  data Type: Set where</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Nat : Type</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"> -}</span></span></code></pre></div>
 <h2 id="coq-vs-agda">Coq vs agda</h2>
-<p><a href="https://wiki.portal.chalmers.se/agda/Main/AgdaVsCoq">https://wiki.portal.chalmers.se/agda/Main/AgdaVsCoq</a></p>
+<p><a
+href="https://wiki.portal.chalmers.se/agda/Main/AgdaVsCoq">https://wiki.portal.chalmers.se/agda/Main/AgdaVsCoq</a></p>
 <p>False type:</p>
 <ul>
 <li>Agda: <code>data 𝟘 : Type where</code></li>
@@ -510,28 +596,36 @@
 </tbody>
 </table>
 <h2 id="coq-like-notations">Coq-like notations</h2>
-<p>Other than <a href="https://agda.readthedocs.io/en/latest/language/mixfix-operators.html#mixfix-operators">mixfix operators</a>, <a href="https://agda.readthedocs.io/en/latest/language/syntax-declarations.html">syntax declarations</a> can help.</p>
+<p>Other than <a
+href="https://agda.readthedocs.io/en/latest/language/mixfix-operators.html#mixfix-operators">mixfix
+operators</a>, <a
+href="https://agda.readthedocs.io/en/latest/language/syntax-declarations.html">syntax
+declarations</a> can help.</p>
 <p>—</p>
 <ul>
-<li>Syntax declarations must be linear. ie, each argument can be used exactly once.</li>
+<li>Syntax declarations must be linear. ie, each argument can be used
+exactly once.</li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="kw">syntax</span> wrong x <span class="ot">=</span> x + x</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="co">-- Eg.agda:16,22: Malformed syntax declaration: syntax must use holes exactly once</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a><span class="co">-- x&lt;ERROR&gt;</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a><span class="kw">syntax</span> wrong x <span class="ot">=</span> id</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a><span class="co">-- Eg.agda:16,18: Malformed syntax declaration: syntax must use holes exactly once</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a><span class="co">-- id&lt;ERROR&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode agda"><code class="sourceCode agda"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">syntax</span> wrong x <span class="ot">=</span> x + x</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Eg.agda:16,22: Malformed syntax declaration: syntax must use holes exactly once</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- x&lt;ERROR&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="kw">syntax</span> wrong x <span class="ot">=</span> id</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- Eg.agda:16,18: Malformed syntax declaration: syntax must use holes exactly once</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- id&lt;ERROR&gt;</span></span></code></pre></div>
 <ul>
 <li>Syntax declarations cannot have holes.</li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="kw">syntax</span> #<span class="ot">_</span> f <span class="ot">=</span> Atom f</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a><span class="co">-- Eg.agda:17,20: Syntax declarations are allowed only for simple names (without holes)</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a><span class="co">-- f&lt;ERROR&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode agda"><code class="sourceCode agda"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">syntax</span> #<span class="ot">_</span> f <span class="ot">=</span> Atom f</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Eg.agda:17,20: Syntax declarations are allowed only for simple names (without holes)</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- f&lt;ERROR&gt;</span></span></code></pre></div>
 <p>—</p>
-<p>For example, a unary operator in agda-unimath<a href="https://github.com/UniMath/agda-unimath/blob/3ae1f7c6c18a894f9d8d54a51f9b26c670347694/src/foundation-core/negation.lagda.md?plain=1#L23">ˡ</a>:</p>
+<p>For example, a unary operator in agda-unimath<a
+href="https://github.com/UniMath/agda-unimath/blob/3ae1f7c6c18a894f9d8d54a51f9b26c670347694/src/foundation-core/negation.lagda.md?plain=1#L23">ˡ</a>:</p>
 <pre><code>infix 25 ¬_
 
 ¬_ : {l : Level} → UU l → UU l
@@ -539,18 +633,22 @@
 </code></pre>
 <p>See:</p>
 <ul>
-<li>An example: <a href="https://unimath.github.io/agda-unimath/MIXFIX-OPERATORS.html">https://unimath.github.io/agda-unimath/MIXFIX-OPERATORS.html</a></li>
+<li>An example: <a
+href="https://unimath.github.io/agda-unimath/MIXFIX-OPERATORS.html">https://unimath.github.io/agda-unimath/MIXFIX-OPERATORS.html</a></li>
 </ul>
 <h2 id="precedence">Precedence</h2>
 <p>Lower precedence value =&gt; higher precedence (like in Coq)</p>
 <ul>
 <li><code>infixl</code>: left associativity</li>
 <li><code>infixr</code>: right associativity</li>
-<li><code>infix</code>: no associativity (parenthesis always needed)</li>
+<li><code>infix</code>: no associativity (parenthesis always
+needed)</li>
 </ul>
-<p>Associativity of mixfix operators can be definied with one of the above three.</p>
+<p>Associativity of mixfix operators can be definied with one of the
+above three.</p>
 <h2 id="erasure">Erasure</h2>
-<p><a href="https://agda.readthedocs.io/en/v2.6.3/language/runtime-irrelevance.html">https://agda.readthedocs.io/en/v2.6.3/language/runtime-irrelevance.html</a></p>
+<p><a
+href="https://agda.readthedocs.io/en/v2.6.3/language/runtime-irrelevance.html">https://agda.readthedocs.io/en/v2.6.3/language/runtime-irrelevance.html</a></p>
 <ul>
 <li><p>Needs <code>--erasure</code> option</p></li>
 <li><p>Syntax: <code>@0</code></p></li>
@@ -566,33 +664,37 @@ BMatrix2D r c = Vec (Vec Bool c) r
 <h2 id="type-class-instance">'Type class instance'</h2>
 <p>Type classes are just records.</p>
 <ul>
-<li><a href="https://agda.readthedocs.io/en/latest/language/instance-arguments.html#declaring-instances">https://agda.readthedocs.io/en/latest/language/instance-arguments.html#declaring-instances</a></li>
+<li><a
+href="https://agda.readthedocs.io/en/latest/language/instance-arguments.html#declaring-instances">https://agda.readthedocs.io/en/latest/language/instance-arguments.html#declaring-instances</a></li>
 </ul>
-<div class="sourceCode" id="cb17"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="kw">open</span> <span class="kw">import</span> Data<span class="ot">.</span>List <span class="kw">using</span> <span class="ot">(</span>List<span class="ot">;</span> []<span class="ot">;</span> <span class="ot">_</span>++<span class="ot">_)</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a><span class="kw">record</span> Monoid <span class="ot">(</span>A <span class="ot">:</span> <span class="dt">Set</span><span class="ot">)</span> <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a>  <span class="kw">field</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a>    mempty <span class="ot">:</span> A </span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true"></a>    <span class="ot">_</span>&lt;&gt;<span class="ot">_</span> <span class="ot">:</span> A <span class="ot">-&gt;</span> A <span class="ot">-&gt;</span> A</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true"></a><span class="co">-- Make mempty and _&lt;&gt;_ available</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true"></a><span class="kw">open</span> Monoid <span class="ot">{{...}}</span> <span class="kw">public</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true"></a></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true"></a><span class="kw">instance</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true"></a>  ListMonoid <span class="ot">:</span> <span class="ot">{</span>A <span class="ot">:</span> <span class="dt">Set</span><span class="ot">}</span> <span class="ot">-&gt;</span> Monoid <span class="ot">(</span>List A<span class="ot">)</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true"></a>  ListMonoid <span class="ot">=</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true"></a>    <span class="kw">record</span> <span class="ot">{</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true"></a>      mempty <span class="ot">=</span> []<span class="ot">;</span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true"></a>      <span class="ot">_</span>&lt;&gt;<span class="ot">_</span> <span class="ot">=</span> <span class="ot">_</span>++<span class="ot">_</span></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true"></a>    <span class="ot">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode agda"><code class="sourceCode agda"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> <span class="kw">import</span> Data<span class="ot">.</span>List <span class="kw">using</span> <span class="ot">(</span>List<span class="ot">;</span> []<span class="ot">;</span> <span class="ot">_</span>++<span class="ot">_)</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">record</span> Monoid <span class="ot">(</span>A <span class="ot">:</span> <span class="dt">Set</span><span class="ot">)</span> <span class="ot">:</span> <span class="dt">Set</span> <span class="kw">where</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">field</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    mempty <span class="ot">:</span> A </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="ot">_</span>&lt;&gt;<span class="ot">_</span> <span class="ot">:</span> A <span class="ot">-&gt;</span> A <span class="ot">-&gt;</span> A</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Make mempty and _&lt;&gt;_ available</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> Monoid <span class="ot">{{...}}</span> <span class="kw">public</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  ListMonoid <span class="ot">:</span> <span class="ot">{</span>A <span class="ot">:</span> <span class="dt">Set</span><span class="ot">}</span> <span class="ot">-&gt;</span> Monoid <span class="ot">(</span>List A<span class="ot">)</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  ListMonoid <span class="ot">=</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">record</span> <span class="ot">{</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>      mempty <span class="ot">=</span> []<span class="ot">;</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>      <span class="ot">_</span>&lt;&gt;<span class="ot">_</span> <span class="ot">=</span> <span class="ot">_</span>++<span class="ot">_</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="ot">}</span></span></code></pre></div>
 <ul>
-<li><code>private instance</code>: limit the scope of instance to current module</li>
+<li><code>private instance</code>: limit the scope of instance to
+current module</li>
 </ul>
 <h2 id="rewriting">Rewriting</h2>
 <ul>
 <li>Similar to automatic rewrites of Coq
 <ul>
-<li>Adds some definitions as rules that are automatically?? used for rewrites.</li>
+<li>Adds some definitions as rules that are automatically?? used for
+rewrites.</li>
 </ul></li>
 <li>Needs <code>{-# OPTIONS --rewriting #-}</code></li>
 <li>Done via <code>REWRITE</code> pragma.
@@ -602,8 +704,10 @@ BMatrix2D r c = Vec (Vec Bool c) r
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://agda.readthedocs.io/en/latest/language/rewriting.html">https://agda.readthedocs.io/en/latest/language/rewriting.html</a></li>
-<li><a href="https://jesper.sikanda.be/posts/hack-your-type-theory.html">https://jesper.sikanda.be/posts/hack-your-type-theory.html</a></li>
+<li><a
+href="https://agda.readthedocs.io/en/latest/language/rewriting.html">https://agda.readthedocs.io/en/latest/language/rewriting.html</a></li>
+<li><a
+href="https://jesper.sikanda.be/posts/hack-your-type-theory.html">https://jesper.sikanda.be/posts/hack-your-type-theory.html</a></li>
 </ul>
 <h2 id="emacs">Emacs</h2>
 <ul>
@@ -617,11 +721,13 @@ BMatrix2D r c = Vec (Vec Bool c) r
 <li><p>C-c C-Space: Finish hole after filling it</p></li>
 <li><p>C-c C-l: Type check buffer</p>
 <ul>
-<li>Write an <code>?</code> and do <code>C-c C-l</code> to insert a hole</li>
+<li>Write an <code>?</code> and do <code>C-c C-l</code> to insert a
+hole</li>
 </ul></li>
 <li><p>C-c C-r: Refine</p>
 <ul>
-<li>Can be used to introduce a lambda abstraction if it's obvious from the type.</li>
+<li>Can be used to introduce a lambda abstraction if it's obvious from
+the type.</li>
 </ul></li>
 <li><p>Right click on a typechecked part to go to its definiton</p></li>
 <li><p>Find type of an expression: C-c C-d</p></li>
@@ -630,7 +736,8 @@ BMatrix2D r c = Vec (Vec Bool c) r
 <p>—</p>
 <ul>
 <li><code>{!!}</code> can be used to place a hole manually</li>
-<li>Demand to fill a hole with an expression using <code>C-c C-SPC</code></li>
+<li>Demand to fill a hole with an expression using
+<code>C-c C-SPC</code></li>
 </ul>
 <p>—</p>
 <ul>
@@ -650,7 +757,8 @@ BMatrix2D r c = Vec (Vec Bool c) r
 <li>C-c C-,: Show goal and context</li>
 <li>C-c C-t: Show goal</li>
 </ul>
-<p><a href="https://agda.readthedocs.io/en/latest/tools/emacs-mode.html#keybindings">https://agda.readthedocs.io/en/latest/tools/emacs-mode.html#keybindings</a></p>
+<p><a
+href="https://agda.readthedocs.io/en/latest/tools/emacs-mode.html#keybindings">https://agda.readthedocs.io/en/latest/tools/emacs-mode.html#keybindings</a></p>
 <h3 id="todo">Todo</h3>
 <ul>
 <li>Find type of name under cursor</li>
@@ -663,12 +771,15 @@ BMatrix2D r c = Vec (Vec Bool c) r
 </ul>
 <p>—</p>
 <ul>
-<li>M-x agda-input-show-translations: Show latex codes for unicode symbols</li>
-<li>Show how to input a unicode character already in a buffer: <code>M-x quail-show-key</code></li>
+<li>M-x agda-input-show-translations: Show latex codes for unicode
+symbols</li>
+<li>Show how to input a unicode character already in a buffer:
+<code>M-x quail-show-key</code></li>
 </ul>
 <h2 id="misc-1">Misc</h2>
 <ul>
-<li>Papers using agda: <a href="https://wiki.portal.chalmers.se/agda/pmwiki.php?n=Main.PapersUsingAgda">https://wiki.portal.chalmers.se/agda/pmwiki.php?n=Main.PapersUsingAgda</a></li>
+<li>Papers using agda: <a
+href="https://wiki.portal.chalmers.se/agda/pmwiki.php?n=Main.PapersUsingAgda">https://wiki.portal.chalmers.se/agda/pmwiki.php?n=Main.PapersUsingAgda</a></li>
 </ul>
 <h2 id="doubts">Doubts</h2>
 <ul>
@@ -676,11 +787,13 @@ BMatrix2D r c = Vec (Vec Bool c) r
 <li>String, Char</li>
 <li>Coinduction</li>
 <li>Are there notation scopes in agda?</li>
-<li>How to perform compilation/extraction of unary Nat to Haskell Int?</li>
+<li>How to perform compilation/extraction of unary Nat to Haskell
+Int?</li>
 <li>recursive notations like in coq</li>
 <li>override implicit argument in agda
 <ul>
-<li><a href="https://agda.readthedocs.io/en/latest/language/implicit-arguments.html">https://agda.readthedocs.io/en/latest/language/implicit-arguments.html</a></li>
+<li><a
+href="https://agda.readthedocs.io/en/latest/language/implicit-arguments.html">https://agda.readthedocs.io/en/latest/language/implicit-arguments.html</a></li>
 </ul></li>
 <li>scoped inline type annotation in agda</li>
 </ul>
@@ -688,13 +801,18 @@ BMatrix2D r c = Vec (Vec Bool c) r
 <ul>
 <li>CS410: Advanced Functional Programming at University of Strathclyde
 <ul>
-<li>(<a href="https://github.com/pigworker/CS410-15/blob/master/CS410-Indexed.agda">2015 edition</a>)</li>
-<li>(<a href="https://github.com/fredrikNordvallForsberg/CS410-22">2022 edition</a>)</li>
+<li>(<a
+href="https://github.com/pigworker/CS410-15/blob/master/CS410-Indexed.agda">2015
+edition</a>)</li>
+<li>(<a href="https://github.com/fredrikNordvallForsberg/CS410-22">2022
+edition</a>)</li>
 </ul></li>
-<li><a href="https://agda.readthedocs.io/en/latest/getting-started/tutorial-list.html">https://agda.readthedocs.io/en/latest/getting-started/tutorial-list.html</a></li>
+<li><a
+href="https://agda.readthedocs.io/en/latest/getting-started/tutorial-list.html">https://agda.readthedocs.io/en/latest/getting-started/tutorial-list.html</a></li>
 <li>Functional programming course at TU Delft
 <ul>
-<li><a href="https://github.com/jespercockx/agda-lecture-notes/blob/master/agda.pdf">https://github.com/jespercockx/agda-lecture-notes/blob/master/agda.pdf</a></li>
+<li><a
+href="https://github.com/jespercockx/agda-lecture-notes/blob/master/agda.pdf">https://github.com/jespercockx/agda-lecture-notes/blob/master/agda.pdf</a></li>
 </ul></li>
 </ul>
 </div>

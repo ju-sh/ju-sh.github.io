@@ -46,11 +46,14 @@
 <div id="content-container">
 <p>Usually done with cabal or stack.</p>
 <h2 id="cabal">cabal</h2>
-<p><a href="https://cabal.readthedocs.io/en/latest/cabal-commands.html">https://cabal.readthedocs.io/en/latest/cabal-commands.html</a></p>
+<p><a
+href="https://cabal.readthedocs.io/en/latest/cabal-commands.html">https://cabal.readthedocs.io/en/latest/cabal-commands.html</a></p>
 <ul>
 <li>Install a package: <code>cabal install</code></li>
-<li>Update package index (ie, list of available packages): <code>cabal update</code></li>
-<li>Upgrade cabal itself: <code>cabal install cabal-install</code> (Unverified)</li>
+<li>Update package index (ie, list of available packages):
+<code>cabal update</code></li>
+<li>Upgrade cabal itself: <code>cabal install cabal-install</code>
+(Unverified)</li>
 <li>Build project: <code>cabal build</code></li>
 <li>Build and run project: <code>cabal run</code></li>
 <li>Open a REPL for the built project: <code>cabal repl</code></li>
@@ -61,11 +64,13 @@
 </ul></li>
 <li>Start a new project interactively: <code>cabal init -i</code></li>
 <li>Build haddock documentation: <code>cabal haddock</code></li>
-<li>Download a package without adding it to a project: <code>cabal get &lt;package-name&gt;</code></li>
+<li>Download a package without adding it to a project:
+<code>cabal get &lt;package-name&gt;</code></li>
 <li>List all installed packages: <code>cabal list --installed</code>
 <ul>
 <li>Also <code>ghc-pkg list</code></li>
-<li><a href="https://stackoverflow.com/questions/36953396/how-to-list-all-the-installed-packages-and-their-version-with-cabal">https://stackoverflow.com/questions/36953396/how-to-list-all-the-installed-packages-and-their-version-with-cabal</a></li>
+<li><a
+href="https://stackoverflow.com/questions/36953396/how-to-list-all-the-installed-packages-and-their-version-with-cabal">https://stackoverflow.com/questions/36953396/how-to-list-all-the-installed-packages-and-their-version-with-cabal</a></li>
 </ul></li>
 </ul>
 <p>—</p>
@@ -78,23 +83,30 @@ cabal build
 <h3 id="install-an-executable-tool">Install an executable tool</h3>
 <pre><code>cabal install --install-method=copy &lt;package-name&gt;
 </code></pre>
-<p>The executable will be at <code>~/.cabal/bin/</code></p>
+<p>The executable will be at <code
+class="verbatim">~/.cabal/bin/</code></p>
 <p>Eg:</p>
 <pre><code>cabal install --install-method=copy pandoc
 # Executable would be at ~/.cabal/bin/pandoc
 </code></pre>
 <h3 id="tests">Tests</h3>
 <ul>
-<li>Install dependencies for testing: <code>cabal install --enable-tests</code></li>
+<li>Install dependencies for testing:
+<code>cabal install --enable-tests</code></li>
 <li>Run tests: <code>cabal test</code></li>
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://functional.works-hub.com/learn/basic-unit-testing-in-haskell-using-hunit-and-cabal-29e47">https://functional.works-hub.com/learn/basic-unit-testing-in-haskell-using-hunit-and-cabal-29e47</a></li>
-<li><a href="http://gbacon.blogspot.com/2009/06/setting-up-simple-test-with-cabal.html">http://gbacon.blogspot.com/2009/06/setting-up-simple-test-with-cabal.html</a></li>
-<li><a href="https://jade.fyi/blog/cabal-test-dev-trick/">https://jade.fyi/blog/cabal-test-dev-trick/</a></li>
-<li><a href="https://yanhan.github.io/posts/2013-12-22-cabal-installing-test-dependencies/">https://yanhan.github.io/posts/2013-12-22-cabal-installing-test-dependencies/</a></li>
-<li><a href="https://discourse.haskell.org/t/help-setting-up-cabal-project-with-hunit-tests/2306/5">https://discourse.haskell.org/t/help-setting-up-cabal-project-with-hunit-tests/2306/5</a></li>
+<li><a
+href="https://functional.works-hub.com/learn/basic-unit-testing-in-haskell-using-hunit-and-cabal-29e47">https://functional.works-hub.com/learn/basic-unit-testing-in-haskell-using-hunit-and-cabal-29e47</a></li>
+<li><a
+href="http://gbacon.blogspot.com/2009/06/setting-up-simple-test-with-cabal.html">http://gbacon.blogspot.com/2009/06/setting-up-simple-test-with-cabal.html</a></li>
+<li><a
+href="https://jade.fyi/blog/cabal-test-dev-trick/">https://jade.fyi/blog/cabal-test-dev-trick/</a></li>
+<li><a
+href="https://yanhan.github.io/posts/2013-12-22-cabal-installing-test-dependencies/">https://yanhan.github.io/posts/2013-12-22-cabal-installing-test-dependencies/</a></li>
+<li><a
+href="https://discourse.haskell.org/t/help-setting-up-cabal-project-with-hunit-tests/2306/5">https://discourse.haskell.org/t/help-setting-up-cabal-project-with-hunit-tests/2306/5</a></li>
 </ul>
 <h3 id="new-package-example">New package example</h3>
 <pre><code>cabal init

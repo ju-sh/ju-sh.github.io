@@ -45,40 +45,100 @@
 
 <div id="content-container">
 <ul>
-<li><p><a href="https://en.wikipedia.org/wiki/Transfer_learning">Transfer learning</a>: 'storing knowledge gained while solving one problem and applying it to a different but related problem. For example, knowledge gained while learning to recognize cars could apply when trying to recognize trucks'</p></li>
-<li><p><a href="https://en.wikipedia.org/wiki/Reinforcement_learning">Reinforcement learning</a>:</p>
+<li><a href="https://en.wikipedia.org/wiki/Transfer_learning">Transfer
+learning</a>: 'storing knowledge gained while solving one problem and
+applying it to a different but related problem. For example, knowledge
+gained while learning to recognize cars could apply when trying to
+recognize trucks'</li>
+<li><a
+href="https://en.wikipedia.org/wiki/Reinforcement_learning">Reinforcement
+learning</a>:
 <ul>
-<li>'focus is on finding a balance between exploration (of uncharted territory) and exploitation (of current knowledge).'</li>
-<li>No need of labelled data or explicit correction. Sort of learns by itself based on what it sees.</li>
-<li>'concerned with how intelligent agents ought to take actions in an environment in order to maximize the notion of cumulative reward'</li>
+<li>'focus is on finding a balance between exploration (of uncharted
+territory) and exploitation (of current knowledge).'</li>
+<li>No need of labelled data or explicit correction. Sort of learns by
+itself based on what it sees.</li>
+<li>'concerned with how intelligent agents ought to take actions in an
+environment in order to maximize the notion of cumulative reward'</li>
 </ul></li>
-<li><p>ReLu: Rectified linear unit</p>
+<li>ReLu: Rectified linear unit
 <ul>
 <li>A popular activation function in ANNs</li>
 <li><code>f(x) = max(0, x)</code></li>
 </ul></li>
-<li><p><a href="https://en.wikipedia.org/wiki/Meta-learning_(computer_science)">Meta-learning</a>: 'Learning to learn'</p>
+<li><a
+href="https://en.wikipedia.org/wiki/Meta-learning_(computer_science)">Meta-learning</a>:
+'Learning to learn'
 <ul>
-<li><a href="https://lilianweng.github.io/posts/2018-11-30-meta-learning/">https://lilianweng.github.io/posts/2018-11-30-meta-learning/</a></li>
+<li><a
+href="https://lilianweng.github.io/posts/2018-11-30-meta-learning/">https://lilianweng.github.io/posts/2018-11-30-meta-learning/</a></li>
 </ul></li>
-<li><p>Support vector machine (SVM)</p>
+<li>Support vector machine (SVM)
 <ul>
 <li>For (linear) classification problem</li>
 <li>Supervised training</li>
 </ul></li>
-<li><p>Perceptron (McCulloch-Pitts)</p></li>
-<li><p>Linear classification</p>
+<li>Perceptron (McCulloch-Pitts)</li>
+<li>Linear classification
 <ul>
-<li>Points of different classes drawn on a graph can be demarcated by straight lines</li>
+<li>Points of different classes drawn on a graph can be demarcated by
+straight lines</li>
 </ul></li>
-<li><p>Support vector machines (SVM): Can do linear classification</p></li>
-<li><p>Forecasting algorithms</p>
+<li>Support vector machines (SVM): Can do linear classification</li>
+</ul>
+<ul>
+<li>Forecasting algorithms
 <ul>
 <li>ARIMA (Auto-regressive integrated moving average)</li>
 <li>SARIMA (Seasonal auto-regressive integrated moving average)</li>
 </ul></li>
-<li><p>Autoregression</p></li>
-<li><p>Moving average</p></li>
+<li>Autoregression</li>
+<li>Moving average</li>
+</ul>
+<ul>
+<li>Ablation study
+<ul>
+<li>Ablation =&gt; removing a component of model to see how it
+performance varies</li>
+<li>Useful to gauge the necessity/contribution of a
+component/architecture/parameter.</li>
+<li>Eg: Changing activation function</li>
+</ul></li>
+<li>Continuous learning
+<ul>
+<li>Train a model once, then allow it to learn new things by retraining
+it</li>
+<li>Without losing the knowledge gained from previous trainings</li>
+<li>Allowing the model to adapt to changing need, without being
+retrained from scratch.</li>
+</ul></li>
+<li>Hyperparameter
+<ul>
+<li>Usually set explicity by the designer. Not 'learned' during
+training.</li>
+<li>These are set <em>before</em> training</li>
+<li>Eg: Batch size in training dataset, learning rate</li>
+<li>Difference from 'parameter': Parameters are learnt during training
+process
+<ul>
+<li>The term parameter refers to <em>model parameters</em>.</li>
+<li>Eg: Weights in a neural network, k-value in K-nearest-neighbour</li>
+<li><a
+href="https://machinelearningmastery.com/difference-between-a-parameter-and-a-hyperparameter/">https://machinelearningmastery.com/difference-between-a-parameter-and-a-hyperparameter/</a></li>
+</ul></li>
+</ul></li>
+<li>Choosing value of hyperparameters
+<ul>
+<li>Evaluating AI models</li>
+<li>Grid search: Try all possible configurations =&gt; often
+impractical</li>
+<li>Random search: Select random combinations as configurations
+<ul>
+<li>Results shown to be close enough to grid search</li>
+</ul></li>
+<li><a
+href="https://www.kaggle.com/code/willkoehrsen/intro-to-model-tuning-grid-and-random-search">https://www.kaggle.com/code/willkoehrsen/intro-to-model-tuning-grid-and-random-search</a></li>
+</ul></li>
 </ul>
 <h2 id="reinforcement-learning">Reinforcement learning</h2>
 <ul>
@@ -87,9 +147,11 @@
 <li><p>Policy (π)</p>
 <ul>
 <li>Are probabilities of 'transitions'</li>
-<li>P(s'|s, a): probability of going to s' from s by taking action a</li>
+<li>P(s'|s, a): probability of going to s' from s by taking action
+a</li>
 <li>Expected utility of a π</li>
-<li>Probabilistic =&gt; need not take the same path every time for the same π</li>
+<li>Probabilistic =&gt; need not take the same path every time for the
+same π</li>
 <li>π<sup>*</sup>: optimal policy
 <ul>
 <li>Policy with maximum expected utility</li>
@@ -115,14 +177,39 @@
 <pre><code>Utility of a state = Reward of that state + Utility of next state
 </code></pre>
 <h2 id="sketching">Sketching</h2>
-<p>From <a href="https://www.sketchingbigdata.org/fall20/lec/notes.pdf">here</a>:</p>
+<p>From <a
+href="https://www.sketchingbigdata.org/fall20/lec/notes.pdf">here</a>:</p>
 <blockquote>
-<p>A sketch C(X) of some data set X with respect to some function f is a compression of X that allows us to compute, or approximately compute, f (X) given access only to C(X).</p>
+<p>A sketch C(X) of some data set X with respect to some function f is a
+compression of X that allows us to compute, or approximately compute, f
+(X) given access only to C(X).</p>
 </blockquote>
 <ul>
-<li>'compress data in a way that lets you answer queries' <a href="https://people.eecs.berkeley.edu/~minilek/tum2016/notes3.pdf">¹¹</a></li>
+<li>'compress data in a way that lets you answer queries' <a
+href="https://people.eecs.berkeley.edu/~minilek/tum2016/notes3.pdf">¹¹</a></li>
 <li>Helps save bandwidth when streaming data over a network.</li>
 </ul>
+<h2 id="fun-facts">Fun facts</h2>
+<ul>
+<li>Fun fact (2025): PyTorch is the most popular framework used in deep
+learning research</li>
+<li>Hugging Face also provide libraries. Like trainers.
+<ul>
+<li><a
+href="https://huggingface.co/docs/transformers/en/main_classes/trainer">https://huggingface.co/docs/transformers/en/main_classes/trainer</a></li>
+</ul></li>
+</ul>
+<h2 id="libraries-and-frameworks">Libraries and frameworks</h2>
+<ul>
+<li>PyTorch</li>
+<li>Tensorflow (dead??)</li>
+<li>Theano</li>
+<li>Caffe</li>
+<li>Keras</li>
+</ul>
+<h2 id="acks">Acks</h2>
+<p>Much of the info here is result of online searches instigated by
+conversions with the following people: Vishnu, Likith, Eva</p>
 </div>
 </body>
 </html>

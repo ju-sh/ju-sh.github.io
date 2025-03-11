@@ -103,15 +103,18 @@ done
 <p>Chomsky hierarchy</p>
 <p>Regular set</p>
 <ul>
-<li>if it's built from an empty set, empty word, char, cat, alt, etc ???</li>
+<li>if it's built from an empty set, empty word, char, cat, alt, etc
+???</li>
 </ul>
 <p>Syntax of regexp was set up to mimick that of regular sets.</p>
 <p>Semantics of regex being 'rational'…</p>
-<p>Brzozowski proved L -&gt; DFA correspondence: Brzozowski derivatives</p>
+<p>Brzozowski proved L -&gt; DFA correspondence: Brzozowski
+derivatives</p>
 <ul>
 <li>A small step operational semantics</li>
 </ul>
-<p>Derivative is with respect to letter. What is the next continuation?</p>
+<p>Derivative is with respect to letter. What is the next
+continuation?</p>
 <pre><code>Lₐ = {u | au ∈ L}
 </code></pre>
 <pre class="own"><code>δₐ(0) = 0
@@ -121,7 +124,8 @@ done
 δₐ(e1+e2) = δₐ(e1) + δₐ(e2)
 δₐ(e*) = δₐ(e);e*
 </code></pre>
-<p>This does not yet give a start state. We can pick it ourselves. We can give <code>e</code> itself as the start state.</p>
+<p>This does not yet give a start state. We can pick it ourselves. We
+can give <code>e</code> itself as the start state.</p>
 <p>—</p>
 <p>What is a DFA?</p>
 <ul>
@@ -132,7 +136,9 @@ done
 <li>Only one transition allowed for each input</li>
 </ul></li>
 </ul>
-<p>Write down the type to match your intent. Once you get the type right, difficult to go wrong afterwards. Kind of what Brzozowski did.</p>
+<p>Write down the type to match your intent. Once you get the type
+right, difficult to go wrong afterwards. Kind of what Brzozowski
+did.</p>
 <ul>
 <li>E: RE -&gt; 2
 <ul>
@@ -148,15 +154,19 @@ E(e1+e2) = E(e1) ∨ E(e2)
 </code></pre>
 <p>E is a test. 2 is again a regex (0 or 1). Cool!</p>
 <p>—</p>
-<p>Is this guaranteed to have finite states? Think what happens for <code>(a*)*</code></p>
+<p>Is this guaranteed to have finite states? Think what happens for
+<code>(a*)*</code></p>
 <p>e = (a*)* e = (1;a*)(a**) = (0a* + 1a*);a** + (1a*)(a**)</p>
 <p>(1a*)(a**) will keep repeating. =&gt; infinite number of states.</p>
 <p>It doesn't simplify 0a* = 0 or 1a* = a*.</p>
 <p>Soln: Look at equiv classes of derivatives.</p>
-<p>Method1: Delete repeated term in a plus. If one deletion is found, that's it.</p>
-<p>Brzozowski: Take derivative wrt ACI (assoc, comm, idempotency) ACI ould've been obtained for free if we had δₐ(e): RE -&gt; P(RE)</p>
+<p>Method1: Delete repeated term in a plus. If one deletion is found,
+that's it.</p>
+<p>Brzozowski: Take derivative wrt ACI (assoc, comm, idempotency) ACI
+ould've been obtained for free if we had δₐ(e): RE -&gt; P(RE)</p>
 <p>Ie, getting a set of regex and then joining them together.</p>
-<p>Thanks to Antimirov. Who apparently showed that RE modulo ACI is same as a 'set approach'.</p>
+<p>Thanks to Antimirov. Who apparently showed that RE modulo ACI is same
+as a 'set approach'.</p>
 <p>Antimirov derivatives:</p>
 <pre class="own"><code>δₐ(0) = 0
 δₐ(1) = 0
@@ -166,22 +176,28 @@ E(e1+e2) = E(e1) ∨ E(e2)
 δₐ(e1+e2) = δₐ(e1) + δₐ(e2)
 δₐ(e*) = δₐ(e);e*
 </code></pre>
-<p>Antimirov gives NFA Remove duplicates and plus them all. Thompson's construction.</p>
+<p>Antimirov gives NFA Remove duplicates and plus them all. Thompson's
+construction.</p>
 <ul>
 <li>allows ε transitions</li>
-<li>Eg: for <code>e;f</code> final of e are connected to start of f by ε transitions</li>
+<li>Eg: for <code>e;f</code> final of e are connected to start of f by ε
+transitions</li>
 </ul>
 <h1 id="d2">D2</h1>
 <p>We saw how to go from regex to reglang: e → Aₐ</p>
 <p>Let's now see the other direction.</p>
-<p>Transitions can be thought of as a square matrix S*S -&gt; S<sup>A</sup></p>
+<p>Transitions can be thought of as a square matrix S*S -&gt;
+S<sup>A</sup></p>
 <p>where A is alphabet</p>
-<p>Entries will be allowed letters??? Like <code>Mat[i][j]</code> being <code>a+b</code> ?? No, they are essentially regexes.</p>
+<p>Entries will be allowed letters??? Like <code>Mat[i][j]</code> being
+<code>a+b</code> ?? No, they are essentially regexes.</p>
 <p>Multiplication is Cat</p>
 <p>What is Star?</p>
-<p>Proof is algebraic. DBT: And <em>relatively</em> recent. State elim method</p>
+<p>Proof is algebraic. DBT: And <em>relatively</em> recent. State elim
+method</p>
 <ul>
-<li>delete states, replace trans with regex till only 2 states are left</li>
+<li>delete states, replace trans with regex till only 2 states are
+left</li>
 <li>only 1 final state =&gt; don't delete</li>
 <li>multiple final state ??</li>
 </ul>
@@ -192,8 +208,10 @@ E(e1+e2) = E(e1) ∨ E(e2)
 </ul>
 <p>Order of state elim different =&gt; regex diff but equiv</p>
 <hr />
-<p>Often, automata for things involving counting is easier to write than their regex.</p>
-<p>Kleene's original question: Given two regex, can we show that they are equiv?</p>
+<p>Often, automata for things involving counting is easier to write than
+their regex.</p>
+<p>Kleene's original question: Given two regex, can we show that they
+are equiv?</p>
 <p>Kleene algebra is a structure.</p>
 <p>(K,0,1,+,;,*)</p>
 <ul>
@@ -236,7 +254,8 @@ e*f ≤ x
 </ul>
 <p>Kleene algebra examples:</p>
 <ul>
-<li>2<sup>(A*)</sup>: Set of all (regular?) languages: (2<sup>(A*)</sup>, ∅, {ε}, ∪, ⋅, *)</li>
+<li>2<sup>(A*)</sup>: Set of all (regular?) languages:
+(2<sup>(A*)</sup>, ∅, {ε}, ∪, ⋅, *)</li>
 <li>binary relations: (Rel, ∅, Δ, ∪, ⋅, *)
 <ul>
 <li>∅: Empty relation</li>
@@ -261,7 +280,8 @@ e*f ≤ x
 ⎡ (a+bd*c)*    first;bd*⎤
 ⎣  ....        (d+ca*b)*⎦
 </code></pre>
-<p>This 2x2 matrix can be extended to larger matrix. For example, 3x3.</p>
+<p>This 2x2 matrix can be extended to larger matrix. For example,
+3x3.</p>
 <pre><code>⎡ _  _ |_ ⎤
 ⎢ _  _ |_ ⎥
 ⎢------|--⎥
@@ -276,7 +296,8 @@ e*f ≤ x
 <li>completeness: RTL</li>
 </ul></li>
 </ul>
-<p>Reglang are <em>the</em> model. Minimum model required to describe a Kleene algebra.</p>
+<p>Reglang are <em>the</em> model. Minimum model required to describe a
+Kleene algebra.</p>
 <p>Kozen's proof:</p>
 <pre><code>e      ≡       f
 ↓              ↓
@@ -289,20 +310,24 @@ Mₑ&#39;    ≡       Mf&#39;
 <ul>
 <li>An NFA is made from every regex.
 <ul>
-<li>Using Thompson's construction (a more recent proof builds it more directly)</li>
+<li>Using Thompson's construction (a more recent proof builds it more
+directly)</li>
 </ul></li>
 <li>Determinize them.</li>
 <li>Automata are minimized
 <ul>
-<li>It is known that every DFA has a unique version modulo state renaming.</li>
+<li>It is known that every DFA has a unique version modulo state
+renaming.</li>
 <li>A canonical form in a finite sequence of steps</li>
 <li>If they are same, the DFAs would be isomorphic</li>
 </ul></li>
 </ul>
-<p>Uses matrices. Matrix of regexs like yesterday. Can be proven sound just by using KA axioms</p>
+<p>Uses matrices. Matrix of regexs like yesterday. Can be proven sound
+just by using KA axioms</p>
 <hr />
 <p>Reasoning about simple imperative progs.</p>
-<p>For conditionals, we need to add something more than plain KA. ie, KAT.</p>
+<p>For conditionals, we need to add something more than plain KA. ie,
+KAT.</p>
 <p>The tests are like tests for the current state.</p>
 <p>KAT = KA + a boolean algebra</p>
 <p>But how to do that?</p>
@@ -323,7 +348,8 @@ where - is complement I guess??
 <li>Prog actions are with p,q</li>
 <li>tests/conditionals are with b0,b1</li>
 </ul>
-<p>Right, we need to add more euqations for KAT (only for things in B)</p>
+<p>Right, we need to add more euqations for KAT (only for things in
+B)</p>
 <ul>
 <li>b+1 ≡ 1</li>
 <li>(a+b)' ≡ a'b'</li>
@@ -334,8 +360,10 @@ where - is complement I guess??
 </ul>
 <p>(yeah, de-Morgan's laws)</p>
 <p>DBT: Is 1' = 0 mentioned ??</p>
-<p>Remark: BA doesn't use the star operation. It doesn't need * to be a boolean algebra. HW: Any b* is 1.</p>
-<p>This doesn't work for languages with effects. Our assumption: Sequential, effect-free progs.</p>
+<p>Remark: BA doesn't use the star operation. It doesn't need * to be a
+boolean algebra. HW: Any b* is 1.</p>
+<p>This doesn't work for languages with effects. Our assumption:
+Sequential, effect-free progs.</p>
 <p>OT: Concurrent KA</p>
 <ul>
 <li>partial distributed commutative lattice ??? for tests needed.</li>
@@ -377,15 +405,19 @@ b := t ∈ T
 <p>A = T U P</p>
 <p>The <code>b</code>-s are like <code>assert b</code>.</p>
 <p>After an assert, we know something about the state.</p>
-<p>If we have an α like t1⋅t2'⋅…tn where there's a t for each variable, it's a <strong>full test</strong> or <strong>valuation</strong>.</p>
+<p>If we have an α like t1⋅t2'⋅…tn where there's a t for each variable,
+it's a <strong>full test</strong> or <strong>valuation</strong>.</p>
 <p>Atoms of BA are generated by T ???</p>
-<p>Atoms are just subset of the set of tests Think of atoms as states.</p>
+<p>Atoms are just subset of the set of tests Think of atoms as
+states.</p>
 <p>Atom = 2<sup>T</sup></p>
 <p>Action = like program</p>
 <p>α₀p₀α₁p₁α₂p₂…αₙpₙ</p>
-<p>Take an atom, programs might change it, and we are left with a final state.</p>
+<p>Take an atom, programs might change it, and we are left with a final
+state.</p>
 <p>(αp)*α</p>
-<p>BDD: Binary decision diagrams FDD = Forward DD. (essentially BDD with vals)</p>
+<p>BDD: Binary decision diagrams FDD = Forward DD. (essentially BDD with
+vals)</p>
 <p>Damien Pous popl'15</p>
 <p>[e]: 2<sup>((At.P)*At)</sup></p>
 <ul>
@@ -394,7 +426,9 @@ b := t ∈ T
 <p>[b] = {α | α ≤ b} [p] = {αpβ | α β ∈ At}</p>
 <p>p can transform any α into any β</p>
 <p>[e+f] = [e] ∪ [f] [e;f] = [e] ◇ [f]</p>
-<p>can't just concat because there are two guards. Last atom of e1 and first atom of e2 should be same So there's a new operator ◇ which checks the compatiblity. If not same, then it's undefined. Abort.</p>
+<p>can't just concat because there are two guards. Last atom of e1 and
+first atom of e2 should be same So there's a new operator ◇ which checks
+the compatiblity. If not same, then it's undefined. Abort.</p>
 <p>[if b then p else q]</p>
 <p>Recall that this is just <code>bp + b'q</code></p>
 <pre><code>[bp]                    U   [b&#39;q]
@@ -465,7 +499,8 @@ bp((b∨c)_)*(b∨c)&#39; + b&#39;
 bp((b+c)(cq + c&#39;p))*(b+c)&#39; + b&#39;
 bp((b+c)(cq + c&#39;p))*b&#39;c&#39; + b&#39;
 </code></pre>
-<p>Can use denesting and sliding rules to show that these two programs are equiv.</p>
+<p>Can use denesting and sliding rules to show that these two programs
+are equiv.</p>
 <hr />
 <p>netKAT: a special KAT POPL'15/16</p>
 <ul>
@@ -476,7 +511,8 @@ bp((b+c)(cq + c&#39;p))*b&#39;c&#39; + b&#39;
 <ul>
 <li>fields and each field has got a val</li>
 <li>All vals are defined</li>
-<li>nodes can forward/drop packets based on packet field vals (tests)</li>
+<li>nodes can forward/drop packets based on packet field vals
+(tests)</li>
 <li>nodes can also modify value of the packet (actions)</li>
 </ul>
 <p>An example netKAT prog:</p>
@@ -488,7 +524,8 @@ bp((b+c)(cq + c&#39;p))*b&#39;c&#39; + b&#39;
 </ul>
 <pre><code>(sw=2);(type=ssh);  (pt ← 4);(dst←10.2.10.2)
 </code></pre>
-<p>First part filters packets. If that test passes, packet attrs are modified.</p>
+<p>First part filters packets. If that test passes, packet attrs are
+modified.</p>
 <p>Some simplification rules:</p>
 <ul>
 <li>f ← n; f ← m ≡ f ← m</li>
@@ -518,7 +555,8 @@ bp((b+c)(cq + c&#39;p))*b&#39;c&#39; + b&#39;
 <p>—</p>
 <p>netkat axioms</p>
 <p>f &lt;- n; f &lt;-m ≡ f←</p>
-<p>Every field has a value. No field can be left undefined. Set of values is finite.</p>
+<p>Every field has a value. No field can be left undefined. Set of
+values is finite.</p>
 <p>For a given field f,</p>
 <pre><code>  Σ     f = n
 n ∈ Val

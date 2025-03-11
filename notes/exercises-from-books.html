@@ -44,7 +44,9 @@
 <hr/>
 
 <div id="content-container">
-<p>I doubt I'll ever get around to doing all the exercises in any of the books I like, but I want a way to remember the the solutions that I could figure out.</p>
+<p>I doubt I'll ever get around to doing all the exercises in any of the
+books I like, but I want a way to remember the the solutions that I
+could figure out.</p>
 <h1 id="tapl---benjamin-pierce">TAPL - Benjamin Pierce</h1>
 <h2 id="section">5.2.1</h2>
 <pre class="ulc"><code>{- logical or -}
@@ -151,7 +153,9 @@ shift(2) (λ. 0 1 (λ. 0 1 2))
 <p>[0 ↦ 1] 0 (λ. λ. 1</p>
 <h2 id="section-4">13.1.1</h2>
 <h3 id="question">Question</h3>
-<p>Draw a similar diagram showing the effects of evaluating the expressions <code>a = {ref 0, ref 0}</code> and <code>b = (λx: Ref Nat. {x, x}) (ref 0)</code>.</p>
+<p>Draw a similar diagram showing the effects of evaluating the
+expressions <code>a = {ref 0, ref 0}</code> and
+<code>b = (λx: Ref Nat. {x, x}) (ref 0)</code>.</p>
 <h3 id="answer">Answer</h3>
 <p><code>a = {ref 0, ref 0}</code></p>
 <pre><code>
@@ -163,7 +167,8 @@ a = { _, _}
     +---+---+
 
 </code></pre>
-<p>where the two elements of the record point to different memory locations.</p>
+<p>where the two elements of the record point to different memory
+locations.</p>
 <p>And</p>
 <p><code>b = (λx: Ref Nat. {x, x}) (ref 0)</code></p>
 <pre><code>
@@ -177,10 +182,12 @@ b = { _, _}
       +---+
 
 </code></pre>
-<p>where both elements of the record point to the same memory location.</p>
+<p>where both elements of the record point to the same memory
+location.</p>
 <h2 id="section-5">15.2.1</h2>
 <h3 id="question-1">Question</h3>
-<p>Draw a derivation showing that <code>{x:Nat, y:Nat, z:Nat}</code> is a subtype of <code>{y:Nat}</code>.</p>
+<p>Draw a derivation showing that <code>{x:Nat, y:Nat, z:Nat}</code> is
+a subtype of <code>{y:Nat}</code>.</p>
 <h3 id="answer-1">Answer</h3>
 <table>
 <tbody>
@@ -211,7 +218,8 @@ b = { _, _}
 y:_ -&gt; _
 z:_
 </code></pre>
-<p><code>y</code> has to return something which <code>x z</code> can accept</p>
+<p><code>y</code> has to return something which <code>x z</code> can
+accept</p>
 <pre><code>x:A -&gt; X -&gt; _
 y:A -&gt; X
 z:A
@@ -232,7 +240,8 @@ z:A
 <li>{X=Nat,Y=X→X}: {X=Nat, Y=Nat→Nat}</li>
 <li>{Nat→Nat=X→Y}: {X↦Nat, Y↦Nat}
 <ul>
-<li>Just constraints. So types can appear in LHS as well. I guess LHS and RHS swapping doesn't make a difference.</li>
+<li>Just constraints. So types can appear in LHS as well. I guess LHS
+and RHS swapping doesn't make a difference.</li>
 </ul></li>
 <li>{Nat=Nat→Y}: No unifier possible.</li>
 <li>{Y=Y→Nat}: No unifier possible.
@@ -241,11 +250,13 @@ z:A
 </ul></li>
 <li>{X→Y=Y→Z, Z=U→W}: {X:U→W, Y:U→W, Z:U→W}
 <ul>
-<li>Had got this wrong. Nothing stopping us from assigning the same type to all types!</li>
+<li>Had got this wrong. Nothing stopping us from assigning the same type
+to all types!</li>
 </ul></li>
 <li>{}: Nothing</li>
 </ul>
-<h1 id="string-diagrams---ralf-hinze-dan-marsden">String diagrams - Ralf Hinze, Dan Marsden</h1>
+<h1 id="string-diagrams---ralf-hinze-dan-marsden">String diagrams - Ralf
+Hinze, Dan Marsden</h1>
 <h2 id="section-9"><span class="done DONE">DONE</span> 1.3</h2>
 <p>Category whose objects ∈ ℕ, and morphisms are nxm matrices.</p>
 <ul>
@@ -257,8 +268,11 @@ z:A
 <pre><code>(c * b) * a = c * (b * a)
 id * a = a = a * id
 </code></pre>
-<h1 id="principles-of-abstract-interpretation---cousot">Principles of abstract interpretation - Cousot</h1>
-<h2 id="galois-connection-for-n-x-n-x"><span class="done DONE">DONE</span> 11.2 Galois connection for <code>n ≤⌊x⌋⇔ n ≤ x</code></h2>
+<h1 id="principles-of-abstract-interpretation---cousot">Principles of
+abstract interpretation - Cousot</h1>
+<h2 id="galois-connection-for-n-x-n-x"><span
+class="done DONE">DONE</span> 11.2 Galois connection for
+<code>n ≤⌊x⌋⇔ n ≤ x</code></h2>
 <p>Let</p>
 <ul>
 <li>α x = ⌊x⌋</li>

@@ -55,7 +55,9 @@ if
 </code></pre>
 <p>From <em>Discrete mathematics and its applications</em>:</p>
 <blockquote>
-<p>If <code>a</code> and <code>b</code> are integers and <code>m</code> is a positive integer, then <code>a</code> is congruent to <code>b modulo m</code> if <code>m</code> divides <code>a-b</code>.</p>
+<p>If <code>a</code> and <code>b</code> are integers and <code>m</code>
+is a positive integer, then <code>a</code> is congruent to
+<code>b modulo m</code> if <code>m</code> divides <code>a-b</code>.</p>
 </blockquote>
 <p>Then,</p>
 <ul>
@@ -74,8 +76,10 @@ if
 </ul></li>
 </ul>
 <h3 id="congruence-class">Congruence class</h3>
-<p>Set of all integers which are congruent to <code>a (mod m)</code> constitutes the congruence class of a modulo m.</p>
-<h2 id="a-mod-m-vs-a-mod-b"><code>a (mod m)</code> vs <code>a mod b</code></h2>
+<p>Set of all integers which are congruent to <code>a (mod m)</code>
+constitutes the congruence class of a modulo m.</p>
+<h2 id="a-mod-m-vs-a-mod-b"><code>a (mod m)</code> vs
+<code>a mod b</code></h2>
 <p>a ≡ b (mod m) and a mod m = b are not the same.</p>
 <ul>
 <li>a ≡ b (mod m): a relation on ℤ</li>
@@ -103,18 +107,23 @@ then
 <blockquote>
 <p>If a, b ∈ ℤ⁺ then ∃s, t ∈ ℤ such that gcd(a, b) = sa + tb</p>
 </blockquote>
-<p>where s and t are known as <strong>Bézout's coefficients</strong>.</p>
-<p>ie, gcd(a, b) can be expressed as a linear combination with integer coefficients for a and b.</p>
+<p>where s and t are known as <strong>Bézout's
+coefficients</strong>.</p>
+<p>ie, gcd(a, b) can be expressed as a linear combination with integer
+coefficients for a and b.</p>
 <p>Eg:</p>
 <pre><code>gcd(6, 14) = 2
 (-2 * 6) + (1 * 14) = 2
 </code></pre>
 <h2 id="solving-congruences">Solving congruences</h2>
 <h3 id="chinese-reminder-theorem">Chinese Reminder Theorem</h3>
-<p>Usable when the moduli of the system of linear congruences are pairwise relatively prime.</p>
+<p>Usable when the moduli of the system of linear congruences are
+pairwise relatively prime.</p>
 <p>From <em>Discrete mathematics and its applications</em>:</p>
 <blockquote>
-<p>When the moduli of a system of linear congruences are pairwise relatively prime, there is a unique solution of the system modulo the product of the moduli.</p>
+<p>When the moduli of a system of linear congruences are pairwise
+relatively prime, there is a unique solution of the system modulo the
+product of the moduli.</p>
 </blockquote>
 <p>Eg:</p>
 <pre><code>x ≡ 2 (mod 3)
@@ -159,17 +168,24 @@ Biggest one is 7:
 <p>Same solution with <strong>Back-substitution method</strong>:</p>
 <h2 id="properties">Properties</h2>
 <ul>
-<li><p><code>a ≡ b (mod m)</code> means <code>(a - b) mod m</code> is zero.</p></li>
-<li><p><code>a ≡ b (mod m)</code> means <code>∃k ∈ ℤ, a = km + b</code></p></li>
-<li><p><code>a ≡ b (mod m)</code> iff <code>a mod m  =  b mod m</code></p></li>
-<li><p>If <code>a ≡ b (mod m)</code> and <code>c ≡ d (mod m)</code>, then</p>
+<li><p><code>a ≡ b (mod m)</code> means <code>(a - b) mod m</code> is
+zero.</p></li>
+<li><p><code>a ≡ b (mod m)</code> means
+<code>∃k ∈ ℤ, a = km + b</code></p></li>
+<li><p><code>a ≡ b (mod m)</code> iff
+<code>a mod m  =  b mod m</code></p></li>
+<li><p>If <code>a ≡ b (mod m)</code> and <code>c ≡ d (mod m)</code>,
+then</p>
 <ul>
 <li><code>a+c ≡ b+d (mod m)</code></li>
 <li><code>ac ≡ bd (mod m)</code></li>
 </ul></li>
-<li><p><code>(a+b) mod m = ((a mod m) + (b mod m)) mod m</code> (Note that this is the function mod!)</p></li>
-<li><p><code>(ab) mod m = ((a mod m) * (b mod m)) mod m</code> (Note that this is the function mod!)</p></li>
-<li><p>ℤₘ with modular addition constitutes a commutative group (ie, an Abelian group).</p></li>
+<li><p><code>(a+b) mod m = ((a mod m) + (b mod m)) mod m</code> (Note
+that this is the function mod!)</p></li>
+<li><p><code>(ab) mod m = ((a mod m) * (b mod m)) mod m</code> (Note
+that this is the function mod!)</p></li>
+<li><p>ℤₘ with modular addition constitutes a commutative group (ie, an
+Abelian group).</p></li>
 </ul>
 <p>Informally speaking,</p>
 <pre><code>a⁻¹ ≡ b (mod m) is same as 
@@ -177,15 +193,19 @@ Biggest one is 7:
 
 but a coprime condition is involved??
 </code></pre>
-<p>But, beware: Modular fraction arithmetic is valid only for fractions with denominator coprime to the modulus.</p>
+<p>But, beware: Modular fraction arithmetic is valid only for fractions
+with denominator coprime to the modulus.</p>
 <h2 id="common-notations">Common notations</h2>
 <ul>
-<li><code>a | b</code> means <code>a</code> divides <code>b</code>. ie, <code>a mod b</code> is zero.</li>
+<li><code>a | b</code> means <code>a</code> divides <code>b</code>. ie,
+<code>a mod b</code> is zero.</li>
 <li>a +ₘ b = (a + b) mod (m)</li>
 <li>ℤₘ = [0, m) ie, all non-negative integers less than m.</li>
 </ul>
 <h2 id="example-usages">Example usages</h2>
-<h3 id="section"><span class="done DONE">DONE</span> 7<sup>(2015)</sup> % 48 <a href="https://davidaltizio.web.illinois.edu/ModularArithmetic.pdf">¹</a></h3>
+<h3 id="section"><span class="done DONE">DONE</span> 7<sup>(2015)</sup>
+% 48 <a
+href="https://davidaltizio.web.illinois.edu/ModularArithmetic.pdf">¹</a></h3>
 <pre><code>49         ≡    1  mod 48
 7²         ≡    1  mod 48
 (7²)¹⁰⁰⁷   ≡    1  mod 48
@@ -193,12 +213,15 @@ but a coprime condition is involved??
 7²⁰¹⁵      ≡    7  mod 48
 </code></pre>
 <p>So the remainder is 7.</p>
-<h3 id="last-2-digits-of-17¹⁹⁸-¹"><span class="todo TODO">TODO</span> Last 2 digits of 17¹⁹⁸ <a href="https://davidaltizio.web.illinois.edu/ModularArithmetic.pdf">¹</a></h3>
+<h3 id="last-2-digits-of-17¹⁹⁸-¹"><span class="todo TODO">TODO</span>
+Last 2 digits of 17¹⁹⁸ <a
+href="https://davidaltizio.web.illinois.edu/ModularArithmetic.pdf">¹</a></h3>
 <p>289 ≡ -11 (mod 100) 17² ≡ -11 (mod 100)</p>
 <p>(17²)⁹⁹ ≡ -11 (mod 100)</p>
 <h2 id="references">References</h2>
 <ul>
-<li>Chapter 4, <em>Discrete mathematics and its applications</em> (7e) - Kenneth H. Rosen</li>
+<li>Chapter 4, <em>Discrete mathematics and its applications</em> (7e) -
+Kenneth H. Rosen</li>
 </ul>
 </div>
 </body>

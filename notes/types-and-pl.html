@@ -45,40 +45,57 @@
 
 <div id="content-container">
 <h2 id="confluence-rewriting-system">Confluence (rewriting system)</h2>
-<p>Multiple paths between a source and target term via rewrite rules.</p>
-<p>As in the Church-Rosser theorem (ie, ordering in which reduction rules are applied doesn't matter in lambda calculus).</p>
-<h2 id="weak-vs-strong-normalization-rewriting-system">Weak vs strong normalization (rewriting system)</h2>
+<p>Multiple paths between a source and target term via rewrite
+rules.</p>
+<p>As in the Church-Rosser theorem (ie, ordering in which reduction
+rules are applied doesn't matter in lambda calculus).</p>
+<h2 id="weak-vs-strong-normalization-rewriting-system">Weak vs strong
+normalization (rewriting system)</h2>
 <p>Following is weak normalizing:</p>
 <pre><code>1) S -&gt; S S
 2) S -&gt; A
 </code></pre>
-<p>because there exists at least one path by which normal form is reached:</p>
+<p>because there exists at least one path by which normal form is
+reached:</p>
 <pre><code>S -&gt; S S 
   -&gt; A A         (by 2)
 </code></pre>
-<p>But this is not strong normalizing because, the rewriting can potentially go on infinitely. For example:</p>
+<p>But this is not strong normalizing because, the rewriting can
+potentially go on infinitely. For example:</p>
 <pre><code>S -&gt; S S 
   -&gt; (S S) S     (by 1)
   -&gt; ...
 </code></pre>
-<p>— Strong normalization =&gt; no matter what order of rewrite rules we use, it will eventually lead to a normal form within a finite number of rewrites.</p>
-<p>Untyped lambda calculus is not normalizing. Due to the famous divergent terms. It is not even weakly normalizing since given <code>(λx. x x) (λx. x x)</code>, the only applicable rewrite rule is that of application and it would simply diverge further.</p>
-<p>On the other hand, simply typed lambda calculus is strongly normalizing.</p>
+<p>— Strong normalization =&gt; no matter what order of rewrite rules we
+use, it will eventually lead to a normal form within a finite number of
+rewrites.</p>
+<p>Untyped lambda calculus is not normalizing. Due to the famous
+divergent terms. It is not even weakly normalizing since given
+<code>(λx. x x) (λx. x x)</code>, the only applicable rewrite rule is
+that of application and it would simply diverge further.</p>
+<p>On the other hand, simply typed lambda calculus is strongly
+normalizing.</p>
 <p>—</p>
 <ul>
-<li>Strong normalization implies weak normalization, but not the other way.</li>
-<li>Normal form =&gt; no more applicable rewrite rules. Irreducible.</li>
+<li>Strong normalization implies weak normalization, but not the other
+way.</li>
+<li>Normal form =&gt; no more applicable rewrite rules.
+Irreducible.</li>
 </ul>
 <p>Ref:</p>
 <ul>
-<li><a href="https://cs.stackexchange.com/questions/68080/what-is-the-difference-between-strong-normalization-and-weak-normalization-in-th">https://cs.stackexchange.com/questions/68080/what-is-the-difference-between-strong-normalization-and-weak-normalization-in-th</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Normal_form_(abstract_rewriting)">https://en.wikipedia.org/wiki/Normal_form_(abstract_rewriting)</a></li>
-<li><a href="https://www.cse.chalmers.se/~abela/talkMcGill2012Normalization.pdf">https://www.cse.chalmers.se/~abela/talkMcGill2012Normalization.pdf</a></li>
+<li><a
+href="https://cs.stackexchange.com/questions/68080/what-is-the-difference-between-strong-normalization-and-weak-normalization-in-th">https://cs.stackexchange.com/questions/68080/what-is-the-difference-between-strong-normalization-and-weak-normalization-in-th</a></li>
+<li><a
+href="https://en.wikipedia.org/wiki/Normal_form_(abstract_rewriting)">https://en.wikipedia.org/wiki/Normal_form_(abstract_rewriting)</a></li>
+<li><a
+href="https://www.cse.chalmers.se/~abela/talkMcGill2012Normalization.pdf">https://www.cse.chalmers.se/~abela/talkMcGill2012Normalization.pdf</a></li>
 </ul>
 <h2 id="point-free-functions">Point-free functions</h2>
 <ul>
 <li>aka tacit programming</li>
-<li>A style of writing functions where the function arguments are never explicitly mentioned.</li>
+<li>A style of writing functions where the function arguments are never
+explicitly mentioned.</li>
 <li>The function is made as a combinator.
 <ul>
 <li>via function composition operations.</li>
@@ -86,23 +103,28 @@
 </ul>
 <p>Eg: A function to find factorial of a number</p>
 <p>A 'normal' style function:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="co">-- Haskell</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="ot">fact ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>fact <span class="dv">0</span> <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>fact n <span class="ot">=</span> n <span class="op">*</span> fact (n<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>λ<span class="op">&gt;</span> fact <span class="dv">5</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="dv">120</span></span></code></pre></div>
-<p>A point-free style function: <a href="https://www.willamette.edu/~fruehr/haskell/evolution.html">¹⁰</a></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="ot">fact ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>fact <span class="ot">=</span> <span class="fu">foldl</span> (<span class="op">*</span>) <span class="dv">1</span> <span class="op">.</span> <span class="fu">enumFromTo</span> <span class="dv">1</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>λ<span class="op">&gt;</span> fact <span class="dv">5</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="dv">120</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Haskell</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ot">fact ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>fact <span class="dv">0</span> <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>fact n <span class="ot">=</span> n <span class="op">*</span> fact (n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> fact <span class="dv">5</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="dv">120</span></span></code></pre></div>
+<p>A point-free style function: <a
+href="https://www.willamette.edu/~fruehr/haskell/evolution.html">¹⁰</a></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ot">fact ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>fact <span class="ot">=</span> <span class="fu">foldl</span> (<span class="op">*</span>) <span class="dv">1</span> <span class="op">.</span> <span class="fu">enumFromTo</span> <span class="dv">1</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> fact <span class="dv">5</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dv">120</span></span></code></pre></div>
 <h2 id="weak-head-normal-form">Weak head normal form</h2>
-<p>From <a href="https://stackoverflow.com/questions/993112/what-does-the-exclamation-mark-mean-in-a-haskell-declaration">here</a>:</p>
+<p>From <a
+href="https://stackoverflow.com/questions/993112/what-does-the-exclamation-mark-mean-in-a-haskell-declaration">here</a>:</p>
 <blockquote>
-<p>Weak-head normal form means: evaluate it until you reach the outermost constructor.</p>
+<p>Weak-head normal form means: evaluate it until you reach the
+outermost constructor.</p>
 </blockquote>
 <p>Eg:</p>
 <table>
@@ -123,42 +145,55 @@
 </tr>
 </tbody>
 </table>
-<p>Also see <a href="https://stackoverflow.com/questions/6872898/what-is-weak-head-normal-form/6889335#6889335">this</a>.</p>
+<p>Also see <a
+href="https://stackoverflow.com/questions/6872898/what-is-weak-head-normal-form/6889335#6889335">this</a>.</p>
 <h2 id="bifunctor">Bifunctor</h2>
 <ul>
-<li>Short for 'binary functor'<a href="https://ncatlab.org/nlab/show/bifunctor">¹</a>.</li>
+<li>Short for 'binary functor'<a
+href="https://ncatlab.org/nlab/show/bifunctor">¹</a>.</li>
 <li>Functors of two arguments.</li>
 <li>A functor whose domain is a product of two categories.</li>
 </ul>
-<p>Haskell got it in <a href="https://hackage.haskell.org/package/base-4.17.0.0/docs/Data-Bifunctor.html"><code>Data.Bifunctor</code></a>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">class</span> <span class="dt">BiFunctor</span> f <span class="kw">where</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="ot">  bimap ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> (c <span class="ot">-&gt;</span> d) <span class="ot">-&gt;</span> f a b <span class="ot">-&gt;</span> f c d</span></code></pre></div>
-<h2 id="incompleteness-of-subtyping-in-java">Incompleteness of subtyping in Java</h2>
-<p>Array types should be invariant, but java compiler enforces only the covariant part during its type checking phase. Java has got</p>
+<p>Haskell got it in <a
+href="https://hackage.haskell.org/package/base-4.17.0.0/docs/Data-Bifunctor.html"><code>Data.Bifunctor</code></a>:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">BiFunctor</span> f <span class="kw">where</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ot">  bimap ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> (c <span class="ot">-&gt;</span> d) <span class="ot">-&gt;</span> f a b <span class="ot">-&gt;</span> f c d</span></code></pre></div>
+<h2 id="incompleteness-of-subtyping-in-java">Incompleteness of subtyping
+in Java</h2>
+<p>Array types should be invariant, but java compiler enforces only the
+covariant part during its type checking phase. Java has got</p>
 <pre><code>   S &lt;: T 
 ------------
  [S] &lt;: [T]
 </code></pre>
 <p>The contravariance check is done at run-time.</p>
-<p>So programs like this:<a href="https://stackoverflow.com/questions/12369957/dealing-with-an-arraystoreexception">³</a>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">public</span> <span class="kw">class</span> Foo {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) {</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>    <span class="bu">Object</span>[] oarr = <span class="st">&quot;hi,hello&quot;</span>.<span class="fu">split</span>(<span class="st">&quot;,&quot;</span>);</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>    oarr[<span class="dv">0</span>] = <span class="dv">42</span>;</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>  }</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>}</span></code></pre></div>
+<p>So programs like this:<a
+href="https://stackoverflow.com/questions/12369957/dealing-with-an-arraystoreexception">³</a>:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Foo <span class="op">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span><span class="op">(</span><span class="bu">String</span><span class="op">[]</span> args<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Object</span><span class="op">[]</span> oarr <span class="op">=</span> <span class="st">&quot;hi,hello&quot;</span><span class="op">.</span><span class="fu">split</span><span class="op">(</span><span class="st">&quot;,&quot;</span><span class="op">);</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    oarr<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="dv">42</span><span class="op">;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>will compile fine, but would result in runtime error:</p>
 <pre><code>Exception in thread &quot;main&quot; java.lang.ArrayStoreException: java.lang.Integer
         at Foo.main(Foo.java:5)
 </code></pre>
-<p>This is a design choice that some people consider to have been not so cool.</p>
-<p>See <a href="http://www.angelikalanger.com/GenericsFAQ/FAQSections/ParameterizedTypes.html#FAQ102">this</a> and <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ArrayStoreException.html">this</a>.</p>
+<p>This is a design choice that some people consider to have been not so
+cool.</p>
+<p>See <a
+href="http://www.angelikalanger.com/GenericsFAQ/FAQSections/ParameterizedTypes.html#FAQ102">this</a>
+and <a
+href="https://docs.oracle.com/javase/8/docs/api/java/lang/ArrayStoreException.html">this</a>.</p>
 <h2 id="type-inference">Type inference</h2>
 <ul>
 <li>aka type reconstruction</li>
 </ul>
 <p>Principal type</p>
-<p>Most general instance of a type: 'makes the smallest commitment about the values of type variables tha yields a well-typed term' Eg:</p>
+<p>Most general instance of a type: 'makes the smallest commitment about
+the values of type variables tha yields a well-typed term' Eg:</p>
 <pre><code>a = λf:Y. λx.X. f x
 
 a by itself is not well-typed.
@@ -174,47 +209,63 @@ This is the most general instance of a.
 </code></pre>
 <p>Notation:</p>
 <ul>
-<li><code>σ ⊑ β</code>: unifier <code>σ</code> is less specific (ie, more general) than unifier <code>β</code>.</li>
+<li><code>σ ⊑ β</code>: unifier <code>σ</code> is less specific (ie,
+more general) than unifier <code>β</code>.</li>
 </ul>
 <p>Principal unifier: Most general unifier</p>
 <ul>
 <li>σ such that ∀α, σ ⊑ α</li>
 </ul>
 <h2 id="first-class-values">First-class values</h2>
-<p>With first-class values in a programming language, both the following are possible:</p>
+<p>With first-class values in a programming language, both the following
+are possible:</p>
 <ul>
 <li>Can be passed as arguments to functions</li>
 <li>Can be stored in data structures</li>
 </ul>
 <h2 id="logical-relations">Logical relations</h2>
-<p>Refs: <a href="https://www.cs.uoregon.edu/research/summerschool/summer13/lectures/ahmed-1.pdf">link</a> <a href="https://www.cs.uoregon.edu/research/summerschool/summer16/notes/AhmedLR.pdf">link</a></p>
-<p>Strong normalization <del>(??)</del> of STLC is not provable with induction (??) but is with logical relations.</p>
+<p>Refs: <a
+href="https://www.cs.uoregon.edu/research/summerschool/summer13/lectures/ahmed-1.pdf">link</a>
+<a
+href="https://www.cs.uoregon.edu/research/summerschool/summer16/notes/AhmedLR.pdf">link</a></p>
+<p>Strong normalization <del>(??)</del> of STLC is not provable with
+induction (??) but is with logical relations.</p>
 <h2 id="w-types-and-m-types">W-types and M-types</h2>
 <ul>
 <li><p>Looks like W-types are just inductive types as in Coq</p></li>
 <li><p>And M-types seem to be coinductive types</p></li>
-<li><p>'M-types can be derived from W-types': <a href="https://en.wikipedia.org/wiki/Inductive_type">https://en.wikipedia.org/wiki/Inductive_type</a></p></li>
+<li><p>'M-types can be derived from W-types': <a
+href="https://en.wikipedia.org/wiki/Inductive_type">https://en.wikipedia.org/wiki/Inductive_type</a></p></li>
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://ncatlab.org/nlab/show/W-type#WTypesInTypeTheory">https://ncatlab.org/nlab/show/W-type#WTypesInTypeTheory</a></li>
-<li><a href="https://ncatlab.org/nlab/show/well-founded+relation">https://ncatlab.org/nlab/show/well-founded+relation</a></li>
+<li><a
+href="https://ncatlab.org/nlab/show/W-type#WTypesInTypeTheory">https://ncatlab.org/nlab/show/W-type#WTypesInTypeTheory</a></li>
+<li><a
+href="https://ncatlab.org/nlab/show/well-founded+relation">https://ncatlab.org/nlab/show/well-founded+relation</a></li>
 </ul>
 <p>More:</p>
 <ul>
-<li><a href="https://www.cs.uoregon.edu/research/summerschool/summer13/lectures/ahmed_official1.pdf">https://www.cs.uoregon.edu/research/summerschool/summer13/lectures/ahmed_official1.pdf</a></li>
-<li><a href="https://www.cs.uoregon.edu/research/summerschool/summer16/notes/AhmedLR.pdf">https://www.cs.uoregon.edu/research/summerschool/summer16/notes/AhmedLR.pdf</a></li>
-<li><a href="https://cs.brown.edu/people/bgreenma/resources/notes/logical-relations-greatest-hits.pdf">https://cs.brown.edu/people/bgreenma/resources/notes/logical-relations-greatest-hits.pdf</a></li>
+<li><a
+href="https://www.cs.uoregon.edu/research/summerschool/summer13/lectures/ahmed_official1.pdf">https://www.cs.uoregon.edu/research/summerschool/summer13/lectures/ahmed_official1.pdf</a></li>
+<li><a
+href="https://www.cs.uoregon.edu/research/summerschool/summer16/notes/AhmedLR.pdf">https://www.cs.uoregon.edu/research/summerschool/summer16/notes/AhmedLR.pdf</a></li>
+<li><a
+href="https://cs.brown.edu/people/bgreenma/resources/notes/logical-relations-greatest-hits.pdf">https://cs.brown.edu/people/bgreenma/resources/notes/logical-relations-greatest-hits.pdf</a></li>
 </ul>
 <h2 id="kind">Kind</h2>
 <p>A kind is a type of types.</p>
-<p>From <a href="https://serokell.io/blog/kinds-and-hkts-in-haskell">https://serokell.io/blog/kinds-and-hkts-in-haskell</a></p>
+<p>From <a
+href="https://serokell.io/blog/kinds-and-hkts-in-haskell">https://serokell.io/blog/kinds-and-hkts-in-haskell</a></p>
 <blockquote>
-<p>they show the arity of a type (if we think of that type as a function).</p>
+<p>they show the arity of a type (if we think of that type as a
+function).</p>
 </blockquote>
-<p>Concrete types are like values and polymorphic types are like functions.</p>
+<p>Concrete types are like values and polymorphic types are like
+functions.</p>
 <h3 id="higher-kinded-types">Higher-kinded types</h3>
-<p>Can be thought of as a 'function' taking a kind and returning another kind.</p>
+<p>Can be thought of as a 'function' taking a kind and returning another
+kind.</p>
 <h2 id="subtyping">Subtyping</h2>
 <ul>
 <li>aka subtype polymorphism</li>
@@ -226,7 +277,8 @@ This is the most general instance of a.
 <ul>
 <li>S is a sub-type of T</li>
 <li>T is a super-type of S</li>
-<li>Set of S-values is a subset of set of T-values (aka subset-semantics)</li>
+<li>Set of S-values is a subset of set of T-values (aka
+subset-semantics)</li>
 <li>S is more informative than T</li>
 <li>Values described by S are also described by T</li>
 <li>Eg: S=squares, T=rectangles
@@ -245,36 +297,46 @@ This is the most general instance of a.
 <p>Subtyping relation:</p>
 <ul>
 <li>Must be reflexive and transitive</li>
-<li>Record type: Can make S by adding more fields to T =&gt; <code>S &lt;: T</code>
+<li>Record type: Can make S by adding more fields to T =&gt;
+<code>S &lt;: T</code>
 <ul>
-<li>Smaller type (ie, type with lesser number of values) is the subtype</li>
-<li>Subtyping =&gt; we are kind of further restricting set of possible values</li>
+<li>Smaller type (ie, type with lesser number of values) is the
+subtype</li>
+<li>Subtyping =&gt; we are kind of further restricting set of possible
+values</li>
 <li><em>Width subtyping</em></li>
 </ul></li>
 <li>Subtyping for functions =&gt; variance comes to play
 <ul>
-<li>Says under what circumstances can a function of one type can be used in place of another.</li>
+<li>Says under what circumstances can a function of one type can be used
+in place of another.</li>
 </ul></li>
 </ul>
 <p>—</p>
-<p>Sense of relation reversed for arg type (contravariant) but remained same for result type (covariant).</p>
+<p>Sense of relation reversed for arg type (contravariant) but remained
+same for result type (covariant).</p>
 <pre><code> T1 &lt;: S1        S2 &lt;: T2 
 ──────────────────────────
       S1→S2 &lt;: T1→T2
 </code></pre>
 <p>(Go from conclusion then it's easier to remember this rule)</p>
 <p>Intuition behind this rule:</p>
-<p><code>f: S1→S2</code> means <code>f</code> is a function that accepts values of type S1.</p>
-<p>This means <code>f</code> would accept values of a subtype of <code>S1</code> as well. If <code>T1 &lt;: S1</code>, we have:</p>
+<p><code>f: S1→S2</code> means <code>f</code> is a function that accepts
+values of type S1.</p>
+<p>This means <code>f</code> would accept values of a subtype of
+<code>S1</code> as well. If <code>T1 &lt;: S1</code>, we have:</p>
 <pre><code>S1→S2 &lt;: T1→?
 </code></pre>
-<p>Now, considering the result value. <code>f</code> gives a value of type <code>S2</code>. Any value of type <code>S2</code> is also a value of a supertype of <code>S2</code>.</p>
+<p>Now, considering the result value. <code>f</code> gives a value of
+type <code>S2</code>. Any value of type <code>S2</code> is also a value
+of a supertype of <code>S2</code>.</p>
 <p>If <code>S2 &lt;: T2</code>, we have:</p>
 <pre><code>S1→S2 &lt;: T1→T2
 </code></pre>
 <ul>
 <li>No arg should 'surprise' the function.</li>
-<li>No result should surprise the context (to which the value from <code>f</code> would be given).</li>
+<li>No result should surprise the context (to which the value from
+<code>f</code> would be given).</li>
 </ul>
 <p>—</p>
 <ul>
@@ -290,30 +352,39 @@ This is the most general instance of a.
 <li>Bivariant: Both covariant and contravariant</li>
 <li>Invariant: Neither covariant and contravariant</li>
 </ul>
-<p>Consider a type operator <code>T</code> and types <code>A</code> and <code>B</code>.</p>
+<p>Consider a type operator <code>T</code> and types <code>A</code> and
+<code>B</code>.</p>
 <ul>
-<li>T is convariant if <code>A ≤ B</code> means <code>T(A) ≤ T(B)</code></li>
-<li>T is contravariant if <code>A ≤ B</code> means <code>T(B) ≤ T(A)</code></li>
+<li>T is convariant if <code>A ≤ B</code> means
+<code>T(A) ≤ T(B)</code></li>
+<li>T is contravariant if <code>A ≤ B</code> means
+<code>T(B) ≤ T(A)</code></li>
 <li>Invariant =&gt; mutable?? As in anything can happen??</li>
 </ul>
-<p><a href="https://old.reddit.com/r/programming/comments/lkmhy/understanding_covariance_and_contravariance_in/">https://old.reddit.com/r/programming/comments/lkmhy/understanding_covariance_and_contravariance_in/</a></p>
+<p><a
+href="https://old.reddit.com/r/programming/comments/lkmhy/understanding_covariance_and_contravariance_in/">https://old.reddit.com/r/programming/comments/lkmhy/understanding_covariance_and_contravariance_in/</a></p>
 <ul>
-<li>'Java array subtyping problem – which is resolved in Java by doing a runtime check at each array mutation operation.'</li>
+<li>'Java array subtyping problem – which is resolved in Java by doing a
+runtime check at each array mutation operation.'</li>
 </ul>
 <h2 id="axiom-k">Axiom K</h2>
 <p>There is only one proof equality.</p>
 <ul>
 <li>Not valid in homotopy type theory</li>
 </ul>
-<p><a href="https://www.pls-lab.org/en/Axiom_K_(type_theory)">https://www.pls-lab.org/en/Axiom_K_(type_theory)</a></p>
+<p><a
+href="https://www.pls-lab.org/en/Axiom_K_(type_theory)">https://www.pls-lab.org/en/Axiom_K_(type_theory)</a></p>
 <h2 id="misc">Misc</h2>
 <ul>
 <li>catamorphism: fold (banana)</li>
 <li>anamorphism: unfold</li>
-<li>hylomorphism: function made with both fold and unfold operations</li>
-<li>Endofunctor: A functor mapping a category to the self-same category.</li>
+<li>hylomorphism: function made with both fold and unfold
+operations</li>
+<li>Endofunctor: A functor mapping a category to the self-same
+category.</li>
 </ul>
-<h2 id="types-categories-topologies-knots-etc">Types, Categories, Topologies, Knots, etc</h2>
+<h2 id="types-categories-topologies-knots-etc">Types, Categories,
+Topologies, Knots, etc</h2>
 <p>From an article.</p>
 <h3 id="types">Types</h3>
 <ul>
@@ -322,7 +393,8 @@ This is the most general instance of a.
 <ul>
 <li>well founded inductive types are like trees</li>
 </ul></li>
-<li>M-types (ie, coinductive types) can be made from W-types (ie, inductive types)
+<li>M-types (ie, coinductive types) can be made from W-types (ie,
+inductive types)
 <ul>
 <li>TODO: How?</li>
 </ul></li>
@@ -331,19 +403,22 @@ This is the most general instance of a.
 <li>math structures represented by types</li>
 <li>type correspond to spaces</li>
 <li>equal types correspond to homotopy equivalent spaces</li>
-<li>equal elements of a type correspond to points in the space between which there is a path</li>
+<li>equal elements of a type correspond to points in the space between
+which there is a path</li>
 <li>agda-unimath</li>
 </ul></li>
 </ul>
 <h3 id="categories">Categories</h3>
 <ul>
 <li><p>natural transformation: morphism of functors</p></li>
-<li><p>natural isomorphism: natural transformation that is an isomorphism?</p></li>
+<li><p>natural isomorphism: natural transformation that is an
+isomorphism?</p></li>
 <li><p>adjoint functors</p></li>
 <li><p>adjunction</p></li>
 <li><p>monoidal category: like category of product types</p></li>
 <li><p>intial algebras</p></li>
-<li><p>initial object in the category of F-algebras for a given endofunctor F</p>
+<li><p>initial object in the category of F-algebras for a given
+endofunctor F</p>
 <ul>
 <li>So it itself is an F-algebra</li>
 <li>'Provides framework for recursion and induction.'
@@ -355,13 +430,16 @@ This is the most general instance of a.
 <ul>
 <li>aka coterminal object</li>
 <li>aka universal object</li>
-<li>For every object X in the category, there is exactly one morphism (I→X) from I to the X</li>
-<li><strong>Strict initial object</strong>: if the I→X morphisms are isomorphisms.</li>
+<li>For every object X in the category, there is exactly one morphism
+(I→X) from I to the X</li>
+<li><strong>Strict initial object</strong>: if the I→X morphisms are
+isomorphisms.</li>
 </ul></li>
 <li><p>terminal object (T)</p>
 <ul>
 <li>aka final object</li>
-<li>For every object X in the category, there is exactly one morphism X→T</li>
+<li>For every object X in the category, there is exactly one morphism
+X→T</li>
 </ul></li>
 <li><p>Null object</p>
 <ul>
@@ -392,7 +470,8 @@ This is the most general instance of a.
 <li><p>Opposite category</p>
 <ul>
 <li>aka dual category</li>
-<li>The category that we get by reversing the direction of all morphisms within the original category</li>
+<li>The category that we get by reversing the direction of all morphisms
+within the original category</li>
 <li>Needless to say, opposite (opposite C) is C itself.</li>
 </ul></li>
 <li><p>small types</p></li>
@@ -417,7 +496,8 @@ This is the most general instance of a.
 <li><p>Interval category</p>
 <ul>
 <li>aka 2</li>
-<li>Category with just 2 objects (0 and 1) with just one non-trivial morphism (0 → 1)</li>
+<li>Category with just 2 objects (0 and 1) with just one non-trivial
+morphism (0 → 1)</li>
 </ul></li>
 <li><p>k-morphism (or k-cells)</p>
 <ul>
@@ -439,7 +519,8 @@ This is the most general instance of a.
 <li><p>2-category</p>
 <ul>
 <li>A higher category</li>
-<li>Has 2-morphisms (in addition to the 1-morphisms of normal categories)</li>
+<li>Has 2-morphisms (in addition to the 1-morphisms of normal
+categories)</li>
 </ul></li>
 </ul>
 <h3 id="topology">Topology</h3>
@@ -485,18 +566,23 @@ This is the most general instance of a.
 </ul>
 <p>Homeomorphism:</p>
 <ul>
-<li>Mapping from a topological space that preserves all topological properties of that space</li>
+<li>Mapping from a topological space that preserves all topological
+properties of that space</li>
 <li>aka topological isomorphism</li>
-<li>Two spaces with a homeomorphism between them are said to be homeomorphic.</li>
+<li>Two spaces with a homeomorphism between them are said to be
+homeomorphic.</li>
 <li>Not all homeomorphisms are continuous deformations.
 <ul>
-<li>Homeomorphism that is a continuous deformation is a <strong>homotopy</strong>.</li>
+<li>Homeomorphism that is a continuous deformation is a
+<strong>homotopy</strong>.</li>
 </ul></li>
 <li>Deformation of a line into a point is not a homeomorphism. Why?</li>
 </ul>
 <p>Neighbourhood of a point:</p>
 <ul>
-<li>Set of points, of which the point is a part, such that we can move 'some distance' in any direction from that point without leaving that set.</li>
+<li>Set of points, of which the point is a part, such that we can move
+'some distance' in any direction from that point without leaving that
+set.</li>
 </ul>
 <h3 id="knot">Knot</h3>
 <p>Tangles String diagrams</p>
@@ -516,11 +602,14 @@ This is the most general instance of a.
 </ul></li>
 <li>Hilbert space
 <ul>
-<li>A vector space equipped with an inner product which can give rise to a distance function by which the vector space is a (complete) metric space.</li>
+<li>A vector space equipped with an inner product which can give rise to
+a distance function by which the vector space is a (complete) metric
+space.</li>
 </ul></li>
 <li>Cauchy space: a complete metric space</li>
 </ul>
-<h2 id="operational-vs-denotational-semantics">Operational vs denotational semantics</h2>
+<h2 id="operational-vs-denotational-semantics">Operational vs
+denotational semantics</h2>
 <ul>
 <li>Synthetic guarded domain theory (SGDT)</li>
 </ul>
@@ -528,20 +617,24 @@ This is the most general instance of a.
 <p>They are duals of each other.</p>
 <p>Recursion:</p>
 <ul>
-<li>Kinda 'top-down': Go down till a base case and build up from there</li>
+<li>Kinda 'top-down': Go down till a base case and build up from
+there</li>
 <li>Folding</li>
 </ul>
 <p>Co-recursion:</p>
 <ul>
-<li>Kinda 'bottom-up: Accumulator style. Start from a point and build from there</li>
+<li>Kinda 'bottom-up: Accumulator style. Start from a point and build
+from there</li>
 <li>Unfolding</li>
 </ul>
 <p>—</p>
 <p>More:</p>
 <ul>
 <li><em>Classical (co)recursion</em> - Downen, Ariola @ JFP'2023</li>
-<li><a href="https://blog.thomasheartman.com/posts/corecursion-and-anamorphisms">https://blog.thomasheartman.com/posts/corecursion-and-anamorphisms</a></li>
-<li><a href="https://softwareengineering.stackexchange.com/questions/144274/whats-the-difference-between-recursion-and-corecursion">https://softwareengineering.stackexchange.com/questions/144274/whats-the-difference-between-recursion-and-corecursion</a></li>
+<li><a
+href="https://blog.thomasheartman.com/posts/corecursion-and-anamorphisms">https://blog.thomasheartman.com/posts/corecursion-and-anamorphisms</a></li>
+<li><a
+href="https://softwareengineering.stackexchange.com/questions/144274/whats-the-difference-between-recursion-and-corecursion">https://softwareengineering.stackexchange.com/questions/144274/whats-the-difference-between-recursion-and-corecursion</a></li>
 </ul>
 <h2 id="itp-vs-atp">ITP vs ATP</h2>
 <table>

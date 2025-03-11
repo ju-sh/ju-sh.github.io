@@ -36,17 +36,8 @@
 </header>
 
 <ul>
-    <li>Date created: 05-Sep-2017</li>
     </ul>
 
-<div>
-  <p>
-    Tags: / 
-    <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/c.html">c</a>
-    </code> /
-  <p>
-</div>
 
 
 <div id="description">
@@ -56,31 +47,41 @@ Another example from Andrew König's book..
 <hr/>
 
 <div id="content-container">
-<p><sub><sup><a href="../misc/old-blog.html">From my old blog</a>.</sup></sub></p>
-<p>Another interesting program from Andrew Koenig's <em>C traps and pitfalls</em> (I'm assuming a 32-bit, little-endian machine):</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;stdio&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>main()</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>{</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="dt">int</span> i;</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>    <span class="dt">char</span> c;</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>    <span class="cf">for</span>(i=<span class="dv">0</span>; i&lt;<span class="dv">5</span>; i++)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    {</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>        scanf(<span class="st">&quot;%d&quot;</span>, &amp;c);</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>        printf(<span class="st">&quot;%d &quot;</span>, i);</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>    }</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>}</span></code></pre></div>
+<p><sub><sup><a href="../misc/old-blog.html">From my old
+blog</a>.</sup></sub></p>
+<p>Another interesting program from Andrew Koenig's <em>C traps and
+pitfalls</em> (I'm assuming a 32-bit, little-endian machine):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>main<span class="op">()</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> i<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> c<span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span>i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i<span class="op">&lt;</span><span class="dv">5</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        scanf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">&amp;</span>c<span class="op">);</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span><span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Most of us would expect the output to be:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span></span></code></pre></div>
-<p>when we provide some input but it turns out that it might not be the case.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span></span></code></pre></div>
+<p>when we provide some input but it turns out that it might not be the
+case.</p>
 <p>Notice the line</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>scanf(<span class="st">&quot;%d&quot;</span>, &amp;c);</span></code></pre></div>
-<p>where the <code>%d</code> format specifier is used instead of <code>%c</code> to store the value read as input into the variable <code>c</code>. This causes <code>scanf()</code> to think that the address provided is the address of an integer and writes data over <code>sizeof(int)</code> bytes thereby intruding upon the memory of some other variable which might very well be part of the area where <code>i</code> is stored.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>scanf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">&amp;</span>c<span class="op">);</span></span></code></pre></div>
+<p>where the <code>%d</code> format specifier is used instead of
+<code>%c</code> to store the value read as input into the variable
+<code>c</code>. This causes <code>scanf()</code> to think that the
+address provided is the address of an integer and writes data over
+<code>sizeof(int)</code> bytes thereby intruding upon the memory of some
+other variable which might very well be part of the area where
+<code>i</code> is stored.</p>
 <p>So, initially,</p>
 <pre><code>i = 0
 c = garbage (let&#39;s assume it&#39;s 0x61)
 </code></pre>
-<p>The variable <code>i</code> and <code>c</code> could (platform dependent) be in memory like this:</p>
+<p>The variable <code>i</code> and <code>c</code> could (platform
+dependent) be in memory like this:</p>
 <pre><code>+----------+----------+----------+----------+----------+----------+
 |  Value   |     0x00 |     0x00 |     0x00 |     0x00 |     0x61 |
 +----------+----------+----------+----------+----------+----------+
@@ -89,10 +90,19 @@ c = garbage (let&#39;s assume it&#39;s 0x61)
 | Variable |                int i                      |  char c  |
 +----------+----------+----------+----------+----------+----------+
 </code></pre>
-<p>The address of <code>i</code> is <code>0x45678C</code> and that of <code>c</code> is <code>0x45678B</code>.</p>
-<p>The <code>scanf()</code> here can intrude upon the bytes at <code>0x45678C</code>, <code>0x45678D</code> and <code>0x45678E</code> of <code>i</code> as the address <code>0x45678B</code> is provided to <code>scanf()</code> and <code>sizeof(int)</code> is <code>4</code> (this value is platform dependent).</p>
-<p>While reading into <code>c</code> if a value &lt; 256 is entered, the lower bytes (in a little endian machine otherwise the higher bytes) of the 'integer' whose base address is the address of <code>c</code> will become zero.</p>
-<p>The values that the least signicant byte of <code>i</code> will assume for different ranges of input are:</p>
+<p>The address of <code>i</code> is <code>0x45678C</code> and that of
+<code>c</code> is <code>0x45678B</code>.</p>
+<p>The <code>scanf()</code> here can intrude upon the bytes at
+<code>0x45678C</code>, <code>0x45678D</code> and <code>0x45678E</code>
+of <code>i</code> as the address <code>0x45678B</code> is provided to
+<code>scanf()</code> and <code>sizeof(int)</code> is <code>4</code>
+(this value is platform dependent).</p>
+<p>While reading into <code>c</code> if a value &lt; 256 is entered, the
+lower bytes (in a little endian machine otherwise the higher bytes) of
+the 'integer' whose base address is the address of <code>c</code> will
+become zero.</p>
+<p>The values that the least signicant byte of <code>i</code> will
+assume for different ranges of input are:</p>
 <table>
 <thead>
 <tr class="header">
@@ -123,7 +133,10 @@ c = garbage (let&#39;s assume it&#39;s 0x61)
 </tr>
 </tbody>
 </table>
-<p>The loop will go on as long as <code>i &lt; 5</code>. That means as long as <code>i &lt; 4</code> at the end of each iteration, the loop will go on. ie, as long as the input is a number &lt; 1024, the loop will go on.</p>
+<p>The loop will go on as long as <code>i &lt; 5</code>. That means as
+long as <code>i &lt; 4</code> at the end of each iteration, the loop
+will go on. ie, as long as the input is a number &lt; 1024, the loop
+will go on.</p>
 </div>
 </body>
 </html>

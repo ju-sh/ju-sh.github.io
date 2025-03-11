@@ -44,8 +44,9 @@
 <hr/>
 
 <div id="content-container">
-<div class="sourceCode" id="cb1"><pre class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="dv">import uvm_pkg:</span>:*;</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="ot">`include </span><span class="fl">&quot;uvm_macros.svh&quot;</span><span class="ot"> </span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">import uvm_pkg:</span><span class="op">:</span>*<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">`include </span><span class="fl">&quot;uvm_macros.svh&quot;</span><span class="ot"> </span></span></code></pre></div>
 <h2 id="general">General</h2>
 <ul>
 <li><code>virtual</code>: kind of a like an abstract type ??</li>
@@ -56,17 +57,20 @@
 <li>9 primary phases</li>
 <li>function: no simulation time consumed</li>
 <li>task: can consume simulation time</li>
-<li><a href="https://www.chipverify.com/uvm/uvm-phases">https://www.chipverify.com/uvm/uvm-phases</a></li>
+<li><a
+href="https://www.chipverify.com/uvm/uvm-phases">https://www.chipverify.com/uvm/uvm-phases</a></li>
 </ul>
 <hr />
 <ul>
-<li>build: construct testbench, create and initialize uvm components</li>
+<li>build: construct testbench, create and initialize uvm
+components</li>
 <li>connect: connect components in testbench</li>
 <li>end of elaboration: final configuration</li>
 <li>start of simulation: Prepare for initiating simulation</li>
 <li>run: execute main test scenario</li>
 <li>extract: collect data from simulation</li>
-<li>check: scoreboard tasks. Check for errors based on actual and expected values</li>
+<li>check: scoreboard tasks. Check for errors based on actual and
+expected values</li>
 <li>report: generate reports</li>
 <li>final: clean up before ending simulation</li>
 </ul>
@@ -75,44 +79,56 @@
 <li>Drive signals to a component being tested</li>
 <li>Mentions timing information too</li>
 </ul>
-<p><a href="https://www.chipverify.com/uvm/uvm-driver">https://www.chipverify.com/uvm/uvm-driver</a></p>
+<p><a
+href="https://www.chipverify.com/uvm/uvm-driver">https://www.chipverify.com/uvm/uvm-driver</a></p>
 <h2 id="environment-uvm_env">Environment (<code>uvm_env</code>)</h2>
 <ul>
 <li>Have resuable components and their default configuration</li>
 <li>Can also have smaller environments</li>
-<li>Tip: Build testbench class from <code>uvm_env</code>, then instantiate as needed</li>
+<li>Tip: Build testbench class from <code>uvm_env</code>, then
+instantiate as needed</li>
 </ul>
-<p><a href="https://www.chipverify.com/uvm/uvm-environment">https://www.chipverify.com/uvm/uvm-environment</a></p>
+<p><a
+href="https://www.chipverify.com/uvm/uvm-environment">https://www.chipverify.com/uvm/uvm-environment</a></p>
 <h2 id="monitor-uvm_monitor">Monitor (<code>uvm_monitor</code>)</h2>
 <ul>
-<li>Observes signal activity and send them as transactions to other components</li>
+<li>Observes signal activity and send them as transactions to other
+components</li>
 </ul>
 <h2 id="scoreboard">Scoreboard</h2>
 <ul>
 <li>Have checkers to verify test results</li>
 <li></li>
 </ul>
-<p><a href="https://www.chipverify.com/uvm/uvm-scoreboard">https://www.chipverify.com/uvm/uvm-scoreboard</a></p>
-<h2 id="transaction-level-modeling-tlm">Transaction level modeling (TLM)</h2>
+<p><a
+href="https://www.chipverify.com/uvm/uvm-scoreboard">https://www.chipverify.com/uvm/uvm-scoreboard</a></p>
+<h2 id="transaction-level-modeling-tlm">Transaction level modeling
+(TLM)</h2>
 <ul>
 <li>Data represented as <strong>transactions</strong></li>
 <li>Not specific to SystemVerilog</li>
-<li>Transactions are objects that contain random protocol specific info</li>
+<li>Transactions are objects that contain random protocol specific
+info</li>
 <li>Data flow is via TLM interfaces</li>
 <li>TLM port: specify an API (set of methods) for a connection</li>
 <li>TLM export: Actual implementation of a TLM port</li>
 <li>Analysis ports: Used to monitor data flow
 <ul>
-<li>Components receiving data from an analysis port doesn't modify that data</li>
+<li>Components receiving data from an analysis port doesn't modify that
+data</li>
 <li>Can publish data to any number of ports (subscribers ??)</li>
-<li><a href="https://www.chipverify.com/uvm/uvm-tlm-analysis-port">https://www.chipverify.com/uvm/uvm-tlm-analysis-port</a></li>
+<li><a
+href="https://www.chipverify.com/uvm/uvm-tlm-analysis-port">https://www.chipverify.com/uvm/uvm-tlm-analysis-port</a></li>
 </ul></li>
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://www.chipverify.com/uvm/uvm-tlm">https://www.chipverify.com/uvm/uvm-tlm</a></li>
-<li><a href="https://theartofverification.com/uvm-tlm-concepts/">https://theartofverification.com/uvm-tlm-concepts/</a></li>
-<li><a href="https://verificationacademy.com/verification-methodology-reference/uvmc-2.3.1/docs/html/files/docs/TLM_REVIEW-txt.html">https://verificationacademy.com/verification-methodology-reference/uvmc-2.3.1/docs/html/files/docs/TLM_REVIEW-txt.html</a></li>
+<li><a
+href="https://www.chipverify.com/uvm/uvm-tlm">https://www.chipverify.com/uvm/uvm-tlm</a></li>
+<li><a
+href="https://theartofverification.com/uvm-tlm-concepts/">https://theartofverification.com/uvm-tlm-concepts/</a></li>
+<li><a
+href="https://verificationacademy.com/verification-methodology-reference/uvmc-2.3.1/docs/html/files/docs/TLM_REVIEW-txt.html">https://verificationacademy.com/verification-methodology-reference/uvmc-2.3.1/docs/html/files/docs/TLM_REVIEW-txt.html</a></li>
 </ul>
 <h2 id="more">More</h2>
 <ul>

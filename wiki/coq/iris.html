@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>iris</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">iris</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<p><a
+href="https://plv.mpi-sws.org/coqdoc/iris/index.html">https://plv.mpi-sws.org/coqdoc/iris/index.html</a>
+<a
+href="https://plv.mpi-sws.org/semantics-course/">https://plv.mpi-sws.org/semantics-course/</a></p>
+<h1 id="iris-1">Iris</h1>
+<ul>
+<li><a
+href="https://iris-project.org/tutorial-material.html">https://iris-project.org/tutorial-material.html</a></li>
+<li><a
+href="https://iris-project.org/tutorial-pdfs/iris-lecture-notes.pdf">https://iris-project.org/tutorial-pdfs/iris-lecture-notes.pdf</a></li>
+<li>Setting up editor: <a
+href="https://gitlab.mpi-sws.org/iris/iris/-/blob/master/docs/editor.md">https://gitlab.mpi-sws.org/iris/iris/-/blob/master/docs/editor.md</a>
+<ul>
+<li>Many iris operators needs special characters.</li>
+</ul></li>
+</ul>
+<p>—</p>
+<ul>
+<li><p>Seperation logic</p>
+<ul>
+<li>Notion of resource ownership</li>
+<li>Facts + resource ownership</li>
+</ul></li>
+<li><p>Concurrent seperation logic</p></li>
+<li><p>PCM: Partial Commutative Monoids</p>
+<ul>
+<li>User defined resources modeled as PCM ??</li>
+</ul></li>
+<li><p>WP: Weakest Precondition</p></li>
+<li><p>Resource algebras</p></li>
+<li><p>OFE: Ordered Families of Equivalences</p>
+<ul>
+<li>Corresponds to sets but in step-indexed settings ??</li>
+</ul></li>
+<li><p>COFE: Complete OFE</p></li>
+<li><p>FAA: Fetch-and-add</p></li>
+<li><p>▶P: later</p>
+<ul>
+<li>advances the step indexing ??</li>
+<li>P holds but only from next step onwards ??</li>
+<li>Kind of like liveness in LTL</li>
+</ul></li>
+<li><p>μr.P</p>
+<ul>
+<li>P always holds ??</li>
+<li>Kind of like safety/global in LTL</li>
+</ul></li>
+<li><p>Points-to connective (<code>l ↦ v</code>)</p>
+<ul>
+<li><code>l ↦ v</code> says that <code>l</code> points to value
+<code>v</code></li>
+<li>Also indicates <em>exclusive ownership</em> of <code>l</code> by the
+expression under consideration</li>
+</ul></li>
+<li><p>Separation conjunction (<code>P ∗ Q</code>)</p>
+<ul>
+<li>State is made up of <em>disjoint</em> parts <code>P</code> and
+<code>Q</code></li>
+</ul></li>
+<li><p>Adequacy</p></li>
+<li><p>Löb induction principle</p></li>
+<li><p>Ghost state</p>
+<ul>
+<li>Camera</li>
+<li>OFEs to cameras ??</li>
+<li><code>heapGS</code>: type class providing some cameras <a
+href="https://gitlab.mpi-sws.org/iris/iris/-/blob/master/docs/resource_algebras.md?ref_type=heads#advanced-topic-ghost-state-singletons">ˡ</a></li>
+</ul></li>
+<li><p>Ghost variables</p>
+<ul>
+<li>A way to avoid loss of information due to existential
+quantification</li>
+<li>They come in 'entangled' pairs
+<ul>
+<li>Authoritative: curved arrow with black circle</li>
+<li>Fragment: curved arrow with white circle</li>
+</ul></li>
+</ul></li>
+<li><p>View shift</p>
+<ul>
+<li>Related to ghost variables</li>
+</ul></li>
+<li><p><code>{P} e {v.Q}_ε</code></p>
+<ul>
+<li>P is pre-condition</li>
+<li>e is an expression resulting in a value v</li>
+<li>Q is a post-condition that is a predicate which holds for v</li>
+<li>Currently active invariant is written as subscript</li>
+</ul></li>
+<li><p><code>l ↦ v</code>: 'points-to' predicate</p>
+<ul>
+<li>Think of them as heap fragments</li>
+<li>asserts ownership of a singleton heap mapping <code>l</code> to
+<code>v</code>.</li>
+</ul></li>
+<li><p><code>iProp Σ</code>: Type of propositions</p>
+<ul>
+<li>where <code>Σ: gFunctors</code> indicates available resources that
+is part of current context</li>
+<li><code>gFunctors</code>: a global list of resource algebras</li>
+</ul></li>
+<li><p><code>∗</code> is not idempotent</p>
+<ul>
+<li>ie, <code>P ⊢ P * P</code> needn't be true</li>
+<li>NOTE: This is not asterisk ('*')</li>
+</ul></li>
+<li><p><code>iSplitL H</code>: <code>H</code> is given to left subgoal,
+rest to the right subgoal</p>
+<ul>
+<li>Vice-versa for <code>iSplitR</code></li>
+</ul></li>
+<li><p><code>-∗</code>: 'magic wand' operator</p>
+<ul>
+<li>aka 'wand'</li>
+<li><code>P -∗ Q</code> is equivalent to <code>P ⊢ Q</code></li>
+<li>NOTE: the <code>∗</code> is NOT asterisk!</li>
+</ul></li>
+<li><p><code>⊣⊢</code>: bi-entailment</p>
+<ul>
+<li>Like 'iff'</li>
+<li><code>P ⊣⊢ Q</code> means <code>(P -∗ Q) ∧ (Q -∗ P)</code></li>
+</ul></li>
+<li><p><code>P ∗ Q</code>: <code>P</code> and <code>Q</code> are
+disjoint components that make up the state</p>
+<ul>
+<li>We can split off <code>P</code> and <code>Q</code></li>
+<li><code>x ↦ v1 ∗ y ↦ v2</code>: we can be sure that <code>x</code> and
+<code>y</code> are not pointing to same location
+<ul>
+<li>∵ we need to be able to split <code>P</code> and <code>Q</code></li>
+</ul></li>
+</ul></li>
+<li><p><code>⌜ p ⌝</code> turns a coq propositions <code>p</code> into
+an iris proposition</p></li>
+<li><p><code>[⊢ p]</code> turns an iris proposition <code>p</code> into
+a coq proposition</p></li>
+<li><p><code>#</code> can be used to convert a literal to a
+<code>val</code></p>
+<ul>
+<li>Quite useful because <code>val</code> coerces to
+<code>expr</code></li>
+<li>Useful to convert a coq term to a heaplang term</li>
+</ul></li>
+<li><p><code>iIntros "(Hx &amp; Hy &amp; Hz)"</code> can be used instead
+of <code>iIntros "[Hx [Hy Hz]]"</code></p></li>
+</ul>
+<h2 id="nonev-and-somev"><code>NONEV</code> and <code>SOMEV</code></h2>
+<ul>
+<li>Both are <code>val</code> values.</li>
+<li><code>val</code> counterparts of <code>SOME</code> and
+<code>NONE</code></li>
+</ul>
+<pre class="coq"><code>Notation NONEV := (InjLV #())
+Notation SOMEV x := (InjRV x)
+</code></pre>
+<p><code>InjLV</code> itself is a constructor of <code>val</code>
+type:</p>
+<pre class="coq"><code>Inductive expr : Set :=
+    Val : val → expr
+  | Var : string → expr
+  | Rec : binder → binder → expr → expr
+  | App : expr → expr → expr
+  | UnOp : un_op → expr → expr
+  | BinOp : bin_op → expr → expr → expr
+  | If : expr → expr → expr → expr
+  | Pair : expr → expr → expr
+  | Fst : expr → expr
+  | Snd : expr → expr
+  | InjL : expr → expr
+  | InjR : expr → expr
+  | Case : expr → expr → expr → expr
+  | AllocN : expr → expr → expr
+  | Free : expr → expr
+  | Load : expr → expr
+  | Store : expr → expr → expr
+  | CmpXchg : expr → expr → expr → expr
+  | Xchg : expr → expr → expr
+  | FAA : expr → expr → expr
+  | Fork : expr → expr
+  | NewProph : expr
+  | Resolve : expr → expr → expr → expr
+  with val : Set :=
+    LitV : base_lit → val
+  | RecV : binder → binder → expr → val
+  | PairV : val → val → val
+  | InjLV : val → val
+  | InjRV : val → val.
+</code></pre>
+<h2 id="concurrency">Concurrency</h2>
+<ul>
+<li><code>Fork e</code>: create a new thread to run <code>e</code>
+<ul>
+<li><code>e</code> is run only for its side effects. Its return value
+cannot be used</li>
+<li><code>Fork</code> is the only primitive for concurrency in
+HeapLang</li>
+</ul></li>
+<li><code>spawn</code>: takes a thunk that will be executed in a new
+thread
+<ul>
+<li>A handle to the return value of this execution is returned</li>
+<li>This handle can be awaited upon with <code>spawn.join</code></li>
+</ul></li>
+<li><code>par</code>: Run two threads in parallel
+<ul>
+<li>Needs <code>From iris.heap_lang Require Import lib.par</code></li>
+<li>Defined in terms of <code>spawn</code> ??</li>
+<li><code>e1 ||| e2</code> is notation for <code>par e1 e2</code></li>
+<li>Result will be a pair, consisting of return values from running
+<code>e1</code> and <code>e2</code></li>
+</ul></li>
+</ul>
+<h2 id="iris-proof-mode-ipm">Iris Proof Mode (IPM)</h2>
+<p><a
+href="https://gitlab.mpi-sws.org/iris/iris/blob/master/docs/proof_mode.md">https://gitlab.mpi-sws.org/iris/iris/blob/master/docs/proof_mode.md</a></p>
+<ul>
+<li>Involves an extra context named <strong>spatial context</strong>
+<ul>
+<li>This is in addition to the 'normal' context, called non-spatial
+context in iris.</li>
+</ul></li>
+<li>iris tactics tailored to work also with spatial context start with
+<code>i</code>
+<ul>
+<li>Eg: <code>iIntros "H"</code> instead of <code>intros H</code></li>
+<li>Eg: <code>iApply "H"</code> instead of <code>apply H</code></li>
+</ul></li>
+<li>Start IPM: <code>iStartProof</code>
+<ul>
+<li>Many iris tactics will automatically start IPM though.</li>
+</ul></li>
+<li><a
+href="https://github.com/izgzhen/iris-coq/blob/master/ProofMode.md">https://github.com/izgzhen/iris-coq/blob/master/ProofMode.md</a></li>
+</ul>
+<h2 id="rules">Rules</h2>
+<pre><code>P1 ⊢ Q1      P2 ⊢ Q2
+----------------------
+  P1 ∗ P2 ⊢ Q1 ∗ Q2
+</code></pre>
+<p>–</p>
+<pre><code>  {P} e {w. Q}
+---------------- Frame rule
+{P*R} e {w. Q*R}
+
+
+------------------ Val
+{True} v {w. w==v}
+
+
+---------------------- Alloc
+{True} ref(v) {l. l↦v}
+
+
+------------------------ Load
+{l↦v} !l {w. w==v * l↦v}
+
+
+--------------- Store
+{l↦v} l←w {l↦w}
+
+</code></pre>
+<p>Relevance of frame rule:</p>
+<ul>
+<li>It says that if a computation proceeded without involvement of a
+resource, it will still go correctly with its involvement.</li>
+<li>Helps us to compose disjoint computations together.</li>
+</ul>
+<h2 id="heaplang">HeapLang</h2>
+<p>HeapLang: an ML-like language that comes with iris.</p>
+<ul>
+<li>Values are prefixed by <code>#</code>
+<ul>
+<li>Eg: <code>#4</code>, <code>#true</code></li>
+</ul></li>
+<li>Natively supported by HeapLang
+<ul>
+<li>Integers</li>
+<li>Booleans</li>
+<li>Tuples: <code>Fst</code>, <code>Snd</code></li>
+<li>Option: <code>SOME</code>, <code>NONE</code></li>
+</ul></li>
+<li>Is untyped ??
+<ul>
+<li>Eg: <code>if: #true then #() else #false</code> is vaild</li>
+</ul></li>
+<li>Variables are strings</li>
+</ul>
+<h3 id="types">Types</h3>
+<ul>
+<li><code>val</code>
+<ul>
+<li>Scope: <code>%V</code></li>
+</ul></li>
+<li><code>expr</code>
+<ul>
+<li>Scope: <code>%E</code></li>
+</ul></li>
+<li><code>loc</code></li>
+</ul>
+<h3 id="functions">Functions</h3>
+<p>Non-recursive:</p>
+<pre><code>(* add5 := λx. x+5 *)
+λ: &quot;x&quot;, &quot;x&quot; + #5 
+
+(* compose := λx. x+5 *)
+λ: &quot;f&quot; &quot;g&quot;, (λ: &quot;x&quot;, &quot;g&quot; (&quot;f&quot; &quot;x&quot;))
+</code></pre>
+<p>Recursive:</p>
+<pre><code></code></pre>
+<h3 id="references">References</h3>
+<ul>
+<li>'Handles' for dynamically allocated values.</li>
+<li>A <code>ref</code> use does this:
+<ol>
+<li>A location in heap is found for the value</li>
+<li>Value is stored in this location</li>
+<li>This location is returned</li>
+</ol></li>
+<li>Dereference value at a location <code>l</code>: <code>!l</code></li>
+<li>Update value at location <code>l</code> with another value
+<code>v</code>: <code>l &lt;- v</code></li>
+</ul>
+<pre><code>let &quot;v&quot; := ref (#0) in
+&quot;v&quot;
+</code></pre>
+<h3 id="evaluate-an-expr">Evaluate an <code>expr</code></h3>
+<ul>
+<li>Use <code>eval</code> with a fuel parameter</li>
+<li>Eg: <code>eval 10 expvar</code> where <code>10</code> is the
+fuel</li>
+<li><code>inl _</code> if result could be obtained. Otherwise
+<code>inr _</code></li>
+</ul>
+<h3 id="let-expressions">let expressions</h3>
+<p>Not native, but available by means of notations that desugars to
+lambda abstractions.</p>
+<p>Example:</p>
+<pre class="coq"><code>let: &quot;a&quot; := #4 in
+let: &quot;b&quot; := #2 in
+&quot;a&quot; + &quot;b&quot;.
+</code></pre>
+<h3 id="tactics">Tactics</h3>
+<ul>
+<li>iModIntro: related to ghost variables</li>
+<li>iFrame
+<ul>
+<li><a
+href="https://gitlab.mpi-sws.org/iris/iris/-/blob/master/docs/proof_mode.md?ref_type=heads#separation-logic-specific-tactics">https://gitlab.mpi-sws.org/iris/iris/-/blob/master/docs/proof_mode.md?ref_type=heads#separation-logic-specific-tactics</a></li>
+<li>'pairs up hypotheses with pieces of separation sequence'</li>
+</ul></li>
+<li>iStartProof</li>
+<li>iNext: advance to next step in the step-index relation</li>
+<li>iLöb</li>
+<li>iApply, iIntro, iIntros, iDestruct, iExists, iInduction</li>
+<li>iPureIntro</li>
+</ul>
+<h3 id="wp">WP</h3>
+<p><code>WP e {{ v, Φ v }}</code> is the weakest precondition such
+that</p>
+<ul>
+<li>all executions of the expression <code>e</code> would produce a
+value <code>v</code> such that <code>Φ v</code> is true</li>
+<li><code>φ</code> is a proposition</li>
+<li>The <code>{{ v, Φ v }}</code> is the post condition</li>
+</ul>
+<p>Example from <a
+href="https://github.com/logsem/iris-tutorial/blob/master/exercises/specifications.v">here</a>:</p>
+<pre class="coq"><code>Section Proof.         
+  Context `{heapGS Σ}.
+
+Section list.                                     
+  Context `{heapGS Σ}.                            
+
+  Example arith : expr := #1 + #2 + #3 + #4 + #5. 
+
+  Lemma arith_spec : ⊢ WP arith {{ v, ⌜v = #15⌝ }}. 
+  Proof.                                            
+    unfold arith.                                   
+    by wp_pures.                                    
+  Qed.                                              
+End Proof.
+</code></pre>
+<hr />
+<pre><code>{{{ P }}} e {{{ RET v, Q }}}
+
+desugars to
+
+∀ Φ, P -∗ (Q -∗ Φ v) -∗ WP e {{ v, Φ v }}
+
+This is logically equivalent to
+
+P -∗ WP e {{ x, x = v ∗ Q }}
+</code></pre>
+<h3 id="wp-tactics">WP tactics</h3>
+<p><a
+href="https://gitlab.mpi-sws.org/iris/iris/-/blob/master/docs/heap_lang.md#tactics">https://gitlab.mpi-sws.org/iris/iris/-/blob/master/docs/heap_lang.md#tactics</a></p>
+<p>These tactics work when goal is like <code>WP e @ E {{ Q }}</code>
+??</p>
+<ul>
+<li>wp<sub>lam</sub>: removes <code>λ:</code>
+<ul>
+<li>Does application. ie, beta-reduction</li>
+</ul></li>
+<li>wp<sub>rec</sub>: similar to wp<sub>lam</sub>, but for recursive
+function</li>
+<li>wp<sub>let</sub>: zeta-reduction (ie, substitutes let var with its
+definition)</li>
+<li>wp<sub>load</sub>: substitute <code>!x</code> with <code>v</code> if
+there is a <code>x ↦ v</code> in assumption</li>
+<li>wp<sub>store</sub>: move a <code>p &lt;- v</code> to context as
+<code>p ↦ v</code></li>
+<li>wp<sub>seq</sub>: reduce a sequential composition</li>
+<li>wp<sub>alloc</sub></li>
+<li>wp<sub>pair</sub></li>
+<li>wp<sub>fork</sub></li>
+<li>wp<sub>apply</sub></li>
+<li>wp<sub>smartapply</sub></li>
+<li>wp<sub>bind</sub></li>
+<li>wp<sub>pures</sub></li>
+<li>wp<sub>cmpxchgsuc</sub>, wp<sub>cmpxchgfail</sub></li>
+<li>wp<sub>faa</sub></li>
+<li>wp<sub>proj</sub></li>
+<li>wp<sub>inj</sub></li>
+<li>wp<sub>match</sub>, wp<sub>case</sub></li>
+<li>wp<sub>unop</sub>, wp<sub>binop</sub>, wp<sub>op</sub>: reduce
+unary, binary or other arithmetic operation</li>
+<li>wp<sub>pure</sub>: kind of like 'auto' for wp_ tactics</li>
+<li>wp<sub>pures</sub>: do wp<sub>pure</sub> as many times as
+possible</li>
+</ul>
+<ol>
+<li><p>wp<sub>lam</sub></p>
+<pre><code>&quot;Hx&quot; : x ↦ v1
+&quot;Hy&quot; : y ↦ v2
+&quot;Post&quot; : ▷ (x ↦ v2 ∗ y ↦ v1 -∗ Φ #())
+--------------------------------------∗
+WP (λ: &quot;x&quot; &quot;y&quot;, let: &quot;tmp&quot; := ! &quot;x&quot; in &quot;x&quot; &lt;- &quot;y&quot;;; &quot;y&quot; &lt;- &quot;tmp&quot;)%V #x #y
+{{ v, Φ v }}
+</code></pre>
+<p>becomes</p>
+<pre><code>&quot;Hx&quot; : x ↦ v1
+&quot;Hy&quot; : y ↦ v2
+&quot;Post&quot; : x ↦ v2 ∗ y ↦ v1 -∗ Φ #()
+--------------------------------------∗
+WP let: &quot;y&quot; := #y in let: &quot;tmp&quot; := ! #x in #x &lt;- &quot;y&quot;;; &quot;y&quot; &lt;- &quot;tmp&quot;
+{{ v, Φ v }}
+</code></pre></li>
+<li><p>wp<sub>store</sub></p>
+<pre><code>--------------------------------------□
+&quot;Hp&quot; : p ↦ (#x, v)
+&quot;Hl&quot; : is_list l v
+&quot;Post&quot; : (∃ p0 : loc, ⌜InjRV #p = InjRV #p0⌝ ∗
+            ∃ v&#39; : val, p0 ↦ (#(n + x), v&#39;) ∗ is_list (map (Z.add n) l) v&#39;) -∗
+         Φ #()
+--------------------------------------∗
+WP #p &lt;- (#x + #n, v);; inc_list #n v {{ v, Φ v }}
+</code></pre>
+<p>becomes</p>
+<pre><code>--------------------------------------□
+&quot;Hp&quot; : p ↦ (#(x + n), v)
+&quot;Hl&quot; : is_list l v
+&quot;Post&quot; : (∃ p0 : loc, ⌜InjRV #p = InjRV #p0⌝ ∗
+            ∃ v&#39; : val, p0 ↦ (#(n + x), v&#39;) ∗ is_list (map (Z.add n) l) v&#39;) -∗
+         Φ #()
+--------------------------------------∗
+WP inc_list #n v {{ v, Φ v }}
+</code></pre></li>
+</ol>
+<h3 id="interpreter-experimental">Interpreter (experimental)</h3>
+<ul>
+<li>A heaplang interpreter is available as part of the
+<code>iris_unstable</code> package.
+<ul>
+<li>This package contains iris stuff that is not considered ready for
+release.</li>
+</ul></li>
+<li>This interpreter is only development version and is not part of
+standard release.</li>
+<li>Use via <code>exec</code> function with a fuel parameter:
+<ul>
+<li>Eg: <code>Compute (exec 10 exprn)</code></li>
+</ul></li>
+</ul>
+<h2 id="misc">Misc</h2>
+<ul>
+<li>Both of these are same:
+<ul>
+<li><code>iIntros "%Φ [Hx Hy] Post".</code></li>
+<li><code>iIntros (Φ) "[Hx Hy] Post"</code></li>
+</ul></li>
+<li>The name 'Texan triple' for the triple curly brace notation
+<ul>
+<li>It's a lot of curly braces. As in big braces</li>
+<li>Texas is the biggest state in US, so Texan.</li>
+</ul></li>
+</ul>
+<h2 id="doubts">Doubts</h2>
+<ul>
+<li>Meaning of <code>%-&gt;</code></li>
+<li>Meaning of <code>|={⊤}=&gt;</code></li>
+</ul>
+<h1 id="seperation-logic">Seperation Logic</h1>
+<ul>
+<li><p><code>l ↦ v</code> being a precondition for <code>e</code> means
+that <code>e</code> has ownership of <code>l</code>.</p></li>
+<li><p>Concurrency:</p>
+<ul>
+<li>By means of invariants</li>
+</ul></li>
+</ul>
+<h1 id="dbt">Dbt</h1>
+<ul>
+<li>Is there an <code>iCheck</code> to see types of terms?</li>
+</ul>
+</div>
+</body>
+</html>

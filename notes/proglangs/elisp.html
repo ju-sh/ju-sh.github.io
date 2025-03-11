@@ -48,54 +48,72 @@
 <ul>
 <li>Apparently, there is no built-in function composition.</li>
 <li>Comments: Starts with <code>;</code></li>
-<li><code>progn</code>: evaluate each statement in body sequentially and return value from last statement.
+<li><code>progn</code>: evaluate each statement in body sequentially and
+return value from last statement.
 <ul>
 <li>Kind of like comma operator in C.</li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/eintr/progn.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/progn.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/eintr/progn.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/progn.html</a></li>
 </ul></li>
-<li><code>(1- x)</code> is same as <code>(- x 1)</code>. Former form is considered better style.</li>
+<li><code>(1- x)</code> is same as <code>(- x 1)</code>. Former form is
+considered better style.</li>
 <li>Invoke shell commands: <code>(shell-command "cmd")</code></li>
-<li>Search text with regex: <code>(re-search-forward "^* The specific heading")</code></li>
+<li>Search text with regex:
+<code>(re-search-forward "^* The specific heading")</code></li>
 <li>Write text to current buffer: <code>(insert "text")</code></li>
-<li><code>(file-name-nondirectory arg)</code>: get filename and extension
+<li><code>(file-name-nondirectory arg)</code>: get filename and
+extension
 <ul>
 <li>Remove everything after last slash</li>
 </ul></li>
-<li><code>(name)</code> is a function (as in <code>name()</code> in C), but <code>name</code> is a value</li>
-<li><code>let</code> is normal let, <code>let*</code> is like <code>letrec</code></li>
+<li><code>(name)</code> is a function (as in <code>name()</code> in C),
+but <code>name</code> is a value</li>
+<li><code>let</code> is normal let, <code>let*</code> is like
+<code>letrec</code></li>
 <li>elisp has vectors
 <ul>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Vectors.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Vectors.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Vectors.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Vectors.html</a></li>
 </ul></li>
-<li><code>(signal ..)</code> and <code>(error ..)</code>: ways to indicate errors programmatically
+<li><code>(signal ..)</code> and <code>(error ..)</code>: ways to
+indicate errors programmatically
 <ul>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Signaling-Errors.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Signaling-Errors.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Signaling-Errors.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Signaling-Errors.html</a></li>
 </ul></li>
 <li>Emacs:
 <ul>
-<li><code>M-x pp-buffer</code>: pretty-print a buffer with lisp code</li>
+<li><code>M-x pp-buffer</code>: pretty-print a buffer with lisp
+code</li>
 </ul></li>
 </ul>
 <h2 id="temporary-files-and-buffers">Temporary files and buffers</h2>
 <ul>
 <li>Create a temporary file: <code>(make-temp-file "foo")</code>
 <ul>
-<li>By default, Creates a file with <code>"foo"</code> prefix in <code>/tmp/</code> and returns its path as string.</li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Unique-File-Names.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Unique-File-Names.html</a></li>
+<li>By default, Creates a file with <code>"foo"</code> prefix in
+<code>/tmp/</code> and returns its path as string.</li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Unique-File-Names.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Unique-File-Names.html</a></li>
 <li>DBT: Would this file get deleted automatically after use ??</li>
 </ul></li>
-<li><code>(with-temp-file outfile body)</code>: create new buffer, evaluate body there and write to outfile ??</li>
+<li><code>(with-temp-file outfile body)</code>: create new buffer,
+evaluate body there and write to outfile ??</li>
 </ul>
 <h2 id="regions">Regions</h2>
 <ul>
-<li><code>(use-region-p)</code>: returns <code>t</code> if a region is active</li>
-<li><code>(region-beginning)</code>: integer representing start of current region</li>
-<li><code>(region-end)</code>: integer representing end of current region</li>
+<li><code>(use-region-p)</code>: returns <code>t</code> if a region is
+active</li>
+<li><code>(region-beginning)</code>: integer representing start of
+current region</li>
+<li><code>(region-end)</code>: integer representing end of current
+region</li>
 </ul>
 <h2 id="type-conversions">Type conversions</h2>
 <p>Check value of a type:</p>
 <ul>
-<li><code>(integerp v)</code>: return <code>t</code> if <code>v</code> is an integer</li>
+<li><code>(integerp v)</code>: return <code>t</code> if <code>v</code>
+is an integer</li>
 <li><code>(sequencep '(1 2)) ;; t</code>: check if value is a sequence
 <ul>
 <li><code>(sequencep (make-hash-table)) ;; nil</code></li>
@@ -107,15 +125,19 @@
 <li>String to number:
 <ul>
 <li><code>(+ 2 (string-to-number "3")) ;; 5</code></li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/String-Conversion.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/String-Conversion.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/String-Conversion.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/String-Conversion.html</a></li>
 </ul></li>
 </ul>
 <h2 id="funcall-and-apply">funcall and apply</h2>
 <ul>
 <li>Quite similar.</li>
-<li><code>funcall f args</code>: calls function <code>f</code> with <code>args</code> as arguments</li>
-<li><code>apply</code> takes <code>args</code> as a list, but they are passed to <code>f</code> as separate args</li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Calling-Functions.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Calling-Functions.html</a></li>
+<li><code>funcall f args</code>: calls function <code>f</code> with
+<code>args</code> as arguments</li>
+<li><code>apply</code> takes <code>args</code> as a list, but they are
+passed to <code>f</code> as separate args</li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Calling-Functions.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Calling-Functions.html</a></li>
 </ul>
 <pre class="elisp"><code>(funcall &#39;+ 2 3)
 ; 5
@@ -127,11 +149,13 @@
 <ul>
 <li>Printed representation and read syntax
 <ul>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Printed-Representation">https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Printed-Representation</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Printed-Representation">https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Printed-Representation</a></li>
 </ul></li>
 </ul>
 <h3 id="point">Point</h3>
-<p><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Point.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Point.html</a></p>
+<p><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Point.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Point.html</a></p>
 <ul>
 <li>org narrow =&gt; point is restricted to accessible region</li>
 <li>Excursion: Temporarily change point position
@@ -142,7 +166,8 @@
 <p>Associated functions:</p>
 <ul>
 <li><code>(point)</code>: current value of point in buffer</li>
-<li><code>(point-min)</code> / <code>(point-max)</code>: minimum/maximum accessible value of point in buffer</li>
+<li><code>(point-min)</code> / <code>(point-max)</code>: minimum/maximum
+accessible value of point in buffer</li>
 </ul>
 <h3 id="kill-ring">Kill ring</h3>
 <ul>
@@ -156,8 +181,10 @@
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/The-Kill-Ring.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/The-Kill-Ring.html</a></li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Internals-of-Kill-Ring.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Internals-of-Kill-Ring.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/The-Kill-Ring.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/The-Kill-Ring.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Internals-of-Kill-Ring.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Internals-of-Kill-Ring.html</a></li>
 </ul>
 <h2 id="single-characters">Single characters</h2>
 <p>Preceded by a <code>?</code> for syntax.</p>
@@ -167,8 +194,10 @@
 </code></pre>
 <p>See:</p>
 <ul>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Basic-Char-Syntax.html#Basic-Char-Syntax">https://www.gnu.org/software/emacs/manual/html_node/elisp/Basic-Char-Syntax.html#Basic-Char-Syntax</a></li>
-<li><a href="https://emacs.stackexchange.com/questions/30392/what-are-the-symbols-in-emacs-lisp">https://emacs.stackexchange.com/questions/30392/what-are-the-symbols-in-emacs-lisp</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Basic-Char-Syntax.html#Basic-Char-Syntax">https://www.gnu.org/software/emacs/manual/html_node/elisp/Basic-Char-Syntax.html#Basic-Char-Syntax</a></li>
+<li><a
+href="https://emacs.stackexchange.com/questions/30392/what-are-the-symbols-in-emacs-lisp">https://emacs.stackexchange.com/questions/30392/what-are-the-symbols-in-emacs-lisp</a></li>
 </ul>
 <h2 id="lists">Lists</h2>
 <ul>
@@ -180,8 +209,10 @@
 </ul>
 <h3 id="nth-element-of-a-list">nth element of a list</h3>
 <ul>
-<li><code>(nth idx lst)</code>: get <code>n</code>-th element of <code>lst</code></li>
-<li><code>(nthcdr n lst)</code>: Like calling <code>cdr</code> <code>n</code> times on <code>lst</code></li>
+<li><code>(nth idx lst)</code>: get <code>n</code>-th element of
+<code>lst</code></li>
+<li><code>(nthcdr n lst)</code>: Like calling <code>cdr</code>
+<code>n</code> times on <code>lst</code></li>
 </ul>
 <pre class="elisp"><code>(nth 0 &#39;(0 1 2 3 4 5))
 0
@@ -195,16 +226,19 @@
 (nthcdr 10 &#39;(0 1 2 3 4 5))
 nil
 </code></pre>
-<p><a href="https://www.gnu.org/software/emacs/manual/html_node/eintr/nth.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/nth.html</a></p>
+<p><a
+href="https://www.gnu.org/software/emacs/manual/html_node/eintr/nth.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/nth.html</a></p>
 <h3 id="car-and-cdr"><code>car</code> and <code>cdr</code></h3>
 <ul>
 <li>Head and tail functions for lists.</li>
 <li>Name is due to historical reasons: IBM 704.
 <ul>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/eintr/Strange-Names.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/Strange-Names.html</a>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/eintr/Strange-Names.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/Strange-Names.html</a>
 <ul>
 <li>car: contents of address part of register</li>
-<li>cdr (pronounced 'could-er'): contents of decrement part of register</li>
+<li>cdr (pronounced 'could-er'): contents of decrement part of
+register</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -231,7 +265,8 @@ nil
 (cdr &#39;())
 ; nil
 </code></pre>
-<p><a href="https://www.gnu.org/software/emacs/manual/html_node/eintr/car-_0026-cdr.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/car-_0026-cdr.html</a></p>
+<p><a
+href="https://www.gnu.org/software/emacs/manual/html_node/eintr/car-_0026-cdr.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/car-_0026-cdr.html</a></p>
 <h2 id="strings">Strings</h2>
 <ul>
 <li>Find length of a string: <code>string-width</code>
@@ -241,7 +276,8 @@ nil
 <li><code>(string-width "\n") ; 0</code></li>
 </ul></li>
 <li>Make a string from a char: <code>(string ?a) ; "a"</code></li>
-<li>Repeat a character n times <code>(make-string &lt;count&gt; &lt;char&gt;)</code>
+<li>Repeat a character n times
+<code>(make-string &lt;count&gt; &lt;char&gt;)</code>
 <ul>
 <li><code>(make-string 2 ?a) ; "aa"</code></li>
 </ul></li>
@@ -259,15 +295,18 @@ nil
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Creating-Strings.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Creating-Strings.html</a></li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Shell-Arguments.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Shell-Arguments.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Creating-Strings.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Creating-Strings.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Shell-Arguments.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Shell-Arguments.html</a></li>
 </ul>
 <h3 id="uppercase-and-lowercase">Uppercase and lowercase</h3>
 <ul>
 <li>Convert string/char to lowercase: downcase</li>
 <li>Convert string/char to uppercase: upcase</li>
 </ul>
-<p>If argument is char, return value is int for both <code>downcase</code> and <code>upcase</code>.</p>
+<p>If argument is char, return value is int for both
+<code>downcase</code> and <code>upcase</code>.</p>
 <h3 id="splitting-a-string">Splitting a string</h3>
 <p><code>split-string</code></p>
 <ul>
@@ -279,7 +318,8 @@ nil
 (split-string &quot;a-b c&quot; &quot;-&quot;)
 ; (&quot;a&quot; &quot;b c&quot;)
 </code></pre>
-<p><a href="https://stackoverflow.com/questions/6236196/elisp-split-string-function-to-split-a-string-by-character">https://stackoverflow.com/questions/6236196/elisp-split-string-function-to-split-a-string-by-character</a></p>
+<p><a
+href="https://stackoverflow.com/questions/6236196/elisp-split-string-function-to-split-a-string-by-character">https://stackoverflow.com/questions/6236196/elisp-split-string-function-to-split-a-string-by-character</a></p>
 <h2 id="functions">Functions</h2>
 <pre class="elisp"><code>defun foo () (5)
 (foo)  ;5
@@ -319,14 +359,16 @@ nil
 <ul>
 <li>Paired list of elements</li>
 <li>Effectively just list which can be treated specially</li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Plists-and-Alists.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Plists-and-Alists.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Plists-and-Alists.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Plists-and-Alists.html</a></li>
 </ul>
 <p>Functions:</p>
 <ul>
 <li>plist-put: add new key-element pair</li>
 <li>plist-get: add element given a key</li>
 <li>plist-member: check membership for a key</li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Plist-Access.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Plist-Access.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Plist-Access.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Plist-Access.html</a></li>
 </ul>
 <p>—</p>
 <p>In:</p>
@@ -340,32 +382,36 @@ nil
 </ul>
 <p>—</p>
 <p>Examples:</p>
-<div class="sourceCode" id="cb14" data-org-language="lisp"><pre class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>(setq-local myplist &#39;(<span class="st">&quot;pine&quot;</span> <span class="st">&quot;cones&quot;</span> <span class="st">&quot;numbers&quot;</span> (<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>) <span class="st">&quot;color&quot;</span> <span class="st">&quot;blue&quot;</span>))</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="co">; (&quot;pine&quot; &quot;cones&quot; &quot;numbers&quot; (1 2 3) &quot;color&quot; &quot;blue&quot;)</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>(setq-local myplist (plist-put myplist <span class="st">&quot;vive&quot;</span> <span class="st">&quot;la&quot;</span>))</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a><span class="co">; (&quot;pine&quot; &quot;cones&quot; &quot;numbers&quot; (1 2 3) &quot;color&quot; &quot;blue&quot; &quot;vive&quot; &quot;la&quot;)</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>(setq-local l myplist)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a><span class="co">; (&quot;pine&quot; &quot;cones&quot; &quot;numbers&quot; (1 2 3) &quot;color&quot; &quot;blue&quot; &quot;vive&quot; &quot;la&quot;)</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a>(plist-get &#39;(foo <span class="dv">4</span>) &#39;foo)</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true"></a><span class="co">; 4</span></span></code></pre></div>
+<div class="sourceCode" id="cb14" data-org-language="lisp"><pre
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>(setq-local myplist &#39;(<span class="st">&quot;pine&quot;</span> <span class="st">&quot;cones&quot;</span> <span class="st">&quot;numbers&quot;</span> (<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>) <span class="st">&quot;color&quot;</span> <span class="st">&quot;blue&quot;</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">; (&quot;pine&quot; &quot;cones&quot; &quot;numbers&quot; (1 2 3) &quot;color&quot; &quot;blue&quot;)</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>(setq-local myplist (plist-put myplist <span class="st">&quot;vive&quot;</span> <span class="st">&quot;la&quot;</span>))</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">; (&quot;pine&quot; &quot;cones&quot; &quot;numbers&quot; (1 2 3) &quot;color&quot; &quot;blue&quot; &quot;vive&quot; &quot;la&quot;)</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>(setq-local l myplist)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">; (&quot;pine&quot; &quot;cones&quot; &quot;numbers&quot; (1 2 3) &quot;color&quot; &quot;blue&quot; &quot;vive&quot; &quot;la&quot;)</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>(plist-get &#39;(foo <span class="dv">4</span>) <span class="dt">&#39;foo</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">; 4</span></span></code></pre></div>
 <h2 id="alist-association-list">Alist (Association list)</h2>
 <ul>
 <li>Similar to plists</li>
 <li>Syntax: <code>(key . value)</code></li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Association-Lists.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Association-Lists.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Association-Lists.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Association-Lists.html</a></li>
 <li>Just a fancy list?? Allows multiple entries with same 'key'</li>
 </ul>
-<div class="sourceCode" id="cb15" data-org-language="lisp"><pre class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>(setq-local myalist</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a>  &#39;((<span class="st">&quot;name&quot;</span> . <span class="st">&quot;joe&quot;</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a>   (<span class="st">&quot;age&quot;</span> . <span class="dv">50</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a>   (<span class="st">&quot;planet&quot;</span> . <span class="st">&quot;earth&quot;</span>)))</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true"></a><span class="co">; ((&quot;name&quot; . &quot;joe&quot;) (&quot;age&quot; . 50) (&quot;planet&quot; . &quot;earth&quot;))</span></span></code></pre></div>
+<div class="sourceCode" id="cb15" data-org-language="lisp"><pre
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>(setq-local myalist</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  &#39;((<span class="st">&quot;name&quot;</span> . <span class="st">&quot;joe&quot;</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>   (<span class="st">&quot;age&quot;</span> . <span class="dv">50</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>   (<span class="st">&quot;planet&quot;</span> . <span class="st">&quot;earth&quot;</span>)))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">; ((&quot;name&quot; . &quot;joe&quot;) (&quot;age&quot; . 50) (&quot;planet&quot; . &quot;earth&quot;))</span></span></code></pre></div>
 <p>Functions:</p>
 <ul>
-<li><code>(assq key alist)</code>: return element of alist whose <code>car</code> is <code>key</code></li>
+<li><code>(assq key alist)</code>: return element of alist whose
+<code>car</code> is <code>key</code></li>
 </ul>
 <p>—</p>
 <p>Folding over an alist (courtesy of chatgpt):</p>
@@ -386,7 +432,8 @@ nil
 <ul>
 <li>ie, like python dictionary</li>
 </ul></li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Hash-Tables">https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Hash-Tables</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Hash-Tables">https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Hash-Tables</a></li>
 </ul>
 <h3 id="creating-hash-tables">Creating hash tables</h3>
 <ul>
@@ -400,33 +447,37 @@ nil
 <li><code>#s(hash-table size 50 data (key1 val1) (key2 (val2)</code></li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb17" data-org-language="lisp"><pre class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>#s(<span class="kw">hash-table</span> data (key1 val1 key2 <span class="dv">300</span>))</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a><span class="co">; #s(hash-table size 65 test eql rehash-size 1.5 rehash-threshold 0.8125 data (key1 val1 key2 300 ...))</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a>#s(<span class="kw">hash-table</span> (key1 val1 key2 <span class="dv">300</span>))</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a><span class="co">; #s(hash-table size 65 test eql rehash-size 1.5 rehash-threshold 0.8125 data ( ...))</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true"></a>#s(key1 val1 key2 <span class="dv">300</span>)</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true"></a><span class="co">; #s(key1 val1 key2 300)</span></span></code></pre></div>
+<div class="sourceCode" id="cb17" data-org-language="lisp"><pre
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>#s(<span class="kw">hash-table</span> data (key1 val1 key2 <span class="dv">300</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">; #s(hash-table size 65 test eql rehash-size 1.5 rehash-threshold 0.8125 data (key1 val1 key2 300 ...))</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>#s(<span class="kw">hash-table</span> (key1 val1 key2 <span class="dv">300</span>))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">; #s(hash-table size 65 test eql rehash-size 1.5 rehash-threshold 0.8125 data ( ...))</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>#s(key1 val1 key2 <span class="dv">300</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">; #s(key1 val1 key2 300)</span></span></code></pre></div>
 <p>Example usage:</p>
-<div class="sourceCode" id="cb18" data-org-language="lisp"><pre class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a>(<span class="kw">make-hash-table</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a><span class="co">; #s(hash-table size 65 test eql rehash-size 1.5 rehash-threshold 0.8125 data ( ...))</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a>#s(<span class="kw">hash-table</span> size <span class="dv">30</span> data (key1 val1 key2 <span class="dv">300</span>))</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a><span class="co">; #s(hash-table size 30 test eql rehash-size 1.5 rehash-threshold 0.8125 data (key1 val1 key2 300 ...))</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a>(setq-local myht #s(<span class="kw">hash-table</span> size <span class="dv">30</span> data (<span class="st">&quot;a&quot;</span> <span class="dv">10</span> <span class="st">&quot;b&quot;</span> <span class="dv">20</span>)))</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true"></a><span class="co">; #s(hash-table size 30 test eql rehash-size 1.5 rehash-threshold 0.8125 data (&quot;a&quot; 10 &quot;b&quot; 20 ...))</span></span></code></pre></div>
+<div class="sourceCode" id="cb18" data-org-language="lisp"><pre
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">make-hash-table</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">; #s(hash-table size 65 test eql rehash-size 1.5 rehash-threshold 0.8125 data ( ...))</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>#s(<span class="kw">hash-table</span> size <span class="dv">30</span> data (key1 val1 key2 <span class="dv">300</span>))</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">; #s(hash-table size 30 test eql rehash-size 1.5 rehash-threshold 0.8125 data (key1 val1 key2 300 ...))</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>(setq-local myht #s(<span class="kw">hash-table</span> size <span class="dv">30</span> data (<span class="st">&quot;a&quot;</span> <span class="dv">10</span> <span class="st">&quot;b&quot;</span> <span class="dv">20</span>)))</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">; #s(hash-table size 30 test eql rehash-size 1.5 rehash-threshold 0.8125 data (&quot;a&quot; 10 &quot;b&quot; 20 ...))</span></span></code></pre></div>
 <h3 id="functions-1">Functions</h3>
 <ul>
 <li><code>gethash key table</code></li>
 <li><code>puthash key table</code></li>
 <li><code>remhash key table</code></li>
 <li><code>clrhash table</code>: empty the hash table</li>
-<li><code>maphash function table</code>: in-place map over hashtable</li>
+<li><code>maphash function table</code>: in-place map over
+hashtable</li>
 <li><code>hash-table-keys table</code>: get all keys of hashtable</li>
 </ul>
-<p><a href="https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Hash-Access">https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Hash-Access</a></p>
+<p><a
+href="https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Hash-Access">https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Hash-Access</a></p>
 <pre class="elisp"><code>(hash-table-keys #s(hash-table data (&quot;a&quot; 1 &quot;b&quot; 2)))
 ; (&quot;a&quot; &quot;b&quot;)
 
@@ -444,7 +495,8 @@ nil
 ; t
 </code></pre>
 <h2 id="text-properties-in-strings">Text properties in strings</h2>
-<p><a href="https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Text-Props-and-Strings">https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Text-Props-and-Strings</a></p>
+<p><a
+href="https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Text-Props-and-Strings">https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Text-Props-and-Strings</a></p>
 <p>For example, the following means:</p>
 <pre class="elisp"><code>#(&quot;foo bar&quot; 0 3 (face bold) 3 4 nil 4 7 (face italic))
 </code></pre>
@@ -476,26 +528,33 @@ nil
 </table>
 <h2 id="conditionals">Conditionals</h2>
 <ul>
-<li><code>if</code> statement: <code>(if (condition) (then-clause) (else-clause))</code>
+<li><code>if</code> statement:
+<code>(if (condition) (then-clause) (else-clause))</code>
 <ul>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/eintr/else.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/else.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/eintr/else.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/else.html</a></li>
 </ul></li>
 <li><code>when</code>: like <code>if</code> without else</li>
-<li><code>unless</code>: like <code>if</code> with <em>only</em> else</li>
+<li><code>unless</code>: like <code>if</code> with <em>only</em>
+else</li>
 </ul>
 <h2 id="equality-check">Equality check</h2>
 <ul>
 <li>eq: equal only both args are the <em>same</em> object</li>
-<li>eql: For non-atomic types, looks inside for <code>eq</code>-style equality ??
+<li>eql: For non-atomic types, looks inside for <code>eq</code>-style
+equality ??
 <ul>
-<li>ie, not too strict at top level, but is like <code>eq</code> for looking at internal structure ??</li>
+<li>ie, not too strict at top level, but is like <code>eq</code> for
+looking at internal structure ??</li>
 </ul></li>
 <li>equal</li>
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://stackoverflow.com/questions/547436/whats-the-difference-between-eq-eql-equal-and-equalp-in-common-lisp">https://stackoverflow.com/questions/547436/whats-the-difference-between-eq-eql-equal-and-equalp-in-common-lisp</a></li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Equality-Predicates.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Equality-Predicates.html</a></li>
+<li><a
+href="https://stackoverflow.com/questions/547436/whats-the-difference-between-eq-eql-equal-and-equalp-in-common-lisp">https://stackoverflow.com/questions/547436/whats-the-difference-between-eq-eql-equal-and-equalp-in-common-lisp</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Equality-Predicates.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Equality-Predicates.html</a></li>
 </ul>
 <h3 id="eq"><code>eq</code></h3>
 <pre class="elisp"><code>(setq-local a 3)
@@ -527,18 +586,25 @@ nil
 <li><code>sqrt</code>: square root</li>
 </ul>
 <h2 id="advising-functions">Advising functions</h2>
-<p><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Advising-Functions.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Advising-Functions.html</a></p>
-<p>Change the default behaviour of an existing function ('by giving some advice') rather than redefining the whole function.</p>
-<h2 id="codes-for-interactive-prompts">Codes for interactive prompts</h2>
+<p><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Advising-Functions.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Advising-Functions.html</a></p>
+<p>Change the default behaviour of an existing function ('by giving some
+advice') rather than redefining the whole function.</p>
+<h2 id="codes-for-interactive-prompts">Codes for interactive
+prompts</h2>
 <p>First character of argument of <code>(interactive)</code>.</p>
-<p><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Interactive-Codes.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Interactive-Codes.html</a></p>
+<p><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Interactive-Codes.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Interactive-Codes.html</a></p>
 <ul>
-<li><code>(interactive)</code>: function can be called with <code>M-x</code> as well
+<li><code>(interactive)</code>: function can be called with
+<code>M-x</code> as well
 <ul>
-<li>What does <code>(interactive "p")</code> mean?: See <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Interactive-Codes.html#Interactive-Codes">this</a></li>
+<li>What does <code>(interactive "p")</code> mean?: See <a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Interactive-Codes.html#Interactive-Codes">this</a></li>
 </ul></li>
 </ul>
-<h2 id="read-input-from-user-interactively">Read input from user interactively:</h2>
+<h2 id="read-input-from-user-interactively">Read input from user
+interactively:</h2>
 <table>
 <thead>
 <tr class="header">
@@ -577,7 +643,8 @@ nil
 </tr>
 </tbody>
 </table>
-<h2 id="dotimes-and-dolist"><code>dotimes</code> and <code>dolist</code></h2>
+<h2 id="dotimes-and-dolist"><code>dotimes</code> and
+<code>dolist</code></h2>
 <pre class="elisp"><code>dotimes (counter limit result) body
 </code></pre>
 <ul>
@@ -597,7 +664,8 @@ nil
 <pre><code>for list_elem in list_name:
   operation(list_elem)
 </code></pre>
-<h2 id="write-part-of-a-buffer-to-a-file">Write part of a buffer to a file</h2>
+<h2 id="write-part-of-a-buffer-to-a-file">Write part of a buffer to a
+file</h2>
 <pre class="elisp"><code>; Overwrite
 (write-region (point-min) (point-max) &quot;outfilename&quot;)
 
@@ -608,11 +676,15 @@ nil
 <p>Append a string to a file with <code>write-region</code>:</p>
 <pre class="elisp"><code>(write-region &lt;string&gt; nil &lt;filename&gt; &#39;append)
 </code></pre>
-<p><a href="https://stackoverflow.com/questions/17376706/in-emacs-lisp-how-can-i-append-a-string-to-a-file-that-i-dont-like-to-open">https://stackoverflow.com/questions/17376706/in-emacs-lisp-how-can-i-append-a-string-to-a-file-that-i-dont-like-to-open</a></p>
-<h2 id="run-an-external-command-and-get-its-output">Run an external command and get its output</h2>
+<p><a
+href="https://stackoverflow.com/questions/17376706/in-emacs-lisp-how-can-i-append-a-string-to-a-file-that-i-dont-like-to-open">https://stackoverflow.com/questions/17376706/in-emacs-lisp-how-can-i-append-a-string-to-a-file-that-i-dont-like-to-open</a></p>
+<h2 id="run-an-external-command-and-get-its-output">Run an external
+command and get its output</h2>
 <ul>
-<li><code>shell-command-to-string</code>: run a command and gets its output as a string</li>
-<li><code>shell-command</code>: just run the command. Don't use its output</li>
+<li><code>shell-command-to-string</code>: run a command and gets its
+output as a string</li>
+<li><code>shell-command</code>: just run the command. Don't use its
+output</li>
 <li><code>async-shell-command</code></li>
 </ul>
 <pre class="elisp"><code>(message (shell-command-to-string &quot;/bin/echo -n hello&quot;))
@@ -622,7 +694,8 @@ nil
 <ul>
 <li>There is no boolean type in elisp
 <ul>
-<li><a href="http://xahlee.info/emacs/emacs/elisp_boolean.html">http://xahlee.info/emacs/emacs/elisp_boolean.html</a></li>
+<li><a
+href="http://xahlee.info/emacs/emacs/elisp_boolean.html">http://xahlee.info/emacs/emacs/elisp_boolean.html</a></li>
 </ul></li>
 <li>Following can stand in:
 <ul>
@@ -644,46 +717,59 @@ nil
 </code></pre>
 <h2 id="managing-parenthesis">Managing parenthesis</h2>
 <ul>
-<li>Find unbalanced parenthesis (vanilla emacs): <code>M-x check-parens</code></li>
+<li>Find unbalanced parenthesis (vanilla emacs):
+<code>M-x check-parens</code></li>
 <li>Third party packages: paredit, lispy
 <ul>
-<li><a href="http://danmidwood.com/content/2014/11/21/animated-paredit.html">http://danmidwood.com/content/2014/11/21/animated-paredit.html</a></li>
+<li><a
+href="http://danmidwood.com/content/2014/11/21/animated-paredit.html">http://danmidwood.com/content/2014/11/21/animated-paredit.html</a></li>
 </ul></li>
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Parentheses.html">https://www.gnu.org/software/emacs/manual/html_node/emacs/Parentheses.html</a></li>
-<li>Stuff available in vanilla emacs itself: <a href="http://web.archive.org/web/20160712150651/https://cl-cookbook.sourceforge.net/emacs-ide.html">http://web.archive.org/web/20160712150651/https://cl-cookbook.sourceforge.net/emacs-ide.html</a></li>
-<li><a href="https://www.emacswiki.org/emacs/NavigatingParentheses">https://www.emacswiki.org/emacs/NavigatingParentheses</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Parentheses.html">https://www.gnu.org/software/emacs/manual/html_node/emacs/Parentheses.html</a></li>
+<li>Stuff available in vanilla emacs itself: <a
+href="http://web.archive.org/web/20160712150651/https://cl-cookbook.sourceforge.net/emacs-ide.html">http://web.archive.org/web/20160712150651/https://cl-cookbook.sourceforge.net/emacs-ide.html</a></li>
+<li><a
+href="https://www.emacswiki.org/emacs/NavigatingParentheses">https://www.emacswiki.org/emacs/NavigatingParentheses</a></li>
 </ul>
 <h2 id="handling-time-and-date">Handling time and date</h2>
-<div class="sourceCode" id="cb30" data-org-language="lisp"><pre class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a>(current-time)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true"></a><span class="co">; (26423 47784 405993 901000)</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true"></a>(decode-time)</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true"></a><span class="co">; (42 48 2 16 11 2024 6 nil 19800)</span></span></code></pre></div>
+<div class="sourceCode" id="cb30" data-org-language="lisp"><pre
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>(current-time)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co">; (26423 47784 405993 901000)</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>(decode-time)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">; (42 48 2 16 11 2024 6 nil 19800)</span></span></code></pre></div>
 <ul>
-<li>format-time-string: formats current datetime if no datetime argument is given</li>
+<li>format-time-string: formats current datetime if no datetime argument
+is given</li>
 </ul>
-<div class="sourceCode" id="cb31" data-org-language="lisp"><pre class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a>(format-time-string <span class="st">&quot;%Y-%m-%d&quot;</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true"></a><span class="st">&quot;2024-11-16&quot;</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true"></a>(format-time-string <span class="st">&quot;%Y-%m-%d&quot;</span> (decode-time))</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true"></a><span class="st">&quot;1970-01-07&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb32" data-org-language="lisp"><pre class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a>(decode-time)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true"></a><span class="co">; (59 6 3 16 11 2024 6 nil 19800)</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true"></a>(encode-time (decode-time))</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true"></a><span class="co">; (26423 48961)</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true"></a></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true"></a>(format-time-string <span class="st">&quot;%Y-%m-%d&quot;</span> (encode-time (decode-time)))</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true"></a><span class="co">; &quot;2024-11-16&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb31" data-org-language="lisp"><pre
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>(format-time-string <span class="st">&quot;%Y-%m-%d&quot;</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;2024-11-16&quot;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>(format-time-string <span class="st">&quot;%Y-%m-%d&quot;</span> (decode-time))</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;1970-01-07&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb32" data-org-language="lisp"><pre
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>(decode-time)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">; (59 6 3 16 11 2024 6 nil 19800)</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>(encode-time (decode-time))</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co">; (26423 48961)</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>(format-time-string <span class="st">&quot;%Y-%m-%d&quot;</span> (encode-time (decode-time)))</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co">; &quot;2024-11-16&quot;</span></span></code></pre></div>
 <p>See:</p>
 <ul>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-of-Day.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-of-Day.html</a></li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Parsing.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Parsing.html</a></li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Calculations.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Calculations.html</a></li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Conversion.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Conversion.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-of-Day.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-of-Day.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Parsing.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Parsing.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Calculations.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Calculations.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Conversion.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Conversion.html</a></li>
 </ul>
 <h2 id="car-and-cdr-1">car and cdr</h2>
 <ul>
@@ -693,26 +779,29 @@ nil
 </ul></li>
 <li><code>cdr</code>: tail of list</li>
 </ul>
-<div class="sourceCode" id="cb33" data-org-language="lisp"><pre class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a>(<span class="kw">car</span> &#39;(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>))</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a><span class="co">; 0</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true"></a>(<span class="kw">car</span> <span class="kw">nil</span>)</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true"></a><span class="co">; nil</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true"></a></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true"></a>(<span class="kw">cdr</span> &#39;(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>))</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true"></a><span class="co">; (1 2 3)</span></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true"></a></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true"></a>(<span class="kw">cdr</span> (<span class="kw">cdr</span> &#39;(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>)))</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true"></a><span class="co">; (2 3)</span></span></code></pre></div>
+<div class="sourceCode" id="cb33" data-org-language="lisp"><pre
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">car</span> &#39;(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">; 0</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>(<span class="kw">car</span> <span class="kw">nil</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co">; nil</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>(<span class="kw">cdr</span> &#39;(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>))</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co">; (1 2 3)</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>(<span class="kw">cdr</span> (<span class="kw">cdr</span> &#39;(<span class="dv">0</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>)))</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="co">; (2 3)</span></span></code></pre></div>
 <ul>
-<li><code>nthcdr</code> repeats <code>cdr</code> function <code>n</code> times</li>
+<li><code>nthcdr</code> repeats <code>cdr</code> function <code>n</code>
+times</li>
 </ul>
 <h2 id="nth-element-in-a-listtuple">nth element in a list/tuple</h2>
 <ul>
 <li>Indexing starts from zero.</li>
 </ul>
-<div class="sourceCode" id="cb34" data-org-language="lisp"><pre class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true"></a>(<span class="kw">nth</span> <span class="dv">2</span> &#39;(<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>))</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true"></a><span class="co">; 3</span></span></code></pre></div>
+<div class="sourceCode" id="cb34" data-org-language="lisp"><pre
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">nth</span> <span class="dv">2</span> &#39;(<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>))</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">; 3</span></span></code></pre></div>
 <h2 id="file-paths">File paths</h2>
 <pre class="elisp"><code>(file-name-directory &quot;/home/user/Desktop/file.ext&quot;)
 ; &quot;/home/user/Desktop/&quot;
@@ -733,11 +822,14 @@ nil
 </code></pre>
 <p>See:</p>
 <ul>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Name-Components.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Name-Components.html</a></li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Directory-Names.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Directory-Names.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Name-Components.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Name-Components.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Directory-Names.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Directory-Names.html</a></li>
 </ul>
 <h2 id="let-expressions"><code>let</code> expressions</h2>
-<p>See: <a href="https://www.gnu.org/software/emacs/manual/html_node/eintr/let.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/let.html</a></p>
+<p>See: <a
+href="https://www.gnu.org/software/emacs/manual/html_node/eintr/let.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/let.html</a></p>
 <h3 id="let"><code>let</code></h3>
 <pre class="elisp"><code>(let 
   ((x 1)
@@ -762,35 +854,47 @@ nil
 ; command-execute(eval-expression)
 </code></pre>
 <h3 id="let-1"><code>let*</code></h3>
-<p>Unlike <code>let</code>, bindings can be defined dependent on other values mentioned in the same <code>let*</code> expression.</p>
+<p>Unlike <code>let</code>, bindings can be defined dependent on other
+values mentioned in the same <code>let*</code> expression.</p>
 <pre class="elisp"><code>(let*
   ((x 1)
    (y (+ x 2)))
   (message (format &quot;x=%d, y=%d&quot; x y)))
 ; x=1, y=3
 </code></pre>
-<p><a href="https://emacs.stackexchange.com/questions/42449/what-does-let-let-asterisk-mean-in-elisp">https://emacs.stackexchange.com/questions/42449/what-does-let-let-asterisk-mean-in-elisp</a></p>
+<p><a
+href="https://emacs.stackexchange.com/questions/42449/what-does-let-let-asterisk-mean-in-elisp">https://emacs.stackexchange.com/questions/42449/what-does-let-let-asterisk-mean-in-elisp</a></p>
 <h2 id="copy-whole-buffer">Copy whole buffer</h2>
-<p>These functions update the kill ring. To just delete text without disturbing kill ring use functions that start with <code>kill-</code>.</p>
+<p>These functions update the kill ring. To just delete text without
+disturbing kill ring use functions that start with
+<code>kill-</code>.</p>
 <ul>
-<li>Copy without deleting: <code>(copy-region-as-kill (point-min) (point-max))</code></li>
-<li>Copy with deleting: <code>(kill-region (point-min) (point-max))</code></li>
+<li>Copy without deleting:
+<code>(copy-region-as-kill (point-min) (point-max))</code></li>
+<li>Copy with deleting:
+<code>(kill-region (point-min) (point-max))</code></li>
 </ul>
-<p><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Kill-Functions.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Kill-Functions.html</a></p>
+<p><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Kill-Functions.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Kill-Functions.html</a></p>
 <h2 id="writing-to-file">Writing to file</h2>
-<p><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Writing-to-Files.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Writing-to-Files.html</a></p>
+<p><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Writing-to-Files.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Writing-to-Files.html</a></p>
 <h2 id="lisp-interaction-mode">Lisp interaction mode</h2>
-<p>Handy to try out lisp snippets. Maybe in <code>*scratch*</code> buffer.</p>
+<p>Handy to try out lisp snippets. Maybe in <code>*scratch*</code>
+buffer.</p>
 <ul>
 <li>Enable mode: <code>M-x lisp-interaction-mode</code></li>
 <li><code>C-j</code>: Evaluate last line</li>
 </ul>
-<p><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Lisp-Interaction.html">https://www.gnu.org/software/emacs/manual/html_node/emacs/Lisp-Interaction.html</a></p>
+<p><a
+href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Lisp-Interaction.html">https://www.gnu.org/software/emacs/manual/html_node/emacs/Lisp-Interaction.html</a></p>
 <hr />
 <p>References:</p>
 <ul>
-<li><a href="https://www.csie.ntu.edu.tw/~course/10420/Resources/lp/node34.html">https://www.csie.ntu.edu.tw/~course/10420/Resources/lp/node34.html</a></li>
-<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Iteration.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Iteration.html</a></li>
+<li><a
+href="https://www.csie.ntu.edu.tw/~course/10420/Resources/lp/node34.html">https://www.csie.ntu.edu.tw/~course/10420/Resources/lp/node34.html</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Iteration.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Iteration.html</a></li>
 </ul>
 <h2 id="common-lisp">Common lisp</h2>
 <p>May not be true for elisp.</p>
@@ -805,28 +909,35 @@ nil
 <ul>
 <li>dash: like a bettern cl.el ??
 <ul>
-<li><a href="https://github.com/magnars/dash.el">https://github.com/magnars/dash.el</a></li>
+<li><a
+href="https://github.com/magnars/dash.el">https://github.com/magnars/dash.el</a></li>
 </ul></li>
 <li>s.el: string manipulation
 <ul>
-<li><a href="https://github.com/magnars/s.el">https://github.com/magnars/s.el</a></li>
+<li><a
+href="https://github.com/magnars/s.el">https://github.com/magnars/s.el</a></li>
 </ul></li>
 </ul>
 <h2 id="file-system-management">File system management</h2>
 <ul>
 <li><code>(directory-files "/foo" nil directory-files-no-dot-files-regexp)</code></li>
 </ul>
-<p><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Contents-of-Directories.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Contents-of-Directories.html</a></p>
+<p><a
+href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Contents-of-Directories.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Contents-of-Directories.html</a></p>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://github.com/bbatsov/emacs-lisp-style-guide">An elisp style guide</a></li>
-<li>Emacs common lisp emulation: <a href="https://www.gnu.org/software/emacs/manual/html_node/cl/">https://www.gnu.org/software/emacs/manual/html_node/cl/</a></li>
-<li><a href="https://www.gnu.org/software/emacs/manual/pdf/eintr.pdf">https://www.gnu.org/software/emacs/manual/pdf/eintr.pdf</a></li>
+<li><a href="https://github.com/bbatsov/emacs-lisp-style-guide">An elisp
+style guide</a></li>
+<li>Emacs common lisp emulation: <a
+href="https://www.gnu.org/software/emacs/manual/html_node/cl/">https://www.gnu.org/software/emacs/manual/html_node/cl/</a></li>
+<li><a
+href="https://www.gnu.org/software/emacs/manual/pdf/eintr.pdf">https://www.gnu.org/software/emacs/manual/pdf/eintr.pdf</a></li>
 </ul>
 <h1 id="common-lisp-1">Common lisp</h1>
 <ul>
 <li>Run lisp from a file: <code>sbcl --script inp.lisp</code></li>
-<li>Load lisp from file and start repl: <code>sbcl --load inp.lisp</code></li>
+<li>Load lisp from file and start repl:
+<code>sbcl --load inp.lisp</code></li>
 <li><code>(print)</code>: print strings</li>
 </ul>
 </div>
