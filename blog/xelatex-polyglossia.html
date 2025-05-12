@@ -36,8 +36,17 @@
 </header>
 
 <ul>
+    <li>Date created: 04-Jun-2022</li>
     </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/tex unicode.html">tex unicode</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
@@ -47,245 +56,151 @@ About using polyglossia with XeLaTex for non-Latin scripts.
 <hr/>
 
 <div id="content-container">
-<p>I once needed to use non-Latin characters in a pdf document to be
-generated with LaTeX. That meant <code>xelatex</code> being more
-preferable as the tex engine than <code>pdflatex</code> since the former
-has native unicode support and ability to use system fonts. <a
-href="https://www.tug.org/levels.html">⁴</a></p>
-<p>Having settled on <code>xelatex</code>, I spent some time online and
-saw that there were two options to write non-English (or non-Latin
-characters, rather) documents: <a
-href="https://ctan.org/pkg/babel">babel</a> and <a
-href="https://ctan.org/pkg/polyglossia">polyglossia</a>.</p>
-<p>I decided to try polyglossia though I had never used babel
-before.</p>
-<p>Polyglossia supports 80 languages <a
-href="https://github.com/reutenauer/polyglossia/blob/master/doc/languages.csv">⁶</a>
-at the time of writing this blog post (I originally wrote this in
-January 2022).</p>
-<p>I used multiple writing scripts, each of which needed a different set
-of glyphs.</p>
-<p>(Empty boxes will appear instead of the glyphs if the font being used
-doesn't have those glyphs.)</p>
+<p>I once needed to use non-Latin characters in a pdf document to be generated with LaTeX. That meant <code>xelatex</code> being more preferable as the tex engine than <code>pdflatex</code> since the former has native unicode support and ability to use system fonts. <a href="https://www.tug.org/levels.html">⁴</a></p>
+<p>Having settled on <code>xelatex</code>, I spent some time online and saw that there were two options to write non-English (or non-Latin characters, rather) documents: <a href="https://ctan.org/pkg/babel">babel</a> and <a href="https://ctan.org/pkg/polyglossia">polyglossia</a>.</p>
+<p>I decided to try polyglossia though I had never used babel before.</p>
+<p>Polyglossia supports 80 languages <a href="https://github.com/reutenauer/polyglossia/blob/master/doc/languages.csv">⁶</a> at the time of writing this blog post (I originally wrote this in January 2022).</p>
+<p>I used multiple writing scripts, each of which needed a different set of glyphs.</p>
+<p>(Empty boxes will appear instead of the glyphs if the font being used doesn't have those glyphs.)</p>
 <p>I was on <a href="https://tug.org/texlive/">Tex Live</a> 2021.</p>
 <h2 id="setting-up">Setting up</h2>
 <h3 id="default-language">Default language</h3>
-<p>Before using polyglossia, we need to let it know about the languages
-that we'll be using in the document. This process is known as
-'activating' those languages.</p>
-<p>Default language (ie, the language in which most of the document is
-written in), can be set with <code>\setdefaultlanguage</code> or
-<code>\setmainlanguage</code>.</p>
+<p>Before using polyglossia, we need to let it know about the languages that we'll be using in the document. This process is known as 'activating' those languages.</p>
+<p>Default language (ie, the language in which most of the document is written in), can be set with <code>\setdefaultlanguage</code> or <code>\setmainlanguage</code>.</p>
 <p>For example, to set English as the main language, we can do:</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode tex"><code class="sourceCode latex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\setmainlanguage</span>{english}</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">% or \setdefaultlanguage{english}</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">\setmainlanguage</span>{english}</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="co">% or \setdefaultlanguage{english}</span></span></code></pre></div>
 <h3 id="other-languages">Other languages</h3>
-<p>The other languages that need to be used can mentioned with
-<code>\setotherlanguage</code> (to mention languages one by one) or
-<code>\setotherlanguages</code> (can be used specify multiple languages
-at once).</p>
+<p>The other languages that need to be used can mentioned with <code>\setotherlanguage</code> (to mention languages one by one) or <code>\setotherlanguages</code> (can be used specify multiple languages at once).</p>
 <p>If we needed Russian, Greek and Arabic, we can do:</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode tex"><code class="sourceCode latex"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\setotherlanguages</span>{russian, greek, arabic}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="fu">\setotherlanguages</span>{russian, greek, arabic}</span></code></pre></div>
 <p>(This is same as doing</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode tex"><code class="sourceCode latex"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\setotherlanguage</span>{russian}</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\setotherlanguage</span>{greek}</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\setotherlanguage</span>{arabic}</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="fu">\setotherlanguage</span>{russian}</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="fu">\setotherlanguage</span>{greek}</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="fu">\setotherlanguage</span>{arabic}</span></code></pre></div>
 <p>but the former method is more concise.)</p>
-<p>After setting the languages, we can use
-<code>\text&lt;lang-name&gt;</code> (where
-<code>&lt;lang-name&gt;</code> is the name of an activated language, as
-in <code>\textarabic</code>) or <code>\textlang</code> to have text in
-those languages.</p>
+<p>After setting the languages, we can use <code>\text&lt;lang-name&gt;</code> (where <code>&lt;lang-name&gt;</code> is the name of an activated language, as in <code>\textarabic</code>) or <code>\textlang</code> to have text in those languages.</p>
 <h3 id="fonts">Fonts</h3>
-<p>We need fonts which have the glyphs to represent the characters in
-the languages that we need.</p>
-<p>The font that can be set with <code>\setmainfont</code> may not be
-having the glyphs for all languages.</p>
-<p>We can explicitly specify the font to be used for a language with
-something like</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode tex"><code class="sourceCode latex"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\newfontfamily\&lt;</span>lang&gt;font{&lt;font-name&gt;}</span></code></pre></div>
-<p>where <code>&lt;lang&gt;</code> is the name of the language and
-<code>&lt;font-name&gt;</code> is the font to be used for that
-language.</p>
+<p>We need fonts which have the glyphs to represent the characters in the languages that we need.</p>
+<p>The font that can be set with <code>\setmainfont</code> may not be having the glyphs for all languages.</p>
+<p>We can explicitly specify the font to be used for a language with something like</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="fu">\newfontfamily\&lt;</span>lang&gt;font{&lt;font-name&gt;}</span></code></pre></div>
+<p>where <code>&lt;lang&gt;</code> is the name of the language and <code>&lt;font-name&gt;</code> is the font to be used for that language.</p>
 <p>For example, if the language is Tamil, we can use:</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode tex"><code class="sourceCode latex"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\newfontfamily\tamilfont</span>{Noto Serif Tamil}</span></code></pre></div>
-<p>and then use it with <code>\texttamil</code> or
-<code>\begin{tamil} ... \end{tamil}</code> after activating Tamil for
-polyglossia.</p>
-<p>The fonts need to be installed separately. <a
-href="https://fonts.google.com/noto">Noto fonts</a> seem to have fonts
-for a lot of scripts.</p>
-<p>We can use the <a href="https://ctan.org/pkg/albatross">albatross</a>
-tool to find fonts which have the glyphs that we need.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="fu">\newfontfamily\tamilfont</span>{Noto Serif Tamil}</span></code></pre></div>
+<p>and then use it with <code>\texttamil</code> or <code>\begin{tamil} ... \end{tamil}</code> after activating Tamil for polyglossia.</p>
+<p>The fonts need to be installed separately. <a href="https://fonts.google.com/noto">Noto fonts</a> seem to have fonts for a lot of scripts.</p>
+<p>We can use the <a href="https://ctan.org/pkg/albatross">albatross</a> tool to find fonts which have the glyphs that we need.</p>
 <h2 id="writing-text">Writing text</h2>
-<p>As mentioned earlier, we can place text inside commands of the
-<code>\text&lt;language&gt;{}</code> form, where 'language' is a
-language which has been activated.</p>
-<p>For example, with English as main language and having activated Greek
-and Tamil, we could do:</p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode tex"><code class="sourceCode latex"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\documentclass</span>{<span class="ex">report</span>}</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">polyglossia</span>}</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>Greek: <span class="fu">\textgreek</span>{Ελληνικά}<span class="fu">\\</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>Tamil: <span class="fu">\texttamil</span>{தமிழ்}</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
-<p>Or we can have separate environments with language name if the text
-is longer.</p>
-<p>For instance, a block of text in the Russian language can be put
-within a <code>\begin{russian}</code> and <code>\end{russian}</code>
-pair.</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode tex"><code class="sourceCode latex"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\documentclass</span>{<span class="ex">report</span>}</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">polyglossia</span>}</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\setmainlanguage</span>{english}</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">\setotherlanguage</span>{russian}</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">% Just set one font for all cyrillic scripts, I guess.</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">\newfontfamily\cyrillicfont</span>[Script=Cyrillic]{LiberationMono}</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">russian</span>}</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>В начале 1806-го года Николай Ростов вернулся в отпуск. Денисов ехал тоже домой в Воронеж, и Ростов уговорил его ехать с собой до Москвы и остановиться у них в доме. На предпоследней станции, встретив товарища, Денисов выпил с ним три бутылки вина и, подъезжая к Москве, несмотря на ухабы дороги, не просыпался, лежа на дне перекладных саней, подле Ростова, который по мере приближения к Москве приходил все более и более в нетерпение.</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">russian</span>}</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
+<p>As mentioned earlier, we can place text inside commands of the <code>\text&lt;language&gt;{}</code> form, where 'language' is a language which has been activated.</p>
+<p>For example, with English as main language and having activated Greek and Tamil, we could do:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="bu">\documentclass</span>{<span class="ex">report</span>}</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="bu">\usepackage</span>{<span class="ex">polyglossia</span>}</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>Greek: <span class="fu">\textgreek</span>{Ελληνικά}\\</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>Tamil: <span class="fu">\texttamil</span>{தமிழ்}</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
+<p>Or we can have separate environments with language name if the text is longer.</p>
+<p>For instance, a block of text in the Russian language can be put within a <code>\begin{russian}</code> and <code>\end{russian}</code> pair.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="bu">\documentclass</span>{<span class="ex">report</span>}</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="bu">\usepackage</span>{<span class="ex">polyglossia</span>}</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="fu">\setmainlanguage</span>{english}</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="fu">\setotherlanguage</span>{russian}</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="co">% Just set one font for all cyrillic scripts, I guess.</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="fu">\newfontfamily\cyrillicfont</span>[Script=Cyrillic]{LiberationMono}</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a><span class="kw">\begin</span>{<span class="ex">russian</span>}</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a>В начале 1806-го года Николай Ростов вернулся в отпуск. Денисов ехал тоже домой в Воронеж, и Ростов уговорил его ехать с собой до Москвы и остановиться у них в доме. На предпоследней станции, встретив товарища, Денисов выпил с ним три бутылки вина и, подъезжая к Москве, несмотря на ухабы дороги, не просыпался, лежа на дне перекладных саней, подле Ростова, который по мере приближения к Москве приходил все более и более в нетерпение.</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a><span class="kw">\end</span>{<span class="ex">russian</span>}</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
 <h2 id="languages-written-vertically">Languages written vertically</h2>
-<p>Some languages are written vertically. Like Mongolian written in its
-traditional script, which is written from top to bottom, progressing
-from left to right <a
-href="https://omniglot.com/writing/mongolian.htm">⁷</a>.</p>
-<p>Polyglossia supports Mongolian, but it will be rendered the way
-English is rendered. ie, from left to right <em>horizontally</em>.</p>
+<p>Some languages are written vertically. Like Mongolian written in its traditional script, which is written from top to bottom, progressing from left to right <a href="https://omniglot.com/writing/mongolian.htm">⁷</a>.</p>
+<p>Polyglossia supports Mongolian, but it will be rendered the way English is rendered. ie, from left to right <em>horizontally</em>.</p>
 <p>As an example, for:</p>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode tex"><code class="sourceCode latex"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\documentclass</span>{<span class="ex">report</span>}</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">polyglossia</span>}</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\newfontfamily\mongolianfont</span>[Script=Mongolian]{Noto Sans Mongolian}</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>Mongolian:</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">\textmongolian</span>{ᠮᠣᠩᠭᠣᠯ ᠬᠡᠯᠡ}</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="bu">\documentclass</span>{<span class="ex">report</span>}</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="bu">\usepackage</span>{<span class="ex">polyglossia</span>}</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="fu">\newfontfamily\mongolianfont</span>[Script=Mongolian]{Noto Sans Mongolian}</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>Mongolian:</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="fu">\textmongolian</span>{ᠮᠣᠩᠭᠣᠯ ᠬᠡᠯᠡ}</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
 <p>the output rendered in the pdf would look like:</p>
 <pre><code>ᠮᠣᠩᠭᠣᠯ ᠬᠡᠯᠡ
 </code></pre>
-<p>But that can be fixed by enclosing the part where the Mongolian
-script is being used within in an environment which is then rotated by
-90 degrees as shown <a
-href="https://tex.stackexchange.com/questions/87259/manchu-and-mongolian-script">here</a>.</p>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode tex"><code class="sourceCode latex"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\documentclass</span>{<span class="ex">report</span>}</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">graphicx</span>}</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">polyglossia</span>}</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">\newfontfamily\mongolianfont</span>[Script=Mongolian]{Noto Sans Mongolian}</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    Mongolian:</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">\rotatebox</span>{-90}{<span class="co">%</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">% make new lines will appear on top of previous lines</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">% instead of under previous lines.</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">\XeTeXupwardsmode</span>1<span class="fu">\\</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">% height of minipage determines the maximum length</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">% of the sentences</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">\begin</span>{<span class="ex">minipage</span>}{14em}</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">\textmongolian</span>{ᠮᠣᠩᠭᠣᠯ ᠬᠡᠯᠡ}</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">\end</span>{<span class="ex">minipage</span>}</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">% Revert to the old way</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">\XeTeXupwardsmode</span>0</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    }<span class="co">% End rotatebox</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
+<p>But that can be fixed by enclosing the part where the Mongolian script is being used within in an environment which is then rotated by 90 degrees as shown <a href="https://tex.stackexchange.com/questions/87259/manchu-and-mongolian-script">here</a>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="bu">\documentclass</span>{<span class="ex">report</span>}</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="bu">\usepackage</span>{<span class="ex">graphicx</span>}</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="bu">\usepackage</span>{<span class="ex">polyglossia</span>}</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="fu">\newfontfamily\mongolianfont</span>[Script=Mongolian]{Noto Sans Mongolian}</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>    Mongolian:</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>    <span class="fu">\rotatebox</span>{-90}{<span class="co">%</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a>    <span class="co">% make new lines will appear on top of previous lines</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a>    <span class="co">% instead of under previous lines.</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a>    <span class="fu">\XeTeXupwardsmode</span>1<span class="fu">\\</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a>    <span class="co">% height of minipage determines the maximum length</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a>    <span class="co">% of the sentences</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true"></a>    <span class="kw">\begin</span>{<span class="ex">minipage</span>}{14em}</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true"></a>        <span class="fu">\textmongolian</span>{ᠮᠣᠩᠭᠣᠯ ᠬᠡᠯᠡ}</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true"></a>    <span class="kw">\end</span>{<span class="ex">minipage</span>}</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true"></a>    <span class="co">% Revert to the old way</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true"></a>    <span class="fu">\XeTeXupwardsmode</span>0</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true"></a>    }<span class="co">% End rotatebox</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
 <p>and the output would look something like:</p>
 <p><div style="writing-mode: vertical-lr;" class="verticalscript"></p>
 <pre><code>ᠮᠣᠩᠭᠣᠯ ᠬᠡᠯᠡ
 </code></pre>
 <p></div></p>
-<p>The <code>\XeTeXupwardsmode&lt;Integer&gt;</code> makes the
-successive lines of text to be stacked upwards instead downwards when
-the <code>&lt;Integer&gt;</code> is greater than zero <a
-href="https://ctan.org/pkg/xetexref">⁹</a>.</p>
-<p>And <code>\rotatebox{&lt;angle&gt;}{&lt;text&gt;}</code> is something
-from the <a
-href="https://ctan.org/pkg/graphicx"><code>graphicx</code></a> package
-(well, actually it seems to be from the <code>graphics</code> package
-which <code>graphicx</code> extends and implicitly loads) that puts some
-text in a box and rotates it by <code>&lt;angle&gt;</code> degrees.</p>
+<p>The <code>\XeTeXupwardsmode&lt;Integer&gt;</code> makes the successive lines of text to be stacked upwards instead downwards when the <code>&lt;Integer&gt;</code> is greater than zero <a href="https://ctan.org/pkg/xetexref">⁹</a>.</p>
+<p>And <code>\rotatebox{&lt;angle&gt;}{&lt;text&gt;}</code> is something from the <a href="https://ctan.org/pkg/graphicx"><code>graphicx</code></a> package (well, actually it seems to be from the <code>graphics</code> package which <code>graphicx</code> extends and implicitly loads) that puts some text in a box and rotates it by <code>&lt;angle&gt;</code> degrees.</p>
 <h2 id="cjk">CJK</h2>
-<p>Polyglossia offers some level of support for CJK
-(Chinese-Japanese-Korean) characters.</p>
-<p>The <a
-href="https://mirror.kku.ac.th/CTAN/macros/unicodetex/latex/polyglossia/polyglossia.pdf">manual</a>
-mentions supporting Korean and some level of Japanese. But Chinese is
-not even mentioned. I suppose there's no official support for
-Chinese.</p>
-<p>We could use the <a
-href="https://www.ctan.org/pkg/xecjk?lang=en">xeCJK</a> latex package to
-have CJK characters including Chinese characters.</p>
-<p>Found people <a
-href="https://tex.stackexchange.com/questions/17611/how-does-one-type-chinese-in-latex">saying</a>
-that xeCJK is to be used when only a few characters are needed.
-Otherwise <a href="https://ctan.org/pkg/ctex?lang=en">ctex</a> seems to
-be a better choice.</p>
-<p>I suppose that means xeCJK is meant to be a quick and easy
-solution.</p>
+<p>Polyglossia offers some level of support for CJK (Chinese-Japanese-Korean) characters.</p>
+<p>The <a href="https://mirror.kku.ac.th/CTAN/macros/unicodetex/latex/polyglossia/polyglossia.pdf">manual</a> mentions supporting Korean and some level of Japanese. But Chinese is not even mentioned. I suppose there's no official support for Chinese.</p>
+<p>We could use the <a href="https://www.ctan.org/pkg/xecjk?lang=en">xeCJK</a> latex package to have CJK characters including Chinese characters.</p>
+<p>Found people <a href="https://tex.stackexchange.com/questions/17611/how-does-one-type-chinese-in-latex">saying</a> that xeCJK is to be used when only a few characters are needed. Otherwise <a href="https://ctan.org/pkg/ctex?lang=en">ctex</a> seems to be a better choice.</p>
+<p>I suppose that means xeCJK is meant to be a quick and easy solution.</p>
 <p>An example:</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode tex"><code class="sourceCode latex"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\documentclass</span>{<span class="ex">article</span>}</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">xeCJK</span>} <span class="co">% For CJK in non-CJK documents</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\setCJKmainfont</span>{Noto Serif CJK SC}</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>Chinese text: 现代标准汉语 <span class="fu">\\</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>Korean text: 한국어 (south), 조선말 (north) <span class="fu">\\</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>Japanese text: 日本語 (kanji), にほんご (hiragana), ニホンゴ (katakana)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="bu">\documentclass</span>{<span class="ex">article</span>}</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="bu">\usepackage</span>{<span class="ex">xeCJK</span>} <span class="co">% For CJK in non-CJK documents</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="fu">\setCJKmainfont</span>{Noto Serif CJK SC}</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>Chinese text: 现代标准汉语 <span class="fu">\\</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a>Korean text: 한국어 (south), 조선말 (north) <span class="fu">\\</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>Japanese text: 日本語 (kanji), にほんご (hiragana), ニホンゴ (katakana)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
 <p>which would give something like</p>
 <pre><code>Chinese text: 现代标准汉语
 Korean text: 한국어 (south), 조선말 (north)
 Japanese text: 日本語 (kanji), にほんご (hiragana), ニホンゴ (katakana)
 </code></pre>
-<p>Notice that with xeCJK, the text needn't be place inside commands
-like <code>\textkorean{}</code>.</p>
-<p>Also check <a
-href="https://www.overleaf.com/learn/latex/Chinese">this</a> out.</p>
-<h2 id="languages-with-multiple-scripts">Languages with multiple
-scripts</h2>
-<p>Some languages can be written using more than one script. Like
-Serbian, which may be written with Latin (Srpski) or Cyrillic (Српски)
-script.</p>
-<p>Looks like the script being used can be changed with a parameter
-named <code>script</code>.</p>
+<p>Notice that with xeCJK, the text needn't be place inside commands like <code>\textkorean{}</code>.</p>
+<p>Also check <a href="https://www.overleaf.com/learn/latex/Chinese">this</a> out.</p>
+<h2 id="languages-with-multiple-scripts">Languages with multiple scripts</h2>
+<p>Some languages can be written using more than one script. Like Serbian, which may be written with Latin (Srpski) or Cyrillic (Српски) script.</p>
+<p>Looks like the script being used can be changed with a parameter named <code>script</code>.</p>
 <p>Like:</p>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode tex"><code class="sourceCode latex"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">% By default, Latin script is used for Serbian.</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\newfontfamily\serbianfont</span>[Script=Cyrillic]{Noto Sans}</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="co">% By default, Latin script is used for Serbian.</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="fu">\newfontfamily\serbianfont</span>[Script=Cyrillic]{Noto Sans}</span></code></pre></div>
 <h2 id="and-more..">And more..</h2>
-<p>There are lots of other stuff possible with polyglossia, but these
-are all that I've got figured out at the moment.</p>
+<p>There are lots of other stuff possible with polyglossia, but these are all that I've got figured out at the moment.</p>
 <p>Check out the polyglossia manual if curious to find more.</p>
-<p>I had started a quest to have a sample of all languages supported by
-polyglossia in a single pdf (that's around 80 languages!), but never got
-around to finishing it.</p>
-<p>If any of you guys do it, or find that somebody has already done it,
-please let me know. :)</p>
+<p>I had started a quest to have a sample of all languages supported by polyglossia in a single pdf (that's around 80 languages!), but never got around to finishing it.</p>
+<p>If any of you guys do it, or find that somebody has already done it, please let me know. :)</p>
 <h2 id="references">References</h2>
 <ul>
-<li><a
-href="https://mirror.kku.ac.th/CTAN/macros/unicodetex/latex/polyglossia/polyglossia.pdf">polyglossia
-manual</a></li>
-<li><a href="https://ctan.org/pkg/xetexref">xetex reference
-manual</a></li>
-<li><a
-href="https://mirrors.ctan.org/macros/xetex/latex/xecjk/xeCJK.pdf">xeCJK
-manual</a> (Chinese)</li>
+<li><a href="https://mirror.kku.ac.th/CTAN/macros/unicodetex/latex/polyglossia/polyglossia.pdf">polyglossia manual</a></li>
+<li><a href="https://ctan.org/pkg/xetexref">xetex reference manual</a></li>
+<li><a href="https://mirrors.ctan.org/macros/xetex/latex/xecjk/xeCJK.pdf">xeCJK manual</a> (Chinese)</li>
 </ul>
 </div>
 </body>

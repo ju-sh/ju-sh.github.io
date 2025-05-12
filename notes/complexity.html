@@ -36,6 +36,7 @@
 </header>
 
 <ul>
+    <li>Date created: May-2021</li>
     </ul>
 
 
@@ -51,28 +52,22 @@
 <li>Solvable in polynomial time.</li>
 <li>Verifiable in polynomial time.</li>
 <li>Tractable problems</li>
-<li>Mentioned in <a
-href="https://en.wikipedia.org/wiki/Cobham%27s\_thesis">Cobham's
-thesis</a> (although not under this name).</li>
+<li>Mentioned in <a href="https://en.wikipedia.org/wiki/Cobham%27s\_thesis">Cobham's thesis</a> (although not under this name).</li>
 <li>A problem is in P, then its complement is also in P.</li>
 </ul>
 <h2 id="np">NP</h2>
 <ul>
 <li>No polynomial time solution</li>
-<li>NP stands for 'Non-deterministic Polynomial acceptable problems' (<a
-href="https://en.wikipedia.org/wiki/NP-hardness">Source</a>)</li>
+<li>NP stands for 'Non-deterministic Polynomial acceptable problems' (<a href="https://en.wikipedia.org/wiki/NP-hardness">Source</a>)</li>
 <li>Verifiable in polynomial time.</li>
 <li>Example: 3-SAT</li>
 </ul>
 <p>Unsolved problem: Is P = NP ?</p>
 <h2 id="np-complete">NP-Complete</h2>
 <ul>
-<li><p>Like 'Hardest problems in NP' (but still got to be NP, unlike in
-the case of NP-Hard)</p></li>
-<li><p>All NP problems can be reduced to an NP-C problem in polynomial
-time.</p></li>
-<li><p>If a polynomial time solution was found to an NP-C problem, we
-can conclude that P = NP</p></li>
+<li><p>Like 'Hardest problems in NP' (but still got to be NP, unlike in the case of NP-Hard)</p></li>
+<li><p>All NP problems can be reduced to an NP-C problem in polynomial time.</p></li>
+<li><p>If a polynomial time solution was found to an NP-C problem, we can conclude that P = NP</p></li>
 <li><p>Example: Circuit satisfiability</p>
 <p>NP-C ⊂ NP</p></li>
 </ul>
@@ -91,8 +86,7 @@ can conclude that P = NP</p></li>
 <li>Primality:
 <ul>
 <li>Proof of primality can be checked in P-time (Eg: AKS)</li>
-<li>Compositeness proof of a number is prime factors =&gt; Can be
-checked in P-time</li>
+<li>Compositeness proof of a number is prime factors =&gt; Can be checked in P-time</li>
 </ul></li>
 </ul>
 <h2 id="co-np-complete">co-NP-Complete</h2>
@@ -102,8 +96,7 @@ checked in P-time</li>
 </ul>
 <h2 id="np-hard">NP-Hard</h2>
 <ul>
-<li>Like '<strong>at least as hard</strong> as the hardest problems in
-NP'.</li>
+<li>Like '<strong>at least as hard</strong> as the hardest problems in NP'.</li>
 <li>May not be even be NP.</li>
 <li>May not be even be decidable.</li>
 <li>Example: Subset sum problem</li>
@@ -125,8 +118,7 @@ NP'.</li>
 <li>A problem is in PSPACE, then its complement is also in PSPACE.</li>
 </ul>
 <p>Amount of space required is polynomial in the input size.</p>
-<p>In polynomial time, an algorithm can only use polynomial amount of
-space. ie,</p>
+<p>In polynomial time, an algorithm can only use polynomial amount of space. ie,</p>
 <pre><code>P ⊆ PSPACE
 </code></pre>
 <p>There is a PSPACE solution to 3-SAT problem. Consequently,</p>
@@ -135,10 +127,8 @@ space. ie,</p>
 <p>Not proven that P ≠ PSPACE though that seems likely.</p>
 <h2 id="pspace-complete">PSPACE Complete</h2>
 <ul>
-<li>Any problem in PSPACE can be converted into this in polynomial
-time.</li>
-<li>Considered the hardest problems in PSPACE as a solution to a PSPACE
-Complete problem can be used to solve any PSPACE problem.</li>
+<li>Any problem in PSPACE can be converted into this in polynomial time.</li>
+<li>Considered the hardest problems in PSPACE as a solution to a PSPACE Complete problem can be used to solve any PSPACE problem.</li>
 <li>Suspected to be outside P and NP, but not proven.</li>
 </ul>
 <h1 id="more">More</h1>
@@ -146,46 +136,28 @@ Complete problem can be used to solve any PSPACE problem.</li>
 <ul>
 <li>Nick's Class</li>
 <li>For parallel algorithms.</li>
-<li>Can be solved in 𝑂𝑙𝑜𝑔ᶜn) time using 𝑂(nᵏ) parallel processors for
-some c, k</li>
-<li>NC ⊂ PSPACE (from [space hierarchy theorem](<a
-href="https://en.wikipedia.org/wiki/Space_hierarchy_theorem">https://en.wikipedia.org/wiki/Space_hierarchy_theorem</a>))</li>
+<li>Can be solved in 𝑂𝑙𝑜𝑔ᶜn) time using 𝑂(nᵏ) parallel processors for some c, k</li>
+<li>NC ⊂ PSPACE (from [space hierarchy theorem](<a href="https://en.wikipedia.org/wiki/Space_hierarchy_theorem">https://en.wikipedia.org/wiki/Space_hierarchy_theorem</a>))</li>
 </ul>
 <h1 id="time-complexity">Time complexity</h1>
 <h2 id="polylgorithmic-time">Polylgorithmic time</h2>
 <p>Time is in O(logᵏn) which is same as O((log n)ᵏ)</p>
 <h1 id="related-stuff">Related stuff</h1>
-<h2 id="reducing-a-problem-to-another">Reducing a problem to
-another</h2>
-<p>Even when it is possible to reduce a problem X another problem Y in
-polynomial time, it may not be possible to reduce Y back to X.</p>
-<p>For example, any computation problem can be converted to the halting
-problem (where the Turing halts for the output), but the halting problem
-cannot be converted to the computation problem (for the cases where the
-Turing machine doesn't halt). (<a
-href="https://cs.stackexchange.com/questions/1526/all-np-problems-reduce-to-np-complete-problems-so-how-can-np-problems-not-be-np">A
-discussion</a>)</p>
+<h2 id="reducing-a-problem-to-another">Reducing a problem to another</h2>
+<p>Even when it is possible to reduce a problem X another problem Y in polynomial time, it may not be possible to reduce Y back to X.</p>
+<p>For example, any computation problem can be converted to the halting problem (where the Turing halts for the output), but the halting problem cannot be converted to the computation problem (for the cases where the Turing machine doesn't halt). (<a href="https://cs.stackexchange.com/questions/1526/all-np-problems-reduce-to-np-complete-problems-so-how-can-np-problems-not-be-np">A discussion</a>)</p>
 <h2 id="complement-of-a-problem">Complement of a problem</h2>
 <h2 id="certificate-of-complexity">Certificate of complexity</h2>
 <p>A solution path in within a verification process.</p>
 <h1 id="references">References</h1>
 <ul>
 <li>Algorithm Design</li>
-<li><a href="https://en.wikipedia.org/wiki/PSPACE-complete">Wikipedia:
-PSPACE-complete</a></li>
-<li><a
-href="https://en.wikipedia.org/wiki/Cobham%27s\_thesis">Wikipedia:
-Cobham's thesis</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Time\_complexity">Wikipedia:
-Time complexity</a></li>
-<li><a href="https://en.wikipedia.org/wiki/NC\_(complexity)">Wikipedia:
-NC (complexity)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/NP-hardness">Wikipedia:
-NP-hardness</a></li>
-<li><a
-href="https://cs.stackexchange.com/questions/1526/all-np-problems-reduce-to-np-complete-problems-so-how-can-np-problems-not-be-np">Stackexchange:
-All NP problems reduce to NP complete problems so how can NP problems
-not be NP</a></li>
+<li><a href="https://en.wikipedia.org/wiki/PSPACE-complete">Wikipedia: PSPACE-complete</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Cobham%27s\_thesis">Wikipedia: Cobham's thesis</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Time\_complexity">Wikipedia: Time complexity</a></li>
+<li><a href="https://en.wikipedia.org/wiki/NC\_(complexity)">Wikipedia: NC (complexity)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/NP-hardness">Wikipedia: NP-hardness</a></li>
+<li><a href="https://cs.stackexchange.com/questions/1526/all-np-problems-reduce-to-np-complete-problems-so-how-can-np-problems-not-be-np">Stackexchange: All NP problems reduce to NP complete problems so how can NP problems not be NP</a></li>
 </ul>
 <h1 id="doubts">Doubts</h1>
 <ul>

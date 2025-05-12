@@ -46,8 +46,7 @@
 <div id="content-container">
 <p>Iverson style array programming</p>
 <ul>
-<li><a
-href="https://aplwiki.com/wiki/Iverson_notation">https://aplwiki.com/wiki/Iverson_notation</a></li>
+<li><a href="https://aplwiki.com/wiki/Iverson_notation">https://aplwiki.com/wiki/Iverson_notation</a></li>
 <li>Kenneth Iverson's notations</li>
 <li>APL grew out of this idea</li>
 </ul>
@@ -58,12 +57,10 @@ href="https://aplwiki.com/wiki/Iverson_notation">https://aplwiki.com/wiki/Iverso
 </ul>
 <p>Remarks:</p>
 <ul>
-<li>Understanding the concept of ranks is <em>very</em> important in
-using APL.</li>
+<li>Understanding the concept of ranks is <em>very</em> important in using APL.</li>
 <li>Array is (more?) to APL as table is to lua.</li>
 <li>APL evaluates expressions from right to left</li>
-<li><code>*</code> is exponentiation. Multiplication is
-<code>×</code></li>
+<li><code>*</code> is exponentiation. Multiplication is <code>×</code></li>
 </ul>
 <h2 id="general">General</h2>
 <ul>
@@ -72,8 +69,7 @@ using APL.</li>
 </ul>
 <h2 id="operators">Operators</h2>
 <h3 id="reshape-shape-ρ">Reshape / shape (ρ )</h3>
-<p><a
-href="https://aplwiki.com/wiki/Reshape">https://aplwiki.com/wiki/Reshape</a></p>
+<p><a href="https://aplwiki.com/wiki/Reshape">https://aplwiki.com/wiki/Reshape</a></p>
 <p>Two forms:</p>
 <ul>
 <li>Dyadic: Reshape an array.</li>
@@ -101,8 +97,7 @@ href="https://aplwiki.com/wiki/Reshape">https://aplwiki.com/wiki/Reshape</a></p>
 2 4
 </code></pre>
 <h3 id="index-generator">Index generator (⍳)</h3>
-<p><a
-href="https://aplwiki.com/wiki/Index_Generator">https://aplwiki.com/wiki/Index_Generator</a></p>
+<p><a href="https://aplwiki.com/wiki/Index_Generator">https://aplwiki.com/wiki/Index_Generator</a></p>
 <pre class="apl"><code>&gt; ⍳ 9
 1 2 3 4 5 6 7 8 9
 
@@ -195,8 +190,7 @@ href="https://aplwiki.com/wiki/Index_Generator">https://aplwiki.com/wiki/Index_G
 &gt; + / 2 4 ρ ι 8
 10 26
 </code></pre>
-<h3 id="scan-along-first-and-last-axis-and">Scan along first and last
-axis (⍀ and \)</h3>
+<h3 id="scan-along-first-and-last-axis-and">Scan along first and last axis (⍀ and \)</h3>
 <pre><code>&gt;  2 4 ρ ι 8
 1 2 3 4
 5 6 7 8
@@ -232,8 +226,7 @@ axis (⍀ and \)</h3>
 1
 </code></pre>
 <h3 id="roll">Roll (?)</h3>
-<p><code>? n</code> selects a number randomly from the first n
-numbers.</p>
+<p><code>? n</code> selects a number randomly from the first n numbers.</p>
 <pre><code>&gt; ? 100
 97
 
@@ -286,16 +279,14 @@ DOMAIN ERROR
       1096.633158 2980.957987
 </code></pre>
 <h2 id="axis">Axis</h2>
-<p><a
-href="https://aplwiki.com/wiki/Axis">https://aplwiki.com/wiki/Axis</a></p>
+<p><a href="https://aplwiki.com/wiki/Axis">https://aplwiki.com/wiki/Axis</a></p>
 <ul>
 <li>Axes are dimensions along which the array is organized</li>
 <li>Rank of an array = number of axes</li>
 </ul>
 <h2 id="more">More</h2>
 <ul>
-<li>≢ (monadic): tally. Number of major cells in an array. Like len() of
-python</li>
+<li>≢ (monadic): tally. Number of major cells in an array. Like len() of python</li>
 <li>≡ (monadic): depth. ie, maximum level of (array) nesting
 <ul>
 <li>Depth and rank aren't same</li>
@@ -326,18 +317,15 @@ python</li>
 <h2 id="emacs">emacs</h2>
 <p>emacs: gnu-apl mode</p>
 <ul>
-<li><a
-href="https://github.com/lokedhs/gnu-apl-mode">https://github.com/lokedhs/gnu-apl-mode</a></li>
+<li><a href="https://github.com/lokedhs/gnu-apl-mode">https://github.com/lokedhs/gnu-apl-mode</a></li>
 <li>Activate with <code>M-x gnu-apl-mode</code></li>
-<li>Shift to APL symbol keyboard by holding super key (ie, 'windows
-key')
+<li>Shift to APL symbol keyboard by holding super key (ie, 'windows key')
 <ul>
 <li>There are other ways like the APL-Z input method.</li>
 </ul></li>
 </ul>
 <h2 id="keyboard">Keyboard</h2>
-<p>Default keyboard is like (from <a
-href="https://github.com/ilovezfs/gnu-apl/blob/master/README-3-keyboard">here</a>):</p>
+<p>Default keyboard is like (from <a href="https://github.com/ilovezfs/gnu-apl/blob/master/README-3-keyboard">here</a>):</p>
 <pre><code>╔════╦════╦════╦════╦════╦════╦════╦════╦════╦════╦════╦════╦════╦═════════╗
 ║ ~  ║ !⌶ ║ @⍫ ║ #⍒ ║ $⍋ ║ %⌽ ║ ^⍉ ║ &amp;⊖ ║ *⍟ ║ (⍱ ║ )⍲ ║ _! ║ +⌹ ║         ║
 ║ `◊ ║ 1¨ ║ 2¯ ║ 3&lt; ║ 4≤ ║ 5= ║ 6≥ ║ 7&gt; ║ 8≠ ║ 9∨ ║ 0∧ ║ -× ║ =÷ ║ BACKSP  ║
@@ -352,11 +340,9 @@ href="https://github.com/ilovezfs/gnu-apl/blob/master/README-3-keyboard">here</a
 ║  SHIFT      ║ z⊂ ║ x⊃ ║ c∩ ║ v∪ ║ b⊥ ║ n⊤ ║ m| ║ ,⍝ ║ .⍀ ║ /⌿ ║  SHIFT   ║
 ╚═════════════╩════╩════╩════╩════╩════╩════╩════╩════╩════╩════╩══════════╝
 </code></pre>
-<p>(Depending on the font used, this may look different on different
-devices.)</p>
+<p>(Depending on the font used, this may look different on different devices.)</p>
 <h2 id="vim">vim</h2>
-<p>vim-apl: <a
-href="https://github.com/zoomlogo/vim-apl">https://github.com/zoomlogo/vim-apl</a></p>
+<p>vim-apl: <a href="https://github.com/zoomlogo/vim-apl">https://github.com/zoomlogo/vim-apl</a></p>
 <p>Backtick is the prefix key by default:</p>
 <ul>
 <li><code>`i</code> gives <code>ι</code></li>
@@ -371,10 +357,8 @@ href="https://github.com/zoomlogo/vim-apl">https://github.com/zoomlogo/vim-apl</
 </ul>
 <h2 id="even-more">Even more</h2>
 <ul>
-<li>Game of life with apl: <a
-href="https://www.youtube.com/watch?v=a9xAKttWgP4">https://www.youtube.com/watch?v=a9xAKttWgP4</a></li>
-<li>ANN with apl: <a
-href="https://www.youtube.com/playlist?list=PLgTqamKi1MS3p-O0QAgjv5vt4NY5OgpiM">https://www.youtube.com/playlist?list=PLgTqamKi1MS3p-O0QAgjv5vt4NY5OgpiM</a></li>
+<li>Game of life with apl: <a href="https://www.youtube.com/watch?v=a9xAKttWgP4">https://www.youtube.com/watch?v=a9xAKttWgP4</a></li>
+<li>ANN with apl: <a href="https://www.youtube.com/playlist?list=PLgTqamKi1MS3p-O0QAgjv5vt4NY5OgpiM">https://www.youtube.com/playlist?list=PLgTqamKi1MS3p-O0QAgjv5vt4NY5OgpiM</a></li>
 </ul>
 </div>
 </body>

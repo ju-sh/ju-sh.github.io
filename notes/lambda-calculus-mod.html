@@ -68,8 +68,7 @@
 </tbody>
 </table>
 <h2 id="boolean">Boolean</h2>
-<p>Takes two values. The one to be given for true and false
-respectively.</p>
+<p>Takes two values. The one to be given for true and false respectively.</p>
 <p>First value is for true, second is for false.</p>
 <table>
 <tbody>
@@ -161,8 +160,7 @@ C₂ = λs. λz. s (s z)   -- S (S 0) = 2
 --     ----↓---    ↓    ↓
 --         s       z    result
 </code></pre>
-<p>ie, the encoding for each natural number takes two values as
-arguments:</p>
+<p>ie, the encoding for each natural number takes two values as arguments:</p>
 <ul>
 <li>s: represents successor function</li>
 <li>z: represents zero</li>
@@ -183,8 +181,7 @@ arguments:</p>
  - e: else case
 </code></pre>
 <p>Here, the <code>c</code> is like a boolean.</p>
-<p>As an aside, the <code>λc. λt. λe. c t e</code> here is constructed
-like</p>
+<p>As an aside, the <code>λc. λt. λe. c t e</code> here is constructed like</p>
 <p>Lambda</p>
 <p>—</p>
 <pre class="utlc"><code>{- Represents something like a condition check?? -}
@@ -261,8 +258,7 @@ fst (pair 1 2)
 = 1
 </code></pre>
 <h2 id="semantics">Semantics</h2>
-<p>Syntax says how the terms can be made. Se qualifiedmantics specifies
-how the terms are <em>evaluated</em>.</p>
+<p>Syntax says how the terms can be made. Se qualifiedmantics specifies how the terms are <em>evaluated</em>.</p>
 <h2 id="conventions">Conventions</h2>
 <p>As used in TAPL.</p>
 <ul>
@@ -272,10 +268,8 @@ how the terms are <em>evaluated</em>.</p>
 </ul></li>
 <li>Bodies of abstractions extend as far right as possible.
 <ul>
-<li>Eg: <code>λx. λy. x y x</code> is same as
-<code>λx. (λy. ((x y) x))</code></li>
-<li>I suppose because of this we could say 'application has more
-precedence than abstraction'. :GUESS:</li>
+<li>Eg: <code>λx. λy. x y x</code> is same as <code>λx. (λy. ((x y) x))</code></li>
+<li>I suppose because of this we could say 'application has more precedence than abstraction'. :GUESS:</li>
 </ul></li>
 </ul>
 </div>

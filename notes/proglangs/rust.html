@@ -50,13 +50,11 @@
 <li><p>Ownership</p>
 <ul>
 <li>Each resource can have only one owner at a time.</li>
-<li>References are variables which can access data without owning
-it.</li>
+<li>References are variables which can access data without owning it.</li>
 </ul></li>
 <li><p>Destructuring: Looks like pattern matching</p>
 <ul>
-<li><a
-href="https://doc.rust-lang.org/rust-by-example/flow_control/match/destructuring/destructure_tuple.html">https://doc.rust-lang.org/rust-by-example/flow_control/match/destructuring/destructure_tuple.html</a></li>
+<li><a href="https://doc.rust-lang.org/rust-by-example/flow_control/match/destructuring/destructure_tuple.html">https://doc.rust-lang.org/rust-by-example/flow_control/match/destructuring/destructure_tuple.html</a></li>
 </ul></li>
 <li><p>References</p>
 <ul>
@@ -66,8 +64,7 @@ href="https://doc.rust-lang.org/rust-by-example/flow_control/match/destructuring
 <li><p>Lifetime: Prefixed with an apostrophe.</p>
 <ul>
 <li>Eg: <code>'static</code>.</li>
-<li><a
-href="https://doc.rust-lang.org/nomicon/lifetimes.html">https://doc.rust-lang.org/nomicon/lifetimes.html</a></li>
+<li><a href="https://doc.rust-lang.org/nomicon/lifetimes.html">https://doc.rust-lang.org/nomicon/lifetimes.html</a></li>
 </ul></li>
 <li><p><code>Box&lt;T&gt;</code>: simplest form of heap allocation</p>
 <ul>
@@ -77,17 +74,12 @@ href="https://doc.rust-lang.org/nomicon/lifetimes.html">https://doc.rust-lang.or
 <ul>
 <li>Eg: <code>println!</code>, ~</li>
 </ul></li>
-<li><p><code>&amp;[i32]</code>: a 'slice'. A 'pointer' to an array (also
-contains info about the length of the array)</p></li>
+<li><p><code>&amp;[i32]</code>: a 'slice'. A 'pointer' to an array (also contains info about the length of the array)</p></li>
 <li><p>Panic: like an error ???</p></li>
-<li><p><code>unsafe { }</code>: code which won't be typechecked by
-compiler for type safety ??</p></li>
-<li><p>'<code>{:?}</code> formats the "next" value passed to a
-formatting macro, and supports anything that implements
-<code>Debug</code>.'</p>
+<li><p><code>unsafe { }</code>: code which won't be typechecked by compiler for type safety ??</p></li>
+<li><p>'<code>{:?}</code> formats the "next" value passed to a formatting macro, and supports anything that implements <code>Debug</code>.'</p>
 <ul>
-<li><a
-href="https://stackoverflow.com/questions/38157335/what-does-mean-in-a-rust-format-string">https://stackoverflow.com/questions/38157335/what-does-mean-in-a-rust-format-string</a></li>
+<li><a href="https://stackoverflow.com/questions/38157335/what-does-mean-in-a-rust-format-string">https://stackoverflow.com/questions/38157335/what-does-mean-in-a-rust-format-string</a></li>
 </ul></li>
 <li><p>Raw borrow: <code>&amp;raw const</code> ??</p></li>
 <li><p>Value expressions vs place expressions</p>
@@ -95,25 +87,22 @@ href="https://stackoverflow.com/questions/38157335/what-does-mean-in-a-rust-form
 <li>A subtle difference ?</li>
 <li>Place expression: like lvalue in C</li>
 <li>Value expression: like rvalue in C</li>
-<li><a
-href="https://www.ralfj.de/blog/2024/08/14/places.html">https://www.ralfj.de/blog/2024/08/14/places.html</a></li>
+<li><a href="https://www.ralfj.de/blog/2024/08/14/places.html">https://www.ralfj.de/blog/2024/08/14/places.html</a></li>
 </ul></li>
 </ul>
 <h2 id="debug-trait">Debug trait</h2>
 <p>Useful for printing values helpful for the programmer.</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>derive<span class="at">(</span><span class="bu">Debug</span><span class="at">)]</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> List<span class="op">&lt;</span>T<span class="op">&gt;{</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cn">Nil</span><span class="op">,</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cn">Cons</span>(T<span class="op">,</span> <span class="dt">Box</span><span class="op">&lt;</span>List<span class="op">&lt;</span>T<span class="op">&gt;&gt;</span>)<span class="op">,</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="at">#[</span>derive<span class="at">(</span><span class="bu">Debug</span><span class="at">)]</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">enum</span> List<span class="op">&lt;</span>T<span class="op">&gt;{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>    <span class="cn">Nil</span><span class="op">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="cn">Cons</span>(T<span class="op">,</span> <span class="dt">Box</span><span class="op">&lt;</span>List<span class="op">&lt;</span>T<span class="op">&gt;&gt;</span>)<span class="op">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="op">}</span></span></code></pre></div>
 <h2 id="misc">Misc</h2>
 <ul>
 <li>TUI libraries: cursive, ratatui, crossterm</li>
 </ul>
 <h2 id="references">References</h2>
-<p><a
-href="https://doc.rust-lang.org/rust-by-example/flow_control/match/destructuring/destructure_pointers.html">https://doc.rust-lang.org/rust-by-example/flow_control/match/destructuring/destructure_pointers.html</a></p>
+<p><a href="https://doc.rust-lang.org/rust-by-example/flow_control/match/destructuring/destructure_pointers.html">https://doc.rust-lang.org/rust-by-example/flow_control/match/destructuring/destructure_pointers.html</a></p>
 <ul>
 <li>Syntax is similar to pointers in C.</li>
 <li>Create a reference to <code>x</code>: <code>&amp;x</code></li>
@@ -122,15 +111,11 @@ href="https://doc.rust-lang.org/rust-by-example/flow_control/match/destructuring
 <h2 id="printing">Printing</h2>
 <p>See:</p>
 <ul>
-<li><a
-href="https://doc.rust-lang.org/std/fmt/">https://doc.rust-lang.org/std/fmt/</a></li>
-<li><a
-href="https://doc.rust-lang.org/rust-by-example/hello/print.html">https://doc.rust-lang.org/rust-by-example/hello/print.html</a></li>
+<li><a href="https://doc.rust-lang.org/std/fmt/">https://doc.rust-lang.org/std/fmt/</a></li>
+<li><a href="https://doc.rust-lang.org/rust-by-example/hello/print.html">https://doc.rust-lang.org/rust-by-example/hello/print.html</a></li>
 </ul>
 <hr />
-<p><a
-href="https://doc.rust-lang.org/std/fmt/#formatting-traits">Formatting
-traits</a>:</p>
+<p><a href="https://doc.rust-lang.org/std/fmt/#formatting-traits">Formatting traits</a>:</p>
 <table>
 <tbody>
 <tr class="odd">
@@ -164,41 +149,34 @@ traits</a>:</p>
 <li>All stack allocated values have copy semantics.</li>
 <li>Types with copy semantics have <code>Copy</code> traits.
 <ul>
-<li><code>Copy</code> and <code>Clone</code> traits are similar but have
-different purposes.</li>
-<li><a
-href="https://doc.rust-lang.org/std/marker/trait.Copy.html#whats-the-difference-between-copy-and-clone">https://doc.rust-lang.org/std/marker/trait.Copy.html#whats-the-difference-between-copy-and-clone</a></li>
+<li><code>Copy</code> and <code>Clone</code> traits are similar but have different purposes.</li>
+<li><a href="https://doc.rust-lang.org/std/marker/trait.Copy.html#whats-the-difference-between-copy-and-clone">https://doc.rust-lang.org/std/marker/trait.Copy.html#whats-the-difference-between-copy-and-clone</a></li>
 </ul></li>
 </ul>
 <h2 id="move-semantics">Move semantics</h2>
-<p><a
-href="https://doc.rust-lang.org/rust-by-example/scope/move.html">https://doc.rust-lang.org/rust-by-example/scope/move.html</a></p>
+<p><a href="https://doc.rust-lang.org/rust-by-example/scope/move.html">https://doc.rust-lang.org/rust-by-example/scope/move.html</a></p>
 <ul>
-<li>Types with copy semantics have <code>Drop</code> trait (to drop
-ownership)
+<li>Types with copy semantics have <code>Drop</code> trait (to drop ownership)
 <ul>
-<li>To prevent accidental use, <code>Drop::drop()</code> can't be called
-manually.</li>
-<li><a
-href="https://doc.rust-lang.org/std/ops/trait.Drop.html#you-cannot-call-dropdrop-yourself">https://doc.rust-lang.org/std/ops/trait.Drop.html#you-cannot-call-dropdrop-yourself</a></li>
+<li>To prevent accidental use, <code>Drop::drop()</code> can't be called manually.</li>
+<li><a href="https://doc.rust-lang.org/std/ops/trait.Drop.html#you-cannot-call-dropdrop-yourself">https://doc.rust-lang.org/std/ops/trait.Drop.html#you-cannot-call-dropdrop-yourself</a></li>
 </ul></li>
 </ul>
 <h3 id="example-box">Example: <code>Box</code></h3>
 <p><code>Box</code> has move semantics by default.</p>
 <p>This works:</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> foo () <span class="op">{</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> x <span class="op">=</span> <span class="dt">Box</span><span class="pp">::</span>new(<span class="dv">5</span>)<span class="op">;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="pp">println!</span>(<span class="st">&quot;x is: {}&quot;</span><span class="op">,</span> x)<span class="op">;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  foo()<span class="op">;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">$ rustc hello.rs &amp;&amp; ./hello</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">x is: 5</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">fn</span> foo () <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  <span class="kw">let</span> x <span class="op">=</span> <span class="dt">Box</span><span class="pp">::</span>new(<span class="dv">5</span>)<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  <span class="pp">println!</span>(<span class="st">&quot;x is: {}&quot;</span><span class="op">,</span> x)<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="op">}</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>  foo()<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="op">}</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="co">/*</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="co">$ rustc hello.rs &amp;&amp; ./hello</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a><span class="co">x is: 5</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a><span class="co">*/</span></span></code></pre></div>
 <p>This works too:</p>
 <pre><code>fn foo (x: Box&lt;i32&gt;) {
   println!(&quot;x is: {}&quot;, x);
@@ -211,20 +189,19 @@ fn main() {
 }
 </code></pre>
 <p>But this doesn't:</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> foo (x<span class="op">:</span> <span class="dt">Box</span><span class="op">&lt;</span><span class="dt">i32</span><span class="op">&gt;</span>) <span class="op">{</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="pp">println!</span>(<span class="st">&quot;x is: {}&quot;</span><span class="op">,</span> x)<span class="op">;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> x <span class="op">=</span> <span class="dt">Box</span><span class="pp">::</span>new(<span class="dv">5</span>)<span class="op">;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// ownership of x &#39;moves&#39; to foo. main no longer owns x</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  foo(x)<span class="op">;</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// main is trying to use something it doesn&#39;t own. Error!</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="pp">println!</span>(<span class="st">&quot;x is: {}&quot;</span><span class="op">,</span> x)<span class="op">;</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">fn</span> foo (x<span class="op">:</span> <span class="dt">Box</span><span class="op">&lt;</span><span class="dt">i32</span><span class="op">&gt;</span>) <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  <span class="pp">println!</span>(<span class="st">&quot;x is: {}&quot;</span><span class="op">,</span> x)<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="op">}</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>  <span class="kw">let</span> x <span class="op">=</span> <span class="dt">Box</span><span class="pp">::</span>new(<span class="dv">5</span>)<span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>  <span class="co">// ownership of x &#39;moves&#39; to foo. main no longer owns x</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>  foo(x)<span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>  <span class="co">// main is trying to use something it doesn&#39;t own. Error!</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>  <span class="pp">println!</span>(<span class="st">&quot;x is: {}&quot;</span><span class="op">,</span> x)<span class="op">;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a><span class="op">}</span></span></code></pre></div>
 <p>Error is:</p>
 <pre><code>error[E0382]: borrow of moved value: `x`
  --&gt; hello.rs:9:24
@@ -254,11 +231,15 @@ error: aborting due to previous error
 For more information about this error, try `rustc --explain E0382`.
 </code></pre>
 <h2 id="cargo">cargo</h2>
-<p><a
-href="http://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/cargo/guide/creating-a-new-project.html">http://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/cargo/guide/creating-a-new-project.html</a></p>
+<p><a href="http://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/cargo/guide/creating-a-new-project.html">http://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/cargo/guide/creating-a-new-project.html</a></p>
 <pre><code># --bin for binary program (--lib for library)
 # initializes a git repo by default. Disabling with --vcs none
 cargo new &lt;proj_name&gt;  --bin --vcs none
+
+# Or
+cargo new &lt;proj_name&gt;  --lib --vcs none
+
+cargo build
 </code></pre>
 </div>
 </body>

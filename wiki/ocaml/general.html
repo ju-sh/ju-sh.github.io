@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>General</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">General</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<h2 id="general-1">General</h2>
+<ul>
+<li><code>ModuleName.(e)</code> is equivalent to <code>let open ModuleName in e</code>
+<ul>
+<li>The module <code>ModuleName</code> is opened only for <code>e</code></li>
+<li><a href="https://stackoverflow.com/questions/30493644/ocaml-operator">https://stackoverflow.com/questions/30493644/ocaml-operator</a></li>
+</ul></li>
+<li>Style guide
+<ul>
+<li><a href="http://ocamlverse.net/content/documentation_guidelines.html">http://ocamlverse.net/content/documentation_guidelines.html</a></li>
+<li>Jane street style guide is aligned with their libraries: <a href="https://opensource.janestreet.com/standards/">https://opensource.janestreet.com/standards/</a></li>
+</ul></li>
+</ul>
+<h3 id="tailcall"><code>[@tailcall]</code></h3>
+<ul>
+<li>Ocaml compiler does tail optimization by default.</li>
+<li>Use of <code>[@tailcall]</code> on a function will induce error if the function cannot be made tail recursive.</li>
+<li>It only checks if the <em>call</em> is in tail position. Not the whole function.</li>
+</ul>
+<p>Error will be like this:</p>
+<pre><code>Error (warning 51 [wrong-tailcall-expectation]): expected tailcall
+</code></pre>
+<h3 id="line-number-directives">Line number directives</h3>
+<ul>
+<li>Starts with a <code>#</code></li>
+<li>These are not comments. But are ignored by ocaml lexer ??</li>
+<li><a href="https://ocaml.org/manual/5.3/lex.html#sss:lex-linedir">https://ocaml.org/manual/5.3/lex.html#sss:lex-linedir</a></li>
+</ul>
+<h3 id="import-only-some-names-from-a-module">Import only some names from a module</h3>
+<p>Unlike Haskell, no such facility is available.</p>
+<p>But this should be good enough:</p>
+<pre><code>let value1, value2 = ModuleName.(value1, value2) 
+</code></pre>
+<p><a href="https://stackoverflow.com/questions/38937520/ocaml-open-only-certain-values-types-from-module">https://stackoverflow.com/questions/38937520/ocaml-open-only-certain-values-types-from-module</a></p>
+<h2 id="emacs-tuareg-mode">Emacs: tuareg mode</h2>
+<p>Can work with utop.</p>
+<ul>
+<li><code>M-x run-ocaml</code>: start tuareg (is an alias for <code>tuareg-run-ocaml</code>)</li>
+<li><code>C-c C-s</code>: Start utop</li>
+<li><code>C-x C-e</code> / <code>C-c C-e</code>: Feed block of current line (or selection) to utop</li>
+<li><code>C-c C-t</code>: Show type of value under cursor</li>
+</ul>
+<p><a href="https://ocamlpro.github.io/ocaml-cheat-sheets/tuareg-mode.pdf">https://ocamlpro.github.io/ocaml-cheat-sheets/tuareg-mode.pdf</a></p>
+<hr />
+<p>Tuareg: Emacs major mode for OCaml.</p>
+<ul>
+<li>Start: ??</li>
+<li>Eval phrase: C-x C-e or C-c C-e</li>
+<li>Eval buffer: C-c C-b</li>
+<li>Eval region: C-c C-r</li>
+<li>Compile: C-c C-c</li>
+<li>Show type of identifier (needs annotation file): C-c C-l</li>
+<li>Indent: C-c C-q</li>
+</ul>
+<p>Insert template code snippet:</p>
+<ul>
+<li>C-c . l: <code>let _ in</code></li>
+<li>C-c . i: <code>if _ then _ else _</code></li>
+<li>C-c . m: <code>match _ with _</code></li>
+</ul>
+<h2 id="ocamlformat">ocamlformat</h2>
+<p>An automatic code formatter.</p>
+<p>dune integration (needs setup in dune-project):</p>
+<ul>
+<li><p>Dry run: <code>dune build @fmt</code></p></li>
+<li><p>Apply: <code>dune promote</code></p></li>
+<li><p><a href="https://dune.readthedocs.io/en/stable/howto/formatting.html">https://dune.readthedocs.io/en/stable/howto/formatting.html</a></p></li>
+<li><p>Ignore all warnings: <code>dune &lt;command&gt; --profile release</code></p>
+<ul>
+<li>By default, warnings are treated like errors</li>
+<li><a href="https://discuss.ocaml.org/t/disable-make-all-warnings-errors/11658">https://discuss.ocaml.org/t/disable-make-all-warnings-errors/11658</a></li>
+</ul></li>
+</ul>
+<h2 id="utop">utop</h2>
+<ul>
+<li>Next completion: M-right</li>
+<li>Previous completion: M-left</li>
+<li>Select completion: M-Tab</li>
+<li>Load a file: <code>#use "myfile.ml"</code></li>
+</ul>
+<p><a href="https://www.systutorials.com/utop-key-bindings-key-shortcuts/">https://www.systutorials.com/utop-key-bindings-key-shortcuts/</a></p>
+<h2 id="ppx">ppx</h2>
+<ul>
+<li>Preprocessors. Change the program before giving it to compiler.</li>
+<li>Similar to C macros??</li>
+</ul>
+<p>Links:</p>
+<ul>
+<li><a href="https://ocaml.org/docs/metaprogramming">https://ocaml.org/docs/metaprogramming</a></li>
+<li><a href="https://github.com/ocaml-ppx/ppxlib/blob/main/examples/simple-extension-rewriter">https://github.com/ocaml-ppx/ppxlib/blob/main/examples/simple-extension-rewriter</a></li>
+<li><a href="http://ocamlverse.net/content/metaprogramming.html">http://ocamlverse.net/content/metaprogramming.html</a></li>
+<li><a href="https://tarides.com/blog/2019-05-09-an-introduction-to-ocaml-ppx-ecosystem/">https://tarides.com/blog/2019-05-09-an-introduction-to-ocaml-ppx-ecosystem/</a></li>
+</ul>
+<p>Eg:</p>
+<ul>
+<li>ppx<sub>derivingjsonschema</sub>: JSON schema from ocaml type</li>
+<li>ppx<sub>yojsonconv</sub>: JSON de/serialization</li>
+</ul>
+<h3 id="deriving-_"><code>[@@deriving _]</code></h3>
+<ul>
+<li>To provide functionality similiar to automatic typeclass derivation in haskell.</li>
+<li>Needs third-party libraries.
+<ul>
+<li><a href="https://github.com/ocaml-ppx/ppxlib">https://github.com/ocaml-ppx/ppxlib</a></li>
+<li><a href="https://github.com/ocaml-ppx/ppx_deriving">https://github.com/ocaml-ppx/ppx_deriving</a> (old)</li>
+</ul></li>
+</ul>
+<h2 id="odoc">odoc</h2>
+<p><a href="https://ocaml.github.io/odoc/">https://ocaml.github.io/odoc/</a></p>
+<ul>
+<li><p>Meant to supercede an older tool?: ocamldoc</p>
+<ul>
+<li><a href="https://v2.ocaml.org/manual/ocamldoc.html">https://v2.ocaml.org/manual/ocamldoc.html</a></li>
+</ul></li>
+<li><p>Cross referencing possible</p></li>
+<li><p>Use comments in the <code>(** ‥ *)</code> format.</p></li>
+<li><p>Module docstring: First odoc comment</p></li>
+<li><p>Type, exception docstrings: odoc comment right before definition (normal comments can be there in between though)</p></li>
+<li><p>Constructor docstring: On same line</p></li>
+<li><p>Function docstring: before and after function definition</p></li>
+<li><p>Stop odoc mode with a 'stop comment': <code>(**/**)</code></p>
+<ul>
+<li>Another stop comment will re-enable odoc</li>
+</ul></li>
+<li><p>Inlince code: <code>[hello]</code></p></li>
+</ul>
+<p>List: ul, ol</p>
+<h3 id="string-formatting">String formatting</h3>
+<ul>
+<li>{b hello}: bold</li>
+<li>{i hello}: italic</li>
+<li>{e hello}: emphasize</li>
+</ul>
+<p>Alignment:</p>
+<ul>
+<li>{L hello}: left</li>
+<li>{C hello}: centre</li>
+<li>{R hello}: right</li>
+</ul>
+</div>
+</body>
+</html>

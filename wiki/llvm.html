@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>LLVM IR</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">LLVM IR</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<h2 id="general">General</h2>
+<ul>
+<li><code>.ll</code>: LLVM IR file extension</li>
+<li>Compiler LLVM IR to assembly: <code>llc inp.ll</code></li>
+<li>Variables are names or numbered
+<ul>
+<li>Eg: <code>%retval</code>, <code>%1</code></li>
+</ul></li>
+<li>Comments in the <em>textual representation</em> of LLVM IR starts with <code>;</code></li>
+</ul>
+<h2 id="get-llvm-ir-for-a-c-program">Get LLVM IR for a C program</h2>
+<p>Use clang.</p>
+<pre><code>clang -cc1 inp.c -emit-llvm
+</code></pre>
+<p><a href="https://stackoverflow.com/questions/9148890/how-to-make-clang-compile-to-llvm-ir">https://stackoverflow.com/questions/9148890/how-to-make-clang-compile-to-llvm-ir</a></p>
+<h2 id="using-an-llvm-ir-module-in-c-code">Using an LLVM IR module in C code</h2>
+<p><a href="https://danieljharvey.github.io/posts/2023-02-08-llvm-compiler-part-1.html">https://danieljharvey.github.io/posts/2023-02-08-llvm-compiler-part-1.html</a></p>
+<p>C program (<code>main.c</code>):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="dt">void</span> printint(<span class="dt">int</span> i) {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>  printf(<span class="st">&quot;%d&quot;</span>, i);</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>}</span></code></pre></div>
+<p>LLVM IR (Text format): <code>fun.ll</code>:</p>
+<pre><code>; ModuleID = &#39;fun&#39;
+
+declare external ccc i32 @printint(i32)
+
+define external ccc i32 @main()    {
+  %1 =  call ccc i32 @printint(i32  42)
+  ret i32 0
+}
+</code></pre>
+<p>Now use it with:</p>
+<pre><code>$ clang -Wno-override-module -lm fun.ll main.c -o a.out
+$ ./a.out
+42
+</code></pre>
+<h1 id="llvm">LLVM</h1>
+<ul>
+<li>Opaque pointer</li>
+</ul>
+</div>
+</body>
+</html>

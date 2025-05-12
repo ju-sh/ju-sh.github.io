@@ -56,8 +56,7 @@
 <tbody>
 <tr class="odd">
 <td><code>nat</code></td>
-<td><a
-href="https://coq.inria.fr/library/Coq.Init.Nat.html"><code>Nat</code></a></td>
+<td><a href="https://coq.inria.fr/library/Coq.Init.Nat.html"><code>Nat</code></a></td>
 <td><code>nat</code></td>
 </tr>
 <tr class="even">
@@ -77,21 +76,18 @@ href="https://coq.inria.fr/library/Coq.Init.Nat.html"><code>Nat</code></a></td>
 </tr>
 <tr class="odd">
 <td><code>R</code></td>
-<td><a
-href="https://coq.inria.fr/stdlib/Coq.Reals.Reals.html"><code>Reals</code></a></td>
+<td><a href="https://coq.inria.fr/stdlib/Coq.Reals.Reals.html"><code>Reals</code></a></td>
 <td><code>R</code></td>
 </tr>
 <tr class="even">
 <td><code>Q</code></td>
-<td><a
-href="https://coq.inria.fr/stdlib/Coq.Reals.Reals.html"><code>QArith</code></a></td>
+<td><a href="https://coq.inria.fr/stdlib/Coq.Reals.Reals.html"><code>QArith</code></a></td>
 <td><code>Q</code></td>
 </tr>
 </tbody>
 </table>
 <h2 id="nat"><code>nat</code></h2>
-<p><a href="https://en.wikipedia.org/wiki/Giuseppe_Peano">Peano</a>
-numbers.</p>
+<p><a href="https://en.wikipedia.org/wiki/Giuseppe_Peano">Peano</a> numbers.</p>
 <pre class="coq"><code>Print nat.
 (*
 Inductive nat : Set :=
@@ -136,10 +132,8 @@ Compute xI xH.
      : positive
 *)
 </code></pre>
-<p>We can sort of think of this as the number in binary with the bits in
-the reverse order.</p>
-<p>For example, consider <code>10%positive</code>, which is
-<code>xO (xI (xO xH))</code>.</p>
+<p>We can sort of think of this as the number in binary with the bits in the reverse order.</p>
+<p>For example, consider <code>10%positive</code>, which is <code>xO (xI (xO xH))</code>.</p>
 <pre><code>xO (xI (xO xH)).
  |   |   |  |
  v   v   v  v
@@ -150,9 +144,7 @@ which is
 1010₂ = 10₁₀
 </code></pre>
 <p>All have to end with <code>xH</code>.</p>
-<p>Because if <code>xO</code> was allowed as the end, a lone
-<code>xO</code> would mean zero, which isn't part of
-<code>positive</code>.</p>
+<p>Because if <code>xO</code> was allowed as the end, a lone <code>xO</code> would mean zero, which isn't part of <code>positive</code>.</p>
 <pre class="coq"><code>Compute xO (xI (xO xO)).
 (*
 The term &quot;xO&quot; has type &quot;positive -&gt; positive&quot;
@@ -160,11 +152,9 @@ while it is expected to have type &quot;positive&quot;.
 *)
 </code></pre>
 <h2 id="n"><code>N</code></h2>
-<p>Natural numbers in a more 'concise form' than the <code>nat</code>
-type.</p>
+<p>Natural numbers in a more 'concise form' than the <code>nat</code> type.</p>
 <ul>
-<li><a
-href="https://coq.inria.fr/doc/v8.19/stdlib/Coq.Numbers.BinNums.html">https://coq.inria.fr/doc/v8.19/stdlib/Coq.Numbers.BinNums.html</a></li>
+<li><a href="https://coq.inria.fr/doc/v8.19/stdlib/Coq.Numbers.BinNums.html">https://coq.inria.fr/doc/v8.19/stdlib/Coq.Numbers.BinNums.html</a></li>
 </ul>
 <pre class="coq"><code>Require Import ZArith.
 Print N.
@@ -213,8 +203,7 @@ Compute Npos 45%positive.
      : N
 *)
 </code></pre>
-<p>So basically, <code>N</code> is <code>positive</code> along with
-zero.</p>
+<p>So basically, <code>N</code> is <code>positive</code> along with zero.</p>
 <h2 id="z"><code>Z</code></h2>
 <pre class="coq"><code>Require Import ZArith.
 Print Z.
@@ -225,8 +214,7 @@ Inductive Z : Set :=
 | Zneg : positive -&gt; Z.
 *)
 </code></pre>
-<p><code>Z</code> is like <code>N</code> but with an extra constructor
-to represent negative numbers.</p>
+<p><code>Z</code> is like <code>N</code> but with an extra constructor to represent negative numbers.</p>
 <pre class="coq"><code>Compute Z0.
 (*
 = 0%Z
@@ -254,9 +242,7 @@ Record Q : Set := Qmake {
 }.
 *)
 </code></pre>
-<p>Rational numbers are numbers which can be represented in p/q form.
-<code>Qnum</code> and <code>Qden</code> corresponds to <code>p</code>
-(numerator) and <code>q</code> (denominator) respectively.</p>
+<p>Rational numbers are numbers which can be represented in p/q form. <code>Qnum</code> and <code>Qden</code> corresponds to <code>p</code> (numerator) and <code>q</code> (denominator) respectively.</p>
 <pre class="coq"><code>Require Import ZArith.
 Require Import QArith.
 
@@ -266,9 +252,7 @@ Compute Qmake 2 3.
      : Q
 *)
 </code></pre>
-<p>Note that we can't make infinity out of <code>Q</code>'s
-<code>Qmake</code> since <code>Qden</code> has to be a value of type
-<code>positive</code>, which cannot be zero.</p>
+<p>Note that we can't make infinity out of <code>Q</code>'s <code>Qmake</code> since <code>Qden</code> has to be a value of type <code>positive</code>, which cannot be zero.</p>
 <pre class="coq"><code>Compute Qmake 1 0.
 (*
 Cannot interpret this number as a value of type positive
@@ -399,8 +383,7 @@ Compute 12%R.
                       v
                      12
 </code></pre>
-<p><code>INR</code> can be used to make an <code>R</code> out of a
-<code>nat</code>.</p>
+<p><code>INR</code> can be used to make an <code>R</code> out of a <code>nat</code>.</p>
 <pre class="coq"><code>Check INR.      
 (*
 INR
@@ -413,15 +396,11 @@ Compute INR 5.
      : R
 *)
 </code></pre>
-<p><a href="https://github.com/coq-community/corn">CoRN</a> has a
-different representation of real numbers.</p>
-<p>Coq's built-in <code>R</code> is an <a
-href="https://coq.inria.fr/distrib/current/stdlib/Coq.Reals.Rdefinitions.html#">axiomatic
-representation</a>.</p>
+<p><a href="https://github.com/coq-community/corn">CoRN</a> has a different representation of real numbers.</p>
+<p>Coq's built-in <code>R</code> is an <a href="https://coq.inria.fr/distrib/current/stdlib/Coq.Reals.Rdefinitions.html#">axiomatic representation</a>.</p>
 <h2 id="more">More</h2>
 <ul>
-<li><a
-href="http://www.cs.ru.nl/~herman/PUBS/Types00-GeuversNiqui.pdf">http://www.cs.ru.nl/~herman/PUBS/Types00-GeuversNiqui.pdf</a></li>
+<li><a href="http://www.cs.ru.nl/~herman/PUBS/Types00-GeuversNiqui.pdf">http://www.cs.ru.nl/~herman/PUBS/Types00-GeuversNiqui.pdf</a></li>
 </ul>
 </div>
 </body>

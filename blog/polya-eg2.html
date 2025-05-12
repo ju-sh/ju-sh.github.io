@@ -36,8 +36,17 @@
 </header>
 
 <ul>
+    <li>Date created: 21-Jul-2022</li>
     </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/math practical.html">math practical</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
@@ -47,27 +56,18 @@ An example from Polya's 'How to solve it'.
 <hr/>
 
 <div id="content-container">
-<p>I recently read a part of <a
-href="https://en.wikipedia.org/wiki/How_to_Solve_It"><em>How to Solve
-it</em></a> by the Hungarian mathematician <a
-href="https://mathshistory.st-andrews.ac.uk/Biographies/Polya/">George
-Polya</a> (Pólya György) and found a nice example of how basic math can
-be used in every-day life to infer practically useful information.</p>
+<p>I recently read a part of <a href="https://en.wikipedia.org/wiki/How_to_Solve_It"><em>How to Solve it</em></a> by the Hungarian mathematician <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Polya/">George Polya</a> (Pólya György) and found a nice example of how basic math can be used in every-day life to infer practically useful information.</p>
 <p>It's named 'A rate problem' and appears in Part I.</p>
 <p>In this blog post, I try to retell it. 😊</p>
 <p>—</p>
-<p>Consider a vessel in the shape of a hollow inverted right-circular
-cone with horizontal base. The base of this cone is the opening of the
-vessel.</p>
+<p>Consider a vessel in the shape of a hollow inverted right-circular cone with horizontal base. The base of this cone is the opening of the vessel.</p>
 <p>Measurements of the cone are:</p>
 <ul>
 <li>base radius: a.</li>
 <li>height: b</li>
 </ul>
 <p>Suppose water is entering into this vessel at a rate r.</p>
-<p>We need to find the rate at which the water level is rising inside
-the vessel when the water level is at a height y from the pointed end of
-the cone.</p>
+<p>We need to find the rate at which the water level is rising inside the vessel when the water level is at a height y from the pointed end of the cone.</p>
 <p>The overall setup looks something like:</p>
 <pre><code>            a          
        +----------+           
@@ -95,31 +95,21 @@ b |          \    .    /          |
 </ul>
 <p>What we need to find is:</p>
 <ul>
-<li>rate at which y is increasing as water is flowing at the rate
-r.</li>
+<li>rate at which y is increasing as water is flowing at the rate r.</li>
 </ul>
-<p>Now the water level changes as time goes by since more water is
-entering the vessel without the vessel losing any of the water that's
-already inside it.</p>
+<p>Now the water level changes as time goes by since more water is entering the vessel without the vessel losing any of the water that's already inside it.</p>
 <p>So we can say the y is a function of time t.</p>
-<p>ie, the rate at which y increasing means rate at which the water
-level y is changing with respect to time.</p>
+<p>ie, the rate at which y increasing means rate at which the water level y is changing with respect to time.</p>
 <p>Then what we need to find is:</p>
 <pre><code> dy
 ────
  dt
 </code></pre>
-<p>(Because derivative of a function gives with respect to a variable
-gives the rate of change of that function with respect to that
-variable.)</p>
-<p>All right, we have now got a notation/name for what we need to find
-out.</p>
-<p>Now we need to find a relation between the information that we know
-and this <code>dy/dt</code>.</p>
-<p>Let's have a look at the water that's already inside the vessel, even
-as more water is entering the vessel at rate r.</p>
-<p>We can see that the water that's already inside the vessel assumes
-the shape of a cone as well.</p>
+<p>(Because derivative of a function gives with respect to a variable gives the rate of change of that function with respect to that variable.)</p>
+<p>All right, we have now got a notation/name for what we need to find out.</p>
+<p>Now we need to find a relation between the information that we know and this <code>dy/dt</code>.</p>
+<p>Let's have a look at the water that's already inside the vessel, even as more water is entering the vessel at rate r.</p>
+<p>We can see that the water that's already inside the vessel assumes the shape of a cone as well.</p>
 <p>Let x be the radius of the base of this cone.</p>
 <pre><code>            a        x 
        +----------+-----+     
@@ -145,22 +135,18 @@ b |          \    .    /          |
 
 where r is radius of base and h is height.
 </code></pre>
-<p>So the volume of water that's already inside the vessel when the
-water level is y is</p>
+<p>So the volume of water that's already inside the vessel when the water level is y is</p>
 <pre><code>     πx²y
 V = ──────
       3   
 </code></pre>
-<p>Like in the case of the water level, the volume of water inside the
-vessel increases as time goes by. So <code>V</code> is a function of
-<code>t</code> as well.</p>
+<p>Like in the case of the water level, the volume of water inside the vessel increases as time goes by. So <code>V</code> is a function of <code>t</code> as well.</p>
 <p>So the rate at which volume of water changes is:</p>
 <pre><code> dV
 ────
  dt
 </code></pre>
-<p>But we already know that water is entering the vessel at a rate
-r.</p>
+<p>But we already know that water is entering the vessel at a rate r.</p>
 <p>So</p>
 <pre><code>     dV
 r = ────
@@ -188,17 +174,14 @@ b |          \    |    /          |
 
                   A
 </code></pre>
-<p>where the vessel corresponds to ΔABC and the cone formed by the water
-that's already inside the vessel corresponds to ΔAMN.</p>
+<p>where the vessel corresponds to ΔABC and the cone formed by the water that's already inside the vessel corresponds to ΔAMN.</p>
 <p>Let's have a closer look at these two triangles.</p>
 <pre><code>∠BAC = ∠MAN   (same angle)
 ∠ABC = ∠AMN   (since BC ‖ MN)
 </code></pre>
-<p>So, <code>ΔABC</code> and <code>ΔAMN</code> are similar triangles (by
-AA similarity criterion).</p>
+<p>So, <code>ΔABC</code> and <code>ΔAMN</code> are similar triangles (by AA similarity criterion).</p>
 <p>ie,, <code>ΔABC ~ ΔAMN</code></p>
-<p>This means that the ratio of any two corresponding sides would be the
-same.</p>
+<p>This means that the ratio of any two corresponding sides would be the same.</p>
 <pre><code>   OM     AO
   ──── = ────
    PB     AP
@@ -213,8 +196,7 @@ same.</p>
 =&gt;  x = ──────  
           b
 </code></pre>
-<p>Cool! We got a relation between the base radius of the water cone and
-<code>a</code>, <code>y</code> &amp; <code>b</code>.</p>
+<p>Cool! We got a relation between the base radius of the water cone and <code>a</code>, <code>y</code> &amp; <code>b</code>.</p>
 <p>Now recall that</p>
 <pre><code>         πx²y
    V  = ──────
@@ -251,8 +233,7 @@ same.</p>
 =&gt; ──── = ───────── * ────
     dt     y²*2πa²     dt
 </code></pre>
-<p>And that's it! We have got <code>dy/dt</code>, which is what we were
-after.</p>
+<p>And that's it! We have got <code>dy/dt</code>, which is what we were after.</p>
 <p>Let's try an example case.</p>
 <p>Suppose the values of constants were like:</p>
 <ul>
@@ -275,9 +256,7 @@ after.</p>
         = ─────────────
               16π 
 </code></pre>
-<p>So, if the conical vessel is of height 3m with base radius 4m, the
-water level inside it rises at a rate of 9/16π ms⁻¹ when the water level
-is 1m..</p>
+<p>So, if the conical vessel is of height 3m with base radius 4m, the water level inside it rises at a rate of 9/16π ms⁻¹ when the water level is 1m..</p>
 </div>
 </body>
 </html>

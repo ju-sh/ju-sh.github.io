@@ -49,22 +49,18 @@
 <ul>
 <li>∃ was introduced by Peano</li>
 <li>∀ was introduced by Gentzen (after ∃)</li>
-<li>natural deduction, rules come in pairs
-(introduction,elimination)</li>
-<li>Sentential logic: another name for Boolean logic <a
-href="https://plato.stanford.edu/entries/logic-firstorder-emergence/">⁵</a></li>
+<li>natural deduction, rules come in pairs (introduction,elimination)</li>
+<li>Sentential logic: another name for Boolean logic <a href="https://plato.stanford.edu/entries/logic-firstorder-emergence/">⁵</a></li>
 <li>Subjunction: Something like 'implies' or 'if-then'</li>
 </ul>
 <ul>
-<li>Contrapositive: a rule by which the antecedent and consequent of an
-implication are inverted and switched.
+<li>Contrapositive: a rule by which the antecedent and consequent of an implication are inverted and switched.
 <ul>
 <li>Eg: (p → q) → (~q → ~p)</li>
 </ul></li>
 </ul>
 <ul>
-<li>Transposition: a rule by which we can switch the antecedent and
-consequent of an implication.
+<li>Transposition: a rule by which we can switch the antecedent and consequent of an implication.
 <ul>
 <li>Eg: (p → q) ↔︎ (~q → ~p)</li>
 </ul></li>
@@ -167,11 +163,9 @@ consequent of an implication.
 </tr>
 </tbody>
 </table>
-<h2 id="stlc-curry-style-and-church-style">STLC: Curry style and Church
-style</h2>
+<h2 id="stlc-curry-style-and-church-style">STLC: Curry style and Church style</h2>
 <p>UTLC functions have no fixed domain and range.</p>
-<p>Both Curry and Church came up with typed versions of their lambda
-calculus systems:</p>
+<p>Both Curry and Church came up with typed versions of their lambda calculus systems:</p>
 <ul>
 <li>Curry style</li>
 <li>Church style</li>
@@ -206,8 +200,7 @@ calculus systems:</p>
 </tr>
 </tbody>
 </table>
-<p><a
-href="https://ncatlab.org/nlab/show/intrinsic+and+extrinsic+views+of+typing">https://ncatlab.org/nlab/show/intrinsic+and+extrinsic+views+of+typing</a></p>
+<p><a href="https://ncatlab.org/nlab/show/intrinsic+and+extrinsic+views+of+typing">https://ncatlab.org/nlab/show/intrinsic+and+extrinsic+views+of+typing</a></p>
 <p>CoC (and hence CIC) is in Church style.</p>
 <pre><code>type := Type
       | type → type
@@ -225,13 +218,11 @@ href="https://ncatlab.org/nlab/show/intrinsic+and+extrinsic+views+of+typing">htt
 </ul>
 <h2 id="bhk-classical-interpretation">BHK: Classical interpretation</h2>
 <ul>
-<li>Brouwer-Heyting-Kolmogorov interpration: assign a set of proofs to
-the formula
+<li>Brouwer-Heyting-Kolmogorov interpration: assign a set of proofs to the formula
 <ul>
 <li>formula is true iff it has a proof</li>
 </ul></li>
-<li>Tarski-an interpretation: interpretation of a formula is either
-'true' or 'false'.</li>
+<li>Tarski-an interpretation: interpretation of a formula is either 'true' or 'false'.</li>
 <li>Classical vs intuitionistic logic:
 <ul>
 <li>Classical: Existence is proof</li>
@@ -239,12 +230,8 @@ the formula
 </ul></li>
 <li>Constructive programming: Programming is replaced by proving.</li>
 </ul>
-<p>Ref: Classical Brouwer-Heyting-Kolmogorov interpretation - Sata,
-Masahiko: <a
-href="https://repository.kulib.kyoto-u.ac.jp/dspace/bitstream/2433/61685/1/1021-3.pdf">https://repository.kulib.kyoto-u.ac.jp/dspace/bitstream/2433/61685/1/1021-3.pdf</a></p>
-<h2 id="peirces-law"><a
-href="https://en.wikipedia.org/wiki/Peirce%27s_law">Peirce's
-law</a></h2>
+<p>Ref: Classical Brouwer-Heyting-Kolmogorov interpretation - Sata, Masahiko: <a href="https://repository.kulib.kyoto-u.ac.jp/dspace/bitstream/2433/61685/1/1021-3.pdf">https://repository.kulib.kyoto-u.ac.jp/dspace/bitstream/2433/61685/1/1021-3.pdf</a></p>
+<h2 id="peirces-law"><a href="https://en.wikipedia.org/wiki/Peirce%27s_law">Peirce's law</a></h2>
 <p>Named after the logician Charles Peirce.</p>
 <pre><code>((p -&gt; q) -&gt; p) -&gt; p
 </code></pre>
@@ -256,8 +243,7 @@ law</a></h2>
 | 1 | 0 |      0 |           1 |                    1 |
 | 1 | 1 |      1 |           1 |                    1 |
 </code></pre>
-<p>Peirce's law is equivalent to law of excluded middle when
-<code>q</code> is made <code>¬p</code>:</p>
+<p>Peirce's law is equivalent to law of excluded middle when <code>q</code> is made <code>¬p</code>:</p>
 <pre><code>| ((p -&gt; ¬p) -&gt; p) -&gt; p      |                          |
 | ((¬p ∨ p) -&gt; p) -&gt; p       | (p-&gt;q) ≡ (¬p ∨ q)        |
 | (¬(¬p ∨ p) ∨ p) -&gt; p       | (p-&gt;q) ≡ (¬p ∨ q)        |
@@ -272,8 +258,7 @@ law</a></h2>
 Assumes double negation rule (ie, ¬¬p ≡ p). But it&#39;s classical logic anyway, since we are deriving law of excluded middle.
 </code></pre>
 <h2 id="minimal-logic">Minimal logic</h2>
-<p><a
-href="https://en.wikipedia.org/wiki/Minimal_logic">https://en.wikipedia.org/wiki/Minimal_logic</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Minimal_logic">https://en.wikipedia.org/wiki/Minimal_logic</a></p>
 <p>Doesn't have:</p>
 <ul>
 <li>law of excluded middle (<code>p ∨ ¬p</code>)</li>
@@ -291,10 +276,8 @@ href="https://en.wikipedia.org/wiki/Minimal_logic">https://en.wikipedia.org/wiki
 </ul>
 <h2 id="order-of-quantifier-matters">Order of quantifier matters</h2>
 <ul>
-<li>In <code>∀x, ∃y</code>, means x is fixed first, and y is chosen
-later.</li>
-<li>In <code>∃y, ∀x</code>, means y is fixed first, and x is chosen
-later.</li>
+<li>In <code>∀x, ∃y</code>, means x is fixed first, and y is chosen later.</li>
+<li>In <code>∃y, ∀x</code>, means y is fixed first, and x is chosen later.</li>
 </ul>
 <p>For example,</p>
 <pre><code>∀x:country, ∃y:city,
@@ -306,18 +289,15 @@ later.</li>
 </code></pre>
 <p>means 'there is some city which is the capital of all countries'.</p>
 <h2 id="sequent-calculus">Sequent calculus</h2>
-<p>A style of formal logical argumentation in which every line of proof
-is a conditional tautology (known as <em>sequent</em>).</p>
+<p>A style of formal logical argumentation in which every line of proof is a conditional tautology (known as <em>sequent</em>).</p>
 <ul>
 <li>More suited for theoretical analysis.
 <ul>
 <li>Natural deduction more suited for practical theorem proving.</li>
 </ul></li>
-<li>Sequent calculus is a <em>Gentzen style</em> system, like natural
-deduction.
+<li>Sequent calculus is a <em>Gentzen style</em> system, like natural deduction.
 <ul>
-<li>But unlike natural deduction, which can have only one conclusion per
-line, sequent calculus can have one or more conclusions per line.</li>
+<li>But unlike natural deduction, which can have only one conclusion per line, sequent calculus can have one or more conclusions per line.</li>
 </ul></li>
 </ul>
 <h3 id="inference-rules">Inference rules</h3>
@@ -352,26 +332,20 @@ Left ¬ rule: (DOUBT: How does this one come about??)
 <li>An inference rule in sequent calculus.</li>
 <li>Something like a broader/generalized form of modus ponens rule.</li>
 </ul>
-<p>If a formula <code>A</code> appears as a conclusion of one proof and
-appears as a hypothesis of another proof, a third proof can be deduced
-in which the formula <code>A</code> does not even appear (ie,
-<code>A</code> is eliminated).</p>
+<p>If a formula <code>A</code> appears as a conclusion of one proof and appears as a hypothesis of another proof, a third proof can be deduced in which the formula <code>A</code> does not even appear (ie, <code>A</code> is eliminated).</p>
 <pre><code>  Γ ⊢ A,Δ   Γ&#39;,A ⊢ Δ&#39;
 ======================
      Γ,Γ&#39; ⊢ Δ,Δ&#39;
 </code></pre>
 <h2 id="hilbert-style-proof-systems">Hilbert style proof systems</h2>
 <ul>
-<li>Every line of the proof is an unconditional tautology (ie, a
-theorem).</li>
+<li>Every line of the proof is an unconditional tautology (ie, a theorem).</li>
 <li>Has small number of inference rules, more number of axioms.
 <ul>
-<li>Unlike Gentzen style systems, which have few axioms and more
-inference rules.</li>
+<li>Unlike Gentzen style systems, which have few axioms and more inference rules.</li>
 </ul></li>
 </ul>
-<h2 id="continuation-passing-style-cps">Continuation Passing Style
-(CPS)</h2>
+<h2 id="continuation-passing-style-cps">Continuation Passing Style (CPS)</h2>
 <ul>
 <li>Used by smlnj internally.</li>
 </ul>
@@ -379,32 +353,23 @@ inference rules.</li>
 <h2 id="proposition">Proposition</h2>
 <p>Informally speaking,</p>
 <blockquote>
-<p>A proposition is a 'sentence' for which 'it makes sense' to ask if it
-is true or false.</p>
+<p>A proposition is a 'sentence' for which 'it makes sense' to ask if it is true or false.</p>
 </blockquote>
-<p>Reference: <em>Applied abstract algebra</em> (2e) - Rudolf Lidl,
-Günter Pilz</p>
+<p>Reference: <em>Applied abstract algebra</em> (2e) - Rudolf Lidl, Günter Pilz</p>
 <h2 id="skolemization">Skolemization</h2>
 <ul>
-<li>A process of removing existential quantifiers from a first order
-formula.
+<li>A process of removing existential quantifiers from a first order formula.
 <ul>
 <li>By introducing new function symbols if needed.</li>
 </ul></li>
-<li>The result would be in <a
-href="https://en.wikipedia.org/wiki/Skolem_normal_form">Skolem normal
-form</a>.</li>
-<li>Needn't be equivalent to the original formula, but result is SAT
-only if the original formula is SAT.
+<li>The result would be in <a href="https://en.wikipedia.org/wiki/Skolem_normal_form">Skolem normal form</a>.</li>
+<li>Needn't be equivalent to the original formula, but result is SAT only if the original formula is SAT.
 <ul>
-<li>ie, result of skolemization is equisatisfiable with the original
-formula.</li>
+<li>ie, result of skolemization is equisatisfiable with the original formula.</li>
 </ul></li>
-<li>Dual of skolemization is <a
-href="https://en.wikipedia.org/wiki/Herbrandization">Herbrandization</a>.</li>
+<li>Dual of skolemization is <a href="https://en.wikipedia.org/wiki/Herbrandization">Herbrandization</a>.</li>
 </ul>
-<p>An example <a
-href="https://www.cs.toronto.edu/~sheila/384/w14/Lectures/Resolution-plus-tutorial-6pp.pdf">¹⁶</a>:</p>
+<p>An example <a href="https://www.cs.toronto.edu/~sheila/384/w14/Lectures/Resolution-plus-tutorial-6pp.pdf">¹⁶</a>:</p>
 <pre><code>Formula: Every philosopher has written at least one book.
 ie, for each philosopher, there exists a book that is written by that philosopher.
 
@@ -419,8 +384,7 @@ This part is the skolemization.
 
 ∀p, ¬ Philo(p) ∨ [book(g(p)) ∧ write(p, g(p))]
 </code></pre>
-<p>Another example <a
-href="https://www.cs.toronto.edu/~sheila/384/w14/Lectures/Resolution-plus-tutorial-6pp.pdf">¹⁶</a>:</p>
+<p>Another example <a href="https://www.cs.toronto.edu/~sheila/384/w14/Lectures/Resolution-plus-tutorial-6pp.pdf">¹⁶</a>:</p>
 <pre><code>∀p ∀s, philo(p) ∧ studentOf(p, s) -&gt; ∃b, book(b) ∧ write(p, b) ∧ read(s, b)
 
 Rewriting the implication,
@@ -489,27 +453,20 @@ Skolemizing,
 <li>Each resource can be used <em>atmost</em> once.
 <ul>
 <li>Ie, can also be left unused.</li>
-<li>Or to put it in other words, resource can be discarded instead of
-being used.</li>
+<li>Or to put it in other words, resource can be discarded instead of being used.</li>
 </ul></li>
-<li>Unlike linear logic, where each resource has to be used
-<em>exactly</em> once <a
-href="https://en.wikipedia.org/wiki/Substructural_type_system">ʷ</a></li>
+<li>Unlike linear logic, where each resource has to be used <em>exactly</em> once <a href="https://en.wikipedia.org/wiki/Substructural_type_system">ʷ</a></li>
 </ul>
 <h2 id="leibnizs-equality">Leibniz's equality</h2>
-<p>x = y iff P(x) = P(y) for all predicates. <a
-href="https://en.wikipedia.org/wiki/Equality_(mathematics)">ʷ</a></p>
+<p>x = y iff P(x) = P(y) for all predicates. <a href="https://en.wikipedia.org/wiki/Equality_(mathematics)">ʷ</a></p>
 <h1 id="type-theory">Type theory</h1>
 <ul>
-<li>Types are 'specs' for values. <a
-href="https://bitbucket.org/piyush-kurur/hott-notes/src/master/course-tifr/lectures/introduction.lhs.md">¹</a></li>
+<li>Types are 'specs' for values. <a href="https://bitbucket.org/piyush-kurur/hott-notes/src/master/course-tifr/lectures/introduction.lhs.md">¹</a></li>
 <li>Compilers ensure that these specs are adhered to.</li>
-<li>Π-calculus: a popular core language for defining semnatics of
-message-based concurrent languages.</li>
+<li>Π-calculus: a popular core language for defining semnatics of message-based concurrent languages.</li>
 <li>type reconstruction: another name for 'type inference'.
 <ul>
-<li>Compiler fills in type information that has been left out by the
-programmer.</li>
+<li>Compiler fills in type information that has been left out by the programmer.</li>
 </ul></li>
 </ul>
 <h2 id="type-variable-example">Type variable example</h2>
@@ -543,35 +500,24 @@ programmer.</li>
    |      |    |
    f      a  return value
 </code></pre>
-<p>Holding type variable abstract like this allows for <em>parametric
-polymorphism</em>.</p>
+<p>Holding type variable abstract like this allows for <em>parametric polymorphism</em>.</p>
 <h2 id="most-general-instance">Most general instance</h2>
-<p>Makes smallest commitment about the values of type variables that
-yields a well-typed term.</p>
+<p>Makes smallest commitment about the values of type variables that yields a well-typed term.</p>
 <h3 id="example">Example</h3>
 <p>Consider a term:</p>
 <pre><code>λf:Y.
 λa:X.
 f (f a)
 </code></pre>
-<p>This by itself can't be said to be well typed. Because <code>f</code>
-is of type <code>Y</code> when it has got to accept <code>a : X</code>
-as argument.</p>
-<p>But if we change <code>Y</code> to be <code>X → X</code>, to make
-it</p>
+<p>This by itself can't be said to be well typed. Because <code>f</code> is of type <code>Y</code> when it has got to accept <code>a : X</code> as argument.</p>
+<p>But if we change <code>Y</code> to be <code>X → X</code>, to make it</p>
 <pre><code>λf:X → X.
 λa:X.
 f (f a)
 </code></pre>
-<p>we could say that the term is well-typed, but without yet giving a
-concrete value for the type variable <code>X</code>. Its type is:
-<code>(X → X) → X → X</code>.</p>
-<p>So, the latter is the 'most general instance' of the former. Smallest
-commitment regarding values of type variables that yields a well-typed
-term.</p>
-<p>We could say that <strong>type inference</strong> (aka <strong>type
-reconstruction</strong>) is the search for a valid instantiation of type
-variables.</p>
+<p>we could say that the term is well-typed, but without yet giving a concrete value for the type variable <code>X</code>. Its type is: <code>(X → X) → X → X</code>.</p>
+<p>So, the latter is the 'most general instance' of the former. Smallest commitment regarding values of type variables that yields a well-typed term.</p>
+<p>We could say that <strong>type inference</strong> (aka <strong>type reconstruction</strong>) is the search for a valid instantiation of type variables.</p>
 <pre><code>λf:Y .
 λa:X .
 f (f a)
@@ -603,28 +549,21 @@ f (f a)
 </tr>
 </tbody>
 </table>
-<p>Any function definable in lambda calculus has a fixed point, which
-itself is definable in labmda calculus. <a
-href="https://cs.pomona.edu/~kim/CSC066S06/Lectures/Lecture13/Lecture13_1.html">⁸</a></p>
+<p>Any function definable in lambda calculus has a fixed point, which itself is definable in labmda calculus. <a href="https://cs.pomona.edu/~kim/CSC066S06/Lectures/Lecture13/Lecture13_1.html">⁸</a></p>
 <h1 id="computer-science">Computer Science</h1>
 <h2 id="fuzzing">Fuzzing</h2>
-<p>Testing a functionality by feeding it randomly generated input to see
-if it breaks on any of them</p>
+<p>Testing a functionality by feeding it randomly generated input to see if it breaks on any of them</p>
 <ul>
 <li>An automated software testing technique</li>
-<li><a
-href="https://oherrala.medium.com/quickcheck-or-fuzzing-which-one-to-use-98d200e9609b">https://oherrala.medium.com/quickcheck-or-fuzzing-which-one-to-use-98d200e9609b</a></li>
+<li><a href="https://oherrala.medium.com/quickcheck-or-fuzzing-which-one-to-use-98d200e9609b">https://oherrala.medium.com/quickcheck-or-fuzzing-which-one-to-use-98d200e9609b</a></li>
 <li>'Fuzzing: Breaking Things with Random Inputs'
 <ul>
-<li><a
-href="https://www.fuzzingbook.org/html/Fuzzer.html">https://www.fuzzingbook.org/html/Fuzzer.html</a></li>
+<li><a href="https://www.fuzzingbook.org/html/Fuzzer.html">https://www.fuzzingbook.org/html/Fuzzer.html</a></li>
 </ul></li>
-<li>Aim is to produce unexpected input and see if they are handled
-properly</li>
+<li>Aim is to produce unexpected input and see if they are handled properly</li>
 <li>Most useful when input is structured</li>
 <li>A test oracle is used ??</li>
-<li>Repeatedly run with random input to try and crash the software. If a
-crash occurs, examine to figure out what went wrong.</li>
+<li>Repeatedly run with random input to try and crash the software. If a crash occurs, examine to figure out what went wrong.</li>
 </ul>
 <ul>
 <li>Black box fuzzing
@@ -635,8 +574,7 @@ crash occurs, examine to figure out what went wrong.</li>
 <ul>
 <li>Property-based testing</li>
 <li>Mutation testing</li>
-<li><a
-href="https://news.ycombinator.com/item?id=29763115">https://news.ycombinator.com/item?id=29763115</a></li>
+<li><a href="https://news.ycombinator.com/item?id=29763115">https://news.ycombinator.com/item?id=29763115</a></li>
 </ul></li>
 </ul>
 <h2 id="church-turing-thesis">Church-Turing thesis</h2>
@@ -652,30 +590,24 @@ href="https://news.ycombinator.com/item?id=29763115">https://news.ycombinator.co
 <li>Some decision problems are undecidable.
 <ul>
 <li>There's no <em>general</em> algorithm that works every time.</li>
-<li><a
-href="https://en.wikipedia.org/wiki/Turing%27s_proof">https://en.wikipedia.org/wiki/Turing%27s_proof</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Turing%27s_proof">https://en.wikipedia.org/wiki/Turing%27s_proof</a></li>
 </ul></li>
 <li>Alan Turing worked on Turing machines.</li>
 <li>Alonzo Church worked on lambda calculus.</li>
 </ul>
-<p>Informally speaking, Church-Turing thesis says:that both Turing
-machines and lambda calculus represent computations.</p>
-<p>Reference: <a
-href="https://www.cs.cornell.edu/courses/cs3110/2021sp/textbook/adv/curry-howard.html">https://www.cs.cornell.edu/courses/cs3110/2021sp/textbook/adv/curry-howard.html</a></p>
+<p>Informally speaking, Church-Turing thesis says:that both Turing machines and lambda calculus represent computations.</p>
+<p>Reference: <a href="https://www.cs.cornell.edu/courses/cs3110/2021sp/textbook/adv/curry-howard.html">https://www.cs.cornell.edu/courses/cs3110/2021sp/textbook/adv/curry-howard.html</a></p>
 <h3 id="entscheidungsproblem">Entscheidungsproblem</h3>
 <ul>
-<li>Accept a statement as input and find an algorithm that check if the
-statement holds in the given axiom system.
+<li>Accept a statement as input and find an algorithm that check if the statement holds in the given axiom system.
 <ul>
-<li>ie, whether the statement is valid in every structure satisfying the
-axioms.</li>
+<li>ie, whether the statement is valid in every structure satisfying the axioms.</li>
 <li>An algorithm that can give a yes/no answer.</li>
 </ul></li>
 </ul>
 <h2 id="church-rosser-theorem">Church-Rosser theorem</h2>
 <p>Related to lambda calculus.</p>
-<p>If two different β-reductions upon a term terminate, then they
-terminate in the same term.</p>
+<p>If two different β-reductions upon a term terminate, then they terminate in the same term.</p>
 <pre><code>   e1
  ↗   ↘
 e     e&#39;
@@ -684,10 +616,8 @@ e     e&#39;
 </code></pre>
 <p>References:</p>
 <ul>
-<li><a
-href="https://www.cse.iitk.ac.in/users/karkare/Talks/FPIntro.pdf">https://www.cse.iitk.ac.in/users/karkare/Talks/FPIntro.pdf</a></li>
-<li><a
-href="https://en.wikipedia.org/wiki/Church%E2%80%93Rosser_theorem">https://en.wikipedia.org/wiki/Church%E2%80%93Rosser_theorem</a></li>
+<li><a href="https://www.cse.iitk.ac.in/users/karkare/Talks/FPIntro.pdf">https://www.cse.iitk.ac.in/users/karkare/Talks/FPIntro.pdf</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Church%E2%80%93Rosser_theorem">https://en.wikipedia.org/wiki/Church%E2%80%93Rosser_theorem</a></li>
 </ul>
 <h2 id="logic-1">Logic</h2>
 <h2 id="red-black-trees">Red-black trees</h2>
@@ -695,8 +625,7 @@ href="https://en.wikipedia.org/wiki/Church%E2%80%93Rosser_theorem">https://en.wi
 <li>A balanced binary search tree (that means elements are sorted).</li>
 <li>Better performance than AVL trees.</li>
 </ul>
-<p>From <a
-href="https://www.cis.upenn.edu/~sweirich/talks/icfp14.pdf">here</a>:</p>
+<p>From <a href="https://www.cis.upenn.edu/~sweirich/talks/icfp14.pdf">here</a>:</p>
 <ul>
 <li>Root is black</li>
 <li>Leaves are black</li>
@@ -733,29 +662,21 @@ B         B               R
 <h2 id="kripke-structures">Kripke structures</h2>
 <p>Basically the state diagrams used in model checking books.</p>
 <p>Pronounced <code>/ˈkrɪpki/</code>.</p>
-<h2 id="finite-automata-vs-finite-state-machine">Finite automata vs
-Finite state machine</h2>
+<h2 id="finite-automata-vs-finite-state-machine">Finite automata vs Finite state machine</h2>
 <p>Apparently the same?? Not sure…</p>
-<p><a
-href="https://stackoverflow.com/questions/22354706/can-anyone-please-explain-difference-between-finite-state-machine-and-finite-aut">https://stackoverflow.com/questions/22354706/can-anyone-please-explain-difference-between-finite-state-machine-and-finite-aut</a></p>
-<h2 id="primitive-recursive-functions">Primitive recursive
-functions</h2>
+<p><a href="https://stackoverflow.com/questions/22354706/can-anyone-please-explain-difference-between-finite-state-machine-and-finite-aut">https://stackoverflow.com/questions/22354706/can-anyone-please-explain-difference-between-finite-state-machine-and-finite-aut</a></p>
+<h2 id="primitive-recursive-functions">Primitive recursive functions</h2>
 <p>Functions which are known to terminate.</p>
-<p>As in a loop whose maximum possible number of iterations is known
-before entering the loop.</p>
-<p>(Gödel called this just 'recursive functions'. Kleene kind of renamed
-it.)</p>
+<p>As in a loop whose maximum possible number of iterations is known before entering the loop.</p>
+<p>(Gödel called this just 'recursive functions'. Kleene kind of renamed it.)</p>
 <h2 id="petrinet">Petrinet</h2>
 <ul>
 <li><p>Can model distributed systems.</p>
 <ul>
 <li>Advantage: Can be given a formal semantics of system execution.</li>
-<li>Can have multiple concurrent activities, unlike a finite automaton
-where at a time there is only one 'activity'. <a
-href="https://people.cs.vt.edu/kafura/ComputationalThinking/Class-Notes/Petri-Net-Notes-Expanded.pdf">ʳ</a></li>
+<li>Can have multiple concurrent activities, unlike a finite automaton where at a time there is only one 'activity'. <a href="https://people.cs.vt.edu/kafura/ComputationalThinking/Class-Notes/Petri-Net-Notes-Expanded.pdf">ʳ</a></li>
 </ul></li>
-<li><p>Named after German computer scientist Carl Adam Petri. <a
-href="https://en.wikipedia.org/wiki/Petri_net">ʷ</a></p></li>
+<li><p>Named after German computer scientist Carl Adam Petri. <a href="https://en.wikipedia.org/wiki/Petri_net">ʷ</a></p></li>
 <li><p>A directed bipartite graph</p></li>
 <li><p>Two kinds of nodes</p>
 <ul>
@@ -764,20 +685,15 @@ href="https://en.wikipedia.org/wiki/Petri_net">ʷ</a></p></li>
 </ul></li>
 <li><p>Arcs connect places and transitions.</p>
 <ul>
-<li>There can be no arcs between nodes of the same type (ie, between two
-places or two transitions).</li>
+<li>There can be no arcs between nodes of the same type (ie, between two places or two transitions).</li>
 </ul></li>
-<li><p>A place can contain tokens (black small circles within
-place).</p></li>
-<li><p>A transition is enable if all places connected as input to it has
-at least one token each.</p></li>
+<li><p>A place can contain tokens (black small circles within place).</p></li>
+<li><p>A transition is enable if all places connected as input to it has at least one token each.</p></li>
 <li><p>Non-deterministic behaviour.</p>
 <ul>
-<li>If multiple transitions are enabled, the order in which they fire is
-not predetermined.</li>
+<li>If multiple transitions are enabled, the order in which they fire is not predetermined.</li>
 </ul></li>
-<li><p>See some example petrinets <a
-href="http://petrinet.org/#ProducerConsumer">here</a>.</p></li>
+<li><p>See some example petrinets <a href="http://petrinet.org/#ProducerConsumer">here</a>.</p></li>
 </ul>
 <p>Definition:</p>
 <p>(P, T, F)</p>
@@ -795,10 +711,20 @@ href="http://petrinet.org/#ProducerConsumer">here</a>.</p></li>
 <li>Timed/untimed</li>
 <li>Coloured</li>
 </ul>
+<h2 id="dynamic-programming">Dynamic programming</h2>
+<ul>
+<li>Suitable if problem has an <strong>optimal substructure</strong></li>
+<li>'Remembers' what was already computed</li>
+<li>Uses this 'saved' info to do further calculations</li>
+<li>Examples:
+<ul>
+<li>nth Fibonacci number</li>
+<li>Number of moves required to solve towers of Hanoi with n discs</li>
+</ul></li>
+</ul>
 <h1 id="electronics">Electronics</h1>
 <h2 id="register-retiming">Register retiming</h2>
-<p>Move registers to decrease the time for the critical path so that
-frequency may be increased.</p>
+<p>Move registers to decrease the time for the critical path so that frequency may be increased.</p>
 <p>Retiming is possible only when there is sufficient slack.</p>
 <pre><code>+--+   /-----\   /-----\   +--+   +--+
 |R1|---| OP1 |-&gt;-| OP2 |-&gt;-|R2|-&gt;-|R3|
@@ -806,8 +732,7 @@ frequency may be increased.</p>
          10ns      20ns               
 </code></pre>
 <p>where the 'R's are registers.</p>
-<p>In the above case, R1-R2 takes 10ns + 20ns = 30ns whereas R2-R3 takes
-0ns (ie, we have a positive slack of 20ns in R2-R3??).</p>
+<p>In the above case, R1-R2 takes 10ns + 20ns = 30ns whereas R2-R3 takes 0ns (ie, we have a positive slack of 20ns in R2-R3??).</p>
 <p>So one clock should be of at least 30ns.</p>
 <p>That means ν = 1/(30 * 10⁻⁹) = 33.33MHz</p>
 <p>Yet, if OP2 were moved to R2-R3,</p>
@@ -843,13 +768,10 @@ frequency may be increased.</p>
 <h3 id="manhattan-distance">Manhattan distance</h3>
 <ul>
 <li>aka Taxicab distance</li>
-<li>Often used in intergrated circuits where the wires can run only
-parallel to the X and Y axes (ie, rectilinear).
+<li>Often used in intergrated circuits where the wires can run only parallel to the X and Y axes (ie, rectilinear).
 <ul>
-<li><a
-href="https://xlinux.nist.gov/dads/HTML/manhattanDistance.html">https://xlinux.nist.gov/dads/HTML/manhattanDistance.html</a></li>
-<li><a
-href="https://xlinux.nist.gov/dads/HTML/rectilinear.html">https://xlinux.nist.gov/dads/HTML/rectilinear.html</a></li>
+<li><a href="https://xlinux.nist.gov/dads/HTML/manhattanDistance.html">https://xlinux.nist.gov/dads/HTML/manhattanDistance.html</a></li>
+<li><a href="https://xlinux.nist.gov/dads/HTML/rectilinear.html">https://xlinux.nist.gov/dads/HTML/rectilinear.html</a></li>
 </ul></li>
 </ul>
 <pre><code>  |   |   |   |   |   |   |             |   |   |   |   |   |   |
@@ -884,13 +806,9 @@ href="https://xlinux.nist.gov/dads/HTML/rectilinear.html">https://xlinux.nist.go
 
 (1,0) to  (4,3)
 </code></pre>
-<p>The name comes from Manhattan, New York where the buildings were
-arranged in a grid layout and the shortest path a taxicab could take
-between two locations was precisely the 'Manhattan distance'. [¹][1]</p>
-<p>It's like all the squares are buildings and the lines of the grid are
-roads.</p>
-<p>To navigate between the different road junctions, a taxi would have
-to go around the 'buildings'.</p>
+<p>The name comes from Manhattan, New York where the buildings were arranged in a grid layout and the shortest path a taxicab could take between two locations was precisely the 'Manhattan distance'. [¹][1]</p>
+<p>It's like all the squares are buildings and the lines of the grid are roads.</p>
+<p>To navigate between the different road junctions, a taxi would have to go around the 'buildings'.</p>
 <p>Hence the nick name 'taxicab distance', I guess.</p>
 <h3 id="chebyshev-distance">Chebyshev distance</h3>
 <ul>
@@ -917,33 +835,63 @@ to go around the 'buildings'.</p>
 </code></pre>
 <p>See:</p>
 <ul>
-<li><a
-href="https://en.wikipedia.org/wiki/Chebyshev_distance">https://en.wikipedia.org/wiki/Chebyshev_distance</a></li>
-<li><a
-href="https://en.wikipedia.org/wiki/Pafnuty_Chebyshev">https://en.wikipedia.org/wiki/Pafnuty_Chebyshev</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Chebyshev_distance">https://en.wikipedia.org/wiki/Chebyshev_distance</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Pafnuty_Chebyshev">https://en.wikipedia.org/wiki/Pafnuty_Chebyshev</a></li>
+</ul>
+<h3 id="levenshtein-distance">Levenshtein distance</h3>
+<ul>
+<li>Indicates how different two strings are</li>
+<li>Minimum number of single character edits needed to change one of them into the other</li>
+<li>Allowed: Insertion, deletion, replacement</li>
+<li>Named after Vladimir Levenshtein
+<ul>
+<li>Defined it in 1965</li>
+<li>Soviet mathematician</li>
+</ul></li>
+</ul>
+<pre><code>lev(a, b) = 
+  if |a|=0 then |b|
+  else if |b|=0 then |a|     
+  else if head(a) = head(b):
+    lev(tail(a), tail(b))
+  else:
+    1 + min(
+          lev(a, tail(b)),
+          lev(tail(a), b),
+          lev(tail(a), tail(b))
+        )
+</code></pre>
+<p>Example: lev(kitten, sitting) = 3</p>
+<pre><code>kitten, sitting
+(Delete &#39;g&#39;) =&gt; Total cost: 1
+kitten, sittin
+(i↦e) =&gt; Total cost: 2
+kitten, sitten
+(s↦k) =&gt; Total cost: 3
+kitten, kitten
+</code></pre>
+<h3 id="hamming-distance">Hamming distance</h3>
+<ul>
+<li>Number of positions where the strings differ</li>
+<li>Indicates how different two strings <strong>of equal length</strong>
+<ul>
+<li>Like a restricted form of Levenshtein distance</li>
+</ul></li>
 </ul>
 <h3 id="minkowski">Minkowski</h3>
 <ul>
 <li>aka Lₘ distance.</li>
 </ul>
-<p><a
-href="https://xlinux.nist.gov/dads/HTML/lmdistance.html">https://xlinux.nist.gov/dads/HTML/lmdistance.html</a></p>
+<p><a href="https://xlinux.nist.gov/dads/HTML/lmdistance.html">https://xlinux.nist.gov/dads/HTML/lmdistance.html</a></p>
 <h1 id="sat-smt">SAT-SMT</h1>
-<p><a
-href="https://cacm.acm.org/research/the-silent-revolution-of-sat/">https://cacm.acm.org/research/the-silent-revolution-of-sat/</a></p>
+<p><a href="https://cacm.acm.org/research/the-silent-revolution-of-sat/">https://cacm.acm.org/research/the-silent-revolution-of-sat/</a></p>
 <p>–</p>
-<p>From <em>Handbook of Satisfiability</em> by Armin Biere, Marijn
-Heule, Hans van Maaren, Toby Walsh:</p>
+<p>From <em>Handbook of Satisfiability</em> by Armin Biere, Marijn Heule, Hans van Maaren, Toby Walsh:</p>
 <blockquote>
-<p>In its broadest sense, a pseudo-Boolean function is a function that
-maps n Boolean values to a real number. … … Pseudo-Boolean constraints
-offer a more expressive and natural way to express constraints than
-clauses and yet, this formalism remains close enough to the SAT problem
-to benefit from the recent advances in SAT solving.</p>
+<p>In its broadest sense, a pseudo-Boolean function is a function that maps n Boolean values to a real number. … … Pseudo-Boolean constraints offer a more expressive and natural way to express constraints than clauses and yet, this formalism remains close enough to the SAT problem to benefit from the recent advances in SAT solving.</p>
 </blockquote>
 <ul>
-<li>Cook-Levine theorem: Boolean satisfiability problem is
-NP-complete.</li>
+<li>Cook-Levine theorem: Boolean satisfiability problem is NP-complete.</li>
 </ul>
 <h2 id="linear-pb-constaints">Linear PB constaints</h2>
 <pre><code>Σ aⱼlⱼ   operator   b
@@ -954,10 +902,8 @@ where
  - lⱼ are literals
  - operator ∈ {=, ≥, ≤, &lt;, &gt;}
 </code></pre>
-<p>RHS of the constraint (ie, <code>b</code> here) is known as the
-<strong>degree</strong> of the constraint.</p>
-<h2 id="notations-abbreviations-and-some-terms">Notations, abbreviations
-and some terms</h2>
+<p>RHS of the constraint (ie, <code>b</code> here) is known as the <strong>degree</strong> of the constraint.</p>
+<h2 id="notations-abbreviations-and-some-terms">Notations, abbreviations and some terms</h2>
 <ul>
 <li><p>PB: Pseudo-boolean</p></li>
 <li><p>QBF: Quantified boolean formula</p></li>
@@ -982,10 +928,8 @@ and some terms</h2>
 ─────────────────────
         a ∨ b
 </code></pre>
-<p>where <code>a ∨ b</code> is the <em>resolvent</em> over
-<code>x</code> of <code>a ∨ x</code> and <code>b ∨ x̅</code>.</p>
-<p>Because we need both <code>a ∨ x</code> and <code>b ∨ x̅</code> to be
-true.</p>
+<p>where <code>a ∨ b</code> is the <em>resolvent</em> over <code>x</code> of <code>a ∨ x</code> and <code>b ∨ x̅</code>.</p>
+<p>Because we need both <code>a ∨ x</code> and <code>b ∨ x̅</code> to be true.</p>
 <p>3 variables =&gt; 8 possibilities:</p>
 <table>
 <tbody>
@@ -1101,26 +1045,23 @@ true.</p>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb28"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sage: <span class="im">import</span> sage.logic.propcalc <span class="im">as</span> propcalc</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>sage: f <span class="op">=</span> propcalc.formula(<span class="st">&quot;((a|x) &amp; (b|(~x))) -&gt; (a|b)&quot;</span>)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>sage: f.truthtable()</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>a      x      b      value</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="va">False</span>  <span class="va">False</span>  <span class="va">False</span>  <span class="va">True</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="va">False</span>  <span class="va">False</span>  <span class="va">True</span>   <span class="va">True</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="va">False</span>  <span class="va">True</span>   <span class="va">False</span>  <span class="va">True</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="va">False</span>  <span class="va">True</span>   <span class="va">True</span>   <span class="va">True</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="va">True</span>   <span class="va">False</span>  <span class="va">False</span>  <span class="va">True</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="va">True</span>   <span class="va">False</span>  <span class="va">True</span>   <span class="va">True</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="va">True</span>   <span class="va">True</span>   <span class="va">False</span>  <span class="va">True</span></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="va">True</span>   <span class="va">True</span>   <span class="va">True</span>   <span class="va">True</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a>sage: <span class="im">import</span> sage.logic.propcalc <span class="im">as</span> propcalc</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true"></a>sage: f <span class="op">=</span> propcalc.formula(<span class="st">&quot;((a|x) &amp; (b|(~x))) -&gt; (a|b)&quot;</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true"></a>sage: f.truthtable()</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true"></a>a      x      b      value</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true"></a><span class="va">False</span>  <span class="va">False</span>  <span class="va">False</span>  <span class="va">True</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true"></a><span class="va">False</span>  <span class="va">False</span>  <span class="va">True</span>   <span class="va">True</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true"></a><span class="va">False</span>  <span class="va">True</span>   <span class="va">False</span>  <span class="va">True</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true"></a><span class="va">False</span>  <span class="va">True</span>   <span class="va">True</span>   <span class="va">True</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true"></a><span class="va">True</span>   <span class="va">False</span>  <span class="va">False</span>  <span class="va">True</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true"></a><span class="va">True</span>   <span class="va">False</span>  <span class="va">True</span>   <span class="va">True</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true"></a><span class="va">True</span>   <span class="va">True</span>   <span class="va">False</span>  <span class="va">True</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true"></a><span class="va">True</span>   <span class="va">True</span>   <span class="va">True</span>   <span class="va">True</span></span></code></pre></div>
 <p>—</p>
-<p>Consider a CNF from <em>Handbook of satisfiability</em> (2e, Chapter
-7):</p>
+<p>Consider a CNF from <em>Handbook of satisfiability</em> (2e, Chapter 7):</p>
 <pre><code>(x ∨ y) ∧ (x ∨ y̅ ∨ z) ∧ (x̅ ∨ z) ∧ (y ∨ z̅) ∧ (y̅ ∨ z̅)
 </code></pre>
-<p>Each clause is something that must necessarily hold (ie, like an
-axiom).</p>
+<p>Each clause is something that must necessarily hold (ie, like an axiom).</p>
 <table>
 <tbody>
 <tr class="odd">
@@ -1205,10 +1146,8 @@ axiom).</p>
 <li>still not enough code points for all the languages in the world</li>
 <li>Japan had multiple codes
 <ul>
-<li>mojibake: garbled nonsensical text when one code is interpreted as
-another</li>
-<li><a
-href="https://en.wikipedia.org/wiki/Mojibake">https://en.wikipedia.org/wiki/Mojibake</a></li>
+<li>mojibake: garbled nonsensical text when one code is interpreted as another</li>
+<li><a href="https://en.wikipedia.org/wiki/Mojibake">https://en.wikipedia.org/wiki/Mojibake</a></li>
 </ul></li>
 </ul>
 <p>Unicode:</p>
@@ -1239,14 +1178,12 @@ href="https://en.wikipedia.org/wiki/Mojibake">https://en.wikipedia.org/wiki/Moji
 <ul>
 <li><code>0.0.0.0</code>: local network
 <ul>
-<li>If a device has this address, it often means that it is not
-connected</li>
+<li>If a device has this address, it often means that it is not connected</li>
 </ul>
 to a TCP/IP network</li>
 <li><code>127.0.0.1</code>: common loopback address
 <ul>
-<li>Looks like the whole <code>127.0.0.0</code> to
-<code>127.0.0.255</code> range is available for loopback addresses</li>
+<li>Looks like the whole <code>127.0.0.0</code> to <code>127.0.0.255</code> range is available for loopback addresses</li>
 <li>ipv6: <code>::1/128</code></li>
 </ul></li>
 </ul>
@@ -1296,23 +1233,18 @@ to a TCP/IP network</li>
 <li>'Yaml bomb' possible in YAML due to recursive definition</li>
 <li>Tab character not allowed in YAML ??
 <ul>
-<li><a
-href="https://yaml.org/faq.html">https://yaml.org/faq.html</a></li>
+<li><a href="https://yaml.org/faq.html">https://yaml.org/faq.html</a></li>
 </ul></li>
 </ul>
-<p><a
-href="https://stackoverflow.com/questions/1726802/what-is-the-difference-between-yaml-and-json">https://stackoverflow.com/questions/1726802/what-is-the-difference-between-yaml-and-json</a></p>
-<h1 id="stuff-that-i-would-like-to-know-more-about">Stuff that I would
-like to know more about</h1>
+<p><a href="https://stackoverflow.com/questions/1726802/what-is-the-difference-between-yaml-and-json">https://stackoverflow.com/questions/1726802/what-is-the-difference-between-yaml-and-json</a></p>
+<h1 id="stuff-that-i-would-like-to-know-more-about">Stuff that I would like to know more about</h1>
 <ul>
 <li>Monadic second order logic</li>
-<li>How did something as rational as logic evolve out of
-philosophy?</li>
+<li>How did something as rational as logic evolve out of philosophy?</li>
 <li>What's the use of considering NFAs instead of DFAs?
 <ul>
 <li>Less number of states?</li>
-<li>We can't have a physical implementation of NFA, although such
-concepts probably came in before computers were invented.</li>
+<li>We can't have a physical implementation of NFA, although such concepts probably came in before computers were invented.</li>
 </ul></li>
 <li>Monad in category theory
 <ul>

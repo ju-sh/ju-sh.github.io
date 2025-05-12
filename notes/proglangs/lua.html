@@ -51,28 +51,24 @@
 <h2 id="chained-assignment">Chained assignment</h2>
 <p>This doesn't seem to be possible in lua.</p>
 <p>Closest we can get is:</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="va">a</span><span class="op">,</span><span class="va">b</span> <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="va">a</span><span class="op">,</span><span class="va">b</span><span class="op">)</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>       <span class="kw">nil</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="op">&gt;</span> a<span class="op">,</span>b <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span>a<span class="op">,</span>b<span class="op">)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="dv">2</span>       <span class="kw">nil</span></span></code></pre></div>
 <p>Another attempt gave error:</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="va">a</span> <span class="op">=</span> <span class="va">b</span> <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">stdin</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span> <span class="va">unexpected</span> <span class="va">symbol</span> near <span class="st">&#39;=&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="op">&gt;</span> a <span class="op">=</span> b <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>stdin<span class="op">:</span><span class="dv">1</span><span class="op">:</span> unexpected symbol near <span class="st">&#39;=&#39;</span></span></code></pre></div>
 <h2 id="repeat-a-string">Repeat a string</h2>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">string.rep</span><span class="op">(</span><span class="st">&#39;a&#39;</span><span class="op">,</span> <span class="dv">2</span><span class="op">))</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">aa</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">string.rep</span><span class="op">(</span><span class="st">&#39;a&#39;</span><span class="op">,</span> <span class="dv">4</span><span class="op">/</span><span class="dv">2</span><span class="op">))</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="va">aa</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">string.rep</span><span class="op">(</span><span class="st">&#39;a&#39;</span><span class="op">,</span> <span class="dv">2</span><span class="op">))</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>aa</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">string.rep</span><span class="op">(</span><span class="st">&#39;a&#39;</span><span class="op">,</span> <span class="dv">4</span><span class="op">/</span><span class="dv">2</span><span class="op">))</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>aa</span></code></pre></div>
 <h2 id="length-of-a-string">Length of a string</h2>
 <p>Use <code>#</code>.</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(#</span><span class="st">&quot;hello&quot;</span><span class="op">)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="va">a</span> <span class="op">=</span> <span class="st">&quot;hi&quot;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(#</span><span class="va">a</span><span class="op">)</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(#</span><span class="st">&quot;hello&quot;</span><span class="op">)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="dv">5</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="op">&gt;</span> a <span class="op">=</span> <span class="st">&quot;hi&quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(#</span>a<span class="op">)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="dv">2</span></span></code></pre></div>
 <h2 id="global-variables">Global variables</h2>
 <p>No need to declare them separately.</p>
 <p>They are sort of always there, unless they are <code>nil</code>.</p>
@@ -80,51 +76,41 @@ class="sourceCode lua"><code class="sourceCode lua"><span id="cb4-1"><a href="#c
 <p>The <em>only</em> built-in data structure available in lua.</p>
 <p>Quite flexible though. Tables could be termed the 'heart' of lua.</p>
 <ul>
-<li>Insert new element: table.insert(&lt;table-var&gt;,
-&lt;elem/key&gt;)</li>
-<li>Delete element: table.remove(&lt;table-var&gt;,
-&lt;elem/key&gt;)</li>
-<li>Get element: table.getn(&lt;table-var&gt;, &lt;elem/key&gt;) or
-&lt;table-var&gt;["&lt;elem/key&gt;"] or
-&lt;table-var&gt;.&lt;elem/key&gt;</li>
+<li>Insert new element: table.insert(&lt;table-var&gt;, &lt;elem/key&gt;)</li>
+<li>Delete element: table.remove(&lt;table-var&gt;, &lt;elem/key&gt;)</li>
+<li>Get element: table.getn(&lt;table-var&gt;, &lt;elem/key&gt;) or &lt;table-var&gt;["&lt;elem/key&gt;"] or &lt;table-var&gt;.&lt;elem/key&gt;</li>
 <li>Iterate over elements: pairs(&lt;table-var&gt;)</li>
 </ul>
 <p>Note: <code>{}</code> and <code>nil</code> are not equivalent.</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="va">t</span> <span class="op">=</span> <span class="op">{</span><span class="va">a</span><span class="op">=</span><span class="dv">1</span><span class="op">}</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="va">t</span><span class="op">[</span><span class="st">&#39;a&#39;</span><span class="op">])</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="op">&gt;</span> t <span class="op">=</span> <span class="op">{</span>a<span class="op">=</span><span class="dv">1</span><span class="op">}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span>t<span class="op">[</span><span class="st">&#39;a&#39;</span><span class="op">])</span></span></code></pre></div>
 <p>Can be used as a list/dictionary.</p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- dictionary style</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="va">t</span> <span class="op">=</span> <span class="op">{</span><span class="va">a</span><span class="op">=</span><span class="dv">1</span><span class="op">,</span> <span class="va">b</span><span class="op">=</span><span class="dv">2</span><span class="op">}</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- list style</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="va">t</span> <span class="op">=</span> <span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="co">-- dictionary style</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>t <span class="op">=</span> <span class="op">{</span>a<span class="op">=</span><span class="dv">1</span><span class="op">,</span> b<span class="op">=</span><span class="dv">2</span><span class="op">}</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="co">-- list style</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>t <span class="op">=</span> <span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">}</span></span></code></pre></div>
 <h3 id="indexing-starts-from-1">Indexing starts from 1</h3>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="va">a</span><span class="op">={</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span><span class="op">}</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="cf">for</span> <span class="va">i</span><span class="op">,</span><span class="va">x</span> <span class="kw">in</span> <span class="fu">pairs</span><span class="op">(</span><span class="va">a</span><span class="op">)</span> <span class="cf">do</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span>   <span class="fu">print</span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="cf">end</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="op">&gt;</span> a<span class="op">={</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span><span class="op">}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="op">&gt;</span> <span class="cf">for</span> i<span class="op">,</span>x <span class="kw">in</span> <span class="fu">pairs</span><span class="op">(</span>a<span class="op">)</span> <span class="cf">do</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="op">&gt;</span>   <span class="fu">print</span><span class="op">(</span>i<span class="op">)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="op">&gt;</span> <span class="cf">end</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="dv">1</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="dv">2</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="dv">3</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="dv">4</span></span></code></pre></div>
 <h3 id="joining-elements-of-a-table">'Joining' elements of a table</h3>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="va">a</span> <span class="op">=</span> <span class="op">{</span><span class="st">&quot;a&quot;</span><span class="op">,</span> <span class="st">&quot;b&quot;</span><span class="op">}</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">table.concat</span><span class="op">(</span><span class="va">a</span><span class="op">,</span><span class="st">&#39;</span><span class="sc">\n</span><span class="st">&#39;</span><span class="op">))</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="va">a</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="va">b</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">table.concat</span><span class="op">(</span><span class="va">a</span><span class="op">,</span><span class="st">&#39;&#39;</span><span class="op">))</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="va">ab</span></span></code></pre></div>
-<p>Elements needn't be strings. It will be converted to string,
-apparently.</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">table.concat</span><span class="op">({</span><span class="st">&quot;a&quot;</span><span class="op">,</span> <span class="dv">3</span><span class="op">},</span> <span class="st">&#39;&#39;</span><span class="op">))</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="va">a3</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">table.concat</span><span class="op">({</span><span class="st">&quot;a&quot;</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">1.2</span><span class="op">},</span> <span class="st">&#39;&#39;</span><span class="op">))</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="va">a31</span><span class="dv">.2</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="op">&gt;</span> a <span class="op">=</span> <span class="op">{</span><span class="st">&quot;a&quot;</span><span class="op">,</span> <span class="st">&quot;b&quot;</span><span class="op">}</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">table.concat</span><span class="op">(</span>a<span class="op">,</span><span class="st">&#39;</span><span class="sc">\n</span><span class="st">&#39;</span><span class="op">))</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>a</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>b</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">table.concat</span><span class="op">(</span>a<span class="op">,</span><span class="st">&#39;&#39;</span><span class="op">))</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>ab</span></code></pre></div>
+<p>Elements needn't be strings. It will be converted to string, apparently.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">table.concat</span><span class="op">({</span><span class="st">&quot;a&quot;</span><span class="op">,</span> <span class="dv">3</span><span class="op">},</span> <span class="st">&#39;&#39;</span><span class="op">))</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>a3</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">table.concat</span><span class="op">({</span><span class="st">&quot;a&quot;</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">1.2</span><span class="op">},</span> <span class="st">&#39;&#39;</span><span class="op">))</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>a31<span class="dv">.2</span></span></code></pre></div>
 <h2 id="operators">Operators</h2>
 <table>
 <tbody>
@@ -143,79 +129,63 @@ class="sourceCode lua"><code class="sourceCode lua"><span id="cb9-1"><a href="#c
 </tbody>
 </table>
 <h2 id="if-statement"><code>if</code> statement</h2>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">&lt;</span><span class="va">condition</span><span class="op">&gt;</span> <span class="cf">then</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span><span class="va">branch</span> <span class="dv">1</span><span class="op">&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">elseif</span> <span class="op">&lt;</span><span class="va">condition</span><span class="op">&gt;</span> <span class="cf">then</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span><span class="va">branch</span> <span class="dv">2</span><span class="op">&gt;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span><span class="va">branch</span> <span class="dv">3</span><span class="op">&gt;</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="cf">if</span> <span class="op">&lt;</span>condition<span class="op">&gt;</span> <span class="cf">then</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>  <span class="op">&lt;</span>branch <span class="dv">1</span><span class="op">&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="cf">elseif</span> <span class="op">&lt;</span>condition<span class="op">&gt;</span> <span class="cf">then</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>  <span class="op">&lt;</span>branch <span class="dv">2</span><span class="op">&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a><span class="cf">else</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>  <span class="op">&lt;</span>branch <span class="dv">3</span><span class="op">&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a><span class="cf">end</span></span></code></pre></div>
 <h2 id="functions">Functions</h2>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Function taking no args</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> noarg_fn<span class="op">()</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span><span class="va">body</span><span class="op">&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Function taking args</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> with_args<span class="op">(</span><span class="va">a</span><span class="op">,</span><span class="va">b</span><span class="op">)</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span><span class="va">body</span><span class="op">&gt;</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="co">-- Function taking no args</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="kw">function</span> noarg_fn<span class="op">()</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>  <span class="op">&lt;</span>body<span class="op">&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a><span class="kw">end</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a><span class="co">-- Function taking args</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a><span class="kw">function</span> with_args<span class="op">(</span>a<span class="op">,</span>b<span class="op">)</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a>  <span class="op">&lt;</span>body<span class="op">&gt;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a><span class="kw">end</span></span></code></pre></div>
 <h3 id="anonymous-function">Anonymous function</h3>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="va">a</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">()</span> <span class="fu">print</span><span class="op">(</span><span class="dv">3</span><span class="op">)</span> <span class="kw">end</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> a<span class="op">()</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="op">&gt;</span> a <span class="op">=</span> <span class="kw">function</span> <span class="op">()</span> <span class="fu">print</span><span class="op">(</span><span class="dv">3</span><span class="op">)</span> <span class="kw">end</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="op">&gt;</span> a<span class="op">()</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="dv">3</span></span></code></pre></div>
 <h2 id="integer-division">Integer division</h2>
-<p>lua &gt;= 5.3 has the <code>//</code> operator, but we can use
-<code>math.floor</code> for older versions.</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- lua 5.2</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="dv">3</span><span class="op">/</span><span class="dv">2</span><span class="op">)</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1.5</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">math.floor</span><span class="op">(</span><span class="dv">3</span><span class="op">/</span><span class="dv">2</span><span class="op">))</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span></span></code></pre></div>
-<p>Reference: <a
-href="https://stackoverflow.com/questions/9654496/lua-converting-from-float-to-int">https://stackoverflow.com/questions/9654496/lua-converting-from-float-to-int</a></p>
+<p>lua &gt;= 5.3 has the <code>//</code> operator, but we can use <code>math.floor</code> for older versions.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="co">-- lua 5.2</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="dv">3</span><span class="op">/</span><span class="dv">2</span><span class="op">)</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="dv">1.5</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">math.floor</span><span class="op">(</span><span class="dv">3</span><span class="op">/</span><span class="dv">2</span><span class="op">))</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a><span class="dv">1</span></span></code></pre></div>
+<p>Reference: <a href="https://stackoverflow.com/questions/9654496/lua-converting-from-float-to-int">https://stackoverflow.com/questions/9654496/lua-converting-from-float-to-int</a></p>
 <h2 id="string-manipulation">String manipulation</h2>
-<p>Reference: <a
-href="http://math2.org/luasearch/string.html">http://math2.org/luasearch/string.html</a></p>
+<p>Reference: <a href="http://math2.org/luasearch/string.html">http://math2.org/luasearch/string.html</a></p>
 <p>Indexing starts from 1.</p>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="va">a</span> <span class="op">=</span> <span class="st">&quot;0123456789&quot;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="va">a</span><span class="op">:</span><span class="fu">sub</span><span class="op">(#</span><span class="va">a</span><span class="op">-</span><span class="dv">3</span><span class="op">))</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="dv">6789</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="va">a</span><span class="op">:</span><span class="fu">sub</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="op">#</span><span class="va">a</span><span class="op">-</span><span class="dv">3</span><span class="op">)</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="dv">0123456</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">string.sub</span><span class="op">(</span><span class="va">a</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span> <span class="op">#</span><span class="va">a</span><span class="op">-</span><span class="dv">3</span><span class="op">))</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="dv">0123456</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="op">&gt;</span> a <span class="op">=</span> <span class="st">&quot;0123456789&quot;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span>a<span class="op">:</span><span class="fu">sub</span><span class="op">(#</span>a<span class="op">-</span><span class="dv">3</span><span class="op">))</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a><span class="dv">6789</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span>a<span class="op">:</span><span class="fu">sub</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="op">#</span>a<span class="op">-</span><span class="dv">3</span><span class="op">)</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a><span class="dv">0123456</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a><span class="op">&gt;</span> <span class="fu">print</span><span class="op">(</span><span class="fu">string.sub</span><span class="op">(</span>a<span class="op">,</span><span class="dv">1</span><span class="op">,</span> <span class="op">#</span>a<span class="op">-</span><span class="dv">3</span><span class="op">))</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a><span class="dv">0123456</span></span></code></pre></div>
 <ul>
-<li>Delete last character in a string:
-<code>string.sub(a,1, #a-1)</code></li>
+<li>Delete last character in a string: <code>string.sub(a,1, #a-1)</code></li>
 </ul>
 <h2 id="linters">Linters</h2>
-<p><a
-href="https://github.com/lunarmodules/luacheck">https://github.com/lunarmodules/luacheck</a></p>
+<p><a href="https://github.com/lunarmodules/luacheck">https://github.com/lunarmodules/luacheck</a></p>
 <h2 id="general">General</h2>
 <ul>
-<li><p><code>os.getenv "ROOTDIR" or "out"</code>: results in value of
-shell variable <code>$ROOTDIR</code> or the string
-<code>"out"</code></p>
+<li><p><code>os.getenv "ROOTDIR" or "out"</code>: results in value of shell variable <code>$ROOTDIR</code> or the string <code>"out"</code></p>
 <ul>
-<li><a
-href="https://www.lua.org/pil/22.2.html">https://www.lua.org/pil/22.2.html</a></li>
+<li><a href="https://www.lua.org/pil/22.2.html">https://www.lua.org/pil/22.2.html</a></li>
 </ul></li>
 <li><p><code>os.date("!%Y-%m-%d %T")</code>: get current date</p>
 <ul>
-<li><a
-href="https://www.lua.org/pil/22.1.html">https://www.lua.org/pil/22.1.html</a></li>
+<li><a href="https://www.lua.org/pil/22.1.html">https://www.lua.org/pil/22.1.html</a></li>
 </ul></li>
-<li><p><code>string.format()</code>: like python's
-<code>str.format()</code></p>
+<li><p><code>string.format()</code>: like python's <code>str.format()</code></p>
 <ul>
-<li><a
-href="https://www.lua.org/pil/20.html">https://www.lua.org/pil/20.html</a></li>
+<li><a href="https://www.lua.org/pil/20.html">https://www.lua.org/pil/20.html</a></li>
 </ul></li>
 <li><p><code>math.sqrt(4)</code></p></li>
 <li><p>Chunk: a sequence of statements</p>
@@ -224,11 +194,9 @@ href="https://www.lua.org/pil/20.html">https://www.lua.org/pil/20.html</a></li>
 <li>Could be a single line in an interactive session.</li>
 </ul></li>
 <li><p>Launch repl with <code>lua</code> command</p></li>
-<li><p>Emacs mode: <a
-href="https://github.com/immerrr/lua-mode">https://github.com/immerrr/lua-mode</a></p>
+<li><p>Emacs mode: <a href="https://github.com/immerrr/lua-mode">https://github.com/immerrr/lua-mode</a></p>
 <ul>
-<li>Also see: <a
-href="https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-lua.html">https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-lua.html</a></li>
+<li>Also see: <a href="https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-lua.html">https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-lua.html</a></li>
 </ul></li>
 </ul>
 <h2 id="importing-libraries">Importing libraries</h2>
@@ -237,8 +205,7 @@ href="https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-lua.html">http
 <li><code>require</code> them and bind it to a variable</li>
 <li>Table attributes are the definitions provided by the library</li>
 </ul>
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode lua"><code class="sourceCode lua"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> <span class="va">filter</span> <span class="op">=</span> <span class="fu">require</span> <span class="st">&quot;make4ht-filter&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="kw">local</span> filter <span class="op">=</span> <span class="fu">require</span> <span class="st">&quot;make4ht-filter&quot;</span></span></code></pre></div>
 <h2 id="package-management">Package management</h2>
 <ul>
 <li>luarocks: Like pip for python</li>

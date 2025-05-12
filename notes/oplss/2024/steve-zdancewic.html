@@ -115,8 +115,7 @@
 <ul>
 <li>One way: Give an interpreter. ie, denosem
 <ul>
-<li>Can't define straightforwardly ∵ of while termination not being
-evident.</li>
+<li>Can't define straightforwardly ∵ of while termination not being evident.</li>
 <li>Problem: Partiality</li>
 </ul></li>
 <li>Another way: relational operational semantics
@@ -128,18 +127,14 @@ evident.</li>
 </ul>
 <p>Cons of large step:</p>
 <ul>
-<li>Recursion for while is not defined on the structure of term syntax.
-Have to use a diff kind of reasoning</li>
+<li>Recursion for while is not defined on the structure of term syntax. Have to use a diff kind of reasoning</li>
 <li>Is partial</li>
 <li>Isn't executable</li>
-<li>Is a deep embedding =&gt; can't use coq's meta-theory. Got to roll
-our own.</li>
+<li>Is a deep embedding =&gt; can't use coq's meta-theory. Got to roll our own.</li>
 </ul>
 <ul>
-<li>denosem attempt and big-step: <a
-href="https://softwarefoundations.cis.upenn.edu/lf-current/Imp.html">https://softwarefoundations.cis.upenn.edu/lf-current/Imp.html</a></li>
-<li>small-step: <a
-href="https://softwarefoundations.cis.upenn.edu/plf-current/Smallstep.html">https://softwarefoundations.cis.upenn.edu/plf-current/Smallstep.html</a></li>
+<li>denosem attempt and big-step: <a href="https://softwarefoundations.cis.upenn.edu/lf-current/Imp.html">https://softwarefoundations.cis.upenn.edu/lf-current/Imp.html</a></li>
+<li>small-step: <a href="https://softwarefoundations.cis.upenn.edu/plf-current/Smallstep.html">https://softwarefoundations.cis.upenn.edu/plf-current/Smallstep.html</a></li>
 </ul>
 <pre><code>a := n 
    | a + a
@@ -219,11 +214,9 @@ c := skip
 <p>Think of monad as a generalized <code>let</code>.</p>
 <ul>
 <li><p>'Well-behaved sequential composition'</p></li>
-<li><p>Monad laws were not placed inside the Monad type class in the
-example shown. Why?</p>
+<li><p>Monad laws were not placed inside the Monad type class in the example shown. Why?</p>
 <ul>
-<li>In Coq it's considered good practice unbundle proof component.
-Facilitates extraction for one thing.</li>
+<li>In Coq it's considered good practice unbundle proof component. Facilitates extraction for one thing.</li>
 </ul></li>
 </ul>
 <p>Common monads</p>
@@ -246,8 +239,7 @@ Facilitates extraction for one thing.</li>
 </ol>
 <p>(Think of monad being a box and <code>&lt;-</code> as unboxing.)</p>
 <p>–</p>
-<p>A bunch of equational theory for the monadic rules which can then be
-used as rewrite rules to prove semantic equality of two programs.</p>
+<p>A bunch of equational theory for the monadic rules which can then be used as rewrite rules to prove semantic equality of two programs.</p>
 <ul>
 <li>put s1; put s2 ≈ put s2 ???</li>
 <li>put s; get ≈ put s; ret s</li>
@@ -263,8 +255,7 @@ used as rewrite rules to prove semantic equality of two programs.</p>
 <p>Expression problem: Lack of modularity/extensability.</p>
 <ul>
 <li>Add new features like new operator =&gt; lot of changes</li>
-<li>Datatype à la carte: Parametrize expr with a type representing
-operations/features</li>
+<li>Datatype à la carte: Parametrize expr with a type representing operations/features</li>
 </ul>
 <pre class="coq"><code>Inductive expr (opr: Type): Type :=
 | Val: nat -&gt; expr opr
@@ -318,8 +309,7 @@ Notation &quot;x &lt;- e1;; e2 &quot; := (seq e1 (fun x =&gt; e2)).
 </code></pre>
 <p>Operations as triggerable events:</p>
 <ul>
-<li>Do <code>op</code> and return its value as an <code>expr</code>
-??</li>
+<li>Do <code>op</code> and return its value as an <code>expr</code> ??</li>
 </ul>
 <pre class="coq"><code>Definition trigger {opr: Type} (op: opr): Expr opr :=
   Do op (fun n =&gt; Val n).
@@ -374,8 +364,7 @@ evalf (hsum hadd hsubtr) (
 )
 (* 3 *)
 </code></pre>
-<p>Note: The Add and inl are duplicate essentially. Typeclasses to help
-it figure out could come in handy.</p>
+<p>Note: The Add and inl are duplicate essentially. Typeclasses to help it figure out could come in handy.</p>
 <h2 id="free-monads">Free monads</h2>
 <p>Generalizing instead of specializing results to nat.</p>
 <pre class="coq"><code>(*
@@ -388,16 +377,14 @@ Inductive FFree (E: Type -&gt; Type) (R: Type): Type :=
     E X -&gt; (X -&gt; FFree E R).
 </code></pre>
 <p>E X: E produces an X, which will be fed in to the continuation.</p>
-<p><del>Same as expr from earlier,</del> <del>except for nat being
-generalized</del>.</p>
+<p><del>Same as expr from earlier,</del> <del>except for nat being generalized</del>.</p>
 <h2 id="itree">itree</h2>
 <pre class="coq"><code>Inductive itree
 | Ret: R -&gt; itree
 | Tau: itree
 | Vis {Ans: Type} (event: E Ans) (k: Ans -&gt; itree).
 </code></pre>
-<p>const5 := Ret 5. double := Vis Input (fun n <code
-class="verbatim">&gt; Ret 2*n).
+<p>const5 := Ret 5. double := Vis Input (fun n <code>&gt; Ret 2*n).
 silentloop :</code> Tau silentloop</p>
 <pre class="coq"><code>(* Result from event given to the system is the index Type *)
 Inductive IOEvent: Type -&gt; Type :=
@@ -449,12 +436,12 @@ iter (t: itree) (k: inty -&gt; itree) (init: inty)
 <ul>
 <li>strong bisimulation: structure has to be exactly the same
 <ul>
-<li><code class="verbatim">t1 ~ t2</code></li>
+<li><code>t1 ~ t2</code></li>
 </ul></li>
 <li>weak bisimulation: tau is 'flattened' out
 <ul>
 <li>'equailty up to taus' (eutt):</li>
-<li><code class="verbatim">t1 ≈ t2</code></li>
+<li><code>t1 ≈ t2</code></li>
 </ul></li>
 </ul>
 <p>Monad laws hold upto strong bisimulation.</p>
@@ -465,9 +452,7 @@ iter (t: itree) (k: inty -&gt; itree) (init: inty)
 <p>Kleisli</p>
 <p>DBT: bimap</p>
 <ul>
-<li><a
-href="https://github.com/Zdancewic/oplss2024/blob/main/terse/ITreesEquiv.html">https://github.com/Zdancewic/oplss2024/blob/main/terse/ITreesEquiv.html</a>
-(slide-5)</li>
+<li><a href="https://github.com/Zdancewic/oplss2024/blob/main/terse/ITreesEquiv.html">https://github.com/Zdancewic/oplss2024/blob/main/terse/ITreesEquiv.html</a> (slide-5)</li>
 </ul>
 <h2 id="imp-deno-sem-with-itrees">Imp deno sem with itrees</h2>
 <p>DBT: Why variant for MemE?</p>

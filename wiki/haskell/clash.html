@@ -53,36 +53,24 @@
 <li><code>System</code>: Useful for simulation</li>
 </ul></li>
 <li>Convert to VHDL: <code>clash --vhdl MAC.hs</code></li>
-<li><code>Signal</code> values represent synchronous values. ie, values
-that change with respect to a clock.
+<li><code>Signal</code> values represent synchronous values. ie, values that change with respect to a clock.
 <ul>
 <li>Functions without signals are purely combinatorial.</li>
 </ul></li>
 <li>Combinational circuits: (recursive) functions</li>
-<li>Sequential circuits: composition of functions together with a finite
-state machine like a Mealy machine.</li>
-<li>Clock, Reset, Enable signals are implicit by default when using
-<code>HiddenClockResetEnable</code>.
+<li>Sequential circuits: composition of functions together with a finite state machine like a Mealy machine.</li>
+<li>Clock, Reset, Enable signals are implicit by default when using <code>HiddenClockResetEnable</code>.
 <ul>
-<li>These signals can be exposed with functions like
-<code>exposeClockResetEnable</code>.</li>
+<li>These signals can be exposed with functions like <code>exposeClockResetEnable</code>.</li>
 </ul></li>
 </ul>
 <h2 id="nfdatax"><code>NFDataX</code></h2>
-<p>To be synthesizable, data type needs to be an instance of <a
-href="https://hackage.haskell.org/package/clash-prelude-1.6.6/docs/Clash-XException.html#t:NFDataX"><code>NFDataX</code></a>,
-a typeclass defined in clash-prelude.</p>
-<p>It's like <a
-href="https://hackage.haskell.org/package/deepseq-1.5.0.0/docs/Control-DeepSeq.html#g:1"><code>NFData</code></a>.
-<code>NFData</code> says that the type has a normal form (ie, is fully
-evaluatable and doesn't diverge). (I guess NF stands for 'normal
-form').</p>
+<p>To be synthesizable, data type needs to be an instance of <a href="https://hackage.haskell.org/package/clash-prelude-1.6.6/docs/Clash-XException.html#t:NFDataX"><code>NFDataX</code></a>, a typeclass defined in clash-prelude.</p>
+<p>It's like <a href="https://hackage.haskell.org/package/deepseq-1.5.0.0/docs/Control-DeepSeq.html#g:1"><code>NFData</code></a>. <code>NFData</code> says that the type has a normal form (ie, is fully evaluatable and doesn't diverge). (I guess NF stands for 'normal form').</p>
 <p>This makes the evaluation eager?</p>
-<p><code>NFDataX</code> is <code>NFData</code> with support for
-undefined values.</p>
+<p><code>NFDataX</code> is like <code>NFData</code> from deepseq package, but with support for undefined values.</p>
 <h2 id="simulating-a-mealy-machine">Simulating a Mealy machine</h2>
-<p>(cf: from <a
-href="https://essay.utwente.nl/59482/1/scriptie_C_Baaij.pdf">here</a>)</p>
+<p>(cf: from <a href="https://essay.utwente.nl/59482/1/scriptie_C_Baaij.pdf">here</a>)</p>
 <pre><code>            +---------------+
 Input  ---&gt;-|               |------&gt; Output
             | Combinational |
@@ -97,20 +85,19 @@ Current ^                       V   Next
             +---------------+
 </code></pre>
 <p>–</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Function to run a mealy machine</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>run _ _ []                    <span class="ot">=</span> []   <span class="co">-- no input means no output</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>run func state (input<span class="op">:</span>inputs) <span class="ot">=</span> output<span class="op">:</span> outputs</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  (output, state′) <span class="ot">=</span> func input state</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  outputs <span class="ot">=</span> run func state′ inputs</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Transition function for a mealy machine</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ot">func ::</span> <span class="dt">InputSignals</span> → <span class="dt">State</span> a → (<span class="dt">OutputSignals</span>, <span class="dt">State</span> a)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>func input state <span class="ot">=</span> (output, state′)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="co">-- | Function to run a mealy machine</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>run _ _ []                    <span class="ot">=</span> []   <span class="co">-- no input means no output</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>run func state (input<span class="op">:</span>inputs) <span class="ot">=</span> output<span class="op">:</span> outputs</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a> <span class="kw">where</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>  (output, state′) <span class="ot">=</span> func input state</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>  outputs <span class="ot">=</span> run func state′ inputs</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="co">-- | Transition function for a mealy machine</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="ot">func ::</span> <span class="dt">InputSignals</span> <span class="ot">→</span> <span class="dt">State</span> a <span class="ot">→</span> (<span class="dt">OutputSignals</span>, <span class="dt">State</span> a)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>func input state <span class="ot">=</span> (output, state′)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a> <span class="kw">where</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>  <span class="op">...</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>  <span class="op">...</span></span></code></pre></div>
 <p>–</p>
 <p>Type:</p>
 <pre><code>mealy
@@ -145,92 +132,123 @@ Transition function of the mealy machine:
 </ul>
 <h2 id="assign-names-to-signals">Assign names to signals</h2>
 <p>à la ports in VHDL, I guess.</p>
-<p>Use <code>:::</code>. An example: <a
-href="https://github.com/clash-lang/clash-compiler/pull/2584/files">https://github.com/clash-lang/clash-compiler/pull/2584/files</a></p>
-<h2 id="control-name-of-ports-in-generated-hdl">Control name of ports in
-generated HDL</h2>
-<p>Using an annotation</p>
+<p>Use <code>:::</code>. An example: <a href="https://github.com/clash-lang/clash-compiler/pull/2584/files">https://github.com/clash-lang/clash-compiler/pull/2584/files</a></p>
+<h2 id="annotations">Annotations</h2>
+<p><a href="https://hackage-content.haskell.org/package/clash-prelude-1.8.2/docs/Clash-Annotations-Primitive.html">https://hackage-content.haskell.org/package/clash-prelude-1.8.2/docs/Clash-Annotations-Primitive.html</a></p>
+<h3 id="control-name-of-ports-in-generated-hdl">Control name of ports in generated HDL</h3>
 <ul>
-<li><a
-href="https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Annotations-TopEntity.html">https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Annotations-TopEntity.html</a></li>
+<li><a href="https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Annotations-TopEntity.html">https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Annotations-TopEntity.html</a></li>
 </ul>
 <p>Example:</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# ANN topEntity</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ot">  (Synthesize</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ot">    { t_name   = &quot;topEntity&quot;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ot">    , t_inputs = [ PortName &quot;clk&quot;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ot">                 , PortName &quot;rst&quot;</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ot">                 , PortName &quot;en&quot;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ot">                 , PortName &quot;inp&quot; ]</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ot">    , t_output = PortName &quot;res&quot;</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="ot">    }) #-}</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="ot">{-# ANN topEntity</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="ot">  (Synthesize</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="ot">    { t_name   = &quot;topEntity&quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="ot">    , t_inputs = [ PortName &quot;clk&quot;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="ot">                 , PortName &quot;rst&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="ot">                 , PortName &quot;en&quot;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="ot">                 , PortName &quot;inp&quot; ]</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="ot">    , t_output = PortName &quot;res&quot;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="ot">    }) #-}</span></span></code></pre></div>
+<h3 id="blackbox">blackbox</h3>
+<ul>
+<li>Used to say that a particular definition is not handled by clash and it is to be treated as a blackbox.</li>
+<li>HDL code will plugged in instead
+<ul>
+<li>Eg: <a href="https://github.com/clash-lang/clash-compiler/tree/master/clash-lib/prims">https://github.com/clash-lang/clash-compiler/tree/master/clash-lib/prims</a></li>
+<li><a href="https://clash-lang.discourse.group/t/how-to-use-a-blackbox-to-specify-a-predefined-type-in-existing-hdl/60">https://clash-lang.discourse.group/t/how-to-use-a-blackbox-to-specify-a-predefined-type-in-existing-hdl/60</a></li>
+</ul></li>
+</ul>
+<h3 id="clashopaque">CLASH<sub>OPAQUE</sub></h3>
+<p>Becomes:</p>
+<ul>
+<li>NOINLINE in GHC&lt;9.4</li>
+<li>OPAQUE in newer GHC</li>
+<li><a href="https://github.com/clash-lang/clash-compiler/pull/2511">https://github.com/clash-lang/clash-compiler/pull/2511</a></li>
+</ul>
 <h2 id="testbenches">Testbenches</h2>
 <ul>
 <li>Function name has to be <code>testBench</code></li>
 <li><code>testBench</code> has to be in root module</li>
 </ul>
-<p><a
-href="https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Tutorial.html">https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Tutorial.html</a></p>
+<p><a href="https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Tutorial.html">https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Tutorial.html</a></p>
 <ul>
 <li><code>outputVerifier</code>
 <ul>
 <li>Returns <code>True</code> when all test cases have been tested</li>
 <li>Otherwise keeps returning <code>False</code></li>
-<li>Also writes error message to stderr when output is not as
-expected</li>
+<li>Also writes error message to stderr when output is not as expected</li>
 </ul></li>
 </ul>
 <h2 id="simulate">Simulate</h2>
 <ul>
-<li><code>simulate</code>: give a <code>Signal a -&gt; Signal b</code>
-and get a <code>[a] -&gt; [b]</code>
+<li><code>simulate</code>: give a <code>Signal a -&gt; Signal b</code> and get a <code>[a] -&gt; [b]</code>
 <ul>
-<li><a
-href="https://hackage.haskell.org/package/clash-prelude-1.6.5/docs/Clash-Signal-Internal.html#v:simulate">https://hackage.haskell.org/package/clash-prelude-1.6.5/docs/Clash-Signal-Internal.html#v:simulate</a></li>
+<li><a href="https://hackage.haskell.org/package/clash-prelude-1.6.5/docs/Clash-Signal-Internal.html#v:simulate">https://hackage.haskell.org/package/clash-prelude-1.6.5/docs/Clash-Signal-Internal.html#v:simulate</a></li>
 </ul></li>
-<li><code>simulate_lazy</code>: lazy version of
-<code>simulate</code></li>
-<li><code>sample</code>: Convert a <code>Signal</code> into an infinite
-list
+<li><code>simulate_lazy</code>: lazy version of <code>simulate</code></li>
+<li><code>sample</code>: Convert a <code>Signal</code> into an infinite list
 <ul>
 <li><code>L.take 5 $ sample 10 top</code></li>
 </ul></li>
-<li><code>sampleN</code>: get n samples of a <code>Signal</code> as a
-list
+<li><code>sampleN</code>: get n samples of a <code>Signal</code> as a list
 <ul>
 <li><code>sampleN @System 5 $ register 8 $ fromList [1,2,3,4]</code></li>
 </ul></li>
 <li><code>fromList</code>: convert a list to a <code>Signal</code></li>
 </ul>
 <h2 id="bundling-signals">Bundling signals</h2>
-<p><a
-href="https://hackage.haskell.org/package/clash-prelude-1.6.3/docs/Clash-Signal-Bundle.html">https://hackage.haskell.org/package/clash-prelude-1.6.3/docs/Clash-Signal-Bundle.html</a></p>
-<p><code>bundle</code> takes a tuple of signals and makes a signal of
-tuples. Something like: <code>(Signal dom a, Signal dom b)</code>
-becoming <code>Signal dom (a, b)</code>.</p>
-<p>Similarly <code>unbundle</code> does it in the other direction.
-Signal of tuples becomes tuple of signals. Something like:
-<code>Signal dom (a, b)</code> becoming
-<code>(Signal dom a, Signal dom b)</code>.</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ot">bundle ::</span> <span class="dt">Unbundled</span> dom a <span class="ot">-&gt;</span> <span class="dt">Signal</span> dom a</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Example:</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ot">bundle ::</span> (<span class="dt">Signal</span> dom a, <span class="dt">Signal</span> dom b) <span class="ot">-&gt;</span> <span class="dt">Signal</span> dom (a,b)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ot">unbundle ::</span> <span class="dt">Signal</span> dom a <span class="ot">-&gt;</span> <span class="dt">Unbundled</span> dom a</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Example:</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ot">unbundle ::</span> <span class="dt">Signal</span> dom (a,b) <span class="ot">-&gt;</span> (<span class="dt">Signal</span> dom a, <span class="dt">Signal</span> dom b)</span></code></pre></div>
+<p><a href="https://hackage.haskell.org/package/clash-prelude-1.6.3/docs/Clash-Signal-Bundle.html">https://hackage.haskell.org/package/clash-prelude-1.6.3/docs/Clash-Signal-Bundle.html</a></p>
+<p><code>bundle</code> takes a tuple of signals and makes a signal of tuples. Something like: <code>(Signal dom a, Signal dom b)</code> becoming <code>Signal dom (a, b)</code>.</p>
+<p>Similarly <code>unbundle</code> does it in the other direction. Signal of tuples becomes tuple of signals. Something like: <code>Signal dom (a, b)</code> becoming <code>(Signal dom a, Signal dom b)</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="ot">bundle ::</span> <span class="dt">Unbundled</span> dom a <span class="ot">-&gt;</span> <span class="dt">Signal</span> dom a</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="co">-- Example:</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="ot">bundle ::</span> (<span class="dt">Signal</span> dom a, <span class="dt">Signal</span> dom b) <span class="ot">-&gt;</span> <span class="dt">Signal</span> dom (a,b)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="ot">unbundle ::</span> <span class="dt">Signal</span> dom a <span class="ot">-&gt;</span> <span class="dt">Unbundled</span> dom a</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a><span class="co">-- Example:</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a><span class="ot">unbundle ::</span> <span class="dt">Signal</span> dom (a,b) <span class="ot">-&gt;</span> (<span class="dt">Signal</span> dom a, <span class="dt">Signal</span> dom b)</span></code></pre></div>
+<h2 id="bitvector"><code>BitVector</code></h2>
+<p><a href="https://hackage-content.haskell.org/package/clash-prelude-1.8.2/docs/Clash-Class-BitPack.html#t:BitPack">https://hackage-content.haskell.org/package/clash-prelude-1.8.2/docs/Clash-Class-BitPack.html#t:BitPack</a></p>
+<ul>
+<li>BitVector indexing: <code>!</code>
+<ul>
+<li>Index is descending. Right-most index is 0 (ie, LSB is right-most)</li>
+</ul></li>
+</ul>
+<pre><code>bar :: BitVector 8 -&gt; (BitVector 2, BitVector 3, BitVector 3)
+bar bv = let (zyx, cba, qp) = unpack bv in (qp, cba, zyx)
+
+-- Another option: Using `slice`
+koo :: BitVector 8 -&gt; (BitVector 2, BitVector 3, BitVector 3)
+koo bv = (slice d1 d0 bv, slice d4 d2 bv, slice d7 d5 bv)
+
+-- Convoluted
+foo :: BitVector 8 -&gt; (BitVector 2, BitVector 3, BitVector 3)
+foo bv = case bv of
+    $(bitPattern &quot;zyxc_baqp&quot;) -&gt; (pack (q ++# p), pack (c ++# b ++# a), pack (z ++# y ++# x))
+</code></pre>
+<p>Packing/unpacking:</p>
+<pre><code>λ&gt; pack (Left () :: Either () Bool)
+0b0.
+λ&gt; pack (Right False :: Either () Bool)
+0b10
+λ&gt; pack (Right True :: Either () Bool)
+0b11
+
+-- The . is a don&#39;t care
+
+λ&gt; pack (((), True) :: ((), Bool))
+0b1
+λ&gt; pack (((), False) :: ((), Bool))
+0b0
+</code></pre>
 <h2 id="misc">Misc</h2>
 <ul>
-<li>DDR signals: <a
-href="https://hackage.haskell.org/package/clash-prelude-1.6.6/docs/Clash-Explicit-DDR.html">https://hackage.haskell.org/package/clash-prelude-1.6.6/docs/Clash-Explicit-DDR.html</a>
+<li>DDR signals: <a href="https://hackage.haskell.org/package/clash-prelude-1.6.6/docs/Clash-Explicit-DDR.html">https://hackage.haskell.org/package/clash-prelude-1.6.6/docs/Clash-Explicit-DDR.html</a>
 <ul>
-<li>Special signals. Looks like they are made such that they are updated
-twice in a cycle when compared to normal <code>Signal</code> type.</li>
+<li>Special signals. Looks like they are made such that they are updated twice in a cycle when compared to normal <code>Signal</code> type.</li>
 </ul></li>
-<li><a href="https://github.com/standardsemiconductor/lion">Lion</a>: A
-RISC-V CPU?? made with Clash</li>
+<li><a href="https://github.com/standardsemiconductor/lion">Lion</a>: A RISC-V CPU?? made with Clash</li>
 </ul>
 <h3 id="register"><code>register</code></h3>
 <pre><code>register
@@ -259,16 +277,14 @@ Clash.Prelude&gt; unpack 0b101 ::Unsigned 3
 </code></pre>
 <p>—</p>
 <p>Some operations:</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Bitwise OR</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dt">Clash.Prelude</span> <span class="dt">Prelude</span><span class="op">&gt;</span> (<span class="op">Clash.Prelude..|.</span>) 0b1001 0b1010</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dv">11</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="co">-- Bitwise OR</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="dt">Clash.Prelude</span> <span class="dt">Prelude</span><span class="op">&gt;</span> (<span class="op">Clash.Prelude..|.</span>) 0b1001 0b1010</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="dv">11</span></span></code></pre></div>
 <p>—</p>
 <p>bLit:</p>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Clash.Prelude</span><span class="op">&gt;</span> <span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.List</span> <span class="kw">as</span> <span class="dt">List</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="dt">Clash.Prelude</span> <span class="dt">List</span><span class="op">&gt;</span> <span class="op">$</span>(bLit (List.replicate <span class="dv">4</span> <span class="ch">&#39;0&#39;</span>))</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>0b1111</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="dt">Clash.Prelude</span><span class="op">&gt;</span> <span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.List</span> <span class="kw">as</span> <span class="dt">List</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="dt">Clash.Prelude</span> <span class="dt">List</span><span class="op">&gt;</span> <span class="op">$</span>(bLit (List.replicate <span class="dv">4</span> <span class="ch">&#39;0&#39;</span>))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>0b1111</span></code></pre></div>
 <h3 id="segment-with-clash">7 segment with clash</h3>
 <table>
 <thead>
@@ -331,29 +347,27 @@ class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Char</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.Map</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ot">a ::</span> [(<span class="dt">Char</span>, <span class="dt">Vec</span> <span class="dv">7</span> <span class="dt">Bool</span>)]</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">--         a        b       c        d        e        f        g</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> [(<span class="ch">&#39;0&#39;</span>, <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">True</span> <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">Nil</span>),</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>     (<span class="ch">&#39;1&#39;</span>, <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">True</span> <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">Nil</span>),</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>     (<span class="ch">&#39;?&#39;</span>, <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">True</span> <span class="op">:&gt;</span> <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">Nil</span>)]</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> Data.Map.fromList a</span></code></pre></div>
-<h3 id="constructing-signal-manually">Constructing <code>Signal</code>
-manually</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="kw">import</span> <span class="dt">Data.Char</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.Map</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a><span class="ot">a ::</span> [(<span class="dt">Char</span>, <span class="dt">Vec</span> <span class="dv">7</span> <span class="dt">Bool</span>)]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a><span class="co">--         a        b       c        d        e        f        g</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a>a <span class="ot">=</span> [(<span class="ch">&#39;0&#39;</span>, <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">True</span> <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">Nil</span>),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a>     (<span class="ch">&#39;1&#39;</span>, <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">True</span> <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">Nil</span>),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a>     (<span class="ch">&#39;?&#39;</span>, <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">True</span> <span class="op">:&gt;</span> <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">False</span> <span class="op">:&gt;</span> <span class="dt">True</span>  <span class="op">:&gt;</span> <span class="dt">Nil</span>)]</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a>b <span class="ot">=</span> Data.Map.fromList a</span></code></pre></div>
+<h3 id="constructing-signal-manually">Constructing <code>Signal</code> manually</h3>
 <p>Not synthesizable. Shouldn't be used in production code!!</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="kw">import</span> <span class="dt">Clash.Signal.Internal</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t (<span class="dv">1</span> <span class="op">:-</span> <span class="dv">2</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span> <span class="op">:-</span> <span class="dv">2</span>)<span class="ot"> ::</span> <span class="dt">Num</span> a <span class="ot">=&gt;</span> <span class="dt">Signal</span> dom a</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="dv">1</span><span class="ot"> ::</span> <span class="dt">Signal</span> <span class="dt">System</span> <span class="dt">Int</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="op">...............</span></span></code></pre></div>
-<h2 id="unknown">Unknown</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>λ<span class="op">&gt;</span> <span class="kw">import</span> <span class="dt">Clash.Signal.Internal</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t (<span class="dv">1</span> <span class="op">:-</span> <span class="dv">2</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a>(<span class="dv">1</span> <span class="op">:-</span> <span class="dv">2</span>)<span class="ot"> ::</span> <span class="dt">Num</span> a <span class="ot">=&gt;</span> <span class="dt">Signal</span> dom a</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a>λ<span class="op">&gt;</span> <span class="dv">1</span><span class="ot"> ::</span> <span class="dt">Signal</span> <span class="dt">System</span> <span class="dt">Int</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a><span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="dv">1</span> <span class="op">...............</span></span></code></pre></div>
+<h2 id="more">More</h2>
 <ul>
-<li><code>CLASH_OPAQUE</code>: From ghc itself</li>
+<li>Lion: Formally verified, pipelined RISC-V processor</li>
+<li>Slides from a clash talk: <a href="https://github.com/fp-syd/meetings/blob/master/2024/2024-11-27-Clash_Talk-Alex_Mason.pdf">https://github.com/fp-syd/meetings/blob/master/2024/2024-11-27-Clash_Talk-Alex_Mason.pdf</a></li>
 </ul>
 </div>
 </body>

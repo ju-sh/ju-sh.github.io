@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>SystemVerilog Assertions</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">SystemVerilog Assertions</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<ul>
+<li>Boolean negation: <code>not p</code> or <code>! p</code> ??</li>
+<li><code>p and q</code>: <code>p</code> and <code>q</code> should be true, but both need not end at same time</li>
+<li><code>p intersect q</code>: Concurrent and
+<ul>
+<li>also <code>p &amp;&amp; q</code> ??</li>
+</ul></li>
+<li><code>p ##N q</code>: check if p holds, then check if q holds <code>N</code> cycles later
+<ul>
+<li>Eg: <code>p ##2 q</code></li>
+</ul></li>
+<li><code>p [*N]</code>: <code>p</code> is repeated <code>N</code> times
+<ul>
+<li>Eg: <code>p [*3]</code></li>
+</ul></li>
+<li>Implication:
+<ul>
+<li>Overlapping <code>(p |-&gt; q)</code>
+<ul>
+<li>If <code>p</code> is true, then <code>q</code> must hold on the <em>same</em> cycle</li>
+</ul></li>
+<li>Non-overlapping <code>(p |=&gt; q)</code>
+<ul>
+<li>If <code>p</code> is true, then <code>q</code> must hold on the <em>next</em> cycle</li>
+<li>Equivalent to something like <code>p ##1 (true |-&gt; q)</code></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="terms">Terms</h2>
+<ul>
+<li>Assertion</li>
+<li>Assumption</li>
+<li>Cover point
+<ul>
+<li>Something that is only occassionally true</li>
+<li>Kind of like coverage in tests</li>
+</ul></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.doulos.com/knowhow/systemverilog/systemverilog-tutorials/systemverilog-assertions-tutorial/">https://www.doulos.com/knowhow/systemverilog/systemverilog-tutorials/systemverilog-assertions-tutorial/</a></li>
+<li><em>Formal verification: An essential toolkit for modern VLSI design</em></li>
+</ul>
+</div>
+</body>
+</html>

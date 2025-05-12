@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>OCaml: Package management</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">OCaml: Package management</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<h2 id="opam">opam</h2>
+<p>opam switches are comparable to python's venvs: <a href="https://ocaml.org/docs/opam-switch-introduction">https://ocaml.org/docs/opam-switch-introduction</a></p>
+<ul>
+<li><p>Show switches available to be installed: <code>opam switch list-available</code></p>
+<ul>
+<li>Show pre-releases as well: <code>opam switch list-available --all</code></li>
+</ul></li>
+<li><p>Activate: <code>eval $(opam env)</code></p></li>
+<li><p>Create new switch: <code>opam switch create &lt;switch-name&gt;</code></p>
+<ul>
+<li>Make a new switch with a specific compiler version (v5.1.1): <code>opam switch create 5.1.1</code></li>
+</ul></li>
+<li><p>Delete a switch: <code>opam switch remove &lt;switch-name&gt;</code></p>
+<ul>
+<li>Default switch is named <code>default</code> ??</li>
+</ul></li>
+<li><p>List switches: <code>opam switch</code></p></li>
+<li><p>Go to a switch: <code>opam switch &lt;switch-name&gt;</code></p></li>
+<li><p>List installed packages: <code>opam list</code> or <code>opam list -i</code></p>
+<ul>
+<li>List all available packages: <code>opam list -a</code></li>
+</ul></li>
+<li><p>Change switch: <code>opam switch set &lt;switch-name&gt;</code></p></li>
+<li><p>Install a package (to current switch): <code>opam install &lt;package-name&gt;</code></p></li>
+<li><p>Remove a package: <code>opam remove &lt;package-name&gt;</code></p></li>
+<li><p>Update package list: <code>opam update</code></p></li>
+<li><p>Show version of an installed package: <code>opam info &lt;package-name&gt;</code></p></li>
+</ul>
+<p>—</p>
+<p>Many useful packages related to Coq are available only after adding this repo:</p>
+<pre><code>opam repo add coq-released https://coq.inria.fr/opam/released
+</code></pre>
+<p>Reference: <a href="https://opam.ocaml.org/doc/Usage.html">https://opam.ocaml.org/doc/Usage.html</a></p>
+<h2 id="dune">dune</h2>
+<h3 id="general">General</h3>
+<ul>
+<li>ocamllex has its own stanza:
+<ul>
+<li><a href="https://dune.readthedocs.io/en/latest/reference/dune/ocamllex.html">https://dune.readthedocs.io/en/latest/reference/dune/ocamllex.html</a></li>
+<li><a href="https://stackoverflow.com/questions/77159120/how-can-i-add-the-ml-flag-or-any-flag-really-to-ocamllex-in-a-dune-file">https://stackoverflow.com/questions/77159120/how-can-i-add-the-ml-flag-or-any-flag-really-to-ocamllex-in-a-dune-file</a></li>
+</ul></li>
+<li>Run an executable:
+<ul>
+<li><code>dune exec ./lexer.exe</code></li>
+<li>dune adds a <code>.exe</code> extension to the executables that it makes</li>
+</ul></li>
+<li><code>name</code> field of <code>executable</code> is the entry point.
+<ul>
+<li>Could be <code>main</code> for <code>main.ml</code></li>
+</ul></li>
+</ul>
+<h3 id="starting-off">Starting off</h3>
+<pre><code># Initialize new project
+dune init proj &lt;proj-name&gt;
+
+dune build
+dune exec
+</code></pre>
+<p>References: <a href="https://ocaml.org/docs/up-and-running">https://ocaml.org/docs/up-and-running</a></p>
+<hr />
+<p>Both of the following are equivalent??</p>
+<pre><code>dune exec -- &lt;cmd&gt;
+dune install; &lt;cmd&gt;
+</code></pre>
+<h3 id="dont-treat-a-warning-as-error">Don't treat a warning as error</h3>
+<pre><code>(executable
+  (name lexer)
+  (flags (:standard (-warn-error -32))))
+</code></pre>
+<p><a href="https://dune.readthedocs.io/en/latest/concepts/ocaml-flags.html">https://dune.readthedocs.io/en/latest/concepts/ocaml-flags.html</a></p>
+<h2 id="useful-packagestools">Useful packages/tools</h2>
+<ul>
+<li>ocamlc: bytecode compiler</li>
+<li>ocamlopt: native code compiler</li>
+<li>merlin: ocaml code completion for text editors</li>
+<li>utop: like an enhanced ocaml REPL</li>
+<li>ocamlfind: ??</li>
+<li>js<sub>ofocaml</sub>: make web stuff from ocaml
+<ul>
+<li>effectively allows running ocaml equivalent code as javascript</li>
+</ul></li>
+</ul>
+<p>Jane Street libraries:</p>
+<ul>
+<li>base: a ocaml stdlib (minimal, lightweight, stable API, no dependencies)</li>
+<li>core: much more than base</li>
+<li>core<sub>kernel</sub>: more than base, less than core</li>
+<li>hardcaml: hardware designs with ocaml</li>
+</ul>
+<p>Historical:</p>
+<ul>
+<li>oasis: an old build tool that was used before dune came along</li>
+<li>jbuilder: earlier name of dune</li>
+</ul>
+<h3 id="loading-base-jane-street">Loading base (Jane Street)</h3>
+<p>base is a package from janestreet.</p>
+<pre><code># #use &quot;topfind&quot;;;
+# #require &quot;base&quot;;;
+# open Base;;
+</code></pre>
+<p>base &lt; core<sub>kernel</sub> &lt; core</p>
+<p>The extra <code>#</code> are needed.</p>
+</div>
+</body>
+</html>

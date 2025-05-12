@@ -36,8 +36,17 @@
 </header>
 
 <ul>
+    <li>Date created: 27-Dec-2022</li>
     </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/xp.html">xp</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
@@ -47,69 +56,32 @@ About a math circle session that happend at our institute.
 <hr/>
 
 <div id="content-container">
-<p>A few weeks back, the math circle being run by our institute
-organized a session involving a bit of computer programming.</p>
-<p>I and some of my friends were there to help the participants. It was
-fun and in this blog post, I try to describe what happened in the
-session as a means of recalling the memory of that day.</p>
-<p>The session was led by my advisor and used the programming language
-named <a href="https://racket-lang.org/">racket</a>, a language
-originally meant to be used to teach computer programming which has
-evolved into much more than that. I heard that there is even a <a
-href="https://docs.racket-lang.org/continue/">framework</a> written in
-racket to make web applications.</p>
-<p>The ultimate aim was to get the participants familiar with the
-concept of recursion without them realizing it. True to the spirit of
-math circle where the idea is to let school students discover new things
-in a fun way. They are not lectures or classes, just some fun
-activities.</p>
-<p>We used the <code>slideshow</code> 'language' of racket. I include
-ASCII-art depictions of the actual image output generated.</p>
-<p>Considering that many people who encounter a lisp-like language find
-it 'difficult' to use, I was surprised to see that the children got
-quite comfortable with racket in no time. Probably due to the thoughtful
-way in which it was presented to them.</p>
-<p>Then again, those who find lisp difficult to get used to are often
-those who already got accustomed to languages like C, C++, python, etc.
-It's like windows users finding FOSS operating systems 'difficult' to
-use at first.</p>
-<p>I, for one, wasn't familiar with racket though I have been able to
-put together an emacs configuration in elisp by copying snippets off the
-internet. But thanks to the guidance of our teachers, I am no longer a
-novice at functional programming style and the basics of racket syntax
-was easy enough.</p>
-<p>Being a language designed for teaching programming, Racket comes with
-its own IDE called <a
-href="https://docs.racket-lang.org/drracket/">DrRacket</a>.<br />
-(Though an emacs mode for racket is available, we used DrRacket for the
-session as we couldn't expect the participants to be familiar with
-emacs!)</p>
+<p>A few weeks back, the math circle being run by our institute organized a session involving a bit of computer programming.</p>
+<p>I and some of my friends were there to help the participants. It was fun and in this blog post, I try to describe what happened in the session as a means of recalling the memory of that day.</p>
+<p>The session was led by my advisor and used the programming language named <a href="https://racket-lang.org/">racket</a>, a language originally meant to be used to teach computer programming which has evolved into much more than that. I heard that there is even a <a href="https://docs.racket-lang.org/continue/">framework</a> written in racket to make web applications.</p>
+<p>The ultimate aim was to get the participants familiar with the concept of recursion without them realizing it. True to the spirit of math circle where the idea is to let school students discover new things in a fun way. They are not lectures or classes, just some fun activities.</p>
+<p>We used the <code>slideshow</code> 'language' of racket. I include ASCII-art depictions of the actual image output generated.</p>
+<p>Considering that many people who encounter a lisp-like language find it 'difficult' to use, I was surprised to see that the children got quite comfortable with racket in no time. Probably due to the thoughtful way in which it was presented to them.</p>
+<p>Then again, those who find lisp difficult to get used to are often those who already got accustomed to languages like C, C++, python, etc. It's like windows users finding FOSS operating systems 'difficult' to use at first.</p>
+<p>I, for one, wasn't familiar with racket though I have been able to put together an emacs configuration in elisp by copying snippets off the internet. But thanks to the guidance of our teachers, I am no longer a novice at functional programming style and the basics of racket syntax was easy enough.</p>
+<p>Being a language designed for teaching programming, Racket comes with its own IDE called <a href="https://docs.racket-lang.org/drracket/">DrRacket</a>.<br />
+(Though an emacs mode for racket is available, we used DrRacket for the session as we couldn't expect the participants to be familiar with emacs!)</p>
 <hr />
-<p>The session began by the participants doing simple arithmetic like
-addition of two numbers using racket. This gave them a taste of what
-racket was like.</p>
+<p>The session began by the participants doing simple arithmetic like addition of two numbers using racket. This gave them a taste of what racket was like.</p>
 <pre><code>&gt; (+ 1 2)
 3
 </code></pre>
-<p>At first, many found the prefix notation strange. But then they got
-used to it.</p>
-<p>Then instead of just two numbers, they were asked to find the sum of
-a set of numbers.</p>
-<p>Instruction was given for the kids to find the sum using racket. It
-was presented as a number game. The first one who found the correct sum
-wins.</p>
+<p>At first, many found the prefix notation strange. But then they got used to it.</p>
+<p>Then instead of just two numbers, they were asked to find the sum of a set of numbers.</p>
+<p>Instruction was given for the kids to find the sum using racket. It was presented as a number game. The first one who found the correct sum wins.</p>
 <pre><code>&gt; (+ 16 35 9 23 53 64 22)
 222
 </code></pre>
-<p>We never kept track of the winners and the children didn't seem to
-have complaints about it either. But the satisfaction of finding the sum
-using computer was visible on each of their faces.</p>
-<p>Next, the participants were shown how to give names to values. We
-started off with a constant, the value of pi.</p>
+<p>We never kept track of the winners and the children didn't seem to have complaints about it either. But the satisfaction of finding the sum using computer was visible on each of their faces.</p>
+<p>Next, the participants were shown how to give names to values. We started off with a constant, the value of pi.</p>
 <pre class="racket"><code>(define pi 3.14)
 </code></pre>
-<p>then used it to make to make non-constants. Like the area of a
-circle:</p>
+<p>then used it to make to make non-constants. Like the area of a circle:</p>
 <pre class="racket"><code>(define (area r)
   (* pi r r))
 </code></pre>
@@ -120,52 +92,22 @@ circle:</p>
 &gt; (area 5)
 78.5
 </code></pre>
-<p>In between, the children went on to define constants named after
-themselves, their favorite sports players, actors, etc.</p>
-<p>After giving some time for them to experiment on their own,
-participants were shown how to draw shapes. Rectangles first and then
-circles. They figured out that squares can be made using the 'technique'
-to draw rectangles if both length and breadth were made the same.</p>
-<p>Then filled rectangles, circles, ellipses, etc were shown.
-Particularly popular was the way to colour all these shapes that they
-had made.</p>
-<p>Soon, a lot of creativity was on display on the computer monitors as
-a result of the children's experimentation.</p>
-<p>We saw lot of interesting creations, including colourful depictions
-of trains, wrist watch, cats, human figures and desktop computers.</p>
-<p>FIFA world cup was going on at the time. Some of the particpants got
-busy drawing the likeness of the flags of their favourite football
-teams.<br />
-Came across many Argentina flags. Also present were loyal supporters of
-Brazil proudly showing off their colours though their team exited the
-world cup only the night before.</p>
-<p>There were participants asking for a way to insert space between
-shapes, many asked for a way to draw triangles. Someone got interested
-in the way to draw a shape on top of another (overlays) but I don't
-think he got time to do that during the session itself. I have a hunch
-that he tried it out at home afterwards.</p>
-<p>I myself was interested in drawing curves, but didn't dig deep enough
-into the racket documentation to find a way.</p>
-<p>The participants seemed to have been well versed with colour names
-used in the web. I came across many unheard of colour names that the
-kids were using. At first I thought such colours didn't exist for
-racket, but they did in most cases.</p>
-<p>One interesting question that I heard one of the kids asking was how
-they would draw all these shapes if the built-in methods to draw
-rectangles and circles weren't there.</p>
-<p>For most of them, this was the first programming experience, though
-there were some who were already familiar with Python. Some of the
-participants were not that comfortable with using a desktop computer.
-Maybe it's because children these days are more familiar with mobile
-phones than desktop (or laptop) computers with an actual keyboard.</p>
-<p>As was mentioned before, the aim of the session was to let the
-participants get hold of an understanding ofthe concept of recursion,
-without really telling them that it's recursion. In such a way that they
-will come to know what it is before they know what it is called.</p>
+<p>In between, the children went on to define constants named after themselves, their favorite sports players, actors, etc.</p>
+<p>After giving some time for them to experiment on their own, participants were shown how to draw shapes. Rectangles first and then circles. They figured out that squares can be made using the 'technique' to draw rectangles if both length and breadth were made the same.</p>
+<p>Then filled rectangles, circles, ellipses, etc were shown. Particularly popular was the way to colour all these shapes that they had made.</p>
+<p>Soon, a lot of creativity was on display on the computer monitors as a result of the children's experimentation.</p>
+<p>We saw lot of interesting creations, including colourful depictions of trains, wrist watch, cats, human figures and desktop computers.</p>
+<p>FIFA world cup was going on at the time. Some of the particpants got busy drawing the likeness of the flags of their favourite football teams.<br />
+Came across many Argentina flags. Also present were loyal supporters of Brazil proudly showing off their colours though their team exited the world cup only the night before.</p>
+<p>There were participants asking for a way to insert space between shapes, many asked for a way to draw triangles. Someone got interested in the way to draw a shape on top of another (overlays) but I don't think he got time to do that during the session itself. I have a hunch that he tried it out at home afterwards.</p>
+<p>I myself was interested in drawing curves, but didn't dig deep enough into the racket documentation to find a way.</p>
+<p>The participants seemed to have been well versed with colour names used in the web. I came across many unheard of colour names that the kids were using. At first I thought such colours didn't exist for racket, but they did in most cases.</p>
+<p>One interesting question that I heard one of the kids asking was how they would draw all these shapes if the built-in methods to draw rectangles and circles weren't there.</p>
+<p>For most of them, this was the first programming experience, though there were some who were already familiar with Python. Some of the participants were not that comfortable with using a desktop computer. Maybe it's because children these days are more familiar with mobile phones than desktop (or laptop) computers with an actual keyboard.</p>
+<p>As was mentioned before, the aim of the session was to let the participants get hold of an understanding ofthe concept of recursion, without really telling them that it's recursion. In such a way that they will come to know what it is before they know what it is called.</p>
 <p>This was done with the help of examples.</p>
 <h2 id="zebra-crossing">Zebra crossing</h2>
-<p>The next task was to draw a zebra crossing pattern. With alternating
-stripes of white and black. Sort of like this:</p>
+<p>The next task was to draw a zebra crossing pattern. With alternating stripes of white and black. Sort of like this:</p>
 <pre><code>██░░██░░██░░██░░██░░██░░
 ██░░██░░██░░██░░██░░██░░
 ██░░██░░██░░██░░██░░██░░
@@ -201,24 +143,19 @@ stripes of white and black. Sort of like this:</p>
 (define z4
   (hc-append z1 z3))
 </code></pre>
-<p>Then they were encouraged to find patterns. We were looking for them
-to find this pattern:</p>
+<p>Then they were encouraged to find patterns. We were looking for them to find this pattern:</p>
 <pre><code>z2 = z1 + z1
 z3 = z1 + z2
 z4 = z1 + z3
 </code></pre>
-<p>Once they figured that out, they were able to have a method to
-generate arbitrarily long zebra crossing patterns.</p>
+<p>Once they figured that out, they were able to have a method to generate arbitrarily long zebra crossing patterns.</p>
 <pre class="racket"><code>(define (zebra n)
   (if (&lt;= n 1) z1
 
 ; (zebra 4)
 </code></pre>
 <h2 id="chess-board">Chess board</h2>
-<p>We had run out of time by this point, but the person leading session
-was prepared with more things and had given us a glimpse of some of it
-earlier. One of them was the chess board pattern (or checkerboard, if
-you like).</p>
+<p>We had run out of time by this point, but the person leading session was prepared with more things and had given us a glimpse of some of it earlier. One of them was the chess board pattern (or checkerboard, if you like).</p>
 <p>Aim is to make a pattern like:</p>
 <pre><code>████░░░░████░░░░████░░░░████░░░░
 ████░░░░████░░░░████░░░░████░░░░
@@ -237,10 +174,8 @@ you like).</p>
 ░░░░████░░░░████░░░░████░░░░████
 ░░░░████░░░░████░░░░████░░░░████
 </code></pre>
-<p>As in the case of the zebra crossing pattern, one could start by
-having a few patterns.</p>
-<p>We can consider a board consisting of four cells as the board of size
-1. Then boards of sizes 1, 2 and 3 would be like:</p>
+<p>As in the case of the zebra crossing pattern, one could start by having a few patterns.</p>
+<p>We can consider a board consisting of four cells as the board of size 1. Then boards of sizes 1, 2 and 3 would be like:</p>
 <pre><code>b1          b2                  b3
 
 ████░░░░    ████░░░░████░░░░    ████░░░░████░░░░████░░░░████░░░░
@@ -288,8 +223,7 @@ having a few patterns.</p>
 <li>b2 is b1 tiled four times</li>
 <li>b3 is b2 tiled four times</li>
 </ul>
-<p>So we could have a function to make a board of size
-<code>n</code>.</p>
+<p>So we could have a function to make a board of size <code>n</code>.</p>
 <pre class="racket"><code>(define (board n)
   (if (&lt;= n 1) b1
     (vc-append
@@ -297,15 +231,8 @@ having a few patterns.</p>
       (hc-append (board (- n 1)) (board (- n 1))))))
 </code></pre>
 <h2 id="sierpiński-carpet">Sierpiński carpet</h2>
-<p>Next illustration that the session leader had in mind was the <a
-href="https://en.wikipedia.org/wiki/Sierpi%C5%84ski_carpet">Sierpiński
-carpet</a>. Participants weren't given time to do this as it would've
-taken too much time. They were simply shown this and the way to think
-about making these shapes.</p>
-<p>Roughly speaking, Sierpiński carpet consists of the pattern formed
-when a square shape is recursively removed from the middle of square
-such that after each removal the remaining portion consists of 8 squares
-of the same dimension as the removed square.</p>
+<p>Next illustration that the session leader had in mind was the <a href="https://en.wikipedia.org/wiki/Sierpi%C5%84ski_carpet">Sierpiński carpet</a>. Participants weren't given time to do this as it would've taken too much time. They were simply shown this and the way to think about making these shapes.</p>
+<p>Roughly speaking, Sierpiński carpet consists of the pattern formed when a square shape is recursively removed from the middle of square such that after each removal the remaining portion consists of 8 squares of the same dimension as the removed square.</p>
 <p>Looks like this:</p>
 <pre><code>Level 1               Level 2               Level 3
 
@@ -319,21 +246,15 @@ of the same dimension as the removed square.</p>
 ██████████████████    ██████████████████    ██  ████  ████  ██
 ██████████████████    ██████████████████    ██████████████████
 </code></pre>
-<p>I tried to make a function to make this shape in racket. It sort of
-works, but it's not exactly nice so I'm not including it as part of this
-blog post.</p>
-<p>A nice version of Sierpiński carpet in racket can be found <a
-href="https://docs.racket-lang.org/teachpack/2htdpimage-guide.html">here</a>.</p>
-<p>Anyway, if the pattern of level <code>l</code> is made by a function
-<code>f</code>, we could think of the carpet of level <code>l</code>
-(ie, <code>f(l)</code>) being made like:</p>
+<p>I tried to make a function to make this shape in racket. It sort of works, but it's not exactly nice so I'm not including it as part of this blog post.</p>
+<p>A nice version of Sierpiński carpet in racket can be found <a href="https://docs.racket-lang.org/teachpack/2htdpimage-guide.html">here</a>.</p>
+<p>Anyway, if the pattern of level <code>l</code> is made by a function <code>f</code>, we could think of the carpet of level <code>l</code> (ie, <code>f(l)</code>) being made like:</p>
 <pre><code>f(l-1)    f(l-1)      f(l-1)
 f(l-1)    blank(l)    f(l-1)
 f(l-1)    f(l-1)      f(l-1)
 </code></pre>
 <p>where <code>blank(l)</code> denotes an empty space.</p>
-<p>Just for the fun of it, here's a Sierpiński carpet of level 4 that I
-made:</p>
+<p>Just for the fun of it, here's a Sierpiński carpet of level 4 that I made:</p>
 <pre><code>██████████████████████████████████████████████████████
 ██  ████  ████  ████  ████  ████  ████  ████  ████  ██
 ██████████████████████████████████████████████████████
@@ -362,22 +283,11 @@ made:</p>
 ██  ████  ████  ████  ████  ████  ████  ████  ████  ██
 ██████████████████████████████████████████████████████
 </code></pre>
-<p>Fun fact that I heard during the session: Sierpiński carpet design is
-used in <a
-href="https://en.wikipedia.org/wiki/Fractal_antenna">antennas</a> to be
-put inside small devices like phones. Because the 'holes' of different
-dimensions can handle signals of different frequencies.</p>
+<p>Fun fact that I heard during the session: Sierpiński carpet design is used in <a href="https://en.wikipedia.org/wiki/Fractal_antenna">antennas</a> to be put inside small devices like phones. Because the 'holes' of different dimensions can handle signals of different frequencies.</p>
 <h2 id="take-away">Take away</h2>
-<p>At the end of the day, the children were excited to see all the
-illustrations that they ended up making. In effect, they learned the
-concept of recursion as a fun activity. In fact, I didn't hear the word
-recursion ever being mentioned.</p>
-<p>When they get around to learning about recursion at school, these
-kids would be in for a pleasant surprise.</p>
-<p><strong>Acknowledgements</strong>: Thanks to Piyush sir, who led the
-session. He has got the source code for some of the content used in his
-presentation over <a
-href="https://gitlab.com/piyush-kurur/math-circle">here</a>.</p>
+<p>At the end of the day, the children were excited to see all the illustrations that they ended up making. In effect, they learned the concept of recursion as a fun activity. In fact, I didn't hear the word recursion ever being mentioned.</p>
+<p>When they get around to learning about recursion at school, these kids would be in for a pleasant surprise.</p>
+<p><strong>Acknowledgements</strong>: Thanks to Piyush sir, who led the session. He has got the source code for some of the content used in his presentation over <a href="https://gitlab.com/piyush-kurur/math-circle">here</a>.</p>
 </div>
 </body>
 </html>

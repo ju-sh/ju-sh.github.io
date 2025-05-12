@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>OCaml 5</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">OCaml 5</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<ul>
+<li>Domain: Parallelism
+<ul>
+<li>Threads (but not the usual kind??)</li>
+</ul></li>
+<li>Concurrency: Effect handlers
+<ul>
+<li>Overlapped execution. Yield-restart kind of thing.</li>
+</ul></li>
+</ul>
+<h2 id="effect-handlers">Effect handlers</h2>
+<p>No primitives for concurrency till Ocaml5.</p>
+<ul>
+<li>3rd party libs: Lwt and Async
+<ul>
+<li>Not primitive. Essentially, syntactic sugar.</li>
+<li>Monadic syntax, but doesn't obey monadic laws ??</li>
+<li>Less readable errors. No backtrace. No exceptions.</li>
+</ul></li>
+</ul>
+<p>Can think of effect handlers as 'first-class, restartable exceptions'</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co">(* When [E] is performed, we will get a value of type [string] *)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>effect E: <span class="dt">string</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="co">(* A computation. Like a thunk *)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="kw">let</span> comp () = </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>  <span class="dt">print_string</span> <span class="st">&quot;0: start&quot;</span>;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>  <span class="dt">print_string</span> (perform E);</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>  <span class="dt">print_string</span> <span class="st">&quot;3: end&quot;</span>;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="kw">let</span> main () = </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>  <span class="kw">try</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>    comp ()</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>  <span class="co">(* Effect handler. [k] is a delimited continuation *)</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>  <span class="kw">with</span> effect E k -&gt;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>    <span class="dt">print_string</span> <span class="st">&quot;1: EH start&quot;</span>;</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>    continue k <span class="st">&quot;2: EH cont&quot;</span>;</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>    <span class="dt">print_string</span> <span class="st">&quot;4: EH end&quot;</span>;</span></code></pre></div>
+<p>Here control goes like:</p>
+<ul>
+<li>main</li>
+<li>comp: start</li>
+<li>E k: EH start</li>
+<li>comp: EH cont, end</li>
+<li>E k: EH end</li>
+</ul>
+</div>
+</body>
+</html>

@@ -36,8 +36,18 @@
 </header>
 
 <ul>
-    </ul>
+    <li>Date created: May-2021</li>
+      <li>Last updated: 22-Dec-2021</li>
+  </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/tools electronics.html">tools electronics</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
@@ -47,20 +57,17 @@ A simple custom yosys.
 <hr/>
 
 <div id="content-container">
-<p>For use with <a href="http://www.clifford.at/yosys">yosys</a> (<a
-href="https://yosyshq.net/yosys/">link</a>).</p>
+<p>For use with <a href="http://www.clifford.at/yosys">yosys</a> (<a href="https://yosyshq.net/yosys/">link</a>).</p>
 <h2 id="input-verilog-file">Input verilog file</h2>
-<p>Suppose that we got a verilog file <code>adder.v</code> for a
-half-adder like</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> halfadder <span class="op">(</span>a<span class="op">,</span> b<span class="op">,</span> sum<span class="op">,</span> carry<span class="op">);</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">input</span> a<span class="op">,</span> b<span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">output</span> sum<span class="op">,</span> carry<span class="op">;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">wire</span> sum<span class="op">,</span> carry<span class="op">;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">xor</span><span class="op">(</span>sum<span class="op">,</span> a<span class="op">,</span> b<span class="op">);</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">and</span><span class="op">(</span>carry<span class="op">,</span> a<span class="op">,</span> b<span class="op">);</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">endmodule</span></span></code></pre></div>
+<p>Suppose that we got a verilog file <code>adder.v</code> for a half-adder like</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">module</span> halfadder (a, b, sum, carry);</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>    <span class="dt">input</span> a, b;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>    <span class="dt">output</span> sum, carry;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="dt">wire</span> sum, carry;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>    <span class="dt">xor</span>(sum, a, b);</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    <span class="dt">and</span>(carry, a, b);</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="kw">endmodule</span></span></code></pre></div>
 <p><!--
     module counter (clk,rst,en,count);
     input clk,rst,en;
@@ -75,36 +82,31 @@ class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb1-1"><a 
     endmodule
 --></p>
 <h2 id="creating-a-custom-pass">Creating a custom pass</h2>
-<p>Create a directory named <code>mypass/</code> under the
-<code>passes/</code> directory and create a file <code>mypass.cc</code>
-with the following:</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;kernel/yosys.h&quot;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>USING_YOSYS_NAMESPACE</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>PRIVATE_NAMESPACE_BEGIN</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> MyPass <span class="op">:</span> <span class="kw">public</span> Pass <span class="op">{</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    MyPass<span class="op">()</span> <span class="op">:</span> Pass<span class="op">(</span><span class="st">&quot;MyPass&quot;</span><span class="op">,</span><span class="st">&quot;counter&quot;</span><span class="op">)</span> <span class="op">{</span> <span class="op">}</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> execute<span class="op">(</span>vector<span class="op">&lt;</span>string<span class="op">&gt;,</span> RTLIL<span class="op">::</span>Design <span class="op">*</span>design<span class="op">)</span> <span class="kw">override</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        log<span class="op">(</span><span class="st">&quot;Inside the newly created pass</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        log_header<span class="op">(</span>design<span class="op">,</span> <span class="st">&quot;Executing MyPass</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> mod <span class="op">:</span> design<span class="op">-&gt;</span>modules<span class="op">())</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            log<span class="op">(</span><span class="st">&quot;  </span><span class="sc">%s</span><span class="st"> (</span><span class="sc">%d</span><span class="st"> wires, </span><span class="sc">%d</span><span class="st"> cells)</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> log_id<span class="op">(</span>mod<span class="op">),</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                    GetSize<span class="op">(</span>mod<span class="op">-&gt;</span>wires<span class="op">()),</span> GetSize<span class="op">(</span>mod<span class="op">-&gt;</span>cells<span class="op">()));</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            run_pass<span class="op">(</span><span class="st">&quot;dump&quot;</span><span class="op">,*&amp;</span>design<span class="op">);</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> MyPass<span class="op">;</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>PRIVATE_NAMESPACE_END</span></code></pre></div>
-<h2 id="synthesizing-gate-level-netlist">Synthesizing gate-level
-netlist</h2>
+<p>Create a directory named <code>mypass/</code> under the <code>passes/</code> directory and create a file <code>mypass.cc</code> with the following:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&quot;kernel/yosys.h&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>USING_YOSYS_NAMESPACE</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>PRIVATE_NAMESPACE_BEGIN</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="kw">struct</span> MyPass : <span class="kw">public</span> Pass {</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>    MyPass() : Pass(<span class="st">&quot;MyPass&quot;</span>,<span class="st">&quot;counter&quot;</span>) { }</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>    <span class="dt">void</span> execute(vector&lt;string&gt;, RTLIL::Design *design) <span class="kw">override</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>    {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>        log(<span class="st">&quot;Inside the newly created pass</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>        log_header(design, <span class="st">&quot;Executing MyPass</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>        <span class="cf">for</span> (<span class="kw">auto</span> mod : design-&gt;modules())</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>        {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a>            log(<span class="st">&quot;  </span><span class="sc">%s</span><span class="st"> (</span><span class="sc">%d</span><span class="st"> wires, </span><span class="sc">%d</span><span class="st"> cells)</span><span class="sc">\n</span><span class="st">&quot;</span>, log_id(mod),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>                    GetSize(mod-&gt;wires()), GetSize(mod-&gt;cells()));</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a>            run_pass(<span class="st">&quot;dump&quot;</span>,*&amp;design);</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a>        }</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a>    }</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a>} MyPass;</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a>PRIVATE_NAMESPACE_END</span></code></pre></div>
+<h2 id="synthesizing-gate-level-netlist">Synthesizing gate-level netlist</h2>
 <p>We convert behavioural verilog code into gate-level netlist here.</p>
-<p>Create a file named script.ys (just a random name) with the following
-yosys commands:</p>
+<p>Create a file named script.ys (just a random name) with the following yosys commands:</p>
 <pre><code># Read verilog source and convert to an internal representation
 read_verilog adder.v
 
@@ -147,27 +149,21 @@ write_verilog synth.v
 <p>and run them with yosys using</p>
 <pre><code>yosys -s script.ys
 </code></pre>
-<p>This will create a <code>synth.v</code> file with the netlist in
-it.</p>
-<p>We are using a cell library named <code>cmos_cells.lib</code> from
-the <code>examples/</code> directory of the yosys source code.</p>
+<p>This will create a <code>synth.v</code> file with the netlist in it.</p>
+<p>We are using a cell library named <code>cmos_cells.lib</code> from the <code>examples/</code> directory of the yosys source code.</p>
 <h2 id="running-the-custom-pass">Running the custom pass</h2>
 <p>Use</p>
 <pre><code>yosys-config --build hello.so hello.cc
 </code></pre>
 <p>and a file named <code>hello.so</code> would get created.</p>
-<p>Now use the <code>synth.v</code> file that got generated earlier and
-run</p>
+<p>Now use the <code>synth.v</code> file that got generated earlier and run</p>
 <pre><code>yosys -ql hello.log -m hello.so synth.v -p MyPass
 </code></pre>
 <p>to get the log data in the file <code>hello.log</code>.</p>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://www.clifford.at/yosys/files/yosys_manual.pdf">yosys
-manual</a></li>
-<li><a
-href="http://www.clifford.at/yosys/files/yosys_presentation.pdf">yosys
-presentation by Clifford Wolf</a></li>
+<li><a href="https://www.clifford.at/yosys/files/yosys_manual.pdf">yosys manual</a></li>
+<li><a href="http://www.clifford.at/yosys/files/yosys_presentation.pdf">yosys presentation by Clifford Wolf</a></li>
 </ul>
 <p><!--
 

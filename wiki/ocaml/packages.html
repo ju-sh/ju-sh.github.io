@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Some OCaml packages</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">Some OCaml packages</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<h2 id="cmdliner">Cmdliner</h2>
+<ul>
+<li><code>let+</code>
+<ul>
+<li><a href="https://ocaml.org/manual/5.3/bindingops.html">https://ocaml.org/manual/5.3/bindingops.html</a></li>
+<li><code>let+ x = xs in f x</code> corresponds to <code>map (fun x -&gt; f x) xs</code></li>
+</ul></li>
+<li><code>@@</code></li>
+<li><code>%%VERSION%%</code></li>
+</ul>
+<h3 id="blocks">Blocks</h3>
+<p>Man page 'flags' provided by Cmdliner:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>`S</td>
+<td>section</td>
+</tr>
+<tr class="even">
+<td>`P</td>
+<td>paragraph</td>
+</tr>
+<tr class="odd">
+<td>`I</td>
+<td>label-text paragraph</td>
+</tr>
+<tr class="even">
+<td>`Pre</td>
+<td>pre-formatted text</td>
+</tr>
+<tr class="odd">
+<td>`Noblank</td>
+<td>suppress blank line between 2 blocks</td>
+</tr>
+<tr class="even">
+<td>`Blocks</td>
+<td>list of (more) blocks</td>
+</tr>
+</tbody>
+</table>
+<p>From <a href="https://erratique.ch/software/cmdliner/doc/Cmdliner/Manpage/index.html">https://erratique.ch/software/cmdliner/doc/Cmdliner/Manpage/index.html</a></p>
+<h3 id="markup">'Markup'</h3>
+<ul>
+<li>Italics: <code>$(i, text)</code></li>
+<li>Bold: <code>$(b, text)</code></li>
+</ul>
+<p><a href="https://erratique.ch/software/cmdliner/doc/tool_man.html#doclang">https://erratique.ch/software/cmdliner/doc/tool_man.html#doclang</a></p>
+<p>–</p>
+<ul>
+<li><code>$(tname)</code>: term name (ie, command name?)</li>
+<li><code>$(mname)</code>: main command name</li>
+<li><code>$(iname)</code></li>
+</ul>
+<p><a href="https://erratique.ch/software/cmdliner/doc/Cmdliner/Cmd/index.html#info">https://erratique.ch/software/cmdliner/doc/Cmdliner/Cmd/index.html#info</a></p>
+<p>–</p>
+<ul>
+<li><code>eval_ok</code>: type for successful evaluation</li>
+<li><code>eval_error</code>: type for unsuccessful evaluation</li>
+</ul>
+<p><a href="https://erratique.ch/software/cmdliner/doc/Cmdliner/Cmd/index.html#eval_low">https://erratique.ch/software/cmdliner/doc/Cmdliner/Cmd/index.html#eval_low</a></p>
+<h3 id="term"><code>Term</code></h3>
+<ul>
+<li><code>const value</code>: a <code>Term</code> that evaluates to <code>value</code></li>
+<li><code>($)</code> / <code>app</code>: function application with respect to <code>Term</code></li>
+</ul>
+<p>Evaluate <code>Term</code> to get <code>Result</code>, which can be used to get an exit status.</p>
+<h3 id="env"><code>Env</code></h3>
+<ul>
+<li>info: of type <code>Term.env_info</code>
+<ul>
+<li><code>val info: ?deprecated:string -&gt; ?docs:string -&gt; ?doc:string -&gt; var -&gt; info</code></li>
+<li><a href="https://erratique.ch/software/cmdliner/doc/Cmdliner/Cmd/Env/index.html#type-info">https://erratique.ch/software/cmdliner/doc/Cmdliner/Cmd/Env/index.html#type-info</a></li>
+</ul></li>
+</ul>
+<h3 id="cmd"><code>Cmd</code></h3>
+<ul>
+<li><code>val v : info -&gt; 'a Term.t -&gt; 'a t</code>
+<ul>
+<li><code>v i t</code> is a command with information i and command line syntax parsed by <code>Cmd.t</code>.</li>
+</ul></li>
+</ul>
+<h3 id="arg"><code>Arg</code></h3>
+<p>Converters:</p>
+<ul>
+<li>file: convert to file path. Also checks if the file exists ??</li>
+</ul>
+<h2 id="hardcaml">Hardcaml</h2>
+<ul>
+<li>Conversion of hardcaml to verilog/vhdl possible</li>
+<li>verilog to hardcaml conversion possible (via yosys): <a href="https://github.com/janestreet/hardcaml_of_verilog">https://github.com/janestreet/hardcaml_of_verilog</a>
+<ul>
+<li>With <code>Hardcaml.Rtl</code>: <a href="https://github.com/janestreet/hardcaml/blob/master/docs/rtl_generation.md">https://github.com/janestreet/hardcaml/blob/master/docs/rtl_generation.md</a></li>
+</ul></li>
+<li>Simulation possible in hardcaml (Kinda like clash)</li>
+</ul>
+<h3 id="operations">Operations</h3>
+<p><a href="https://github.com/janestreet/hardcaml/blob/master/docs/combinational_logic.md">https://github.com/janestreet/hardcaml/blob/master/docs/combinational_logic.md</a></p>
+<ul>
+<li>Addition: Args must have same width, result will have that width
+<ul>
+<li><code>(+:)</code>: addition</li>
+<li><code>(-:)</code>: subtraction</li>
+</ul></li>
+<li>Multiplication: Args can be of different width, result will have sum of arg widths
+<ul>
+<li><code>(*:)</code>: unsigned multiplication</li>
+<li><code>(*+)</code>: signed multiplication</li>
+</ul></li>
+<li><code>(&amp;:)</code>: logical and</li>
+<li><code>(|:)</code>: logical or</li>
+<li><code>(^:)</code>: logical xor</li>
+<li><code>(</code>:)~: logical not</li>
+</ul>
+<p>Vectors:</p>
+<ul>
+<li>Splice: <code>select v ~high:3 ~low:2</code> or <code>v.:[3,2]</code></li>
+<li>Concatenation: <code>v1 @ v2</code></li>
+</ul>
+<h2 id="menhir">menhir</h2>
+<ul>
+<li>%inline</li>
+<li>%left, %right, %nonassoc: associativity
+<ul>
+<li>Entries should be written in increasing order of precedence</li>
+</ul></li>
+<li>%type:</li>
+<li>%token: Declare terminals. Also makes them constructors of token type
+<ul>
+<li>Can be used to make token aliases to improve readability of mly file</li>
+</ul></li>
+<li>%start: entry point</li>
+<li>%prec: assign precedence
+<ul>
+<li>Can be used with 'dummies'
+<ul>
+<li><p><a href="https://discuss.ocaml.org/t/in-menhir-the-meaning-of-uminus/9054">https://discuss.ocaml.org/t/in-menhir-the-meaning-of-uminus/9054</a></p>
+<blockquote>
+<p>An annotation of the form %prec id indicates that the precedence level of the production group is the level assigned to the symbol id via a previous %nonassoc, %left, or %right declaration.</p>
+</blockquote></li>
+</ul></li>
+</ul></li>
+<li>Generates an ocaml module named <code>Parser</code> which may be used in the lex file</li>
+</ul>
+</div>
+</body>
+</html>

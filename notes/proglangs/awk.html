@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>awk</title>
+  <style>
+    body {
+      max-width: 38rem;
+      padding: 2rem;
+      margin: auto;
+      background-color: #FAF0E6;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<div id="header">
+<a href="https://ju-sh.github.io">Home</a>
+ | 
+<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+ | 
+<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+ | 
+<a href="https://ju-sh.github.io/about.html">About</a>
+</div>
+
+<header id="title-block-header">
+<h1 class="title">awk</h1>
+</header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<div id="content-container">
+<p>Reference:</p>
+<ul>
+<li><em>The AWK programming language</em> - Alfred Aho, Brian Kernighan, Peter J. Weinberger</li>
+<li><a href="https://www.gnu.org/software/gawk/manual/gawk.html">https://www.gnu.org/software/gawk/manual/gawk.html</a></li>
+</ul>
+<p>Line number starts from 0.</p>
+<h2 id="predefined-variables">Predefined variables</h2>
+<p><a href="https://www.gnu.org/software/gawk/manual/gawk.html#Built_002din-Variables">https://www.gnu.org/software/gawk/manual/gawk.html#Built_002din-Variables</a></p>
+<ul>
+<li>NR: line/record number (from all files)</li>
+<li>FNR: line number (from current file)</li>
+<li>RS: record separator. ie, separates lines
+<ul>
+<li>Default <code>\n</code>.</li>
+</ul></li>
+<li>END:</li>
+<li>$0: current line text</li>
+</ul>
+<h2 id="begin-and-end">BEGIN and END</h2>
+<p>Special patterns.</p>
+<ul>
+<li>BEGIN: run before file is processed</li>
+<li>END: run after file is processed</li>
+</ul>
+<h2 id="positional-specifier">Positional specifier</h2>
+<p>Follwing two statements have the same effect:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode awk"><code class="sourceCode awk"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">printf</span> <span class="st">&quot;%s %s</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="st">&quot;hello&quot;</span>, <span class="st">&quot;world&quot;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">printf</span> <span class="st">&quot;%2$s %1$s</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="st">&quot;world&quot;</span>, <span class="st">&quot;hello&quot;</span></span></code></pre></div>
+<p>and prints 'hello world'.</p>
+<h2 id="appending-to-a-string-variable">Appending to a string variable</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>$ <span class="bu">echo</span> <span class="st">&#39;a&#39;</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;BEGIN {a=&quot;1&quot;} /.+/ {a=a$0} END{print a}&#39;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="ex">1a</span></span></code></pre></div>
+<h2 id="awk-function">awk function</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode awk"><code class="sourceCode awk"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">function</span> <span class="op">&lt;</span>name<span class="op">&gt;</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>}</span></code></pre></div>
+<p><a href="https://faculty.cs.niu.edu/~berezin/330/N/awk-fun.html">https://faculty.cs.niu.edu/~berezin/330/N/awk-fun.html</a></p>
+<h2 id="arithmetic">Arithmetic</h2>
+<ul>
+<li>Integer division: <code>int()</code></li>
+<li>Can treat strings as if they are numbers</li>
+</ul>
+<h2 id="string-substitution">String substitution</h2>
+<ul>
+<li>sub</li>
+<li>gsub</li>
+</ul>
+<p><a href="https://www.gnu.org/software/gawk/manual/html_node/String-Functions.html">https://www.gnu.org/software/gawk/manual/html_node/String-Functions.html</a></p>
+<h2 id="matching-non-empty-lines">Matching non-empty lines</h2>
+<p>A trick:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode awk"><code class="sourceCode awk"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="fu">length</span> { <span class="op">&lt;</span>code<span class="op">&gt;</span> }</span></code></pre></div>
+<p>This works because <code>length</code> of empty line gives <code>0</code>, which is considered as false value.</p>
+<p>Thanks to tirnanog from #awk.</p>
+<h2 id="regex">Regex</h2>
+<ul>
+<li><code>[[:digit:]]</code>: like <code>\d</code> in sed</li>
+<li>regex match operatioin: <code>var ~ /rgx/</code></li>
+</ul>
+<p>Example:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode awk"><code class="sourceCode awk"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="co"># -F is used to make field separator comma instead of space</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="co"># Prints lines whose first column starts with &#39;T&#39; </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>awk <span class="op">-</span>F <span class="st">&quot;,&quot;</span> &#39;<span class="dt">$1</span> <span class="op">~</span> <span class="ot">/^</span><span class="ss">T</span><span class="ot">/</span> {<span class="kw">print</span> <span class="dt">$0</span>}&#39;</span></code></pre></div>
+<p>Another:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode awk"><code class="sourceCode awk"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>$ cut <span class="op">-</span>f4,<span class="dv">5</span> <span class="op">-</span>d, pincodes.csv \</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  <span class="op">|</span> sed <span class="st">&quot;s/</span><span class="sc">\</span><span class="er">&quot;</span><span class="st">//g&quot;</span>  \</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>  <span class="op">|</span> awk <span class="op">-</span>F <span class="st">&quot;,&quot;</span> &#39;<span class="dt">$2</span> <span class="op">~</span> <span class="ot">/</span><span class="ss">5</span><span class="ot">[</span><span class="ex">[:digit:]</span><span class="ot">]</span><span class="ss">5</span><span class="ot">[</span><span class="ex">[:digit:]</span><span class="ot">]</span><span class="ss">2</span><span class="ot">[</span><span class="ex">[:digit:]</span><span class="ot">]/</span> <span class="op">&amp;&amp;</span> <span class="dt">$1</span> <span class="op">~</span> <span class="ot">/^</span><span class="ss">T</span><span class="ot">/</span> {<span class="kw">print</span> <span class="dt">$0</span>}&#39; \</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>  <span class="op">|</span> sort <span class="op">-</span>k1 \</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>  <span class="op">|</span> less <span class="op">-</span>N</span></code></pre></div>
+<h2 id="tips">Tips</h2>
+<ul>
+<li><code>print ""</code>: outputs a blank line (with <code>\n</code>?)</li>
+<li>Indexing starts from 1</li>
+<li>Formatting functions: <code>sprintf</code>, <code>printf</code></li>
+</ul>
+<h2 id="jargon">Jargon</h2>
+<table>
+<thead>
+<tr class="header">
+<th>awk</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>record</td>
+<td>line</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

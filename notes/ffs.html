@@ -61,9 +61,7 @@
 1   0   1    1    (set)
 1   1   x    ?    (not allowed)</code></pre>
 <h3 id="jk">JK</h3>
-<p>The J and K in the name of the flip-flop doesn’t have an expansion
-and was apparently chosen randomly (except that they are adjacent
-letters in the English alphabet).</p>
+<p>The J and K in the name of the flip-flop doesn’t have an expansion and was apparently chosen randomly (except that they are adjacent letters in the English alphabet).</p>
 <pre><code>J   K   Qₙ  Qₙ₊₁  
 ----------------  
 0   0   0    0    (no change)
@@ -82,8 +80,7 @@ letters in the English alphabet).</p>
 0   1    1    (no change)
 1   0    1    (toggle)
 1   1    0    (toggle)</code></pre>
-<p>T flip-flop can be implemented by applying same signal to J and K
-inputs of a JK flip-flop.</p>
+<p>T flip-flop can be implemented by applying same signal to J and K inputs of a JK flip-flop.</p>
 <pre><code>            --------
             |      |
 T -&gt;-----&gt;--|J   Q |---&gt;
@@ -101,8 +98,7 @@ T -&gt;-----&gt;--|J   Q |---&gt;
 0   1    1    (no change)
 1   0    1    (toggle)
 1   1    0    (toggle)</code></pre>
-<p>D flip-flop can be implemented with a JK flip-flop by applying the
-input signal at J and its complement at K.</p>
+<p>D flip-flop can be implemented with a JK flip-flop by applying the input signal at J and its complement at K.</p>
 <pre><code>             --------
              |      |
 D -&gt;-----&gt;---|J   Q |---&gt;
@@ -119,18 +115,15 @@ D -&gt;-----&gt;---|J   Q |---&gt;
 <h2 id="registers">Registers</h2>
 <p>Consists of a set of flip-flops.</p>
 <h3 id="shift-registers">Shift registers</h3>
-<p>Consists of a number of (cascaded) flip-flops that share a clock
-signal.</p>
-<p>Output of a flip-flop is connected to the input of another
-flip-flop.</p>
+<p>Consists of a number of (cascaded) flip-flops that share a clock signal.</p>
+<p>Output of a flip-flop is connected to the input of another flip-flop.</p>
 <p>Data access could be of one of the following:</p>
 <ul>
 <li>Serial-in parallel-out (SIPO)</li>
 <li>Parallel-in serial-out (PISO)</li>
 </ul>
 <h3 id="ring-counters">Ring Counters</h3>
-<p>Output of last flip-flop connected input of the first, making a
-circular (or ‘ring’) counter.</p>
+<p>Output of last flip-flop connected input of the first, making a circular (or ‘ring’) counter.</p>
 <p>aka:</p>
 <ul>
 <li>straight ring counter</li>
@@ -150,8 +143,7 @@ circular (or ‘ring’) counter.</p>
    3   | 0  | 0  | 0  | 1  
    0   | 1  | 0  | 0  | 0  </code></pre>
 <h3 id="johnson-counter">Johnson counter</h3>
-<p>Complement of output of last flip-flop is connected to the input of
-the first flip-flop.</p>
+<p>Complement of output of last flip-flop is connected to the input of the first flip-flop.</p>
 <h4 id="advantages">Advantages</h4>
 <ul>
 <li>No need to ‘inject’ first state</li>
@@ -179,12 +171,8 @@ the first flip-flop.</p>
    0   | 0  | 0  | 0  | 0  </code></pre>
 <h2 id="edge-triggered-flip-flops">Edge triggered flip-flops</h2>
 <ul>
-<li><strong>Positive edge triggered flip-flops</strong> change state
-during a 0 → 1 transition of the clock (ie, rising edge of the
-clock).</li>
-<li><strong>Negative edge triggered flip-flops</strong> change state
-during a 1 → 0 transition of the clock (ie, falling edge of the
-clock).</li>
+<li><strong>Positive edge triggered flip-flops</strong> change state during a 0 → 1 transition of the clock (ie, rising edge of the clock).</li>
+<li><strong>Negative edge triggered flip-flops</strong> change state during a 1 → 0 transition of the clock (ie, falling edge of the clock).</li>
 </ul>
 <h2 id="todo">Todo</h2>
 <ul>
@@ -199,10 +187,8 @@ clock).</li>
 </ul>
 <h2 id="references">References</h2>
 <ul>
-<li><em>Switching Theory and Finite Automata (Third edition)</em> by Zvi
-Kohavi, Niraj K. Jha</li>
-<li><a
-href="https://en.wikipedia.org/wiki/Flip-flop_(electronics)">https://en.wikipedia.org/wiki/Flip-flop_(electronics)</a></li>
+<li><em>Switching Theory and Finite Automata (Third edition)</em> by Zvi Kohavi, Niraj K. Jha</li>
+<li><a href="https://en.wikipedia.org/wiki/Flip-flop_(electronics)">https://en.wikipedia.org/wiki/Flip-flop_(electronics)</a></li>
 </ul>
 </div>
 </body>

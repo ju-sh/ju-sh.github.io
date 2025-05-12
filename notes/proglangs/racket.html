@@ -47,8 +47,7 @@
 <p>Quite similar to lisp.</p>
 <p>An advantage of s-expr:</p>
 <ul>
-<li><code>(+ 1 2 3 4 5 6)</code> is clearer than
-<code>1+2+3+4+5+6</code></li>
+<li><code>(+ 1 2 3 4 5 6)</code> is clearer than <code>1+2+3+4+5+6</code></li>
 </ul>
 <h2 id="general">General</h2>
 <ul>
@@ -61,40 +60,32 @@
 </ul></li>
 <li><p>Function call: <code>(fn-name args)</code></p></li>
 <li><p>Variable 'call': <code>var-name</code> (ie, no braces)</p></li>
-<li><p>'<code>#lang ...</code> is only a shorthand for
-<code>(module name initial-import decl ...)</code></p>
+<li><p>'<code>#lang ...</code> is only a shorthand for <code>(module name initial-import decl ...)</code></p>
 <ul>
-<li><a
-href="https://elixirforum.com/t/external-dsls/12504/5">https://elixirforum.com/t/external-dsls/12504/5</a></li>
+<li><a href="https://elixirforum.com/t/external-dsls/12504/5">https://elixirforum.com/t/external-dsls/12504/5</a></li>
 </ul></li>
 <li><p>Multiple modules can be imported at once</p>
 <ul>
 <li>Eg: <code>(require (for-syntax racket/base))</code></li>
 </ul></li>
 <li><p><code>racket/base</code> is the foundational language</p></li>
-<li><p><code>define-syntax</code>: 'basic tool for introducing a macro'
-ᵇʳ</p>
+<li><p><code>define-syntax</code>: 'basic tool for introducing a macro' ᵇʳ</p>
 <ul>
 <li>accepts a syntax object, returns another syntax object</li>
 </ul></li>
 <li><p><code>syntax-parse</code>: 'most powerful macro-making tool'</p>
 <ul>
-<li><code>syntax-case</code>: a limited form of
-<code>syntax-parse</code> ??</li>
+<li><code>syntax-case</code>: a limited form of <code>syntax-parse</code> ??</li>
 </ul></li>
 <li><p><code>with-syntax</code>, <code>with-syntax*</code></p></li>
 <li><p>A given lang is inside a directory with its name</p>
 <ul>
 <li>Must have a file <code>main.rkt</code></li>
-<li><code>main.rkt</code> must have a submodule named
-<code>reader</code></li>
-<li><code>reader</code> module must <code>provide</code> a
-<code>read-syntax</code> function</li>
+<li><code>main.rkt</code> must have a submodule named <code>reader</code></li>
+<li><code>reader</code> module must <code>provide</code> a <code>read-syntax</code> function</li>
 </ul></li>
 </ul>
-<h2
-id="case-lambda-defining-function-by-cases"><code>case-lambda</code>:
-Defining function by cases</h2>
+<h2 id="case-lambda-defining-function-by-cases"><code>case-lambda</code>: Defining function by cases</h2>
 <pre class="racket"><code>#lang racket/base
 
 (define f
@@ -117,10 +108,8 @@ Defining function by cases</h2>
 <h2 id="string-formatting">String formatting</h2>
 <p>Use <code>racket/format</code>.</p>
 <ul>
-<li><a
-href="https://stackoverflow.com/questions/32839407/how-to-format-output-using-racket">https://stackoverflow.com/questions/32839407/how-to-format-output-using-racket</a></li>
-<li><a
-href="https://docs.racket-lang.org/reference/strings.html">https://docs.racket-lang.org/reference/strings.html</a></li>
+<li><a href="https://stackoverflow.com/questions/32839407/how-to-format-output-using-racket">https://stackoverflow.com/questions/32839407/how-to-format-output-using-racket</a></li>
+<li><a href="https://docs.racket-lang.org/reference/strings.html">https://docs.racket-lang.org/reference/strings.html</a></li>
 </ul>
 <pre class="racket"><code>#lang racket/base
 
@@ -139,30 +128,24 @@ href="https://docs.racket-lang.org/reference/strings.html">https://docs.racket-l
 </code></pre>
 <h2 id="data-structure-contracts">Data structure contracts</h2>
 <ul>
-<li><p><a
-href="https://docs.racket-lang.org/reference/contracts.html">https://docs.racket-lang.org/reference/contracts.html</a></p></li>
-<li><p><a
-href="https://docs.racket-lang.org/reference/data-structure-contracts.html">https://docs.racket-lang.org/reference/data-structure-contracts.html</a></p></li>
+<li><p><a href="https://docs.racket-lang.org/reference/contracts.html">https://docs.racket-lang.org/reference/contracts.html</a></p></li>
+<li><p><a href="https://docs.racket-lang.org/reference/data-structure-contracts.html">https://docs.racket-lang.org/reference/data-structure-contracts.html</a></p></li>
 <li><p><code>or/c</code></p></li>
 <li><p><code>any/c</code></p></li>
 </ul>
 <h2 id="variable-name-conventions">Variable name conventions</h2>
-<p><a
-href="https://docs.racket-lang.org/reference/reader.html#(part._default-readtable-dispatch">https://docs.racket-lang.org/reference/reader.html#(part._default-readtable-dispatch</a>)</p>
+<p><a href="https://docs.racket-lang.org/reference/reader.html#(part._default-readtable-dispatch">https://docs.racket-lang.org/reference/reader.html#(part._default-readtable-dispatch</a>)</p>
 <p>Many of the conventions are from Scheme.</p>
 <ul>
-<li>Question mark at end of a function means that it is a function
-returning a bool (predicate)
+<li>Question mark at end of a function means that it is a function returning a bool (predicate)
 <ul>
 <li>Eg: <code>pair?</code></li>
-<li><a
-href="https://docs.racket-lang.org/reference/notation.html">https://docs.racket-lang.org/reference/notation.html</a></li>
+<li><a href="https://docs.racket-lang.org/reference/notation.html">https://docs.racket-lang.org/reference/notation.html</a></li>
 <li><code>(boolean? #f) ; #t</code></li>
 </ul></li>
 <li>Exclamation mark at end of name: function that mutates.
 <ul>
-<li>For destructive procedures. ie, those that modifies arg
-in-place.</li>
+<li>For destructive procedures. ie, those that modifies arg in-place.</li>
 <li>Eg: <code>set!</code></li>
 </ul></li>
 <li><code>-&gt;</code>: procedures that perform a conversion
@@ -190,8 +173,7 @@ in-place.</li>
 <li>Eg: <code>top:func</code></li>
 </ul></li>
 </ul>
-<p><a
-href="https://justinethier.github.io/cyclone/docs/Scheme-code-conventions.html">https://justinethier.github.io/cyclone/docs/Scheme-code-conventions.html</a></p>
+<p><a href="https://justinethier.github.io/cyclone/docs/Scheme-code-conventions.html">https://justinethier.github.io/cyclone/docs/Scheme-code-conventions.html</a></p>
 <h2 id="pattern-macros">Pattern macros</h2>
 <pre class="racket"><code>(define-syntax-rule (swap x y)
   (let ([tmp x])
@@ -210,8 +192,7 @@ href="https://justinethier.github.io/cyclone/docs/Scheme-code-conventions.html">
 <ul>
 <li><code>provide</code>: mention list of names to export from a file
 <ul>
-<li><a
-href="https://docs.racket-lang.org/reference/require.html">https://docs.racket-lang.org/reference/require.html</a></li>
+<li><a href="https://docs.racket-lang.org/reference/require.html">https://docs.racket-lang.org/reference/require.html</a></li>
 </ul></li>
 <li><code>rename-out</code>: rename names while exporting</li>
 <li><code>define-syntax</code>:</li>
@@ -281,8 +262,7 @@ module: identifier already defined
 ; is same as
 &#39;(1 2 3)
 </code></pre>
-<p>The single quote sort of asks the interpreter to stop evaluating from
-that point.</p>
+<p>The single quote sort of asks the interpreter to stop evaluating from that point.</p>
 <ul>
 <li>Constructor: <code>list</code></li>
 <li>head: <code>car</code></li>
@@ -300,12 +280,10 @@ that point.</p>
 </code></pre>
 <p><code>car</code> and <code>cdr</code> for elisp is similar:</p>
 <ul>
-<li><a
-href="https://www.gnu.org/software/emacs/manual/html_node/eintr/car-_0026-cdr.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/car-_0026-cdr.html</a></li>
+<li><a href="https://www.gnu.org/software/emacs/manual/html_node/eintr/car-_0026-cdr.html">https://www.gnu.org/software/emacs/manual/html_node/eintr/car-_0026-cdr.html</a></li>
 </ul>
 <h2 id="pairs">Pairs</h2>
-<p>See <a
-href="https://docs.racket-lang.org/reference/pairs.html">https://docs.racket-lang.org/reference/pairs.html</a>.</p>
+<p>See <a href="https://docs.racket-lang.org/reference/pairs.html">https://docs.racket-lang.org/reference/pairs.html</a>.</p>
 <ul>
 <li><p>Tuples.</p></li>
 <li><p>Immutable</p></li>
@@ -328,17 +306,13 @@ href="https://docs.racket-lang.org/reference/pairs.html">https://docs.racket-lan
 &gt; (cdr &#39;(1 . 2))
 2
 </code></pre>
-<p>Etymology of <code>car</code> and <code>cdr</code> (for pairs and
-lists) in the lisp world is historical.</p>
+<p>Etymology of <code>car</code> and <code>cdr</code> (for pairs and lists) in the lisp world is historical.</p>
 <ul>
-<li><a
-href="https://en.wikipedia.org/wiki/CAR_and_CDR">https://en.wikipedia.org/wiki/CAR_and_CDR</a></li>
-<li><a
-href="https://www.math.utah.edu/docs/info/emacs-lisp-intro_8.html">https://www.math.utah.edu/docs/info/emacs-lisp-intro_8.html</a></li>
+<li><a href="https://en.wikipedia.org/wiki/CAR_and_CDR">https://en.wikipedia.org/wiki/CAR_and_CDR</a></li>
+<li><a href="https://www.math.utah.edu/docs/info/emacs-lisp-intro_8.html">https://www.math.utah.edu/docs/info/emacs-lisp-intro_8.html</a></li>
 </ul>
 <h2 id="loops">Loops</h2>
-<p>See <a
-href="https://docs.racket-lang.org/guide/for.html">https://docs.racket-lang.org/guide/for.html</a></p>
+<p>See <a href="https://docs.racket-lang.org/guide/for.html">https://docs.racket-lang.org/guide/for.html</a></p>
 <pre class="racket"><code>(for ([i 3])
   (display i))
 
@@ -358,8 +332,7 @@ href="https://docs.racket-lang.org/guide/for.html">https://docs.racket-lang.org/
 <li>Emacs mode: <a href="https://racket-mode.com/">racket-mode</a>
 <ul>
 <li>C-c C-c: Load buffer</li>
-<li><a href="https://wikemacs.org/wiki/Paredit-mode">paredit mode</a>
-could be useful.</li>
+<li><a href="https://wikemacs.org/wiki/Paredit-mode">paredit mode</a> could be useful.</li>
 <li>Or even better: <code>racket-xp-mode</code></li>
 </ul></li>
 </ul>

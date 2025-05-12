@@ -36,78 +36,62 @@
 </header>
 
 <ul>
-    </ul>
+    <li>Date created: 10-Jun-2017</li>
+      <li>Last updated: 25-Jun-2021</li>
+  </ul>
 
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/c.html">c</a>
+    </code> /
+  <p>
+</div>
 
 
 <div id="description">
-About the <u><u>func</u></u> constant specified by the C standard.
+About the __func__ constant specified by the C standard.
 </div>
 
 <hr/>
 
 <div id="content-container">
-<p><sub><sup><a href="../misc/old-blog.html">From my old
-blog</a>.</sup></sub></p>
+<p><sub><sup><a href="../misc/old-blog.html">From my old blog</a>.</sup></sub></p>
 <hr />
-<p><code>__func__</code> is an implicitly declared ‘magic constant'
-which will ‘hold the name of the current function as a string'. <a
-href="https://gcc.gnu.org/onlinedocs/gcc-7.1.0/gcc/Function-Names.html#Function-Names">¹</a></p>
-<p>It is mentioned in C99 under <a
-href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf"><code>6.4.2.2 Predefined identifiers</code></a>
-(draft version):</p>
+<p><code>__func__</code> is an implicitly declared ‘magic constant' which will ‘hold the name of the current function as a string'. <a href="https://gcc.gnu.org/onlinedocs/gcc-7.1.0/gcc/Function-Names.html#Function-Names">¹</a></p>
+<p>It is mentioned in C99 under <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf"><code>6.4.2.2 Predefined identifiers</code></a> (draft version):</p>
 <blockquote>
-<p>The identifier <code>__func__</code> shall be implicitly declared by
-the translator as if, immediately following the opening brace of each
-function definition, the declaration</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">const</span> <span class="dt">char</span> __func__<span class="op">[]</span> <span class="op">=</span> <span class="st">&quot;function_name&quot;</span><span class="op">;</span></span></code></pre></div>
-<p>appeared, where <code>function_name</code> is the name of the
-lexically-enclosing function.</p>
+<p>The identifier <code>__func__</code> shall be implicitly declared by the translator as if, immediately following the opening brace of each function definition, the declaration</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="dt">static</span> <span class="dt">const</span> <span class="dt">char</span> __func__[] = <span class="st">&quot;function_name&quot;</span>;</span></code></pre></div>
+<p>appeared, where <code>function_name</code> is the name of the lexically-enclosing function.</p>
 </blockquote>
-<p><code>__func__</code> will have the unadorned name of the function.
-No return type, argument types or arguments themselves.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">Name of function: </span><span class="sc">%s</span><span class="st">&quot;</span><span class="op">,</span> __func__<span class="op">);</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p><code>__func__</code> will have the unadorned name of the function. No return type, argument types or arguments themselves.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="dt">int</span> main()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>{</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Name of function: %s&quot;</span>, __func__);</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>}</span></code></pre></div>
 <p>The above program will print:</p>
 <pre><code>Name of function: main
 </code></pre>
-<p><code>__func__</code> is not a macro as the function names will be
-known only after parsing. Hence <code>__func__</code> does not catenate
-with strings. Meaning things like</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> here<span class="op">[]</span> <span class="op">=</span> <span class="st">&quot;Function &quot;</span> __func__ <span class="st">&quot; is used&quot;</span><span class="op">;</span></span></code></pre></div>
+<p><code>__func__</code> is not a macro as the function names will be known only after parsing. Hence <code>__func__</code> does not catenate with strings. Meaning things like</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="dt">char</span> here[] = <span class="st">&quot;Function &quot;</span> __func__ <span class="st">&quot; is used&quot;</span>;</span></code></pre></div>
 <p>will give an error.</p>
-<p>As mentioned in <a
-href="https://stackoverflow.com/a/31430997/5375464">this stackoverflow
-post</a>:</p>
+<p>As mentioned in <a href="https://stackoverflow.com/a/31430997/5375464">this stackoverflow post</a>:</p>
 <blockquote>
-<p>Expanding <code>__func__</code> at preprocessing time requires the
-preprocessor to know which function it's processing. The preprocessor
-generally doesn't know that, because parsing happens after the
-preprocessing</p>
+<p>Expanding <code>__func__</code> at preprocessing time requires the preprocessor to know which function it's processing. The preprocessor generally doesn't know that, because parsing happens after the preprocessing</p>
 </blockquote>
-<p>GCC has another constant <code>__FUNCTION__</code> which is basically
-like an alias of <code>__func__</code>.</p>
+<p>GCC has another constant <code>__FUNCTION__</code> which is basically like an alias of <code>__func__</code>.</p>
 <blockquote>
-<p>Provided for backward compatibility with old version of GCC. <a
-href="https://gcc.gnu.org/onlinedocs/gcc-7.1.0/gcc/Function-Names.html#Function-Names">¹</a></p>
+<p>Provided for backward compatibility with old version of GCC. <a href="https://gcc.gnu.org/onlinedocs/gcc-7.1.0/gcc/Function-Names.html#Function-Names">¹</a></p>
 </blockquote>
-<p><em>Fun fact</em>: GCC provides yet another 'magic constant'
-<code>__PRETTY_FUNCTION__</code> as an extension which is similar to
-<code>__func__</code> for C programs but gives the function signature as
-well in C++.</p>
+<p><em>Fun fact</em>: GCC provides yet another 'magic constant' <code>__PRETTY_FUNCTION__</code> as an extension which is similar to <code>__func__</code> for C programs but gives the function signature as well in C++.</p>
 <h3 id="references">References</h3>
 <ul>
-<li><a
-href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf"><a
-href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf">http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf</a></a></li>
-<li><a
-href="https://gcc.gnu.org/onlinedocs/gcc-7.1.0/gcc/Function-Names.html#Function-Names"><a
-href="https://gcc.gnu.org/onlinedocs/gcc-7.1.0/gcc/Function-Names.html#Function-Names">https://gcc.gnu.org/onlinedocs/gcc-7.1.0/gcc/Function-Names.html#Function-Names</a></a></li>
-<li><a href="https://stackoverflow.com/a/31430997/5375464"><a
-href="https://stackoverflow.com/a/31430997/5375464">https://stackoverflow.com/a/31430997/5375464</a></a></li>
+<li><a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf"><a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf">http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf</a></a></li>
+<li><a href="https://gcc.gnu.org/onlinedocs/gcc-7.1.0/gcc/Function-Names.html#Function-Names"><a href="https://gcc.gnu.org/onlinedocs/gcc-7.1.0/gcc/Function-Names.html#Function-Names">https://gcc.gnu.org/onlinedocs/gcc-7.1.0/gcc/Function-Names.html#Function-Names</a></a></li>
+<li><a href="https://stackoverflow.com/a/31430997/5375464"><a href="https://stackoverflow.com/a/31430997/5375464">https://stackoverflow.com/a/31430997/5375464</a></a></li>
 </ul>
 </div>
 </body>

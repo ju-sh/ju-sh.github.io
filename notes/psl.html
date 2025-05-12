@@ -51,9 +51,7 @@
 </ul>
 <h2 id="properties-fl">Properties (FL)</h2>
 <blockquote>
-<p>FL Properties describe single or multi-cycle behavior built from
-Boolean expressions, sequential expressions, and subordinate
-properties.</p>
+<p>FL Properties describe single or multi-cycle behavior built from Boolean expressions, sequential expressions, and subordinate properties.</p>
 </blockquote>
 <h1 id="ops">Ops</h1>
 <p>p: property, s:sequence, b:boolean</p>
@@ -83,8 +81,7 @@ properties.</p>
 <ul>
 <li>never: s -&gt; p ??</li>
 </ul>
-<p>No need of separate strong operators for <code>next</code> ops as
-there is always a next event in streams. Data never runs out.</p>
+<p>No need of separate strong operators for <code>next</code> ops as there is always a next event in streams. Data never runs out.</p>
 <h1 id="old">Old</h1>
 <h2 id="fusion">Fusion (<code>:</code>)</h2>
 <pre><code>a:b
@@ -141,8 +138,7 @@ clk ----+   +---+   +---+   +---+   +---+   +---+   +--
                     |      |        |                  
  b  ----------------+      +--------+                  
 </code></pre>
-<h2 id="consecutive-repetition">Consecutive repetition
-(<code>[*]</code>)</h2>
+<h2 id="consecutive-repetition">Consecutive repetition (<code>[*]</code>)</h2>
 <p>Many flavours:</p>
 <pre><code>| A[*n]             | A exactly n times                   |
 | A[*n:m]           | A n to m times                      |
@@ -151,8 +147,7 @@ clk ----+   +---+   +---+   +---+   +---+   +---+   +--
 | A[*0:inf] or A[*] | A any number (including 0) of times |
 | A[+]              | A at least once                     |
 </code></pre>
-<h2 id="non-consecutive-repetition">Non-consecutive repetition
-(<code>[=]</code>)</h2>
+<h2 id="non-consecutive-repetition">Non-consecutive repetition (<code>[=]</code>)</h2>
 <p>Many flavours:</p>
 <ul>
 <li>A[=n]: A exactly n times anywhere in path</li>
@@ -161,8 +156,7 @@ clk ----+   +---+   +---+   +---+   +---+   +---+   +--
 <p>The boolean expression should hold in the last cycle.</p>
 <h2 id="references">References</h2>
 <ul>
-<li>IEEE Standard for Property Specification Language (PSL) - IEEE Std
-1850-2010</li>
+<li>IEEE Standard for Property Specification Language (PSL) - IEEE Std 1850-2010</li>
 </ul>
 </div>
 </body>

@@ -42,6 +42,102 @@
 
 <div id="content-container">
 <h1 id="pp-sam-staton">2019: PP: Sam Staton</h1>
+<h2 id="pre">Pre?</h2>
+<h3 id="bayesian-statistics">Bayesian statistics</h3>
+<p>From <a href="https://www.nature.com/articles/s43586-020-00001-2">here</a>:</p>
+<blockquote>
+<p>an approach to data analysis based on Bayes' theorem, where knowledge about parameters in a statistical model is updated with the information in observed data.</p>
+</blockquote>
+<ul>
+<li>From Thomas Bayes (1701-1761), an English statistician.</li>
+<li>Based on the 'Bayesian interpretation of probability' <a href="https://en.wikipedia.org/wiki/Bayesian_statistics">ʷ</a>
+<ul>
+<li>ie, probability indicates the 'degree of belief in an event' <a href="https://en.wikipedia.org/wiki/Bayesian_probability">ʷ</a></li>
+</ul></li>
+<li>Compute and update probabilities after encountering new data.</li>
+</ul>
+<ol>
+<li><p>Bayes law:</p>
+<p>P(A/B) is probability of A occuring provided B happens (conditional probability).</p>
+<pre><code>          P(A) 
+P(A/B) = ────── * P(B/A)
+      P(B)
+</code></pre>
+<hr />
+<pre><code>Posterior probability  ∝  Likelihood * Prior
+</code></pre>
+<ul>
+<li>Prior: Prior information.
+<ul>
+<li>Background knowledge.</li>
+<li>A distribution</li>
+</ul></li>
+<li>Likelihood: Observed data
+<ul>
+<li>A function</li>
+</ul></li>
+<li>Posterior probability
+<ul>
+<li>Updated probability distribution based on prior and likelihood ??</li>
+</ul></li>
+</ul>
+<p>Posterior can be used to make predictions.</p>
+<p>—</p>
+<pre><code>               P(d/x) * P(x)
+P(x/d) = -----------------------
+          a normalizing constant
+
+
+
+               P(d/x) * P(x)
+       = -----------------------
+          a normalizing constant
+</code></pre>
+<p>(<code>P(x/d)</code> is <code>P(x)</code> given data <code>d</code>)</p>
+<p>What could the normalizing constant be?</p>
+<p>It's a big sum (TODO: But why and how ??). ie, intergral.</p>
+<pre><code>⌠
+│ P(d/y) * P(y) * dy
+⌡
+</code></pre></li>
+</ol>
+<h3 id="probabilistic-programming-pp">Probabilistic programming (PP)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>PP</th>
+<th>Bayesian</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sampling</td>
+<td>Prior</td>
+</tr>
+<tr class="even">
+<td>Observation / scoring</td>
+<td>Likelihood</td>
+</tr>
+<tr class="odd">
+<td>normalize / simulate</td>
+<td>Posterior probability</td>
+</tr>
+</tbody>
+</table>
+<p>An example PP program:</p>
+<h3 id="misc">Misc</h3>
+<ol>
+<li><p>Poission distribution</p>
+<ul>
+<li>A discrete probability distribution</li>
+<li>Probability of an event happening n number of times within a given interval of time or space
+<ul>
+<li>TODO: What could interval of space mean here??</li>
+</ul></li>
+<li>Has only one parameter: mean number of events <a href="https://www.scribbr.com/statistics/poisson-distribution/">ʳ</a></li>
+<li>Can be obtained as an approximation of a binomial distribution when the number of trials n is large, success probability p is small and np is finite <a href="https://www.sciencedirect.com/topics/mathematics/poisson-distribution">ʳ</a></li>
+</ul></li>
+</ol>
 <h2 id="lecture-1">Lecture 1</h2>
 <h3 id="bus-weekend-example">Bus weekend example</h3>
 <p>On an average:</p>
@@ -62,13 +158,11 @@
 <ul>
 <li>Hakaru: Indiana
 <ul>
-<li><a
-href="https://github.com/hakaru-dev/hakaru">https://github.com/hakaru-dev/hakaru</a></li>
+<li><a href="https://github.com/hakaru-dev/hakaru">https://github.com/hakaru-dev/hakaru</a></li>
 </ul></li>
 <li>PSI: ETH Zürich
 <ul>
-<li><a
-href="https://github.com/eth-sri/psi">https://github.com/eth-sri/psi</a></li>
+<li><a href="https://github.com/eth-sri/psi">https://github.com/eth-sri/psi</a></li>
 </ul></li>
 </ul>
 <p>—</p>
@@ -83,22 +177,17 @@ href="https://github.com/eth-sri/psi">https://github.com/eth-sri/psi</a></li>
 <li>Definitional interpretor
 <ul>
 <li>By John Reynolds</li>
-<li>Describing a programming language by defining an interpreter for
-it</li>
+<li>Describing a programming language by defining an interpreter for it</li>
 <li>Focus is on meaning, not efficiency</li>
-<li>Dana Scott and Christopher Strachey proposed <em>denotational
-semantics</em>
+<li>Dana Scott and Christopher Strachey proposed <em>denotational semantics</em>
 <ul>
-<li><a
-href="https://homepage.divms.uiowa.edu/~slonnegr/plf/Book/Chapter9.pdf">https://homepage.divms.uiowa.edu/~slonnegr/plf/Book/Chapter9.pdf</a></li>
+<li><a href="https://homepage.divms.uiowa.edu/~slonnegr/plf/Book/Chapter9.pdf">https://homepage.divms.uiowa.edu/~slonnegr/plf/Book/Chapter9.pdf</a></li>
 </ul></li>
 </ul></li>
 <li>TODO: What's the difference from definitional interpreter?
 <ul>
-<li>Denotational semantics: Describes what a program does by associating
-it with a mathematical object</li>
-<li>Definitional interpretor: Describes what a program does by giving an
-interpretor giving that mathematical object ??</li>
+<li>Denotational semantics: Describes what a program does by associating it with a mathematical object</li>
+<li>Definitional interpretor: Describes what a program does by giving an interpretor giving that mathematical object ??</li>
 </ul></li>
 </ul>
 <h3 id="simulation">Simulation</h3>
@@ -118,10 +207,8 @@ interpretor giving that mathematical object ??</li>
 <li>Run the program numerous (a big number) times</li>
 <li>Make random choice on each run</li>
 </ul>
-<p>Note: Likelihood and probability are not the same. The subtle
-difference is more clearly in the case of continuous.</p>
-<p>TODO: How does one decide which probability distribution would be
-best suited to a scenario?</p>
+<p>Note: Likelihood and probability are not the same. The subtle difference is more clearly in the case of continuous.</p>
+<p>TODO: How does one decide which probability distribution would be best suited to a scenario?</p>
 <h3 id="uncertainity">Uncertainity</h3>
 <p>Incorporating uncertainity about facts into the model.</p>
 <ul>
@@ -133,20 +220,17 @@ best suited to a scenario?</p>
 <li>Changing observation</li>
 </ul>
 <h3 id="regression">Regression</h3>
-<p>Tries to answer this question: 'What function could have generated
-these data points?'</p>
+<p>Tries to answer this question: 'What function could have generated these data points?'</p>
 <ul>
 <li>Linear regression =&gt; this function is a straight line.</li>
-<li>'Traditional statistics'=&gt; find the line that fits best. Least
-squares method.</li>
+<li>'Traditional statistics'=&gt; find the line that fits best. Least squares method.</li>
 <li>Bayesian statistics</li>
 <li>TODO: Cubic functions will have 4 parameters ?? Why?</li>
 </ul>
 <p>Metropolis-Hastings algorithm</p>
 <h2 id="lecture-2">Lecture 2</h2>
 <ul>
-<li>An attraction of probabilistic programming: Model is separate from
-the inference algorithm</li>
+<li>An attraction of probabilistic programming: Model is separate from the inference algorithm</li>
 </ul>
 </div>
 </body>

@@ -44,9 +44,9 @@
 <hr/>
 
 <div id="content-container">
+<p>#+LINK c1 <a href="https://www.smlnj.org/doc/CM/index.html">https://www.smlnj.org/doc/CM/index.html</a></p>
 <p>Based on some informal notes by Robert Harper.</p>
-<p><a href="https://www.cse.iitd.ac.in/~suban/COL100/smltutorial.pdf"><a
-href="https://www.cse.iitd.ac.in/~suban/COL100/smltutorial.pdf">https://www.cse.iitd.ac.in/~suban/COL100/smltutorial.pdf</a></a></p>
+<p><a href="https://www.cse.iitd.ac.in/~suban/COL100/smltutorial.pdf"><a href="https://www.cse.iitd.ac.in/~suban/COL100/smltutorial.pdf">https://www.cse.iitd.ac.in/~suban/COL100/smltutorial.pdf</a></a></p>
 <hr />
 <h2 id="ml">ML</h2>
 <p>Meta-Language</p>
@@ -56,14 +56,11 @@ href="https://www.cse.iitd.ac.in/~suban/COL100/smltutorial.pdf">https://www.cse.
 <li><em>strongly</em> typed</li>
 <li><em>polymorphic</em> type system</li>
 <li>supports <em>abstract types</em></li>
-<li>statically scoped: identifiers references are resolved at compile
-time itself</li>
+<li>statically scoped: identifiers references are resolved at compile time itself</li>
 <li>Has a type-safe exception mechanism</li>
-<li>Programs can be broken down into modules for incremental
-construction.
+<li>Programs can be broken down into modules for incremental construction.
 <ul>
-<li>An ML program = interdependent collection of <em>structures</em>
-held together by <em>functors</em>.</li>
+<li>An ML program = interdependent collection of <em>structures</em> held together by <em>functors</em>.</li>
 <li>Separate compilation possible by export or import of functors.</li>
 </ul></li>
 </ul>
@@ -83,141 +80,103 @@ held together by <em>functors</em>.</li>
 <p>Instances are built from <em>value constructors</em>.</p>
 <ul>
 <li>Tuple: like <code>(true, ()) : bool * unit</code></li>
-<li>List: <code>[1,2]</code> which is same as
-<code>1 :: 2 :: 3</code></li>
-<li>Record: like
-<code>{name="Jack Doe", age=34} : {age:int, name:string}</code></li>
+<li>List: <code>[1,2]</code> which is same as <code>1 :: 2 :: 3</code></li>
+<li>Record: like <code>{name="Jack Doe", age=34} : {age:int, name:string}</code></li>
 </ul>
-<h4 id="short-hand-notation-for-records-and-tuples">Short-hand notation
-for records (and tuples)</h4>
-<p>Since accessing a specific element out of a record is an often used
-operation, we have a notation to do that.</p>
-<p>The syntax is like ::
-<code>val &lt;ident&gt; = #&lt;field&gt; &lt;record&gt;</code>,
-where</p>
+<h4 id="short-hand-notation-for-records-and-tuples">Short-hand notation for records (and tuples)</h4>
+<p>Since accessing a specific element out of a record is an often used operation, we have a notation to do that.</p>
+<p>The syntax is like :: <code>val &lt;ident&gt; = #&lt;field&gt; &lt;record&gt;</code>, where</p>
 <ul>
-<li><code class="verbatim">&lt;field&gt;</code> is the field being
-accessed</li>
-<li><code class="verbatim">&lt;record&gt;</code> is the record (or
-tuple)</li>
-<li><code class="verbatim">&lt;ident&gt;</code> identifier for the
-variable being set</li>
+<li><code>&lt;field&gt;</code> is the field being accessed</li>
+<li><code>&lt;record&gt;</code> is the record (or tuple)</li>
+<li><code>&lt;ident&gt;</code> identifier for the variable being set</li>
 </ul>
-<p>This is essentially same as ::
-<code>val {&lt;field&gt;=&lt;ident&gt;, ...} = &lt;record&gt;</code>.</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> r = {name=<span class="st">&quot;Jack&quot;</span>, age=<span class="dv">34</span>}</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> fname = #name r</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">fname = &quot;Jack&quot; : string</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">Recall that the following yielded the same result:</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">val r = {name=&quot;Jack&quot;, age=34}</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">val {name=fname, age=num} = r</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span></code></pre></div>
-<p>And since tuples are just a special kind of records, this notation
-can be used to 'index' the elements of a tuple.</p>
-<p>In this case, the 'indexing' starts from (<code>1</code> and not
-<code>0</code>).</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> t = (<span class="st">&quot;one&quot;</span>, <span class="dv">2</span>, <span class="kw">true</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> first = #<span class="dv">1</span> t</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> second = #<span class="dv">2</span> t</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> third = #<span class="dv">3</span> t</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">val first = &quot;one&quot; : string</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">val second = 2 : int</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">val third = true : bool</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span></code></pre></div>
-<p>Trying to access out of bounds of the record/tuple would give error
-though.</p>
+<p>This is essentially same as :: <code>val {&lt;field&gt;=&lt;ident&gt;, ...} = &lt;record&gt;</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">val</span> r = {name=<span class="st">&quot;Jack&quot;</span>, age=<span class="dv">34</span>}</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">val</span> fname = #name r</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="co">fname = &quot;Jack&quot; : string</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="co">*)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="co">Recall that the following yielded the same result:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="co">val r = {name=&quot;Jack&quot;, age=34}</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="co">val {name=fname, age=num} = r</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="co">*)</span></span></code></pre></div>
+<p>And since tuples are just a special kind of records, this notation can be used to 'index' the elements of a tuple.</p>
+<p>In this case, the 'indexing' starts from (<code>1</code> and not <code>0</code>).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">val</span> t = (<span class="st">&quot;one&quot;</span>, <span class="dv">2</span>, <span class="kw">true</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">val</span> first = #<span class="dv">1</span> t</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="kw">val</span> second = #<span class="dv">2</span> t</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="kw">val</span> third = #<span class="dv">3</span> t</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="co">val first = &quot;one&quot; : string</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="co">val second = 2 : int</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="co">val third = true : bool</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="co">*)</span></span></code></pre></div>
+<p>Trying to access out of bounds of the record/tuple would give error though.</p>
 <h4 id="equality">Equality</h4>
 <ul>
-<li>Any type that an equality test on its values is said to <em>admit
-equality</em>.</li>
+<li>Any type that an equality test on its values is said to <em>admit equality</em>.</li>
 <li>Every atomic type admit equality.</li>
 <li>Function types don't admit equality.</li>
-<li>For compound types, a type <code>α -&gt; τ</code> admits equality
-iff both <code>α</code> and <code>τ</code> admits equality</li>
+<li>For compound types, a type <code>α -&gt; τ</code> admits equality iff both <code>α</code> and <code>τ</code> admits equality</li>
 </ul>
 <h3 id="variables">Variables</h3>
 <p><em>Value identifiers</em>: Another name for variables in sml.</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">(* Value binding *)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> pi = <span class="fl">3.14</span>  <span class="co">(* 3.14 : real *)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="co">(* Value binding *)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="kw">val</span> pi = <span class="fl">3.14</span>  <span class="co">(* 3.14 : real *)</span></span></code></pre></div>
 <p>Variables in sml are not mere assignments.</p>
-<p>Once an identifier is bound to a value, the value cannot be changed.
-Though the identifier may be rebound to another value.</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> x = <span class="dv">1</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> y = x</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> x = <span class="dv">2</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">(* Even if value of [x] changed, [y] is still [1] *)</span></span></code></pre></div>
-<h4 id="binding-multiple-variables-at-once">Binding multiple variables
-at once</h4>
+<p>Once an identifier is bound to a value, the value cannot be changed. Though the identifier may be rebound to another value.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">val</span> x = <span class="dv">1</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="kw">val</span> y = x</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="kw">val</span> x = <span class="dv">2</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="co">(* Even if value of [x] changed, [y] is still [1] *)</span></span></code></pre></div>
+<h4 id="binding-multiple-variables-at-once">Binding multiple variables at once</h4>
 <p>Separate with an <code>and</code>.</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> x = <span class="dv">10</span> <span class="kw">and</span> y = <span class="dv">20</span> <span class="kw">and</span> z = <span class="dv">30</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">val</span> x = <span class="dv">10</span> <span class="kw">and</span> y = <span class="dv">20</span> <span class="kw">and</span> z = <span class="dv">30</span>;</span></code></pre></div>
 <p>Notice this, though:</p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> x = <span class="dv">1</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> x = <span class="kw">true</span> <span class="kw">and</span> y = x</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">(* Value of [y] is [1]! Not [true].</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">   Because that&#39;s the context at the time.</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">   [x] was not yet changed when y is defined as they are in the same line.</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span></code></pre></div>
-<p>Because the bindings made with the <code>and</code> are evaluated
-parallelly. The RHS of all expressions (like <code>true</code> and
-<code>x</code> in the above example) are evaluated first and then the
-resultant values are bound to the variables at once.</p>
-<p>An <em>environment</em> is maintained which keeps track of the
-meaning of all the identifiers.</p>
-<h4 id="sequential-composition-of-variables">Sequential composition of
-variables</h4>
-<p>Semicolons can be used to create variables one by one (sequentially,
-instead of doing the same parallelly with <code>and</code>).</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> x = <span class="dv">3</span>; <span class="kw">val</span> x = <span class="kw">true</span> <span class="kw">and</span> z = <span class="dv">5</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">val x = 3 : int</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">val x = true : bool</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">val z = 5 : int</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">val</span> x = <span class="dv">1</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="kw">val</span> x = <span class="kw">true</span> <span class="kw">and</span> y = x</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="co">(* Value of [y] is [1]! Not [true].</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="co">   Because that&#39;s the context at the time.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="co">   [x] was not yet changed when y is defined as they are in the same line.</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="co">*)</span></span></code></pre></div>
+<p>Because the bindings made with the <code>and</code> are evaluated parallelly. The RHS of all expressions (like <code>true</code> and <code>x</code> in the above example) are evaluated first and then the resultant values are bound to the variables at once.</p>
+<p>An <em>environment</em> is maintained which keeps track of the meaning of all the identifiers.</p>
+<h4 id="sequential-composition-of-variables">Sequential composition of variables</h4>
+<p>Semicolons can be used to create variables one by one (sequentially, instead of doing the same parallelly with <code>and</code>).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="kw">val</span> x = <span class="dv">3</span>; <span class="kw">val</span> x = <span class="kw">true</span> <span class="kw">and</span> z = <span class="dv">5</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="co">val x = 3 : int</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="co">val x = true : bool</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="co">val z = 5 : int</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="co">*)</span></span></code></pre></div>
 <h4 id="local-variable-declarations">Local variable declarations</h4>
 <p>Useful to assist in the creation of other variables.</p>
 <p>Like:</p>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> x = <span class="dv">2</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">in</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> y = x div x</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> z = x*y + <span class="dv">3</span>*x</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">val y = 1 : int</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">val z = 8 : int</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span></code></pre></div>
-<p>Here, <code>x</code> is available only during the time of binding of
-value to the variables <code>y</code> and <code>z</code>. ie,
-<code>x</code> is local to the binding of <code>y</code> and
-<code>z</code>.</p>
-<p>Similarly, we can use <code>let</code> to make a variable that will
-be kept local to an expression.</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> x = <span class="dv">10</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">in</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  x*x + <span class="dv">2</span>*x + <span class="dv">1</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">121 : int</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span></code></pre></div>
-<p>The part between the <code>in</code> and <code>end</code> is
-evaluated by the environment augmented by the declarations occurring
-between <code>let</code> and <code>in</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">local</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>  <span class="kw">val</span> x = <span class="dv">2</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="kw">in</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>  <span class="kw">val</span> y = x div x</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>  <span class="kw">val</span> z = x*y + <span class="dv">3</span>*x</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="kw">end</span>;</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a><span class="co">val y = 1 : int</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a><span class="co">val z = 8 : int</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a><span class="co">*)</span></span></code></pre></div>
+<p>Here, <code>x</code> is available only during the time of binding of value to the variables <code>y</code> and <code>z</code>. ie, <code>x</code> is local to the binding of <code>y</code> and <code>z</code>.</p>
+<p>Similarly, we can use <code>let</code> to make a variable that will be kept local to an expression.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="kw">let</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>  <span class="kw">val</span> x = <span class="dv">10</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="kw">in</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>  x*x + <span class="dv">2</span>*x + <span class="dv">1</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="kw">end</span>;</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a><span class="co">121 : int</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="co">*)</span></span></code></pre></div>
+<p>The part between the <code>in</code> and <code>end</code> is evaluated by the environment augmented by the declarations occurring between <code>let</code> and <code>in</code>.</p>
 <h3 id="operators">Operators</h3>
 <h4 id="some-operators">Some operators</h4>
 <table>
@@ -404,92 +363,82 @@ between <code>let</code> and <code>in</code>.</p>
 <h3 id="pattern-matching">Pattern matching</h3>
 <dl>
 <dt>Patterns</dt>
-<dd>
-Made up from variables and constants using value constructors.
+<dd>Made up from variables and constants using value constructors.
 </dd>
 <dt>Wildcard pattern</dt>
-<dd>
-<p><code>_</code> used to match something that may then be ignored.</p>
+<dd><p><code>_</code> used to match something that may then be ignored.</p>
 <ul>
 <li>No binding is created.</li>
 <li>A don't care.</li>
 </ul>
 </dd>
 </dl>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> x = (<span class="dv">12</span>, <span class="kw">true</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">(12, true) : int * bool</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> (left, right) = x   <span class="co">(* Pattern! *)</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">left = 12 : int</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">right = true : bool</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">(* ** Wildcard pattern *)</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> hd::_ = [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>];</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">(* hd = 1 : int *)</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">(* ** Pattern matching on records *)</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> r = {name=<span class="st">&quot;Jack&quot;</span>, age=<span class="dv">34</span>}</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> {name=fname, age=num} = r</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co">(* ** Patten matching partially on a record *)</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> r = {name=<span class="st">&quot;Jack&quot;</span>, age=<span class="dv">34</span>}</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> {name=fname, ...} = r   <span class="co">(* Use only [name] *)</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co">fname = &quot;Jack&quot; : string</span></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="kw">val</span> x = (<span class="dv">12</span>, <span class="kw">true</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="co">(12, true) : int * bool</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="co">*)</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a><span class="kw">val</span> (left, right) = x   <span class="co">(* Pattern! *)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a><span class="co">left = 12 : int</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a><span class="co">right = true : bool</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a><span class="co">*)</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a><span class="co">(* ** Wildcard pattern *)</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a><span class="kw">val</span> hd::_ = [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>];</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a><span class="co">(* hd = 1 : int *)</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true"></a><span class="co">(* ** Pattern matching on records *)</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true"></a><span class="kw">val</span> r = {name=<span class="st">&quot;Jack&quot;</span>, age=<span class="dv">34</span>}</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true"></a><span class="kw">val</span> {name=fname, age=num} = r</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true"></a><span class="co">*)</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true"></a><span class="co">(* ** Patten matching partially on a record *)</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true"></a><span class="kw">val</span> r = {name=<span class="st">&quot;Jack&quot;</span>, age=<span class="dv">34</span>}</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true"></a><span class="kw">val</span> {name=fname, ...} = r   <span class="co">(* Use only [name] *)</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true"></a><span class="co">fname = &quot;Jack&quot; : string</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true"></a><span class="co">*)</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true"></a></span></code></pre></div>
 <h4 id="layered-pattern-matching">Layered pattern matching</h4>
 <p>Useful for building complex patterns.</p>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> x = ((<span class="st">&quot;left&quot;</span>, <span class="st">&quot;mid&quot;</span>), <span class="st">&quot;right&quot;</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> (l <span class="kw">as</span> (left, mid), right) = x</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">l = (&quot;left&quot;,&quot;mid&quot;) : string * string    (* two birds with one stone! *)</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>left = <span class="st">&quot;left&quot;</span> : <span class="dt">string</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>mid = <span class="st">&quot;mid&quot;</span> : <span class="dt">string</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>right = <span class="st">&quot;right&quot;</span> : <span class="dt">string</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>*)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="kw">val</span> x = ((<span class="st">&quot;left&quot;</span>, <span class="st">&quot;mid&quot;</span>), <span class="st">&quot;right&quot;</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="kw">val</span> (l <span class="kw">as</span> (left, mid), right) = x</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a><span class="co">l = (&quot;left&quot;,&quot;mid&quot;) : string * string    (* two birds with one stone! *)</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a>left = <span class="st">&quot;left&quot;</span> : <span class="dt">string</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a>mid = <span class="st">&quot;mid&quot;</span> : <span class="dt">string</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a>right = <span class="st">&quot;right&quot;</span> : <span class="dt">string</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a>*)</span></code></pre></div>
 <h3 id="functions">Functions</h3>
 <ul>
 <li><p>Multiple arguments are passed using tuples.</p></li>
 <li><p>Functions are also values.</p></li>
 <li><p>Can't do pattern matching on functions.</p></li>
-<li><p>We can't check equality of two functions (Is an undecidable
-problem).</p></li>
-<li><p>Clausal function definitions :: Function definition with a clause
-for every constructor of argument.</p></li>
-<li><p>Higher-order functions :: Functions that take other functions as
-arguments.</p></li>
+<li><p>We can't check equality of two functions (Is an undecidable problem).</p></li>
+<li><p>Clausal function definitions :: Function definition with a clause for every constructor of argument.</p></li>
+<li><p>Higher-order functions :: Functions that take other functions as arguments.</p></li>
 </ul>
 <h4 id="polymorphic-functions">Polymorphic functions</h4>
 <p>Type of function can be dependent on the arguments.</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> append ([], y) = y</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  | append (x::xs, y) = x :: append (xs, y)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">(* append = fn : &#39;a list -&gt; &#39;a list -&gt; &#39;a list *)</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>append ([<span class="dv">1</span>,<span class="dv">2</span>], [<span class="dv">3</span>,<span class="dv">4</span>])</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">(* [1,2,3,4] : int list *)</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>append ([<span class="fl">1.1</span>,<span class="fl">2.2</span>], [<span class="fl">3.3</span>,<span class="fl">4.4</span>]);</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">(* [1.1,2.2,3.3,4.4] : real list *)</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a> append ([<span class="st">&quot;We&#39;re&quot;</span>, <span class="st">&quot;having&quot;</span>], [<span class="st">&quot;some&quot;</span>, <span class="st">&quot;good&quot;</span>, <span class="st">&quot;weather&quot;</span>]);</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">(* [&quot;We&#39;re&quot;,&quot; having&quot;,&quot;some&quot;,&quot;good&quot;,&quot;weather&quot;] : string list *)</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>append ([<span class="kw">true</span>, <span class="kw">false</span>], [<span class="kw">false</span>, <span class="kw">true</span>]);</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">(* [true,false,false,true] : bool list *)</span></span></code></pre></div>
-<p>In the above example, the function <code>append</code> can operate on
-arguments of different types because it is polymorphic.</p>
-<p>Because the body of <code>append</code> makes no assumption that is
-specific to a particular with regard to its arguments.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="kw">fun</span> append ([], y) = y</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>  | append (x::xs, y) = x :: append (xs, y)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="co">(* append = fn : &#39;a list -&gt; &#39;a list -&gt; &#39;a list *)</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>append ([<span class="dv">1</span>,<span class="dv">2</span>], [<span class="dv">3</span>,<span class="dv">4</span>])</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a><span class="co">(* [1,2,3,4] : int list *)</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a>append ([<span class="fl">1.1</span>,<span class="fl">2.2</span>], [<span class="fl">3.3</span>,<span class="fl">4.4</span>]);</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a><span class="co">(* [1.1,2.2,3.3,4.4] : real list *)</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a> append ([<span class="st">&quot;We&#39;re&quot;</span>, <span class="st">&quot;having&quot;</span>], [<span class="st">&quot;some&quot;</span>, <span class="st">&quot;good&quot;</span>, <span class="st">&quot;weather&quot;</span>]);</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a><span class="co">(* [&quot;We&#39;re&quot;,&quot; having&quot;,&quot;some&quot;,&quot;good&quot;,&quot;weather&quot;] : string list *)</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true"></a>append ([<span class="kw">true</span>, <span class="kw">false</span>], [<span class="kw">false</span>, <span class="kw">true</span>]);</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true"></a><span class="co">(* [true,false,false,true] : bool list *)</span></span></code></pre></div>
+<p>In the above example, the function <code>append</code> can operate on arguments of different types because it is polymorphic.</p>
+<p>Because the body of <code>append</code> makes no assumption that is specific to a particular with regard to its arguments.</p>
 <h4 id="user-defined-functions">User-defined functions</h4>
 <ul>
 <li>The keyword <code>fun</code> is used to define functions.
@@ -498,80 +447,73 @@ specific to a particular with regard to its arguments.</p>
 </ul></li>
 </ul>
 <p>Some examples:</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> twice x = <span class="dv">2</span> * x      <span class="co">(* twice = fn : int -&gt; int *)</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>twice <span class="dv">10</span>                 <span class="co">(* 20 : int *)</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> fact x = <span class="kw">if</span> x &gt; <span class="dv">0</span> <span class="kw">then</span> x * (fact (x<span class="dv">-1</span>)) <span class="kw">else</span> <span class="dv">1</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                         <span class="co">(* fact = fn : int -&gt; int *)</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>fact <span class="dv">5</span>                   <span class="co">(* 120 : int *)</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> plus (x, y) = x + y  <span class="co">(* plus = fn : int -&gt; int -&gt; int *)</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>plus(<span class="dv">3</span>, <span class="dv">2</span>)               <span class="co">(* 5 : int *)</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">(* nil is same as [] *)</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> is_nil (nil) = <span class="kw">true</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  | is_nil (_ :: _) = <span class="kw">false</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">(* is_nil = fn : &#39;a list -&gt; bool *)</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>is_nil []                <span class="co">(* true *)</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>is_nil [<span class="dv">1</span>, <span class="dv">2</span>]            <span class="co">(* false *)</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> reverse (x::xs) = (reverse xs) :: [x]</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  | reverse [] = []</span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> is_perfect x = </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> is_factor (n, f) = <span class="kw">if</span> (n mod f = <span class="dv">0</span>) <span class="kw">then</span> <span class="kw">true</span> <span class="kw">else</span> <span class="kw">false</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">in</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>TODO: XXX</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="kw">fun</span> twice x = <span class="dv">2</span> * x      <span class="co">(* twice = fn : int -&gt; int *)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>twice <span class="dv">10</span>                 <span class="co">(* 20 : int *)</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a><span class="kw">fun</span> fact x = <span class="kw">if</span> x &gt; <span class="dv">0</span> <span class="kw">then</span> x * (fact (x<span class="dv">-1</span>)) <span class="kw">else</span> <span class="dv">1</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a>                         <span class="co">(* fact = fn : int -&gt; int *)</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a>fact <span class="dv">5</span>                   <span class="co">(* 120 : int *)</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true"></a><span class="kw">fun</span> plus (x, y) = x + y  <span class="co">(* plus = fn : int -&gt; int -&gt; int *)</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true"></a>plus(<span class="dv">3</span>, <span class="dv">2</span>)               <span class="co">(* 5 : int *)</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true"></a><span class="co">(* nil is same as [] *)</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true"></a><span class="kw">fun</span> is_nil (nil) = <span class="kw">true</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true"></a>  | is_nil (_ :: _) = <span class="kw">false</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true"></a><span class="co">(* is_nil = fn : &#39;a list -&gt; bool *)</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true"></a>is_nil []                <span class="co">(* true *)</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true"></a>is_nil [<span class="dv">1</span>, <span class="dv">2</span>]            <span class="co">(* false *)</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true"></a><span class="kw">fun</span> reverse (x::xs) = (reverse xs) :: [x]</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true"></a>  | reverse [] = []</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true"></a></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="kw">fun</span> is_perfect x = </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>  <span class="kw">let</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a>    <span class="kw">fun</span> is_factor (n, f) = <span class="kw">if</span> (n mod f = <span class="dv">0</span>) <span class="kw">then</span> <span class="kw">true</span> <span class="kw">else</span> <span class="kw">false</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a>  <span class="kw">in</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>TODO: XXX</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a></span></code></pre></div>
 <h5 id="type-constraint">Type constraint</h5>
 <p>Consider a function <code>fun plus (x, y) : int = x + y</code>.</p>
 <p>The <code>: int</code> part is a <em>type constraint</em>.</p>
-<p>Its purpose here is to say that only <code>int</code> addition is
-allowed and that <code>real</code> got to stay away.</p>
-<p>(Although this seems to be what is inferred by sml in the case of
-this example by default. Even when the type constraint was absent
-here.)</p>
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">(* Can handle only integers *)</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> plus (x, y) : <span class="dt">int</span> = x + y     <span class="co">(* Same as [plus (x, y) = x + y] *)</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">(* fn : int * int -&gt; int *)</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>plus (<span class="dv">3</span>, <span class="dv">4</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">(* 7 : int *)</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>plus (<span class="fl">3.1</span>, <span class="fl">4.2</span>)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">Error: operator and operand don&#39;t agree [tycon mismatch]</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">  operator domain: int * int</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">  operand:         real * real</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">  in expression:</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">    plus (3.1, 4.2)</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">(* Can handle only real numbers *)</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> plusReal (x, y) : <span class="dt">real</span> = x + y</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">(* fn : real * real -&gt; real *)</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>plusReal (<span class="fl">3.1</span>, <span class="fl">4.2</span>)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">(* 7.3 : real *)</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>plusReal (<span class="dv">3</span>, <span class="dv">4</span>)</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">Error: operator and operand don&#39;t agree [overload conflict]</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">  operator domain: real * real</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">  operand:         [int ty] * [int ty]</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">  in expression:</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">    plusReal (3,4)</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span></code></pre></div>
+<p>Its purpose here is to say that only <code>int</code> addition is allowed and that <code>real</code> got to stay away.</p>
+<p>(Although this seems to be what is inferred by sml in the case of this example by default. Even when the type constraint was absent here.)</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="co">(* Can handle only integers *)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a><span class="kw">fun</span> plus (x, y) : <span class="dt">int</span> = x + y     <span class="co">(* Same as [plus (x, y) = x + y] *)</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a><span class="co">(* fn : int * int -&gt; int *)</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true"></a>plus (<span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true"></a><span class="co">(* 7 : int *)</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true"></a>plus (<span class="fl">3.1</span>, <span class="fl">4.2</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true"></a><span class="co">Error: operator and operand don&#39;t agree [tycon mismatch]</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true"></a><span class="co">  operator domain: int * int</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true"></a><span class="co">  operand:         real * real</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true"></a><span class="co">  in expression:</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true"></a><span class="co">    plus (3.1, 4.2)</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true"></a><span class="co">*)</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="co">(* Can handle only real numbers *)</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a><span class="kw">fun</span> plusReal (x, y) : <span class="dt">real</span> = x + y</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a><span class="co">(* fn : real * real -&gt; real *)</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a>plusReal (<span class="fl">3.1</span>, <span class="fl">4.2</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a><span class="co">(* 7.3 : real *)</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a>plusReal (<span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true"></a><span class="co">Error: operator and operand don&#39;t agree [overload conflict]</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true"></a><span class="co">  operator domain: real * real</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true"></a><span class="co">  operand:         [int ty] * [int ty]</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true"></a><span class="co">  in expression:</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true"></a><span class="co">    plusReal (3,4)</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true"></a><span class="co">*)</span></span></code></pre></div>
 <h4 id="function-type">Function type</h4>
 <ul>
 <li>Is of type <code>α -&gt; τ</code>.</li>
@@ -582,49 +524,37 @@ class="sourceCode sml"><code class="sourceCode sml"><span id="cb16-1"><a href="#
 <ul>
 <li>Can be defined using the <code>fn</code> keyword.</li>
 </ul>
-<div class="sourceCode" id="cb17"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> x = <span class="kw">fn</span> x =&gt; x + <span class="dv">1</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">x = fn : int -&gt; int</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>x <span class="dv">5</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">6 : int</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="kw">val</span> x = <span class="kw">fn</span> x =&gt; x + <span class="dv">1</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a><span class="co">x = fn : int -&gt; int</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a><span class="co">*)</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a>x <span class="dv">5</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true"></a><span class="co">6 : int</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true"></a><span class="co">*)</span></span></code></pre></div>
 <h3 id="some-interesting-facts">Some interesting facts</h3>
 <ul>
 <li><code>unit</code> type consists of one value: <code>()</code>.
 <ul>
-<li>Used when an expression has no interesting value or when a function
-is not to have arguments.</li>
+<li>Used when an expression has no interesting value or when a function is not to have arguments.</li>
 </ul></li>
-<li><code>if</code> statement: <code>else</code> clause is mandatory and
-may not be omitted.
+<li><code>if</code> statement: <code>else</code> clause is mandatory and may not be omitted.
 <ul>
-<li>Both <code>e1</code> and <code>e2</code> in
-<code>if e then e1 else e2</code> must be of the same type.</li>
+<li>Both <code>e1</code> and <code>e2</code> in <code>if e then e1 else e2</code> must be of the same type.</li>
 </ul></li>
-<li><code>int</code>: Negative values are denoted using <code
-class="verbatim">~</code> instead of <code
-class="verbatim">-</code>.</li>
+<li><code>int</code>: Negative values are denoted using <code>~</code> instead of <code>-</code>.</li>
 <li><code>real</code>: Floating point numbers in sml</li>
-<li>Functions like <code>+</code> and <code>-</code> can be applied only
-to operands of same type. Mix and match not allowed.
+<li>Functions like <code>+</code> and <code>-</code> can be applied only to operands of same type. Mix and match not allowed.
 <ul>
 <li><code>3 + 4</code> ✓</li>
 <li><code>3.14 + 5</code> ✗</li>
 </ul></li>
-<li><code>div</code> (can use <code>/</code> instead) and
-<code>mod</code> not defined for <code>real</code>.</li>
-<li>Type variables start with an <code>'</code> . Like
-<code>'a list</code></li>
+<li><code>div</code> (can use <code>/</code> instead) and <code>mod</code> not defined for <code>real</code>.</li>
+<li>Type variables start with an <code>'</code> . Like <code>'a list</code></li>
 <li>Tuple is actually a special type of record.
 <ul>
-<li>A tuple type <code>σ * τ</code> is same as the record type
-<code>{1: α, 2: τ}</code> where the field names are just numbers
-starting from 1.</li>
-<li>So a tuple <code>{5,6}</code> is effectively same as
-<code>{1: 5, 2: 6}</code>.</li>
+<li>A tuple type <code>σ * τ</code> is same as the record type <code>{1: α, 2: τ}</code> where the field names are just numbers starting from 1.</li>
+<li>So a tuple <code>{5,6}</code> is effectively same as <code>{1: 5, 2: 6}</code>.</li>
 </ul></li>
 <li>(Informally,) Integers are first-order objects.</li>
 </ul>
@@ -635,74 +565,65 @@ starting from 1.</li>
 </ul>
 <h3 id="defining-new-types">Defining new types</h3>
 <p>Three forms of type bindings.</p>
-<h4 id="transparent-type-binding-aka-type-abbreviation">Transparent type
-binding (aka type abbreviation)</h4>
-<p>Essentially just giving another name for a (usually complex)
-type.</p>
-<p>Can be used to abbreviate a complex type expression, leading to
-improved readability.</p>
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> intpair = <span class="dt">int</span> * <span class="dt">int</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">(* There is no difference between [int * int] and [intpair] *)</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> f(x:intpair) = <span class="kw">let</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                     <span class="kw">val</span> (l, r) = x</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                   <span class="kw">in</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                     l</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                   <span class="kw">end</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> &#39;a pair = &#39;a * &#39;a</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> boolpair = <span class="dt">bool</span> pair</span></code></pre></div>
+<h4 id="transparent-type-binding-aka-type-abbreviation">Transparent type binding (aka type abbreviation)</h4>
+<p>Essentially just giving another name for a (usually complex) type.</p>
+<p>Can be used to abbreviate a complex type expression, leading to improved readability.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a><span class="kw">type</span> intpair = <span class="dt">int</span> * <span class="dt">int</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a><span class="co">(* There is no difference between [int * int] and [intpair] *)</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a><span class="kw">fun</span> f(x:intpair) = <span class="kw">let</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a>                     <span class="kw">val</span> (l, r) = x</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a>                   <span class="kw">in</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a>                     l</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true"></a>                   <span class="kw">end</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true"></a><span class="kw">type</span> &#39;a pair = &#39;a * &#39;a</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true"></a><span class="kw">type</span> boolpair = <span class="dt">bool</span> pair</span></code></pre></div>
 <h4 id="compound-types-1">Compound types</h4>
 <p>Uses the <code>datatype</code> keyword.</p>
-<p>Give a name, some type parameters (optional) and a set of
-constructors. To extend the type system of ML.</p>
-<p>A <code>datatype</code> declaration creates a new type constructor
-and a set of value constructors for that type.</p>
-<div class="sourceCode" id="cb19"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">(* Create a new type [color] with the 3 constructors *)</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">datatype</span> color = Red | Green | Blue</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> isRed Red = <span class="kw">true</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  | isRed _ = <span class="kw">false</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">(* Another example *)</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="kw">datatype</span> dinero = broke                  <span class="co">(* no money *)</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>                | coin <span class="kw">of</span> <span class="dt">int</span>            <span class="co">(* denomination *)</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>                | note <span class="kw">of</span> <span class="dt">int</span>            <span class="co">(* denomination *)</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>                | check <span class="kw">of</span> <span class="dt">string</span> * <span class="dt">int</span>  <span class="co">(* bank name, amount *)</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> totalCoins (broke) = <span class="dv">0</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  | totalCoins (coin(count)) = count</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  | totalCoins (note(count)) = count * <span class="dv">100</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  | totalCoins (check(bank, count)) = count</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co">(* val totalCoins = fn : dinero -&gt; int *)</span></span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>totalCoins(broke);</span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="co">(* val it = 0 : int *)</span></span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>totalCoins(coin(<span class="dv">100</span>));</span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="co">(* val it = 100 : int *)</span></span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>totalCoins(note(<span class="dv">100</span>));</span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="co">(* val it = 10000 : int *)</span></span></code></pre></div>
+<p>Give a name, some type parameters (optional) and a set of constructors. To extend the type system of ML.</p>
+<p>A <code>datatype</code> declaration creates a new type constructor and a set of value constructors for that type.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a><span class="co">(* Create a new type [color] with the 3 constructors *)</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a><span class="kw">datatype</span> color = Red | Green | Blue</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true"></a><span class="kw">fun</span> isRed Red = <span class="kw">true</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true"></a>  | isRed _ = <span class="kw">false</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true"></a><span class="co">(* Another example *)</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true"></a><span class="kw">datatype</span> dinero = broke                  <span class="co">(* no money *)</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true"></a>                | coin <span class="kw">of</span> <span class="dt">int</span>            <span class="co">(* denomination *)</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true"></a>                | note <span class="kw">of</span> <span class="dt">int</span>            <span class="co">(* denomination *)</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true"></a>                | check <span class="kw">of</span> <span class="dt">string</span> * <span class="dt">int</span>  <span class="co">(* bank name, amount *)</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true"></a><span class="kw">fun</span> totalCoins (broke) = <span class="dv">0</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true"></a>  | totalCoins (coin(count)) = count</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true"></a>  | totalCoins (note(count)) = count * <span class="dv">100</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true"></a>  | totalCoins (check(bank, count)) = count</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true"></a></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true"></a><span class="co">(* val totalCoins = fn : dinero -&gt; int *)</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true"></a></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true"></a>totalCoins(broke);</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true"></a><span class="co">(* val it = 0 : int *)</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true"></a></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true"></a>totalCoins(coin(<span class="dv">100</span>));</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true"></a><span class="co">(* val it = 100 : int *)</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true"></a></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true"></a>totalCoins(note(<span class="dv">100</span>));</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true"></a><span class="co">(* val it = 10000 : int *)</span></span></code></pre></div>
 <p>Data types can be recursive. As in the case of a binary tree.</p>
-<div class="sourceCode" id="cb20"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">datatype</span> btree = empty </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>               | leaf </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>               | node <span class="kw">of</span> btree * btree</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> btreeLen (empty) = <span class="dv">0</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  | btreeLen (leaf) = <span class="dv">1</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  | btreeLen (lchild, rchild) = btreeLen lchild + btreeLen rchild</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a><span class="kw">datatype</span> btree = empty </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true"></a>               | leaf </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true"></a>               | node <span class="kw">of</span> btree * btree</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true"></a><span class="kw">fun</span> btreeLen (empty) = <span class="dv">0</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true"></a>  | btreeLen (leaf) = <span class="dv">1</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true"></a>  | btreeLen (lchild, rchild) = btreeLen lchild + btreeLen rchild</span></code></pre></div>
 <p>Here's a parametric datatype:</p>
-<div class="sourceCode" id="cb21"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">(* Typed binary tree *)</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">datatype</span> &#39;a tbtree = empty </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                   | leaf <span class="kw">of</span> &#39;a</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                   | node <span class="kw">of</span> &#39;a btree * &#39;a btree</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="co">(* Typed binary tree *)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a><span class="kw">datatype</span> &#39;a tbtree = empty </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true"></a>                   | leaf <span class="kw">of</span> &#39;a</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true"></a>                   | node <span class="kw">of</span> &#39;a btree * &#39;a btree</span></code></pre></div>
 <h4 id="abstract-data-types">Abstract data types</h4>
 <p>Uses the <code>abstype</code> keyword.</p>
 <p>A data type with a set of functions defined on it.</p>
@@ -710,34 +631,28 @@ class="sourceCode sml"><code class="sourceCode sml"><span id="cb21-1"><a href="#
 <ul>
 <li>The type itself: <strong>implementation type</strong></li>
 <li>The functions: <strong>interface</strong> of the type</li>
-<li>Programs that use the implementation type:
-<strong>clients</strong></li>
+<li>Programs that use the implementation type: <strong>clients</strong></li>
 </ul>
-<p>Constructors of the implementation type are hidden from the client
-programs. Only the interface is visible to the clients. This allows the
-programmer to change the implementation details without affecting the
-way the clients use it.</p>
+<p>Constructors of the implementation type are hidden from the client programs. Only the interface is visible to the clients. This allows the programmer to change the implementation details without affecting the way the clients use it.</p>
 <p>Client is insulated from the implementation details.</p>
-<p>Only the functions in the interface have access to the implementation
-details.</p>
-<div class="sourceCode" id="cb22"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">(* The interface comes between the [with] and the last [end] *)</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">abstype</span> color = blend <span class="kw">of</span> <span class="dt">int</span> * <span class="dt">int</span> * <span class="dt">int</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="kw">with</span> <span class="kw">val</span> white = blend (<span class="dv">255</span>, <span class="dv">255</span>, <span class="dv">255</span>)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>     <span class="kw">and</span> red = blend (<span class="dv">255</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>     <span class="kw">and</span> green = blend (<span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">0</span>)</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>     <span class="kw">and</span> blue = blend (<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>)</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>     <span class="kw">fun</span> mix(parts: <span class="dt">int</span>, blend(r,g,b),</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>             parts&#39;: <span class="dt">int</span>, blend(r&#39;,g&#39;,b&#39;)) =</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>         <span class="kw">if</span> parts&lt;<span class="dv">0</span> <span class="kw">orelse</span> parts&#39;&lt;<span class="dv">0</span> <span class="kw">then</span> white</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>         <span class="kw">else</span> <span class="kw">let</span> <span class="kw">val</span> t = parts + parts&#39;</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>                  <span class="kw">and</span> rr = (parts*r + parts&#39;*r&#39;) div t</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>                  <span class="kw">and</span> gg = (parts*g + parts&#39;*g&#39;) div t</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>                  <span class="kw">and</span> bb = (parts*b + parts&#39;*b&#39;) div t</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>              <span class="kw">in</span> blend(rr, gg, bb)</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>              <span class="kw">end</span></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co">(* Okay, smlnj gives error for this example. But I guess we can get the idea. *)</span></span></code></pre></div>
+<p>Only the functions in the interface have access to the implementation details.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a><span class="co">(* The interface comes between the [with] and the last [end] *)</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a><span class="kw">abstype</span> color = blend <span class="kw">of</span> <span class="dt">int</span> * <span class="dt">int</span> * <span class="dt">int</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true"></a><span class="kw">with</span> <span class="kw">val</span> white = blend (<span class="dv">255</span>, <span class="dv">255</span>, <span class="dv">255</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true"></a>     <span class="kw">and</span> red = blend (<span class="dv">255</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true"></a>     <span class="kw">and</span> green = blend (<span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">0</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true"></a>     <span class="kw">and</span> blue = blend (<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true"></a>     <span class="kw">fun</span> mix(parts: <span class="dt">int</span>, blend(r,g,b),</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true"></a>             parts&#39;: <span class="dt">int</span>, blend(r&#39;,g&#39;,b&#39;)) =</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true"></a>         <span class="kw">if</span> parts&lt;<span class="dv">0</span> <span class="kw">orelse</span> parts&#39;&lt;<span class="dv">0</span> <span class="kw">then</span> white</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true"></a>         <span class="kw">else</span> <span class="kw">let</span> <span class="kw">val</span> t = parts + parts&#39;</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true"></a>                  <span class="kw">and</span> rr = (parts*r + parts&#39;*r&#39;) div t</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true"></a>                  <span class="kw">and</span> gg = (parts*g + parts&#39;*g&#39;) div t</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true"></a>                  <span class="kw">and</span> bb = (parts*b + parts&#39;*b&#39;) div t</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true"></a>              <span class="kw">in</span> blend(rr, gg, bb)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true"></a>              <span class="kw">end</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true"></a><span class="kw">end</span>;</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true"></a><span class="co">(* Okay, smlnj gives error for this example. But I guess we can get the idea. *)</span></span></code></pre></div>
 <h3 id="mutable-values">Mutable values</h3>
 <table>
 <thead>
@@ -771,18 +686,14 @@ class="sourceCode sml"><code class="sourceCode sml"><span id="cb22-1"><a href="#
 &#39;a ref * &#39;a -&gt; unit
 </code></pre>
 <p>Sequential composition of statements in sml, as in</p>
-<div class="sourceCode" id="cb24"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>exp1; exp2</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a>exp1; exp2</span></code></pre></div>
 <p>is syntactic sugar for</p>
-<div class="sourceCode" id="cb25"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> _ = exp1</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">in</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  exp2</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
-<p>Note: Functions of type <code>typ -&gt; unit</code> are also known as
-<em>procedures</em> as they are executed purely for their effects. Their
-return value is not used.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a><span class="kw">let</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true"></a>  <span class="kw">val</span> _ = exp1</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true"></a><span class="kw">in</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true"></a>  exp2</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true"></a><span class="kw">end</span></span></code></pre></div>
+<p>Note: Functions of type <code>typ -&gt; unit</code> are also known as <em>procedures</em> as they are executed purely for their effects. Their return value is not used.</p>
 <h3 id="thunks">Thunks</h3>
 <ul>
 <li>An unevaluated expression.</li>
@@ -791,27 +702,22 @@ return value is not used.</p>
 <li>For lazy evaluation</li>
 </ul>
 <h2 id="module-system-chapter-3">Module system (Chapter 3)</h2>
-<p>A large program organized as relatively independent smaller modules
-with <em>well-defined interfaces</em> ⇒ easier maintenance</p>
+<p>A large program organized as relatively independent smaller modules with <em>well-defined interfaces</em> ⇒ easier maintenance</p>
 <h3 id="motivation">Motivation</h3>
 <ul>
 <li>Ability for each module to be compiled separately.</li>
 <li>Way to assemble the modules into the complete program.</li>
 </ul>
 <h3 id="structure">structure</h3>
-<p>ML: <strong>structure</strong> (stands for <em>environment
-structure</em>) (Non-ML languages: Modules/packages/clusters)</p>
+<p>ML: <strong>structure</strong> (stands for <em>environment structure</em>) (Non-ML languages: Modules/packages/clusters)</p>
 <p>Because an environment gives meanings to all the identifiers.</p>
-<p>When a variable is declared like <code>val x = 3</code>, the
-environment remembers that now there is an identifier <code>x</code>
-whose value is <code>3</code> of type <code>int</code>.</p>
+<p>When a variable is declared like <code>val x = 3</code>, the environment remembers that now there is an identifier <code>x</code> whose value is <code>3</code> of type <code>int</code>.</p>
 <ul>
 <li>Program units
 <ul>
 <li>For making sml programs modular.</li>
 </ul></li>
-<li>Consists of a collection components, including types and
-values.</li>
+<li>Consists of a collection components, including types and values.</li>
 </ul>
 <h3 id="signature">signature</h3>
 <ul>
@@ -819,10 +725,8 @@ values.</li>
 <li>Like the type of a structure.</li>
 <li>Describes the structure to the outside world.</li>
 <li>Information that's known about the structure at compile time.</li>
-<li>Can explicitly define a signature to control what all things of the
-structure will be made visible to the outside world.</li>
-<li><code>:&gt;</code> are opaque, <code>:</code> are transparently
-ascribed.</li>
+<li>Can explicitly define a signature to control what all things of the structure will be made visible to the outside world.</li>
+<li><code>:&gt;</code> are opaque, <code>:</code> are transparently ascribed.</li>
 </ul>
 <h3 id="functor">Functor</h3>
 <p><code>functor : structure → structure</code></p>
@@ -860,67 +764,56 @@ opening SMLofNJ.Cont
 </code></pre>
 <p>See:</p>
 <ul>
-<li><a
-href="https://en.wikipedia.org/wiki/Call-with-current-continuation">https://en.wikipedia.org/wiki/Call-with-current-continuation</a></li>
-<li><a
-href="https://www.smlnj.org/doc/SMLofNJ/pages/cont.html#SIG:CONT.callcc:VAL">https://www.smlnj.org/doc/SMLofNJ/pages/cont.html#SIG:CONT.callcc:VAL</a></li>
-<li><a
-href="https://gitlab.com/piyush-kurur/popl/-/raw/master/examples/sml/continuation/threads.sml">https://gitlab.com/piyush-kurur/popl/-/raw/master/examples/sml/continuation/threads.sml</a></li>
-<li><a
-href="https://gitlab.com/piyush-kurur/popl/-/raw/master/examples/sml/continuation/demo.sml">https://gitlab.com/piyush-kurur/popl/-/raw/master/examples/sml/continuation/demo.sml</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Call-with-current-continuation">https://en.wikipedia.org/wiki/Call-with-current-continuation</a></li>
+<li><a href="https://www.smlnj.org/doc/SMLofNJ/pages/cont.html#SIG:CONT.callcc:VAL">https://www.smlnj.org/doc/SMLofNJ/pages/cont.html#SIG:CONT.callcc:VAL</a></li>
+<li><a href="https://gitlab.com/piyush-kurur/popl/-/raw/master/examples/sml/continuation/threads.sml">https://gitlab.com/piyush-kurur/popl/-/raw/master/examples/sml/continuation/threads.sml</a></li>
+<li><a href="https://gitlab.com/piyush-kurur/popl/-/raw/master/examples/sml/continuation/demo.sml">https://gitlab.com/piyush-kurur/popl/-/raw/master/examples/sml/continuation/demo.sml</a></li>
 </ul>
 <h2 id="cps">CPS</h2>
-<p>Makes every aspect of data and control flow explicit.[1]</p>
+<p>Makes every aspect of data and control flow explicit.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <h2 id="tips">Tips</h2>
 <h3 id="settings">Settings</h3>
-<p>Reference: <a
-href="https://www.smlnj.org/doc/Compiler/pages/printcontrol.html">https://www.smlnj.org/doc/Compiler/pages/printcontrol.html</a></p>
+<p>Reference: <a href="https://www.smlnj.org/doc/Compiler/pages/printcontrol.html">https://www.smlnj.org/doc/Compiler/pages/printcontrol.html</a></p>
 <ul>
-<li>Show objects instead of <code>#</code>:
-<code>Control.Print.printDepth := 20</code></li>
+<li>Show objects instead of <code>#</code>: <code>Control.Print.printDepth := 20</code></li>
 </ul>
 <h3 id="equality-operation">Equality operation</h3>
 <p>It's <code>=</code>, not <code>==</code>.</p>
-<div class="sourceCode" id="cb27"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>- <span class="dv">1</span>=<span class="dv">2</span>;</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> it = <span class="kw">false</span> : <span class="dt">bool</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true"></a>- <span class="dv">1</span>=<span class="dv">2</span>;</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true"></a><span class="kw">val</span> it = <span class="kw">false</span> : <span class="dt">bool</span></span></code></pre></div>
 <h3 id="fst-and-snd-for-a-tuple">fst and snd for a tuple</h3>
 <p>It's like indexing in sml.</p>
-<div class="sourceCode" id="cb28"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>#<span class="dv">1</span> (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>);</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> it = <span class="dv">1</span> : <span class="dt">int</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>- #<span class="dv">0</span> (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>);</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>stdIn:<span class="fl">115.2-115.5</span> Error: syntax error: deleting  INT0 LPAREN</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>stdIn:<span class="fl">115.6-115.9</span> Error: syntax error: deleting  COMMA INT COMMA</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>- #<span class="dv">2</span> (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>);</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> it = <span class="dv">2</span> : <span class="dt">int</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>- #<span class="dv">4</span> (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>);</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>stdIn:<span class="fl">116.1-116.11</span> Error: operator <span class="kw">and</span> operand don&#39;t agree [record labels]</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  operator domain: {<span class="dv">4</span>:&#39;Y; &#39;Z}</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  operand:         [<span class="dt">int</span> ty] * [<span class="dt">int</span> ty] * [<span class="dt">int</span> ty]</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">in</span> expression:</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">fn</span> {<span class="dv">4</span>=<span class="dv">4</span>,...} =&gt; <span class="dv">4</span>) (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>- </span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>- #<span class="dv">3</span> (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>);</span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> it = <span class="dv">3</span> : <span class="dt">int</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a>#<span class="dv">1</span> (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>);</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a><span class="kw">val</span> it = <span class="dv">1</span> : <span class="dt">int</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true"></a>- #<span class="dv">0</span> (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>);</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true"></a>stdIn:<span class="fl">115.2-115.5</span> Error: syntax error: deleting  INT0 LPAREN</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true"></a>stdIn:<span class="fl">115.6-115.9</span> Error: syntax error: deleting  COMMA INT COMMA</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true"></a>- #<span class="dv">2</span> (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>);</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true"></a><span class="kw">val</span> it = <span class="dv">2</span> : <span class="dt">int</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true"></a>- #<span class="dv">4</span> (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>);</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true"></a>stdIn:<span class="fl">116.1-116.11</span> Error: operator <span class="kw">and</span> operand don&#39;t agree [record labels]</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true"></a>  operator domain: {<span class="dv">4</span>:&#39;Y; &#39;Z}</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true"></a>  operand:         [<span class="dt">int</span> ty] * [<span class="dt">int</span> ty] * [<span class="dt">int</span> ty]</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true"></a>  <span class="kw">in</span> expression:</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true"></a>    (<span class="kw">fn</span> {<span class="dv">4</span>=<span class="dv">4</span>,...} =&gt; <span class="dv">4</span>) (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true"></a>- </span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true"></a>- #<span class="dv">3</span> (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>);</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true"></a><span class="kw">val</span> it = <span class="dv">3</span> : <span class="dt">int</span></span></code></pre></div>
 <h3 id="op"><code>op</code></h3>
 <p>To use an infix operator as a normal function.</p>
-<div class="sourceCode" id="cb29"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>- <span class="dv">1</span> + <span class="dv">2</span>;</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> it = <span class="dv">3</span> : <span class="dt">int</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>- <span class="kw">op</span>+ (<span class="dv">1</span>,<span class="dv">2</span>);</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> it = <span class="dv">3</span> : <span class="dt">int</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>- <span class="dv">5</span> mod <span class="dv">6</span>;</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> it = <span class="dv">5</span> : <span class="dt">int</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>- <span class="kw">op</span> mod (<span class="dv">5</span>, <span class="dv">6</span>);</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> it = <span class="dv">5</span> : <span class="dt">int</span></span></code></pre></div>
-<p>See: <a
-href="https://stackoverflow.com/questions/54812817/the-op-operator-in-sml">https://stackoverflow.com/questions/54812817/the-op-operator-in-sml</a></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a>- <span class="dv">1</span> + <span class="dv">2</span>;</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true"></a><span class="kw">val</span> it = <span class="dv">3</span> : <span class="dt">int</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true"></a>- <span class="kw">op</span>+ (<span class="dv">1</span>,<span class="dv">2</span>);</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true"></a><span class="kw">val</span> it = <span class="dv">3</span> : <span class="dt">int</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true"></a>- <span class="dv">5</span> mod <span class="dv">6</span>;</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true"></a><span class="kw">val</span> it = <span class="dv">5</span> : <span class="dt">int</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true"></a>- <span class="kw">op</span> mod (<span class="dv">5</span>, <span class="dv">6</span>);</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true"></a><span class="kw">val</span> it = <span class="dv">5</span> : <span class="dt">int</span></span></code></pre></div>
+<p>See: <a href="https://stackoverflow.com/questions/54812817/the-op-operator-in-sml">https://stackoverflow.com/questions/54812817/the-op-operator-in-sml</a></p>
 <h3 id="char"><code>char</code></h3>
-<p>Character literals are denoted with a string of length 1 prefixed by
-a <code>#</code>.</p>
+<p>Character literals are denoted with a string of length 1 prefixed by a <code>#</code>.</p>
 <p>Eg:</p>
 <pre><code>- #&quot;a&quot;;
 val it = #&quot;a&quot; : char
@@ -940,66 +833,58 @@ val it = [#&quot;a&quot;,#&quot;b&quot;,#&quot;c&quot;] : char list
 stdIn:19.1-19.5 Error: character constant not length 1
 </code></pre>
 <h3 id="list-concatenation">List concatenation</h3>
-<div class="sourceCode" id="cb31"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>- [<span class="dv">1</span>,<span class="dv">2</span>] @ [<span class="dv">3</span>,<span class="dv">4</span>];</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> it = [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>] : <span class="dt">int</span> <span class="dt">list</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a>- [<span class="dv">1</span>,<span class="dv">2</span>] @ [<span class="dv">3</span>,<span class="dv">4</span>];</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true"></a><span class="kw">val</span> it = [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>] : <span class="dt">int</span> <span class="dt">list</span></span></code></pre></div>
 <h2 id="exercises">Exercises</h2>
 <h3 id="section">2.5.1</h3>
-<div class="sourceCode" id="cb32"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> cirumference r = <span class="dv">2</span> * <span class="fl">3.14</span> * r</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> area r = <span class="fl">3.14</span> * r * r</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a><span class="kw">fun</span> cirumference r = <span class="dv">2</span> * <span class="fl">3.14</span> * r</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a><span class="kw">fun</span> area r = <span class="fl">3.14</span> * r * r</span></code></pre></div>
 <h3 id="section-1">2.5.2</h3>
-<div class="sourceCode" id="cb33"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> abs x : <span class="dt">real</span> = <span class="kw">if</span> x &lt; <span class="dv">0</span> <span class="kw">then</span> ~x <span class="kw">else</span> x</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true"></a><span class="kw">fun</span> abs x : <span class="dt">real</span> = <span class="kw">if</span> x &lt; <span class="dv">0</span> <span class="kw">then</span> ~x <span class="kw">else</span> x</span></code></pre></div>
 <h3 id="incomplete">2.7.2 (incomplete)</h3>
-<div class="sourceCode" id="cb34"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">abstype</span> &#39;a set = set <span class="kw">of</span> &#39;a <span class="dt">list</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">with</span> <span class="kw">val</span> emptyset: &#39;a set = </span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">fun</span> singleton (e: &#39;a): &#39;a set =</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">fun</span> union (s1: &#39;a set, s2: &#39;a set): &#39;a set =</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">fun</span> member (e: &#39;a, s: &#39;a set): <span class="dt">bool</span> =</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    | member (e, set (h :: t)) = (e = h)</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="kw">orelse</span> member(e, set t)</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">fun</span> intersection(s1: &#39;a set, s2: &#39;a set): &#39;a set = </span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true"></a><span class="kw">abstype</span> &#39;a set = set <span class="kw">of</span> &#39;a <span class="dt">list</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true"></a>  <span class="kw">with</span> <span class="kw">val</span> emptyset: &#39;a set = </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true"></a>  <span class="kw">fun</span> singleton (e: &#39;a): &#39;a set =</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true"></a>  <span class="kw">fun</span> union (s1: &#39;a set, s2: &#39;a set): &#39;a set =</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true"></a>  <span class="kw">fun</span> member (e: &#39;a, s: &#39;a set): <span class="dt">bool</span> =</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true"></a>    | member (e, set (h :: t)) = (e = h)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true"></a>                                 <span class="kw">orelse</span> member(e, set t)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true"></a>  <span class="kw">fun</span> intersection(s1: &#39;a set, s2: &#39;a set): &#39;a set = </span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true"></a><span class="kw">end</span>;</span></code></pre></div>
 <h2 id="abstract-types">Abstract types</h2>
 <ul>
 <li>Kind of like classes in OOP-oriented languages.</li>
 <li>Perhaps the same can be achieved via signatures and structs ??</li>
 <li>Keywords: <code>abstype</code> … <code>with</code></li>
-<li>No pattern matching on values since type is abstract. Has to rely on
-associated operations</li>
+<li>No pattern matching on values since type is abstract. Has to rely on associated operations</li>
 </ul>
 <h2 id="exceptions">Exceptions</h2>
-<div class="sourceCode" id="cb35"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">(* exception exception_name of args *)</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co">(* exception empty_list of unit *)</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="kw">exception</span> empty_list</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co">&gt;&gt;&gt; empty_list;;</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co">val it = empty_list(-) : exn</span></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="co">(* hd: &#39;a list -&gt; &#39;a *)</span></span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> head nil = <span class="kw">raise</span> empty_list</span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  | head (x::xs) = x</span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> append l1 l2 = </span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>  (head l1) :: (append (tl l1) l2)</span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">handle</span> empty_list =&gt; l2</span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
-<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="co">&gt;&gt;&gt; append [1] [2,3];;</span></span>
-<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a><span class="co">val it = [1,2,3] : int list</span></span>
-<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true"></a><span class="co">(* exception exception_name of args *)</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true"></a><span class="co">(* exception empty_list of unit *)</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true"></a><span class="kw">exception</span> empty_list</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true"></a><span class="co">&gt;&gt;&gt; empty_list;;</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true"></a><span class="co">val it = empty_list(-) : exn</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true"></a><span class="co">*)</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true"></a></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true"></a><span class="co">(* hd: &#39;a list -&gt; &#39;a *)</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true"></a><span class="kw">fun</span> head nil = <span class="kw">raise</span> empty_list</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true"></a>  | head (x::xs) = x</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true"></a></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true"></a><span class="kw">fun</span> append l1 l2 = </span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true"></a>  (head l1) :: (append (tl l1) l2)</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true"></a>  <span class="kw">handle</span> empty_list =&gt; l2</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true"></a></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true"></a><span class="co">(*</span></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true"></a><span class="co">&gt;&gt;&gt; append [1] [2,3];;</span></span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true"></a><span class="co">val it = [1,2,3] : int list</span></span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true"></a><span class="co">*)</span></span></code></pre></div>
 <ul>
-<li><del>exception<sub>type</sub>: is the value returned while raising
-the exception ??</del>
+<li><del>exception<sub>type</sub>: is the value returned while raising the exception ??</del>
 <ul>
-<li><del>(* exception exception<sub>name</sub> of
-exception<sub>type</sub> *)</del></li>
+<li><del>(* exception exception<sub>name</sub> of exception<sub>type</sub> *)</del></li>
 </ul></li>
 <li>value returned can be <code>handle</code>-ed</li>
 <li><code>exn</code>: sml's only extensible data type that is built-in
@@ -1009,30 +894,21 @@ exception<sub>type</sub> *)</del></li>
 </ul>
 <p>See:</p>
 <ul>
-<li><a
-href="https://courses.cs.washington.edu/courses/cse341/04wi/lectures/10-ml-exceptions.html">https://courses.cs.washington.edu/courses/cse341/04wi/lectures/10-ml-exceptions.html</a></li>
+<li><a href="https://courses.cs.washington.edu/courses/cse341/04wi/lectures/10-ml-exceptions.html">https://courses.cs.washington.edu/courses/cse341/04wi/lectures/10-ml-exceptions.html</a></li>
 </ul>
 <h2 id="doubts">Doubts</h2>
 <ul>
-<li>Can we declare a variable explicitly to be of a particular type? As
-in the <code>intpair</code> example?</li>
+<li>Can we declare a variable explicitly to be of a particular type? As in the <code>intpair</code> example?</li>
 <li>Infinitely large numbers</li>
 <li>orelse, andif</li>
-<li>integer division with <code>div</code> (infix) <code>op div</code>
-is of type <code>int * int -&gt; int</code></li>
+<li>integer division with <code>div</code> (infix) <code>op div</code> is of type <code>int * int -&gt; int</code></li>
 </ul>
 <h2 id="misc">Misc</h2>
 <h3 id="bitvector">Bitvector</h3>
-<p>smlnj has a <a
-href="https://www.smlnj.org/doc/smlnj-lib/Util/str-BitArray.html">BitArray</a>
-structure.</p>
-<p>It seems have had a <a
-href="http://www.kb.ecei.tohoku.ac.jp/~sumii/class/proenb2006/library/smlnj/Manual/bit-vector.html">BitVector</a>
-structure as well ??</p>
+<p>smlnj has a <a href="https://www.smlnj.org/doc/smlnj-lib/Util/str-BitArray.html">BitArray</a> structure.</p>
+<p>It seems have had a <a href="http://www.kb.ecei.tohoku.ac.jp/~sumii/class/proenb2006/library/smlnj/Manual/bit-vector.html">BitVector</a> structure as well ??</p>
 <h3 id="matrices">Matrices</h3>
-<p>There is an <a
-href="https://smlfamily.github.io/Basis/array2.html">Array2</a>
-structure for implementing 2D arrays.</p>
+<p>There is an <a href="https://smlfamily.github.io/Basis/array2.html">Array2</a> structure for implementing 2D arrays.</p>
 <ul>
 <li>Could be handy for implmenting matrices.</li>
 <li>Built-in in smlnj</li>
@@ -1040,30 +916,30 @@ structure for implementing 2D arrays.</p>
 <h2 id="references">References</h2>
 <ul>
 <li><a href="https://www.cs.cmu.edu/~rwh/isml/book.pdf">link</a></li>
-<li><a href="https://www.cs.cmu.edu/~rwh/isml/book.pdf">Programming in
-Standard ML (DRAFT: VERSION 1.2 OF 11.02.11.)</a> by Robert Harper</li>
-<li><a href="https://smlfamily.github.io/">Standard ML Family GitHub
-Project</a></li>
-<li>[1]: Compiling with continuations - Andrew Appel</li>
+<li><a href="https://www.cs.cmu.edu/~rwh/isml/book.pdf">Programming in Standard ML (DRAFT: VERSION 1.2 OF 11.02.11.)</a> by Robert Harper</li>
+<li><a href="https://smlfamily.github.io/">Standard ML Family GitHub Project</a></li>
+<li></li>
 </ul>
-<h2 id="anonymous-functions-and-parenthesis">Anonymous functions and
-parenthesis</h2>
+<h2 id="anonymous-functions-and-parenthesis">Anonymous functions and parenthesis</h2>
 <p>Parenthesis placement can be a source of confusion.</p>
 <p>For example:</p>
-<div class="sourceCode" id="cb36"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> foo nil = <span class="kw">fn</span> x =&gt; <span class="kw">true</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  | foo _ = <span class="kw">fn</span> y =&gt; <span class="kw">false</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true"></a><span class="kw">fun</span> foo nil = <span class="kw">fn</span> x =&gt; <span class="kw">true</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true"></a>  | foo _ = <span class="kw">fn</span> y =&gt; <span class="kw">false</span></span></code></pre></div>
 <p>would give error.</p>
 <pre><code>Error: syntax error: replacing  EQUALOP with  DARROW
 </code></pre>
-<p>This is because the parser thinks that the second line is
-continuation of the anonymous function described in the first line.</p>
-<p>Make it clear to the parser that they are separate functions and that
-the second line is not another case of the first anonymous function with
-explicit parentheses.</p>
-<div class="sourceCode" id="cb38"><pre
-class="sourceCode sml"><code class="sourceCode sml"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> foo nil = (<span class="kw">fn</span> x =&gt; <span class="kw">true</span>)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  | foo _ = <span class="kw">fn</span> y =&gt; <span class="kw">false</span></span></code></pre></div>
+<p>This is because the parser thinks that the second line is continuation of the anonymous function described in the first line.</p>
+<p>Make it clear to the parser that they are separate functions and that the second line is not another case of the first anonymous function with explicit parentheses.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode sml"><code class="sourceCode sml"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true"></a><span class="kw">fun</span> foo nil = (<span class="kw">fn</span> x =&gt; <span class="kw">true</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true"></a>  | foo _ = <span class="kw">fn</span> y =&gt; <span class="kw">false</span></span></code></pre></div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><pre class="example"><code>Compiling with continuations - Andrew Appel
+</code></pre>
+<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></li>
+</ol>
+</section>
 </div>
 </body>
 </html>
