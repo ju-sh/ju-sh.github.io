@@ -13,3 +13,77 @@ table, th, td {
 figure figcaption {
   text-align: center;
 }
+
+samp {
+  font-weight: bold;
+}
+
+.kw {
+  /* Keywords */
+  color: #0f852c;
+  font-weight: bold;
+}
+
+.fu {
+  /* Function */
+  color: #06287e;
+}
+
+.co {
+  /* Comment */
+  color: #60a0b0;
+  font-style: italic;
+}
+
+.dv {
+  /* Decimal value */
+  color: #40a070;
+}
+
+.dt {
+  /* Data type */
+  color: #902000;
+}
+
+.pp {
+  /* Preprocessor */
+  color: #bc7a00;
+}
+
+.im {
+  /* Data type */
+  color: #902000;
+}
+
+.st {
+  /* String */
+  color: #4070a0;
+}
+
+.op {
+  /* Operator */
+  color: #666666;
+}
+
+.sc {
+  /* Special character */
+  color: #4070a0;
+}
+
+.va {
+  /* Variable */
+  color: #19177c;
+}
+
+.fl {
+  /* Float */
+  color: #40a070;
+}
+
+
+/*
+sf
+.bu: built-in
+.ex: extension
+.im: import
+*/
