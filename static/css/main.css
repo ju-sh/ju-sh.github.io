@@ -4,7 +4,12 @@ body {
   margin: auto;
   background-color: #FAF0E6;
 }
+
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
+}
+
+figure figcaption {
+  text-align: center;
 }
