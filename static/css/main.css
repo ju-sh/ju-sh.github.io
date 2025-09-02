@@ -16,11 +16,13 @@ figure figcaption {
 
 pre {
   max-width: 100%;
-  overflow-x: auto;
+  overflow: auto;
   background: #faf0ff;
   padding: 1em;
   border: 1px solid #ccc;
   border-radius: 5px;
+  border-left: 4px solid #8888ff;
+  max-height: 50em;
 }
 
 samp {
