@@ -10,6 +10,10 @@ table, th, td {
   border-collapse: collapse;
 }
 
+th {
+  background-color: #eaeaea;
+}
+
 figure figcaption {
   text-align: center;
 }
