@@ -21,6 +21,7 @@ figcaption {
 pre.ascii-art {
   text-align: center;
   border: 1px solid gray;
+  padding-bottom: 0;
 }
 
 pre {
