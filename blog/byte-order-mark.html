@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="keywords" content="encoding" />
+  <title>Byte order mark: Empty file not empty</title>
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
+</head>
+<body>
+
+
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
+
+<header id="title-block-header">
+      <h1 class="title">Byte order mark: Empty file not empty</h1>
+    </header>
+
+<ul>
+    <li>Date created: 16-Jul-2017</li>
+    </ul>
+
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/encoding.html">encoding</a>
+    </code> /
+  <p>
+</div>
+
+
+<div id="description">
+About empty file taking up space due to the presence of BOM.
+</div>
+
+<hr/>
+
+<main id="content-container">
+<p>Make a new empty text file with UTF-8 encoding and save it. Now look at the size of this file. It will be 3 bytes. See Figure <a href="#fig-bom-utf">1</a> for a screenshot from Windows file explorer.</p>
+<p>Makes one wonder from where the 3 bytes are coming when the file is absolutely empty.</p>
+<figure id="fig-bom-utf">
+  <img
+    src="https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/000-005_001.png?raw=true"
+    title="Size of empty file using ANSI encoding"
+    alt="Screenshot showing file size. File explorer and notepad are open in Windows 8"
+    width="100%"
+    align="center" />
+  <figcaption>
+    Figure 1: Size of empty file using UTF-8 encoding
+  </figcaption>
+</figure>
+
+<p>At the same time if the ANSI encoding was used, the same file would have amounted to 0 bytes (See Figure <a href="#fig-bom-ansi">2</a>).</p>
+<figure id="fig-bom-ansi">
+  <img
+    src="https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/000-005_002.png?raw=true"
+    title="Size of empty file using ANSI encoding"
+    alt="Screenshot showing file size. File explorer and notepad are open in Windows 8"
+    width="100%"
+    align="center" />
+  <figcaption>
+    Figure 2: Size of empty file using ANSI encoding
+  </figcaption>
+</figure>
+
+<p>The reason behind this is <em>Byte Order Mark</em>.</p>
+<p>It is a sequence of bytes which (among other things) is used to convey the encoding used for the file to the programs that may use the file so that they can be processed accordingly.</p>
+<p>Byte order mark for UTF-8 files is the byte sequence 0xEF,0xBB,0xBF. Which are hexadecimal values for 239, 187 and 191 respectively.</p>
+<p>If you try printing these three characters as we normally do, it could look like this:</p>
+<pre><code>∩
+╗
+┐
+</code></pre>
+<p>Byte order mark can serve other purposes like specifying the endianness as well.</p>
+<p>See:</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/byte_order_mark">https://en.wikipedia.org/wiki/byte_order_mark</a></li>
+<li><a href="https://en.wikipedia.org/wiki/endianness">https://en.wikipedia.org/wiki/endianness</a></li>
+</ul>
+</main>
+</body>
+</html>

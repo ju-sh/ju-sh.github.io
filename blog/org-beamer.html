@@ -3,37 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Julin Shaji" />
+  <meta name="keywords" content="emacs, org-mode, tex" />
   <title>Beamer slides from org file</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">Beamer slides from org file</h1>
-</header>
+      <h1 class="title">Beamer slides from org file</h1>
+    </header>
 
 <ul>
     <li>Date created: 19-Feb-2022</li>
@@ -43,7 +33,13 @@
   <p>
     Tags: / 
     <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/emacs org-mode tex.html">emacs org-mode tex</a>
+      <a href="https://ju-sh.github.io/blog/pages/tags/emacs.html">emacs</a>
+    </code> /
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/org-mode.html">org-mode</a>
+    </code> /
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/tex.html">tex</a>
     </code> /
   <p>
 </div>
@@ -55,7 +51,7 @@ Making beamer presentation slides as pdf from org files in emacs..
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <p>Beamer is a great way to make slides for presentations. It relieves us of the burden of worrying about the exact placement of elements present in the slides.</p>
 <p>But LaTeX commands can get in the way of the actual content while we are making the slides (especially when you are in a hurry to finish it). Org mode of emacs is a cool way to make notes in an organized way that lets us focus on the content. Writing the initial draft of the presentation in org mode, then converting it to a beamer tex file and finally adding finishing touches can greatly accelerate the time in which the presentation can be created.</p>
 <p>This post gives a broad outline of how to get started with using org mode for writing beamer presentations.</p>
@@ -78,6 +74,8 @@ Making beamer presentation slides as pdf from org files in emacs..
 #+AUTHOR: My name
 #+EMAIL:  my@email.com
 #+DATE:   2022-Feb-19
+#+AUTHOR: Julin Shaji
+#+LANGUAGE: en-GB
 #+SUBTITLE: org-beamer: subtitle
 #+DESCRIPTION: org-beamer: description
 #+OPTIONS:  H:2
@@ -139,6 +137,6 @@ Making beamer presentation slides as pdf from org files in emacs..
 <li><a href="https://orgmode.org/manual/LaTeX-header-and-sectioning.html"><a href="https://orgmode.org/manual/LaTeX-header-and-sectioning.html">https://orgmode.org/manual/LaTeX-header-and-sectioning.html</a></a></li>
 <li><a href="https://orgmode.org/manual/Export-Settings.html"><a href="https://orgmode.org/manual/Export-Settings.html">https://orgmode.org/manual/Export-Settings.html</a></a></li>
 </ul>
-</div>
+</main>
 </body>
 </html>

@@ -4,36 +4,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Python packages</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">Python packages</h1>
-</header>
+      <h1 class="title">Python packages</h1>
+    </header>
 
 <ul>
     </ul>
@@ -43,7 +31,7 @@
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <p>Info on some python packages.</p>
 <ul>
 <li><em>numpy</em></li>
@@ -61,7 +49,10 @@
 <li>Shape: <code>arr.shape</code></li>
 <li>1-D arrays can be made from list generator: <code>np.fromiter(list_gen)</code> (UNVERIFIED)</li>
 <li>Infinity: <code>np.inf</code></li>
-<li>Identity matrix: <code>np.identity(n)</code> (where <code>n</code> is number of rows)</li>
+<li>Identity matrix: <code>np.identity(n)</code> (where <code>n</code> is number of rows)
+<ul>
+<li>For <code>int</code> elements: <code>np.identity(3, dtype=int)</code></li>
+</ul></li>
 <li>Add two matrices: <code>np.add(m1, m2)</code> or just <code>m1 + m2</code></li>
 <li>Broadcasting: <a href="https://numpy.org/devdocs/user/basics.broadcasting.html">https://numpy.org/devdocs/user/basics.broadcasting.html</a></li>
 <li>Default <code>dtype</code> is <code>float</code></li>
@@ -73,7 +64,49 @@
 </ul></li>
 <li>np.resize and var.resize behaves slightly different, apparently</li>
 <li>np.newaxis is actually an alias for <code>None</code> ??</li>
+<li>Create (main) diagonal matrix: <code>np.eye(size)</code></li>
+<li><code>np.argmax()</code> ??</li>
 </ul>
+<h2 id="assert-that-two-values-are-equal">Assert that two values are equal</h2>
+<pre><code>assert np.array_equal(a, b)
+</code></pre>
+<h2 id="norm-of-a-vector">Norm of a vector</h2>
+<p><a href="https://numpy.org/devdocs/reference/generated/numpy.linalg.norm.html">https://numpy.org/devdocs/reference/generated/numpy.linalg.norm.html</a></p>
+<p>Use <code>np.linalg.norm(v)</code></p>
+<ul>
+<li>Many different forms of norm possible</li>
+<li>Default norm is Frobenius norm (aka magnitude)
+<ol>
+<li>Take absolute values of squares of all elements</li>
+<li>Sum it up</li>
+<li>Take the square root of the whole value</li>
+</ol></li>
+</ul>
+<pre><code>&gt;&gt;&gt; a
+array([1, 2, 3])
+
+&gt;&gt;&gt; np.linalg.norm(a)
+np.float64(3.7416573867739413)
+# (1+4+9)^½
+</code></pre>
+<h2 id="kronecker-product">Kronecker product</h2>
+<ul>
+<li>aka tensor product.</li>
+<li>Use <code>np.kron(a, b)</code></li>
+<li>Make copies of <code>b</code> at every location of <code>a</code> where value is <code>1</code>. Kinda.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> i22 <span class="op">=</span> np.identity(<span class="dv">2</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> mul <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>                [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>]])</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.kron(i22, mul)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>array([[<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>,  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>       [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>       [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,  <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>       [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>]])</span></code></pre></div>
 <h2 id="jargon">Jargon</h2>
 <ul>
 <li>Rank of shape: Number of elements in <code>shape</code></li>
@@ -108,25 +141,25 @@ array([[1, 0, 1, 0],
 </code></pre>
 <h2 id="matrix-creation">Matrix creation</h2>
 <h3 id="create-a-vectormatrix-of-all-zeros">Create a vector/matrix of all zeros</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>array([<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>])</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).shape</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>(<span class="dv">3</span>,)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>array([[<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>]])</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>).shape</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>(<span class="dv">1</span>, <span class="dv">3</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a><span class="co">###</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros((<span class="dv">1</span>,<span class="dv">3</span>))</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>array([[<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>]])</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros((<span class="dv">1</span>,<span class="dv">3</span>)).shape</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a>(<span class="dv">1</span>, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>array([<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>])</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).shape</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>(<span class="dv">3</span>,)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a>array([[<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>]])</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros(<span class="dv">3</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>).shape</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a>(<span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a><span class="co">###</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros((<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a>array([[<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>]])</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.zeros((<span class="dv">1</span>,<span class="dv">3</span>)).shape</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true"></a>(<span class="dv">1</span>, <span class="dv">3</span>)</span></code></pre></div>
 <p><a href="https://numpy.org/doc/stable/reference/generated/numpy.zeros.html">https://numpy.org/doc/stable/reference/generated/numpy.zeros.html</a></p>
 <h3 id="make-a-matrix-by-giving-all-values-explicitly">Make a matrix by giving all values explicitly</h3>
 <pre><code>&gt;&gt;&gt; np.array([[0, 1], [0, 0]])
@@ -134,19 +167,24 @@ array([[0, 1],
        [0, 0]])
 </code></pre>
 <h3 id="create-a-matrix-out-of-a-constant">Create a matrix out of a constant</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">2</span>,<span class="dv">2</span>), <span class="dv">3</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>array([[<span class="dv">3</span>, <span class="dv">3</span>],</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>       [<span class="dv">3</span>, <span class="dv">3</span>]])</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">2</span>,<span class="dv">2</span>), np.inf)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>array([[inf, inf],</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>       [inf, inf]])</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">3</span>,<span class="dv">2</span>), [<span class="dv">1</span>,<span class="dv">2</span>])</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>array([[<span class="dv">1</span>, <span class="dv">2</span>],</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>       [<span class="dv">1</span>, <span class="dv">2</span>],</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>       [<span class="dv">1</span>, <span class="dv">2</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">2</span>,<span class="dv">2</span>), <span class="dv">3</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>array([[<span class="dv">3</span>, <span class="dv">3</span>],</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>       [<span class="dv">3</span>, <span class="dv">3</span>]])</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">2</span>,<span class="dv">2</span>), np.inf)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>array([[inf, inf],</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>       [inf, inf]])</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> np.full((<span class="dv">3</span>,<span class="dv">2</span>), [<span class="dv">1</span>,<span class="dv">2</span>])</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a>array([[<span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a>       [<span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a>       [<span class="dv">1</span>, <span class="dv">2</span>]])</span></code></pre></div>
 <p><a href="https://numpy.org/doc/stable/reference/generated/numpy.full.html">https://numpy.org/doc/stable/reference/generated/numpy.full.html</a></p>
+<h3 id="create-a-matrix-from-a-python-list">Create a matrix from a python list</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>])</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> a.shape</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>(<span class="dv">3</span>,)</span></code></pre></div>
 <h2 id="matrix-multiplication">Matrix multiplication</h2>
 <ul>
 <li>Multipy vector with matrix: <code>np.dot</code></li>
@@ -239,17 +277,17 @@ RangeIndex(start=0, stop=16, step=1)
 <h1 id="scipy">scipy</h1>
 <h2 id="sparse-matrix">Sparse matrix</h2>
 <p><a href="https://docs.scipy.org/doc/scipy/reference/sparse.html">https://docs.scipy.org/doc/scipy/reference/sparse.html</a></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> scipy</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> X <span class="op">=</span> scipy.sparse.csr_matrix(<span class="fl">1.</span><span class="op">/</span><span class="fl">2.</span><span class="op">*</span>np.array([[<span class="fl">0.</span>,<span class="fl">1.</span>],[<span class="fl">1.</span>,<span class="fl">0.</span>]]))</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> X</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="op">&lt;</span>2x2 sparse matrix of <span class="bu">type</span> <span class="st">&#39;&lt;class &#39;</span>numpy.float64<span class="st">&#39;&gt;&#39;</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a>        <span class="cf">with</span> <span class="dv">2</span> stored elements <span class="kw">in</span> Compressed Sparse Row <span class="bu">format</span><span class="op">&gt;</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span>(X)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a>  (<span class="dv">0</span>, <span class="dv">1</span>)        <span class="fl">0.5</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a>  (<span class="dv">1</span>, <span class="dv">0</span>)        <span class="fl">0.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> scipy</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> X <span class="op">=</span> scipy.sparse.csr_matrix(<span class="fl">1.</span><span class="op">/</span><span class="fl">2.</span><span class="op">*</span>np.array([[<span class="fl">0.</span>,<span class="fl">1.</span>],[<span class="fl">1.</span>,<span class="fl">0.</span>]]))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> X</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a><span class="op">&lt;</span>2x2 sparse matrix of <span class="bu">type</span> <span class="st">&#39;&lt;class &#39;</span>numpy.float64<span class="st">&#39;&gt;&#39;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a>        <span class="cf">with</span> <span class="dv">2</span> stored elements <span class="kw">in</span> Compressed Sparse Row <span class="bu">format</span><span class="op">&gt;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span>(X)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true"></a>  (<span class="dv">0</span>, <span class="dv">1</span>)        <span class="fl">0.5</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true"></a>  (<span class="dv">1</span>, <span class="dv">0</span>)        <span class="fl">0.5</span></span></code></pre></div>
 <h2 id="curve-fitting">Curve fitting</h2>
 <p>Find an equation corresponding a function made from a set of data points.</p>
 <ul>
@@ -286,13 +324,13 @@ RangeIndex(start=0, stop=16, step=1)
 <ul>
 <li>Install: pip3 install BeautifulSoup4</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="im">import</span> pathlib</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>html_path <span class="op">=</span> pathlib.Path(<span class="st">&quot;/home/user/Downloads/input.html&quot;</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>htmlstr <span class="op">=</span> html_path.read_text()</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>soup <span class="op">=</span> BeautifulSoup(htmlstr)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>content <span class="op">=</span> soup.find(<span class="bu">id</span><span class="op">=</span><span class="st">&#39;content-container&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="im">import</span> pathlib</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>html_path <span class="op">=</span> pathlib.Path(<span class="st">&quot;/home/user/Downloads/input.html&quot;</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a>htmlstr <span class="op">=</span> html_path.read_text()</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a>soup <span class="op">=</span> BeautifulSoup(htmlstr)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>content <span class="op">=</span> soup.find(<span class="bu">id</span><span class="op">=</span><span class="st">&#39;content-container&#39;</span>)</span></code></pre></div>
 <h2 id="finding">Finding</h2>
 <ul>
 <li>Find all elements matching class: <code>soup.find_all("tagname", class_="classname")</code></li>
@@ -329,6 +367,6 @@ RangeIndex(start=0, stop=16, step=1)
 <li>Show execution time of tests: <code>pytest durations=0  # show tests that ran for more than 0s</code></li>
 </ul></li>
 </ul>
-</div>
+</main>
 </body>
 </html>

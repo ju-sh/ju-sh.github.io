@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="keywords" content="c, python" />
+  <title>Modulo operation with negative numbers</title>
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
+</head>
+<body>
+
+
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
+
+<header id="title-block-header">
+      <h1 class="title">Modulo operation with negative numbers</h1>
+    </header>
+
+<ul>
+    <li>Date created: 16-Jul-2017</li>
+    </ul>
+
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/c.html">c</a>
+    </code> /
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/python.html">python</a>
+    </code> /
+  <p>
+</div>
+
+
+<div id="description">
+About modulo operation involving negative numbers being a bit.
+</div>
+
+<hr/>
+
+<main id="content-container">
+<p>In C, the behaviour of the <code>%</code> operation is defined as</p>
+<pre><code>a = (a/b)*b + (a%b)
+</code></pre>
+<p>Therefore,</p>
+<pre><code>(a%b) = a - (a/b)*b
+</code></pre>
+<p>That means</p>
+<pre class="org"><code>| a   | b   | a%b |
+|-----+-----+-----|
+| +ve | -ve | +ve |
+| -ve | +ve | -ve |
+| -ve | -ve | -ve |
+| +ve | +ve | +ve |
+</code></pre>
+<p>ie, the sign of the value of the <code>%</code> operator will be the sign of the first operand itself.</p>
+<p>The <code>%</code> operator in C is more like a remainder operator than modulo operator.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="dt">int</span> main() {</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>    printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="dv">14</span>%-<span class="dv">8</span>);   <span class="co">//  6</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>    printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, -<span class="dv">14</span>%<span class="dv">8</span>);   <span class="co">// -6</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>    printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, -<span class="dv">14</span>%-<span class="dv">8</span>);  <span class="co">// -6</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>    printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="dv">14</span>%<span class="dv">8</span>);    <span class="co">//  6</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>}</span></code></pre></div>
+<p>The <code>%</code> operator in Python is different from that in C. In Python, it is more like a proper modulo operator.</p>
+<pre><code>&gt;&gt;&gt; 14%-8
+-2
+
+&gt;&gt;&gt; -14%8
+2
+
+&gt;&gt;&gt; -14%-8
+-6
+
+&gt;&gt;&gt; 14%8
+6
+</code></pre>
+<p>Further reading:</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Modulo_operation">https://en.wikipedia.org/wiki/Modulo_operation</a></li>
+<li><a href="https://stackoverflow.com/questions/17524673/understanding-the-modulus-operator">https://stackoverflow.com/questions/17524673/understanding-the-modulus-operator</a></li>
+<li><a href="https://stackoverflow.com/questions/11720656/modulo-operation-with-negative-numbers">https://stackoverflow.com/questions/11720656/modulo-operation-with-negative-numbers</a></li>
+<li><a href="https://stackoverflow.com/questions/13683563/whats-the-difference-between-mod-and-remainder">https://stackoverflow.com/questions/13683563/whats-the-difference-between-mod-and-remainder</a></li>
+<li><a href="http://web.archive.org/web/20121222204903/http://blogs.msdn.com/b/ericlippert/archive/2011/12/05/what-s-the-difference-remainder-vs-modulus.aspx">http://web.archive.org/web/20121222204903/http://blogs.msdn.com/b/ericlippert/archive/2011/12/05/what-s-the-difference-remainder-vs-modulus.aspx</a></li>
+</ul>
+</main>
+</body>
+</html>

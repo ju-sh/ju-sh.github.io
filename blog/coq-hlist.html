@@ -3,37 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Julin Shaji" />
+  <meta name="keywords" content="coq" />
   <title>Heterogeneous lists in Coq</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">Heterogeneous lists in Coq</h1>
-</header>
+      <h1 class="title">Heterogeneous lists in Coq</h1>
+    </header>
 
 <ul>
     <li>Date created: 13-Apr-2022</li>
@@ -55,7 +45,7 @@ About making heterogeneous list (hlist) in Coq's Gallina.
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <p>In programming languages, a list is a collection of values.</p>
 <p>The built-in lists of some programming languages (like OCaml and C++) are homogeneous lists. ie, lists where all elements should be of the same type.</p>
 <p>Whereas the lists that come out of the box in some other programming languages (like Python) can be heterogeneous, where the elements needn't all be of the same type. (I included a sample usage of lists in a few programming languages under the 'Addendum' section at the end of this blog post.)</p>
@@ -825,6 +815,6 @@ hcons 3 [[ ]]%hlist
      : hlist (fun _ : bool =&gt; nat)
 *)
 </code></pre>
-</div>
+</main>
 </body>
 </html>

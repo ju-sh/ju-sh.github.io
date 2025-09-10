@@ -4,36 +4,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Bash</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">Bash</h1>
-</header>
+      <h1 class="title">Bash</h1>
+    </header>
 
 <ul>
     </ul>
@@ -43,7 +31,7 @@
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <h1 id="tips">Tips</h1>
 <ul>
 <li><p>Alt-u: upper case word starting at cursor</p></li>
@@ -65,6 +53,7 @@
 <ul>
 <li><a href="https://stackoverflow.com/questions/2107945/how-to-loop-over-directories-in-linux">https://stackoverflow.com/questions/2107945/how-to-loop-over-directories-in-linux</a></li>
 </ul></li>
+<li>Bash functions (like unix processes) exit code must fall in the range [0.255]. That means no negative exit codes.</li>
 </ul>
 <h1 id="options">'Options'</h1>
 <ul>
@@ -422,6 +411,6 @@ fi
 <p>Sample output:</p>
 <pre><code>GNU bash, version 4.4.20(1)-release (x86_64-pc-linux-gnu)
 </code></pre>
-</div>
+</main>
 </body>
 </html>

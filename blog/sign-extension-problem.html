@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="keywords" content="c" />
+  <title>Problem of sign extension</title>
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
+</head>
+<body>
+
+
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
+
+<header id="title-block-header">
+      <h1 class="title">Problem of sign extension</h1>
+    </header>
+
+<ul>
+    <li>Date created: 12-Aug-2017</li>
+    </ul>
+
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/c.html">c</a>
+    </code> /
+  <p>
+</div>
+
+
+<div id="description">
+About sign extension with an example C snippet .
+</div>
+
+<hr/>
+
+<main id="content-container">
+<p>Consider the following program</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="dt">int</span> main()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>{</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a> <span class="dt">char</span> c = <span class="dv">255</span>;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a> <span class="dt">int</span> a = (<span class="dt">int</span>)(<span class="dt">unsigned</span> <span class="dt">char</span>)c;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a> <span class="dt">int</span> b = (<span class="dt">int</span>)c;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>            printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">a = %d&quot;</span>, a);</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>            printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">b = %d&quot;</span>, b);</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a> <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>}</span></code></pre></div>
+<p>The output is interesting:</p>
+<pre><code>a = 255
+b = -1
+</code></pre>
+<p>This is because of sign extension.</p>
+<p>In <code>a = (int)c</code>, <code>c</code> has the value <code>255</code>. As <code>char</code> is of 8 bits (usually), the binary representation in memory would be:</p>
+<pre><code>1111 1111
+</code></pre>
+<p>When this value is cast into <code>int</code> which means <code>signed int</code>, this <code>1111 1111</code> is considered a signed value. Like this</p>
+<pre><code>1 111 1111
+</code></pre>
+<p>with the first bit denoting the sign of the number.</p>
+<p>Since the sign bit is <code>1</code> here, <code>c</code> is assumed to be negative.</p>
+<p><code>sizeof(int)</code> is greater than <code>sizeof(char)</code> so there are some bits to fill in the <code>int</code> representation of <code>c</code>.</p>
+<p>Attempt to preserve the sign as well as the value of the number. So the lower bits of <code>c</code> assigned to <code>a</code> is unchanged and the ‘vacant’ bits of the <code>int</code> representation are filled with the value of the sign bit.</p>
+<p>ie, the binary representation of a would be (assuming <code>sizeof(int)</code> is 4 bytes)</p>
+<pre><code>1111 1111 1111 1111 1111 1111 1111 1111
+</code></pre>
+<p>which is the binary for <code>-1</code> (in 2’s complement form) when considered as a <code>signed int</code>.</p>
+<p>Whereas in <code>b = (int) (unsigned char)c;</code>, <code>c</code> is first cast into an <code>unsigned char</code>. Therefore its sign won’t be considered when it is cast into a <code>signed int</code> afterwards and hence sign extension won’t be done.</p>
+<p>Ie, the binary representation of <code>b</code> would be</p>
+<pre><code>0000 0000 0000 0000 0000 0000 1111 1111
+</code></pre>
+<p>as the sign bit of <code>c</code> won’t be copied to the ‘vacant’ bits of <code>b</code>.</p>
+<p>See: <a href="https://en.wikipedia.org/wiki/Sign_extension">https://en.wikipedia.org/wiki/Sign_extension</a></p>
+</main>
+</body>
+</html>

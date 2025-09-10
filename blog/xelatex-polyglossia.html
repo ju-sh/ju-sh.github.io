@@ -3,37 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Julin Shaji" />
+  <meta name="keywords" content="tex, unicode" />
   <title>Polyglossia with XeLaTeX</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">Polyglossia with XeLaTeX</h1>
-</header>
+      <h1 class="title">Polyglossia with XeLaTeX</h1>
+    </header>
 
 <ul>
     <li>Date created: 04-Jun-2022</li>
@@ -43,7 +33,10 @@
   <p>
     Tags: / 
     <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/tex unicode.html">tex unicode</a>
+      <a href="https://ju-sh.github.io/blog/pages/tags/tex.html">tex</a>
+    </code> /
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/unicode.html">unicode</a>
     </code> /
   <p>
 </div>
@@ -55,7 +48,7 @@ About using polyglossia with XeLaTex for non-Latin scripts.
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <p>I once needed to use non-Latin characters in a pdf document to be generated with LaTeX. That meant <code>xelatex</code> being more preferable as the tex engine than <code>pdflatex</code> since the former has native unicode support and ability to use system fonts. <a href="https://www.tug.org/levels.html">⁴</a></p>
 <p>Having settled on <code>xelatex</code>, I spent some time online and saw that there were two options to write non-English (or non-Latin characters, rather) documents: <a href="https://ctan.org/pkg/babel">babel</a> and <a href="https://ctan.org/pkg/polyglossia">polyglossia</a>.</p>
 <p>I decided to try polyglossia though I had never used babel before.</p>
@@ -202,6 +195,6 @@ Japanese text: 日本語 (kanji), にほんご (hiragana), ニホンゴ (katakan
 <li><a href="https://ctan.org/pkg/xetexref">xetex reference manual</a></li>
 <li><a href="https://mirrors.ctan.org/macros/xetex/latex/xecjk/xeCJK.pdf">xeCJK manual</a> (Chinese)</li>
 </ul>
-</div>
+</main>
 </body>
 </html>

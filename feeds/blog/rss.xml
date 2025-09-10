@@ -19,259 +19,277 @@
     <atom:link href="https://ju-sh.github.io/blog/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>
-        Panel discussion - RSD 7 @ IITPKD
+        'Local names' in LaTeX environments
       </title>
       <link>
-        https://ju-sh.github.io/blog/panel-rsd7-iitpkd.html
+        https://ju-sh.github.io/blog/local-names-latex.html
       </link>
       <description>
         
 &lt;div&gt;
   &lt;div&gt;
-    Notes from the panel discussion held as part of RSD 7 at IITPKD
+    About using macros to have names with local scope for use within LaTeX environments
   &lt;/div&gt;
   &lt;div&gt;
-    &lt;div id=&quot;content-container&quot;&gt;
-&lt;p&gt;Research scholars day of IIT Palakkad for the year 2025 (RSD 7) was held between February 21st and 22nd. As part of this event, a panel discussion was held which went over matters related to research life. The panel consisted of professors from IITPKD.&lt;/p&gt;
-&lt;p&gt;This post is an outline of the thoughts from this session. (Occasionally augmented with my own comments. So this may not be exactly what was discussed.)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Learn not just to answer a question but &lt;strong&gt;to ask the right question&lt;/strong&gt;
-&lt;ul&gt;
-&lt;li&gt;Look at recent papers in your field&lt;/li&gt;
-&lt;li&gt;Identify the common source of truth that these paper seems to derive from&lt;/li&gt;
-&lt;li&gt;Start research from that point and figure how to arrive at that source of truth&lt;/li&gt;
-&lt;li&gt;ie, See what is the &lt;strong&gt;common direction of the papers&lt;/strong&gt; being published and try to arrive at the source&lt;/li&gt;
-&lt;li&gt;Remark: Hitchhiker&#x27;s guide to galaxy quote
-&lt;ul&gt;
-&lt;li&gt;What is the answer to life, the universe, everything? 42.&lt;/li&gt;
-&lt;li&gt;Then what is the meaning of the question ??!&lt;/li&gt;
-&lt;li&gt;ie, before finding the answer, one should have a clear idea of the question.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Number of publications vs quality of research
-&lt;ul&gt;
-&lt;li&gt;Quality should matter more than quantity&lt;/li&gt;
-&lt;li&gt;Unfortunately, Quality is not quanitifiable&lt;/li&gt;
-&lt;li&gt;Difficult for a group of people to rank papers based on quality&lt;/li&gt;
-&lt;li&gt;Number is the only metric by which can be agreed upon by everyone&lt;/li&gt;
-&lt;li&gt;For this reason, number of publications is often used to decide who gets promotion, funding, etc.&lt;/li&gt;
-&lt;li&gt;Quality is not quanitifiable&lt;/li&gt;
-&lt;li&gt;Suggestion: &lt;strong&gt;Focus on quality, but don&#x27;t neglect quantity&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;About advisors potentially pushing student to publish review papers
-&lt;ul&gt;
-&lt;li&gt;Since review papers are much more likely to accumulate citations&lt;/li&gt;
-&lt;li&gt;Review papers is not original research, but is literature review&lt;/li&gt;
-&lt;li&gt;Suggestion:
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Literature review is a critical skill in research&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;But literature review must lead to new ideas being explored&lt;/li&gt;
-&lt;li&gt;One shouldn&#x27;t stick to writing review papers&lt;/li&gt;
-&lt;li&gt;Like in the case quantity vs quality,&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Literature review
-&lt;ul&gt;
-&lt;li&gt;You should know the state of art before starting the actual work&lt;/li&gt;
-&lt;li&gt;Helps avoid duplication of effort&lt;/li&gt;
-&lt;li&gt;You are likely to gain insights&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Finding a research topic
-&lt;ul&gt;
-&lt;li&gt;Seek something that you are passionate about&lt;/li&gt;
-&lt;li&gt;Know more about it. Read literature. Talk to people working in that domain.&lt;/li&gt;
-&lt;li&gt;See how you can advance the state of the art.&lt;/li&gt;
-&lt;li&gt;See what contribution can you make to make the work of future researchers easier.&lt;/li&gt;
-&lt;li&gt;Something that others can build on.&lt;/li&gt;
-&lt;li&gt;ie, &lt;strong&gt;find something that you are passionate about and see how to make that better&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Incremental research vs breakthroughs
-&lt;ul&gt;
-&lt;li&gt;Most research is incremental in nature&lt;/li&gt;
-&lt;li&gt;A PhD work usually extends the boundaries of knowledge a little bit&lt;/li&gt;
-&lt;li&gt;Although breakthrough ideas are nice, that is not for everyone.&lt;/li&gt;
-&lt;li&gt;In maths, 10 mediocre theorems may be easier to prove than one big theorem&lt;/li&gt;
-&lt;li&gt;Method used by a panelist to identify a worthwhile proof:
-&lt;ul&gt;
-&lt;li&gt;Write the proof, keep it away for a few weeks.&lt;/li&gt;
-&lt;li&gt;By now you probably can&#x27;t recall the details of the proof.&lt;/li&gt;
-&lt;li&gt;Come back and read what you wrote earlier.&lt;/li&gt;
-&lt;li&gt;If you are amazed by the proof, it is great.&lt;/li&gt;
-&lt;li&gt;Otherwise, it is mediocre.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Importance of research collaboration
-&lt;ul&gt;
-&lt;li&gt;How to meet people: Attend conferences, summer schools, webinars&lt;/li&gt;
-&lt;li&gt;Establish connections while attending events
-&lt;ul&gt;
-&lt;li&gt;Send a mail&lt;/li&gt;
-&lt;li&gt;If you have a concrete idea to work on, keep at it don&#x27;t let lie&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Collobrations should be with people whose expertise you can complement&lt;/strong&gt;
-&lt;ul&gt;
-&lt;li&gt;This also allows both parties to better appreciate each other.&lt;/li&gt;
-&lt;li&gt;Both parties bring something new to the table, thereby achieving something that neither would&#x27;ve been able to achieve alone.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Casual conversations sometimes lead to full blown collaborations&lt;/li&gt;
-&lt;li&gt;Story shared by a panelist: 
-&lt;ul&gt;
-&lt;li&gt;Panelist published a paper in an interdisciplinary domain with a collaborator&lt;/li&gt;
-&lt;li&gt;The collaborator and the panelist were members of the mess committe of their institute&lt;/li&gt;
-&lt;li&gt;While running an errand related to the mess (buying samosas), they had a chat about their areas of research.&lt;/li&gt;
-&lt;li&gt;This eventually led to a colloboration resulting in a paper.&lt;/li&gt;
-&lt;li&gt;A professor in the audience remarked that this is another reason why students should consider joining the mess committee. :D&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Suggestions:
-&lt;ul&gt;
-&lt;li&gt;Talk about your research to anyone who would listen&lt;/li&gt;
-&lt;li&gt;Ask about others&#x27; research and listen to anyone who has the time to talk about their work.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Knowing which journal to submit to: 
-&lt;ul&gt;
-&lt;li&gt;It could help to know the expertise of editors before submitting to journal&lt;/li&gt;
-&lt;li&gt;Even for good quality submissions, if the reviewer is not familiar with the topic, they could judge it poorly.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Role of AI/ML:
-&lt;ul&gt;
-&lt;li&gt;AI isn&#x27;t everything, nor is it nothing&lt;/li&gt;
-&lt;li&gt;It can make positive contributions
-&lt;ul&gt;
-&lt;li&gt;Eg: Chatgpt is capable of helping people make beamer slides&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;These days applications of AIML is being helpful in almost every domains&lt;/li&gt;
-&lt;li&gt;To know the benefit of applying concepts or output from another field, there should be interdisciplinary communication
-&lt;ul&gt;
-&lt;li&gt;Eg: Mechanical dept student should talk with CSE/Data science to learn how AIML can help them automate some of their work.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Disadvantage: Big applications like chatgpt is difficult for normal people to run on their own.
-&lt;ul&gt;
-&lt;li&gt;Have to depend on vendors who could charge users.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Whether it will take away jobs?
-&lt;ul&gt;
-&lt;li&gt;Probably.&lt;/li&gt;
-&lt;li&gt;Once computers began to get popular, many jobs vanished&lt;/li&gt;
-&lt;li&gt;But computers did make life better.&lt;/li&gt;
-&lt;li&gt;Ideally, people should be capable of adapting to changing environment.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Concern: What if people start depending on AI too much that they &#x27;forget&#x27; how to do the things that they come to depend on AI for?
-&lt;ul&gt;
-&lt;li&gt;Remark by panelist: Similar to a scenario in an Isaac Asimov novel&lt;/li&gt;
-&lt;li&gt;As in, there are inteliigent machines, but no human knows to build one anymore.&lt;/li&gt;
-&lt;li&gt;Not an invalid point, I guess.&lt;/li&gt;
-&lt;li&gt;Use of computers and calculators has made mental arithmetic less necessary.&lt;/li&gt;
-&lt;li&gt;But people can now possibly use the time spent on mastering mental arithmetic skills to do other work.&lt;/li&gt;
-&lt;li&gt;The novel: &lt;em&gt;Prelude to Foundation&lt;/em&gt; - 1st prequel in the &lt;em&gt;Foundation&lt;/em&gt; series&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Example of handling hostile paper reviews
-&lt;ul&gt;
-&lt;li&gt;Reviews are usually helpful&lt;/li&gt;
-&lt;li&gt;If a review&#x27;s tone is hostile, disregard the tone and use the feedback itself if it makes sense.&lt;/li&gt;
-&lt;li&gt;If the reviewer is being unnecessarily hostile, contact the journal&#x27;s editor.&lt;/li&gt;
-&lt;li&gt;Eg: A paper review mentioned that the submitter is arrogant because of the delay in incorporating suggested changes. Even though there was no direct communication between submitter and the reviewer.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;Finish your PhD as soon as possible
-&lt;ul&gt;
-&lt;li&gt;During a PhD, you will be making much less money that you would if you were in the industry.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Every extra year you take to complete PhD is loss of great amount of money and immense amount of wasted value in terms of time&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;You do your best work when you are young&lt;/li&gt;
-&lt;li&gt;Use your youth to do good work and gain experience&lt;/li&gt;
-&lt;li&gt;When you get old, you are less likely to be energetic, but you can use your experience to help collaborators and still get good work done.&lt;/li&gt;
-&lt;li&gt;Great insights are derived from past experiences&lt;/li&gt;
-&lt;li&gt;ie, time is limited. Use it effectively.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Interesting stuff:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;IEEE seems to have banned the world &#x27;novel&#x27; from the titles of papers that it publishes
-&lt;ul&gt;
-&lt;li&gt;Probably due to too many papers using it.&lt;/li&gt;
-&lt;li&gt;(Couldn&#x27;t find the source)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Joke?: Review of a 4 page write-up spanned 5 pages.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;—&lt;/p&gt;
-&lt;p&gt;Thanks to:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The students who organized the event&lt;/li&gt;
-&lt;li&gt;Moderator: Dr. Albert Sunny&lt;/li&gt;
-&lt;li&gt;Panelists:
-&lt;ul&gt;
-&lt;li&gt;Dr. Dinesh Jagadeeshan (Dept. of Chemistry)&lt;/li&gt;
-&lt;li&gt;Dr. Jaikrishnan Janardhanan (Dept. of Mathematics)&lt;/li&gt;
-&lt;li&gt;Dr. Kesavan D. (Dept. of Mechanical Engineering)&lt;/li&gt;
-&lt;li&gt;Dr. Sabarimalai Manikandan (Dept. of Electrical Engineering)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr/&gt;
-&lt;p&gt;Just for fun, here&#x27;s the part from Hitchiker&#x27;s guide to galaxy (book version) mentioned earlier.&lt;/p&gt;
-&lt;p&gt;From &lt;em&gt;The hitchhiker&#x27;s guide to the galaxy&lt;/em&gt; by Douglas Adams:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&quot;Seventy-five thousand generations ago, our ancestors set this program in motion,&quot; the second man said, &quot;and in all that time we will be the first to hear the computer speak.&quot;&lt;/p&gt;
-&lt;p&gt;&quot;An awesome prospect, Phouchg,&quot; agreed the first man, and Arthur suddenly realized that he was watching a recording with subtitles.&lt;/p&gt;
-&lt;p&gt;&quot;We are the ones who will hear,&quot; said Phouchg, &quot;the answer to the great question of Life …!&quot;&lt;br/&gt;
-&quot;The Universe …!&quot; said Loonquawl.&lt;br/&gt;
-&quot;And Everything …!&quot;&lt;br/&gt;
-&quot;Shhh,&quot; said Loonquawl with a slight gesture, &quot;I think Deep Thought is preparing to speak!&quot;&lt;/p&gt;
-&lt;p&gt;There was a moment&#x27;s expectant pause whilst panels slowly came to life on the front of the console. Lights flashed on and off experimentally and settled down into a businesslike pattern. A soft low hum came from the communication channel.&lt;/p&gt;
-&lt;p&gt;&quot;Good morning,&quot; said Deep Thought at last.&lt;br/&gt;
-&quot;Er … Good morning, O Deep Thought,&quot; said Loonquawl nervously, &quot;do you have … er, that is …&quot;&lt;br/&gt;
-&quot;An answer for you?&quot; interrupted Deep Thought majestically. &quot;Yes. I have.&quot;&lt;br/&gt;
-The two men shivered with expectancy. Their waiting had not been in vain.&lt;br/&gt;
-&quot;There really is one?&quot; breathed Phouchg.&lt;br/&gt;
-&quot;There really is one,&quot; confirmed Deep Thought.&lt;br/&gt;
-&quot;To Everything? To the great Question of Life, the Universe and Everything?&quot;&lt;br/&gt;
-&quot;Yes.&quot;&lt;br/&gt;
-Both of the men had been trained for this moment, their lives had been a preparation for it, they had been selected at birth as those who would witness the answer, but even so they found themselves gasping and squirming like excited children.&lt;br/&gt;
-&quot;And you&#x27;re ready to give it to us?&quot; urged Loonquawl. &quot;I am.&quot;&lt;br/&gt;
-&quot;Now?&quot;&lt;br/&gt;
-&quot;Now,&quot; said Deep Thought.&lt;br/&gt;
-They both licked their dry lips.&lt;br/&gt;
-&quot;Though I don&#x27;t think,&quot; added Deep Thought, &quot;that you&#x27;re going to like it.&quot;&lt;br/&gt;
-&quot;Doesn&#x27;t matter!&quot; said Phouchg. &quot;We must know it! Now!&quot;&lt;br/&gt;
-&quot;Now?&quot; inquired Deep Thought.&lt;br/&gt;
-&quot;Yes! Now …&quot;&lt;br/&gt;
-&quot;Alright,&quot; said the computer and settled into silence again. The two men fidgeted. The tension was unbearable.&lt;br/&gt;
-&quot;You&#x27;re really not going to like it,&quot; observed Deep Thought.&lt;br/&gt;
-&quot;Tell us!&quot;&lt;br/&gt;
-&quot;Alright,&quot; said Deep Thought. &quot;The Answer to the Great Question …&quot;&lt;br/&gt;
-&quot;Yes …!&quot;&lt;br/&gt;
-&quot;Of Life, the Universe and Everything …&quot; said Deep Thought.&lt;br/&gt;
-&quot;Yes …!&quot;&lt;br/&gt;
-&quot;Is …&quot; said Deep Thought, and paused.&lt;br/&gt;
-&quot;Yes …!&quot;&lt;br/&gt;
-&quot;Is …&quot;&lt;br/&gt;
-&quot;Yes …!!!…?&quot;&lt;br/&gt;
-&quot;Forty-two,&quot; said Deep Thought, with infinite majesty and calm.&lt;/p&gt;
-&lt;p&gt;It was a long time before anyone spoke.&lt;br/&gt;
-Out of the corner of his eye Phouchg could see the sea of tense expectant faces down in the square outside.&lt;/p&gt;
-&lt;p&gt;&quot;We&#x27;re going to get lynched aren&#x27;t we?&quot; he whispered.&lt;br/&gt;
-&quot;It was a tough assignment,&quot; said Deep Thought mildly.&lt;br/&gt;
-&quot;Forty-two!&quot; yelled Loonquawl. &quot;Is that all you&#x27;ve got to show for seven and a half million years&#x27; work?&quot;&lt;br/&gt;
-&quot;I checked it very thoroughly,&quot; said the computer, &quot;and that quite definitely is the answer. I think the problem, to be quite honest with you, is that you&#x27;ve never actually known what the question is.&quot;&lt;br/&gt;
-&quot;But it was the Great Question! The Ultimate Question of Life, the Universe and Everything!&quot; howled Loonquawl.&lt;br/&gt;
-&quot;Yes,&quot; said Deep Thought with the air of one who suffers fools gladly, &quot;but what actually is it?&quot;&lt;/p&gt;
-&lt;p&gt;A slow stupefied silence crept over the men as they stared at the computer and then at each other.&lt;/p&gt;
-&lt;p&gt;&quot;Well, you know, it&#x27;s just Everything … Everything …&quot; offered Phouchg weakly.&lt;br/&gt;
-&quot;Exactly!&quot; said Deep Thought. &quot;So once you do know what the question actually is, you&#x27;ll know what the answer means.&quot;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/div&gt;
+    &lt;main id=&quot;content-container&quot;&gt;
+&lt;p&gt;I worked with type theoretical concepts during my postgrads and often used the &lt;code&gt;mathpartir&lt;/code&gt; package while writing reports with LaTeX. Among other things, &lt;code&gt;mathpartir&lt;/code&gt; offers the &lt;code&gt;\inferrule&lt;/code&gt; command that can be used to display derivation trees like the one shown in Figure &lt;a href=&quot;#f1&quot;&gt;1&lt;/a&gt;.&lt;/p&gt;
+&lt;figure id=&quot;f1&quot;&gt;
+&lt;img align=&quot;center&quot; alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-049_001.png?raw=true&quot; style=&quot;padding-bottom: 2%&quot; title=&quot;Example dervation tree&quot; width=&quot;100%&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-title&quot;&gt;Figure 1&lt;/span&gt;: Example derivation tree
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&quot;structure-of-inferrule&quot;&gt;Structure of inferrule&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;mathpartir&lt;/code&gt; lets us format inference rules using the &lt;code&gt;\inferrule&lt;/code&gt; command.&lt;/p&gt;
+&lt;p&gt;An inference rule consists of a set of assumptions and a conclusion as represented below:&lt;/p&gt;
+&lt;figure id=&quot;f2&quot;&gt;
+&lt;pre class=&quot;ascii-art&quot;&gt;
+assm_1   assm_2  ...  assum_k
+─────────────────────────────
+          concl              
+  &lt;/pre&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-title&quot;&gt;Figure 2&lt;/span&gt;: Format of an inference rule
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;This can be written like the following using &lt;code&gt;\inferrule&lt;/code&gt;:&lt;/p&gt;
+&lt;figure id=&quot;s1&quot;&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb1&quot;&gt;&lt;pre class=&quot;sourceCode latex&quot;&gt;&lt;code class=&quot;sourceCode latex&quot;&gt;&lt;span id=&quot;cb1-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;{&lt;/span&gt;
+&lt;span id=&quot;cb1-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-2&quot;&gt;&lt;/a&gt;  assm_1 &lt;span class=&quot;fu&quot;&gt;\\&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-3&quot;&gt;&lt;/a&gt;  assm_2 &lt;span class=&quot;fu&quot;&gt;\\&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-4&quot;&gt;&lt;/a&gt;  ...&lt;/span&gt;
+&lt;span id=&quot;cb1-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-5&quot;&gt;&lt;/a&gt;  assm_k &lt;span class=&quot;fu&quot;&gt;\\&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-6&quot;&gt;&lt;/a&gt;}{&lt;/span&gt;
+&lt;span id=&quot;cb1-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-7&quot;&gt;&lt;/a&gt;  concl&lt;/span&gt;
+&lt;span id=&quot;cb1-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-8&quot;&gt;&lt;/a&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-title&quot;&gt;Snippet 1&lt;/span&gt;: Syntax of &lt;code&gt;\inferrule&lt;/code&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Such rules can be nested as needed to produce proof trees as shown in Figure &lt;a href=&quot;#f3&quot;&gt;3&lt;/a&gt;.&lt;/p&gt;
+&lt;figure id=&quot;f3&quot;&gt;
+&lt;pre class=&quot;ascii-art&quot;&gt;
+  assm_1  assm_2    assm_1  assm_2  
+  ──────────────    ──────────────  
+    concl_1           concl_2       
+────────────────────────────────────
+               concl                
+  &lt;/pre&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-title&quot;&gt;Figure 3&lt;/span&gt;: Format of a proof tree with depth 2
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;For example, consider the derivation tree depicted in Figure &lt;a href=&quot;#f4&quot;&gt;4&lt;/a&gt;.&lt;/p&gt;
+&lt;figure id=&quot;f4&quot;&gt;
+&lt;pre class=&quot;ascii-art&quot;&gt;
+   a     b      b     c   
+  ─────────    ─────────  
+    a ∧ b        b ∧ c    
+──────────────────────────
+         a ∧ b ∧ c        
+  &lt;/pre&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-title&quot;&gt;Figure 4&lt;/span&gt;: Example of a proof tree with depth 2
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;This tree can be made using mathpartir via the LaTeX shown in Snippet &lt;a href=&quot;#s2&quot;&gt;2&lt;/a&gt;.&lt;/p&gt;
+&lt;figure id=&quot;s2&quot;&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb2&quot;&gt;&lt;pre class=&quot;sourceCode latex&quot;&gt;&lt;code class=&quot;sourceCode latex&quot;&gt;&lt;span id=&quot;cb2-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;\begin&lt;/span&gt;{&lt;span class=&quot;ex&quot;&gt;mathpar&lt;/span&gt;}&lt;/span&gt;
+&lt;span id=&quot;cb2-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-2&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;{&lt;/span&gt;
+&lt;span id=&quot;cb2-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-3&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;{&lt;/span&gt;
+&lt;span id=&quot;cb2-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-4&quot;&gt;&lt;/a&gt;      a &lt;span class=&quot;fu&quot;&gt;\\&lt;/span&gt; b&lt;/span&gt;
+&lt;span id=&quot;cb2-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-5&quot;&gt;&lt;/a&gt;    }{&lt;/span&gt;
+&lt;span id=&quot;cb2-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-6&quot;&gt;&lt;/a&gt;      a &lt;span class=&quot;fu&quot;&gt;\land&lt;/span&gt; b&lt;/span&gt;
+&lt;span id=&quot;cb2-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-7&quot;&gt;&lt;/a&gt;    }&lt;/span&gt;
+&lt;span id=&quot;cb2-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-8&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;fu&quot;&gt;\\&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb2-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-9&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;{&lt;/span&gt;
+&lt;span id=&quot;cb2-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-10&quot;&gt;&lt;/a&gt;      b &lt;span class=&quot;fu&quot;&gt;\\&lt;/span&gt; c&lt;/span&gt;
+&lt;span id=&quot;cb2-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-11&quot;&gt;&lt;/a&gt;    }{&lt;/span&gt;
+&lt;span id=&quot;cb2-12&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-12&quot;&gt;&lt;/a&gt;      b &lt;span class=&quot;fu&quot;&gt;\land&lt;/span&gt; c&lt;/span&gt;
+&lt;span id=&quot;cb2-13&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-13&quot;&gt;&lt;/a&gt;    }&lt;/span&gt;
+&lt;span id=&quot;cb2-14&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-14&quot;&gt;&lt;/a&gt;  }{&lt;/span&gt;
+&lt;span id=&quot;cb2-15&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-15&quot;&gt;&lt;/a&gt;    a &lt;span class=&quot;fu&quot;&gt;\land&lt;/span&gt; b &lt;span class=&quot;fu&quot;&gt;\land&lt;/span&gt; c&lt;/span&gt;
+&lt;span id=&quot;cb2-16&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-16&quot;&gt;&lt;/a&gt;  }&lt;/span&gt;
+&lt;span id=&quot;cb2-17&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-17&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;\end&lt;/span&gt;{&lt;span class=&quot;ex&quot;&gt;mathpar&lt;/span&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-title&quot;&gt;Snippet 2&lt;/span&gt;: LaTeX to produce tree in Figure &lt;a href=&quot;#f4&quot;&gt;4&lt;/a&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;The thing is, for larger trees, it quickly gets difficult to write the LaTeX code.&lt;/p&gt;
+&lt;p&gt;A way to build named sub-trees which may then be joined up together to create the overall tree would be quite useful. Kind of like a &lt;code&gt;let&lt;/code&gt;-binding. For instance, it would be more convenient to write the tree shown in Figure &lt;a href=&quot;#f1&quot;&gt;1&lt;/a&gt; as something like Snippet &lt;a href=&quot;#s3&quot;&gt;3&lt;/a&gt;.&lt;/p&gt;
+&lt;figure id=&quot;s3&quot;&gt;
+&lt;pre&gt;&lt;code&gt;let
+  \r1 = \inferrule{a \\ b}{a \land b}
+  \r2 = \inferrule{b \\ c}{b \land c}
+in
+  \inferrule{\r1 \\ \r2}{a \land b \land c}
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-title&quot;&gt;Snippet 3&lt;/span&gt;: Depiction of an imagined &lt;code&gt;let&lt;/code&gt; expression in LaTeX
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;TeX has a &lt;code&gt;\let&lt;/code&gt;, but it is not actually a let-binding. It is more like a way of giving an alias to a macro (See &lt;a href=&quot;https://groups.google.com/g/latexusersgroup/c/sV1zw6Hpv1c&quot;&gt;this&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;For example, both &lt;code&gt;\dhi&lt;/code&gt; and &lt;code&gt;\hi&lt;/code&gt; in Snippet &lt;a href=&quot;#s4&quot;&gt;4&lt;/a&gt; expand to &lt;code&gt;hi&lt;/code&gt;.&lt;/p&gt;
+&lt;figure id=&quot;s4&quot;&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb4&quot;&gt;&lt;pre class=&quot;sourceCode tex&quot;&gt;&lt;code class=&quot;sourceCode latex&quot;&gt;&lt;span id=&quot;cb4-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;% Make a macro \dhi &lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb4-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-2&quot;&gt;&lt;/a&gt;&lt;span class=&quot;fu&quot;&gt;\def\dhi&lt;/span&gt;{hi}&lt;/span&gt;
+&lt;span id=&quot;cb4-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-3&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb4-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-4&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;% Make a macro \hi with the same meaning as \dhi&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb4-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-5&quot;&gt;&lt;/a&gt;&lt;span class=&quot;fu&quot;&gt;\let\hi\dhi&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb4-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-6&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb4-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-7&quot;&gt;&lt;/a&gt;&lt;span class=&quot;fu&quot;&gt;\bye&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb4-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-8&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb4-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-9&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;% Use xdvi to open resultant dvi file&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-title&quot;&gt;Snippet 4&lt;/span&gt;: Usage of &lt;code&gt;\let&lt;/code&gt; in TeX
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Though we don&#x27;t have a &lt;code&gt;\let&lt;/code&gt; in TeX, we can still give names to parts of the tree via macros. We can do this either with &lt;code&gt;\def&lt;/code&gt; of TeX or &lt;code&gt;\newcommand&lt;/code&gt; of LaTeX (or perhaps even &lt;code&gt;\NewCommand&lt;/code&gt; of expl3).&lt;/p&gt;
+&lt;p&gt;Something like what is shown in Snippet &lt;a href=&quot;#s3&quot;&gt;3&lt;/a&gt; can be achieved for Snippet &lt;a href=&quot;#s2&quot;&gt;2&lt;/a&gt; using the LaTeX shown in Snippet &lt;a href=&quot;#s5&quot;&gt;5&lt;/a&gt;.&lt;/p&gt;
+&lt;figure id=&quot;s5&quot;&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb5&quot;&gt;&lt;pre class=&quot;sourceCode latex&quot;&gt;&lt;code class=&quot;sourceCode latex&quot;&gt;&lt;span id=&quot;cb5-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;fu&quot;&gt;\newcommand\rone&lt;/span&gt;{&lt;/span&gt;
+&lt;span id=&quot;cb5-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-2&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;{a &lt;span class=&quot;fu&quot;&gt;\\&lt;/span&gt; b}{a &lt;span class=&quot;fu&quot;&gt;\land&lt;/span&gt; b}&lt;/span&gt;
+&lt;span id=&quot;cb5-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-3&quot;&gt;&lt;/a&gt;}&lt;/span&gt;
+&lt;span id=&quot;cb5-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-4&quot;&gt;&lt;/a&gt;&lt;span class=&quot;fu&quot;&gt;\newcommand\rtwo&lt;/span&gt;{&lt;/span&gt;
+&lt;span id=&quot;cb5-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-5&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;{b &lt;span class=&quot;fu&quot;&gt;\\&lt;/span&gt; c}{b &lt;span class=&quot;fu&quot;&gt;\land&lt;/span&gt; c}&lt;/span&gt;
+&lt;span id=&quot;cb5-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-6&quot;&gt;&lt;/a&gt;}&lt;/span&gt;
+&lt;span id=&quot;cb5-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-7&quot;&gt;&lt;/a&gt;&lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;{&lt;span class=&quot;fu&quot;&gt;\rone&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\\&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\rtwo&lt;/span&gt;}{a &lt;span class=&quot;fu&quot;&gt;\land&lt;/span&gt; b &lt;span class=&quot;fu&quot;&gt;\land&lt;/span&gt; c}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-title&quot;&gt;Snippet 5&lt;/span&gt;: LaTeX in Snippet &lt;a href=&quot;#s2&quot;&gt;2&lt;/a&gt; but with named sub-trees
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Macro names cannot have numbers in it (see &lt;a href=&quot;https://tex.stackexchange.com/questions/406638/macro-names-that-could-contain-numbers&quot;&gt;this&lt;/a&gt; discussion for a &#x27;workaround&#x27;). So I used names like &lt;code&gt;rone&lt;/code&gt; instead of &lt;code&gt;r1&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;an-example-use&quot;&gt;An example use&lt;/h2&gt;
+&lt;p&gt;All right, let us try a more concrete example.&lt;/p&gt;
+&lt;p&gt;The proof tree shown in Figure &lt;a href=&quot;#f1&quot;&gt;1&lt;/a&gt; is from an exercise in the &lt;em&gt;Types and Programming Languages&lt;/em&gt; book (Exercise 9.2.2). This proof tree can be written using mathpar with the code snippet shown in Snippet &lt;a href=&quot;#s6&quot;&gt;6&lt;/a&gt;.&lt;/p&gt;
+&lt;figure id=&quot;s6&quot;&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb6&quot;&gt;&lt;pre class=&quot;sourceCode latex&quot;&gt;&lt;code class=&quot;sourceCode latex&quot;&gt;&lt;span id=&quot;cb6-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;bu&quot;&gt;\documentclass&lt;/span&gt;{&lt;span class=&quot;ex&quot;&gt;article&lt;/span&gt;}&lt;/span&gt;
+&lt;span id=&quot;cb6-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-2&quot;&gt;&lt;/a&gt;&lt;span class=&quot;bu&quot;&gt;\usepackage&lt;/span&gt;{&lt;span class=&quot;ex&quot;&gt;amssymb&lt;/span&gt;}&lt;/span&gt;
+&lt;span id=&quot;cb6-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-3&quot;&gt;&lt;/a&gt;&lt;span class=&quot;bu&quot;&gt;\usepackage&lt;/span&gt;{&lt;span class=&quot;ex&quot;&gt;mathpartir&lt;/span&gt;}&lt;/span&gt;
+&lt;span id=&quot;cb6-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-4&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb6-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-5&quot;&gt;&lt;/a&gt;&lt;span class=&quot;fu&quot;&gt;\newcommand\pr&lt;/span&gt;{&lt;span class=&quot;fu&quot;&gt;\vdash&lt;/span&gt;}&lt;/span&gt;
+&lt;span id=&quot;cb6-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-6&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb6-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-7&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;\begin&lt;/span&gt;{&lt;span class=&quot;ex&quot;&gt;document&lt;/span&gt;}&lt;/span&gt;
+&lt;span id=&quot;cb6-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-8&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb6-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-9&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;\begin&lt;/span&gt;{&lt;span class=&quot;ex&quot;&gt;mathpar&lt;/span&gt;}&lt;/span&gt;
+&lt;span id=&quot;cb6-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-10&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;*[right=T-App]{&lt;/span&gt;
+&lt;span id=&quot;cb6-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-11&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;*{ }{&lt;/span&gt;
+&lt;span id=&quot;cb6-12&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-12&quot;&gt;&lt;/a&gt;      f: &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B} &lt;span class=&quot;fu&quot;&gt;\to&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B}&lt;/span&gt;
+&lt;span id=&quot;cb6-13&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-13&quot;&gt;&lt;/a&gt;    }&lt;/span&gt;
+&lt;span id=&quot;cb6-14&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-14&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;fu&quot;&gt;\\&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb6-15&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-15&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;*[right=T-If]{&lt;/span&gt;
+&lt;span id=&quot;cb6-16&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-16&quot;&gt;&lt;/a&gt;      &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;*[right=T-Var]{&lt;/span&gt;
+&lt;span id=&quot;cb6-17&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-17&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;fu&quot;&gt;\bot&lt;/span&gt;: &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B} &lt;span class=&quot;fu&quot;&gt;\in&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\Gamma&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb6-18&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-18&quot;&gt;&lt;/a&gt;      }{&lt;/span&gt;
+&lt;span id=&quot;cb6-19&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-19&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;fu&quot;&gt;\Gamma&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\pr&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\bot&lt;/span&gt;: &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B}&lt;/span&gt;
+&lt;span id=&quot;cb6-20&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-20&quot;&gt;&lt;/a&gt;      }&lt;/span&gt;
+&lt;span id=&quot;cb6-21&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-21&quot;&gt;&lt;/a&gt;      &lt;span class=&quot;fu&quot;&gt;\\&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb6-22&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-22&quot;&gt;&lt;/a&gt;      &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;*[right=T-Var]{&lt;/span&gt;
+&lt;span id=&quot;cb6-23&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-23&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;fu&quot;&gt;\top&lt;/span&gt;: &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B} &lt;span class=&quot;fu&quot;&gt;\in&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\Gamma&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb6-24&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-24&quot;&gt;&lt;/a&gt;      }{&lt;/span&gt;
+&lt;span id=&quot;cb6-25&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-25&quot;&gt;&lt;/a&gt;        &lt;span class=&quot;fu&quot;&gt;\Gamma&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\pr&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\top&lt;/span&gt;: &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B}&lt;/span&gt;
+&lt;span id=&quot;cb6-26&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-26&quot;&gt;&lt;/a&gt;      }&lt;/span&gt;
+&lt;span id=&quot;cb6-27&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-27&quot;&gt;&lt;/a&gt;    }{&lt;/span&gt;
+&lt;span id=&quot;cb6-28&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-28&quot;&gt;&lt;/a&gt;      &lt;span class=&quot;fu&quot;&gt;\Gamma&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\pr&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb6-29&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-29&quot;&gt;&lt;/a&gt;      (&lt;span class=&quot;fu&quot;&gt;\mathtt&lt;/span&gt;{if}&lt;span class=&quot;fu&quot;&gt;\ \bot\ \mathtt&lt;/span&gt;{then}&lt;span class=&quot;fu&quot;&gt;\ \top\&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb6-30&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-30&quot;&gt;&lt;/a&gt;       &lt;span class=&quot;fu&quot;&gt;\mathtt&lt;/span&gt;{else}&lt;span class=&quot;fu&quot;&gt;\ \bot&lt;/span&gt;): &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B}&lt;/span&gt;
+&lt;span id=&quot;cb6-31&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-31&quot;&gt;&lt;/a&gt;    }&lt;/span&gt;
+&lt;span id=&quot;cb6-32&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-32&quot;&gt;&lt;/a&gt;  }{&lt;/span&gt;
+&lt;span id=&quot;cb6-33&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-33&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;fu&quot;&gt;\Gamma&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\pr&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb6-34&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-34&quot;&gt;&lt;/a&gt;    (f&lt;span class=&quot;fu&quot;&gt;\ &lt;/span&gt;(&lt;span class=&quot;fu&quot;&gt;\mathtt&lt;/span&gt;{if}&lt;span class=&quot;fu&quot;&gt;\ \bot\ \mathtt&lt;/span&gt;{then}&lt;span class=&quot;fu&quot;&gt;\ \top\&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb6-35&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-35&quot;&gt;&lt;/a&gt;         &lt;span class=&quot;fu&quot;&gt;\mathtt&lt;/span&gt;{else}&lt;span class=&quot;fu&quot;&gt;\ \bot&lt;/span&gt;)): &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B}&lt;/span&gt;
+&lt;span id=&quot;cb6-36&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-36&quot;&gt;&lt;/a&gt;  }&lt;/span&gt;
+&lt;span id=&quot;cb6-37&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-37&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;\end&lt;/span&gt;{&lt;span class=&quot;ex&quot;&gt;mathpar&lt;/span&gt;}&lt;/span&gt;
+&lt;span id=&quot;cb6-38&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb6-38&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;\end&lt;/span&gt;{&lt;span class=&quot;ex&quot;&gt;document&lt;/span&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-title&quot;&gt;Snippet 6&lt;/span&gt;: LaTeX for proof tree in Figure &lt;a href=&quot;#f1&quot;&gt;1&lt;/a&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;There are 5 rules (same as the number of horizontal lines) being written with the above snippet (See Figure &lt;a href=&quot;#f5&quot;&gt;5&lt;/a&gt;). This not very pleasant to write because all five rules are kind of interwoven together.&lt;/p&gt;
+&lt;figure id=&quot;f5&quot;&gt;
+&lt;img align=&quot;center&quot; alt=&quot;Sub-components of the proof tree&quot; src=&quot;https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-049_002.png?raw=true&quot; style=&quot;padding-bottom: 2%&quot; title=&quot;Sub-components of the proof tree&quot; width=&quot;100%&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-title&quot;&gt;Figure 5&lt;/span&gt;: Sub-components of the proof tree in Figure &lt;a href=&quot;#f1&quot;&gt;1&lt;/a&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;It can be difficult to see where one sub-tree ends and another begins. Larger the proof tree, easier is it to mess up. Some modularity would be nice, wherein we can deal with each rule independent of others. We can achieve such a &#x27;&lt;code&gt;let&lt;/code&gt;-binding&#x27;-like effect by defining local macros as was described earlier.&lt;/p&gt;
+&lt;p&gt;So, the code in Snippet &lt;a href=&quot;#s6&quot;&gt;6&lt;/a&gt; can be re-written as the LaTeX shown in Snippet &lt;a href=&quot;#s7&quot;&gt;7&lt;/a&gt;.&lt;/p&gt;
+&lt;figure id=&quot;s7&quot;&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb7&quot;&gt;&lt;pre class=&quot;sourceCode latex&quot;&gt;&lt;code class=&quot;sourceCode latex&quot;&gt;&lt;span id=&quot;cb7-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;\begin&lt;/span&gt;{&lt;span class=&quot;ex&quot;&gt;mathpar&lt;/span&gt;}&lt;/span&gt;
+&lt;span id=&quot;cb7-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-2&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;% T-Var&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-3&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;fu&quot;&gt;\newcommand\tvarone&lt;/span&gt;{&lt;span class=&quot;co&quot;&gt;%&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-4&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;*[right=T-Var]{&lt;/span&gt;
+&lt;span id=&quot;cb7-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-5&quot;&gt;&lt;/a&gt;      &lt;span class=&quot;fu&quot;&gt;\top&lt;/span&gt;: &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B} &lt;span class=&quot;fu&quot;&gt;\in&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\Gamma&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-6&quot;&gt;&lt;/a&gt;    }{&lt;/span&gt;
+&lt;span id=&quot;cb7-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-7&quot;&gt;&lt;/a&gt;      &lt;span class=&quot;fu&quot;&gt;\Gamma&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\pr&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\top&lt;/span&gt;: &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B}&lt;/span&gt;
+&lt;span id=&quot;cb7-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-8&quot;&gt;&lt;/a&gt;    }&lt;/span&gt;
+&lt;span id=&quot;cb7-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-9&quot;&gt;&lt;/a&gt;  }&lt;/span&gt;
+&lt;span id=&quot;cb7-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-10&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-11&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;% T-Var&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-12&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-12&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;fu&quot;&gt;\newcommand\tvartwo&lt;/span&gt;{&lt;span class=&quot;co&quot;&gt;%&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-13&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-13&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;*[right=T-Var]{&lt;/span&gt;
+&lt;span id=&quot;cb7-14&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-14&quot;&gt;&lt;/a&gt;      &lt;span class=&quot;fu&quot;&gt;\bot&lt;/span&gt;: &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B} &lt;span class=&quot;fu&quot;&gt;\in&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\Gamma&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-15&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-15&quot;&gt;&lt;/a&gt;    }{&lt;/span&gt;
+&lt;span id=&quot;cb7-16&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-16&quot;&gt;&lt;/a&gt;      &lt;span class=&quot;fu&quot;&gt;\Gamma&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\pr&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\bot&lt;/span&gt;: &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B}&lt;/span&gt;
+&lt;span id=&quot;cb7-17&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-17&quot;&gt;&lt;/a&gt;    }&lt;/span&gt;
+&lt;span id=&quot;cb7-18&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-18&quot;&gt;&lt;/a&gt;  }&lt;/span&gt;
+&lt;span id=&quot;cb7-19&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-19&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-20&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-20&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;% T-If&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-21&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-21&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;fu&quot;&gt;\newcommand\tif&lt;/span&gt;{&lt;span class=&quot;co&quot;&gt;%&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-22&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-22&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;*[right=T-If]{&lt;/span&gt;
+&lt;span id=&quot;cb7-23&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-23&quot;&gt;&lt;/a&gt;      &lt;span class=&quot;fu&quot;&gt;\tvartwo&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\\&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\tvarone&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-24&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-24&quot;&gt;&lt;/a&gt;    }{&lt;/span&gt;
+&lt;span id=&quot;cb7-25&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-25&quot;&gt;&lt;/a&gt;      &lt;span class=&quot;fu&quot;&gt;\Gamma&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\pr&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-26&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-26&quot;&gt;&lt;/a&gt;      (&lt;span class=&quot;fu&quot;&gt;\mathtt&lt;/span&gt;{if}&lt;span class=&quot;fu&quot;&gt;\ \bot\ \mathtt&lt;/span&gt;{then}&lt;span class=&quot;fu&quot;&gt;\ \top\&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-27&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-27&quot;&gt;&lt;/a&gt;       &lt;span class=&quot;fu&quot;&gt;\mathtt&lt;/span&gt;{else}&lt;span class=&quot;fu&quot;&gt;\ \bot&lt;/span&gt;): &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B}&lt;/span&gt;
+&lt;span id=&quot;cb7-28&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-28&quot;&gt;&lt;/a&gt;    }&lt;/span&gt;
+&lt;span id=&quot;cb7-29&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-29&quot;&gt;&lt;/a&gt;  }&lt;/span&gt;
+&lt;span id=&quot;cb7-30&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-30&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-31&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-31&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;% Function f given as premise&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-32&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-32&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;fu&quot;&gt;\newcommand\premf&lt;/span&gt;{&lt;span class=&quot;co&quot;&gt;%&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-33&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-33&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;*{ }{f: &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B} &lt;span class=&quot;fu&quot;&gt;\to&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B}}&lt;/span&gt;
+&lt;span id=&quot;cb7-34&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-34&quot;&gt;&lt;/a&gt;  }&lt;/span&gt;
+&lt;span id=&quot;cb7-35&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-35&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-36&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-36&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;% T-App&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-37&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-37&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;fu&quot;&gt;\newcommand\tapp&lt;/span&gt;{&lt;span class=&quot;co&quot;&gt;%&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-38&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-38&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;fu&quot;&gt;\inferrule&lt;/span&gt;*[right=T-App]{&lt;/span&gt;
+&lt;span id=&quot;cb7-39&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-39&quot;&gt;&lt;/a&gt;      &lt;span class=&quot;fu&quot;&gt;\premf&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\\&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\tif&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-40&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-40&quot;&gt;&lt;/a&gt;    }{&lt;/span&gt;
+&lt;span id=&quot;cb7-41&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-41&quot;&gt;&lt;/a&gt;      &lt;span class=&quot;fu&quot;&gt;\Gamma&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;\pr&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-42&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-42&quot;&gt;&lt;/a&gt;      (f&lt;span class=&quot;fu&quot;&gt;\ &lt;/span&gt;(&lt;span class=&quot;fu&quot;&gt;\mathtt&lt;/span&gt;{if}&lt;span class=&quot;fu&quot;&gt;\ \bot\ \mathtt&lt;/span&gt;{then}&lt;span class=&quot;fu&quot;&gt;\ \top\&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-43&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-43&quot;&gt;&lt;/a&gt;           &lt;span class=&quot;fu&quot;&gt;\mathtt&lt;/span&gt;{else}&lt;span class=&quot;fu&quot;&gt;\ \bot&lt;/span&gt;)): &lt;span class=&quot;fu&quot;&gt;\mathbb&lt;/span&gt;{B}&lt;/span&gt;
+&lt;span id=&quot;cb7-44&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-44&quot;&gt;&lt;/a&gt;    }&lt;/span&gt;
+&lt;span id=&quot;cb7-45&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-45&quot;&gt;&lt;/a&gt;  }&lt;/span&gt;
+&lt;span id=&quot;cb7-46&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-46&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-47&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-47&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;% Final proof tree&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-48&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-48&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;fu&quot;&gt;\tapp&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb7-49&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb7-49&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;\end&lt;/span&gt;{&lt;span class=&quot;ex&quot;&gt;mathpar&lt;/span&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-title&quot;&gt;Snippet 7&lt;/span&gt;: LaTeX in Snippet &lt;a href=&quot;#s6&quot;&gt;6&lt;/a&gt; but with named sub-trees
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Observe how specific parts of the proof tree can be named and set aside, which can then be plugged in to create the complete derivation tree. Though this might look longer than the original snippet, this is much more easier to deal with. Especially since now one can have a clear idea which part of the code correspond to which sub-tree.&lt;/p&gt;
+&lt;p&gt;This way of composing tree from its sub-trees is useful in any situation where there is a tree structure being built. For example, in family tree diagrams built with the &lt;code&gt;geneologytree&lt;/code&gt; package.&lt;/p&gt;
+&lt;h2 id=&quot;def-vs-newcommand&quot;&gt;&lt;code&gt;\def&lt;/code&gt; vs &lt;code&gt;\newcommand&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;As mentioned earlier, &lt;code&gt;\def&lt;/code&gt; and &lt;code&gt;\newcommand&lt;/code&gt; are both ways to define macros. Plain TeX uses &lt;code&gt;\def&lt;/code&gt; whereas LaTeX can also use &lt;code&gt;\newcommand&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;One of the differences between the two is that &lt;code&gt;\newcommand&lt;/code&gt; will give error if we retry to redefine a pre-existing macro (got to use &lt;code&gt;\renewcommand&lt;/code&gt; for that), whereas &lt;code&gt;\def&lt;/code&gt; will simply overwrite the pre-existing definition.&lt;/p&gt;
+&lt;p&gt;The no-questions-asked rewrite behaviour of &lt;code&gt;\def&lt;/code&gt; can cause confusion, especially larger code base..&lt;/p&gt;
+&lt;h2 id=&quot;acknowledgement&quot;&gt;Acknowledgement&lt;/h2&gt;
+&lt;p&gt;Before realizing macros could be used to compose sub-trees into trees, I had set out trying to make a LaTeX package for it. I had made some progress getting familiar with expl3 and had actually made parts of such a package. Then I was able to attend &lt;a href=&quot;https://tug.org/tug2025/program.html&quot;&gt;TUG&#x27;25&lt;/a&gt;, which at Trivandrum this year. I talked to &lt;a href=&quot;https://borisv.lk.net/&quot;&gt;Boris Veytsman&lt;/a&gt; about my need and it was him who suggested using macros. Thanks Boris!&lt;/p&gt;
+&lt;p&gt;Thanks also to TUG for funding my TUG&#x27;25 expenses.&lt;/p&gt;
+&lt;/main&gt;
   &lt;/div&gt;
 &lt;/div&gt;
       </description>
       <pubDate>
-        Tue, 11 Mar 2025 00:00:00 GMT
+        Thu, 11 Sep 2025 00:00:00 GMT
       </pubDate>
       <guid>
-        https://ju-sh.github.io/blog/panel-rsd7-iitpkd.html
+        https://ju-sh.github.io/blog/local-names-latex.html
       </guid>
       <category>
-        outline
+        latex
       </category>
     </item>
   </channel>

@@ -4,36 +4,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Bluespec SystemVerilog</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">Bluespec SystemVerilog</h1>
-</header>
+      <h1 class="title">Bluespec SystemVerilog</h1>
+    </header>
 
 <ul>
     </ul>
@@ -43,7 +31,7 @@
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <p>Bluespec SystemVerilog (BSV) is different from Bluespec Haskell (BH). But both are implementations of Bluespec.</p>
 <ul>
 <li><p>One rule at a time.</p></li>
@@ -53,6 +41,16 @@
 <li>type classes are there as well.</li>
 </ul></li>
 </ul>
+<h2 id="declaring-new-types">Declaring new types</h2>
+<p>3 ways</p>
+<ul>
+<li>Rename a type: typedef:</li>
+<li>Enumeration types: enum:</li>
+<li>Compound types: struct, vector, maybe, tagged union</li>
+</ul>
+<h3 id="typedef">typedef</h3>
+<pre class="bsv"><code></code></pre>
+<p>See: <a href="https://csg.csail.mit.edu/6.175/archive/2016/lectures/T01-BSV.pdf">https://csg.csail.mit.edu/6.175/archive/2016/lectures/T01-BSV.pdf</a></p>
 <h2 id="interfaces">Interfaces</h2>
 <ul>
 <li>Advertises the outside facing part of a module.</li>
@@ -196,10 +194,10 @@ endcase
 </ul></li>
 <li>'A module can be annotated with the synthesize attribute' <a href="https://web.ece.ucsb.edu/its/bluespec/doc/BSV/user-guide.pdf">ʳ</a>. This has the same effect as passing the module name to compiler with the <code>-g</code> flag.</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>(* synthesize *)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="kw">module</span> mkFoo (FooIfc);</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>...</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="kw">endmodule</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>(* synthesize *)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="kw">module</span> mkFoo (FooIfc);</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>...</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="kw">endmodule</span></span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -234,6 +232,6 @@ endcase
 <li>R. Nikhil, "Bluespec System Verilog: efficient, correct RTL from high level specifications," Proceedings. Second ACM and IEEE International Conference on Formal Methods and Models for Co-Design, 2004. MEMOCODE '04., San Diego, CA, USA, 2004, pp. 69-70, doi: 10.1109/MEMCOD.2004.1459818.</li>
 <li>Rishiyur S. Nikhil and Arvind. 2008. What is Bluespec? SIGDA Newsl. 38, 23 (December 2008), 1. <a href="https://doi.org/10.1145/1862867.1862868">https://doi.org/10.1145/1862867.1862868</a></li>
 </ul>
-</div>
+</main>
 </body>
 </html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="keywords" content="latex" />
+  <title>'Local names' in LaTeX environments</title>
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
+</head>
+<body>
+
+
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
+
+<header id="title-block-header">
+      <h1 class="title">'Local names' in LaTeX environments</h1>
+    </header>
+
+<ul>
+    <li>Date created: 11-Sep-2025</li>
+    </ul>
+
+<div>
+  <p>
+    Tags: / 
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/latex.html">latex</a>
+    </code> /
+  <p>
+</div>
+
+
+<div id="description">
+About using macros to have names with local scope for use within LaTeX environments.
+</div>
+
+<hr/>
+
+<main id="content-container">
+<p>I worked with type theoretical concepts during my postgrads and often used the <code>mathpartir</code> package while writing reports with LaTeX. Among other things, <code>mathpartir</code> offers the <code>\inferrule</code> command that can be used to display derivation trees like the one shown in Figure <a href="#f1">1</a>.</p>
+<figure id="f1">
+  <img
+    src="https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-049_001.png?raw=true"
+    title="Example dervation tree"
+    alt="Example derivation tree"
+    width="100%"
+    style="padding-bottom: 2%"
+    align="center" />
+  <figcaption>
+    <span class="fc-title">Figure 1</span>: Example derivation tree
+  </figcaption>
+</figure>
+
+<h2 id="structure-of-inferrule">Structure of inferrule</h2>
+<p><code>mathpartir</code> lets us format inference rules using the <code>\inferrule</code> command.</p>
+<p>An inference rule consists of a set of assumptions and a conclusion as represented below:</p>
+<figure id="f2">
+  <pre class="ascii-art">
+assm_1   assm_2  ...  assum_k
+─────────────────────────────
+          concl              
+  </pre>
+  <figcaption>
+    <span class="fc-title">Figure 2</span>: Format of an inference rule
+  </figcaption>
+</figure>
+
+<p>This can be written like the following using <code>\inferrule</code>:</p>
+<figure id="s1">
+<div class="sourceCode" id="cb1"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">\inferrule</span>{</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  assm_1 <span class="fu">\\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  assm_2 <span class="fu">\\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>  ...</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>  assm_k <span class="fu">\\</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>}{</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>  concl</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>}</span></code></pre></div>
+<figcaption>
+<span class="fc-title">Snippet 1</span>: Syntax of <code>\inferrule</code>
+</figcaption>
+</figure>
+<p>Such rules can be nested as needed to produce proof trees as shown in Figure <a href="#f3">3</a>.</p>
+<figure id="f3">
+  <pre class="ascii-art">
+  assm_1  assm_2    assm_1  assm_2  
+  ──────────────    ──────────────  
+    concl_1           concl_2       
+────────────────────────────────────
+               concl                
+  </pre>
+  <figcaption>
+    <span class="fc-title">Figure 3</span>: Format of a proof tree with depth 2
+  </figcaption>
+</figure>
+
+<p>For example, consider the derivation tree depicted in Figure <a href="#f4">4</a>.</p>
+<figure id="f4">
+  <pre class="ascii-art">
+   a     b      b     c   
+  ─────────    ─────────  
+    a ∧ b        b ∧ c    
+──────────────────────────
+         a ∧ b ∧ c        
+  </pre>
+  <figcaption>
+    <span class="fc-title">Figure 4</span>: Example of a proof tree with depth 2
+  </figcaption>
+</figure>
+
+<p>This tree can be made using mathpartir via the LaTeX shown in Snippet <a href="#s2">2</a>.</p>
+<figure id="s2">
+<div class="sourceCode" id="cb2"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">\begin</span>{<span class="ex">mathpar</span>}</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  <span class="fu">\inferrule</span>{</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>    <span class="fu">\inferrule</span>{</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>      a <span class="fu">\\</span> b</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>    }{</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>      a <span class="fu">\land</span> b</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>    }</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>    <span class="fu">\\</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>    <span class="fu">\inferrule</span>{</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>      b <span class="fu">\\</span> c</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>    }{</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>      b <span class="fu">\land</span> c</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>    }</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>  }{</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a>    a <span class="fu">\land</span> b <span class="fu">\land</span> c</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>  }</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a><span class="kw">\end</span>{<span class="ex">mathpar</span>}</span></code></pre></div>
+<figcaption>
+<span class="fc-title">Snippet 2</span>: LaTeX to produce tree in Figure <a href="#f4">4</a>
+</figcaption>
+</figure>
+<p>The thing is, for larger trees, it quickly gets difficult to write the LaTeX code.</p>
+<p>A way to build named sub-trees which may then be joined up together to create the overall tree would be quite useful. Kind of like a <code>let</code>-binding. For instance, it would be more convenient to write the tree shown in Figure <a href="#f1">1</a> as something like Snippet <a href="#s3">3</a>.</p>
+<figure id="s3">
+<pre><code>let
+  \r1 = \inferrule{a \\ b}{a \land b}
+  \r2 = \inferrule{b \\ c}{b \land c}
+in
+  \inferrule{\r1 \\ \r2}{a \land b \land c}
+end
+</code></pre>
+<figcaption>
+<span class="fc-title">Snippet 3</span>: Depiction of an imagined <code>let</code> expression in LaTeX
+</figcaption>
+</figure>
+<p>TeX has a <code>\let</code>, but it is not actually a let-binding. It is more like a way of giving an alias to a macro (See <a href="https://groups.google.com/g/latexusersgroup/c/sV1zw6Hpv1c">this</a>).</p>
+<p>For example, both <code>\dhi</code> and <code>\hi</code> in Snippet <a href="#s4">4</a> expand to <code>hi</code>.</p>
+<figure id="s4">
+<div class="sourceCode" id="cb4"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="co">% Make a macro \dhi </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="fu">\def\dhi</span>{hi}</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="co">% Make a macro \hi with the same meaning as \dhi</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="fu">\let\hi\dhi</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="fu">\bye</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="co">% Use xdvi to open resultant dvi file</span></span></code></pre></div>
+<figcaption>
+<span class="fc-title">Snippet 4</span>: Usage of <code>\let</code> in TeX
+</figcaption>
+</figure>
+<p>Though we don't have a <code>\let</code> in TeX, we can still give names to parts of the tree via macros. We can do this either with <code>\def</code> of TeX or <code>\newcommand</code> of LaTeX (or perhaps even <code>\NewCommand</code> of expl3).</p>
+<p>Something like what is shown in Snippet <a href="#s3">3</a> can be achieved for Snippet <a href="#s2">2</a> using the LaTeX shown in Snippet <a href="#s5">5</a>.</p>
+<figure id="s5">
+<div class="sourceCode" id="cb5"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="fu">\newcommand\rone</span>{</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>  <span class="fu">\inferrule</span>{a <span class="fu">\\</span> b}{a <span class="fu">\land</span> b}</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>}</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="fu">\newcommand\rtwo</span>{</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>  <span class="fu">\inferrule</span>{b <span class="fu">\\</span> c}{b <span class="fu">\land</span> c}</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>}</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a><span class="fu">\inferrule</span>{<span class="fu">\rone</span> <span class="fu">\\</span> <span class="fu">\rtwo</span>}{a <span class="fu">\land</span> b <span class="fu">\land</span> c}</span></code></pre></div>
+<figcaption>
+<span class="fc-title">Snippet 5</span>: LaTeX in Snippet <a href="#s2">2</a> but with named sub-trees
+</figcaption>
+</figure>
+<p>Macro names cannot have numbers in it (see <a href="https://tex.stackexchange.com/questions/406638/macro-names-that-could-contain-numbers">this</a> discussion for a 'workaround'). So I used names like <code>rone</code> instead of <code>r1</code>.</p>
+<h2 id="an-example-use">An example use</h2>
+<p>All right, let us try a more concrete example.</p>
+<p>The proof tree shown in Figure <a href="#f1">1</a> is from an exercise in the <em>Types and Programming Languages</em> book (Exercise 9.2.2). This proof tree can be written using mathpar with the code snippet shown in Snippet <a href="#s6">6</a>.</p>
+<figure id="s6">
+<div class="sourceCode" id="cb6"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="bu">\documentclass</span>{<span class="ex">article</span>}</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="bu">\usepackage</span>{<span class="ex">amssymb</span>}</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="bu">\usepackage</span>{<span class="ex">mathpartir</span>}</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="fu">\newcommand\pr</span>{<span class="fu">\vdash</span>}</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a><span class="kw">\begin</span>{<span class="ex">mathpar</span>}</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>  <span class="fu">\inferrule</span>*[right=T-App]{</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>    <span class="fu">\inferrule</span>*{ }{</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a>      f: <span class="fu">\mathbb</span>{B} <span class="fu">\to</span> <span class="fu">\mathbb</span>{B}</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>    }</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a>    <span class="fu">\\</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a>    <span class="fu">\inferrule</span>*[right=T-If]{</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a>      <span class="fu">\inferrule</span>*[right=T-Var]{</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a>        <span class="fu">\bot</span>: <span class="fu">\mathbb</span>{B} <span class="fu">\in</span> <span class="fu">\Gamma</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a>      }{</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a>        <span class="fu">\Gamma</span> <span class="fu">\pr</span> <span class="fu">\bot</span>: <span class="fu">\mathbb</span>{B}</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true"></a>      }</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true"></a>      <span class="fu">\\</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true"></a>      <span class="fu">\inferrule</span>*[right=T-Var]{</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true"></a>        <span class="fu">\top</span>: <span class="fu">\mathbb</span>{B} <span class="fu">\in</span> <span class="fu">\Gamma</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true"></a>      }{</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true"></a>        <span class="fu">\Gamma</span> <span class="fu">\pr</span> <span class="fu">\top</span>: <span class="fu">\mathbb</span>{B}</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true"></a>      }</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true"></a>    }{</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true"></a>      <span class="fu">\Gamma</span> <span class="fu">\pr</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true"></a>      (<span class="fu">\mathtt</span>{if}<span class="fu">\ \bot\ \mathtt</span>{then}<span class="fu">\ \top\</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true"></a>       <span class="fu">\mathtt</span>{else}<span class="fu">\ \bot</span>): <span class="fu">\mathbb</span>{B}</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true"></a>    }</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true"></a>  }{</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true"></a>    <span class="fu">\Gamma</span> <span class="fu">\pr</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true"></a>    (f<span class="fu">\ </span>(<span class="fu">\mathtt</span>{if}<span class="fu">\ \bot\ \mathtt</span>{then}<span class="fu">\ \top\</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true"></a>         <span class="fu">\mathtt</span>{else}<span class="fu">\ \bot</span>)): <span class="fu">\mathbb</span>{B}</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true"></a>  }</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true"></a><span class="kw">\end</span>{<span class="ex">mathpar</span>}</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
+<figcaption>
+<span class="fc-title">Snippet 6</span>: LaTeX for proof tree in Figure <a href="#f1">1</a>
+</figcaption>
+</figure>
+<p>There are 5 rules (same as the number of horizontal lines) being written with the above snippet (See Figure <a href="#f5">5</a>). This not very pleasant to write because all five rules are kind of interwoven together.</p>
+<figure id="f5">
+  <img
+    src="https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-049_002.png?raw=true"
+    title="Sub-components of the proof tree"
+    alt="Sub-components of the proof tree"
+    width="100%"
+    style="padding-bottom: 2%"
+    align="center" />
+  <figcaption>
+    <span class="fc-title">Figure 5</span>: Sub-components of the proof tree in Figure <a href="#f1">1</a>
+  </figcaption>
+</figure>
+
+<p>It can be difficult to see where one sub-tree ends and another begins. Larger the proof tree, easier is it to mess up. Some modularity would be nice, wherein we can deal with each rule independent of others. We can achieve such a '<code>let</code>-binding'-like effect by defining local macros as was described earlier.</p>
+<p>So, the code in Snippet <a href="#s6">6</a> can be re-written as the LaTeX shown in Snippet <a href="#s7">7</a>.</p>
+<figure id="s7">
+<div class="sourceCode" id="cb7"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="kw">\begin</span>{<span class="ex">mathpar</span>}</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>  <span class="co">% T-Var</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>  <span class="fu">\newcommand\tvarone</span>{<span class="co">%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>    <span class="fu">\inferrule</span>*[right=T-Var]{</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>      <span class="fu">\top</span>: <span class="fu">\mathbb</span>{B} <span class="fu">\in</span> <span class="fu">\Gamma</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>    }{</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>      <span class="fu">\Gamma</span> <span class="fu">\pr</span> <span class="fu">\top</span>: <span class="fu">\mathbb</span>{B}</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>    }</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a>  }</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a>  <span class="co">% T-Var</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a>  <span class="fu">\newcommand\tvartwo</span>{<span class="co">%</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a>    <span class="fu">\inferrule</span>*[right=T-Var]{</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a>      <span class="fu">\bot</span>: <span class="fu">\mathbb</span>{B} <span class="fu">\in</span> <span class="fu">\Gamma</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a>    }{</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a>      <span class="fu">\Gamma</span> <span class="fu">\pr</span> <span class="fu">\bot</span>: <span class="fu">\mathbb</span>{B}</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true"></a>    }</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true"></a>  }</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true"></a>  <span class="co">% T-If</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true"></a>  <span class="fu">\newcommand\tif</span>{<span class="co">%</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true"></a>    <span class="fu">\inferrule</span>*[right=T-If]{</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true"></a>      <span class="fu">\tvartwo</span> <span class="fu">\\</span> <span class="fu">\tvarone</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true"></a>    }{</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true"></a>      <span class="fu">\Gamma</span> <span class="fu">\pr</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true"></a>      (<span class="fu">\mathtt</span>{if}<span class="fu">\ \bot\ \mathtt</span>{then}<span class="fu">\ \top\</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true"></a>       <span class="fu">\mathtt</span>{else}<span class="fu">\ \bot</span>): <span class="fu">\mathbb</span>{B}</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true"></a>    }</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true"></a>  }</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true"></a></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true"></a>  <span class="co">% Function f given as premise</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true"></a>  <span class="fu">\newcommand\premf</span>{<span class="co">%</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true"></a>    <span class="fu">\inferrule</span>*{ }{f: <span class="fu">\mathbb</span>{B} <span class="fu">\to</span> <span class="fu">\mathbb</span>{B}}</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true"></a>  }</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true"></a></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true"></a>  <span class="co">% T-App</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true"></a>  <span class="fu">\newcommand\tapp</span>{<span class="co">%</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true"></a>    <span class="fu">\inferrule</span>*[right=T-App]{</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true"></a>      <span class="fu">\premf</span> <span class="fu">\\</span> <span class="fu">\tif</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true"></a>    }{</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true"></a>      <span class="fu">\Gamma</span> <span class="fu">\pr</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true"></a>      (f<span class="fu">\ </span>(<span class="fu">\mathtt</span>{if}<span class="fu">\ \bot\ \mathtt</span>{then}<span class="fu">\ \top\</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true"></a>           <span class="fu">\mathtt</span>{else}<span class="fu">\ \bot</span>)): <span class="fu">\mathbb</span>{B}</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true"></a>    }</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true"></a>  }</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true"></a></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true"></a>  <span class="co">% Final proof tree</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true"></a>  <span class="fu">\tapp</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true"></a><span class="kw">\end</span>{<span class="ex">mathpar</span>}</span></code></pre></div>
+<figcaption>
+<span class="fc-title">Snippet 7</span>: LaTeX in Snippet <a href="#s6">6</a> but with named sub-trees
+</figcaption>
+</figure>
+<p>Observe how specific parts of the proof tree can be named and set aside, which can then be plugged in to create the complete derivation tree. Though this might look longer than the original snippet, this is much more easier to deal with. Especially since now one can have a clear idea which part of the code correspond to which sub-tree.</p>
+<p>This way of composing tree from its sub-trees is useful in any situation where there is a tree structure being built. For example, in family tree diagrams built with the <code>geneologytree</code> package.</p>
+<h2 id="def-vs-newcommand"><code>\def</code> vs <code>\newcommand</code></h2>
+<p>As mentioned earlier, <code>\def</code> and <code>\newcommand</code> are both ways to define macros. Plain TeX uses <code>\def</code> whereas LaTeX can also use <code>\newcommand</code>.</p>
+<p>One of the differences between the two is that <code>\newcommand</code> will give error if we retry to redefine a pre-existing macro (got to use <code>\renewcommand</code> for that), whereas <code>\def</code> will simply overwrite the pre-existing definition.</p>
+<p>The no-questions-asked rewrite behaviour of <code>\def</code> can cause confusion, especially larger code base..</p>
+<h2 id="acknowledgement">Acknowledgement</h2>
+<p>Before realizing macros could be used to compose sub-trees into trees, I had set out trying to make a LaTeX package for it. I had made some progress getting familiar with expl3 and had actually made parts of such a package. Then I was able to attend <a href="https://tug.org/tug2025/program.html">TUG'25</a>, which at Trivandrum this year. I talked to <a href="https://borisv.lk.net/">Boris Veytsman</a> about my need and it was him who suggested using macros. Thanks Boris!</p>
+<p>Thanks also to TUG for funding my TUG'25 expenses.</p>
+</main>
+</body>
+</html>

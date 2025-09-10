@@ -4,36 +4,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Compilers</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">Compilers</h1>
-</header>
+      <h1 class="title">Compilers</h1>
+    </header>
 
 <ul>
     </ul>
@@ -43,7 +31,7 @@
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <h2 id="first-and-follow-sets">FIRST and FOLLOW sets</h2>
 <p>Can aid both top-down and bottom-up parsers.</p>
 <h3 id="first">FIRST</h3>
@@ -381,7 +369,10 @@ id ε      |    |
 </code></pre>
 <h3 id="recursive-descent-parsing">Recursive descent parsing</h3>
 <ul>
-<li>Every symbol may be thought of as functions.</li>
+<li>Every symbol may be thought of as functions.
+<ul>
+<li>A procedure is associated with each non-terminal.</li>
+</ul></li>
 <li>May need backtracking.</li>
 <li>Left recursive grammars mean infinite loop.
 <ul>
@@ -391,13 +382,14 @@ id ε      |    |
 <h3 id="predictive-parsing">Predictive parsing</h3>
 <ul>
 <li>A special case of recursive descent parsing.</li>
-<li>No backtracking.</li>
+<li>A type of top-down parsing which <strong>doesn't need backtracking</strong>.</li>
 <li>Appropriate production chosen by looking ahead a fixed number of symbols.
 <ul>
 <li>LL(k) parsing. k is number of lookahead symbols.</li>
 <li>LL means 'Left-to-right (scanning), Left-most derivation'.</li>
 <li>Usually just one symbol =&gt; LL(1) parsing</li>
 </ul></li>
+<li>The lookahead symbol(s) unambiguously determines the production to be chosen for a grammar that can be parsed with a predictive parser.</li>
 </ul>
 <h2 id="bottom-up-parsing">Bottom-up parsing</h2>
 <p>Examples:</p>
@@ -921,6 +913,6 @@ This is actually a regular language...
 <li><em>Compilers: Principles, techniques and tools, 2nd edition</em> - Alfred V. Aho, Monica S. Lam, Ravi Sethi, Jeffrey D. Ullman</li>
 <li><em>Modern compiler implementation in ML</em> - Andrew W. Appel</li>
 </ul>
-</div>
+</main>
 </body>
 </html>

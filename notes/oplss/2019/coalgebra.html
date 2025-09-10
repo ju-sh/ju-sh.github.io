@@ -4,36 +4,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Coalgebraic Semantics</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">Coalgebraic Semantics</h1>
-</header>
+      <h1 class="title">Coalgebraic Semantics</h1>
+    </header>
 
 <ul>
     </ul>
@@ -43,7 +31,7 @@
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <p>Based on vidoes of <a href="https://www.cs.uoregon.edu/research/summerschool/summer19/topics.php#Silva">lectures</a> by Alexandra Silva at OPLSS-2019.</p>
 <p>Mistakes my own.</p>
 <h1 id="l1">L1</h1>
@@ -210,6 +198,6 @@ Induction step:
 <p>we can inductively extend it to:</p>
 <p>t̂:S⨯(A*) → S t̂(s)(ε) = s (no change in state. DFA =&gt; no ε-transitions) t̂(s)(au) = t̂[t(s)(a)][u]</p>
 <p>Then we can say that <code>w</code> is accepted by a state <code>s</code> if <code>o(t̂(s)(w))</code> is 1.</p>
-</div>
+</main>
 </body>
 </html>

@@ -3,37 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Julin Shaji" />
+  <meta name="keywords" content="logic, proof, types" />
   <title>A taste of the PVS theorem prover</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">A taste of the PVS theorem prover</h1>
-</header>
+      <h1 class="title">A taste of the PVS theorem prover</h1>
+    </header>
 
 <ul>
     <li>Date created: 06-Mar-2024</li>
@@ -43,7 +33,13 @@
   <p>
     Tags: / 
     <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/logic proof types.html">logic proof types</a>
+      <a href="https://ju-sh.github.io/blog/pages/tags/logic.html">logic</a>
+    </code> /
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/proof.html">proof</a>
+    </code> /
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/types.html">types</a>
     </code> /
   <p>
 </div>
@@ -55,7 +51,7 @@ First encounter with PVS theorem prover.
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <p>I had attended the <a href="https://fm.csl.sri.com/SSFT22/">Eleventh Summer School on Formal Techniques</a> (SSFT 2022) online.</p>
 <p>During this event, I got to use the PVS theorem prover for the first time. Had heard a lot about it before the SSFT, but had never used it. Have come across a mention of the <code>grind</code> proof strategy of PVS more than a couple of times.</p>
 <p>This blog post is a description of the first proof that I did with PVS, along with some stuff that I found out while doing it.</p>
@@ -433,6 +429,6 @@ Q.E.D.
 <p>The antecedents (with negative numbering) appear above the line whereas the consequents (with positive numbers) show up under the line.</p>
 <p>The numbers are used to name the forumlas.</p>
 <p>Newly introduced formulas have their number enclosed within curly braces. And those formulas which were there in a parent goal itself have their number surrounded by square brackets.</p>
-</div>
+</main>
 </body>
 </html>

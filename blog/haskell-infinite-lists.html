@@ -3,37 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Julin Shaji" />
+  <meta name="keywords" content="haskell, lists" />
   <title>Infinite lists in Haskell</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">Infinite lists in Haskell</h1>
-</header>
+      <h1 class="title">Infinite lists in Haskell</h1>
+    </header>
 
 <ul>
     <li>Date created: 02-Jan-2022</li>
@@ -43,7 +33,10 @@
   <p>
     Tags: / 
     <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/haskell lists.html">haskell lists</a>
+      <a href="https://ju-sh.github.io/blog/pages/tags/haskell.html">haskell</a>
+    </code> /
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/lists.html">lists</a>
     </code> /
   <p>
 </div>
@@ -55,7 +48,7 @@ About lazy evaluation making it possible to define infinite lists in Haskell..
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <p>It is possible for us to define infinite lists in Haskell due to its <a href="https://en.wikipedia.org/wiki/Lazy_evaluation">lazy evaluation</a> <a href="https://wiki.haskell.org/Lazy_vs._non-strict">⁶</a>.</p>
 <p>For example, the following defines an infinite list of <code>1</code>-s:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>a <span class="ot">=</span> <span class="dv">1</span> <span class="op">:</span> a</span></code></pre></div>
@@ -93,6 +86,6 @@ take 2 (1 : (1 : a))
 </ul>
 <hr />
 <p>(This post is a modified form of something that I had scribbled down in 06 September 2021 based on what heard in the class teaching us Haskell. <a href="https://bitbucket.org/piyush-kurur/functional-programming/src/master/notes/live.org">⁷</a>)</p>
-</div>
+</main>
 </body>
 </html>

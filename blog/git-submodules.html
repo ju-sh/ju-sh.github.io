@@ -3,37 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Julin Shaji" />
+  <meta name="keywords" content="git" />
   <title>A tryst with git submodules</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">A tryst with git submodules</h1>
-</header>
+      <h1 class="title">A tryst with git submodules</h1>
+    </header>
 
 <ul>
     <li>Date created: 05-Mar-2022</li>
@@ -55,7 +45,7 @@ About my attempts at working with git submodules (before finally getting it to w
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <p>'A git submodule is a repository embedded inside another repository' where each submodule 'has its own history'.<a href="https://git-scm.com/docs/gitsubmodules">⁵</a></p>
 <p>I had been trying to work with git submodules and though I finally was able to use it properly (with a good deal of help from others), it gave me sufficient trouble that I'm a bit scared of forgetting what I found out. So I thought I better make a blog post on it.</p>
 <p>Acknowledgements: Thanks to the folks at #git, especially osse and jast for helping me get things working.</p>
@@ -272,6 +262,6 @@ child-repo-2
 <p>Tried building without any configuration hoping it would work. But it didn't.. (again because of me being too lazy to read the docs 😅).</p>
 <p>Doing <code>git submodule</code> gave error saying <code>'submodule' is not a git command</code>. Tried using another executable named <code>git-submodule</code> as well. But doing <code>git-submodule update</code> gave <code>./git-submodule: 22: .: git-sh-setup: not found</code>.</p>
 <p>I obviously hadn't done something that should've been done. So I gave up and tried another computer which had a newer git version (v2.30.2) by default.</p>
-</div>
+</main>
 </body>
 </html>

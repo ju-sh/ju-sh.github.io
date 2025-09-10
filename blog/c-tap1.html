@@ -3,37 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Julin Shaji" />
+  <meta name="keywords" content="c" />
   <title>An example from C traps and pitfalls</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">An example from C traps and pitfalls</h1>
-</header>
+      <h1 class="title">An example from C traps and pitfalls</h1>
+    </header>
 
 <ul>
     <li>Date created: 26-Aug-2017</li>
@@ -55,7 +45,7 @@ An example from Andrew König's book..
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <p><sub><sup><a href="../misc/old-blog.html">From my old blog</a>.</sup></sub></p>
 <p>I have been reading Andrew Koenig’s <em>C traps and pitfalls</em> and found an interesting yet simple loop :</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;stdio.h&gt;</span></span>
@@ -71,6 +61,6 @@ An example from Andrew König's book..
 <p>If this "runs on a compiler that allocates memory for variables at decreasing addresses, the word after " <code>arr[9]</code> turns out to be <code>i</code>. Because <code>i</code> will be having the largest address, followed by <code>arr[9]</code>, <code>arr[8]</code>, …, <code>arr[1]</code>, <code>arr[0]</code>.</p>
 <p>So, if you try to access the non-existent <code>arr[10]</code>, what’s really being accessed is the memory right after <code>arr[9]</code> which is <code>i</code>.</p>
 <p>By setting this value to <code>0</code>, you are actually resetting the value of <code>i</code> causing the entire loop to start over and loop forever.</p>
-</div>
+</main>
 </body>
 </html>

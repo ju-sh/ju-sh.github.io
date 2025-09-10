@@ -3,37 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Julin Shaji" />
+  <meta name="keywords" content="electronics" />
   <title>Hardware design with open source tools</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">Hardware design with open source tools</h1>
-</header>
+      <h1 class="title">Hardware design with open source tools</h1>
+    </header>
 
 <ul>
     <li>Date created: 11-Dec-2024</li>
@@ -55,7 +45,7 @@ EDA with open source tools: yosys + nextpnr.
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <p>As part of my masters course project, I generate verilog designs that are then synthesized using vivado before being loaded onto FPGAs.</p>
 <p>I once tried to see if open source tools can be used to achieve the same.</p>
 <p>Spent some time looking up stuff like <a href="https://github.com/google/skywater-pdk">Skywater-PDK</a> (being a hardware novice, I didn't realize for a while that PDK is for ASIC designs).</p>
@@ -639,6 +629,6 @@ load: $(NAME).fs
   --placed-svg placed.svg \
   --routed-svg routed.svg
 </code></pre>
-</div>
+</main>
 </body>
 </html>

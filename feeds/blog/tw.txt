@@ -1,1 +1,1 @@
-2025-03-11T00:00:00+00:00	Panel discussion - RSD 7 @ IITPKD | https://ju-sh.github.io/blog/panel-rsd7-iitpkd.html
+2025-09-11T00:00:00+00:00	'Local names' in LaTeX environments | https://ju-sh.github.io/blog/local-names-latex.html

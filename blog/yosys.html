@@ -3,37 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Julin Shaji" />
+  <meta name="keywords" content="tools, electronics" />
   <title>Simple custom pass in yosys</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">Simple custom pass in yosys</h1>
-</header>
+      <h1 class="title">Simple custom pass in yosys</h1>
+    </header>
 
 <ul>
     <li>Date created: May-2021</li>
@@ -44,7 +34,10 @@
   <p>
     Tags: / 
     <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/tools electronics.html">tools electronics</a>
+      <a href="https://ju-sh.github.io/blog/pages/tags/tools.html">tools</a>
+    </code> /
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/electronics.html">electronics</a>
     </code> /
   <p>
 </div>
@@ -56,7 +49,7 @@ A simple custom yosys.
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <p>For use with <a href="http://www.clifford.at/yosys">yosys</a> (<a href="https://yosyshq.net/yosys/">link</a>).</p>
 <h2 id="input-verilog-file">Input verilog file</h2>
 <p>Suppose that we got a verilog file <code>adder.v</code> for a half-adder like</p>
@@ -1341,6 +1334,6 @@ Time spent: 87% 1x read_verilog (0 sec), 9% 1x dump (0 sec), ...
     Yosys 0.9 (git sha1 UNKNOWN, gcc 7.5.0-3ubuntu1~18.04 -fPIC -Os)
     Time spent: 85% 1x read_verilog (0 sec), 9% 1x dump (0 sec), ...
 --></p>
-</div>
+</main>
 </body>
 </html>

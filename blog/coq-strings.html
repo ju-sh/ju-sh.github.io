@@ -3,37 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Julin Shaji" />
+  <meta name="keywords" content="coq, strings, unicode" />
   <title>About strings in Coq</title>
-  <style>
-    body {
-      max-width: 38rem;
-      padding: 2rem;
-      margin: auto;
-      background-color: #FAF0E6;
-    }
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
 </head>
 <body>
 
 
-<div id="header">
-<a href="https://ju-sh.github.io">Home</a>
- | 
-<a href="https://ju-sh.github.io/blog/index.html">Blog</a>
- | 
-<a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
- | 
-<a href="https://ju-sh.github.io/about.html">About</a>
-</div>
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
 
 <header id="title-block-header">
-<h1 class="title">About strings in Coq</h1>
-</header>
+      <h1 class="title">About strings in Coq</h1>
+    </header>
 
 <ul>
     <li>Date created: 09-Jan-2022</li>
@@ -43,7 +33,13 @@
   <p>
     Tags: / 
     <code>
-      <a href="https://ju-sh.github.io/blog/pages/tags/coq strings unicode.html">coq strings unicode</a>
+      <a href="https://ju-sh.github.io/blog/pages/tags/coq.html">coq</a>
+    </code> /
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/strings.html">strings</a>
+    </code> /
+    <code>
+      <a href="https://ju-sh.github.io/blog/pages/tags/unicode.html">unicode</a>
     </code> /
   <p>
 </div>
@@ -55,7 +51,7 @@ About strings and their representation in Coq..
 
 <hr/>
 
-<div id="content-container">
+<main id="content-container">
 <p>Strings in Coq are represented using terms of type <code>string</code>, like</p>
 <pre class="coq"><code>Require Import String.
 
@@ -440,6 +436,6 @@ b&quot;%string
 </ul>
 <p>—</p>
 <p>Update (28-Jul-2022): Had stumbled on <a href="https://github.com/whonore/Coqtail/issues/247">a small bug</a> in coqtail while trying the stuff in this blog post. It has since been <a href="https://github.com/whonore/Coqtail/pull/256">fixed</a> by the maintainer.</p>
-</div>
+</main>
 </body>
 </html>
