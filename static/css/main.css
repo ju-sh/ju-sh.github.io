@@ -14,8 +14,13 @@ th {
   background-color: #eaeaea;
 }
 
-figure figcaption {
+figcaption {
   text-align: center;
+}
+
+pre.ascii-art {
+  text-align: center;
+  border: 1px solid gray;
 }
 
 pre {
@@ -25,8 +30,11 @@ pre {
   padding: 1em;
   border: 1px solid #ccc;
   border-radius: 5px;
-  border-left: 4px solid #8888ff;
   max-height: 50em;
+}
+
+pre:not(.ascii-art) {
+   border-left: 4px solid #8888ff;
 }
 
 samp {
