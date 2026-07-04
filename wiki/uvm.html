@@ -32,121 +32,948 @@
 <hr/>
 
 <main id="content-container">
-<div class="sourceCode" id="cb1"><pre class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="dv">import uvm_pkg:</span>:*;</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="ot">`include </span><span class="fl">&quot;uvm_macros.svh&quot;</span><span class="ot"> </span></span></code></pre></div>
-<h2 id="general">General</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">import uvm_pkg:</span><span class="op">:</span>*<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">`include </span><span class="fl">&quot;uvm_macros.svh&quot;</span><span class="ot"> </span></span></code></pre></div>
+<section id="new" class="level1">
+<h1>New</h1>
 <ul>
-<li><p>Grew out of OVM (Open Verification Methodology) and simiilar</p></li>
+<li>Agent
+<ul>
+<li>Has everything related to a particular interface
+<ul>
+<li>Sequencer: Generates stimulus</li>
+<li>Driver: Drives signals</li>
+<li>Monitor: Observes activity on the interface and produce transaction
+objects</li>
+</ul></li>
+<li>Driver and monitor are connected to the interface</li>
+</ul></li>
+</ul>
+<pre><code>
+                                                                 +----&gt;--- coverage
+            stimulus                                             |
+Sequencer -----------&gt; Driver -----&gt; DUT ------&gt; Monitor --------+
+                                                                 |
+                                                                 +----&gt;--- scoreboard
+</code></pre>
+<p>From <em>Practical UVM</em>:</p>
+<blockquote>
+<p>think of an agent as a class object that encapsulates everything to
+do with a specific interface.</p>
+</blockquote>
+<ul>
+<li>Env class
+<ul>
+<li>Contains all sub-components of a testbench</li>
+<li>Agents are instantiated within an env</li>
+<li>Also has: coverage monitor, scoreboard</li>
+</ul></li>
+<li>config database: essentially set of name-value pairs</li>
+<li>virtual interface: like a pointer to an actual interface</li>
+<li>one agent for each DUT interface??</li>
+<li>Pin wiggles: Low-level signal activity on DUT pins (individual bits
+toggling) as opposed to high-level transactions. (src: chatgpt)</li>
+</ul>
+<section id="conventions" class="level2">
+<h2>Conventions</h2>
+<ul>
+<li><sub>vi</sub> suffix: virtual interface</li>
+<li><sub>if</sub> suffix: interface</li>
+<li><sub>h</sub> suffix: handle (/instances?)</li>
+</ul>
+</section>
+</section>
+<section id="uvm-basics-verificationacademy" class="level1">
+<h1>UVM Basics (verificationacademy)</h1>
+<section id="sequences-and-tests" class="level2">
+<h2>6: Sequences and tests</h2>
+<section id="uvmsequencer" class="level3">
+<h3>uvm<sub>sequencer</sub></h3>
+</section>
+<section id="inline-constraints" class="level3">
+<h3>Inline constraints</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>assert<span class="op">(</span> tx.randomize<span class="op">()</span> <span class="op">);</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>tx.cmd <span class="op">=</span> WRITE<span class="op">;</span> tx.addr <span class="op">=</span> a<span class="op">;</span> tx.data <span class="op">=</span> d<span class="op">;</span></span></code></pre></div>
+<p>is effectively same as:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>assert<span class="op">(</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  tx.randomize<span class="op">()</span> with <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    cmd <span class="op">==</span> WRITE<span class="op">;</span> addr <span class="op">==</span> a<span class="op">;</span> data <span class="op">==</span> d<span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span></code></pre></div>
+</section>
+<section id="example" class="level3">
+<h3>Example</h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Extends `uvm_sequence`</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">// Parameterized by `my_transaction`, which is a transaction type</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>class read_modify_write extends uvm_sequence #<span class="op">(</span>my_transaction<span class="op">);</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Register with factory</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="ot">`uvm_object_utils</span><span class="op">(</span>read_modify_write<span class="op">)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Constructor</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> new <span class="op">(</span>string name <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">);</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    super.new<span class="op">(</span>name<span class="op">);</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">endfunction</span><span class="op">:</span> new</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">task</span> body<span class="op">;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Declare a value of my_transaction class</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    my_transaction tx<span class="op">;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    int a<span class="op">;</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    int d<span class="op">;</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Make a value of my_transaction class via factory</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    tx <span class="op">=</span> my_transaction<span class="op">::</span>type_id<span class="op">::</span>create<span class="op">(</span><span class="st">&quot;tx&quot;</span><span class="op">);</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Start setting up the tx</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">// `start_item` and `finish_item` helps to do a form of handshaking with driver</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    start_item<span class="op">(</span>tx<span class="op">);</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Randomize the transaction value</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    assert<span class="op">(</span> tx.randomize<span class="op">()</span> <span class="op">);</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">// READ is an enum valu</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    tx.cmd <span class="op">=</span> READ<span class="op">;</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">// tx is ready to be sent off to the driver</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    finish_item<span class="op">(</span>tx<span class="op">);</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Obtain values from the tx</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> tx.addr<span class="op">;</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> tx.data<span class="op">;</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="op">++</span>d<span class="op">;</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="co">// A new tx to write updated value</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    tx <span class="op">=</span> my_transaction<span class="op">::</span>type_id<span class="op">::</span>create<span class="op">(</span><span class="st">&quot;tx&quot;</span><span class="op">);</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    start_item<span class="op">(</span>tx<span class="op">);</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    assert<span class="op">(</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>      tx.randomize<span class="op">()</span> with <span class="op">{</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>        <span class="co">// WRITE is another enum value</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>        cmd <span class="op">==</span> WRITE<span class="op">;</span> addr <span class="op">==</span> a<span class="op">;</span> data <span class="op">==</span> d<span class="op">;</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="op">);</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    finish_item<span class="op">(</span>tx<span class="op">);</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>  <span class="kw">endtask</span><span class="op">:</span> body</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="dv">endclass:</span> read_modify_write   </span></code></pre></div>
+<p>The enum could be like:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>typedef enum <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  READ<span class="op">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  WRITE</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> rw_t<span class="op">;</span></span></code></pre></div>
+<p>–</p>
+<p>Sequences may be nested. For example, we can have another sequence
+that repeats another sequence n times:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>class seq_of_seqs extends uvm_sequence #<span class="op">(</span>my_transaction<span class="op">);</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="ot">`uvm_object_utils</span><span class="op">(</span>seq_of_seqs<span class="op">)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// n controls how many times the inner sequence is repeated</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Variables like `n` are nicknamed a &#39;knobs&#39;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  rand int n<span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  constraint how_many <span class="op">{</span> n inside <span class="op">{[</span><span class="dv">2</span><span class="op">:</span><span class="dv">4</span><span class="op">]};</span> <span class="op">}</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">task</span> body<span class="op">;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">repeat</span><span class="op">(</span>n<span class="op">)</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">begin</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>      read_modify_write seq<span class="op">;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>      seq <span class="op">=</span> read_modify_write<span class="op">::</span>type_id<span class="op">::</span>create<span class="op">(</span><span class="st">&quot;seq&quot;</span><span class="op">);</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>      <span class="co">// `m_sequencer` is a built-in name.</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Means sequencer instance on which the sequence is running</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>      seq.start<span class="op">(</span> m_sequencer<span class="op">,</span> this<span class="op">);</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">endtask</span><span class="op">:</span> body</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="dv">endclass:</span> seq_of_seqs</span></code></pre></div>
+<p>–</p>
+<p>Can place the whole thing inside a package:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>package my_sequences<span class="op">;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">import uvm_pkg:</span><span class="op">:</span>*<span class="op">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  class read_modify_write extends uvm_sequence #<span class="op">(</span>my_transaction<span class="op">);</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ... </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  endclass</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  class seq_of_commands extends uvm_sequence #<span class="op">(</span>my_transaction<span class="op">);</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ... </span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  endclass</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>endpackage</span></code></pre></div>
+<p>—</p>
+<ul>
+<li>Variables like <code>n</code> are nicknamed a 'knobs'</li>
+<li>seq.start(m<sub>sequencer</sub>, this);
+<ul>
+<li>arg1: parent sequencer</li>
+<li>arg2: path</li>
+</ul></li>
+<li><code>m_sequencer</code> is a built-in name. Means sequencer
+instance on which the sequence is running</li>
+<li><code>import uvm_pkg::*;</code> allows writing
+<code>uvm_component</code> insteadof
+<code>uvm_pkg::uvm_component</code></li>
+</ul>
+</section>
+<section id="uvm_test" class="level3">
+<h3><code>uvm_test</code></h3>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>class test1 extends uvm_test<span class="op">;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Register test1 as a component</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="ot">`uvm_component_utils</span><span class="op">(</span>test1<span class="op">)</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Instantiate an env</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  my_env my_env_h<span class="op">;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">task</span> run_phase<span class="op">(</span>uvm_phase phase<span class="op">);</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    read_modify_write seq<span class="op">;</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    seq <span class="op">=</span> read_modify_write<span class="op">::</span>type_id<span class="op">::</span>create<span class="op">(</span><span class="st">&quot;seq&quot;</span><span class="op">);</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Raise object till test is ready</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Objections are usually raised in tests, rather than drivers or sequencers</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    phase.raise_objection<span class="op">(</span>this<span class="op">);</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">// We can set up stimulus for the test here, if needed</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">// The env has an agent, which has a sequencer </span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">// This is the currently relevant sequencer  </span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Assumptions here:</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">//  - my_env has an agent named my_agent_h</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">//  - my_agent_h, in turn has a sequencer named my_sequencer_h</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">//</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">// This was a top-level sequence, so starting it directly from the test.</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Hence, there is no parent argument</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    seq.start<span class="op">(</span>my_env_h.my_agent_h.my_sequencer_h<span class="op">);</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">// seq should now be complete.</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Test is now ready to fire. Drop objection</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    phase.drop_objection<span class="op">(</span>this<span class="op">);</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  <span class="kw">endtask</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>endclass </span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>class test2 extends uvm_test<span class="op">;</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>  <span class="ot">`uvm_component_utils</span><span class="op">(</span>test2<span class="op">)</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>  my_env my_env_h<span class="op">;</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>  <span class="kw">task</span> run_phase<span class="op">(</span>uvm_phase phase<span class="op">);</span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    seq_of_commands seq<span class="op">;</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    seq <span class="op">=</span> seq_of_commands<span class="op">::</span>type_id<span class="op">::</span>create<span class="op">(</span><span class="st">&quot;seq&quot;</span><span class="op">);</span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Change setting to allow overriding of constraint</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    seq.how_many.constraint_mode<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Randomize with constraint n overriden</span></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>    assert<span class="op">(</span> seq.randomize<span class="op">()</span> with <span class="op">{</span>seq.n <span class="op">&gt;</span> <span class="dv">10</span> <span class="op">&amp;&amp;</span> seq.n <span class="op">&lt;</span> <span class="dv">20</span><span class="op">;});</span></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>    phase.raise_objection<span class="op">(</span>this<span class="op">);</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>    seq.start<span class="op">(</span> my_env_h.my_agent_h.my_sequencer_h <span class="op">);</span></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>    phase.drop_objection<span class="op">(</span>this<span class="op">);</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>  <span class="kw">endtask</span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>endclass</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a><span class="co">// A top level module is needed to executethe tests </span></span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+</section>
+<section id="top-level-to-run-tests" class="level3">
+<h3>Top level to run tests</h3>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> top<span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">initial</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">begin:</span><span class="dt"> blk</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Argument is classname of the uvm_test to run</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    run_test<span class="op">(</span><span class="st">&quot;test2&quot;</span><span class="op">);</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">end</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="kw">endmodule</span><span class="op">:</span> top</span></code></pre></div>
+<p>—</p>
+<p>In the case of <code>vsim</code>, we could also use command to name
+the test instead of hardcoding as string.</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> top<span class="op">;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">initial</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">begin:</span><span class="dt"> blk</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    run_test<span class="op">();</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">end</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">endmodule</span><span class="op">:</span> top</span></code></pre></div>
+<p>Command: <code>vsim +UVM_TESTNAME=test2</code> (vsim is probably
+Siemens software)</p>
+</section>
+</section>
+<section id="monitors-and-subscribers" class="level2">
+<h2>7: Monitors and subscribers</h2>
+<ul>
+<li>Passive components</li>
+<li>Performs coverage collection and checking</li>
+<li>Monitor: make transactions out of dut pin wiggles and send it to the
+verification env
+<ul>
+<li>Uses its <em>analysis port</em> to send info to its
+<em>subscribers</em></li>
+<li>Subscriber would have an anlysis export</li>
+<li>Monitor can have any number of subscribers</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>class my_monitor extends uvm_monitor<span class="op">;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="ot">`uvm_component_utils</span><span class="op">(</span>my_monitor<span class="op">)</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Declare an analysis port, parametrized by the type of transactions</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  uvm_analysis_port #<span class="op">(</span>my_transaction<span class="op">)</span> aport<span class="op">;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">// A &#39;pointer&#39; to the DUT interface</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  virtual dut_if dut_vi<span class="op">;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> new ...</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> void build_phase<span class="op">(</span>uvm_phase phase<span class="op">);</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Can use constructor directly,</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// because we don&#39;t need the &#39;flexibility&#39; of factory for analysis ports</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    aport <span class="op">=</span> new<span class="op">(</span><span class="st">&quot;aport&quot;</span><span class="op">,</span> this<span class="op">);</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">endfunction</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">task</span> run_phase<span class="op">(</span>uvm_phase phase<span class="op">);</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">forever</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">begin</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>      my_transaction tx<span class="op">;</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Wait till a positive clock tick</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>      <span class="op">@(</span><span class="kw">posedge</span> dut_vi.clock<span class="op">);</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>      tx <span class="op">=</span> my_transaction<span class="op">::</span>type_id<span class="op">::</span>create<span class="op">(</span><span class="st">&quot;tx&quot;</span><span class="op">);</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Extract values from the DUT pins </span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>      tx.cmd <span class="op">=</span> dut_vi.cmd<span class="op">;</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>      tx.addr <span class="op">=</span> dut_vi.addr<span class="op">;</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>      tx.data <span class="op">=</span> dut_vi.data<span class="op">;</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Write tx to the analysis port</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>      aport.write<span class="op">(</span>tx<span class="op">);</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>  <span class="kw">endtask</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="co">// Monitor is inside the agent</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>class my_agent extends uvm_agent<span class="op">;</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>  uvm_analysis_port #<span class="op">(</span>my_transaction<span class="op">)</span> aport<span class="op">;</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> void build_phase<span class="op">(</span>uvm_phase phase<span class="op">);</span></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>    aport <span class="op">=</span> new<span class="op">(</span><span class="st">&quot;aport&quot;</span><span class="op">,</span> this<span class="op">);</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>    my_sequencer_h <span class="op">=</span> my_sequencer<span class="op">::</span>type_id<span class="op">::</span>create ...</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>    my_driver_h <span class="op">=</span> my_driver <span class="op">::</span>type_id<span class="op">::</span>create ...</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>    my_monitor_h <span class="op">=</span> my_monitor <span class="op">::</span>type_id<span class="op">::</span>create ...</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>  <span class="kw">endfunction</span><span class="op">:</span> build_phase</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> void connect_phase<span class="op">(</span>uvm_phase phase<span class="op">);</span></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Connect aport of monitor to the aport of its agent</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>    my_monitor_h.aport.connect<span class="op">(</span>aport<span class="op">);</span></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>  <span class="kw">endfunction</span><span class="op">:</span> connect_phase</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a><span class="dv">endclass:</span> my_agent</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a><span class="co">// Agent will pass the tx to its env</span></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>class my_env extends uvm_env<span class="op">;</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>  my_agent my_agent_h<span class="op">;</span></span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Declare a subscriber</span></span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>  <span class="co">// NQ: Perhaps we can declare many subscribers here?</span></span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>  my_subscriber my_subscriber_h<span class="op">;</span></span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> void build_phase<span class="op">(</span>uvm_phase phase<span class="op">);</span></span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>    my_agent_h <span class="op">=</span> my_agent <span class="op">::</span>type_id<span class="op">::</span>create ...</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>    my_subscriber_h <span class="op">=</span> my_subscriber<span class="op">::</span>type_id<span class="op">::</span>create ...</span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>  <span class="kw">endfunction</span><span class="op">:</span> build_phase</span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> void connect_phase<span class="op">(</span>uvm_phase phase<span class="op">);</span></span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Connect aport of agent to analysis export of the subscriber</span></span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>    my_agent_h.aport.connect<span class="op">(</span>my_subscriber_h.analysis_export<span class="op">);</span></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>    <span class="co">// NQ: Subscriber will provide impl of the write method called in the monitor?</span></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>  <span class="kw">endfunction</span><span class="op">:</span> connect_phase</span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a><span class="dv">endclass:</span> my_env</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>class my_subscriber extends uvm_subscriber #<span class="op">(</span>my_transaction<span class="op">);</span></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>  <span class="co">// uvm_subscriber already has an analysis export, so we can inherit that</span></span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>  <span class="ot">`uvm_component_utils</span><span class="op">(</span>my_subscriber<span class="op">)</span></span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>  bit cmd<span class="op">;</span></span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>  int addr<span class="op">;</span></span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>  int data<span class="op">;</span></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Covergroup: Defines what we are looking for.</span></span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Based on the verification plan.</span></span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a>  covergroup cover_bus<span class="op">;</span></span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>    coverpoint cmd<span class="op">;</span></span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>    coverpoint addr <span class="op">{</span> bins a<span class="op">[</span><span class="dv">16</span><span class="op">]</span> <span class="op">=</span> <span class="op">{[</span><span class="dv">0</span><span class="op">:</span><span class="dv">255</span><span class="op">]};</span> <span class="op">}</span></span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a>    coverpoint data <span class="op">{</span> bins d<span class="op">[</span><span class="dv">16</span><span class="op">]</span> <span class="op">=</span> <span class="op">{[</span><span class="dv">0</span><span class="op">:</span><span class="dv">255</span><span class="op">]};</span> <span class="op">}</span></span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>  <span class="dv">endgroup:</span> cover_bus</span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> void write<span class="op">(</span>my_transaction t<span class="op">);</span></span>
+<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>    cmd <span class="op">=</span> t.cmd<span class="op">;</span></span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a>    addr <span class="op">=</span> t.addr<span class="op">;</span></span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> t.data<span class="op">;</span></span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Record the information in the cover database??</span></span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a>    cover_bus.sample<span class="op">();</span></span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a>  <span class="kw">endfunction</span><span class="op">:</span> write</span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a><span class="dv">endclass:</span> my_subscriber</span></code></pre></div>
+</section>
+<section id="reporting" class="level2">
+<h2>8: Reporting</h2>
+<ul>
+<li>UVM has built-in reporting</li>
+<li>Can use macros to make messages</li>
+<li><code>`uvm_info("originator/id", "Message", UVM_VERBOSITY)</code></li>
+<li>Eg: <code>`uvm_info("mg", "Transaction received", UVM_NONE)</code>
+<ul>
+<li>Will get <code
+class="verbatim"># UVM_INFO filename.sv(110) @ 100: uvm_test_top.m_env.m_driver [mg] Transaction received</code></li>
+<li>110: line number</li>
+<li>100: simulation time</li>
+</ul></li>
+</ul>
+<section id="severity" class="level3">
+<h3>Severity</h3>
+<ul>
+<li><code>`uvm_info ("id", "message", verbosity)</code></li>
+<li><code>`uvm_warning("id", "message")</code></li>
+<li><code>`uvm_error ("id", "message")</code></li>
+<li><code>`uvm_fatal ("id", "message")</code></li>
+</ul>
+<p>Verbosity levels:</p>
+<ul>
+<li><code>UVM_NONE</code>: Always appear</li>
+<li><code>UVM_LOW</code></li>
+<li><code>UVM_MEDIUM</code></li>
+<li><code>UVM_HIGH</code></li>
+<li><code>UVM_FULL</code>: Usually won't appear</li>
+</ul>
+<p>Setting actions:</p>
+<ul>
+<li>Via report handler</li>
+<li><code>uvm_top.set_report_severity_action_hier(UVM_INFO, UVM_NO_ACTION);</code>
+<ul>
+<li>For the entire hierarchy, take no action for uvm<sub>info</sub>
+messages</li>
+<li>ie, suppress all uvm<sub>info</sub> messages</li>
+</ul></li>
+<li><code>uvm_top.set_report_id_action_hier(“mg", UVM_NO_ACTION);</code>
+<ul>
+<li>For the entire hierarchy, take no action for messages with id
+<code>"mg"</code></li>
+<li>ie, suppress all messages with id <code>"mg"</code></li>
+</ul></li>
+<li>NB: The <code>_hier</code> methods must be called after build phase
+<ul>
+<li>Calling them just before start of simulation would be good</li>
+</ul></li>
+</ul>
+<p>Actions:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>UVM_NO_ACTION</code></td>
+<td>Suppress the messages</td>
+</tr>
+<tr class="even">
+<td><code>UVM_DISPLAY</code></td>
+<td>Send report to standard output (default)</td>
+</tr>
+<tr class="odd">
+<td><code>UVM_LOG</code></td>
+<td>Send report to a file</td>
+</tr>
+<tr class="even">
+<td><code>UVM_COUNT</code></td>
+<td>Stop simulation when max count is reached (error)</td>
+</tr>
+<tr class="odd">
+<td><code>UVM_EXIT</code></td>
+<td>Finish simulation immediately (fatal)</td>
+</tr>
+<tr class="even">
+<td><code>UVM_STOP</code></td>
+<td>Call $stop</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="uvm-advanced" class="level1">
+<h1>UVM Advanced</h1>
+</section>
+<section id="uvm-macros" class="level1">
+<h1>UVM macros</h1>
+<p><a
+href="https://verificationacademy.com/verification-methodology-reference/uvm/docs_1.1c/html/files/macros/uvm_object_defines-svh.html">https://verificationacademy.com/verification-methodology-reference/uvm/docs_1.1c/html/files/macros/uvm_object_defines-svh.html</a></p>
+<ul>
+<li>`uvm<sub>objectutils</sub>:
+<ul>
+<li>Register a class with UVM factory</li>
+<li>Support randomization for sub-classes of
+uvm<sub>sequenceitem</sub></li>
+<li>Eg: <code>`uvm_object_utils(my_item</code> (Note: no semicolon at
+end)</li>
+</ul></li>
+<li><code>`uvm_object_utils_begin</code>
+<ul>
+<li><p>Register fields of a class with UVM to automatically generate
+boiler plate like definitions for <code>convert2string</code>,
+<code>copy</code>, <code>compare</code>, <code>print</code>,
+etc</p></li>
+<li><p>Example:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>class my_item extends uvm_sequence_item<span class="op">;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  rand int ip1<span class="op">;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  rand int ip2<span class="op">;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="ot">`uvm_object_utils_begin</span><span class="op">(</span>my_item<span class="op">)</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="ot">`uvm_field_int</span><span class="op">(</span>ip1<span class="op">,</span> UVM_ALL_ON<span class="op">)</span>  <span class="co">// for integers</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="ot">`uvm_field_int</span><span class="op">(</span>ip2<span class="op">,</span> UVM_ALL_ON<span class="op">)</span>  <span class="co">// for integers</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="ot">`uvm_object_utils_end</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> new<span class="op">(</span>string name<span class="op">=</span><span class="st">&quot;my_item&quot;</span><span class="op">);</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    super.new<span class="op">(</span>name<span class="op">);</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">endfunction</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>endclass</span></code></pre></div></li>
+<li><p>UVM<sub>ALLON</sub>: means this field is used for</p>
+<ul>
+<li>Copying (do<sub>copy</sub>)</li>
+<li>Printing (do<sub>print</sub>)</li>
+<li>Comparison (do<sub>compare</sub>)</li>
+<li>Recording and randomization (do<sub>pack</sub>/do<sub>unpack</sub>
+if needed)</li>
+</ul></li>
+</ul></li>
+<li><code>`uvm_object_param_utils</code>: register parameterized classes
+with UVM
+<ul>
+<li><p>Example:</p>
+<pre><code>class adder_transaction #(int WIDTH = 4) extends uvm_sequence_item;
+  `uvm_object_param_utils(adder_transaction#(WIDTH))
+
+  rand logic [WIDTH-1:0] a, b;
+  rand logic cin;
+  logic [WIDTH-1:0] s;
+  logic cout;
+
+  function new(string name = &quot;adder_transaction&quot;);
+      super.new(name);
+  endfunction
+endclass
+</code></pre></li>
+</ul></li>
+<li><code>`uvm_component_utils</code>: like
+<code>`uvm_object_utils</code> but for components
+<ul>
+<li>For entities like driver, monitor, agent, env, tests</li>
+</ul></li>
+<li><code>`uvm_do</code>:
+<ul>
+<li><p>simplifies starting and finishing a sequence item in a
+sequence.</p></li>
+<li><p>Kind of wraps calls to start<sub>item</sub>, randomize,
+finish<sub>item</sub> into one line.</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>adder_transaction tx<span class="op">;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>tx <span class="op">=</span> adder_transaction<span class="op">::</span>type_id<span class="op">::</span>create<span class="op">(</span><span class="st">&quot;tx&quot;</span><span class="op">);</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ot">`uvm_do(tx);</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Tell sequencer we&#39;re about to use tx</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">start_item(tx);</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">// Randomize the transaction</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">assert(tx.randomize());</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">// Send it to driver</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">finish_item(tx);</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span></code></pre></div></li>
+</ul></li>
+</ul>
+<section id="component-vs-object" class="level2">
+<h2>Component vs object</h2>
+<ul>
+<li>Object: Data
+<ul>
+<li>Just holds the values</li>
+<li>Eg: uvm<sub>sequenceitem</sub></li>
+<li>No presence in run/build/connect phases</li>
+<li>No code execution involved</li>
+<li>Creation: <code>new()</code></li>
+</ul></li>
+<li>Component
+<ul>
+<li>Creation: factory <code>type_id::create()</code></li>
+<li>Eg: driver, monitor, sequencer</li>
+<li>Involved in run/build/connect phases</li>
+<li>Can execute code</li>
+<li>There is a hierarchy involved. A component have other
+components.</li>
+</ul></li>
+</ul>
+</section>
+<section id="uvm_analysis_imp" class="level2">
+<h2><code>uvm_analysis_imp</code></h2>
+<ul>
+<li>UVM analysis implementation</li>
+<li>Component-side implementation of an analysis interface/port.</li>
+<li>Receiver side of an analysis port</li>
+<li>Associated with owner and type of transactions
+<ul>
+<li>Owner is the component instance that instantiates it</li>
+</ul></li>
+<li></li>
+</ul>
+</section>
+<section id="constraints" class="level2">
+<h2>Constraints</h2>
+<p>Soft constraints: More like a suggestion.</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>constraint c_inp <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  soft a   dist <span class="op">{</span> &#39;<span class="dv">0</span> <span class="op">:/</span> <span class="dv">10</span><span class="op">,</span> <span class="op">[</span><span class="dv">1</span><span class="op">:(</span><span class="dv">2</span>**N<span class="op">)-</span><span class="dv">2</span><span class="op">]</span> <span class="op">:/</span> <span class="dv">80</span><span class="op">,</span> &#39;<span class="dv">1</span> <span class="op">:/</span> <span class="dv">10</span> <span class="op">};</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  soft b   dist <span class="op">{</span> &#39;<span class="dv">0</span> <span class="op">:/</span> <span class="dv">10</span><span class="op">,</span> <span class="op">[</span><span class="dv">1</span><span class="op">:(</span><span class="dv">2</span>**N<span class="op">)-</span><span class="dv">2</span><span class="op">]</span> <span class="op">:/</span> <span class="dv">80</span><span class="op">,</span> &#39;<span class="dv">1</span> <span class="op">:/</span> <span class="dv">10</span> <span class="op">};</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  soft cin dist <span class="op">{</span> <span class="dv">0</span> <span class="op">:=</span> <span class="dv">50</span><span class="op">,</span> <span class="dv">1</span> <span class="op">:=</span> <span class="dv">50</span> <span class="op">};</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="tlm" class="level2">
+<h2>TLM</h2>
+<ul>
+<li>Transaction Level Modeling</li>
+<li>Communication between components is via TLM, via method calls</li>
+<li>Initiator and target components</li>
+<li>TLM port: Specifies the API (kind of like type)</li>
+<li>TLM export: Provides the implementation</li>
+<li>Connections are between ports and exports, not directly to the
+components
+<ul>
+<li>Initiator's port is connected to target's export</li>
+</ul></li>
+<li>Ports and exports are parameterized by the type of transactions used
+for the communication</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>class my_env extends uvm_env<span class="op">;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  virtual <span class="kw">function</span> void connect<span class="op">();</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    initiator.pport.connect<span class="op">(</span>target.pxport<span class="op">);</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">endfunction</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  class initiator extends uvm_component<span class="op">;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    uvm_put_port #<span class="op">(</span>tr<span class="op">)</span> pport<span class="op">;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    virtual <span class="kw">task</span> run<span class="op">();</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>      pport.put<span class="op">(</span>tr1<span class="op">);</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">endtask</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  endclass</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  class target extends uvm_component<span class="op">;</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    uvm_put_imp #<span class="op">(</span>tr<span class="op">,</span>target<span class="op">)</span> pxport<span class="op">;</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    virtual <span class="kw">task</span> put<span class="op">(</span>tr<span class="op">);</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">endtask</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>  endclass</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>  class target2 extends target<span class="op">;</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    uvm_put_imp #<span class="op">(</span>tr<span class="op">,</span>target<span class="op">)</span> pxport<span class="op">;</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    virtual <span class="kw">task</span> put<span class="op">(</span>tr<span class="op">);</span></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>      ...</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">endtask</span></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>  endclass</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>endclass</span></code></pre></div>
+</section>
+</section>
+<section id="new-terms" class="level1">
+<h1>New terms</h1>
+<ul>
+<li>SV scheduling regions</li>
+<li>Clocking blocks provide implicit skew control</li>
+<li>Explicit skewing:
+<ul>
+<li><code>default input #0 output #1ns;</code>: Sample input right away,
+but drive output 1ns later</li>
+<li><code>default input #1ns output #1ns;</code>: Sample input and drive
+output after 1ns</li>
+</ul></li>
+<li>Interface arguments: For signals that come from outside, possibly
+shared with other components. Eg: clk, rst</li>
+</ul>
+</section>
+<section id="old" class="level1">
+<h1>Old</h1>
+<section id="general" class="level2">
+<h2>General</h2>
+<ul>
+<li><p>Grew out of OVM (Open Verification Methodology) and
+simiilar</p></li>
 <li><p>Only for SytemVerilog</p></li>
 <li><p>Consists of a bunch of extendable classes</p></li>
-<li><p>Phases (simulation): build, run, cleanup</p>
-<ul>
-<li><a href="https://vlsiverify.com/uvm/uvm-phases/">https://vlsiverify.com/uvm/uvm-phases/</a></li>
-<li><a href="https://www.chipverify.com/uvm/uvm-phases">https://www.chipverify.com/uvm/uvm-phases</a></li>
-</ul></li>
 <li><p>Sequencer: initialization</p></li>
 <li><p>Scoreboard: takes input-output pair and passes judgement</p></li>
-<li><p>Transactions: Model communication between DUT and testbench</p></li>
-<li><p>Register Abstraction Layer (RAL): simplifies creating and accessing register map ??</p></li>
+<li><p>Transactions: Model communication between DUT and
+testbench</p></li>
+<li><p>Register Abstraction Layer (RAL): simplifies creating and
+accessing register map ??</p></li>
 <li><p><code>virtual</code>: kind of a like an abstract type ??</p></li>
-<li><p>Register mode: represent registers and memory-mapped structures</p></li>
+<li><p>Register mode: represent registers and memory-mapped
+structures</p></li>
 <li><p>UVM grew out of OVM</p></li>
 <li><p>UVVM: A simplified VHDL version of UVM</p>
 <ul>
-<li><a href="https://github.com/UVVM/UVVM">https://github.com/UVVM/UVVM</a></li>
+<li><a
+href="https://github.com/UVVM/UVVM">https://github.com/UVVM/UVVM</a></li>
 </ul></li>
 </ul>
-<h2 id="base-classes">Base classes</h2>
-<p><a href="https://www.chipverify.com/uvm/base-classes">https://www.chipverify.com/uvm/base-classes</a></p>
+<p>—</p>
+<ul>
+<li><code>`include "uvm_pkg.sv";</code>: like an reminder to compile the
+uvm library</li>
+<li><code>import uvm_pkg::*;</code>: import uvm</li>
+<li>Do <code>aport = new("aport", this);</code> in
+<code>build_phase</code> and not in <code>new</code></li>
+<li><code>uvm_sequence_item</code>: encapsulation of data elements and
+constraints needed to generate stimulus</li>
+</ul>
+</section>
+<section id="base-classes" class="level2">
+<h2>Base classes</h2>
+<p><a
+href="https://www.chipverify.com/uvm/base-classes">https://www.chipverify.com/uvm/base-classes</a></p>
 <ul>
 <li><p><code>uvm_void</code>: base class of all UVM classes</p></li>
-<li><p><code>uvm_object</code>: base class for all UVM components and transactions</p>
+<li><p><code>uvm_object</code>: base class for all UVM components and
+transactions</p>
 <ul>
-<li><a href="https://www.chipverify.com/uvm/uvm-object">https://www.chipverify.com/uvm/uvm-object</a></li>
+<li><a
+href="https://www.chipverify.com/uvm/uvm-object">https://www.chipverify.com/uvm/uvm-object</a></li>
 </ul></li>
-<li><p><code>uvm_report_object</code>: base class for UVM reporting facility</p></li>
-<li><p><code>uvm_component</code>: base class for all UVM components like agents and drivers</p></li>
-<li><p><code>uvm_transaction</code>: base class for all UVM components like agents and drivers</p></li>
+<li><p><code>uvm_report_object</code>: base class for UVM reporting
+facility</p></li>
+<li><p><code>uvm_component</code>: base class for all UVM components
+like agents and drivers</p></li>
+<li><p><code>uvm_transaction</code>: base class for all UVM components
+like agents and drivers</p></li>
 <li><p><code>uvm_factory</code>: create new instances of a class</p>
 <ul>
 <li>Only for classes which have been registered already</li>
+<li>Register with:
+<ul>
+<li><code>`uvm_component_utils(my_name)</code>: for components (ie,
+structure)</li>
+<li><code>`uvm_object_utils(my_name)</code>: for data (eg: sequence
+item)</li>
+<li>Note: No semicolon at end of this line</li>
+</ul></li>
+<li>Use like
+<code>my_name::type_id::create("my_name_h", this);</code></li>
 </ul></li>
 <li><p><code>uvm_reg</code>: registers</p></li>
 </ul>
-<h2 id="phases">Phases</h2>
+</section>
+<section id="phases" class="level2">
+<h2>Phases</h2>
+<ul>
+<li>Phases (simulation): build, run, cleanup, etc
+<ul>
+<li><a
+href="https://vlsiverify.com/uvm/uvm-phases/">https://vlsiverify.com/uvm/uvm-phases/</a></li>
+<li><a
+href="https://www.chipverify.com/uvm/uvm-phases">https://www.chipverify.com/uvm/uvm-phases</a></li>
+</ul></li>
+</ul>
+<p>—</p>
+<p>Kind of specifies the order of tasks</p>
 <ul>
 <li>Defined as callbacks</li>
 <li>9 primary phases</li>
 <li>function: no simulation time consumed</li>
 <li>task: can consume simulation time</li>
-<li><a href="https://www.chipverify.com/uvm/uvm-phases">https://www.chipverify.com/uvm/uvm-phases</a></li>
+<li><a
+href="https://www.chipverify.com/uvm/uvm-phases">https://www.chipverify.com/uvm/uvm-phases</a>
+<ul>
+<li><a
+href="https://vlsiverify.com/uvm/uvm-phases/">https://vlsiverify.com/uvm/uvm-phases/</a></li>
+</ul></li>
+<li>run<sub>phase</sub> is the only task, all other phases are
+functions. ie, run phase is the only simulation time-consuming
+phase</li>
 </ul>
 <hr />
 <ul>
-<li>build: construct testbench, create and initialize uvm components</li>
-<li>connect: connect components in testbench</li>
+<li>build: construct testbench, create and initialize uvm components
+<ul>
+<li><code>extern virtual function void build_phase (uvm_phase phase);</code></li>
+</ul></li>
+<li>connect: connect components in testbench
+<ul>
+<li><code>extern virtual function void connect_phase (uvm_phase phase);</code></li>
+</ul></li>
 <li>end of elaboration: final configuration</li>
 <li>start of simulation: Prepare for initiating simulation</li>
-<li>run: execute main test scenario</li>
+<li>run: execute main test scenario
+<ul>
+<li>There are sub-phases too??</li>
+</ul></li>
 <li>extract: collect data from simulation</li>
-<li>check: scoreboard tasks. Check for errors based on actual and expected values</li>
+<li>check: scoreboard tasks. Check for errors based on actual and
+expected values</li>
 <li>report: generate reports</li>
 <li>final: clean up before ending simulation</li>
 </ul>
-<h2 id="uvmdriver">uvm<sub>driver</sub></h2>
+<p>—</p>
 <ul>
-<li>Drive signals to a component being tested</li>
+<li><code>run_test()</code>: starts the tests</li>
+</ul>
+</section>
+<section id="uvmdriver" class="level2">
+<h2>uvm<sub>driver</sub></h2>
+<ul>
+<li>Drive signals to a component being tested
+<ul>
+<li>Based on some protocol</li>
+</ul></li>
 <li>Mentions timing information too</li>
 </ul>
-<p><a href="https://www.chipverify.com/uvm/uvm-driver">https://www.chipverify.com/uvm/uvm-driver</a></p>
-<h2 id="environment-uvm_env">Environment (<code>uvm_env</code>)</h2>
+<p><a
+href="https://www.chipverify.com/uvm/uvm-driver">https://www.chipverify.com/uvm/uvm-driver</a></p>
+</section>
+<section id="uvm_test-1" class="level2">
+<h2><code>uvm_test</code></h2>
+<ul>
+<li>Base class for tests in UVM</li>
+</ul>
+</section>
+<section id="environment-uvm_env" class="level2">
+<h2>Environment (<code>uvm_env</code>)</h2>
 <ul>
 <li>Have resuable components and their default configuration</li>
 <li>Can also have smaller environments</li>
-<li>Tip: Build testbench class from <code>uvm_env</code>, then instantiate as needed</li>
+<li>Tip: Build testbench class from <code>uvm_env</code>, then
+instantiate as needed</li>
 </ul>
-<p><a href="https://www.chipverify.com/uvm/uvm-environment">https://www.chipverify.com/uvm/uvm-environment</a></p>
-<h2 id="monitor-uvm_monitor">Monitor (<code>uvm_monitor</code>)</h2>
+<p><a
+href="https://www.chipverify.com/uvm/uvm-environment">https://www.chipverify.com/uvm/uvm-environment</a></p>
+</section>
+<section id="sequencer" class="level2">
+<h2>Sequencer</h2>
 <ul>
-<li>Observes signal activity and send them as transactions to other components</li>
+<li>Generates stimulus</li>
+<li>Produces transactions based on a 'recipe' and gives it to the driver
+<ul>
+<li>Stimulus is fed to driver via a TLM port</li>
+</ul></li>
 </ul>
-<h2 id="scoreboard">Scoreboard</h2>
+</section>
+<section id="monitor-uvm_monitor" class="level2">
+<h2>Monitor (<code>uvm_monitor</code>)</h2>
+<ul>
+<li>Observes signal activity on the interface</li>
+<li>Sends its observation as transactions to other components
+<ul>
+<li>Via a TLM port called an <em>analysis port</em></li>
+<li>The analysis port is connected to an <em>implementation port</em> in
+a uvm component having a covergroup</li>
+</ul></li>
+</ul>
+</section>
+<section id="scoreboard" class="level2">
+<h2>Scoreboard</h2>
 <ul>
 <li>Have checkers to verify test results</li>
 <li></li>
 </ul>
-<p><a href="https://www.chipverify.com/uvm/uvm-scoreboard">https://www.chipverify.com/uvm/uvm-scoreboard</a></p>
-<h2 id="transaction-level-modeling-tlm">Transaction level modeling (TLM)</h2>
+<p><a
+href="https://www.chipverify.com/uvm/uvm-scoreboard">https://www.chipverify.com/uvm/uvm-scoreboard</a></p>
+</section>
+<section id="transaction-level-modeling-tlm" class="level2">
+<h2>Transaction level modeling (TLM)</h2>
 <ul>
 <li>Data represented as <strong>transactions</strong></li>
 <li>Not specific to SystemVerilog</li>
-<li>Transactions are objects that contain random protocol specific info</li>
+<li>Transactions are objects that contain random protocol specific
+info</li>
 <li>Data flow is via TLM interfaces</li>
 <li>TLM port: specify an API (set of methods) for a connection</li>
 <li>TLM export: Actual implementation of a TLM port</li>
 <li>Analysis ports: Used to monitor data flow
 <ul>
-<li>Components receiving data from an analysis port doesn't modify that data</li>
+<li>Components receiving data from an analysis port doesn't modify that
+data</li>
 <li>Can publish data to any number of ports (subscribers ??)</li>
-<li><a href="https://www.chipverify.com/uvm/uvm-tlm-analysis-port">https://www.chipverify.com/uvm/uvm-tlm-analysis-port</a></li>
+<li><a
+href="https://www.chipverify.com/uvm/uvm-tlm-analysis-port">https://www.chipverify.com/uvm/uvm-tlm-analysis-port</a></li>
 </ul></li>
 </ul>
 <p>See:</p>
 <ul>
-<li><a href="https://www.chipverify.com/uvm/uvm-tlm">https://www.chipverify.com/uvm/uvm-tlm</a></li>
-<li><a href="https://theartofverification.com/uvm-tlm-concepts/">https://theartofverification.com/uvm-tlm-concepts/</a></li>
-<li><a href="https://verificationacademy.com/verification-methodology-reference/uvmc-2.3.1/docs/html/files/docs/TLM_REVIEW-txt.html">https://verificationacademy.com/verification-methodology-reference/uvmc-2.3.1/docs/html/files/docs/TLM_REVIEW-txt.html</a></li>
+<li><a
+href="https://www.chipverify.com/uvm/uvm-tlm">https://www.chipverify.com/uvm/uvm-tlm</a></li>
+<li><a
+href="https://theartofverification.com/uvm-tlm-concepts/">https://theartofverification.com/uvm-tlm-concepts/</a></li>
+<li><a
+href="https://verificationacademy.com/verification-methodology-reference/uvmc-2.3.1/docs/html/files/docs/TLM_REVIEW-txt.html">https://verificationacademy.com/verification-methodology-reference/uvmc-2.3.1/docs/html/files/docs/TLM_REVIEW-txt.html</a></li>
 </ul>
-<h2 id="more">More</h2>
+</section>
+<section id="transaction" class="level2">
+<h2>Transaction</h2>
 <ul>
-<li>umv<sub>configdb</sub></li>
-<li>agent</li>
-<li>monitor</li>
-<li>env</li>
+<li>Kind of like 'abstract packets of information'
+<ul>
+<li><a
+href="https://verificationacademy.com/topics/uvm-universal-verification-methodology/uvm-basics/introducing-transactions/">https://verificationacademy.com/topics/uvm-universal-verification-methodology/uvm-basics/introducing-transactions/</a></li>
+<li></li>
+</ul></li>
+</ul>
+</section>
+<section id="coverage" class="level2">
+<h2>Coverage</h2>
+<ul>
+<li>Check if all possible scenarios have been covered</li>
+<li>Coverage points</li>
+<li>Coverage groups</li>
+<li>Test plan</li>
+</ul>
+</section>
+<section id="subscriber-uvm_subscriber" class="level2">
+<h2>Subscriber (<code>uvm_subscriber</code>)</h2>
+<ul>
+<li>Has a uvm<sub>analysisimp</sub> port
+<ul>
+<li>Can connect to analysis port of monitor with this</li>
+</ul></li>
+</ul>
+</section>
+<section id="more" class="level2">
+<h2>More</h2>
+<ul>
 <li>testbench top</li>
 <li>Transaction level objects</li>
-<li>agent</li>
+<li>✓ agent</li>
+<li>✓ monitor</li>
+<li>✓ env</li>
 </ul>
+<p>Keywords:</p>
+<ul>
+<li><code>umv_config_db</code></li>
+<li><code>event</code></li>
+<li><code>covergroup</code>, <code>coverpoint</code></li>
+</ul>
+</section>
+</section>
 </main>
 </body>
 </html>

@@ -32,7 +32,8 @@
 <hr/>
 
 <main id="content-container">
-<h2 id="constructors">Constructors</h2>
+<section id="constructors" class="level2">
+<h2>Constructors</h2>
 <table>
 <thead>
 <tr class="header">
@@ -55,8 +56,11 @@
 </tr>
 </tbody>
 </table>
-<h2 id="boolean">Boolean</h2>
-<p>Takes two values. The one to be given for true and false respectively.</p>
+</section>
+<section id="boolean" class="level2">
+<h2>Boolean</h2>
+<p>Takes two values. The one to be given for true and false
+respectively.</p>
 <p>First value is for true, second is for false.</p>
 <table>
 <tbody>
@@ -95,12 +99,16 @@ tru = λt. λf. t
 -- Accepts two values and returns the second value in the pair
 fls = λt. λf. f
 </code></pre>
-<h2 id="constants">Constants</h2>
+</section>
+<section id="constants" class="level2">
+<h2>Constants</h2>
 <p>Representable as identity functions..</p>
 <pre><code>λx. c
 </code></pre>
 <p>ie, the value of the 'argument' <code>x</code> is simply ignored.</p>
-<h2 id="natural-numbers">Natural numbers</h2>
+</section>
+<section id="natural-numbers" class="level2">
+<h2>Natural numbers</h2>
 <p>There are many ways. Like Church encoding and Scott encoding.</p>
 <p>Church encoding:</p>
 <table>
@@ -148,7 +156,8 @@ C₂ = λs. λz. s (s z)   -- S (S 0) = 2
 --     ----↓---    ↓    ↓
 --         s       z    result
 </code></pre>
-<p>ie, the encoding for each natural number takes two values as arguments:</p>
+<p>ie, the encoding for each natural number takes two values as
+arguments:</p>
 <ul>
 <li>s: represents successor function</li>
 <li>z: represents zero</li>
@@ -160,7 +169,9 @@ C₂ = λs. λz. s (s z)   -- S (S 0) = 2
 <li>z: ℕ</li>
 </ul>
 <p>The outermost lambda gets applied first.</p>
-<h2 id="if-statement"><code>if</code> statement</h2>
+</section>
+<section id="if-statement" class="level2">
+<h2><code>if</code> statement</h2>
 <p>Could be made like</p>
 <pre><code>λc. λt. λe. c t e
 
@@ -169,7 +180,8 @@ C₂ = λs. λz. s (s z)   -- S (S 0) = 2
  - e: else case
 </code></pre>
 <p>Here, the <code>c</code> is like a boolean.</p>
-<p>As an aside, the <code>λc. λt. λe. c t e</code> here is constructed like</p>
+<p>As an aside, the <code>λc. λt. λe. c t e</code> here is constructed
+like</p>
 <p>Lambda</p>
 <p>—</p>
 <pre class="utlc"><code>{- Represents something like a condition check?? -}
@@ -229,7 +241,9 @@ and = λa. a fls tru
 | fls | fls fls tru = tru |
 -}
 </code></pre>
-<h2 id="pairs-2-tuple">Pairs (2-tuple)</h2>
+</section>
+<section id="pairs-2-tuple" class="level2">
+<h2>Pairs (2-tuple)</h2>
 <pre><code>pair = λf. λs. λb. b f s
 fst = λp. p tru
 snd = λp. p fls
@@ -245,9 +259,14 @@ fst (pair 1 2)
 = (λt. λf. t) 1 2
 = 1
 </code></pre>
-<h2 id="semantics">Semantics</h2>
-<p>Syntax says how the terms can be made. Se qualifiedmantics specifies how the terms are <em>evaluated</em>.</p>
-<h2 id="conventions">Conventions</h2>
+</section>
+<section id="semantics" class="level2">
+<h2>Semantics</h2>
+<p>Syntax says how the terms can be made. Se qualifiedmantics specifies
+how the terms are <em>evaluated</em>.</p>
+</section>
+<section id="conventions" class="level2">
+<h2>Conventions</h2>
 <p>As used in TAPL.</p>
 <ul>
 <li>Application is left associative
@@ -256,10 +275,13 @@ fst (pair 1 2)
 </ul></li>
 <li>Bodies of abstractions extend as far right as possible.
 <ul>
-<li>Eg: <code>λx. λy. x y x</code> is same as <code>λx. (λy. ((x y) x))</code></li>
-<li>I suppose because of this we could say 'application has more precedence than abstraction'. :GUESS:</li>
+<li>Eg: <code>λx. λy. x y x</code> is same as
+<code>λx. (λy. ((x y) x))</code></li>
+<li>I suppose because of this we could say 'application has more
+precedence than abstraction'. :GUESS:</li>
 </ul></li>
 </ul>
+</section>
 </main>
 </body>
 </html>

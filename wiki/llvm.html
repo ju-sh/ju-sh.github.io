@@ -32,7 +32,8 @@
 <hr/>
 
 <main id="content-container">
-<h2 id="general">General</h2>
+<section id="general" class="level2">
+<h2>General</h2>
 <ul>
 <li><code>.ll</code>: LLVM IR file extension</li>
 <li>Compiler LLVM IR to assembly: <code>llc inp.ll</code></li>
@@ -40,22 +41,29 @@
 <ul>
 <li>Eg: <code>%retval</code>, <code>%1</code></li>
 </ul></li>
-<li>Comments in the <em>textual representation</em> of LLVM IR starts with <code>;</code></li>
+<li>Comments in the <em>textual representation</em> of LLVM IR starts
+with <code>;</code></li>
 </ul>
-<h2 id="get-llvm-ir-for-a-c-program">Get LLVM IR for a C program</h2>
+</section>
+<section id="get-llvm-ir-for-a-c-program" class="level2">
+<h2>Get LLVM IR for a C program</h2>
 <p>Use clang.</p>
 <pre><code>clang -cc1 inp.c -emit-llvm
 </code></pre>
-<p><a href="https://stackoverflow.com/questions/9148890/how-to-make-clang-compile-to-llvm-ir">https://stackoverflow.com/questions/9148890/how-to-make-clang-compile-to-llvm-ir</a></p>
-<h2 id="using-an-llvm-ir-module-in-c-code">Using an LLVM IR module in C code</h2>
-<p><a href="https://danieljharvey.github.io/posts/2023-02-08-llvm-compiler-part-1.html">https://danieljharvey.github.io/posts/2023-02-08-llvm-compiler-part-1.html</a></p>
+<p><a
+href="https://stackoverflow.com/questions/9148890/how-to-make-clang-compile-to-llvm-ir">https://stackoverflow.com/questions/9148890/how-to-make-clang-compile-to-llvm-ir</a></p>
+</section>
+<section id="using-an-llvm-ir-module-in-c-code" class="level2">
+<h2>Using an LLVM IR module in C code</h2>
+<p><a
+href="https://danieljharvey.github.io/posts/2023-02-08-llvm-compiler-part-1.html">https://danieljharvey.github.io/posts/2023-02-08-llvm-compiler-part-1.html</a></p>
 <p>C program (<code>main.c</code>):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="dt">void</span> printint(<span class="dt">int</span> i) {</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>  printf(<span class="st">&quot;%d&quot;</span>, i);</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> printint<span class="op">(</span><span class="dt">int</span> i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span><span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>LLVM IR (Text format): <code>fun.ll</code>:</p>
 <pre><code>; ModuleID = &#39;fun&#39;
 
@@ -71,10 +79,13 @@ define external ccc i32 @main()    {
 $ ./a.out
 42
 </code></pre>
-<h1 id="llvm">LLVM</h1>
+</section>
+<section id="llvm" class="level1">
+<h1>LLVM</h1>
 <ul>
 <li>Opaque pointer</li>
 </ul>
+</section>
 </main>
 </body>
 </html>

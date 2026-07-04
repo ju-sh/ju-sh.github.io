@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>WASM</title>
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
+</head>
+<body>
+
+
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
+
+<header id="title-block-header">
+      <h1 class="title">WASM</h1>
+    </header>
+
+<ul>
+    </ul>
+
+
+
+
+<hr/>
+
+<main id="content-container">
+<ul>
+<li>Stack machine</li>
+</ul>
+<section id="types" class="level2">
+<h2>Types</h2>
+<ul>
+<li>funcref
+<ul>
+<li><a
+href="https://github.com/WebAssembly/gc/blob/main/proposals/function-references/Overview.md">https://github.com/WebAssembly/gc/blob/main/proposals/function-references/Overview.md</a></li>
+<li>Strings are dealt with via this</li>
+</ul></li>
+<li>Types:
+<ul>
+<li><code>i32</code>, <code>i64</code>: int</li>
+<li><code>f32</code>, <code>f64</code>: float</li>
+</ul></li>
+</ul>
+</section>
+<section id="wat" class="level2">
+<h2>WAT</h2>
+<ul>
+<li>Wasm text format
+<ul>
+<li><a
+href="https://webassembly.github.io/spec/core/text/index.html">https://webassembly.github.io/spec/core/text/index.html</a></li>
+<li><a
+href="https://developer.mozilla.org/en-US/docs/WebAssembly/Guides/Understanding_the_text_format">https://developer.mozilla.org/en-US/docs/WebAssembly/Guides/Understanding_the_text_format</a></li>
+</ul></li>
+<li>Uses s-expressions</li>
+</ul>
+<section id="sym" class="level3">
+<h3>sym</h3>
+<ul>
+<li>Define abbreviations.</li>
+</ul>
+<div class="sourceCode" id="cb1" data-org-language="lisp"><pre
+class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(sym $BLK_SIZE i32 <span class="dv">16</span>)</span></code></pre></div>
+</section>
+</section>
+<section id="others-languages" class="level2">
+<h2>Others languages</h2>
+<ul>
+<li>ghcjs: ghc compiler</li>
+<li>Rust to wasm =&gt; wasm + JavaScript wrapper</li>
+</ul>
+</section>
+<section id="news" class="level2">
+<h2>News</h2>
+<ul>
+<li>Wasm 3.0 released
+<ul>
+<li><a
+href="https://webassembly.org/news/2025-09-17-wasm-3.0/">https://webassembly.org/news/2025-09-17-wasm-3.0/</a></li>
+</ul></li>
+</ul>
+</section>
+</main>
+</body>
+</html>

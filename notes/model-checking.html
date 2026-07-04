@@ -39,17 +39,30 @@
 </ul></li>
 <li>Kripke structure</li>
 </ul>
-<h1 id="w2l1">W2L1</h1>
+<section id="w2l1" class="level1">
+<h1>W2L1</h1>
 <p>Property Atomic propositions</p>
-<h2 id="trace">Trace</h2>
-<p>Trace of an execution is an infinite word over (ie, over the powerset of atomic propositions). ie, Trace(Execution) = {x | x ∈ 2ᴬᴾ}</p>
-<h2 id="traces">Traces</h2>
-<p>Traces of a transition system is the trace of all executions of that TS. ie, Traces(TS) = {Trace(σ) | σ is a execution of TS}</p>
-<p>Traces of a TS describe the behaviour of the TS with respect to a set of atomic propositions.</p>
-<h2 id="property">Property</h2>
+<section id="trace" class="level2">
+<h2>Trace</h2>
+<p>Trace of an execution is an infinite word over (ie, over the powerset
+of atomic propositions). ie, Trace(Execution) = {x | x ∈ 2ᴬᴾ}</p>
+</section>
+<section id="traces" class="level2">
+<h2>Traces</h2>
+<p>Traces of a transition system is the trace of all executions of that
+TS. ie, Traces(TS) = {Trace(σ) | σ is a execution of TS}</p>
+<p>Traces of a TS describe the behaviour of the TS with respect to a set
+of atomic propositions.</p>
+</section>
+<section id="property" class="level2">
+<h2>Property</h2>
 <p>AP-INF = set of infinite words over 2ᴬᴾ.</p>
-<h1 id="old">Old</h1>
-<h2 id="transition-system-ts">Transition system (TS)</h2>
+</section>
+</section>
+<section id="old" class="level1">
+<h1>Old</h1>
+<section id="transition-system-ts" class="level2">
+<h2>Transition system (TS)</h2>
 <p>A tuple</p>
 <pre><code>(S, Act, →, I, AP, L)
 </code></pre>
@@ -67,7 +80,8 @@
 </ul></li>
 <li>AP: set of atomic propositions
 <ul>
-<li>Chosen based on the charecteristics of interest (eg: register states may not be of interest)</li>
+<li>Chosen based on the charecteristics of interest (eg: register states
+may not be of interest)</li>
 </ul></li>
 <li>L: labeling function
 <ul>
@@ -76,36 +90,56 @@
 </ul></li>
 </ul>
 <p>Finite TS: TS whose S, Act, AP are all finite sets.</p>
-<p>Non-deterministic transition if we can't know for sure which path is followed.</p>
-<h2 id="run">Run</h2>
+<p>Non-deterministic transition if we can't know for sure which path is
+followed.</p>
+</section>
+<section id="run" class="level2">
+<h2>Run</h2>
 <ul>
 <li>Describes a possible behaviour of a transition system.</li>
 <li>Execution: A finite prefix of a run.</li>
 </ul>
-<h2 id="fairness-in-reactive-systems">Fairness in reactive systems</h2>
+</section>
+<section id="fairness-in-reactive-systems" class="level2">
+<h2>Fairness in reactive systems</h2>
 <ul>
 <li>Unconditional fairness: Every process gets serviced</li>
 <li>Strong fairness</li>
 <li>Weak fairness</li>
 </ul>
-<h1 id="trivia">Trivia</h1>
+</section>
+</section>
+<section id="trivia" class="level1">
+<h1>Trivia</h1>
 <ul>
-<li>Decision procedure: 'an algorithm that, given a decision problem, terminates with a correct yes/no answer.' <a href="https://link.springer.com/book/10.1007/978-3-540-74105-3">³</a></li>
-<li>Bounded model checking: unroll the FSM only a limited number of times and see if the property holds. That's it.</li>
+<li>Decision procedure: 'an algorithm that, given a decision problem,
+terminates with a correct yes/no answer.' <a
+href="https://link.springer.com/book/10.1007/978-3-540-74105-3">³</a></li>
+<li>Bounded model checking: unroll the FSM only a limited number of
+times and see if the property holds. That's it.</li>
 </ul>
-<h1 id="todo">Todo</h1>
+</section>
+<section id="todo" class="level1">
+<h1>Todo</h1>
 <ul>
 <li>execution vs run vs trace</li>
 </ul>
-<h1 id="notations">Notations</h1>
+</section>
+<section id="notations" class="level1">
+<h1>Notations</h1>
 <ul>
 <li>τ: label for transitions which are internal</li>
 </ul>
-<h1 id="references">References</h1>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
 <ul>
-<li><em>Principles of Model Checking</em> - Christel Baier, Joost-Pieter Katoen</li>
-<li><a href="https://github.com/felipeblassioli/nusmv">NuSMV</a>, the New Symbolic Model Verifier.</li>
+<li><em>Principles of Model Checking</em> - Christel Baier, Joost-Pieter
+Katoen</li>
+<li><a href="https://github.com/felipeblassioli/nusmv">NuSMV</a>, the
+New Symbolic Model Verifier.</li>
 </ul>
+</section>
 </main>
 </body>
 </html>

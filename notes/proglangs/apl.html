@@ -34,7 +34,8 @@
 <main id="content-container">
 <p>Iverson style array programming</p>
 <ul>
-<li><a href="https://aplwiki.com/wiki/Iverson_notation">https://aplwiki.com/wiki/Iverson_notation</a></li>
+<li><a
+href="https://aplwiki.com/wiki/Iverson_notation">https://aplwiki.com/wiki/Iverson_notation</a></li>
 <li>Kenneth Iverson's notations</li>
 <li>APL grew out of this idea</li>
 </ul>
@@ -45,19 +46,174 @@
 </ul>
 <p>Remarks:</p>
 <ul>
-<li>Understanding the concept of ranks is <em>very</em> important in using APL.</li>
+<li>Understanding the concept of ranks is <em>very</em> important in
+using APL.</li>
 <li>Array is (more?) to APL as table is to lua.</li>
 <li>APL evaluates expressions from right to left</li>
-<li><code>*</code> is exponentiation. Multiplication is <code>×</code></li>
+<li><code>*</code> is exponentiation. Multiplication is
+<code>×</code></li>
 </ul>
-<h2 id="general">General</h2>
+<section id="general" class="level2">
+<h2>General</h2>
 <ul>
 <li>Comment: ⍝</li>
 <li>Indexing starts from index origin (<code>IO</code>)</li>
 </ul>
-<h2 id="operators">Operators</h2>
-<h3 id="reshape-shape-ρ">Reshape / shape (ρ )</h3>
-<p><a href="https://aplwiki.com/wiki/Reshape">https://aplwiki.com/wiki/Reshape</a></p>
+</section>
+<section id="constants" class="level2">
+<h2>Constants</h2>
+<ul>
+<li>e: <code>*1</code> (ie, e<sup>1</sup>)</li>
+<li>pi: <code>○1</code></li>
+</ul>
+</section>
+<section id="operators" class="level2">
+<h2>Operators</h2>
+<ul>
+<li><a
+href="https://www.gnu.org/software/apl/apl-intro.html">https://www.gnu.org/software/apl/apl-intro.html</a></li>
+<li><a
+href="https://sheet.shiar.nl/apl">https://sheet.shiar.nl/apl</a></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Monadic</th>
+<th>Dyadic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¯</td>
+<td>✓</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>×</td>
+<td>?</td>
+<td>✓</td>
+</tr>
+<tr class="odd">
+<td>÷</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr class="even">
+<td>ρ</td>
+<td>?</td>
+<td>✓</td>
+</tr>
+<tr class="odd">
+<td>ι</td>
+<td>✓</td>
+<td>?</td>
+</tr>
+<tr class="even">
+<td>⊖</td>
+<td>✓</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>⌽</td>
+<td>✓</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>⍉</td>
+<td>✓</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>↓</td>
+<td></td>
+<td>✓</td>
+</tr>
+<tr class="even">
+<td>↑</td>
+<td></td>
+<td>✓</td>
+</tr>
+<tr class="odd">
+<td><code>/</code></td>
+<td></td>
+<td>✓</td>
+</tr>
+<tr class="even">
+<td>⌿</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>?</td>
+<td>✓</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>⌈</td>
+<td>✓</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>⌊</td>
+<td>✓</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>○</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr class="odd">
+<td><code>*</code></td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr class="even">
+<td>⍟</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr class="odd">
+<td>≢</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr class="even">
+<td>∪</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr class="odd">
+<td>∩</td>
+<td>✗</td>
+<td>✓</td>
+</tr>
+<tr class="even">
+<td>⊢</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<section id="arithmetic" class="level3">
+<h3>Arithmetic</h3>
+<ul>
+<li>¯: unary negation</li>
+<li>×: multiplication</li>
+<li>÷ (dyadic): division</li>
+<li>÷ (monadic): reciprocal</li>
+</ul>
+</section>
+<section id="reshape-shape-ρ" class="level3">
+<h3>Reshape / shape (ρ )</h3>
+<p><a
+href="https://aplwiki.com/wiki/Reshape">https://aplwiki.com/wiki/Reshape</a></p>
 <p>Two forms:</p>
 <ul>
 <li>Dyadic: Reshape an array.</li>
@@ -84,8 +240,22 @@
 <pre><code>&gt; ρ 2 4 ρ ⍳ 8
 2 4
 </code></pre>
-<h3 id="index-generator">Index generator (⍳)</h3>
-<p><a href="https://aplwiki.com/wiki/Index_Generator">https://aplwiki.com/wiki/Index_Generator</a></p>
+<p>—</p>
+<pre><code>&gt; 5 ⍴ 0
+⍝ No output
+
+&gt; 5 ⍴ 0
+0 0 0 0 0
+
+&gt; 2 5 ⍴ 0
+0 0 0 0 0
+0 0 0 0 0
+</code></pre>
+</section>
+<section id="index-generator" class="level3">
+<h3>Index generator (⍳)</h3>
+<p><a
+href="https://aplwiki.com/wiki/Index_Generator">https://aplwiki.com/wiki/Index_Generator</a></p>
 <pre class="apl"><code>&gt; ⍳ 9
 1 2 3 4 5 6 7 8 9
 
@@ -94,7 +264,9 @@
 &gt; ⍳ 9
 0 1 2 3 4 5 6 7 8
 </code></pre>
-<h3 id="reverse-along-first-axis">Reverse along first axis (⊖)</h3>
+</section>
+<section id="reverse-along-first-axis" class="level3">
+<h3>Reverse along first axis (⊖)</h3>
 <pre><code>&gt; ⊖ ⍳ 5
 5 4 3 2 1
 
@@ -104,7 +276,9 @@
 3 4
 1 2
 </code></pre>
-<h3 id="reverse-along-last-axis">Reverse along last axis (⌽)</h3>
+</section>
+<section id="reverse-along-last-axis" class="level3">
+<h3>Reverse along last axis (⌽)</h3>
 <pre><code>&gt; ⌽ 3 2 ρ ⍳ 6
 2 1
 4 3
@@ -121,14 +295,18 @@
 6 5 4
 9 8 7
 </code></pre>
-<h3 id="transpose">Transpose (⍉)</h3>
+</section>
+<section id="transpose" class="level3">
+<h3>Transpose (⍉)</h3>
 <pre><code>&gt; ⍝ Columns got reversed
 &gt; ⍉ 2 3 ρ ⍳ 6
 1 4
 2 5
 3 6
 </code></pre>
-<h3 id="drop">Drop (↓)</h3>
+</section>
+<section id="drop" class="level3">
+<h3>Drop (↓)</h3>
 <p>Drop first n elements of an array.</p>
 <pre class="apl"><code>&gt; 1 ↓ 1 2 3 4 5 6 7
 2 3 4 5 6 7
@@ -136,7 +314,9 @@
 &gt; 2 ↓ 1 2 3 4 5 6 7
 3 4 5 6 7
 </code></pre>
-<h3 id="take">Take (↑)</h3>
+</section>
+<section id="take" class="level3">
+<h3>Take (↑)</h3>
 <p>Take first n elements of an array.</p>
 <pre class="apl"><code>&gt; 2 ↑ 1 2 3 4 5 6 7
 1 2
@@ -144,7 +324,9 @@
 &gt; 4 ↑ 1 2 3 4 5 6 7
 1 2 3 4
 </code></pre>
-<h3 id="replicate">Replicate (/)</h3>
+</section>
+<section id="replicate" class="level3">
+<h3>Replicate (/)</h3>
 <ul>
 <li>Duplication.</li>
 <li>A dyadic operator.</li>
@@ -161,7 +343,9 @@
 &gt; 2 / (3 4 5) (6 7)
 3 4 5  3 4 5  6 7  6 7
 </code></pre>
-<h3 id="reduce-along-first-axis">Reduce along first axis (⌿)</h3>
+</section>
+<section id="reduce-along-first-axis" class="level3">
+<h3>Reduce along first axis (⌿)</h3>
 <pre><code>&gt; 2 4 ρ ι 8
 1 2 3 4
 5 6 7 8
@@ -170,7 +354,9 @@
 6 8 10 12
 </code></pre>
 <p>First axis here is column-wise ??</p>
-<h3 id="reduce-along-last-axis">Reduce along last axis (/)</h3>
+</section>
+<section id="reduce-along-last-axis" class="level3">
+<h3>Reduce along last axis (/)</h3>
 <pre><code>&gt; 2 4 ρ ι 8
 1 2 3 4
 5 6 7 8
@@ -178,7 +364,9 @@
 &gt; + / 2 4 ρ ι 8
 10 26
 </code></pre>
-<h3 id="scan-along-first-and-last-axis-and">Scan along first and last axis (⍀ and \)</h3>
+</section>
+<section id="scan-along-first-and-last-axis-and" class="level3">
+<h3>Scan along first and last axis (⍀ and \)</h3>
 <pre><code>&gt;  2 4 ρ ι 8
 1 2 3 4
 5 6 7 8
@@ -191,7 +379,9 @@
 1 2  3  4
 6 8 10 12
 </code></pre>
-<h3 id="factorial">Factorial (!)</h3>
+</section>
+<section id="factorial" class="level3">
+<h3>Factorial (!)</h3>
 <pre><code>&gt; !5
 120
 </code></pre>
@@ -205,7 +395,9 @@
   1   2    6    24
 120 720 5040 40320
 </code></pre>
-<h3 id="depth">Depth (≡)</h3>
+</section>
+<section id="depth" class="level3">
+<h3>Depth (≡)</h3>
 <p>Nesting depth.</p>
 <pre><code>&gt; ≡ 2 4 ρ ι 8
 1
@@ -213,8 +405,11 @@
 &gt; ≡ ι 8
 1
 </code></pre>
-<h3 id="roll">Roll (?)</h3>
-<p><code>? n</code> selects a number randomly from the first n numbers.</p>
+</section>
+<section id="roll" class="level3">
+<h3>Roll (?)</h3>
+<p><code>? n</code> selects a number randomly from the first n
+numbers.</p>
 <pre><code>&gt; ? 100
 97
 
@@ -227,6 +422,13 @@
 &gt; ? 100
 92
 </code></pre>
+<p>Maximum number is ω. Count of numbers is α:</p>
+<pre><code>&gt; ? 10
+7
+
+&gt; 3 ? 10
+7 9 4
+</code></pre>
 <p>n must be greater than 0.</p>
 <pre><code>&gt;  ? 0
 
@@ -234,7 +436,25 @@ DOMAIN ERROR
       ?0
       ^
 </code></pre>
-<h3 id="ceiling-and-floor-and">Ceiling and floor (⌈ and ⌊)</h3>
+<p>Random values within a range:</p>
+<p>Vector of random floats between 0 and 1:</p>
+<pre><code>&gt; ⍝ Vector of length 5
+&gt; (5 ? 100) ÷ 100
+0.75 0.92 0.14 0.32 0.34
+
+&gt; ⍝ Vector of length 5
+&gt; (5 ? 1000) ÷ 100
+0.5 9.35 0.17 0.05 3.92
+</code></pre>
+<p>3x3 matrix of random floats between 0 and 1:</p>
+<pre><code>&gt; 3 3 ⍴ (9 ? 1000) ÷ 1000
+0.837 0.427 0.169
+0.671 0.094 0.801
+0.72  0.888 0.492
+</code></pre>
+</section>
+<section id="ceiling-and-floor-and" class="level3">
+<h3>Ceiling and floor (⌈ and ⌊)</h3>
 <p>Both are monadic.</p>
 <pre><code>&gt; ⌈ 3.2
 4
@@ -254,27 +474,219 @@ DOMAIN ERROR
 &gt; ⌊ 2.9
 2
 </code></pre>
-<h3 id="exponential">Exponential (*)</h3>
+</section>
+<section id="circle-function" class="level3">
+<h3>Circle function (○)</h3>
+<ul>
+<li>Monadic usage: multiply arg with pi</li>
+<li>Dyadic usage: left argument selects a trigonometric function
+<ul>
+<li>Positive left argument: sin, cos, tan, etc</li>
+<li>Negative left argument: sinh, cosh, tanh, etc</li>
+<li>Left arg range: -12 to 12</li>
+<li>-7 to 7: circular functions</li>
+<li>Others: spherical functions</li>
+</ul></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>x</th>
+<th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>π * y</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>sin(y)</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>cos(y)</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>tan(y)</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>arcsin(y)</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>arccos(y)</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>arctan(y)</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>π * y</td>
+</tr>
+<tr class="odd">
+<td>-1</td>
+<td>sinh(y)</td>
+</tr>
+<tr class="even">
+<td>-2</td>
+<td>cosh(y)</td>
+</tr>
+<tr class="odd">
+<td>-3</td>
+<td>tanh(y)</td>
+</tr>
+<tr class="even">
+<td>-4</td>
+<td>arsinh(y)</td>
+</tr>
+<tr class="odd">
+<td>-5</td>
+<td>arcosh(y)</td>
+</tr>
+<tr class="even">
+<td>-6</td>
+<td>artanh(y)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="exponential" class="level3">
+<h3>Exponential (*)</h3>
 <pre><code>&gt; ⍳ 8
 1 2 3 4 5 6 7 8
 
 &gt; 2 * ⍳ 8
 2 4 8 16 32 64 128 256
 </code></pre>
-<p>Not yet sure how this came about though:</p>
+<p>Default base is e.</p>
 <pre><code>&gt; * ⍳ 8
 2.718281828 7.389056099 20.08553692 54.59815003 148.4131591 403.4287935
       1096.633158 2980.957987
 </code></pre>
-<h2 id="axis">Axis</h2>
-<p><a href="https://aplwiki.com/wiki/Axis">https://aplwiki.com/wiki/Axis</a></p>
+</section>
+<section id="log" class="level3">
+<h3>log (⍟)</h3>
+<p>Default base is e:</p>
+<pre><code>&gt; ⍟4
+1.386294361
+
+&gt; ⍟2.717
+0.9995283304
+
+&gt; ⍟2.71828
+0.9999993273
+</code></pre>
+<p>Other bases:</p>
+<pre><code>&gt; 10 ⍟ 10000
+4
+
+&gt; 2 ⍟ 2048
+11
+</code></pre>
+</section>
+<section id="section" class="level3">
+<h3>≢</h3>
+<ul>
+<li><p>Tally (monadic): Get first dimension of a matrix</p>
+<pre class="apl"><code>&gt; ⍝ 3D matrix
+&gt; ≢ 2 3 4 ρ ι 24
+2
+
+&gt; ⍝ 2D matrix
+&gt; ≢ 3 8 ρ ι 24
+3
+
+&gt; ⍝ Vector
+&gt; ≢ ι 24
+24
+
+&gt; ⍝ Scalar
+&gt; ≢ 4
+1
+</code></pre></li>
+<li><p>Inequality (Dyadic): not-equal-to</p>
+<pre class="apl"><code>&gt; 3 ≢ 3
+0
+
+&gt; 3 ≢ 4
+1
+
+&gt; (1 2 3) ≢ (1 2 3)
+0
+</code></pre></li>
+</ul>
+</section>
+<section id="section-1" class="level3">
+<h3>∪</h3>
+<ul>
+<li>Monadic: Take unique elements only</li>
+<li>Dyadic: Union of args, with 'duplicates of α in ω removed'</li>
+</ul>
+<pre class="apl"><code>&gt; ⍝ Monadic 
+&gt; ∪ 1 2 3 3 3 4 5
+1 2 3 4 5
+
+&gt; ⍝ Dyadic
+&gt; 1 2 3 3 4 ∪ 4 5 
+1 2 3 3 4 5
+</code></pre>
+</section>
+<section id="intersection" class="level3">
+<h3>Intersection (∩)</h3>
+<ul>
+<li>No monadic version</li>
+</ul>
+<pre class="apl"><code>&gt; 1 2 3 3 ∩ 4 5 2 1
+1 2
+</code></pre>
+</section>
+<section id="rightidentity" class="level3">
+<h3>Right/Identity (⊢)</h3>
+<ul>
+<li>Monadic: Returns its argument unchanged</li>
+<li>Dyadic: Return right argument</li>
+</ul>
+<pre class="apl"><code>&gt; ⊢ 3 2
+3 2
+
+&gt; 2 ⊢ 3 2
+3 2
+</code></pre>
+<p>This operator is same as <code>⎕←ω</code>.</p>
+</section>
+<section id="lefthide" class="level3">
+<h3>Left/hide (⊢)</h3>
+<ul>
+<li>Monadic: ??</li>
+<li>Dyadic: Return left argument</li>
+</ul>
+<pre class="apl"><code>&gt; 1 5 6 ⊣ 2 3
+1 5 6
+
+&gt; ⊣ 2 3
+⊣ 2 3
+</code></pre>
+</section>
+</section>
+<section id="axis" class="level2">
+<h2>Axis</h2>
+<p><a
+href="https://aplwiki.com/wiki/Axis">https://aplwiki.com/wiki/Axis</a></p>
 <ul>
 <li>Axes are dimensions along which the array is organized</li>
 <li>Rank of an array = number of axes</li>
 </ul>
-<h2 id="more">More</h2>
+</section>
+<section id="more" class="level2">
+<h2>More</h2>
 <ul>
-<li>≢ (monadic): tally. Number of major cells in an array. Like len() of python</li>
+<li>≢ (monadic): tally. Number of major cells in an array. Like len() of
+python</li>
 <li>≡ (monadic): depth. ie, maximum level of (array) nesting
 <ul>
 <li>Depth and rank aren't same</li>
@@ -282,7 +694,9 @@ DOMAIN ERROR
 <li>⍤: rank</li>
 <li>⊢: ??</li>
 </ul>
-<h2 id="examples">Examples</h2>
+</section>
+<section id="examples" class="level2">
+<h2>Examples</h2>
 <pre class="apl"><code>&gt; n ← 5 6 7
 &gt; n + 2
 7 8 9
@@ -302,18 +716,192 @@ DOMAIN ERROR
 &gt; ⍝ 5^(6^7) is quite a large number (a 195667-digit number)
 ∞
 </code></pre>
-<h2 id="emacs">emacs</h2>
+</section>
+<section id="emacs" class="level2">
+<h2>emacs</h2>
 <p>emacs: gnu-apl mode</p>
 <ul>
-<li><a href="https://github.com/lokedhs/gnu-apl-mode">https://github.com/lokedhs/gnu-apl-mode</a></li>
+<li><a
+href="https://github.com/lokedhs/gnu-apl-mode">https://github.com/lokedhs/gnu-apl-mode</a></li>
 <li>Activate with <code>M-x gnu-apl-mode</code></li>
-<li>Shift to APL symbol keyboard by holding super key (ie, 'windows key')
+<li>Shift to APL symbol keyboard by holding super key (ie, 'windows
+key')
 <ul>
 <li>There are other ways like the APL-Z input method.</li>
 </ul></li>
 </ul>
-<h2 id="keyboard">Keyboard</h2>
-<p>Default keyboard is like (from <a href="https://github.com/ilovezfs/gnu-apl/blob/master/README-3-keyboard">here</a>):</p>
+</section>
+<section id="user-defined-functions" class="level2">
+<h2>User defined functions</h2>
+<ul>
+<li>Delimited by ∇ and ∇ (del symbol)</li>
+</ul>
+<p>Format:</p>
+<pre class="apl"><code>∇ result ← fun_name arg_name
+    ⍝ body
+    result ← expression
+∇
+</code></pre>
+<section id="examples-1" class="level3">
+<h3>Examples</h3>
+<p>Monadic:</p>
+<pre class="apl"><code>∇ double ← square x
+    double ← x × x
+∇
+
+&gt; square 3
+9
+</code></pre>
+<p>Dyadic:</p>
+<pre class="apl"><code>∇ sum ← x add  y
+    sum ← x + y
+∇
+
+&gt; 3 add 5
+8
+</code></pre>
+<p>Niladic (no args):</p>
+<pre class="apl"><code></code></pre>
+<p>Cannot have more than 2 args, but can use an array arg to get around
+that.</p>
+<hr />
+<pre class="apl"><code>∇ result ← sigmoid x
+    result ← 1 ÷ 1 + *-x
+∇
+</code></pre>
+</section>
+</section>
+<section id="dfn" class="level2">
+<h2>dfn</h2>
+<ul>
+<li>Pronunciation: deefns</li>
+<li>Compact local functions, possibly anonymous
+<ul>
+<li>Support in gnu-apl limited ??</li>
+</ul></li>
+<li>Terms:
+<ul>
+<li>⍺: left arg</li>
+<li>⍵: right arg</li>
+<li>∇: self reference (useful for recursion)</li>
+</ul></li>
+<li>'A dfn is a sequence of expressions inside { and }, separated by ⋄
+or newlines.'</li>
+<li>Return value: result of last evaluated expression</li>
+</ul>
+<pre><code>&gt; cubed ← {⍵ × ⍵ × ⍵}
+&gt; cubed 3
+27
+
+&gt; mult ← {α × ⍵}
+&gt; 4 mult 3
+12
+</code></pre>
+</section>
+<section id="gnuapl" class="level2">
+<h2>gnuapl</h2>
+<p>REPL:</p>
+<ul>
+<li>Exit repl: <code>)OFF</code></li>
+<li>Run like: apl -s -f &lt;file-name.apl&gt;</li>
+<li>Workspace:
+<ul>
+<li><code>)CLEAR</code>: clear workspace</li>
+<li><code>)LOAD myname</code>: load saved workspace</li>
+<li><code>)DROP ws_name</code>: delete a workspace</li>
+<li><code>)SAVE myname</code>: save workspace</li>
+<li><code>)ERASE sym_name</code>: delete a symbol from current
+workspace</li>
+<li><code>)COPY</code>: copy some symbols</li>
+<li><code>)FNS</code>: print names of functions defined in current
+workspace</li>
+<li><code>)OPS</code>: print names of operators defined in current
+workspace</li>
+<li><code>)NMS</code>: print all names defined in current workspace</li>
+<li><code>)VARS</code>: print all user defined variables in current
+workspace</li>
+</ul></li>
+<li>Run script: <code>)IN myscript.apl</code></li>
+<li>Load file: <code>data ← ⎕FIO[49] 'test_y.csv'</code></li>
+</ul>
+</section>
+<section id="functions" class="level2">
+<h2>Functions</h2>
+<ul>
+<li>⎕FIO['fopen'] instead of the less intuitive ⎕FIO[3], or even
+⎕FIO[fopen]
+<ul>
+<li><a
+href="https://www.gnu.org/software/apl/apl-intro.html#CH_3.4.14.13">https://www.gnu.org/software/apl/apl-intro.html#CH_3.4.14.13</a></li>
+<li>The 3 is an <em>axis argument</em></li>
+</ul></li>
+<li>⎕UCS: Universal Character Set
+<ul>
+<li><p>Can be used to convert between encodings for characters ?? Like
+character to integer unicode code point?? and the other way
+around</p></li>
+<li><p>From <a
+href="https://www.gnu.org/software/apl/apl-intro.html#CH_3.4.3">https://www.gnu.org/software/apl/apl-intro.html#CH_3.4.3</a>:</p>
+<pre class="apl"><code>⍝ Unicode → integer conversion
+⎕UCS &#39;APL ⍴⍪ $¥£€⍧ ÄÖÜäöüß&#39;
+65 80 76 32 9076 9066 32 36 165 163 8364 9063 32 196 214 220 228 246 252 223
+
+⍝ And back to Unicode
+⎕UCS 65 80 76 32 9076 9066 32 36 165 163 8364 9063 32 196 214 220 22 8 246 252 223
+APL ⍴⍪ $¥£€⍧ ÄÖÜäöüß
+</code></pre></li>
+<li></li>
+</ul></li>
+<li></li>
+</ul>
+</section>
+<section id="editors" class="level2">
+<h2>Editors</h2>
+<section id="emacs-1" class="level3">
+<h3>Emacs</h3>
+<p>Mode: gnu-apl-mode</p>
+<ul>
+<li><a
+href="https://github.com/lokedhs/gnu-apl-mode">https://github.com/lokedhs/gnu-apl-mode</a></li>
+</ul>
+<p>—</p>
+<ul>
+<li>Interactive session: <code>M-x gnu-apl</code></li>
+<li>Use APL-Z input method: <code>C-x RET C-\</code></li>
+<li>Show APL keyboard layout: <code>C-c C-k</code> or
+<code>M-x gnu-apl-show-keyboard</code></li>
+</ul>
+<ul>
+<li>Symbol entry:
+<ul>
+<li>Use super-key if WM doesn't hijack it
+<ul>
+<li>Eg: Sup+i: ι</li>
+</ul></li>
+<li>Toggle input: C-\ APL-Z
+<ul>
+<li>Escape: <code>.</code></li>
+<li>Eg: <code>. e</code> becomes <code>∈</code></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="vim" class="level3">
+<h3>vim</h3>
+<p>vim-apl: <a
+href="https://github.com/zoomlogo/vim-apl">https://github.com/zoomlogo/vim-apl</a></p>
+<p>Backtick is the prefix key by default:</p>
+<ul>
+<li><code>`i</code> gives <code>ι</code></li>
+<li><code>`$</code> gives <code>⍋</code></li>
+<li><code>`r</code> gives <code>ρ</code></li>
+</ul>
+</section>
+</section>
+<section id="keyboard" class="level2">
+<h2>Keyboard</h2>
+<p>Default keyboard is like (from <a
+href="https://github.com/ilovezfs/gnu-apl/blob/master/README-3-keyboard">here</a>):</p>
 <pre><code>╔════╦════╦════╦════╦════╦════╦════╦════╦════╦════╦════╦════╦════╦═════════╗
 ║ ~  ║ !⌶ ║ @⍫ ║ #⍒ ║ $⍋ ║ %⌽ ║ ^⍉ ║ &amp;⊖ ║ *⍟ ║ (⍱ ║ )⍲ ║ _! ║ +⌹ ║         ║
 ║ `◊ ║ 1¨ ║ 2¯ ║ 3&lt; ║ 4≤ ║ 5= ║ 6≥ ║ 7&gt; ║ 8≠ ║ 9∨ ║ 0∧ ║ -× ║ =÷ ║ BACKSP  ║
@@ -328,26 +916,37 @@ DOMAIN ERROR
 ║  SHIFT      ║ z⊂ ║ x⊃ ║ c∩ ║ v∪ ║ b⊥ ║ n⊤ ║ m| ║ ,⍝ ║ .⍀ ║ /⌿ ║  SHIFT   ║
 ╚═════════════╩════╩════╩════╩════╩════╩════╩════╩════╩════╩════╩══════════╝
 </code></pre>
-<p>(Depending on the font used, this may look different on different devices.)</p>
-<h2 id="vim">vim</h2>
-<p>vim-apl: <a href="https://github.com/zoomlogo/vim-apl">https://github.com/zoomlogo/vim-apl</a></p>
-<p>Backtick is the prefix key by default:</p>
+<p>(Depending on the font used, this may look different on different
+devices.)</p>
+</section>
+<section id="even-more" class="level2">
+<h2>Even more</h2>
 <ul>
-<li><code>`i</code> gives <code>ι</code></li>
-<li><code>`$</code> gives <code>⍋</code></li>
-<li><code>`r</code> gives <code>ρ</code></li>
-</ul>
-<h2 id="gnuapl">gnuapl</h2>
-<p>REPL:</p>
+<li>Game of life with apl: <a
+href="https://www.youtube.com/watch?v=a9xAKttWgP4">https://www.youtube.com/watch?v=a9xAKttWgP4</a></li>
+<li>ANN with apl: <a
+href="https://www.youtube.com/playlist?list=PLgTqamKi1MS3p-O0QAgjv5vt4NY5OgpiM">https://www.youtube.com/playlist?list=PLgTqamKi1MS3p-O0QAgjv5vt4NY5OgpiM</a></li>
+<li>Other APL inspired language (mostly proprietary implementations): J,
+K, Q
 <ul>
-<li>Exit repl: <code>)OFF</code></li>
-<li>Run like: apl -s -f &lt;file-name.apl&gt;</li>
-</ul>
-<h2 id="even-more">Even more</h2>
+<li>J: Like APL but uses only ASCII
 <ul>
-<li>Game of life with apl: <a href="https://www.youtube.com/watch?v=a9xAKttWgP4">https://www.youtube.com/watch?v=a9xAKttWgP4</a></li>
-<li>ANN with apl: <a href="https://www.youtube.com/playlist?list=PLgTqamKi1MS3p-O0QAgjv5vt4NY5OgpiM">https://www.youtube.com/playlist?list=PLgTqamKi1MS3p-O0QAgjv5vt4NY5OgpiM</a></li>
+<li><a
+href="https://github.com/jsoftware/jsource">https://github.com/jsoftware/jsource</a></li>
+</ul></li>
+<li>K3: A version of K</li>
+<li>Q: built on top of K4 but proprietary</li>
+</ul></li>
+<li>Fun fact: APL inspired S, which in turn inspired R</li>
+<li>Scripts:
+<ul>
+<li>Read csv: <a
+href="https://www.gnu.org/software/apl/Bits_and_Pieces/CSV.apl.html">https://www.gnu.org/software/apl/Bits_and_Pieces/CSV.apl.html</a></li>
+<li><a
+href="https://www.gnu.org/software/apl/Bits_and_Pieces/Util_JSA.html">https://www.gnu.org/software/apl/Bits_and_Pieces/Util_JSA.html</a></li>
+</ul></li>
 </ul>
+</section>
 </main>
 </body>
 </html>

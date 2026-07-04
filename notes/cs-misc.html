@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Misc: Computer-related</title>
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
+</head>
+<body>
+
+
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
+
+<header id="title-block-header">
+      <h1 class="title">Misc: Computer-related</h1>
+    </header>
+
+<ul>
+    <li>Date created: 2026-May-19</li>
+    </ul>
+
+
+
+
+<hr/>
+
+<main id="content-container">
+<section id="networking" class="level2">
+<h2>Networking</h2>
+<ul>
+<li>Purpose of TTL (Time-to-Live): Avoid data circulating in the network
+forever</li>
+<li>ICMP: Internet Control Message Protocol
+<ul>
+<li>Network layer</li>
+<li>Useful to diagnose communication problems</li>
+<li>Used by <code>ping</code> command ??</li>
+</ul></li>
+<li>Reverse proxy:
+<ul>
+<li>Connections coming to server will come through this</li>
+<li>Unlike proxy, where outgoing connections are re-routed</li>
+</ul></li>
+<li></li>
+</ul>
+<section id="osi-layer" class="level3">
+<h3>OSI layer</h3>
+<p>Open Systems Interconnection</p>
+<table>
+<thead>
+<tr class="header">
+<th>Layer</th>
+<th>Info</th>
+<th>Protocol</th>
+<th>Hardware</th>
+<th>Address</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Application</td>
+<td>Data</td>
+<td>HTTP, SMTP, FTP</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Presentation</td>
+<td>Data</td>
+<td>TLS, JPEG, ASCII</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Session</td>
+<td>Data</td>
+<td>Socket</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Transport</td>
+<td>Segment/Datagram</td>
+<td>TCP, UDP</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Network</td>
+<td>Packet</td>
+<td>IP</td>
+<td>Router</td>
+<td>Logical</td>
+</tr>
+<tr class="even">
+<td>Data-link</td>
+<td>Frame</td>
+<td>MAC, Ethernet, WiFi</td>
+<td>Switch</td>
+<td>Physical</td>
+</tr>
+<tr class="odd">
+<td>Physical</td>
+<td>Bit</td>
+<td></td>
+<td>Wires, repeater</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Purpose:</p>
+<ul>
+<li>Application:</li>
+<li>Presentation:</li>
+<li>Session:</li>
+<li>Transport:</li>
+<li>Network:</li>
+<li>Data-link:</li>
+<li>Physical: Transfer raw bit stream over physical connection</li>
+</ul>
+</section>
+<section id="order-of-function-calls-made-in-tcp" class="level3">
+<h3>Order of function calls made in TCP</h3>
+<p>Server:</p>
+<ol>
+<li>socket: create a socket</li>
+<li>bind: bind the socket with an ip address</li>
+<li>listen: await client requests</li>
+<li>accept: accept client request</li>
+<li>recv / read: read data from client</li>
+<li>send / write: give data to client</li>
+<li>close: close connection</li>
+</ol>
+<p>Client:</p>
+<ol>
+<li>socket: create a socket</li>
+<li>connect: trigger TCP handshake (3-way: SYN, SYN-ACK, ACK)</li>
+<li>send / write: give data to server</li>
+<li>recv / read: get server response</li>
+<li>close: close connection</li>
+</ol>
+</section>
+<section id="protocol-ports" class="level3">
+<h3>Protocol ports</h3>
+<ul>
+<li>SSH: 21</li>
+<li>FTP: 22</li>
+<li>Telnet: 23</li>
+<li>SMTP: 25
+<ul>
+<li>465: SSL/TLS</li>
+<li>587: STARTTLS</li>
+</ul></li>
+<li>HTTP: 80
+<ul>
+<li>HTTPS: 443</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="dbms-rdbms" class="level2">
+<h2>DBMS (RDBMS)</h2>
+<section id="terms" class="level3">
+<h3>Terms</h3>
+<ul>
+<li>Attribute: column</li>
+<li>Tuple: row</li>
+<li>Relation: table</li>
+<li>Cursor</li>
+<li>Entry</li>
+<li>Dependency
+<ul>
+<li>Eg: X → Y</li>
+</ul></li>
+<li>Trigger</li>
+<li>Buffer</li>
+</ul>
+<p>Implementation related:</p>
+<ul>
+<li>ResultSet</li>
+<li>View</li>
+</ul>
+</section>
+<section id="keys" class="level3">
+<h3>Keys</h3>
+<ul>
+<li>Primary key</li>
+<li>Candidate</li>
+<li>Super</li>
+<li>Foreign</li>
+<li>Prime attribute: Attribute part of primary key??</li>
+</ul>
+</section>
+<section id="normal-forms" class="level3">
+<h3>Normal forms</h3>
+<ul>
+<li>1NF: Atomicity
+<ul>
+<li>No column can have more than one value</li>
+</ul></li>
+<li>2NF: No partial dependency ??</li>
+<li>3NF:</li>
+<li>BCNF</li>
+<li>4NF: No multi-valued dependencies</li>
+<li>5NF</li>
+</ul>
+</section>
+<section id="joins" class="level3">
+<h3>Joins</h3>
+<ul>
+<li>Equijoin</li>
+<li>Natural</li>
+<li>Inner</li>
+<li>Outer</li>
+</ul>
+</section>
+</section>
+<section id="pl-specific" class="level2">
+<h2>PL-specific</h2>
+<ul>
+<li>CPP:
+<ul>
+<li>No catch block for an exception: terminate with
+<code>std::terminate</code></li>
+</ul></li>
+<li>Java:
+<ul>
+<li><code>math.sqrt</code> returns <code>NaN</code> if input is
+negative. Because mathematically it's a complex number, I suppose..</li>
+<li>Max size to which a vector object can grow: 2<sup>31</sup> - 1
+(because JVM needs some space for object headers)</li>
+</ul></li>
+</ul>
+</section>
+<section id="ancientobsolete" class="level2">
+<h2>Ancient/Obsolete</h2>
+<ul>
+<li>SOAP: Simple Object Access Protocol
+<ul>
+<li>XML-based</li>
+<li>Supplanted by: REST (REpresentational State Transfer)</li>
+</ul></li>
+<li>UDDI:
+<ul>
+<li>Use: publish and discover web services</li>
+<li>XML-based</li>
+<li>Meant to work closely with SOAP</li>
+<li>Since SOAP got supplanted, this is not prominent now</li>
+</ul></li>
+<li>ALOHA</li>
+<li>RIP: Routing information protocol
+<ul>
+<li>Use: find best path to send packets (low-cost route)</li>
+<li>Supplanted by: protocols like OSPF</li>
+<li>Maximum hop limit of 15</li>
+</ul></li>
+<li>Bastion host: Entry point for a private network meant to be more
+secure</li>
+</ul>
+</section>
+</main>
+</body>
+</html>

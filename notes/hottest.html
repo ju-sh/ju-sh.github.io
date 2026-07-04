@@ -32,28 +32,42 @@
 <hr/>
 
 <main id="content-container">
-<h1 id="jul-2022">04-Jul-2022</h1>
-<p>CCC: Cartesian Closed Category handwaving in a proof: an argument/proof which is not rigorous. affine proof tree</p>
-<h2 id="stlc">STLC</h2>
+<section id="jul-2022" class="level1">
+<h1>04-Jul-2022</h1>
+<p>CCC: Cartesian Closed Category handwaving in a proof: an
+argument/proof which is not rigorous. affine proof tree</p>
+<section id="stlc" class="level2">
+<h2>STLC</h2>
 <ul>
 <li>Natural deduction <code>P</code> means <code>P</code> holds.</li>
-<li>STLC: <code>p:P</code> means <code>p</code> is a proof/witness/inhabitant of <code>P</code>.</li>
+<li>STLC: <code>p:P</code> means <code>p</code> is a
+proof/witness/inhabitant of <code>P</code>.</li>
 </ul>
 <ul>
 <li>STLC is like propositional logic.</li>
-<li>Dependent types =&gt; like predicate logic (aka First-order logic).</li>
+<li>Dependent types =&gt; like predicate logic (aka First-order
+logic).</li>
 </ul>
-<p>:Theorem: Lambek 1985 :: There is an interpretation of STLC into sets. ie, there is an equivalence between STLCs and CCCs.</p>
-<p>:Theorem: Howard 1969 :: Proof trees of ND have a 1-to-1 correspondence with STLC.</p>
+<p>:Theorem: Lambek 1985 :: There is an interpretation of STLC into
+sets. ie, there is an equivalence between STLCs and CCCs.</p>
+<p>:Theorem: Howard 1969 :: Proof trees of ND have a 1-to-1
+correspondence with STLC.</p>
 <p>β-reduction:</p>
 <p>Γ,x:P ⊢ q:Q Γ ⊢ p:P</p>
 <hr />
 <p>Γ ⊢ (λx.q)p = q[p/x]:Q</p>
 <p>Γ ⊢ λx.f x = f:P → Q</p>
-<h1 id="more">More</h1>
-<h1 id="worksheets">Worksheets</h1>
-<h2 id="july-2022">1: 04-July-2022</h2>
-<h3 id="q1">Q1</h3>
+</section>
+</section>
+<section id="more" class="level1">
+<h1>More</h1>
+</section>
+<section id="worksheets" class="level1">
+<h1>Worksheets</h1>
+<section id="july-2022" class="level2">
+<h2>1: 04-July-2022</h2>
+<section id="q1" class="level3">
+<h3>Q1</h3>
 <p>(Difficulty: *)</p>
 <p>State the introduction and elimination rules for</p>
 <ol>
@@ -95,7 +109,9 @@
 ────────────────────────────    
  Γ ⊢ (λx:A).b : Π(x:A).B(x)
 </code></pre>
-<h3 id="q2">Q2</h3>
+</section>
+<section id="q2" class="level3">
+<h3>Q2</h3>
 <p>Fill in this proof tree:</p>
 <pre><code>──────────────       ──────────────
 a:A, b:B ⊢ a:A       ??????????????
@@ -116,11 +132,21 @@ a:A, b:B ⊢ a:A       a:A, b:B ⊢ b:B
 ───────────────────────────────────
 ⊢ λ(a:A).λ(b:B).(a,b) : A → B → A×B
 </code></pre>
-<h1 id="exercises">Exercises</h1>
-<h2 id="july-2022-1">06-July-2022</h2>
-<p><a href="https://github.com/martinescardo/HoTTEST-Summer-School/blob/main/Agda/Exercises/01-Exercises.lagda.md">https://github.com/martinescardo/HoTTEST-Summer-School/blob/main/Agda/Exercises/01-Exercises.lagda.md</a></p>
-<h1 id="agda-emacs-keys">Agda emacs keys</h1>
-<p><a href="https://agda.readthedocs.io/en/v2.6.2.2/tools/emacs-mode.html">https://agda.readthedocs.io/en/v2.6.2.2/tools/emacs-mode.html</a></p>
+</section>
+</section>
+</section>
+<section id="exercises" class="level1">
+<h1>Exercises</h1>
+<section id="july-2022-1" class="level2">
+<h2>06-July-2022</h2>
+<p><a
+href="https://github.com/martinescardo/HoTTEST-Summer-School/blob/main/Agda/Exercises/01-Exercises.lagda.md">https://github.com/martinescardo/HoTTEST-Summer-School/blob/main/Agda/Exercises/01-Exercises.lagda.md</a></p>
+</section>
+</section>
+<section id="agda-emacs-keys" class="level1">
+<h1>Agda emacs keys</h1>
+<p><a
+href="https://agda.readthedocs.io/en/v2.6.2.2/tools/emacs-mode.html">https://agda.readthedocs.io/en/v2.6.2.2/tools/emacs-mode.html</a></p>
 <table>
 <thead>
 <tr class="header">
@@ -207,8 +233,11 @@ a:A, b:B ⊢ a:A       a:A, b:B ⊢ b:B
 </tr>
 </tbody>
 </table>
-<h1 id="tex-for-unicode">TeX for unicode</h1>
-<p><a href="https://github.com/agda/agda/blob/master/doc/user-manual/unicode-symbols-sphinx.tex.txt">https://github.com/agda/agda/blob/master/doc/user-manual/unicode-symbols-sphinx.tex.txt</a></p>
+</section>
+<section id="tex-for-unicode" class="level1">
+<h1>TeX for unicode</h1>
+<p><a
+href="https://github.com/agda/agda/blob/master/doc/user-manual/unicode-symbols-sphinx.tex.txt">https://github.com/agda/agda/blob/master/doc/user-manual/unicode-symbols-sphinx.tex.txt</a></p>
 <pre><code>| Symbol               | TeX |   | Symbol            | TeX |
 |----------------------+-----+   +-------------------+-----|
 | ~\to~ or ~\-&gt;~       | →   |   | ~\parallel~       | ∥   |
@@ -281,14 +310,24 @@ a:A, b:B ⊢ a:A       a:A, b:B ⊢ b:B
 
 | ~\bN~ | ℕ |
 </code></pre>
-<h1 id="references">References</h1>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
 <ul>
-<li><a href="https://martinescardo.github.io/HoTTEST-Summer-School/">Agda lecture notes</a> (Martin Escardo)</li>
-<li><a href="https://github.com/EgbertRijke/HoTT-Intro">Introduction to Homotopy Type Theory</a> - Egbert Rijke</li>
-<li><a href="https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/HoTT-UF-Agda.html">Introduction to Univalent Foundations of Mathematics with Agda</a> - Martín Escardó</li>
+<li><a
+href="https://martinescardo.github.io/HoTTEST-Summer-School/">Agda
+lecture notes</a> (Martin Escardo)</li>
+<li><a href="https://github.com/EgbertRijke/HoTT-Intro">Introduction to
+Homotopy Type Theory</a> - Egbert Rijke</li>
+<li><a
+href="https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/HoTT-UF-Agda.html">Introduction
+to Univalent Foundations of Mathematics with Agda</a> - Martín
+Escardó</li>
 <li>Proofs and Types by Girard</li>
-<li><a href="https://leanprover.github.io/logic_and_proof">https://leanprover.github.io/logic_and_proof</a></li>
+<li><a
+href="https://leanprover.github.io/logic_and_proof">https://leanprover.github.io/logic_and_proof</a></li>
 </ul>
+</section>
 </main>
 </body>
 </html>

@@ -32,13 +32,31 @@
 <hr/>
 
 <main id="content-container">
-<h2 id="general">General</h2>
+<section id="general" class="level2">
+<h2>General</h2>
 <ul>
 <li><code>virtual class</code>: abstract class
 <ul>
-<li><a href="https://www.chipverify.com/systemverilog/systemverilog-abstract-class">https://www.chipverify.com/systemverilog/systemverilog-abstract-class</a></li>
+<li><a
+href="https://www.chipverify.com/systemverilog/systemverilog-abstract-class">https://www.chipverify.com/systemverilog/systemverilog-abstract-class</a></li>
+</ul></li>
+<li>Dynamic array or queue
+<ul>
+<li><p><code>type_name var_name[$]</code></p></li>
+<li><p>Can change size</p></li>
+<li><p>Not available in verilog</p></li>
+<li><p>Eg:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>seq_item item_q<span class="op">[</span>$<span class="op">];</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">// Add new element at end</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>item_q.push_back<span class="op">(</span>tx<span class="op">);</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Remove element from front</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>seq_item first <span class="op">=</span> item_q.pop_front<span class="op">();</span> <span class="co">// remove from front</span></span></code></pre></div></li>
 </ul></li>
 </ul>
+</section>
 </main>
 </body>
 </html>

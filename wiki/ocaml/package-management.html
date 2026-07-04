@@ -32,82 +32,138 @@
 <hr/>
 
 <main id="content-container">
-<h2 id="opam">opam</h2>
-<p>opam switches are comparable to python's venvs: <a href="https://ocaml.org/docs/opam-switch-introduction">https://ocaml.org/docs/opam-switch-introduction</a></p>
+<section id="opam" class="level2">
+<h2>opam</h2>
+<p>opam switches are comparable to python's venvs: <a
+href="https://ocaml.org/docs/opam-switch-introduction">https://ocaml.org/docs/opam-switch-introduction</a></p>
 <ul>
-<li><p>Show switches available to be installed: <code>opam switch list-available</code></p>
+<li><p>Show switches available to be installed:
+<code>opam switch list-available</code></p>
 <ul>
-<li>Show pre-releases as well: <code>opam switch list-available --all</code></li>
+<li>Show pre-releases as well:
+<code>opam switch list-available --all</code></li>
 </ul></li>
 <li><p>Activate: <code>eval $(opam env)</code></p></li>
-<li><p>Create new switch: <code>opam switch create &lt;switch-name&gt;</code></p>
+<li><p>Create new switch:
+<code>opam switch create &lt;switch-name&gt;</code></p>
 <ul>
-<li>Make a new switch with a specific compiler version (v5.1.1): <code>opam switch create 5.1.1</code></li>
+<li>Make a new switch with a specific compiler version (v5.1.1):
+<code>opam switch create 5.1.1</code></li>
 </ul></li>
-<li><p>Delete a switch: <code>opam switch remove &lt;switch-name&gt;</code></p>
+<li><p>Delete a switch:
+<code>opam switch remove &lt;switch-name&gt;</code></p>
 <ul>
 <li>Default switch is named <code>default</code> ??</li>
 </ul></li>
 <li><p>List switches: <code>opam switch</code></p></li>
-<li><p>Go to a switch: <code>opam switch &lt;switch-name&gt;</code></p></li>
-<li><p>List installed packages: <code>opam list</code> or <code>opam list -i</code></p>
+<li><p>Go to a switch:
+<code>opam switch &lt;switch-name&gt;</code></p></li>
+<li><p>List installed packages: <code>opam list</code> or
+<code>opam list -i</code></p>
 <ul>
 <li>List all available packages: <code>opam list -a</code></li>
 </ul></li>
-<li><p>Change switch: <code>opam switch set &lt;switch-name&gt;</code></p></li>
-<li><p>Install a package (to current switch): <code>opam install &lt;package-name&gt;</code></p></li>
-<li><p>Remove a package: <code>opam remove &lt;package-name&gt;</code></p></li>
+<li><p>Change switch:
+<code>opam switch set &lt;switch-name&gt;</code></p></li>
+<li><p>Install a package (to current switch):
+<code>opam install &lt;package-name&gt;</code></p></li>
+<li><p>Remove a package:
+<code>opam remove &lt;package-name&gt;</code></p></li>
 <li><p>Update package list: <code>opam update</code></p></li>
-<li><p>Show version of an installed package: <code>opam info &lt;package-name&gt;</code></p></li>
+<li><p>Show version of an installed package:
+<code>opam info &lt;package-name&gt;</code></p></li>
 </ul>
 <p>—</p>
-<p>Many useful packages related to Coq are available only after adding this repo:</p>
+<p>Many useful packages related to Coq are available only after adding
+this repo:</p>
 <pre><code>opam repo add coq-released https://coq.inria.fr/opam/released
 </code></pre>
-<p>Reference: <a href="https://opam.ocaml.org/doc/Usage.html">https://opam.ocaml.org/doc/Usage.html</a></p>
-<h2 id="dune">dune</h2>
-<h3 id="general">General</h3>
+<p>Reference: <a
+href="https://opam.ocaml.org/doc/Usage.html">https://opam.ocaml.org/doc/Usage.html</a></p>
+</section>
+<section id="dune" class="level2">
+<h2>dune</h2>
+<section id="general" class="level3">
+<h3>General</h3>
 <ul>
 <li>ocamllex has its own stanza:
 <ul>
-<li><a href="https://dune.readthedocs.io/en/latest/reference/dune/ocamllex.html">https://dune.readthedocs.io/en/latest/reference/dune/ocamllex.html</a></li>
-<li><a href="https://stackoverflow.com/questions/77159120/how-can-i-add-the-ml-flag-or-any-flag-really-to-ocamllex-in-a-dune-file">https://stackoverflow.com/questions/77159120/how-can-i-add-the-ml-flag-or-any-flag-really-to-ocamllex-in-a-dune-file</a></li>
+<li><a
+href="https://dune.readthedocs.io/en/latest/reference/dune/ocamllex.html">https://dune.readthedocs.io/en/latest/reference/dune/ocamllex.html</a></li>
+<li><a
+href="https://stackoverflow.com/questions/77159120/how-can-i-add-the-ml-flag-or-any-flag-really-to-ocamllex-in-a-dune-file">https://stackoverflow.com/questions/77159120/how-can-i-add-the-ml-flag-or-any-flag-really-to-ocamllex-in-a-dune-file</a></li>
 </ul></li>
 <li>Run an executable:
 <ul>
 <li><code>dune exec ./lexer.exe</code></li>
-<li>dune adds a <code>.exe</code> extension to the executables that it makes</li>
+<li>dune adds a <code>.exe</code> extension to the executables that it
+makes</li>
 </ul></li>
-<li><code>name</code> field of <code>executable</code> is the entry point.
+<li><code>name</code> field of <code>executable</code> is the entry
+point.
 <ul>
 <li>Could be <code>main</code> for <code>main.ml</code></li>
 </ul></li>
 </ul>
-<h3 id="starting-off">Starting off</h3>
+</section>
+<section id="starting-off" class="level3">
+<h3>Starting off</h3>
 <pre><code># Initialize new project
 dune init proj &lt;proj-name&gt;
 
 dune build
 dune exec
 </code></pre>
-<p>References: <a href="https://ocaml.org/docs/up-and-running">https://ocaml.org/docs/up-and-running</a></p>
+<p>References: <a
+href="https://ocaml.org/docs/up-and-running">https://ocaml.org/docs/up-and-running</a></p>
 <hr />
 <p>Both of the following are equivalent??</p>
 <pre><code>dune exec -- &lt;cmd&gt;
 dune install; &lt;cmd&gt;
 </code></pre>
-<h3 id="dont-treat-a-warning-as-error">Don't treat a warning as error</h3>
+</section>
+<section id="dont-treat-a-warning-as-error" class="level3">
+<h3>Don't treat a warning as error</h3>
 <pre><code>(executable
   (name lexer)
   (flags (:standard (-warn-error -32))))
 </code></pre>
-<p><a href="https://dune.readthedocs.io/en/latest/concepts/ocaml-flags.html">https://dune.readthedocs.io/en/latest/concepts/ocaml-flags.html</a></p>
-<h2 id="useful-packagestools">Useful packages/tools</h2>
+<p><a
+href="https://dune.readthedocs.io/en/latest/concepts/ocaml-flags.html">https://dune.readthedocs.io/en/latest/concepts/ocaml-flags.html</a></p>
+</section>
+</section>
+<section id="utop" class="level2">
+<h2>utop</h2>
+<p>Like an enhanced ocaml REPL.</p>
+<pre><code>$ utop
+──────────────────────────────────────────────────────────────────────
+   │ Welcome to utop version 2.15.0 (using OCaml version 5.2.1)! │
+   └─────────────────────────────────────────────────────────────┘
+
+Type #utop_help for help about using utop.
+
+─( 11:54:52 )─&lt; command 0 &gt;───────────────────{ counter: 0 }─
+utop # #require &quot;angstrom&quot;;;
+─( 11:54:52 )─&lt; command 1 &gt;───────────────────{ counter: 0 }─
+utop # open Angstrom;;
+─( 11:55:00 )─&lt; command 2 &gt;───────────────────{ counter: 0 }─
+utop #
+</code></pre>
+<p>Check type info:</p>
+<pre><code>utop # #typeof &quot;Timedesc.t&quot;;;
+type nonrec Timedesc.t
+
+utop # #show Timedesc.t;;
+type t
+
+</code></pre>
+</section>
+<section id="useful-packagestools" class="level2">
+<h2>Useful packages/tools</h2>
 <ul>
 <li>ocamlc: bytecode compiler</li>
 <li>ocamlopt: native code compiler</li>
 <li>merlin: ocaml code completion for text editors</li>
-<li>utop: like an enhanced ocaml REPL</li>
 <li>ocamlfind: ??</li>
 <li>js<sub>ofocaml</sub>: make web stuff from ocaml
 <ul>
@@ -116,7 +172,8 @@ dune install; &lt;cmd&gt;
 </ul>
 <p>Jane Street libraries:</p>
 <ul>
-<li>base: a ocaml stdlib (minimal, lightweight, stable API, no dependencies)</li>
+<li>base: a ocaml stdlib (minimal, lightweight, stable API, no
+dependencies)</li>
 <li>core: much more than base</li>
 <li>core<sub>kernel</sub>: more than base, less than core</li>
 <li>hardcaml: hardware designs with ocaml</li>
@@ -126,7 +183,8 @@ dune install; &lt;cmd&gt;
 <li>oasis: an old build tool that was used before dune came along</li>
 <li>jbuilder: earlier name of dune</li>
 </ul>
-<h3 id="loading-base-jane-street">Loading base (Jane Street)</h3>
+<section id="loading-base-jane-street" class="level3">
+<h3>Loading base (Jane Street)</h3>
 <p>base is a package from janestreet.</p>
 <pre><code># #use &quot;topfind&quot;;;
 # #require &quot;base&quot;;;
@@ -134,6 +192,8 @@ dune install; &lt;cmd&gt;
 </code></pre>
 <p>base &lt; core<sub>kernel</sub> &lt; core</p>
 <p>The extra <code>#</code> are needed.</p>
+</section>
+</section>
 </main>
 </body>
 </html>

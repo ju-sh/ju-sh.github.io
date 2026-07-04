@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="keywords" content="debian, emacs" />
+  <title>Making a debian package (Draft)</title>
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
+</head>
+<body>
+
+
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
+
+<header id="title-block-header">
+      <h1 class="title">Making a debian package (Draft)</h1>
+    </header>
+
+<ul>
+    <li>Date created: 22-Jun-2026</li>
+    </ul>
+
+<div class="keywords-bar">
+  <p>
+    Tags: / 
+    <code class="keyword-item">
+      <a href="https://ju-sh.github.io/blog/tags.html#debian">debian</a>
+    </code> /
+    <code class="keyword-item">
+      <a href="https://ju-sh.github.io/blog/tags.html#emacs">emacs</a>
+    </code> /
+  <p>
+</div>
+
+
+<div id="description">
+A description of the process of packaging an emacs-elisp MELPA package
+for Debian.
+</div>
+
+<hr/>
+
+<main id="content-container">
+<p>Earlier this year, I attended <a
+href="https://wiki.debian.org/DebianEvents/in/2026/MiniDebCampKochi">MiniDebcamp
+Kochi 2026</a> at Bolgatty, Kochi. During this 4-day event, I had the
+opportunity to interact and learn from long-time debian contributors. I
+ended up attempting to package an emacs-lisp package. This blog post is
+a description of the stuff that I did or came across during this
+packaging.</p>
+<section id="objective" class="level1">
+<h1>Objective</h1>
+<p>The immediate goal in packaging a piece of software for use in debian
+is the generation of source and binary distributions.</p>
+<p>But, how do they look like?</p>
+<ul>
+<li>Source package: Consists of
+<ul>
+<li>Upstream source tarball: <code
+class="verbatim">.orig.tar.gz</code></li>
+<li>Debian directory tarball: <code
+class="verbatim">.debian.tar.gz</code></li>
+<li>Metadata: <code class="verbatim">.dsc</code> file</li>
+</ul></li>
+<li>Binary distribution: <code class="verbatim">.deb</code> file</li>
+</ul>
+<p>Binary distribution is the one we are more likely to be familiar
+with: the <code>.deb</code> file. This is what is being used when we
+install packages via <code>apt</code>. The <code>.deb</code> file
+targeting specific architectures are built from a source distribution,
+which is a tar ball.</p>
+<p>How do we produce these files? Let's find out.</p>
+<p>(Outputs shown are sometimes truncated or edited for clarity.)</p>
+</section>
+<section id="itp" class="level1">
+<h1>ITP</h1>
+<p>Once you decide on a piece of software that you want to package, you
+should first make an 'Intent to Package' (ITP) mail to <code
+class="verbatim">bugs.debian.org</code>. This is to let others know that
+you are gonna start working on this package and thereby help others
+avoid duplicating that effort. ITP also helps to figure out if someone
+has already started working on that project.</p>
+<p>It is good to make the ITP a bit detailed without being wordy. Bullet
+points would be nice, I guess. Points like the following could be
+addressed:</p>
+<ul>
+<li>What does the package do</li>
+<li>What are its dependencies</li>
+<li>Are there similar packages available?
+<ul>
+<li>Are any of them already in debian?</li>
+<li>How does this package compare to other similar packages?</li>
+</ul></li>
+<li>Who will maintain the package? Is there a team doing similar
+work?</li>
+<li>Does the package need a sponsor?</li>
+</ul>
+<p>Fun fact: I actually went on quite a bit with a package before
+thinking of filing an ITP, only to realize that the package was already
+available in debian stable. So, better raise an ITP first, so that the
+risk of your work being wasted is lesser.</p>
+<p>I chose to package <a
+href="https://github.com/dakra/speed-type/blob/master/speed-type.el">speed-type</a>,
+a emacs package that lets us practice touch typing within emacs.</p>
+<p>We should receive an acknowledgement mail with the bug number for the
+ITP some time after submitting the ITP. If you haven't received a bug
+number even after a few hours, it would be good to ask in IRC or
+something.</p>
+<section id="reportbug" class="level2">
+<h2><code>reportbug</code></h2>
+<p>In addition to sending mail directly, we can file an ITP using the
+<code>reportbug</code> tool as well.</p>
+<pre><code>$ reportbug --email famubu@domain.tld wnpp
+
+Warning: no reportbug configuration found.  Proceeding in novice mode.
+Detected character set: UTF-8
+Please change your locale if this is incorrect.
+
+Using &#39;Julin Shaji &lt;famubu@domain.tld&gt;&#39; as your from address.
+Will send report to Debian (per lsb_release).
+What sort of request is this? (If none of these things mean anything to you, or you are trying to report a bug in an existing package, please press Enter to exit reportbug.)
+
+1 ITP  This is an `Intent To Package&#39;. Please submit a package description along with copyright and URL in such a report.
+2 O    The package has been `Orphaned&#39;. It needs a new maintainer as soon as possible.
+3 RFA  This is a `Request for Adoption&#39;. Due to lack of time, resources, interest or something similar, the current maintainer is asking for someone else to maintain this package. They will
+       maintain it in the meantime, but perhaps not in the best possible way. In short: the package needs a new maintainer.
+4 RFH  This is a `Request For Help&#39;. The current maintainer wants to continue to maintain this package, but they need some help to do this because their time is limited or the package is
+       quite big and needs several maintainers.
+5 RFP  This is a `Request For Package&#39;. You have found an interesting piece of software and would like someone else to maintain it for Debian. Please submit a package description along with
+       copyright and URL in such a report.
+
+Choose the request type: 1
+Please enter the proposed package name: speed-type
+Checking package information...
+Please briefly describe this package; this should be an appropriate short description for the eventual package: Practice touch and speed typing within emacs
+Your report will be carbon-copied to debian-devel, per Debian policy.
+Querying Debian BTS for reports on wnpp...
+7609 bug reports found:
+
+ Bugs with severity normal: 1406 remain
+     1)  #140577  RFA: knews -- Graphical threaded news reader
+     2)  #332498  RFH: openssl -- Secure Socket Layer (SSL) binary and related cryptographic tools
+     3)  #354174  RFA: nas -- Network Audio System - local server
+     4)  #374643  O: htdig -- web search and indexing system
+     5)  #375733  O: htdig -- web search and indexing system
+....
+....
+....
+  2723)  #808427  RFP: kaldi -- Kaldi speech recognition toolkit
+  2724)  #808428  RFP: mage-numediart -- toolkit for speech and singing synthesis
+  2725)  #808434  RFP: libkgeomap -- Libkgeomap is a wrapper around different world-map components, to browse and arrange photos over a map.
+  2726)  #808895  RFP: lofreq -- sensitive variant calling from sequencing data
+(2704-2726/7592) Is the bug you found listed above [y|N|b|m|r|q|s|f|e|?]? ?
+y - Problem already reported; optionally add extra information.
+N - (default) Problem not listed above; possibly check more (skip to Next page).
+b - Open the complete bugs list in a web browser.
+m - Get more information about a bug (you can also enter a number without selecting &quot;m&quot; first).
+r - Redisplay the last bugs shown.
+q - I&#39;m bored; quit please.
+s - Skip remaining problems; file a new report immediately.
+f - Filter bug list using a pattern.
+e - Open the report using an e-mail client.
+? - Display this help.
+(2704-2726/7592) Is the bug you found listed above [y|N|b|m|r|q|s|f|e|?]? s
+
+Spawning sensible-editor...
+Report will be sent to Debian Bug Tracking System &lt;submit@bugs.debian.org&gt;
+Submit this report on wnpp (e to edit) [Y|n|a|c|e|i|l|m|p|q|d|t|?]? Y
+Sending message via /usr/sbin/sendmail...
+
+Bug report submitted to: Debian Bug Tracking System &lt;submit@bugs.debian.org&gt;
+Copies sent to:
+  Debian Bug Tracking System &lt;submit@bugs.debian.org&gt;
+  Julin Shaji &lt;famubu@domain.tld&gt;
+
+If you want to provide additional information, please wait to receive the bug tracking number via email; you may then send any extra information to n@bugs.debian.org (e.g.
+nnnnnn@bugs.debian.org), where n is the bug number.  Normally you will receive an acknowledgement via email including the bug report number within an hour; if you haven&#39;t received a
+confirmation, then the bug reporting process failed at some point (reportbug or MTA failure, BTS maintenance, etc.).
+Thank you for using reportbug
+</code></pre>
+<p>Caveat: I couldn't make <code>reportbug</code> work as expected. The
+report seemed to have gone off successfully, as the tool showed no
+error. But the ITP never reached <code
+class="verbatim">bugs.debian.org</code>. I had to manually send a mail
+afterwards. I think this may be because of a configuration of some tool
+that actually sends out the mail from my computer.</p>
+</section>
+</section>
+<section id="packaging" class="level1">
+<h1>Packaging</h1>
+<p>Once obtaining the bug number for the ITP, we can start the
+packaging. Broadly speaking, debian packaging involves the following
+steps:</p>
+<ol>
+<li>Get a copy of the upstream source code</li>
+<li>Adapt it for debian</li>
+<li>Build the source and binary distributions</li>
+</ol>
+<p>Let us examine each step, one by one.</p>
+<section id="get-upstream-code" class="level2">
+<h2>Get upstream code</h2>
+<p>First, we set a couple of variables with the name and email id of the
+person doing the packaging. Value of these variables will be used by the
+tools that we will be using:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">DEBFULLNAME</span><span class="op">=</span><span class="st">&quot;My name&quot;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">DEBEMAIL</span><span class="op">=</span>my@email.com</span></code></pre></div>
+<p>Now, we get the source of the software that we are going to
+package:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">-o</span> upstream https://github.com/dakra/speed-type</span></code></pre></div>
+<p>The <code>-o upstream</code> instructs <code>git</code> to name the
+remote as <code>upstream</code> instead of the <code
+class="verbatim">origin</code>. This is the debian recommended name
+while packaging.</p>
+<p>Before proceeding further, following git config commands can be
+helpful too. Ignore them if not needed.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set name used in commits</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config user.name <span class="st">&quot;My name&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set email used in commits</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config user.email <span class="st">&quot;my@email.com&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set pgp key used to sign commits</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config user.signingkey 5C3B9F1EF93CB7A6A5C66769DDF7D61086BA8EED</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Sign all commits by default</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config commit.gpgsign true</span></code></pre></div>
+<p>With that out of the way, we enter the cloned repo and adjust branch
+names to suit <a
+href="https://dep-team.pages.debian.net/deps/dep14/">DEP-14</a>.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> speed-type</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename default branch from master or main to upstream/latest</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This makes upstream/latest to point to the latest commit in the</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># development branch of source repo</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-m</span> upstream/latest</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove upstream tracking information from repo</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">--unset-upstream</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out tag latest release</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout 1.7</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Duplicate latest release branch with the name debian/latest</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># This branch points to the last commit in the debianized source</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> debian/latest</span></code></pre></div>
+</section>
+<section id="initial-debianization" class="level2">
+<h2>Initial 'debianization'</h2>
+<p>Now, we need to make few files that will adapt the source to work
+well with debian. These files should be within a directory named
+<code>debian/</code>. In most cases, the original source of software
+being packaged is not changed. There are tools to generate a boilerplate
+for the <code>debian/</code> files, by examining files in the source and
+values of shell variables.</p>
+<p>Since, <code>speed-type</code> is already available on <a
+href="https://melpa.org/#/speed-type">MELPA</a>, so we can use
+<code>dh-make-elpa</code>. This tool can do most of the work in
+'debianizing' an ELPA package. Similar tools like
+<code>dh-make-perl</code>, <code>dh-make-golang</code> exist to generate
+template files for other languages in this manner.</p>
+<p>I am not sure how the case of a software having source written in
+multiple languages is handled. But I am guessing it will be
+complicated.</p>
+<p>We can generate the <code class="verbatim">debian/</code> directory
+along with most of the required contents using the following
+command:</p>
+<pre><code>dh-make-elpa --pkg-emacsen
+</code></pre>
+<p>Debian has the <a
+href="https://wiki.debian.org/Teams/DebianEmacsenTeam/">Debian Emacsen
+team</a> which collectively maintain <a
+href="https://salsa.debian.org/emacsen-team/">many emacs packages</a>.
+The <code>--pkg-emacsen</code> flag will instruct
+<code>dh-make-elpa</code> to mention this team in the files under <code
+class="verbatim">debian/</code>.</p>
+<p>The above command will make a <code class="verbatim">debian/</code>
+directory that roughly looks like this:</p>
+<pre><code>debian/
+├── changelog
+├── control
+├── copyright
+├── docs
+├── elpa
+├── gbp.conf
+├── rules
+├── source
+│   └── format
+└── watch
+</code></pre>
+<ul>
+<li><code>control</code>: specifies package name, maintainer and author
+names, pre-requisite packages, etc</li>
+<li><code>copyright</code>: clearly mentions the license and copyright
+holders of the files in the package</li>
+<li><code>docs</code>: lists files that are only for documentation</li>
+<li><code>gbp.conf</code>: info used by the <code>gbp</code>
+command</li>
+<li><code>rules</code>: kind of like a <code>Makefile</code></li>
+<li><code>source/format</code>: determines the format of source
+package</li>
+<li><code>watch</code>: Used by <code>uscan</code> to see if there are
+newer releases</li>
+</ul>
+<p>Among these files, <code>control</code> and <code>copyright</code>
+are probably the ones that requires the most attention.</p>
+<p>I just mentioned a couple of tools like <code>gbp</code> and
+<code>uscan</code>. Debian comes with a bunch of packages that people
+have created over time to help with packaging. Some of them are very
+commonly used. <code>gbp</code> and <code>uscan</code> are two of them.
+You can read more about it if you find them interesting.</p>
+<ul>
+<li><a
+href="https://honk.sigxcpu.org/projects/git-buildpackage/manual-html/gbp.intro.html"><code>gbp</code></a>:
+Git build package
+<ul>
+<li>git integration for debian build system</li>
+<li>Among other things, can import a debian package into git</li>
+</ul></li>
+<li><a
+href="https://www.debian.org/doc/manuals/maint-guide/upload.en.html"><code>uscan</code></a>:
+upstream scan
+<ul>
+<li>check upstream for changes to help maintainer figure out if it's
+time for a new release</li>
+</ul></li>
+</ul>
+<p>Anyway, at this point, we could make a commit.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add debian</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-S</span> <span class="at">-m</span> <span class="st">&quot;initial Debianisation&quot;</span></span></code></pre></div>
+</section>
+<section id="fine-tuning-debianization" class="level2">
+<h2>Fine-tuning debianization</h2>
+<p>The files generated by <code>dh-make-elpa</code> inside the <code
+class="verbatim">debian/</code> directory serves as a starting point. We
+need to modify these files to suit our package. Let's look at few of the
+files and directories within <code class="verbatim">debian/</code>.</p>
+<section id="patches" class="level3">
+<h3>Patches</h3>
+<p>Sometimes, the upstream source of the target software cannot be used
+in debian as is. In such cases, we patch the original source to apply
+appropriate modifications. Such patches will be stored in <code
+class="verbatim">debian/patches/</code>. We can create patches using the
+<code>quilt</code> tool.</p>
+<p>I needed to first set the <code>QUILT_PATCHES</code> variable to make
+<code>quilt</code> generate the patches in the correct directory. Just
+to be safe, we first apply all existing patches, in case there are
+pre-existing patches.</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">QUILT_PATCHES</span><span class="op">=</span>debian/patches</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">quilt</span> push <span class="at">-a</span></span></code></pre></div>
+<p>Suppose the upstream source has a file named <code
+class="verbatim">random.txt</code> that we don't wish to include in the
+source distribution. We can make a new patch named
+<code>remove-random</code> like:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a new patch named &#39;remove-random&#39;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">quilt</span> new remove-random</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Indicate that the file to be patched</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">quilt</span> add random.txt</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the edits for the patch</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># We could also simply use and editor for this.</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="ex">quilt</span> edit random.txt</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Include the edit to the &#39;remove-random&#39; patch</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="ex">quilt</span> refresh</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># At this point, we can see the changes if we want</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="ex">quilt</span> diff</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove all patches, restoring the source to its original state</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="ex">quilt</span> pop <span class="at">-a</span></span></code></pre></div>
+<p>Note: <code>gbp pq</code> can also be used to set up patches.</p>
+</section>
+<section id="changelog" class="level3">
+<h3>changelog</h3>
+<p>As the name implies, the <code
+class="verbatim">debian/changelog</code> file records the history of
+changes to the debian package. This file mentions many things, including
+the version and target debian distribution. We also indicate that the
+acceptance of this package will close the bug number associated with the
+ITP that we made for it. I think eventually, the corresponding RFS bug
+number will also get included, but that will be for the sponsor to
+include.</p>
+<p>See: <a
+href="https://www.debian.org/doc/manuals/debmake-doc/ch06.en.html#changelog">https://www.debian.org/doc/manuals/debmake-doc/ch06.en.html#changelog</a></p>
+<p>The changelog for the first debian revision of our package looked
+like:</p>
+<pre><code>emacs-speed-type (1.7-1) UNRELEASED; urgency=medium
+
+  * Initial release (Closes: #1139675)
+
+ -- Julin Shaji &lt;famubu@domain.tld&gt;  Thu, 11 Jun 2026 09:06:35 +0530
+</code></pre>
+<p>The most important part of the changelog is probably the version
+number. This is the only place where the version of the package is
+mentioned. There are <a
+href="https://www.debian.org/doc/manuals/debmake-doc/ch06.en.html#name-version">some
+conventions</a> in determining the version number of the package. For
+example, in our package, the version number is <code
+class="verbatim">1.7-1</code>. The upstream release version is <code
+class="verbatim">1.7</code>, the <code class="verbatim">-1</code>
+indicates that this is the first revision for debian.</p>
+<p>Few examples:</p>
+<ul>
+<li><code class="verbatim">1.0~alpha</code>: an alpha pre-release</li>
+<li><code class="verbatim">+dfsg</code>: non-free parts removed</li>
+<li><code class="verbatim">~dfsg1</code>: debian release before upstream
+release</li>
+<li><code class="verbatim">1.2~git20260101.abcdef</code>: package from
+git snapshot</li>
+<li><code class="verbatim">2.3+really2.2-1</code>: a newer upstream
+<code class="verbatim">v2.3</code> rolled back to an older version <code
+class="verbatim">v2.2-1</code></li>
+<li><code class="verbatim">1.4-5+deb10u2</code>: second stable update to
+<code class="verbatim">v1.4-5</code> in debian 10</li>
+<li><code class="verbatim">1.4-5+deb10u1~bpo9u1</code>: a package in
+debian 10 backported in debian 9</li>
+<li>Version without a hyphen to indicate debian revision means that the
+package is debian native</li>
+</ul>
+<p>See:</p>
+<ul>
+<li><a
+href="https://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-version">https://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-version</a></li>
+<li><a
+href="https://www.debian.org/doc/debian-policy/ch-binary.html#the-version-of-a-package">https://www.debian.org/doc/debian-policy/ch-binary.html#the-version-of-a-package</a></li>
+</ul>
+<p>Lintian is going to get annoyed with the <code
+class="verbatim">UNRELEASED</code> in this file, but you should not
+change it till the package is ready for final upload to the actual
+debian FTP server (not mentors.debian.net, I guess). I think changing
+the <code class="verbatim">UNRELEASED</code> part also comes under
+purview of the sponsor. It could get changed to <code
+class="verbatim">unstable</code>.</p>
+<p>The <code>dch -i</code> command (debian change) may be used to bump
+the version number of the package. It will trigger the opening up of a
+modified <code class="verbatim">debian/changelog</code> for us to add
+notes.</p>
+</section>
+<section id="control-file" class="level3">
+<h3><code class="verbatim">control</code> file</h3>
+<p>The <code class="verbatim">debian/control</code> file contains
+information about the source and binary packages being created. Among
+other things, it specifies their dependencies.</p>
+<p>In our case, most of the file is as generated by
+<code>dh-make-elpa</code>. I only needed to change the package names and
+description. This is the control file that I ended up with:</p>
+<pre><code>Source: emacs-speed-type
+Section: editors
+Maintainer: Debian Emacsen team &lt;debian-emacsen@lists.debian.org&gt;
+Uploaders: Julin Shaji &lt;famubu@domain.tld&gt;
+Build-Depends: debhelper-compat (= 13),
+ dh-elpa
+Standards-Version: 4.7.4
+Vcs-Browser: https://salsa.debian.org/emacsen-team/speed-type
+Vcs-Git: https://salsa.debian.org/emacsen-team/speed-type.git
+Homepage: https://github.com/dakra/speed-type
+Testsuite: autopkgtest-pkg-elpa
+
+Package: elpa-speed-type
+Architecture: all
+Depends: ${elpa:Depends}, ${misc:Depends}
+Recommends: emacs
+Enhances: emacs
+Description: Practice touch and speed typing
+ Speed-type allows you to practice your touch typing skills.  You can
+ test yourself by typing snippets from online books or use any piece
+ of text or code you have in Emacs.  Speed-type keeps track of your
+ stats (WPM, CPM, accuracy) while you are typing.
+</code></pre>
+<p>As per the Debian emacsen team policy, the source and binary
+distribution for my target package must have different names (<code
+class="verbatim">emacs-speed-type</code> and <code
+class="verbatim">elpa-speed-type</code> respectively).</p>
+<p>The names like <code>${elpa:Depends}</code> are substvars
+(substitution variables). In this case, it's a substvar defined by
+<code>dh_elpa</code> which is implicitly invoked by <code>dh</code>
+while building the package. We can also define substvars of our own if
+needed inside <code class="verbatim">debian/substvars</code>.</p>
+<p>See:</p>
+<ul>
+<li><a
+href="https://www.debian.org/doc/debian-policy/ch-controlfields.html">https://www.debian.org/doc/debian-policy/ch-controlfields.html</a></li>
+<li><a
+href="https://manpages.debian.org/testing/dpkg-dev/deb-substvars.5.en.html">https://manpages.debian.org/testing/dpkg-dev/deb-substvars.5.en.html</a></li>
+</ul>
+</section>
+<section id="copyright-file" class="level3">
+<h3><code class="verbatim">copyright</code> file</h3>
+<p>The <code class="verbatim">debian/copyright</code> file specifies the
+copyright holders and license of the files associated with package.
+Debian is quite attentive towards the license, since it categorizes
+packages into components like <code>main</code>, <code>contrib</code>
+and <code>non-free</code>.</p>
+<p>Note that the entire license text of all mentioned licenses need to
+be included here. Depending on the licenses used, this can make the
+<code class="verbatim">copyright</code> file quite long. For example, I
+needed to include the complete CC-BY-SA-4.0 license text which much
+lengthier than GPL-3+.</p>
+<p>A part of the copyright file that I ended up using is shown
+below:</p>
+<pre><code>Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: speed-type
+Upstream-Contact: Daniel Kraus &lt;daniel@kraus.my&gt;
+Source: https://github.com/dakra/speed-type
+
+Files: *
+Copyright: (C) 2015 Gunther Hagleitner
+License: GPL-3+
+
+Files: debian/*
+Copyright: (C) 2026 Julin Shaji &lt;famubu@domain.tld&gt;
+License: GPL-3+
+
+License: GPL-3+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ .
+ On Debian systems, the complete text of the GNU General
+ Public License version 3 can be found in `/usr/share/common-licenses/GPL-3&#39;
+</code></pre>
+<p>Note that blank lines are not allowed for multi-paragraph texts, a
+dot is placed instead, as seen in the license text above.</p>
+<p>See: <a
+href="https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/">https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/</a></p>
+<p>There are also extensions to the format version 1.0 of the copyright
+fellow that are not uncommon. Like <code>Files-Excludes</code> that can
+be used to exclude a file present in the upstream source from the
+package. But support for such extensions varies among tools.</p>
+<p>The copyright file may be checked to ensure that the licenses are <a
+href="https://www.debian.org/social_contract#guidelines">DFSG</a>-compliant
+(Debian Free Software Guidelines). A package can be included into <code
+class="verbatim">main</code> <a
+href="https://wiki.debian.org/DebianRepository">component</a> of debian
+only if all its files are DFSG-compliant.</p>
+<p>Info: <a href="https://wiki.debian.org/Repacking">Repackaging</a> is
+done in situations like when a package can still be DFSG-compliant after
+making changes like excluding a file.</p>
+<p>There are two tools that can help us assign the copyright
+correctly:</p>
+<ul>
+<li><code class="verbatim">licensecheck</code>: try to figure out the
+copyright that should be assigned</li>
+<li><code class="verbatim">lrc</code> (licenserecon): check if the
+license assigned and the one given by <code
+class="verbatim">licensecheck</code> are same</li>
+</ul>
+<p>For example, I had initially assigned a GPL to a file which was
+CC-BY-SA. <code>lrc</code> caught that.</p>
+<pre><code>$ lrc
+en: Versions: licenserecon &#39;6.0&#39;  licensecheck &#39;3.3.9-1&#39;
+
+Parsing Source Tree  ....
+Reading d/copyright  ....
+Running licensecheck ....
+
+d/copyright      | licensecheck
+
+GPL-3            | GPL-3+            debian/emacs-speed-type/usr/share/emacs/site-lisp/elpa-src/speed-type-1.7/speed-type.el
+GPL-3            | GPL-3+            .github/workflows/test.yml
+GPL-3            | GPL-3+            makem.sh
+GPL-3            | GPL-3+            speed-type.el
+GPL-3            | CC-BY-SA-4.0      test/https-en-wikipedia-org-wiki-Haskell-002f156.txt
+GPL-3            | GPL-3+            test/speed-type-test.el
+</code></pre>
+<p>See: <a
+href="https://wiki.debian.org/CopyrightReviewTools">https://wiki.debian.org/CopyrightReviewTools</a></p>
+</section>
+<section id="gbp" class="level3">
+<h3>gbp</h3>
+<p>The <code class="verbatim">debian/gbp.conf</code> file has
+information that can be used when <code>gbp</code> needs to be invoked.
+For my package, I modified the template made by
+<code>dh-make-elpa</code> and got it to look like this:</p>
+<pre><code>[DEFAULT]
+upstream-branch = upstream/latest
+debian-branch = debian/latest
+upstream-tag = %(version)s
+debian-tag = debian/%(version)s
+
+sign-tags = True
+pristine-tar = False
+pristine-tar-commit = False
+</code></pre>
+<p>For example, this <a
+href="https://manpages.debian.org/bookworm/git-buildpackage/gbp-buildpackage.1.en.html#git~4">makes</a>
+<code>gbp</code> use <code class="verbatim">upstream/latest</code> as
+the value for its <code>--git-upstream-branch</code> option.</p>
+<p>Remember how we named/re-named branches after cloning source repo in
+the beginning? The resultant names are in line with <a
+href="https://dep-team.pages.debian.net/deps/dep14/">DEP-14</a>, and are
+the names mentioned in here.</p>
+<ul>
+<li><code class="verbatim">upstream/latest</code>: latest commit in the
+development branch of upstream</li>
+<li><code class="verbatim">debian/latest</code>: latest commit in
+debianized version of the source code</li>
+</ul>
+<p>At first, I wasn't sure if <code
+class="verbatim">upstream/latest</code> and <code
+class="verbatim">debian/latest</code> were meant to be branches or just
+tags. But I later realized that those two are branches, but names like
+<code class="verbatim">upstream/&lt;version&gt;</code> are to be
+tags.</p>
+<p>See:</p>
+<ul>
+<li><a
+href="https://wiki.debian.org/PackagingWithGit">https://wiki.debian.org/PackagingWithGit</a></li>
+<li><a
+href="https://manpages.debian.org/testing/git-buildpackage/gbp.conf.5.en.html">https://manpages.debian.org/testing/git-buildpackage/gbp.conf.5.en.html</a></li>
+</ul>
+<p>Pristine tar: We can have the original source tar ball from upstream
+(if any) in a separate branch named <code
+class="verbatim">pristine-tar</code>. I didn't include a pristine tar
+ball, since my upstream doesn't provide an explicit tarball. But since
+the source is hosted on github, it does have git tags corresponding to
+latest release, which means github auto-generates a tarball. But I still
+didn't use it since the other emacs packages doesn't seem to be having
+them either.</p>
+<p>See: <a
+href="https://wiki.debian.org/DebianPackaging--pristine-tar-option-explained">https://wiki.debian.org/DebianPackaging--pristine-tar-option-explained</a></p>
+</section>
+<section id="watch-file" class="level3">
+<h3>watch file</h3>
+<p><code>uscan</code> uses the watch file at <code
+class="verbatim">debian/watch</code> to figure out where to look to see
+if there are new releases for the package. The watch file for the
+package that I had been trying ended being like this:</p>
+<pre><code>Version: 5
+
+Template: Github
+Owner: dakra
+Project: speed-type
+</code></pre>
+<p><code>dh-make-elpa</code> generated a watch file with version 4,
+which looked more complex.</p>
+<p>For comparison, the version 4 one made by <code>dh-make-elpa</code>
+looked like this:</p>
+<pre><code>version=4
+opts=&quot;filenamemangle=s/(?:.*?)?v?(@ANY_VERSION@@ARCHIVE_EXT@)/@PACKAGE@-$1/&quot; \
+    https://github.com/dakra/speed-type/tags \
+    (?:.*?/)?@ANY_VERSION@@ARCHIVE_EXT@ debian uupdate
+</code></pre>
+<p>These specify values for various options of <code>uscan</code>.
+Values like <code>@ARCHIVE_EXT@</code> <a
+href="https://manpages.debian.org/stretch/devscripts/uscan.1.en.html">are
+special strings</a> that will automatically get substituted with
+appropriate values by <code>uscan</code>.</p>
+<p>See:</p>
+<ul>
+<li><a
+href="https://manpages.debian.org/testing/devscripts/debian-watch.5.en.html">https://manpages.debian.org/testing/devscripts/debian-watch.5.en.html</a></li>
+<li><a
+href="https://manpages.debian.org/testing/devscripts/uscan-templates.5.en.html">https://manpages.debian.org/testing/devscripts/uscan-templates.5.en.html</a></li>
+</ul>
+</section>
+<section id="sourceformat" class="level3">
+<h3><code class="verbatim">source/format</code></h3>
+<p>If I understand correctly, this file specifies how the source package
+distribution is built. <code class="verbatim">3.0 (quilt)</code> seems
+to be the usual choice, although others choices are also available. Like
+<code class="verbatim">3.0 (native)</code> for native packages. As per
+<a
+href="https://wiki.debian.org/Projects/DebSrc3.0#How_many_packages_have_already_been_converted.3F">a
+page</a> on <code class="verbatim">wiki.debian.org</code>, 'Less than 5
+% of Debian's source packages are not in 3.0 (quilt) format' This format
+has the advantage of letting us keep the patches distinct from the
+source.</p>
+<p>In my case, the <code class="verbatim">source/format</code> generated
+by <code>dh-make-elpa</code> was sufficient uncharged:</p>
+<pre><code>3.0 (quilt)
+</code></pre>
+<p>See:</p>
+<ul>
+<li><a
+href="https://wiki.debian.org/Projects/DebSrc3.0">https://wiki.debian.org/Projects/DebSrc3.0</a></li>
+</ul>
+</section>
+<section id="upstreammetadata" class="level3">
+<h3>upstream/metadata</h3>
+<p><code class="verbatim">debian/upstream/metadata</code> is a yml file
+contains metadata related to the upstream in machine readable form. I
+don't think I saw any lintian errors nudging me to include this file,
+but many emacs packages that recently got accepted to unstable had this
+file, so I thought I would add one too. I got it like:</p>
+<pre><code>---
+Bug-Database: https://github.com/dakra/speed-type/issues
+Bug-Submit: https://github.com/dakra/speed-type/issues/new
+Repository: https://github.com/dakra/speed-type.git
+Repository-Browse: https://github.com/dakra/speed-type
+</code></pre>
+<p>This information will be useful for <code>uscan</code>.</p>
+<p>I am not sure, but I think this file is especially relevant if we are
+using a watch file with version 5 onwards.</p>
+</section>
+<section id="rules" class="level3">
+<h3>rules</h3>
+<p>The <a
+href="https://www.debian.org/doc/debian-policy/ch-source.html#s-debianrules"><code
+class="verbatim">debian/rules</code></a> is the build script of the
+package. It is an executable Makefile that specifies how to build the
+package. In our case, we delegate the whole thing to debhelper commands
+so there is not much left to do. I didn't have to change the <code
+class="verbatim">debian/rules</code> generated by
+<code>dh-make-elpa</code>, which looked like:</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/make -f</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="dv">%:</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="er">    </span>dh <span class="ch">$@</span> --with elpa</span></code></pre></div>
+<p>Using the rules Makefile, we should be able to do stuff like:</p>
+<ul>
+<li>Clean build environment: <code>debian/rules clean</code></li>
+<li>Build package: <code>/debian/rules build</code></li>
+<li>And others like <code>binary</code>, <code>binary-arch</code>,
+<code>build-arch</code>, etc.</li>
+</ul>
+<p>An example:</p>
+<pre><code>$ debian/rules clean
+dh clean --with elpa
+   dh_clean
+
+</code></pre>
+</section>
+</section>
+<section id="building" class="level2">
+<h2>Building</h2>
+<p>We got all the files needed for building the package ready, so let us
+get on with building the package.</p>
+<p>For a package, we need the following:</p>
+<ul>
+<li>Source distribution</li>
+<li>Binary distribution</li>
+</ul>
+<p>We can make a tar ball of the original source with:</p>
+<pre><code>git deborig
+</code></pre>
+<p>This creates a <code>speed-type_1.7.orig.tar.xz</code> file
+containing the source from upstream as is. <code>deborig</code> is not a
+part of a standard git installation and is from the <code
+class="verbatim">devscripts</code> package of debian.</p>
+<p>Note: Somehow <code>deborig</code> will also create a file named
+<code>test.bin</code>. I needed to delete it before building the
+package.</p>
+<p>By this point, we are all set to build the package. The package can
+be built with:</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dpkg-buildpackage</span></span></code></pre></div>
+<p>This created a few extra files.</p>
+<ul>
+<li><code class="verbatim">elpa-speed-type_1.7-1_all.deb</code>: binary
+distribution</li>
+<li><code class="verbatim">speed-type_1.7-1.debian.tar.xz</code>:
+contents of the <code class="verbatim">debian/</code> directory</li>
+<li><code class="verbatim">speed-type_1.7-1.dsc</code>: metadata, with
+info like files involved</li>
+<li><code class="verbatim">speed-type_1.7-1_amd64.buildinfo</code>: for
+reproducible builds. Has info on the environment used to build the
+package</li>
+<li><code class="verbatim">speed-type_1.7-1_amd64.changes</code>:
+contains information used while uploading the package</li>
+</ul>
+<p>Thus, we have obtained the source and binary distributions. These can
+now be uploaded to the FTP servers. But before that, we should push all
+the files that we got to the repo mentioned under <code
+class="verbatim">Vcs-git</code> in the <code
+class="verbatim">debian/control</code> file. I did it like this:</p>
+<pre><code>git push https://salsa.debian.org/emacsen-team/emacs-speed-type --all
+git push https://salsa.debian.org/emacsen-team/emacs-speed-type --tags
+</code></pre>
+</section>
+</section>
+<section id="uploading" class="level1">
+<h1>Uploading</h1>
+<p>Before uploading, the built package needs to be signed by the
+packager. This can be done via <code>debsign</code>:</p>
+<pre><code>$ debsign -k 5C3B9F1EF93CB7A6A5C66769DDF7D61086BA8EED emacs-speed-type_1.7-1_amd64.changes
+ signfile dsc emacs-speed-type_1.7-1.dsc 5C3B9F1EF93CB7A6A5C66769DDF7D61086BA8EED
+
+ fixup_buildinfo emacs-speed-type_1.7-1.dsc emacs-speed-type_1.7-1_amd64.buildinfo
+ signfile buildinfo emacs-speed-type_1.7-1_amd64.buildinfo 5C3B9F1EF93CB7A6A5C66769DDF7D61086BA8EED
+
+ fixup_changes dsc emacs-speed-type_1.7-1.dsc emacs-speed-type_1.7-1_amd64.changes
+ fixup_changes buildinfo emacs-speed-type_1.7-1_amd64.buildinfo emacs-speed-type_1.7-1_amd64.changes
+ signfile changes emacs-speed-type_1.7-1_amd64.changes 5C3B9F1EF93CB7A6A5C66769DDF7D61086BA8EED
+
+Successfully signed dsc, buildinfo, changes files
+</code></pre>
+<p>Our package needs to reviewed before it can be considered for
+inclusion to debian repos. We can upload it to <a
+href="https://mentors.debian.net/"><code
+class="verbatim">mentors.debian.net</code></a> for this. <code
+class="verbatim">mentors.debian.net</code> is a platform facilitating
+review of packages. We can upload our source packages there and other
+people, including non-DDs, can make comments to provide feedback. It is
+like a staging area for debian packages.</p>
+<p>Our package can be <a
+href="https://www.debian.org/doc/manuals/maint-guide/upload.en.html">uploaded</a>
+to <code class="verbatim">mentors.debian.net</code> with:</p>
+<pre><code>$ # Can use --force if reuploading without version change
+$ dput mentors speed-type_1.7-1_amd64.changes
+
+Checking signature on .changes
+gpg: /home/usesr/speed-type/speed-type_1.7-1_amd64.changes: Valid signature from 26AF96E2D752882F
+Checking signature on .dsc
+gpg: /home/user/speed-type/speed-type_1.7-1.dsc: Valid signature from 26AF96E2D752882F
+Uploading to mentors (via https to mentors.debian.net):
+  Uploading speed-type_1.7-1.dsc: done.
+  Uploading speed-type_1.7.orig.tar.xz: done.
+  Uploading speed-type_1.7-1.debian.tar.xz: done.
+  Uploading elpa-speed-type_1.7-1_all.deb: done.
+  Uploading speed-type_1.7-1_amd64.buildinfo: done.
+  Uploading speed-type_1.7-1_amd64.changes: done.
+Successfully uploaded packages.
+</code></pre>
+<p>You should get an acknowledgement mail from <code
+class="verbatim">mentors.debian.net</code> after a few minutes, and the
+package should show up in their webpage.</p>
+<p>Fun fact: <code>dput</code> is used upload package to FTP server.
+Similarly <code>dget</code> can be used to download a package.</p>
+</section>
+<section id="rfs" class="level1">
+<h1>RFS</h1>
+<p>Once the package is ready and uploaded to <code
+class="verbatim">mentors.debian.net</code>, we need it reviewed and need
+a sponsor to upload it to debian repos. Only a debian developer (DD) can
+sponsor packages. We try to get the attention of potential sponsors with
+a 'Request For Sponsors' (RFS). This can be done with a mail to
+<code>submit@bugs.debian.org</code>. Template for such a mail can be
+found at <code class="verbatim">mentors.debian.net</code>. The system
+will generate a bug number for the RFS.</p>
+<p>Note that sending out RFS by no means signify that your package is
+guaranteed to get sponsored or even reviewed. As I understand, it is
+generally difficult to find a sponsor (I haven't found one yet for my
+package). Because the sponsor would need to go through your package (and
+probably get vexed at mistakes/omissions that you made) and suggest
+changes, involving a lot of back-forth mails in the process. Bottom line
+is, sponsor would need to put some work in too, so you might need to be
+patient (and persistent) before you finally get a sponsor.</p>
+<section id="updating-rfs" class="level2">
+<h2>Updating RFS</h2>
+<p>We can reply to the bug number associated with our RFS if we need to
+mention anything more with regard to that RFS.</p>
+<p>I, for one, needed to change the title of the package specified in
+RFS. So sent this mail to <code
+class="verbatim">my-rfs-bug-no@bugs.debian.org</code> get it fixed:</p>
+<pre><code>Control: retitle -1 RFS: emacs-speed-type/1.7-1 [ITP] -- Practice touch and speed typing
+thanks
+</code></pre>
+<p>As I understand it, similar messages can be used to update any bug at
+bugs.debian.org. And that includes ITPs too. Control mailserver commands
+are documented <a
+href="https://www.debian.org/Bugs/server-control#retitle">here</a>.</p>
+</section>
+</section>
+<section id="testing" class="level1">
+<h1>Testing</h1>
+<p>Building the package was the first part of the packaging process.
+Next thing to do is to check whether software installed via that package
+works as expected in the latest debian unstable. If the upstream comes
+with tests, we can use that. Otherwise, not much we can do, I guess.
+Thankfully, my upstream did have tests.</p>
+<section id="lintian" class="level2">
+<h2>lintian</h2>
+<p><a href="https://salsa.debian.org/lintian/lintian">Lintian</a> is a
+tool that acts like linter for debian packages. It is quite good at
+flagging errors and potential errors We can run lintian on a package
+like:</p>
+<pre><code>$ lintian
+W: elpa-speed-type: copyright-contains-automatically-extracted-boilerplate
+W: elpa-speed-type: initial-upload-closes-no-bugs [usr/share/doc/elpa-speed-type/changelog.Debian.gz:1]
+W: speed-type source: unknown-paragraph-in-dep5-copyright [debian/copyright:30]
+</code></pre>
+<p>Lintian expects the <code class="verbatim">.changes</code> file as
+argument, but can use the one in current directory if available.</p>
+<p>Errors/warning produced by lintian are associated with tags. We can
+ask lintian to explain the meaning of that tag with
+<code>lintian-explain-tags</code>. For example:</p>
+<pre><code>$ lintian-explain-tags missing-license-paragraph-in-dep5-copyright
+N:
+W: missing-license-paragraph-in-dep5-copyright
+N:
+N:   The Files paragraph in the machine readable copyright file references a license for which no stand-alone License paragraph exists.
+N:
+N:   Sometimes this tag appears because of incorrect ordering. Stand-alone License paragraphs must appear *after* all Files paragraphs.
+N:
+N:   Please refer to https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/ and Bug#959067 for details.
+N:
+N:   Visibility: warning
+N:   Show-Always: no
+N:   Check: debian/copyright/dep5
+N:
+</code></pre>
+<p>Also, flags can be used to make lintian 'stricter':</p>
+<pre><code>lintian -EviIL +pedantic ../emacs-speed-type_1.7-1_amd64.changes
+</code></pre>
+<p>Caveat: The lintian used at mentors.debian.org was outdated when I
+tried. So some of the errors/warnings that it showed were not relevant.
+I felt that using the latest lintian version locally would be more
+instructive.</p>
+</section>
+<section id="sbuild" class="level2">
+<h2>sbuild</h2>
+<p><code>sbuild</code> can build our package in clean, isolated
+environment. It works on top of a tool named <code>mmdebstrap</code>
+(usually with <code>unshare</code> backend), if I understand
+correctly.</p>
+<p>The full output of <code>sbuild</code> is too long to include here,
+but parts of it looks pretty much like how we install packages with
+<code>apt</code>, because that's exactly what's happening.</p>
+<p>Before using <code>sbuild</code>, I did the following to allow my
+user to use <code>sbuild</code>:</p>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> sbuild-adduser famubu</span></code></pre></div>
+<p>This adds the user named <code>famubu</code> to the group named
+<code>sbuild</code>. Only members of the <code>sbuild</code> group can
+invoke <code>sbuild</code>.</p>
+<pre><code>$ groups famubu
+famubu : famubu audio video users ....... sbuild
+</code></pre>
+<p>Then, invoking sbuild is as simple as:</p>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbuild</span></span></code></pre></div>
+<p>Among other things, sbuild does the following:</p>
+<ul>
+<li>Make a complete debian sid chroot</li>
+<li>Install packages that are prerequisite for our package</li>
+<li>Build the package</li>
+<li>Run the tests present in the source package
+<ul>
+<li>Including lintian checks if <code>--run-lintian</code> option is
+used</li>
+</ul></li>
+</ul>
+<p>Finally, <code>sbuild</code> produces a summary like the one
+below.</p>
+<pre><code>+------------------------------------------------------------------------------+
+| Summary                                      Sat, 23 May 2026 06:36:39 +0000 |
++------------------------------------------------------------------------------+
+
+Build Architecture: amd64
+Build Type: binary
+Build-Space: 1384
+Build-Time: 2
+Distribution: unstable
+Host Architecture: amd64
+Install-Time: 28
+Job: /home/famubu/speed-type/emacs-speed-type_0.7.0-1.dsc
+Lintian: warn
+Machine Architecture: amd64
+Package: emacs-speed-type
+Package-Time: 80
+Source-Version: 0.7.0-1
+Space: 1384
+Status: successful
+Version: 0.7.0-1
+--------------------------------------------------------------------------------
+Finished at 2026-05-23T06:36:17Z
+Build needed 00:01:20, 1384k disk space
+</code></pre>
+<p>Looks like <code>sbuild</code> sets up the chroot at:
+<code>/home/username/.cache/sbuild/unstable-amd64.tar</code>.</p>
+</section>
+<section id="autopkgtest" class="level2">
+<h2><code>autopkgtest</code></h2>
+<p>Warning: This section is all guesses. I haven't completely tried them
+yet.</p>
+<p><a
+href="https://wiki.debian.org/autopkgtest"><code>autopkgtest</code></a>
+is used to test the package after installing it from its binary
+distribution. Its working is described in the <a
+href="https://salsa.debian.org/ci-team/autopkgtest/raw/master/doc/README.package-tests.rst">current
+draft of DEP-8</a>. Unlike <code>sbuild</code> which runs tests from the
+source, autopkgtests are run against the package installed from its
+binary in a debian environment.</p>
+<p>The tests to be run, along with their necessary parameters, are
+specified in the test control file at <code
+class="verbatim">debian/tests/control</code>.</p>
+<ul>
+<li>A test is considered to have passed if it returns <code>0</code> and
+doesn't print anything to <code>stderr</code></li>
+<li>The tests are like scripts inside <code
+class="verbatim">debian/tests/</code></li>
+<li>The tests would run with root of the <em>source</em> package as the
+working directory, but the tests would be testing the <em>installed</em>
+version of the package.</li>
+<li>Also see:
+<ul>
+<li><code
+class="verbatim">/usr/share/docs/autopkgtest/README.package-tests.rst.gz</code></li>
+<li><code
+class="verbatim">/usr/share/docs/autopkgtest/README.running-tests.rst.gz</code></li>
+</ul></li>
+</ul>
+<p>For example, with the following test control file,</p>
+<pre><code>Tests: verbose
+Depends: @, build-essential
+Restrictions: needs-root
+Architecture: amd64 arm64 i386
+</code></pre>
+<p>the <code class="verbatim">debian/tests/verbose</code> test itself
+could be</p>
+<pre><code>!/bin/bash
+
+foo --verbose
+</code></pre>
+<p>and <code>autopkgtest</code> should be able to run the test.</p>
+<p>See:</p>
+<ul>
+<li><a
+href="https://wiki.debian.org/ContinuousIntegration/AutopkgtestBestPractices">https://wiki.debian.org/ContinuousIntegration/AutopkgtestBestPractices</a></li>
+<li><a
+href="https://manpages.debian.org/trixie/autopkgtest/autopkgtest.1.en.html">https://manpages.debian.org/trixie/autopkgtest/autopkgtest.1.en.html</a></li>
+</ul>
+<section id="autodep8" class="level3">
+<h3><code>autodep8</code></h3>
+<p>The test control is meant to be written in a way that is compliant
+with DEP-8. The <a
+href="https://manpages.debian.org/trixie/autodep8/autodep8.1.en.html"><code>autodep8</code></a>
+tool is helpful to generate the test control file template specific to
+the target package. The output of <code>autodep8</code> is meant to be
+the contents of <code class="verbatim">debian/tests/control</code>.</p>
+<p>For example, for the emacs elpa package that I had been using, it
+gave this:</p>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> autodep8</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Test-Command:</span> dh_elpa_test <span class="at">--autopkgtest</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Depends:</span> @, @builddeps@,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Restrictions:</span> rw-build-tree,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Features:</span> test-name=dh-elpa-test-autopkgtest</span></code></pre></div>
+<p><code>autopkgtest</code> can automatically use <code>autodep8</code>
+by looking at the value of <code class="verbatim">Testsuite</code> in
+<code class="verbatim">debian/control</code>. This value should be like
+<code class="verbatim">autopkgtest-pkg-TYPE</code> where <code
+class="verbatim">TYPE</code> is a package type supported by autodep8. In
+our case, <code class="verbatim">TYPE</code> is <code
+class="verbatim">elpa</code>, which is indeed supported, thereby making
+things easier for us.</p>
+</section>
+</section>
+<section id="salsa-tests" class="level2">
+<h2>salsa tests</h2>
+<p>Warning: This section is all guesses. I haven't completely tried them
+yet.</p>
+<p>Debian salsa has CI/CD that can run before a package is admitted into
+unstable. Looks like it runs only basic checks like lintian By default,
+but we can request it to run the tests meant for
+<code>autopkgtest</code> as well by making a <code
+class="verbatim">debian/salsa-ci.yml</code> file like below:</p>
+<pre><code>---
+include:
+  - https://salsa.debian.org/salsa-ci-team/pipeline/raw/master/recipes/debian.yml
+</code></pre>
+</section>
+<section id="manual-testing-with-containers" class="level2">
+<h2>'Manual testing' with containers</h2>
+<p>Tests like those run by from sbuild and autopkgtest are kind of
+automatic. Once the configuration has been done, we need not be involved
+further. But what if you want to play around with the installed package
+to see if it actually feels all right? Sometimes hiccups can creep in
+even when all the tests pass. Though it is an ad-hoc way, a way to enter
+into an environment where the package and its dependencies are installed
+would be nice. It would let us tinker around and see things from the
+usability point of view. A full blown VM is unnecessary for this, a
+container would be sufficient. I went with podman, since it seemed
+lighter than docker.</p>
+<p>Podman is like docker except that it doesn't need a daemon to run.
+Dockerfiles meant for <code>docker</code> can usually be used with
+<code>podman</code> without any modification, except that the file name
+is <code class="verbatim">Containerfile</code> instead of <code
+class="verbatim">Dockerfile</code>.</p>
+<p><a href="https://snapshot.debian.org/">snapshot.debian.org</a>
+provides snapshots that can be used as a basis to build our own
+pods.</p>
+<p>I used this <code class="verbatim">Containerfile</code>:</p>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode Dockerfile"><code class="sourceCode dockerfile"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> debian:sid</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Use snapshot</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="bu">echo</span> <span class="st">&quot;deb http://snapshot.debian.org/archive/debian/20260611T082845Z sid main&quot;</span> <span class="dt">\</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">&gt;</span> /etc/apt/sources.list</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="kw">WORKDIR</span> /root</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Install dependencies</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> install <span class="at">-y</span> <span class="dt">\</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>      lintian <span class="dt">\</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>      devscripts <span class="dt">\</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>      debhelper <span class="dt">\</span></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>      dh-elpa <span class="dt">\</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>      git <span class="dt">\</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>      gnupg</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Download source distribution from mentors.debian.net</span></span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">mkdir</span> ~/.gnupg <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">chmod</span> 700 ~/.gnupg <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>    <span class="ex">gpg</span> <span class="at">--keyserver</span> keyserver.ubuntu.com <span class="at">--recv-keys</span> D752882F <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">dget</span> <span class="at">-x</span> <span class="at">-u</span> https://mentors.debian.net/debian/pool/main/e/emacs-speed-type/emacs-speed-type_1.7-1.dsc</span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a><span class="kw">WORKDIR</span> /root/emacs-speed-type-1.7</span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Build package</span></span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">dpkg-buildpackage</span> <span class="at">-us</span> <span class="at">-uc</span> <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>    <span class="ex">lintian</span> <span class="at">-EviIL</span> +pedantic ../emacs-speed-type_1.7-1_amd64.changes</span>
+<span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">&quot;bash&quot;</span>]</span></code></pre></div>
+<p><code>PWD</code> is location of the <code
+class="verbatim">Containerfile</code>:</p>
+<pre><code># Build image. 
+podman build -t sid:20260611T082845Z .
+
+# Start the pod
+podman run -it sid:20260611T082845Z
+</code></pre>
+<p>This will create a sid snapshot, install our package and run the
+tests. Once that is done, it will enter bash shell where we can examine
+the leftover files or take out our installed package for a spin.</p>
+<p>I can't help feel that someone in debian must have made a tool to
+sort of automate this when using podman. Especially since it looks as if
+there are tools for testing via docker like <code>debdocker</code> and
+<code>debocker</code> are already there.</p>
+</section>
+</section>
+<section id="useful-tools" class="level1">
+<h1>Useful tools</h1>
+<p>As mentioned earlier, there is a whole host of tools that debian
+packagers have developed over the years. Let me mention something about
+a couple of them.</p>
+<ul>
+<li><a
+href="https://wiki.debian.org/piuparts"><code>piuparts</code></a>:
+stands for 'package installation, upgrading and removal testing suite'
+<ul>
+<li>Does a form of regression testing</li>
+<li>Checks whether everything is fine when this package is installed,
+upgraded and removed.</li>
+<li>I suppose the upgrade check cannot be done for fresh packages</li>
+<li>Debian runs this tool on all packages in its repo, with the results
+being made available at <a
+href="https://piuparts.debian.org/">https://piuparts.debian.org/</a></li>
+<li><code>sbuild</code> gave some error when I tried using its
+<code>--run-piuparts</code> flag. When I asked a DD about it, they said
+it's a problem with the tool. Maybe my <code>sbuild</code> version was
+too old.</li>
+</ul></li>
+<li><code>gbp</code> can do stuff like:
+<ul>
+<li><code>gbp import-orig --uscan</code>: check if there are newer
+commits in upstream. If yes, import it</li>
+</ul></li>
+</ul>
+<p>Many of these tools are implicitly used by other tools.</p>
+<p>See: <a
+href="https://wiki.debian.org/PackagingTools">https://wiki.debian.org/PackagingTools</a></p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>So, in conclusion, I figure the flow for a new-comer to submit a
+package for inclusion into debian is like this:</p>
+<ol>
+<li>Find a package</li>
+<li>File ITP</li>
+<li>Package the sofware</li>
+<li>File RFS</li>
+<li>Get package reviewed</li>
+<li>Sponsor found</li>
+</ol>
+<p><strong>Acknowledgements</strong>: Thanks to,</p>
+<ul>
+<li>Everyone involved with MiniDebCamp Kochi 2026!</li>
+<li>Abraham Raji, for his <a
+href="https://web.archive.org/web/20250401090705/https://wiki.abrahamraji.in/simple-packaging-tutorial.html">blog
+post on packaging</a> (nodejs)</li>
+<li>Folks at <code class="verbatim">#debian-emacs</code>, <code
+class="verbatim">#debian-mentors</code></li>
+</ul>
+</section>
+</main>
+</body>
+</html>

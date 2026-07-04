@@ -34,12 +34,18 @@
 <main id="content-container">
 <p>A DSL for stream runtime verification</p>
 <p>(Not the scientist or the company!)</p>
-<p>Originally created for specifying properties about programs running on multi-core systems. <a href="https://www.tessla.io/papers/dagstuhl2017.pdf">¹</a></p>
+<p>Originally created for specifying properties about programs running
+on multi-core systems. <a
+href="https://www.tessla.io/papers/dagstuhl2017.pdf">¹</a></p>
 <hr />
-<h2 id="comments">Comments</h2>
-<p>Comments start with a <code>#</code> or a <code>--</code> and everything from it till the end of line is a comment.</p>
+<section id="comments" class="level2">
+<h2>Comments</h2>
+<p>Comments start with a <code>#</code> or a <code>--</code> and
+everything from it till the end of line is a comment.</p>
 <p>There is no separate syntax for multi-line comments.</p>
-<h2 id="identifiers">Identifiers</h2>
+</section>
+<section id="identifiers" class="level2">
+<h2>Identifiers</h2>
 <p>The usual rules for identifiers.</p>
 <ul>
 <li>Consists only of:
@@ -52,7 +58,9 @@
 <li>Doesn't start with a digit.</li>
 <li>Is not a keyword.</li>
 </ul>
-<h2 id="keywords">Keywords</h2>
+</section>
+<section id="keywords" class="level2">
+<h2>Keywords</h2>
 <p>These are the keywords for TeSSLa:</p>
 <table>
 <tbody>
@@ -82,7 +90,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="types">Types</h2>
+</section>
+<section id="types" class="level2">
+<h2>Types</h2>
 <ul>
 <li>Int</li>
 <li>Float</li>
@@ -91,17 +101,27 @@
 <li>Unit</li>
 <li>Option</li>
 </ul>
-<h3 id="option">Option</h3>
-<p><code>Option[T]</code> represents optional values of type <code>T</code>.</p>
+<section id="option" class="level3">
+<h3>Option</h3>
+<p><code>Option[T]</code> represents optional values of type
+<code>T</code>.</p>
 <pre><code>Option ∈ {Some, None}
 </code></pre>
 <p>Often appears in the type of function arguments.</p>
-<h3 id="some">Some</h3>
-<p><code>Some[T]</code> represents existing values of type <code>T</code>.</p>
+</section>
+<section id="some" class="level3">
+<h3>Some</h3>
+<p><code>Some[T]</code> represents existing values of type
+<code>T</code>.</p>
 <p>'Some value of type <code>T</code>'.</p>
-<h3 id="none">None</h3>
+</section>
+<section id="none" class="level3">
+<h3>None</h3>
 <p><!-- ♢  is the symbol, but it looks too faint --></p>
-<h2 id="mandatory-operators">Mandatory operators</h2>
+</section>
+</section>
+<section id="mandatory-operators" class="level2">
+<h2>Mandatory operators</h2>
 <blockquote>
 <p>TeSSLa operators are monotone, continuous and future independent.</p>
 <ul>
@@ -128,9 +148,11 @@
 </tr>
 </tbody>
 </table>
-<h3 id="nil">nil</h3>
+<section id="nil" class="level3">
+<h3>nil</h3>
 <p>Represents a stream without events.</p>
-<p>Since there are no events, can be of any type. Like <code>Int</code>, <code>Unit</code>, etc.</p>
+<p>Since there are no events, can be of any type. Like <code>Int</code>,
+<code>Unit</code>, etc.</p>
 <pre><code>def nil[T]: Events[T]
 
 nil = {⊥, t≥0}
@@ -146,7 +168,9 @@ nil = {⊥, t≥0}
 012345678901
 </code></pre>
 <p>ie, no events at all.</p>
-<h3 id="unit">unit</h3>
+</section>
+<section id="unit" class="level3">
+<h3>unit</h3>
 <p>A stream whose sole event is an event at timestamp zero.</p>
 <pre><code>def unit: Events[()]
 
@@ -166,9 +190,12 @@ x-----------
 |
 012345678901
 </code></pre>
-<h3 id="default">default</h3>
+</section>
+<section id="default" class="level3">
+<h3>default</h3>
 <p>Initialize a stream with given value.</p>
-<p>ie, if the input stream doesn't have an event at t=0, the output stream would have an event with given value.</p>
+<p>ie, if the input stream doesn't have an event at t=0, the output
+stream would have an event with given value.</p>
 <pre><code>def default[T](stream: strict Events[T],
                value: strict T) : Events[T]
 
@@ -179,8 +206,11 @@ default = ⎧s        , if t=0 and stream[t=0]=s
           ⎮stream[t], if,t&gt;0
           ⎩
 </code></pre>
-<h3 id="time">time</h3>
-<p>Takes an event stream as input and produces a stream whose event values are timestamp at which events occurred in the input stream.</p>
+</section>
+<section id="time" class="level3">
+<h3>time</h3>
+<p>Takes an event stream as input and produces a stream whose event
+values are timestamp at which events occurred in the input stream.</p>
 <p>Looks like:</p>
 <pre><code>def time[T](a: Events[T]): Events[TIME]
 </code></pre>
@@ -190,16 +220,27 @@ a |--x----x-
 z |--3----8-
   0123456789
 </code></pre>
-<h3 id="lift">lift</h3>
-<p>Takes some events streams and a function as arguments and applies the function at all timestamps of the input streams where there is an event to give a single stream as output.</p>
-<p>A simplified version of <code>lift2</code> (ie, <code>lift</code> taking 2 streams as input) would look like:</p>
+</section>
+<section id="lift" class="level3">
+<h3>lift</h3>
+<p>Takes some events streams and a function as arguments and applies the
+function at all timestamps of the input streams where there is an event
+to give a single stream as output.</p>
+<p>A simplified version of <code>lift2</code> (ie, <code>lift</code>
+taking 2 streams as input) would look like:</p>
 <pre><code>lift[A, B, T](a: Events[A], b: Events[B],
               f: (Option[A], Option[B]) =&gt; Option[T]): Events[T]
 </code></pre>
-<p>where <code>A</code>, <code>B</code> and <code>T</code> are type variables.</p>
-<p>At every time stamp, <code>f</code> takes the values in <code>a</code> (of type <code>A</code>) and <code>b</code> (of type <code>B</code>) as parameters and returns a value of type <code>T</code>.</p>
-<p>If a stream doesn't have an event at a timestamp, the parameter passed to <code>f</code> gets <code>None</code> as value.</p>
-<p>We could say that the stream output by <code>lift</code> is like a 'collection of values returned by <code>f</code>'.</p>
+<p>where <code>A</code>, <code>B</code> and <code>T</code> are type
+variables.</p>
+<p>At every time stamp, <code>f</code> takes the values in
+<code>a</code> (of type <code>A</code>) and <code>b</code> (of type
+<code>B</code>) as parameters and returns a value of type
+<code>T</code>.</p>
+<p>If a stream doesn't have an event at a timestamp, the parameter
+passed to <code>f</code> gets <code>None</code> as value.</p>
+<p>We could say that the stream output by <code>lift</code> is like a
+'collection of values returned by <code>f</code>'.</p>
 <pre><code>in a: Events[Int]
 in b: Events[Int]
 def f(a: Option[Int], b: Option[Int]) =
@@ -215,13 +256,17 @@ b |-x---------x-------x----x---------x--
 
 z |-----------2-------2----3---------1--
 </code></pre>
-<p>The <a href="https://www.tessla.io/operators/">docs</a> show how <code>merge</code> operator can be made from <code>lift</code>.</p>
+<p>The <a href="https://www.tessla.io/operators/">docs</a> show how
+<code>merge</code> operator can be made from <code>lift</code>.</p>
 <pre><code>def merge[T](a: Events[T], b: Events[T]) =
     lift(a, b, (x: Option[T], y: Option[T]) =&gt;
         if isNone(x) then y else x)
 </code></pre>
-<h3 id="last">last</h3>
-<p>Takes two streams and gives the last know value in the first stream whenever an event occurs in the second stream.</p>
+</section>
+<section id="last" class="level3">
+<h3>last</h3>
+<p>Takes two streams and gives the last know value in the first stream
+whenever an event occurs in the second stream.</p>
 <pre><code>last[T, U](v: Events[T], r: Events[U]): Events[T]
 </code></pre>
 <p>Example:</p>
@@ -237,8 +282,12 @@ r |--x--------x-------x----x---------x--
 
 z |-----------2-------2----3---------1--
 </code></pre>
-<p>If the value in stream <code>x</code> changes at the precise moment when an event occurs in stream <code>y</code>, the output would be the old value and not the new one.</p>
-<h3 id="delay">delay</h3>
+<p>If the value in stream <code>x</code> changes at the precise moment
+when an event occurs in stream <code>y</code>, the output would be the
+old value and not the new one.</p>
+</section>
+<section id="delay" class="level3">
+<h3>delay</h3>
 <pre><code>def delay(delayTime: Events[Int],
           reset: Events[Unit]) : Events[Unit]
 </code></pre>
@@ -257,9 +306,13 @@ r |--x-----x---x------
 z |----x----------x-x-
   01234567890123456789
 </code></pre>
-<p>For this operation, events in both input streams should happen simultaneously. Otherwise there would be no effect on the output.</p>
-<h3 id="merge">merge</h3>
-<p>Takes two event streams and 'combines' them, giving the first stream priority.</p>
+<p>For this operation, events in both input streams should happen
+simultaneously. Otherwise there would be no effect on the output.</p>
+</section>
+<section id="merge" class="level3">
+<h3>merge</h3>
+<p>Takes two event streams and 'combines' them, giving the first stream
+priority.</p>
 <pre><code>merge[T](a: Events[T], b: Events[T]) : Events[T]
 </code></pre>
 <p>ie,</p>
@@ -306,14 +359,20 @@ b |-1------------4---------x----x---------x--
 
 z |-1-----2------1---------2----3---------1--
 </code></pre>
-<h3 id="slift">slift</h3>
+</section>
+<section id="slift" class="level3">
+<h3>slift</h3>
 <p>Signal lift.</p>
 <p><code>slift</code> taking two events streams as input looks like</p>
 <pre><code>def slift2[A, B, C](a: Events[A], b: Events[B],
                     f: (A, B) =&gt; C): Events[C]
 </code></pre>
-<p><code>slift2</code> takes two events streams and a function that can accept events from these streams as input and returns another stream as output.</p>
-<p>Doesn't start giving output till at least one event occurs in each of the input streams. After which the current or last value from the events is used to produce output.</p>
+<p><code>slift2</code> takes two events streams and a function that can
+accept events from these streams as input and returns another stream as
+output.</p>
+<p>Doesn't start giving output till at least one event occurs in each of
+the input streams. After which the current or last value from the events
+is used to produce output.</p>
 <p>As in,</p>
 <pre><code>in x: Events[Int]
 in y: Events[Int]
@@ -322,7 +381,9 @@ def a = merge(x, last(x, y))
 def b = merge(x, last(x, y))
 def z = x + y
 </code></pre>
-<h3 id="more">More</h3>
+</section>
+<section id="more" class="level3">
+<h3>More</h3>
 <p>There are several other operations like:</p>
 <table>
 <thead>
@@ -375,59 +436,86 @@ def z = x + y
 </tr>
 </tbody>
 </table>
-<h2 id="function-evaluation-strategies">Function evaluation strategies</h2>
+</section>
+</section>
+<section id="function-evaluation-strategies" class="level2">
+<h2>Function evaluation strategies</h2>
 <ul>
 <li>strict</li>
 <li>lazy</li>
 </ul>
-<h2 id="operator-precedence">Operator precedence</h2>
+</section>
+<section id="operator-precedence" class="level2">
+<h2>Operator precedence</h2>
 <p><!-- 4.13.8.1 --></p>
 <ol>
 <li><code>if-then-else</code></li>
 <li><code>=&gt;</code> (anonymous function)</li>
 <li><code>||</code></li>
 <li><code>&amp;&amp;</code></li>
-<li><code>==</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>!=</code>, <code>&gt;.</code>, <code>&lt;.</code>, <code>&lt;=.</code>, <code>&gt;=.</code></li>
+<li><code>==</code>, <code>&lt;</code>, <code>&gt;</code>,
+<code>&lt;=</code>, <code>&gt;=</code>, <code>!=</code>,
+<code>&gt;.</code>, <code>&lt;.</code>, <code>&lt;=.</code>,
+<code>&gt;=.</code></li>
 <li><code>|</code>, <code>^</code></li>
 <li><code>&amp;</code></li>
 <li><code>&gt;&gt;</code>, <code>&lt;&lt;</code></li>
 <li><code>+</code></li>
-<li><code>*</code>, <code>/</code>, <code>%</code>, <code>*.</code>, <code>/.</code></li>
-<li><code>!</code>, <code>-</code>, <code>~</code>, <code>-.</code> (unary)</li>
+<li><code>*</code>, <code>/</code>, <code>%</code>, <code>*.</code>,
+<code>/.</code></li>
+<li><code>!</code>, <code>-</code>, <code>~</code>, <code>-.</code>
+(unary)</li>
 <li><code>()</code> (function call)</li>
 </ol>
-<h2 id="errors">Errors</h2>
+</section>
+<section id="errors" class="level2">
+<h2>Errors</h2>
 <p>As mentioned in the spec.</p>
 <ul>
 <li><code>†</code>: stream evaluation error. An error event.
 <ul>
-<li>indicates that a previous operation couldn't determine if an event exists or not. (Chapter 6 of spec)</li>
+<li>indicates that a previous operation couldn't determine if an event
+exists or not. (Chapter 6 of spec)</li>
 </ul></li>
 <li><code>♢</code>: value evaluation error
 <ul>
 <li>indicates a valid event with a wrong value.</li>
 </ul></li>
 </ul>
-<h3 id="some-notations">Some notations</h3>
+<section id="some-notations" class="level3">
+<h3>Some notations</h3>
 <ul>
-<li><code>⊥</code>: denotes absence of an event (ie, something like <code>None</code>)</li>
+<li><code>⊥</code>: denotes absence of an event (ie, something like
+<code>None</code>)</li>
 <li><code>⟦.⟧</code>: a finite event stream value of a stream</li>
 </ul>
-<p>Data domain of a stream of type <code>T</code> is <code>T ∪ {†}</code></p>
-<h2 id="other-stuff">Other stuff</h2>
+<p>Data domain of a stream of type <code>T</code> is
+<code>T ∪ {†}</code></p>
+</section>
+</section>
+<section id="other-stuff" class="level2">
+<h2>Other stuff</h2>
 <ul>
 <li>liftable</li>
 </ul>
-<h2 id="references">References</h2>
+</section>
+<section id="references" class="level2">
+<h2>References</h2>
 <ul>
-<li><a href="https://arxiv.org/pdf/1808.10717.pdf">TeSSLa: Temporal Stream-based Specification Language</a></li>
-<li><a href="https://www.tessla.io/documentation">TeSSLa documentation</a></li>
+<li><a href="https://arxiv.org/pdf/1808.10717.pdf">TeSSLa: Temporal
+Stream-based Specification Language</a></li>
+<li><a href="https://www.tessla.io/documentation">TeSSLa
+documentation</a></li>
 <li><a href="https://www.tessla.io/tutorial/">TeSSLa tutorial</a></li>
-<li><a href="https://www.tessla.io/TeSSLaLanguageSpecification-1.0.pdf">TeSSLa language specification (v1.0)</a></li>
-<li><a href="https://www.tessla.io/stdlib/">TeSSLa stdlib documentation</a></li>
+<li><a
+href="https://www.tessla.io/TeSSLaLanguageSpecification-1.0.pdf">TeSSLa
+language specification (v1.0)</a></li>
+<li><a href="https://www.tessla.io/stdlib/">TeSSLa stdlib
+documentation</a></li>
 <li><a href="https://www.tessla.io/tutorial/">TeSSLa tutorial</a></li>
 </ul>
 <p><!-- TeSSLa and TeSSLa core are different --></p>
+</section>
 </main>
 </body>
 </html>

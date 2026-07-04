@@ -32,16 +32,21 @@
 <hr/>
 
 <main id="content-container">
-<h2 id="general">General</h2>
+<section id="general" class="level2">
+<h2>General</h2>
 <ul>
-<li>Kleene's theorem: establishes equivalence between FA and regular languages</li>
+<li>Kleene's theorem: establishes equivalence between FA and regular
+languages</li>
 <li>Regular languages: aka rational languages</li>
 </ul>
 <ul>
-<li>A 2-stack DPDA is as powerful as a deterministic TM. <a href="https://stackoverflow.com/questions/62083942/can-a-pda-with-two-stacks-accept-re-language">²</a></li>
+<li>A 2-stack DPDA is as powerful as a deterministic TM. <a
+href="https://stackoverflow.com/questions/62083942/can-a-pda-with-two-stacks-accept-re-language">²</a></li>
 <li><code>aⁿcbⁿ</code> is a CFL but not regular.</li>
 <li><code>aⁿbⁿcⁿ</code> is neither a CFL nor a regular language.</li>
-<li><a href="https://en.wikipedia.org/wiki/Decider_(Turing_machine)">Total Turing machine</a>: A TM that <em>always</em> halts.
+<li><a
+href="https://en.wikipedia.org/wiki/Decider_(Turing_machine)">Total
+Turing machine</a>: A TM that <em>always</em> halts.
 <ul>
 <li>ie, for any input.</li>
 <li>Represents a total function that finishes.</li>
@@ -51,10 +56,13 @@
 <li>An FSM where output is the current state</li>
 <li>There is no separate output logic</li>
 <li>Like a restricted form of Moore machine</li>
-<li><a href="https://www.vhdl-online.de/courses/system_design/synthesis/finite_state_machines_and_vhdl/medvedev">https://www.vhdl-online.de/courses/system_design/synthesis/finite_state_machines_and_vhdl/medvedev</a></li>
+<li><a
+href="https://www.vhdl-online.de/courses/system_design/synthesis/finite_state_machines_and_vhdl/medvedev">https://www.vhdl-online.de/courses/system_design/synthesis/finite_state_machines_and_vhdl/medvedev</a></li>
 </ul></li>
 </ul>
-<h2 id="turing-machine">Turing machine</h2>
+</section>
+<section id="turing-machine" class="level2">
+<h2>Turing machine</h2>
 <p>One-tape turing machine is a 7-tuple:</p>
 <p>M = (Q, Γ, b, Σ, δ, q₀, F)</p>
 <ul>
@@ -78,21 +86,36 @@
 <li>q₀: initial state</li>
 <li>F: set of final states</li>
 </ul>
-<h2 id="dpda-vs-npda">DPDA vs NPDA</h2>
-<p>Unlike in the case of finite automata, DPDA are NPDA are not equivalent.</p>
-<p>For example, <code>wwᴿ</code> can be accepted by a NPDA but no DPDA can handle it.</p>
-<p>∵ the time to switch from the 'w-mode' to the 'wᴿ-mode' cannot be figured out deterministically since there is no delimiter. The possiblity always has to be explored.</p>
+</section>
+<section id="dpda-vs-npda" class="level2">
+<h2>DPDA vs NPDA</h2>
+<p>Unlike in the case of finite automata, DPDA are NPDA are not
+equivalent.</p>
+<p>For example, <code>wwᴿ</code> can be accepted by a NPDA but no DPDA
+can handle it.</p>
+<p>∵ the time to switch from the 'w-mode' to the 'wᴿ-mode' cannot be
+figured out deterministically since there is no delimiter. The
+possiblity always has to be explored.</p>
 <p><code>wcwᴿ</code> can be handled by DPDA if <code>c ∉ w</code>.</p>
-<h2 id="halting-problem">Halting problem</h2>
-<p>Problem: For a specific input, will the Turing machine halt (ie, finish computing and give a result)?</p>
-<p>For a given word and a Turing machine, there is no way to definitely tell whether the Turing machine will aceept that word (ie, halt) or not.</p>
+</section>
+<section id="halting-problem" class="level2">
+<h2>Halting problem</h2>
+<p>Problem: For a specific input, will the Turing machine halt (ie,
+finish computing and give a result)?</p>
+<p>For a given word and a Turing machine, there is no way to definitely
+tell whether the Turing machine will aceept that word (ie, halt) or
+not.</p>
 <p>From Sipser:</p>
 <blockquote>
 <p>recognizers are more powerful than deciders</p>
 </blockquote>
-<h2 id="universal-turing-machine">Universal Turing machine</h2>
+</section>
+<section id="universal-turing-machine" class="level2">
+<h2>Universal Turing machine</h2>
 <p>A TM capable of simulating any TM.</p>
-<h2 id="pumping-lemma-for-regular-languages">Pumping lemma for regular languages</h2>
+</section>
+<section id="pumping-lemma-for-regular-languages" class="level2">
+<h2>Pumping lemma for regular languages</h2>
 <ul>
 <li>Can be used to show that a language is not regular.</li>
 <li>Can't be used to show that a language is regular.</li>
@@ -122,8 +145,11 @@
 <li><code>n</code> be the number of states of <code>M</code></li>
 <li><code>s ∈ L</code> such that <code>|s| ≥ n</code></li>
 </ul>
-<p>From: <a href="https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Pumping.html">https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Pumping.html</a></p>
-<h2 id="context-free-languages">Context free languages</h2>
+<p>From: <a
+href="https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Pumping.html">https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Pumping.html</a></p>
+</section>
+<section id="context-free-languages" class="level2">
+<h2>Context free languages</h2>
 <p>An example CFL: <code>aⁿbⁿ</code> where n≥0.</p>
 <p>CFG:</p>
 <pre><code>S -&gt; aSb | ε
@@ -137,21 +163,29 @@
 <pre><code>S -&gt; aSa | bSb | c
 </code></pre>
 <p>but <code>wcw</code> is not a CFL.</p>
-<p>∵ the stack can only be popped in last-in-first-out order. <code>wcw</code> requires FIFO order.</p>
+<p>∵ the stack can only be popped in last-in-first-out order.
+<code>wcw</code> requires FIFO order.</p>
 <p>—</p>
 <p><code>aⁿbⁿcᵐ</code> where n≥0, m≥0 is a D-CFL.</p>
 <pre><code>S = IE
 I = aIb | ε
 E = cE | ε
 </code></pre>
-<h2 id="masters-theorem">Master's theorem</h2>
+</section>
+<section id="masters-theorem" class="level2">
+<h2>Master's theorem</h2>
 <p>Expressed as a recurrence relation.</p>
-<p>A task of size <code>n</code> can be divided into <code>k</code> sub-tasks each of size <code>n/b</code>.</p>
-<p>The results of these sub-tasks are then combined in <code>𝑂(nᵈ)</code> time to get the final result.</p>
+<p>A task of size <code>n</code> can be divided into <code>k</code>
+sub-tasks each of size <code>n/b</code>.</p>
+<p>The results of these sub-tasks are then combined in
+<code>𝑂(nᵈ)</code> time to get the final result.</p>
 <pre><code>T(n) = k.T(n/b) + 𝑂(nᵈ)
 </code></pre>
-<h2 id="properties-of-languages">Properties of languages</h2>
-<p>From <a href="https://www.geeksforgeeks.org/closure-properties-table-in-toc/">here</a>:</p>
+</section>
+<section id="properties-of-languages" class="level2">
+<h2>Properties of languages</h2>
+<p>From <a
+href="https://www.geeksforgeeks.org/closure-properties-table-in-toc/">here</a>:</p>
 <table>
 <thead>
 <tr class="header">
@@ -176,7 +210,8 @@ E = cE | ε
 </tr>
 <tr class="even">
 <td>Complement</td>
-<td>Y<a href="https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Regular.html">⁶</a></td>
+<td>Y<a
+href="https://www2.lawrence.edu/fast/GREGGJ/CMSC515/chapt01/Regular.html">⁶</a></td>
 <td>N</td>
 <td>N</td>
 <td>Y</td>
@@ -212,13 +247,17 @@ E = cE | ε
 </tr>
 </tbody>
 </table>
-<h2 id="star-free-languages">Star free languages</h2>
-<p>Reference: <a href="https://www.irif.fr/~jep/PDF/MPRI/MPRI.pdf">https://www.irif.fr/~jep/PDF/MPRI/MPRI.pdf</a></p>
+</section>
+<section id="star-free-languages" class="level2">
+<h2>Star free languages</h2>
+<p>Reference: <a
+href="https://www.irif.fr/~jep/PDF/MPRI/MPRI.pdf">https://www.irif.fr/~jep/PDF/MPRI/MPRI.pdf</a></p>
 <p>Given:</p>
 <ul>
 <li>Σ: finite alphabet</li>
 </ul>
-<p>then set L of star-free languges within Σ* is the smallest set such that:</p>
+<p>then set L of star-free languges within Σ* is the smallest set such
+that:</p>
 <table>
 <tbody>
 <tr class="odd">
@@ -252,7 +291,8 @@ E = cE | ε
 <ul>
 <li>Star free languages over Σ ⊆ languages over Σ</li>
 </ul>
-<p>I guess this type in coq can represent star-free languages over Σ:</p>
+<p>I guess this type in coq can represent star-free languages over
+Σ:</p>
 <pre class="coq"><code>Inductive t (Σ: Type): Type :=
 | Nul: t Σ
 | Nil: t Σ
@@ -261,7 +301,8 @@ E = cE | ε
 | Alt: t Σ -&gt; t Σ -&gt; t Σ
 | Cmp: t Σ -&gt; t Σ.
 </code></pre>
-<p>Kamp's theorem: LTL properties are equivalent to star-free languages</p>
+<p>Kamp's theorem: LTL properties are equivalent to star-free
+languages</p>
 <table>
 <thead>
 <tr class="header">
@@ -288,8 +329,10 @@ E = cE | ε
 </tr>
 </tbody>
 </table>
-<p><code>a*</code> is star free for any finite alphabet. <code>a*</code> being same as <code>(Σ* \ a*)</code></p>
-<p><a href="https://cs.stackexchange.com/questions/10768/star-free-language-vs-regular-language">https://cs.stackexchange.com/questions/10768/star-free-language-vs-regular-language</a></p>
+<p><code>a*</code> is star free for any finite alphabet. <code>a*</code>
+being same as <code>(Σ* \ a*)</code></p>
+<p><a
+href="https://cs.stackexchange.com/questions/10768/star-free-language-vs-regular-language">https://cs.stackexchange.com/questions/10768/star-free-language-vs-regular-language</a></p>
 <pre><code>Σ* = ∅ᶜ
 
 a* = (Σ* (Σ \ a) Σ*)ᶜ
@@ -306,7 +349,9 @@ a* = (Σ* (Σ \ a) Σ*)ᶜ
 
 G p = p U ⊥
 </code></pre>
-<h2 id="linear-temporal-logic-ltl">Linear Temporal Logic (LTL)</h2>
+</section>
+<section id="linear-temporal-logic-ltl" class="level2">
+<h2>Linear Temporal Logic (LTL)</h2>
 <table>
 <thead>
 <tr class="header">
@@ -364,7 +409,8 @@ G p = p U ⊥
 </tr>
 </tbody>
 </table>
-<h3 id="past-time-ltl-pltl">Past-time LTL (pLTL)</h3>
+<section id="past-time-ltl-pltl" class="level3">
+<h3>Past-time LTL (pLTL)</h3>
 <p>Has:</p>
 <table>
 <thead>
@@ -384,13 +430,20 @@ G p = p U ⊥
 </tr>
 </tbody>
 </table>
-<p>PLTL is as expressive as LTL but properties can be much more succinct.</p>
-<p><code>p S q</code> is like <code>q+p.*</code> (or in PSL style, <code>q+p[*]</code>).</p>
+<p>PLTL is as expressive as LTL but properties can be much more
+succinct.</p>
+<p><code>p S q</code> is like <code>q+p.*</code> (or in PSL style,
+<code>q+p[*]</code>).</p>
 <ul>
-<li><a href="https://people.irisa.fr/Nicolas.Markey/PDF/MyPapers/eatcs-bull79">https://people.irisa.fr/Nicolas.Markey/PDF/MyPapers/eatcs-bull79</a>()-Mar.pdf</li>
+<li><a
+href="https://people.irisa.fr/Nicolas.Markey/PDF/MyPapers/eatcs-bull79">https://people.irisa.fr/Nicolas.Markey/PDF/MyPapers/eatcs-bull79</a>()-Mar.pdf</li>
 </ul>
-<h3 id="metric-tl-mtl">Metric TL (MTL)</h3>
+</section>
+<section id="metric-tl-mtl" class="level3">
+<h3>Metric TL (MTL)</h3>
 <p>Has interval for U and F in LTL.</p>
+</section>
+</section>
 </main>
 </body>
 </html>

@@ -32,56 +32,76 @@
 <hr/>
 
 <main id="content-container">
-<p>#+LINK w1 <a href="https://en.wikipedia.org/wiki/Logic_gate">https://en.wikipedia.org/wiki/Logic_gate</a></p>
-<p>#+LINK w1 <a href="https://en.wikipedia.org/wiki/Boolean_algebra">https://en.wikipedia.org/wiki/Boolean_algebra</a></p>
-<h2 id="boolean">Boolean</h2>
+<section id="boolean" class="level2">
+<h2>Boolean</h2>
 <p>Named after George Boole.</p>
-<h2 id="boolean-algebra-properties">Boolean algebra properties</h2>
-<h3 id="associativity">Associativity</h3>
+</section>
+<section id="boolean-algebra-properties" class="level2">
+<h2>Boolean algebra properties</h2>
+<section id="associativity" class="level3">
+<h3>Associativity</h3>
 <ul>
 <li>a + (b+c) = (a+b) + c</li>
 <li>a(bc) = (ab)c</li>
 </ul>
-<h3 id="absorption">Absorption</h3>
+</section>
+<section id="absorption" class="level3">
+<h3>Absorption</h3>
 <ul>
 <li>a + ab = a</li>
 <li>a(a + b) = a</li>
 </ul>
-<h3 id="de-morgans-laws">de Morgan's laws</h3>
+</section>
+<section id="de-morgans-laws" class="level3">
+<h3>de Morgan's laws</h3>
 <ul>
 <li>(ab)' = a' + b'</li>
 <li>(a+b)' = a'b'</li>
 </ul>
-<h3 id="identity">Identity</h3>
+</section>
+<section id="identity" class="level3">
+<h3>Identity</h3>
 <ul>
 <li>a + 0 = a</li>
 <li>a.1 = a</li>
 </ul>
-<h3 id="commutativity">Commutativity</h3>
+</section>
+<section id="commutativity" class="level3">
+<h3>Commutativity</h3>
 <ul>
 <li>a.b = b.a</li>
 <li>a + b = b + a</li>
 </ul>
-<h3 id="distributivity">Distributivity</h3>
+</section>
+<section id="distributivity" class="level3">
+<h3>Distributivity</h3>
 <ul>
 <li>a(b + c) = ab + ac</li>
 <li>a + bc = (a + b).(a + c)</li>
 </ul>
-<h3 id="idempotency">Idempotency</h3>
+</section>
+<section id="idempotency" class="level3">
+<h3>Idempotency</h3>
 <ul>
 <li>a.a = a</li>
 <li>a + a = a</li>
 </ul>
-<h3 id="involution">Involution</h3>
+</section>
+<section id="involution" class="level3">
+<h3>Involution</h3>
 <p>aka 'double negation'.</p>
 <ul>
 <li>(a')' = a</li>
 </ul>
-<h2 id="operations">Operations</h2>
+</section>
+</section>
+<section id="operations" class="level2">
+<h2>Operations</h2>
 <ul>
 <li>NOT: aka inverter</li>
 </ul>
-<h3 id="and">AND</h3>
+<section id="and" class="level3">
+<h3>AND</h3>
 <table>
 <thead>
 <tr class="header">
@@ -113,7 +133,9 @@
 </tr>
 </tbody>
 </table>
-<h3 id="or">OR</h3>
+</section>
+<section id="or" class="level3">
+<h3>OR</h3>
 <table>
 <thead>
 <tr class="header">
@@ -145,7 +167,9 @@
 </tr>
 </tbody>
 </table>
-<h3 id="xor">XOR</h3>
+</section>
+<section id="xor" class="level3">
+<h3>XOR</h3>
 <p>Exclusive OR.</p>
 <p>True only when inputs doesn't have the same value.</p>
 <table>
@@ -179,7 +203,9 @@
 </tr>
 </tbody>
 </table>
-<h3 id="nand">NAND</h3>
+</section>
+<section id="nand" class="level3">
+<h3>NAND</h3>
 <p>Inverted AND</p>
 <table>
 <thead>
@@ -212,7 +238,9 @@
 </tr>
 </tbody>
 </table>
-<h3 id="nor">NOR</h3>
+</section>
+<section id="nor" class="level3">
+<h3>NOR</h3>
 <p>Inverted OR</p>
 <table>
 <thead>
@@ -245,7 +273,9 @@
 </tr>
 </tbody>
 </table>
-<h3 id="xnor">XNOR</h3>
+</section>
+<section id="xnor" class="level3">
+<h3>XNOR</h3>
 <p>Inverted XOR.</p>
 <p>ie, True when both inputs are the same.</p>
 <table>
@@ -279,7 +309,10 @@
 </tr>
 </tbody>
 </table>
-<h2 id="universal-gates">Universal gates</h2>
+</section>
+</section>
+<section id="universal-gates" class="level2">
+<h2>Universal gates</h2>
 <ul>
 <li>Can be used to realize any other gate.</li>
 <li>NAND, NOR</li>
@@ -296,11 +329,17 @@
 <li>AND: (AB)'' = (A'+B')' → 3 NOR gates</li>
 <li>OR: (A+B)'' → 2 NOR gates</li>
 </ul>
-<h2 id="references">References</h2>
+</section>
+<section id="references" class="level2">
+<h2>References</h2>
 <ul>
-<li><em>Switching Theory and Finite Automata (Third edition)</em> by Zvi Kohavi, Niraj K. Jha</li>
-<li>[<a href="https://www.mi.mun.ca/users/cchaulk/misc/boolean.html">https://www.mi.mun.ca/users/cchaulk/misc/boolean.html</a>](<a href="https://www.mi.mun.ca/users/cchaulk/misc/boolean.htm">https://www.mi.mun.ca/users/cchaulk/misc/boolean.htm</a>)</li>
+<li><em>Switching Theory and Finite Automata (Third edition)</em> by Zvi
+Kohavi, Niraj K. Jha</li>
+<li>[<a
+href="https://www.mi.mun.ca/users/cchaulk/misc/boolean.html">https://www.mi.mun.ca/users/cchaulk/misc/boolean.html</a>](<a
+href="https://www.mi.mun.ca/users/cchaulk/misc/boolean.htm">https://www.mi.mun.ca/users/cchaulk/misc/boolean.htm</a>)</li>
 </ul>
+</section>
 </main>
 </body>
 </html>

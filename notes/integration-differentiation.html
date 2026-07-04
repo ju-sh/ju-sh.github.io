@@ -32,7 +32,8 @@
 <hr/>
 
 <main id="content-container">
-<h2 id="integration">Integration</h2>
+<section id="integration" class="level2">
+<h2>Integration</h2>
 <pre><code>
 ⌠          1 
 ⎮xⁿ.dx = ───── xⁿ⁺¹ + C
@@ -65,13 +66,16 @@
 ⌡
 
 </code></pre>
-<h3 id="integration-by-parts">Integration by parts</h3>
+<section id="integration-by-parts" class="level3">
+<h3>Integration by parts</h3>
 <pre><code>⌠           ⌠       ⌠   ⎛⌠    ⎞     
 ⎮u v dx =  u⎮v dx - ⎮u&#39; ⎜⎮v.dx⎟ . dx
 ⌡           ⌡       ⌡   ⎝⌡    ⎠     
 </code></pre>
 <p>where u' = du/dx</p>
-<p>To choose u (first function) and v (second function), use the 'ILATE' trick: -I: Integral -L: Logarithm -A: Algebraic -T: Trigonometric -E: Exponent</p>
+<p>To choose u (first function) and v (second function), use the 'ILATE'
+trick: -I: Integral -L: Logarithm -A: Algebraic -T: Trigonometric -E:
+Exponent</p>
 <p>Example:</p>
 <pre><code>   ⌠          
    ⎮x.cosx.dx 
@@ -99,8 +103,12 @@ ie,
 
 =  x.sinx + cosx
 </code></pre>
-<h2 id="derivatives">Derivatives</h2>
-<h3 id="product-rule">Product rule</h3>
+</section>
+</section>
+<section id="derivatives" class="level2">
+<h2>Derivatives</h2>
+<section id="product-rule" class="level3">
+<h3>Product rule</h3>
 <p>Derivative of:</p>
 <pre><code>f(x).g(x)
 </code></pre>
@@ -112,10 +120,15 @@ ie,
 ─── ⎜f.g⎟ = g. ─── + f. ───
  dx ⎝   ⎠      dx       dx
 </code></pre>
-<h3 id="chain-rule">Chain rule</h3>
-<p>Derivative of <code>f(g(x))</code> with respect to <code>x</code> is:</p>
+</section>
+<section id="chain-rule" class="level3">
+<h3>Chain rule</h3>
+<p>Derivative of <code>f(g(x))</code> with respect to <code>x</code>
+is:</p>
 <pre><code>f&#39;(g(x)) . g&#39;(x)
 </code></pre>
+</section>
+</section>
 </main>
 </body>
 </html>

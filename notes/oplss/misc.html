@@ -31,18 +31,21 @@
 <hr/>
 
 <main id="content-container">
-<h1 id="pfenning">2015?: Pfenning</h1>
+<section id="pfenning" class="level1">
+<h1>2015?: Pfenning</h1>
 <ul>
 <li>Introduction rules from bottom to top
 <ul>
-<li>We apply intro rule to go towards something that we wish to prove from something that we know already.</li>
+<li>We apply intro rule to go towards something that we wish to prove
+from something that we know already.</li>
 </ul></li>
 <li>Elimination rules from top to bottom ✓
 <ul>
 <li>Makes sense since we are throwing away info</li>
 </ul></li>
 </ul>
-<p>Proofs in natural deduction proceeds like an attempt to reconcile the goal (bottom part) and assumptions (top part).</p>
+<p>Proofs in natural deduction proceeds like an attempt to reconcile the
+goal (bottom part) and assumptions (top part).</p>
 <p>—</p>
 <p>(A∨B) ∧ (A∨C) ⊢ A∨(B∧C)</p>
 <p>Step 1:</p>
@@ -73,12 +76,14 @@
 <li>○(A ∨ B) ⊢ ○A ∨ ○B</li>
 </ul>
 <p>Not in the intuitinistic case. (TODO: Why ??)</p>
-<h2 id="propositions-as-type">Propositions as type</h2>
+<section id="propositions-as-type" class="level2">
+<h2>Propositions as type</h2>
 <p>Read:</p>
 <ul>
 <li>Curry 1935
 <ul>
-<li>Gentzen's paper of natural deduction (and sequent calculus?) came out around the same time.</li>
+<li>Gentzen's paper of natural deduction (and sequent calculus?) came
+out around the same time.</li>
 </ul></li>
 <li>Howard 1969</li>
 </ul>
@@ -89,18 +94,28 @@
 </ul>
 <p>Intuitionsitic =&gt; <code>¬A</code> is <code>A ⊃ ⊥</code></p>
 <p>which makes <code>A ∨ ¬A</code> to be <code>A ∨ (A ⊃ ⊥)</code>.</p>
-<p>Not provable in general. Because you need to know what A is for both <code>A</code> and <code>A ⊃ ⊥</code>.</p>
-<p>Classical logic: Every proposition is assumed to be either true or false.</p>
-<h3 id="dbts">Dbts</h3>
+<p>Not provable in general. Because you need to know what A is for both
+<code>A</code> and <code>A ⊃ ⊥</code>.</p>
+<p>Classical logic: Every proposition is assumed to be either true or
+false.</p>
+<section id="dbts" class="level3">
+<h3>Dbts</h3>
 <ul>
-<li>How does expansion in logic correspond to extensional equality in type world?</li>
+<li>How does expansion in logic correspond to extensional equality in
+type world?</li>
 </ul>
-<h2 id="william-duff">2018-William Duff</h2>
+</section>
+</section>
+<section id="william-duff" class="level2">
+<h2>2018-William Duff</h2>
 <p>GADT:</p>
 <ul>
-<li>In addition to constructors, we can specify what kind of arguments the constructors can take</li>
+<li>In addition to constructors, we can specify what kind of arguments
+the constructors can take</li>
 <li>Existential type in ocaml? Makable with gadts?</li>
 </ul>
+</section>
+</section>
 </main>
 </body>
 </html>

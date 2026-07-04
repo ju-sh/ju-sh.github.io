@@ -32,23 +32,32 @@
 <hr/>
 
 <main id="content-container">
-<h2 id="general">General</h2>
+<section id="general" class="level2">
+<h2>General</h2>
 <ul>
 <li>Type check current file: C-c C-l</li>
 <li>Math library of lean: mathlib (like mathcomp of coq)</li>
 </ul>
-<h2 id="misc">Misc</h2>
+</section>
+<section id="misc" class="level2">
+<h2>Misc</h2>
 <pre><code>#check Nat
 </code></pre>
-<h1 id="mathlib">mathlib</h1>
+</section>
+<section id="mathlib" class="level1">
+<h1>mathlib</h1>
 <ul>
-<li><code>[CommRing R]</code>: mention that <code>R</code> is a commutative ring</li>
+<li><code>[CommRing R]</code>: mention that <code>R</code> is a
+commutative ring</li>
 </ul>
-<h1 id="lean3">Lean3</h1>
+</section>
+<section id="lean3" class="level1">
+<h1>Lean3</h1>
 <pre><code>namespace &lt;namespace-name&gt;
 open &lt;namespace-name&gt;
 </code></pre>
-<h2 id="coq-analogues">Coq analogues</h2>
+<section id="coq-analogues" class="level2">
+<h2>Coq analogues</h2>
 <ul>
 <li>Check: #check</li>
 <li>Compute: #reduce (done by trusted kernel. Less efficient.)</li>
@@ -56,7 +65,9 @@ open &lt;namespace-name&gt;
 <li>Admitted: sorry</li>
 <li>Proof-Qed: begin-end</li>
 </ul>
-<h2 id="ℕ-vs-ℕ">ℕ vs ℕ+</h2>
+</section>
+<section id="ℕ-vs-ℕ" class="level2">
+<h2>ℕ vs ℕ+</h2>
 <ul>
 <li>ℕ is ℕ₀.</li>
 <li>ℕ+ is ℕ₁.</li>
@@ -64,9 +75,12 @@ open &lt;namespace-name&gt;
 <pre><code>#check (0:ℕ)
 #check (1:ℕ+)
 </code></pre>
-<h2 id="random-snippets">Random snippets</h2>
+</section>
+<section id="random-snippets" class="level2">
+<h2>Random snippets</h2>
 <ul>
-<li>Type*: I guess it's like the Top type. Type of <em>all</em> types.</li>
+<li>Type*: I guess it's like the Top type. Type of <em>all</em>
+types.</li>
 <li>fact: insert a fact. ie, info. Not factorial.</li>
 </ul>
 <pre><code>#reduce 1+2
@@ -102,19 +116,29 @@ def x:ℕ := 5
 theorem or_intro_l (p q: Prop) : p → p ∨ q :=
 show p ∨ q, from or.inl
 </code></pre>
-<h2 id="commas-in-proof-script">Commas in proof script</h2>
-<p>From <a href="https://www.ma.imperial.ac.uk/~buzzard/xena/natural_number_game/?world=1&amp;level=2">https://www.ma.imperial.ac.uk/~buzzard/xena/natural_number_game/?world=1&amp;level=2</a></p>
+</section>
+<section id="commas-in-proof-script" class="level2">
+<h2>Commas in proof script</h2>
+<p>From <a
+href="https://www.ma.imperial.ac.uk/~buzzard/xena/natural_number_game/?world=1&amp;level=2">https://www.ma.imperial.ac.uk/~buzzard/xena/natural_number_game/?world=1&amp;level=2</a></p>
 <blockquote>
-<p>The comma tells Lean "I've finished writing this tactic now, please process it." Lean ignores newlines, but pays great attention to commas.</p>
+<p>The comma tells Lean "I've finished writing this tactic now, please
+process it." Lean ignores newlines, but pays great attention to
+commas.</p>
 </blockquote>
-<h2 id="comment">Comment</h2>
+</section>
+<section id="comment" class="level2">
+<h2>Comment</h2>
 <ul>
 <li>Multi-line: <code>/-- comment --/</code></li>
 <li>Single-line: <code>-- comment</code></li>
 </ul>
-<h2 id="todo">Todo</h2>
+</section>
+<section id="todo" class="level2">
+<h2>Todo</h2>
 <ul>
-<li>How to search for existing lemmas? Like Coq's <code>Search</code>.</li>
+<li>How to search for existing lemmas? Like Coq's
+<code>Search</code>.</li>
 <li>Notations? And <code>Locate</code> equivalent?
 <ul>
 <li>Custom entries?</li>
@@ -122,6 +146,8 @@ show p ∨ q, from or.inl
 <li>Show Proof</li>
 <li>print proofs</li>
 </ul>
+</section>
+</section>
 </main>
 </body>
 </html>

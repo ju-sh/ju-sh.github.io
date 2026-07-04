@@ -34,8 +34,10 @@
 <main id="content-container">
 <p>These are purely combinatory circuits.</p>
 <p>No clock involved.</p>
-<h2 id="single-bit-adders">Single bit adders</h2>
-<h3 id="half-adder">Half adder</h3>
+<section id="single-bit-adders" class="level2">
+<h2>Single bit adders</h2>
+<section id="half-adder" class="level3">
+<h3>Half adder</h3>
 <table>
 <thead>
 <tr class="header">
@@ -76,7 +78,9 @@
 <li>Sum = A XOR B</li>
 <li>Carry = AB</li>
 </ul>
-<h3 id="full-adder">Full adder</h3>
+</section>
+<section id="full-adder" class="level3">
+<h3>Full adder</h3>
 <table>
 <thead>
 <tr class="header">
@@ -150,23 +154,34 @@
 <li>Sum = A XOR B XOR Cᵢₙ</li>
 <li>Cₒᵤₜ = Cᵢₙ(A XOR B) + AB</li>
 </ul>
-<h2 id="multi-bit-adders">Multi-bit adders</h2>
+</section>
+</section>
+<section id="multi-bit-adders" class="level2">
+<h2>Multi-bit adders</h2>
 <p>An n-bit adder is made using n 1-bit full adders.</p>
-<h3 id="ripple-carry-adder">Ripple carry adder</h3>
-<p>Carry-out of i-th full adder is given as the carry-in of the i+1-st full adder.</p>
+<section id="ripple-carry-adder" class="level3">
+<h3>Ripple carry adder</h3>
+<p>Carry-out of i-th full adder is given as the carry-in of the i+1-st
+full adder.</p>
 <p>The carry signal 'ripples' through the full adders.</p>
 <ul>
 <li>Simple design</li>
-<li>Slower (since each full adder must wait for the carry out from the previous full adder before starting work).</li>
+<li>Slower (since each full adder must wait for the carry out from the
+previous full adder before starting work).</li>
 </ul>
 <p>To add n-bit numbers, we need n stages of full adders.</p>
 <ul>
 <li>cinᵢ: Carry-in of i-the full adder</li>
 <li>coutᵢ: Carry-out of i-the full adder</li>
 </ul>
-<p>cout of previous full adder becomes cin of next full adder. ie, cinᵢ₊₁ = coutᵢ</p>
-<p>Time required for addition in a ripple carry adder = propagation delay of the carry to ripple through the different stage of the overall adder.</p>
-<p>The first carry value (which should be part of input) is sometimes called <em>forced carry</em>. And the last carry value (which is part of output) is also known as <em>overflow carry</em>.</p>
+<p>cout of previous full adder becomes cin of next full adder. ie,
+cinᵢ₊₁ = coutᵢ</p>
+<p>Time required for addition in a ripple carry adder = propagation
+delay of the carry to ripple through the different stage of the overall
+adder.</p>
+<p>The first carry value (which should be part of input) is sometimes
+called <em>forced carry</em>. And the last carry value (which is part of
+output) is also known as <em>overflow carry</em>.</p>
 <pre><code>aₙ₋₁ bₙ₋₁   coutₙ₋₁     a₁  b₁   cout₀    a₀  b₀ cin₀
   |  |  +-----+          |  |  +-----+     |  |  |        
   |  |  V     |          |  |  |     |     |  |  |        
@@ -184,7 +199,9 @@ coutₙ₋₁
 <pre><code>sᵢ    = aᵢ ⊕ bᵢ ⊕ cinᵢ
 coutᵢ = aᵢ.bᵢ + bᵢ.cinᵢ + aᵢ.cinᵢ
 </code></pre>
-<h3 id="look-ahead-carry-adder">Look ahead carry adder</h3>
+</section>
+<section id="look-ahead-carry-adder" class="level3">
+<h3>Look ahead carry adder</h3>
 <ul>
 <li>An improvement over ripple carry adder.</li>
 <li>aka CLA (Carry Look-ahead Adder)</li>
@@ -197,11 +214,20 @@ tᵢ = aᵢ ⊕ bᵢ
 coutᵢ = dᵢ + tᵢ.cinᵢ
 sᵢ    = aᵢ ⊕ bᵢ ⊕ cinᵢ
 </code></pre>
-<h3 id="carry-save-adder">Carry save adder</h3>
-<p>Instead of delaying execution by waiting for every previous full adder's carry out to be calculated, we store (ie, 'save') the carry-out of every full adder.</p>
-<p>The actual result is calculated by applying the effect all carry out values at the end.</p>
-<h2 id="single-bit-subtractors">Single bit subtractors</h2>
-<h3 id="half-subtractor">Half subtractor</h3>
+</section>
+<section id="carry-save-adder" class="level3">
+<h3>Carry save adder</h3>
+<p>Instead of delaying execution by waiting for every previous full
+adder's carry out to be calculated, we store (ie, 'save') the carry-out
+of every full adder.</p>
+<p>The actual result is calculated by applying the effect all carry out
+values at the end.</p>
+</section>
+</section>
+<section id="single-bit-subtractors" class="level2">
+<h2>Single bit subtractors</h2>
+<section id="half-subtractor" class="level3">
+<h3>Half subtractor</h3>
 <table>
 <thead>
 <tr class="header">
@@ -242,7 +268,9 @@ sᵢ    = aᵢ ⊕ bᵢ ⊕ cinᵢ
 <li>Difference = D = A XOR B</li>
 <li>Borrow = B = A'B</li>
 </ul>
-<h3 id="full-subtractor">Full subtractor</h3>
+</section>
+<section id="full-subtractor" class="level3">
+<h3>Full subtractor</h3>
 <table>
 <thead>
 <tr class="header">
@@ -325,6 +353,8 @@ sᵢ    = aᵢ ⊕ bᵢ ⊕ cinᵢ
     +---+---+---+---+
 </code></pre>
 <p>K-map for Bout (with C=Bₒᵤₜ)</p>
+</section>
+</section>
 </main>
 </body>
 </html>

@@ -32,49 +32,102 @@
 <hr/>
 
 <main id="content-container">
-<p>Looks like the main use of perl these days is to maintain old code which used perl. Perhaps, Python has taken over the role that perl used to play earlier. Still, perl run faster than python (especially for regex operations).</p>
+<p>Looks like the main use of perl these days is to maintain old code
+which used perl. Perhaps, Python has taken over the role that perl used
+to play earlier. Still, perl run faster than python (especially for
+regex operations).</p>
 <ul>
-<li>Possible expansion of PERL: Practical Extraction and Reporting Language</li>
+<li>Possible expansion of PERL: Practical Extraction and Reporting
+Language</li>
 <li>Perl 5 is current perl</li>
 <li>Perl 6 turned out to be Raku</li>
 </ul>
 <p>Resource:</p>
 <ul>
-<li><em>Perl Hacks: Tips &amp; Tools for Programming, Debugging, and Surviving</em> - Shane Warden, Damian Conway, Curtis 'Ovid' Poe</li>
+<li><em>Perl Hacks: Tips &amp; Tools for Programming, Debugging, and
+Surviving</em> - Shane Warden, Damian Conway, Curtis 'Ovid' Poe</li>
 </ul>
-<h2 id="general">General</h2>
+<section id="general" class="level2">
+<h2>General</h2>
 <ul>
+<li>File extensions
+<ul>
+<li>Module: <code>.pm</code></li>
+<li>Script: <code>.pl</code></li>
+<li>Man/doc files: <code>.pod</code> (plain old documentation)</li>
+<li>Directory for tests: <code>t/</code></li>
+</ul></li>
 <li>Comments: Starts with <code>#</code></li>
-<li><code>shift</code>: remove the first element in array and return that value</li>
-<li><code>unshift</code>: prefix the given elements to the beginning of an array</li>
+<li><code>$/</code>: determines how files are read
+<ul>
+<li><code>local $/;</code>: sets <code>$/</code> to be undefined in
+current block, makes the entire file to be read at once</li>
+<li><code>$/</code> set to <code>\n</code> means file is read one line
+at a time</li>
+</ul></li>
+<li><code>shift</code>: remove the first element in array and return
+that value</li>
+<li><code>unshift</code>: prefix the given elements to the beginning of
+an array</li>
 <li><code>push</code>: append elements to end of array</li>
-<li><code>pop</code>: remove last element of array and return that value</li>
+<li><code>pop</code>: remove last element of array and return that
+value</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode perl"><code class="sourceCode perl"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="dt">@arr</span> = (<span class="kw">&#39;</span><span class="st">Hi.</span><span class="kw">&#39;</span>, <span class="kw">&#39;</span><span class="st">Jack</span><span class="kw">&#39;</span>, <span class="kw">&#39;</span><span class="st">and</span><span class="kw">&#39;</span>, <span class="kw">&#39;</span><span class="st">Jill</span><span class="kw">&#39;</span>);</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="fu">print</span> <span class="kw">&quot;</span><span class="dt">@arr</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="fu">push</span>(<span class="dt">@arr</span>, <span class="kw">&#39;</span><span class="st">went</span><span class="kw">&#39;</span>, <span class="kw">&#39;</span><span class="st">up</span><span class="kw">&#39;</span>);</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="fu">print</span> <span class="kw">&quot;</span><span class="dt">@arr</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="fu">unshift</span>(<span class="dt">@arr</span>, <span class="kw">&#39;</span><span class="st">Hello</span><span class="kw">&#39;</span>, <span class="kw">&#39;</span><span class="st">and</span><span class="kw">&#39;</span>);</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="fu">print</span> <span class="kw">&quot;</span><span class="dt">@arr</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="kw">my</span> <span class="dt">$v1</span> = <span class="fu">pop</span>(<span class="dt">@arr</span>);</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="fu">print</span> <span class="kw">&quot;</span><span class="st">v1: </span><span class="dt">$v1</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="fu">print</span> <span class="kw">&quot;</span><span class="dt">@arr</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="kw">my</span> <span class="dt">$v2</span> = <span class="fu">shift</span>(<span class="dt">@arr</span>);</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="fu">print</span> <span class="kw">&quot;</span><span class="st">v2: </span><span class="dt">$v2</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a><span class="fu">print</span> <span class="kw">&quot;</span><span class="dt">@arr</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a><span class="co"># Hi. Jack and Jill</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a><span class="co"># Hi. Jack and Jill went up</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a><span class="co"># Hello and Hi. Jack and Jill went up</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a><span class="co"># v1: up</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a><span class="co"># Hello and Hi. Jack and Jill went</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a><span class="co"># v2: Hello</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a><span class="co"># and Hi. Jack and Jill went</span></span></code></pre></div>
-<h2 id="strings">Strings</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode perl"><code class="sourceCode perl"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">@arr</span> = (<span class="ot">&#39;</span><span class="ss">Hi.</span><span class="ot">&#39;</span>, <span class="ot">&#39;</span><span class="ss">Jack</span><span class="ot">&#39;</span>, <span class="ot">&#39;</span><span class="ss">and</span><span class="ot">&#39;</span>, <span class="ot">&#39;</span><span class="ss">Jill</span><span class="ot">&#39;</span>);</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span> <span class="ot">&quot;</span><span class="dt">@arr</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">push</span>(<span class="dt">@arr</span>, <span class="ot">&#39;</span><span class="ss">went</span><span class="ot">&#39;</span>, <span class="ot">&#39;</span><span class="ss">up</span><span class="ot">&#39;</span>);</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span> <span class="ot">&quot;</span><span class="dt">@arr</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">unshift</span>(<span class="dt">@arr</span>, <span class="ot">&#39;</span><span class="ss">Hello</span><span class="ot">&#39;</span>, <span class="ot">&#39;</span><span class="ss">and</span><span class="ot">&#39;</span>);</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span> <span class="ot">&quot;</span><span class="dt">@arr</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">my</span> <span class="dt">$v1</span> = <span class="fu">pop</span>(<span class="dt">@arr</span>);</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span> <span class="ot">&quot;</span><span class="st">v1: </span><span class="dt">$v1</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span> <span class="ot">&quot;</span><span class="dt">@arr</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">my</span> <span class="dt">$v2</span> = <span class="fu">shift</span>(<span class="dt">@arr</span>);</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span> <span class="ot">&quot;</span><span class="st">v2: </span><span class="dt">$v2</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span> <span class="ot">&quot;</span><span class="dt">@arr</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Hi. Jack and Jill</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Hi. Jack and Jill went up</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Hello and Hi. Jack and Jill went up</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># v1: up</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Hello and Hi. Jack and Jill went</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># v2: Hello</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># and Hi. Jack and Jill went</span></span></code></pre></div>
+</section>
+<section id="file-handling" class="level2">
+<h2>File handling</h2>
+<section id="classic-way" class="level3">
+<h3>Classic way</h3>
+<p>No 3rd party libraries:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode perl"><code class="sourceCode perl"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">my</span> <span class="dt">$input_file</span>  = <span class="fu">shift</span> || <span class="ot">&#39;</span><span class="ss">input.src</span><span class="ot">&#39;</span>;</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">open</span> <span class="kw">my</span> <span class="dt">$in_fh</span>, <span class="ot">&#39;</span><span class="ss">&lt;</span><span class="ot">&#39;</span>, <span class="dt">$input_file</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="ot">or</span> <span class="fu">die</span> <span class="ot">&quot;</span><span class="st">Cannot open </span><span class="dt">$input_file</span><span class="st">: </span><span class="wa">$!</span><span class="ot">&quot;</span>;</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> <span class="wa">$/</span>;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">my</span> <span class="dt">$inp</span> = &lt;<span class="dt">$in_fh</span>&gt;;</span></code></pre></div>
+<p>Or with <code>Path::Tiny</code> (not tried successfully):</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode perl"><code class="sourceCode perl"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use</span> <span class="fu">Path::Tiny</span>;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">my</span> <span class="dt">$in_fh</span> = path(<span class="dt">$input_file</span>);</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">die</span> <span class="ot">&quot;</span><span class="st">Cannot read </span><span class="dt">$input_file</span><span class="ot">&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">unless</span> <span class="dt">$in_fh</span>-&gt;<span class="dt">exists</span> &amp;&amp; <span class="dt">$in_fh</span>-&gt;<span class="dt">is_file</span>;</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">my</span> <span class="dt">$inp</span> = <span class="dt">$in_fh</span>-&gt;<span class="dt">slurp</span>;</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span> <span class="dt">$inp</span>;</span></code></pre></div>
+</section>
+</section>
+<section id="strings" class="level2">
+<h2>Strings</h2>
 <ul>
 <li><code>qw()</code>: quoted word</li>
 <li><code>chomp()</code>: remove newline from end of string ??</li>
@@ -83,24 +136,32 @@
 <li>String concatenation: <code>$str1 . $str2</code></li>
 <li>String formatting: <code>sprintf</code>
 <ul>
-<li>Also see string interpolation: <a href="https://perldoc.perl.org/perlop#Gory-details-of-parsing-quoted-constructs">https://perldoc.perl.org/perlop#Gory-details-of-parsing-quoted-constructs</a></li>
+<li>Also see string interpolation: <a
+href="https://perldoc.perl.org/perlop#Gory-details-of-parsing-quoted-constructs">https://perldoc.perl.org/perlop#Gory-details-of-parsing-quoted-constructs</a></li>
 </ul></li>
 </ul>
-<h3 id="quoted-strings">Quoted strings</h3>
+<section id="quoted-strings" class="level3">
+<h3>Quoted strings</h3>
 <ul>
 <li>q: single quoted string</li>
 <li>qq: double quoted string
 <ul>
-<li>Delimiter is usually <code>/</code>, but can be other symbols too.</li>
+<li>Delimiter is usually <code>/</code>, but can be other symbols
+too.</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode perl"><code class="sourceCode perl"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>&gt; <span class="kw">my</span> <span class="dt">$s</span> = <span class="kw">q/</span><span class="st">&quot;String&quot; not yet over</span><span class="kw">/</span>;</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">&#39;</span><span class="st">&quot;String&quot; not yet over</span><span class="kw">&#39;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>&gt; <span class="fu">print</span> <span class="dt">$s</span>;</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="kw">&quot;</span><span class="st">String</span><span class="kw">&quot;</span> <span class="kw">not</span> yet over</span></code></pre></div>
-<h2 id="variables">Variables</h2>
-<p><a href="https://perldoc.perl.org/variables">https://perldoc.perl.org/variables</a></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode perl"><code class="sourceCode perl"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>&gt; <span class="kw">my</span> <span class="dt">$s</span> = <span class="ot">q/</span><span class="ss">&quot;String&quot; not yet over</span><span class="ot">/</span>;</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ot">&#39;</span><span class="ss">&quot;String&quot; not yet over</span><span class="ot">&#39;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>&gt; <span class="fu">print</span> <span class="dt">$s</span>;</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ot">&quot;</span><span class="st">String</span><span class="ot">&quot;</span> <span class="ot">not</span> yet over</span></code></pre></div>
+</section>
+</section>
+<section id="variables" class="level2">
+<h2>Variables</h2>
+<p><a
+href="https://perldoc.perl.org/variables">https://perldoc.perl.org/variables</a></p>
 <ul>
 <li>Scalar variables start with: <code>$</code>
 <ul>
@@ -112,15 +173,20 @@
 </ul></li>
 <li>By default, variables are global.
 <ul>
-<li>Include <code>use strict;</code> to make perl warn you of implicit global variables.</li>
+<li>Include <code>use strict;</code> to make perl warn you of implicit
+global variables.</li>
 </ul></li>
 <li>Use <code>my</code> to declare local variables.
 <ul>
-<li>Declaration of multiple <code>my</code> vars: <code>my ($a, $b);</code></li>
+<li>Declaration of multiple <code>my</code> vars:
+<code>my ($a, $b);</code></li>
 </ul></li>
 </ul>
-<h2 id="functions">Functions</h2>
-<p><a href="https://perldoc.perl.org/perlsub">https://perldoc.perl.org/perlsub</a></p>
+</section>
+<section id="functions" class="level2">
+<h2>Functions</h2>
+<p><a
+href="https://perldoc.perl.org/perlsub">https://perldoc.perl.org/perlsub</a></p>
 <ul>
 <li>Subroutines: Functions in perl
 <ul>
@@ -132,42 +198,50 @@
 <li><code>$_[0]</code>: 1st arg, <code>$_[1]</code>: 2nd arg, etc</li>
 </ul></li>
 </ul>
-<h2 id="multiple-variable-with-same-name">Multiple variable with same name</h2>
-<p>If there are two variables in current scope which has the same name (say, <code>$x</code>), use <code>::$x</code> to unshadow outer variable.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode perl"><code class="sourceCode perl"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>// Global var set</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="dt">$pi</span> = <span class="fl">3.14</span>;</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="fu">print</span> <span class="kw">&quot;</span><span class="st">Pi is </span><span class="dt">$pi</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>{</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>  <span class="fu">print</span> <span class="kw">&quot;</span><span class="st">Inside block</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>  // Global var <span class="fu">reset</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>  <span class="dt">$pi</span> = <span class="fl">3.1415</span>;</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>  <span class="fu">print</span> <span class="kw">&quot;</span><span class="st">Inner Pi is </span><span class="dt">$pi</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>  <span class="fu">print</span> <span class="kw">&quot;</span><span class="st">Outer pi is </span><span class="dt">$::pi</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a>  // Local var set</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a>  <span class="kw">my</span> <span class="dt">$pi</span> = <span class="fl">3.141592</span>;</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>  <span class="fu">print</span> <span class="kw">&quot;</span><span class="st">Inner Pi is </span><span class="dt">$pi</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>  <span class="fu">print</span> <span class="kw">&quot;</span><span class="st">Outer pi is </span><span class="dt">$::pi</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a>  <span class="fu">print</span> <span class="kw">&quot;</span><span class="st">Leaving block</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a>}</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a>// The <span class="kw">local</span> var is <span class="fu">no</span> longer in scope.</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true"></a>// Latest value of global var is printed.</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true"></a><span class="fu">print</span> <span class="kw">&quot;</span><span class="st">Pi is </span><span class="dt">$pi</span><span class="ch">\n</span><span class="kw">&quot;</span>;</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true"></a><span class="co"># Pi is 3.14</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true"></a><span class="co"># Inside block</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true"></a><span class="co"># Inner Pi is 3.1415</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true"></a><span class="co"># Outer pi is 3.1415</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true"></a><span class="co"># Inner Pi is 3.141592</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true"></a><span class="co"># Outer pi is 3.1415</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true"></a><span class="co"># Leaving block</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true"></a><span class="co"># Pi is 3.1415</span></span></code></pre></div>
-<h2 id="arrays">Arrays</h2>
-<p><a href="https://www.perltutorial.org/perl-array/">https://www.perltutorial.org/perl-array/</a></p>
+</section>
+<section id="multiple-variable-with-same-name" class="level2">
+<h2>Multiple variable with same name</h2>
+<p>If there are two variables in current scope which has the same name
+(say, <code>$x</code>), use <code>::$x</code> to unshadow outer
+variable.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode perl"><code class="sourceCode perl"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>// Global var set</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dt">$pi</span> = <span class="fl">3.14</span>;</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span> <span class="ot">&quot;</span><span class="st">Pi is </span><span class="dt">$pi</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span> <span class="ot">&quot;</span><span class="st">Inside block</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  // Global var <span class="fu">reset</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">$pi</span> = <span class="fl">3.1415</span>;</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span> <span class="ot">&quot;</span><span class="st">Inner Pi is </span><span class="dt">$pi</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span> <span class="ot">&quot;</span><span class="st">Outer pi is </span><span class="dt">$::pi</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  // Local var set</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">my</span> <span class="dt">$pi</span> = <span class="fl">3.141592</span>;</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span> <span class="ot">&quot;</span><span class="st">Inner Pi is </span><span class="dt">$pi</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span> <span class="ot">&quot;</span><span class="st">Outer pi is </span><span class="dt">$::pi</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span> <span class="ot">&quot;</span><span class="st">Leaving block</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>// The <span class="kw">local</span> var is <span class="fu">no</span> longer in scope.</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>// Latest value of global var is printed.</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span> <span class="ot">&quot;</span><span class="st">Pi is </span><span class="dt">$pi</span><span class="ch">\n</span><span class="ot">&quot;</span>;</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Pi is 3.14</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Inside block</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Inner Pi is 3.1415</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Outer pi is 3.1415</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Inner Pi is 3.141592</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Outer pi is 3.1415</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Leaving block</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Pi is 3.1415</span></span></code></pre></div>
+</section>
+<section id="arrays" class="level2">
+<h2>Arrays</h2>
+<p><a
+href="https://www.perltutorial.org/perl-array/">https://www.perltutorial.org/perl-array/</a></p>
 <ul>
 <li><p>Number of elements: <code>@arr</code></p></li>
 <li><p>Highest index: <code>$#arr</code></p></li>
@@ -184,7 +258,8 @@
 </ul></li>
 <li><p>Sort array: <code>sort @arr</code></p></li>
 </ul>
-<h3 id="indexing">Indexing</h3>
+<section id="indexing" class="level3">
+<h3>Indexing</h3>
 <ul>
 <li>Indexing starts from 0: <code>$arr[i]</code></li>
 <li>Negative indexing and index slices possible.
@@ -192,29 +267,63 @@
 <li>Eg: <code>$arr[-2..-1]</code></li>
 </ul></li>
 </ul>
-<h2 id="hashes">Hashes</h2>
+</section>
+</section>
+<section id="hashes" class="level2">
+<h2>Hashes</h2>
 <p>Hash variable names start with a <code>%</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode perl"><code class="sourceCode perl"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="dt">%hash</span>={<span class="kw">&quot;</span><span class="st">one</span><span class="kw">&quot;</span>=&gt;<span class="dv">1</span>,<span class="kw">&quot;</span><span class="st">two</span><span class="kw">&quot;</span>=&gt;<span class="dv">2</span>,<span class="kw">&quot;</span><span class="st">three</span><span class="kw">&quot;</span>=&gt;<span class="dv">3</span>}</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="fu">print</span> <span class="dt">$hash</span>{<span class="kw">&quot;</span><span class="st">one</span><span class="kw">&quot;</span>}</span></code></pre></div>
-<h2 id="inline-perl">Inline perl</h2>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode perl"><code class="sourceCode perl"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">%hash</span>={<span class="ot">&quot;</span><span class="st">one</span><span class="ot">&quot;</span>=&gt;<span class="dv">1</span>,<span class="ot">&quot;</span><span class="st">two</span><span class="ot">&quot;</span>=&gt;<span class="dv">2</span>,<span class="ot">&quot;</span><span class="st">three</span><span class="ot">&quot;</span>=&gt;<span class="dv">3</span>}</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span> <span class="dt">$hash</span>{<span class="ot">&quot;</span><span class="st">one</span><span class="ot">&quot;</span>}</span></code></pre></div>
+</section>
+<section id="inline-perl" class="level2">
+<h2>Inline perl</h2>
 <p>Use <code>-e</code> option.</p>
 <pre><code>perl -e &#39;print(&quot;Hey!\n&quot;)&#39;
 Hey!
 </code></pre>
-<h2 id="loop">Loop</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode perl"><code class="sourceCode perl"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="co"># $elem is scalar, @elems is an array</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="kw">foreach</span> <span class="dt">$elem</span> in <span class="dt">@elems</span> {</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>  <span class="co"># ...</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>}</span></code></pre></div>
-<h2 id="cpan">cpan</h2>
+</section>
+<section id="loop" class="level2">
+<h2>Loop</h2>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode perl"><code class="sourceCode perl"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># $elem is scalar, @elems is an array</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> <span class="dt">$elem</span> in <span class="dt">@elems</span> {</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+<section id="repl" class="level2">
+<h2>REPL</h2>
+<p>perl itself doesn't seem to come bundled with a REPL, but its
+debugger serves the purpose.</p>
+<p>One of these:</p>
+<ul>
+<li>perl -d -e 0</li>
+<li>perl -dE0</li>
+</ul>
+<pre><code>$ perl -d -e 0
+
+Loading DB routines from perl5db.pl version 1.80
+Editor support available.
+
+Enter h or &#39;h h&#39; for help, or &#39;man perldebug&#39; for more help.
+
+main::(-e:1):   0
+  DB&lt;1&gt;
+
+</code></pre>
+</section>
+<section id="cpan" class="level2">
+<h2>cpan</h2>
 <p>WARNING: Probably never tried any of the following…</p>
 <ul>
 <li><p>Install a module: <code>cpan Module::Name</code></p>
 <ul>
-<li>Same as: <code>cpan -i Module::Name</code> (∵ the <code>-i</code> switch is default)</li>
+<li>Same as: <code>cpan -i Module::Name</code> (∵ the <code>-i</code>
+switch is default)</li>
 <li>May take some time to finish.</li>
 </ul></li>
-<li><p>Installation of new packages: <code>cpan &lt;package-name&gt;</code></p>
+<li><p>Installation of new packages:
+<code>cpan &lt;package-name&gt;</code></p>
 <ul>
 <li>Examples:
 <ul>
@@ -223,18 +332,28 @@ Hey!
 <li><code>cpan File::HomeDir</code></li>
 </ul></li>
 </ul></li>
-<li><p>Run <code>o conf init</code> inside cpan to re-run configuration</p></li>
-<li><p><code>cpanm</code> (cpanminus): something to supplement cpan ??</p>
+<li><p>Run <code>o conf init</code> inside cpan to re-run
+configuration</p></li>
+<li><p><code>cpanm</code> (cpanminus): something to supplement cpan
+??</p>
 <ul>
 <li>Considered simpler to use than <code>cpan</code>.</li>
-<li>Installable with <code>cpan App::cpanminus</code> or using distro package manager.</li>
+<li>Installable with <code>cpan App::cpanminus</code> or using distro
+package manager.</li>
 </ul></li>
 </ul>
-<h2 id="misc">Misc</h2>
+</section>
+<section id="misc" class="level2">
+<h2>Misc</h2>
 <ul>
 <li><code>perltidy</code>: automatic code formatter
 <ul>
 <li>Package: <code>Perl::Tidy</code></li>
+</ul></li>
+<li><code>perlcritic</code>: critique perl code ??
+<ul>
+<li><a
+href="https://metacpan.org/dist/Perl-Critic/view/bin/perlcritic">https://metacpan.org/dist/Perl-Critic/view/bin/perlcritic</a></li>
 </ul></li>
 <li>A perl repl: Many options, each with their own pros and cons.
 <ul>
@@ -242,19 +361,51 @@ Hey!
 <ul>
 <li>Doesn't support <code>my</code> variables ??</li>
 </ul></li>
-<li><code>reply</code>: <a href="https://metacpan.org/pod/Reply">https://metacpan.org/pod/Reply</a>
+<li><code>reply</code>: <a
+href="https://metacpan.org/pod/Reply">https://metacpan.org/pod/Reply</a>
 <ul>
 <li>Install with <code>cpanm Reply</code></li>
 </ul></li>
 </ul></li>
+<li>Make parser for grammars writable as BNF: <a
+href="https://metacpan.org/pod/Marpa">https://metacpan.org/pod/Marpa</a>::R2</li>
 </ul>
-<h2 id="more">More</h2>
+<section id="marpar2" class="level3">
+<h3>Marpa::R2</h3>
+<ul>
+<li>There are multiple action styles</li>
+<li>Multiple modes
+<ul>
+<li>SLIF: Scanless interface. Kind of automatic parsing</li>
+<li>Classic: more manual parsing</li>
+</ul></li>
+<li>Terms
+<ul>
+<li>G1 grammar : Parsing grammar</li>
+<li>L0 grammar: Lexical grammar</li>
+</ul></li>
+<li><code class="verbatim">~</code>: for lexing. ie, tokens</li>
+<li><code>::=</code>: for parsing. ie, for parser</li>
+</ul>
+<p>See:</p>
+<ul>
+<li><a
+href="https://lukasatkinson.de/2013/transforming-syntax/">https://lukasatkinson.de/2013/transforming-syntax/</a></li>
+<li><a
+href="http://savage.net.au/Marpa.html">http://savage.net.au/Marpa.html</a></li>
+</ul>
+</section>
+</section>
+<section id="more" class="level2">
+<h2>More</h2>
 <ul>
 <li>Perl regex</li>
 <li>String formatting/templating</li>
 <li>Time management and formatting</li>
-<li>Example perl script (LaTeXTidy.pl): <a href="http://web.archive.org/web/20160822025224/http://bfc.sfsu.edu/LaTeXTidy-0.31.pl">http://web.archive.org/web/20160822025224/http://bfc.sfsu.edu/LaTeXTidy-0.31.pl</a></li>
+<li>Example perl script (LaTeXTidy.pl): <a
+href="http://web.archive.org/web/20160822025224/http://bfc.sfsu.edu/LaTeXTidy-0.31.pl">http://web.archive.org/web/20160822025224/http://bfc.sfsu.edu/LaTeXTidy-0.31.pl</a></li>
 </ul>
+</section>
 </main>
 </body>
 </html>
