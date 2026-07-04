@@ -8,15 +8,184 @@ body {
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
+  margin: auto;
 }
 
 th {
   background-color: #eaeaea;
 }
 
-figcaption {
+blockquote {
+  margin: 1.5rem 0;
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  font-style: italic;
+  font-size: 1.0rem;
+  line-height: 1.6;
+  color: #374151;
+}
+
+
+/* Image stuff */
+/* =========== */
+
+figure, figcaption {
   text-align: center;
 }
+
+img {
+  padding-bottom: 2%;
+}
+
+.fig-container {
+  border: 2px solid #d2c9c9;
+  border-radius: 20px;
+  padding: 2% 0% 2% 0%;
+}
+
+.fc-pre {
+  font-weight: bold;
+}
+
+.definition {
+    /* max-width: 700px; */
+    /* margin: 2rem auto; */
+    padding: 1.5rem;
+    /* border-left: 6px solid #a3b5a5; */
+    background: #faf0ff;
+    /* background: #83ff7229; */
+    /* background: #b4cac73b; */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    line-height: 1.7;
+}
+
+
+/* .gallery-hori-wrapper { */
+/*   display: flex; */
+/*   flex-direction: column; */
+/*   /\* gap: 2rem; *\/ */
+/*   /\* max-width: 1200px; *\/ */
+/*   margin: 0 auto; */
+/*   /\* padding: 2rem; *\/ */
+/* } */
+
+/* .gallery-hori-row { */
+/*   display: flex; */
+/*   gap: 0.5rem; */
+/*   align-items: stretch; */
+/* } */
+
+/* .gallery-hori-cell { */
+/*   flex: 1 1 0; */
+/*   display: flex; */
+/*   flex-direction: column; */
+/*   justify-content: flex-start; */
+/*   min-width: 140px; */
+/*   overflow: hidden; */
+/*   /\* background: #f5f5f5; *\/ */
+/*   /\* border-radius: 8px; *\/ */
+/* } */
+
+/* .gallery-hori-cell-img { */
+/*   flex: 1 1 auto; */
+/*   display: flex; */
+/*   align-items: center; */
+/*   justify-content: center; */
+/*   min-height: 120px; */
+/*   padding: 1rem; */
+/*   /\* background: #e8e8e8; *\/ */
+/* } */
+
+/* .gallery-hori-cell-img img { */
+/*   display: block; */
+/*   max-width: 100%; */
+/*   height: auto; */
+/* } */
+
+/* .gallery-hori-cell-caption { */
+/*   text-align: center; */
+/*   padding: 0.8rem 1rem; */
+/*   /\* background: white; *\/ */
+/*   font-size: 0.95rem; */
+/*   /\* color: #333; *\/ */
+/*   /\* border-top: 1px solid #ddd; *\/ */
+/*   margin-top: auto; */
+/* } */
+
+/* /\* ------------------------*\/ */
+
+
+/* .gallery-aside-wrapper { */
+/*   display: grid; */
+/*   grid-template-columns: 2fr 1fr; /\* Gallery fixed width, text fills rest *\/ */
+/*   /\* grid-template-columns: 320px 1fr; /\\* Gallery fixed width, text fills rest *\\/ *\/ */
+/*   gap: 2rem; */
+/*   max-width: 1200px; */
+/*   margin: 0 auto; */
+/*   padding: 1rem; */
+/*   align-items: start; /\* Top-align both columns *\/ */
+/* } */
+
+/* .gallery-aside-gallery { */
+/*   /\* background: #f5f5f5; *\/ */
+/*   border-radius: 12px; */
+/*   padding: 1rem; */
+/*   display: flex; */
+/*   flex-direction: column; */
+/*   gap: 1.5rem;    */
+/* } */
+
+/* .gallery-aside-text { */
+/*   /\* Takes remaining space *\/ */
+/*   min-width: 0; /\* Prevents overflow *\/ */
+/* } */
+
+/* .gallery-aside-row { */
+/*   display: flex; */
+/*   flex-direction: column; */
+/*   gap: 1rem; */
+/* } */
+
+/* .gallery-aside-cell { */
+/*   display: flex; */
+/*   flex-direction: column; */
+/*   /\* background: white; *\/ */
+/*   border-radius: 8px; */
+/*   overflow: hidden; */
+/*   box-shadow: 0 2px 8px rgba(0,0,0,0.2); */
+/* } */
+
+/* .gallery-aside-cell-img { */
+/*   display: flex; */
+/*   align-items: center; */
+/*   justify-content: center; */
+/*   padding: 1rem; */
+/*   /\* background: #e8e8e8; *\/ */
+/*   min-height: 150px; */
+/* } */
+
+/* .gallery-aside-cell-img img { */
+/*   max-width: 100%; */
+/*   height: auto; */
+/* } */
+
+/* .gallery-aside-cell-caption { */
+/*   text-align: center; */
+/*   padding: 0.8rem; */
+/*   background: white; */
+/* } */
+
+/* /\* Responsive: Stack on small screens *\/ */
+/* @media (max-width: 768px) { */
+/*   .gallery-aside-wrapper { */
+/*     grid-template-columns: 1fr; /\* Single column *\/ */
+/*     gap: 1.5rem; */
+/*   } */
+/* } */
+
+
+/* Syntax highlighting */
+/* =================== */
 
 pre.ascii-art {
   text-align: center;
@@ -40,6 +209,10 @@ pre:not(.ascii-art) {
 
 samp {
   font-weight: bold;
+}
+
+ruby {
+  font-size: 2em;
 }
 
 .kw {
