@@ -19,828 +19,7 @@
     <atom:link href="https://ju-sh.github.io/blog/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>
-        NFA plus vs star
-      </title>
-      <link>
-        https://ju-sh.github.io/blog/nfa-plus.html
-      </link>
-      <description>
-        
-&lt;div&gt;
-  &lt;div&gt;
-    NFAs with smaller state count by using &#x27;Kleene plus&#x27; instead of Kleene star
-  &lt;/div&gt;
-  &lt;div&gt;
-    &lt;main id=&quot;content-container&quot;&gt;
-&lt;p&gt;Almost four years ago, I came across &lt;a href=&quot;https://cs.ioc.ee/~tarmo/papers/firsov-uustalu-cpp13.pdf&quot;&gt;a CPP
-2013 paper&lt;/a&gt; named &lt;em&gt;Certified parsing of regular languages&lt;/em&gt; by
-Denis Firov, Tarmo Uustalu &lt;span class=&quot;citation&quot; data-cites=&quot;a000050_agda&quot;&gt;&lt;a href=&quot;#ref-a000050_agda&quot; role=&quot;doc-biblioref&quot;&gt;[1]&lt;/a&gt;&lt;/span&gt;.&lt;/p&gt;
-&lt;p&gt;This paper describes a way to construct NFAs corresponding to a given
-regular expression using matrix operations. The underlying principle was
-Thompson&#x27;s algorithm for NFA construction.&lt;/p&gt;
-&lt;p&gt;The CPP paper also had &lt;a href=&quot;https://firsov.ee/cert-reg/&quot;&gt;an agda
-implementation&lt;/a&gt; associated with it, where they expressed regular
-expressions using an agda type like this:&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot; id=&quot;cb1&quot;&gt;&lt;pre class=&quot;sourceCode haskell&quot;&gt;&lt;code class=&quot;sourceCode haskell&quot;&gt;&lt;span id=&quot;cb1-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt; &lt;span class=&quot;op&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;Set&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;where&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;-- regex for empty word&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  ε   &lt;span class=&quot;op&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-5&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-6&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;-- Atom&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-7&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  ′_  &lt;span class=&quot;op&quot;&gt;:&lt;/span&gt; Σ → &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-8&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-9&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;-- Concatenation&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-10&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  _○_ &lt;span class=&quot;op&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt; → &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt; → &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-11&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-12&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-12&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;-- Choice&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-13&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-13&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  _∪_ &lt;span class=&quot;op&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt; → &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt; → &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-14&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-14&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-15&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-15&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;-- Kleene plus&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&quot;cb1-16&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-16&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  _₊  &lt;span class=&quot;op&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt; → &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Interestingly, they were using Kleene plus instead of the more common
-Kleene star as the base operation. Of course it is not that big a deal
-theoretically, since Kleene star and Kleene plus can be written in terms
-of each other. Still, I wondered why. The paper itself had this
-remark:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Note that instead of the Kleene star (&lt;code&gt;_*&lt;/code&gt;) we use plus
-(&lt;code&gt;_+&lt;/code&gt;). This is more convenient for us and does not restrict
-generality, as star is expressible as choice between the empty string
-and plus.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Though this makes it clear that the authors found Kleene plus more
-convenient, I could not figure out why it was more convenient. I tried
-asked around, but could not find anyone who could figure out the reason.
-I also tried contacting the authors, but the mail ids that I found were
-probably obsolete since the paper is a bit old. Anyway, after persisting
-a while, I gave up. A lot later, when I felt I needed a break, I tried
-asking this question in the proofassistants stackexchange. And the
-answers and comments helped me understand the reason. (Should have
-posted the question online, much earlier.) Let me try explaining it in
-my own words.&lt;/p&gt;
-&lt;section class=&quot;level1&quot; id=&quot;background-mcnaughton-yamada-thompson-construction&quot;&gt;
-&lt;h1&gt;Background: McNaughton-Yamada-Thompson construction&lt;/h1&gt;
-&lt;p&gt;The CPP paper builds NFAs corresponding to a given regular expression
-using an algorithm credited to McNaughton, Yamada and Thompson &lt;span class=&quot;citation&quot; data-cites=&quot;a000050mcnaughton a000050thompson&quot;&gt;&lt;a href=&quot;#ref-a000050mcnaughton&quot; role=&quot;doc-biblioref&quot;&gt;[2]&lt;/a&gt;, &lt;a href=&quot;#ref-a000050thompson&quot; role=&quot;doc-biblioref&quot;&gt;[3]&lt;/a&gt;&lt;/span&gt;. There
-are many algorithms to convert regex to finite automaton. The
-McNaughton-Yamada-Thompson algorithm is probably the easiest to
-understand and implement. This algorithm is sometimes also called
-Thompson construction.&lt;/p&gt;
-&lt;p&gt;As I understand it, the original NFA construction algorithm was
-developed by McNaughton and Yamada &lt;span class=&quot;citation&quot; data-cites=&quot;a000050mcnaughton&quot;&gt;&lt;a href=&quot;#ref-a000050mcnaughton&quot; role=&quot;doc-biblioref&quot;&gt;[2]&lt;/a&gt;&lt;/span&gt;, while Ken Thompson made the
-algorithm &lt;span class=&quot;citation&quot; data-cites=&quot;a000050thompson&quot;&gt;&lt;a href=&quot;#ref-a000050thompson&quot; role=&quot;doc-biblioref&quot;&gt;[3]&lt;/a&gt;&lt;/span&gt; which
-allows these NFAs to be run without converting them to DFAs. This is a
-great advantage since NFA to DFA conversion leads to an exponential
-increase in the number of states (state space explosion). Thompson&#x27;s
-algorithm runs an NFA by simulating its execution. A description of
-Thompson&#x27;s NFA simulation algorithm is not necessary for this blog post,
-so I am skipping that (See &lt;a href=&quot;https://swtch.com/~rsc/regexp/regexp1.html&quot;&gt;this article&lt;/a&gt; for
-more about this).&lt;/p&gt;
-&lt;p&gt;Obviously, it is desirable for automata to have as few states as
-possible. Because more number of states means a need for more storage
-space and more state-transition details to keep track of.&lt;/p&gt;
-&lt;/section&gt;
-&lt;section class=&quot;level1&quot; id=&quot;finding-n-for-an-nfa-n&quot;&gt;
-&lt;h1&gt;Finding &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; for
-an NFA &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt;&lt;/h1&gt;
-&lt;p&gt;A NFA consists of a set of states and transitions between those
-states. Some of these states are marked initial or final states. The
-state transitions can happen with or without input.&lt;/p&gt;
-&lt;figure class=&quot;fig-container&quot; id=&quot;f-pre&quot;&gt;
-&lt;img alt=&quot;Schematic diagram of an NFA&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/pre.svg?raw=true&quot; style=&quot;width: 45%;&quot; title=&quot;Schematic diagram of an NFA&quot;/&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Figure 1
-    &lt;/span&gt;:
-    &lt;span class=&quot;fc-title&quot;&gt;
-      Schematic diagram of an NFA
-    &lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;Let&#x27;s have a look at a formal definition for NFAs.&lt;/p&gt;
-&lt;div class=&quot;definition&quot; id=&quot;dfn-nfa-orig&quot;&gt;
-&lt;p&gt;An NFA &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt; may be defined as
-a quintuple &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt; = (&lt;em&gt;Q&lt;/em&gt;, &lt;em&gt;Σ&lt;/em&gt;, &lt;em&gt;δ&lt;/em&gt;, &lt;em&gt;I&lt;/em&gt;, &lt;em&gt;F&lt;/em&gt;)&lt;/span&gt;,
-where&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;Q&lt;/em&gt;&lt;/span&gt;: Finite set of
-states&lt;/li&gt;
-&lt;li&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;Σ&lt;/em&gt;&lt;/span&gt;: Finite set of input
-symbols&lt;/li&gt;
-&lt;li&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;δ&lt;/em&gt; : &lt;em&gt;Q&lt;/em&gt; × (&lt;em&gt;Σ&lt;/em&gt; ∪ &lt;em&gt;ε&lt;/em&gt;) → &lt;em&gt;P&lt;/em&gt;(&lt;em&gt;Q&lt;/em&gt;)&lt;/span&gt;:
-Transition function&lt;/li&gt;
-&lt;li&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;I&lt;/em&gt; ⊆ &lt;em&gt;Q&lt;/em&gt;&lt;/span&gt;: Set of
-initial states&lt;/li&gt;
-&lt;li&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;F&lt;/em&gt; ⊆ &lt;em&gt;Q&lt;/em&gt;&lt;/span&gt;: Set of
-final states&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Definition 1
-    &lt;/span&gt;
-&lt;span class=&quot;fc-title&quot;&gt;
-      : NFA
-    &lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/div&gt;
-&lt;p&gt;Note that there can be more than one start state in this definition
-of NFAs.&lt;/p&gt;
-&lt;p&gt;Given an NFA as &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt; = (&lt;em&gt;Q&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt;, &lt;em&gt;Σ&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt;, &lt;em&gt;δ&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt;, &lt;em&gt;I&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt;, &lt;em&gt;F&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt;)&lt;/span&gt;
-corresponding to a regex &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;/span&gt;,
-how can we construct an NFA as &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/sub&gt; = (&lt;em&gt;Q&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/sub&gt;, &lt;em&gt;Σ&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/sub&gt;, &lt;em&gt;δ&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/sub&gt;, &lt;em&gt;I&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/sub&gt;, &lt;em&gt;F&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/sub&gt;)&lt;/span&gt;
-corresponding to the regex &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;?&lt;/p&gt;
-&lt;p&gt;One may be tempted to think of a construction where we add
-ε-transitions from each state in &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;F&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt;&lt;/span&gt; to each of
-the states in &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;I&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt;&lt;/span&gt; as shown in
-&lt;a href=&quot;#f-post&quot;&gt;Figure 2&lt;/a&gt;.&lt;/p&gt;
-&lt;figure class=&quot;fig-container&quot; id=&quot;f-post&quot;&gt;
-&lt;img alt=&quot;Schematic NFA for an incorrect star operation&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/post.svg?raw=true&quot; style=&quot;width: 60%;&quot; title=&quot;Schematic NFA for an incorrect star operation&quot;/&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Figure 2
-    &lt;/span&gt;:
-    &lt;span class=&quot;fc-title&quot;&gt;
-      NFA for an incorrect star operation
-    &lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;Such a construction is made as a copy of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;A&lt;/em&gt;&lt;/span&gt; with the following
-modifications:&lt;/p&gt;
-&lt;div class=&quot;definition&quot; id=&quot;dfn-nfa-hash&quot;&gt;
-&lt;ul&gt;
-&lt;li&gt;Add ε-transitions from each state in &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;F&lt;/em&gt;&lt;/span&gt; to each of the states in &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;I&lt;/em&gt;&lt;/span&gt;.&lt;/li&gt;
-&lt;li&gt;Make the set of final states of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;A&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; same as the set of
-initial states of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;A&lt;/em&gt;&lt;/span&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;Q&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;Q&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
-  Q_{A^*} = Q_A
-&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;Σ&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;Σ&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
-  \Sigma_{A^*} = \Sigma_A
-&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
-  I_{A^*} = I_A
-&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
-  F_{A^*} = I_A
-&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-&lt;p&gt;&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;δ&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;ε&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;∪&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;∈&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
-  \delta_{A^*}(p, \varepsilon) = {p} \cup I_A, p \in F_A
-&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;δ&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;σ&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;δ&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;σ&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
-  \delta_{A^*}(p, \sigma) = \delta_A(p, \sigma)
-&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Definition 2
-    &lt;/span&gt;:
-    &lt;span class=&quot;fc-title&quot;&gt;
-      A wrong
-      &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msup&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mo&gt;*&lt;/mo&gt;
-&lt;/msup&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N^*&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-      construction
-    &lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/p&gt;&lt;/div&gt;
-&lt;p&gt;For example, consider an NFA &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/span&gt; shown below
-&lt;a href=&quot;#f-n1&quot;&gt;Figure
-3&lt;/a&gt;. It corresponds to the regex &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;1&lt;/sub&gt; = &lt;em&gt;a&lt;/em&gt;&lt;/span&gt;.&lt;/p&gt;
-&lt;figure class=&quot;fig-container&quot; id=&quot;f-n1&quot;&gt;
-&lt;img alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-050_n1-1.png?raw=true&quot; style=&quot;width:55%&quot; title=&quot;Example dervation tree&quot;/&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Figure 3
-    &lt;/span&gt;:
-    &lt;span class=&quot;fc-title&quot;&gt;
-&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msub&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;1&lt;/mn&gt;
-&lt;/msub&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_1&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-&lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;Constructing an NFA using construction from
-&lt;a href=&quot;#dfn-nfa-hash&quot;&gt;Definition 1&lt;/a&gt; yields the automaton &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; shown in
-&lt;a href=&quot;#f-n1-hash&quot;&gt;Figure 4&lt;/a&gt;.&lt;/p&gt;
-&lt;figure class=&quot;fig-container&quot; id=&quot;f-n1-hash&quot;&gt;
-&lt;img alt=&quot;Star NFA for NFA N1&quot; src=&quot;https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-050_n1-2.png?raw=true&quot; style=&quot;width:55%;&quot; title=&quot;Star NFA for NFA N1&quot;/&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Figure 4
-    &lt;/span&gt;:
-    &lt;span class=&quot;fc-title&quot;&gt;
-&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msubsup&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;1&lt;/mn&gt;
-&lt;mo&gt;*&lt;/mo&gt;
-&lt;/msubsup&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_1^*&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-&lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;Though this automaton really does correspond to &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;, this is
-just a coincidence and does not mean that definition the construction in
-&lt;a href=&quot;#dfn-nfa-hash&quot;&gt; Definition 1&lt;/a&gt; is a correct way to derive
-&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; for a given
-&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt;. Let us consider NFAs
-corresponding to a few more regexes to illustrate this.&lt;/p&gt;
-&lt;/section&gt;
-&lt;section class=&quot;level1&quot; id=&quot;a-few-incorrect-n-nfas&quot;&gt;
-&lt;h1&gt;A few incorrect &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; NFAs&lt;/h1&gt;
-&lt;p&gt;Let us have a look at the NFAs corresponding to the following
-regexes:&lt;/p&gt;
-&lt;div class=&quot;table&quot; id=&quot;tab-regex&quot;&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&quot;header&quot;&gt;
-&lt;th&gt;Regex&lt;/th&gt;
-&lt;th&gt;NFA&lt;/th&gt;
-&lt;th&gt;Language&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&quot;odd&quot;&gt;
-&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt; = (&lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt;) * &lt;em&gt;a&lt;/em&gt;&lt;/span&gt;&lt;/td&gt;
-&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/span&gt;&lt;/td&gt;
-&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;L&lt;/em&gt;(&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;)&lt;/span&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
-&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;3&lt;/sub&gt; = (&lt;em&gt;c&lt;/em&gt; * &lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt;) * &lt;em&gt;c&lt;/em&gt; * &lt;em&gt;a&lt;/em&gt;&lt;/span&gt;&lt;/td&gt;
-&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;3&lt;/sub&gt;&lt;/span&gt;&lt;/td&gt;
-&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;L&lt;/em&gt;(&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;3&lt;/sub&gt;)&lt;/span&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
-&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;4&lt;/sub&gt; = (&lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt;) * &lt;em&gt;a&lt;/em&gt;&lt;em&gt;c&lt;/em&gt;&lt;/span&gt;&lt;/td&gt;
-&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;4&lt;/sub&gt;&lt;/span&gt;&lt;/td&gt;
-&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;L&lt;/em&gt;(&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;4&lt;/sub&gt;)&lt;/span&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;caption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-        Table 1
-      &lt;/span&gt;:
-      &lt;span class=&quot;fc-title&quot;&gt;
-        Example regular expressions
-      &lt;/span&gt;
-&lt;/caption&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;p&gt;An NFA recognizing &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;L&lt;/em&gt;(&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;)&lt;/span&gt; could look
-like this:&lt;/p&gt;
-&lt;figure class=&quot;fig-container&quot; id=&quot;f-n2&quot;&gt;
-&lt;img alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-050_n2-1.png?raw=true&quot; style=&quot;width: 50%;&quot; title=&quot;Example dervation tree&quot;/&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Figure 5
-    &lt;/span&gt;:
-    &lt;span class=&quot;fc-title&quot;&gt;
-&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msub&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;2&lt;/mn&gt;
-&lt;/msub&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_1&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-&lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;The corresponding NFA, say
- &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;msubsup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;#&lt;/mi&gt;&lt;/msubsup&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_2^{\#}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;,
-that is derived via &lt;a href=&quot;#dfn-nfa-hash&quot;&gt;Definition 2&lt;/a&gt; would
-be:&lt;/p&gt;
-&lt;figure class=&quot;fig-container&quot; id=&quot;f-n2-hash&quot;&gt;
-&lt;img alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-050_n2-2.png?raw=true&quot; style=&quot;width: 60%;&quot; title=&quot;Example dervation tree&quot;/&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Figure 6
-    &lt;/span&gt;:
-    &lt;span class=&quot;fc-title&quot;&gt;
-&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msubsup&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;2&lt;/mn&gt;
-&lt;mi&gt;#&lt;/mi&gt;
-&lt;/msubsup&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_2^{\#}&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-&lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;Since &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/span&gt;
-corresponds to the regex &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt; = (&lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt;)&lt;sup&gt;*&lt;/sup&gt;&lt;em&gt;a&lt;/em&gt;&lt;/span&gt;,
-we want
- &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;msubsup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;#&lt;/mi&gt;&lt;/msubsup&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_2^{\#}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-to recognize the language of &lt;span class=&quot;math inline&quot;&gt;((&lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt;)&lt;sup&gt;*&lt;/sup&gt;&lt;em&gt;a&lt;/em&gt;)&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;.
-Yet, it is obvious that
- &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;msubsup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;#&lt;/mi&gt;&lt;/msubsup&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_2^{\#}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-accepts the word &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt; ∉ &lt;em&gt;L&lt;/em&gt;(&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;)&lt;/span&gt;.&lt;/p&gt;
-&lt;figure class=&quot;fig-container&quot; id=&quot;f3&quot;&gt;
-&lt;figure id=&quot;f-n2-1&quot;&gt;
-&lt;img alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-050_n2-1.png?raw=true&quot; style=&quot;width:60%;&quot; title=&quot;Example dervation tree&quot;/&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-        (a)
-      &lt;/span&gt;:
-      &lt;span class=&quot;fc-title&quot;&gt;
-&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msub&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;2&lt;/mn&gt;
-&lt;/msub&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_2&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-&lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;figure id=&quot;f-n2-2&quot;&gt;
-&lt;img alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-050_n2-2.png?raw=true&quot; style=&quot;width:70%;&quot; title=&quot;Example dervation tree&quot;/&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-        (b)
-      &lt;/span&gt;:
-      &lt;span class=&quot;fc-title&quot;&gt;
-&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msubsup&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;2&lt;/mn&gt;
-&lt;mi&gt;#&lt;/mi&gt;
-&lt;/msubsup&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_2^{\#}&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-&lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Figure 7
-    &lt;/span&gt;:
-    &lt;span class=&quot;fc-title&quot;&gt;
-      NFAs based on the regex
-      &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;mrow&gt;
-&lt;msub&gt;
-&lt;mi&gt;r&lt;/mi&gt;
-&lt;mn&gt;2&lt;/mn&gt;
-&lt;/msub&gt;
-&lt;mo&gt;=&lt;/mo&gt;
-&lt;mo form=&quot;prefix&quot; stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;
-&lt;mi&gt;a&lt;/mi&gt;
-&lt;mi&gt;b&lt;/mi&gt;
-&lt;mo form=&quot;postfix&quot; stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;
-&lt;mo&gt;*&lt;/mo&gt;
-&lt;mi&gt;a&lt;/mi&gt;
-&lt;/mrow&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;r_2 = (ab)*a&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-&lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;Similarly,
- &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;msubsup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mi&gt;#&lt;/mi&gt;&lt;/msubsup&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_3^{\#}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-(&lt;a href=&quot;#f-n3&quot;&gt;Figure 8b&lt;/a&gt;) accepts the word &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;c&lt;/em&gt;&lt;em&gt;c&lt;/em&gt; ∉ &lt;em&gt;L&lt;/em&gt;(&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;3&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;)&lt;/span&gt;.&lt;/p&gt;
-&lt;div class=&quot;fig-container&quot;&gt;
-&lt;figure id=&quot;f-n3&quot;&gt;
-&lt;div&gt;
-&lt;div&gt;
-&lt;img alt=&quot;NFA for r3&quot; src=&quot;https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-050_n3-1.png?raw=true&quot; style=&quot;width:55%;&quot; title=&quot;NFA for r3&quot;/&gt;
-&lt;/div&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-          (a)
-        &lt;/span&gt;:
-        &lt;span class=&quot;fc-title&quot;&gt;
-&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msub&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;3&lt;/mn&gt;
-&lt;/msub&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_3&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-      (Original NFA)
-        &lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/div&gt;
-&lt;div&gt;
-&lt;div&gt;
-&lt;img alt=&quot;Star attempt for N3&quot; src=&quot;https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-050_n3-2.png?raw=true&quot; style=&quot;width:60%;&quot; title=&quot;Star attempt for N3&quot;/&gt;
-&lt;/div&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-          (b)
-        &lt;/span&gt;:
-        &lt;span class=&quot;fc-title&quot;&gt;
-&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msubsup&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;3&lt;/mn&gt;
-&lt;mi&gt;#&lt;/mi&gt;
-&lt;/msubsup&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_3^{\#}&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-          (Star attempt)
-        &lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/div&gt;
-&lt;/figure&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Figure 8
-    &lt;/span&gt;:
-    &lt;span class=&quot;fc-title&quot;&gt;
-      NFAs based on
-      &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msub&gt;
-&lt;mi&gt;r&lt;/mi&gt;
-&lt;mn&gt;3&lt;/mn&gt;
-&lt;/msub&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;r_3&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-&lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/div&gt;
-&lt;p&gt;Likewise,
- &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;msubsup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mi&gt;#&lt;/mi&gt;&lt;/msubsup&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_4^{\#}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-(&lt;a href=&quot;#f-n4&quot;&gt;Figure 9b&lt;/a&gt;) accepts the word &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt; ∉ &lt;em&gt;L&lt;/em&gt;(&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;4&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;)&lt;/span&gt;.&lt;/p&gt;
-&lt;div class=&quot;fig-container&quot;&gt;
-&lt;figure id=&quot;f-n4&quot;&gt;
-&lt;div&gt;
-&lt;div&gt;
-&lt;img alt=&quot;NFA for r4&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n4-orig.svg?raw=true&quot; style=&quot;width:80%;&quot; title=&quot;NFA for r4&quot;/&gt;
-&lt;/div&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-          (a)
-        &lt;/span&gt;:
-        &lt;span class=&quot;fc-title&quot;&gt;
-&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msub&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;4&lt;/mn&gt;
-&lt;/msub&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_4&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-      (Original NFA)
-        &lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/div&gt;
-&lt;div&gt;
-&lt;div&gt;
-&lt;img alt=&quot;Star attempt for N4&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n4-hash.svg?raw=true&quot; style=&quot;width:85%;&quot; title=&quot;Star attempt for N4&quot;/&gt;
-&lt;/div&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-          (b)
-        &lt;/span&gt;:
-        &lt;span class=&quot;fc-title&quot;&gt;
-&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msubsup&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;4&lt;/mn&gt;
-&lt;mi&gt;#&lt;/mi&gt;
-&lt;/msubsup&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_4^{\#}&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-          (Star attempt)
-    &lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/div&gt;
-&lt;/figure&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Figure 9
-    &lt;/span&gt;:
-    &lt;span class=&quot;fc-title&quot;&gt;
-      NFAs based on
-      &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msub&gt;
-&lt;mi&gt;r&lt;/mi&gt;
-&lt;mn&gt;4&lt;/mn&gt;
-&lt;/msub&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;r_4&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-&lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/div&gt;
-&lt;p&gt;In fact, the regex corresponding to
- &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;msubsup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mi&gt;#&lt;/mi&gt;&lt;/msubsup&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_3^{\#}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-is &lt;span class=&quot;math inline&quot;&gt;(&lt;em&gt;c&lt;/em&gt;|&lt;em&gt;a&lt;/em&gt;(&lt;em&gt;b&lt;/em&gt;|&lt;em&gt;ε&lt;/em&gt;))&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;
-and the one for
- &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;msubsup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mi&gt;#&lt;/mi&gt;&lt;/msubsup&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_4^{\#}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-is &lt;span class=&quot;math inline&quot;&gt;((&lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt;)|(&lt;em&gt;a&lt;/em&gt;&lt;em&gt;c&lt;/em&gt;))&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;.
-Clearly, &lt;a href=&quot;#dfn-nfa-hash&quot;&gt;Definition 2&lt;/a&gt; is not a correct way
-to construct &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;.
-This is the construction that it suggests produces wrong results. At
-least in cases where there is a transition to an initial state, like in
-the examples of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/span&gt;,
-&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;3&lt;/sub&gt;&lt;/span&gt; and &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;4&lt;/sub&gt;&lt;/span&gt;. It happened to
-produce a correct result in the case of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/span&gt; &lt;em&gt;since it had no
-transition going back to initial state&lt;/em&gt;.&lt;/p&gt;
-&lt;/section&gt;
-&lt;section class=&quot;level1&quot; id=&quot;a-correct-way&quot;&gt;
-&lt;h1&gt;A correct way&lt;/h1&gt;
-&lt;p&gt;A robust way to produce &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; corresponding to a
-given &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt; is by adding an
-additional state that is made to be the sole initial and final state as
-described below.&lt;/p&gt;
-&lt;div class=&quot;definition&quot; id=&quot;dfn-nfa-star&quot;&gt;
-&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;Q&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;false&quot;&gt;{&lt;/mo&gt;&lt;mi&gt;𝟙&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;false&quot;&gt;}&lt;/mo&gt;&lt;mo&gt;∪&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;Q&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
-  Q_{A^*} = \{𝟙\} \cup Q_A
-&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;Σ&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;Σ&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
-  \Sigma_{A^*} = \Sigma_A
-&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;false&quot;&gt;{&lt;/mo&gt;&lt;mi&gt;𝟙&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;false&quot;&gt;}&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
-  I_{A^*} = \{𝟙\}
-&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;false&quot;&gt;{&lt;/mo&gt;&lt;mi&gt;𝟙&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;false&quot;&gt;}&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
-  F_{A^*} = \{𝟙\}
-&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-&lt;p&gt;&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;δ&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;𝟙&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;ε&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
-  \delta_{A^*}(𝟙, \varepsilon) = I_A
-&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;δ&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;q&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;ε&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;q&lt;/mi&gt;&lt;mo&gt;∈&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
-  \delta_{A^*}(q, \varepsilon)           = I_A, q \in F_A
-&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;δ&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;σ&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;δ&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;σ&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
-  \delta_{A^*}(p, \sigma)                = \delta_A(p, \sigma)
-&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Definition 3
-    &lt;/span&gt;:
-    &lt;span class=&quot;fc-title&quot;&gt;
-      A correct
-      &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msup&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mo&gt;*&lt;/mo&gt;
-&lt;/msup&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N^*&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-      construction
-    &lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/p&gt;&lt;/div&gt;
-&lt;p&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; NFAs made
-using the construction shown in
-&lt;a href=&quot;#dfn-nfa-star&quot;&gt;Definition 3&lt;/a&gt;, that correspond to the NFAs
-&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/span&gt;, &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/span&gt;, &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;3&lt;/sub&gt;&lt;/span&gt; and &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;4&lt;/sub&gt;&lt;/span&gt;, are shown in
-&lt;a href=&quot;#n-all&quot;&gt;Figure 10&lt;/a&gt;. Note that the number of states in the
-resultant NFA need not be minimal when using this construction. I
-suppose that is a cost we pay for having generality while maintaining
-correctness and simplicity. For example, &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; derived
-using &lt;a href=&quot;#dfn-nfa-star&quot;&gt;Definition 3&lt;/a&gt; has more number of states
-than the version in &lt;a href=&quot;#f-n1-hash&quot;&gt;Figure
-4&lt;/a&gt;, though both recognize the same language. This is a trade off that
-was chosen for having a general solution.&lt;/p&gt;
-&lt;figure class=&quot;fig-container&quot; id=&quot;n-all&quot;&gt;
-&lt;figure id=&quot;f-n1-c&quot;&gt;
-&lt;img alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-050_n1-c.png?raw=true&quot; style=&quot;width:90%; padding-bottom: 2%&quot; title=&quot;Example dervation tree&quot;/&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-          (a)
-        &lt;/span&gt;:
-        &lt;span class=&quot;fc-title&quot;&gt;
-&lt;math&gt;
-&lt;msup&gt;
-&lt;msub&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;1&lt;/mn&gt;
-&lt;/msub&gt;
-&lt;mo&gt;*&lt;/mo&gt;
-&lt;/msup&gt;
-&lt;/math&gt;
-&lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;figure id=&quot;f-n2-c&quot;&gt;
-&lt;img alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-050_n2-c.png?raw=true&quot; style=&quot;width:100%; padding-bottom: 2%&quot; title=&quot;Example dervation tree&quot;/&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-        (b)
-      &lt;/span&gt;:
-      &lt;span class=&quot;fc-title&quot;&gt;
-&lt;math&gt;
-&lt;msup&gt;
-&lt;msub&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;2&lt;/mn&gt;
-&lt;/msub&gt;
-&lt;mo&gt;*&lt;/mo&gt;
-&lt;/msup&gt;
-&lt;/math&gt;
-&lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;figure id=&quot;f-n3-c&quot;&gt;
-&lt;img alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-050_n3-c.png?raw=true&quot; style=&quot;width:100%; padding-bottom: 2%&quot; title=&quot;Example dervation tree&quot;/&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-        (c)
-      &lt;/span&gt;:
-      &lt;span class=&quot;fc-title&quot;&gt;
-&lt;math&gt;
-&lt;msup&gt;
-&lt;msub&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;3&lt;/mn&gt;
-&lt;/msub&gt;
-&lt;mo&gt;*&lt;/mo&gt;
-&lt;/msup&gt;
-&lt;/math&gt;
-&lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;figure id=&quot;f-n4-c&quot;&gt;
-&lt;img alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/ju-sh.github.io/blob/master/static/img/a_000-050_n4-c.png?raw=true&quot; style=&quot;width:100%; padding-bottom: 2%&quot; title=&quot;Example dervation tree&quot;/&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-        (d)
-      &lt;/span&gt;:
-      &lt;span class=&quot;fc-title&quot;&gt;
-&lt;math&gt;
-&lt;msup&gt;
-&lt;msub&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;4&lt;/mn&gt;
-&lt;/msub&gt;
-&lt;mo&gt;*&lt;/mo&gt;
-&lt;/msup&gt;
-&lt;/math&gt;
-&lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Figure 10
-    &lt;/span&gt;:
-    &lt;span class=&quot;fc-title&quot;&gt;
-      Correct &#x27;star-NFA&#x27; corresponding to regexes in Table
-    &lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;Consider the NFA &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; in
-&lt;a href=&quot;#n-all&quot;&gt;Figure 10&lt;/a&gt; which is the &#x27;starred&#x27;-form of the NFA
-&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/span&gt; from
-&lt;a href=&quot;#f-n2&quot;&gt;Figure 5&lt;/a&gt;, which in turn corresponds to the regex
-&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/span&gt; at
-&lt;a href=&quot;#tab-regex&quot;&gt;Table 1&lt;/a&gt;. We can partition &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; into two
-parts: one corresponding &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;ε&lt;/em&gt;&lt;/span&gt; and
-the other corresponding to &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/span&gt;.&lt;/p&gt;
-&lt;figure class=&quot;fig-container&quot; id=&quot;n2-star-mrk&quot;&gt;
-&lt;img alt=&quot;Parts of N2&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n2-star-mrk.svg?raw=true&quot; style=&quot;width: 90%;&quot; title=&quot;Parts of N2&quot;/&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Figure 11
-    &lt;/span&gt;:
-    &lt;span class=&quot;fc-title&quot;&gt;
-      Decomposition of
-      &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
-&lt;semantics&gt;
-&lt;msub&gt;
-&lt;mi&gt;N&lt;/mi&gt;
-&lt;mn&gt;2&lt;/mn&gt;
-&lt;/msub&gt;
-&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_2&lt;/annotation&gt;
-&lt;/semantics&gt;
-&lt;/math&gt;
-&lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;ie, the NFA made using construction in
-&lt;a href=&quot;#dfn-nfa-star&quot;&gt; Definition
-3&lt;/a&gt; essentially corresponds to &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;ε&lt;/em&gt;|&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt;.&lt;/p&gt;
-&lt;/section&gt;
-&lt;section class=&quot;level1&quot; id=&quot;nfa-for-n&quot;&gt;
-&lt;h1&gt;NFA for &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt;&lt;/h1&gt;
-&lt;p&gt;When compared to &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;, adjustments needed to
-make the &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt; for a
-given NFA &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt; is much simpler.
-We just need to add &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;ε&lt;/em&gt;&lt;/span&gt;-transitions from each of the final
-states of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt; to each of its
-initial states as shown in &lt;a href=&quot;#plus&quot;&gt;Figure 11&lt;/a&gt; below.&lt;/p&gt;
-&lt;figure class=&quot;fig-container&quot; id=&quot;plus&quot;&gt;
-&lt;img alt=&quot;Plus operation on an NFA&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/plus.svg?raw=true&quot; style=&quot;width: 60%;&quot; title=&quot;Plus operation on an NFA&quot;/&gt;
-&lt;figcaption&gt;
-&lt;span class=&quot;fc-pre&quot;&gt;
-      Figure 12
-    &lt;/span&gt;:
-    &lt;span class=&quot;fc-title&quot;&gt;
-      Plus operation on an NFA
-    &lt;/span&gt;
-&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;Notice that there is no need to have any extra states. The number of
-states needed for &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt; is exactly the same as
-that of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt;.&lt;/p&gt;
-&lt;/section&gt;
-&lt;section class=&quot;level1&quot; id=&quot;conclusion&quot;&gt;
-&lt;h1&gt;Conclusion&lt;/h1&gt;
-&lt;p&gt;In general, given a regex &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;/span&gt;
-whose NFA is &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt;, the NFA for
-&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; would need at
-least 1 more state than &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt;. On
-the other hand, the NFA for &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt; doesn&#x27;t need any
-additional states. And since the CPP paper already creates an NFA for
-&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;ε&lt;/em&gt;&lt;/span&gt;, it is more convenient to
-use &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;ε&lt;/em&gt;|&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt;
-instead of a separate star operation. This can lead to lesser number of
-states in the case of large NFAs.&lt;/p&gt;
-&lt;p&gt;TL;DR: Initital state of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt;
-cannot be final state of of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;. A new state is
-needed. This results in what is essentially &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;ε&lt;/em&gt;|&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt;. Might as
-well just use &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Acknowledgements&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Li-Yao Xia: This post was triggered thanks to their answer and
-comments on a &lt;a href=&quot;https://proofassistants.stackexchange.com/questions/4642/benefit-of-having-r-as-regex-type-constructor&quot;&gt;question&lt;/a&gt;
-that I had posted at proof assistants stackexchange&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.jflap.org&quot;&gt;JFLAP&lt;/a&gt;: Just to be sure, I tried
-all the automata and regex mention in this post on JFLAP. It&#x27;s a great
-tool, but it would have been better if there was a way to script
-it.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/section&gt;
-&lt;section class=&quot;level1&quot; id=&quot;references&quot;&gt;
-&lt;h1&gt;References&lt;/h1&gt;
-&lt;div class=&quot;references csl-bib-body&quot; data-entry-spacing=&quot;0&quot; id=&quot;refs&quot; role=&quot;list&quot;&gt;
-&lt;div class=&quot;csl-entry&quot; id=&quot;ref-a000050_agda&quot; role=&quot;listitem&quot;&gt;
-&lt;div class=&quot;csl-left-margin&quot;&gt;[1] &lt;/div&gt;&lt;div class=&quot;csl-right-inline&quot;&gt;D.
-Firsov and T. Uustalu, &lt;span&gt;“Certified parsing of regular
-languages,”&lt;/span&gt; in &lt;em&gt;International conference on certified programs
-and proofs&lt;/em&gt;, Springer, 2013, pp. 98–113. Available: &lt;a href=&quot;https://cs.ioc.ee/~tarmo/papers/firsov-uustalu-cpp13.pdf&quot;&gt;https://cs.ioc.ee/~tarmo/papers/firsov-uustalu-cpp13.pdf&lt;/a&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;csl-entry&quot; id=&quot;ref-a000050mcnaughton&quot; role=&quot;listitem&quot;&gt;
-&lt;div class=&quot;csl-left-margin&quot;&gt;[2] &lt;/div&gt;&lt;div class=&quot;csl-right-inline&quot;&gt;R.
-McNaughton and H. Yamada, &lt;span&gt;“Regular expressions and state graphs
-for automata,”&lt;/span&gt; &lt;em&gt;IRE transactions on Electronic Computers&lt;/em&gt;,
-no. 1, pp. 39–47, 1960.&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;csl-entry&quot; id=&quot;ref-a000050thompson&quot; role=&quot;listitem&quot;&gt;
-&lt;div class=&quot;csl-left-margin&quot;&gt;[3] &lt;/div&gt;&lt;div class=&quot;csl-right-inline&quot;&gt;K.
-Thompson, &lt;span&gt;“Programming techniques: Regular expression search
-algorithm,”&lt;/span&gt; &lt;em&gt;Commun. ACM&lt;/em&gt;, vol. 11, no. 6, pp. 419–422,
-Jun. 1968, doi: &lt;a href=&quot;https://doi.org/10.1145/363347.363387&quot;&gt;10.1145/363347.363387&lt;/a&gt;.&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/section&gt;
-&lt;/main&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-      </description>
-      <pubDate>
-        Sat, 04 Jul 2026 00:00:00 GMT
-      </pubDate>
-      <guid>
-        https://ju-sh.github.io/blog/nfa-plus.html
-      </guid>
-      <category>
-        misc
-      </category>
-    </item>
-    <item>
-      <title>
-        Making a debian package (Draft)
+        Making a debian package
       </title>
       <link>
         https://ju-sh.github.io/blog/debian-elisp-packaging.html
@@ -1913,7 +1092,7 @@ post on packaging&lt;/a&gt; (nodejs)&lt;/li&gt;
 &lt;/div&gt;
       </description>
       <pubDate>
-        Mon, 22 Jun 2026 00:00:00 GMT
+        Tue, 07 Jul 2026 00:00:00 GMT
       </pubDate>
       <guid>
         https://ju-sh.github.io/blog/debian-elisp-packaging.html
@@ -1923,6 +1102,762 @@ post on packaging&lt;/a&gt; (nodejs)&lt;/li&gt;
       </category>
       <category>
         emacs
+      </category>
+    </item>
+    <item>
+      <title>
+        NFA plus vs star
+      </title>
+      <link>
+        https://ju-sh.github.io/blog/nfa-plus.html
+      </link>
+      <description>
+        
+&lt;div&gt;
+  &lt;div&gt;
+    NFAs with smaller state count by using &#x27;Kleene plus&#x27; instead of Kleene star
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;main id=&quot;content-container&quot;&gt;
+&lt;p&gt;Almost four years ago, I came across &lt;a href=&quot;https://cs.ioc.ee/~tarmo/papers/firsov-uustalu-cpp13.pdf&quot;&gt;a CPP
+2013 paper&lt;/a&gt; named &lt;em&gt;Certified parsing of regular languages&lt;/em&gt; by
+Denis Firov, Tarmo Uustalu &lt;span class=&quot;citation&quot; data-cites=&quot;a000050_agda&quot;&gt;&lt;a href=&quot;#ref-a000050_agda&quot; role=&quot;doc-biblioref&quot;&gt;[1]&lt;/a&gt;&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;This paper describes a way to construct NFAs corresponding to a given
+regular expression using matrix operations. The underlying principle was
+Thompson&#x27;s algorithm for NFA construction.&lt;/p&gt;
+&lt;p&gt;The CPP paper also had &lt;a href=&quot;https://firsov.ee/cert-reg/&quot;&gt;an agda
+implementation&lt;/a&gt; associated with it, where they expressed regular
+expressions using an agda type like this:&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb1&quot;&gt;&lt;pre class=&quot;sourceCode haskell&quot;&gt;&lt;code class=&quot;sourceCode haskell&quot;&gt;&lt;span id=&quot;cb1-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt; &lt;span class=&quot;op&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;Set&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;where&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;-- regex for empty word&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  ε   &lt;span class=&quot;op&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-5&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-6&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;-- Atom&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-7&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  ′_  &lt;span class=&quot;op&quot;&gt;:&lt;/span&gt; Σ → &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-8&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-9&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;-- Concatenation&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-10&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  _○_ &lt;span class=&quot;op&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt; → &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt; → &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-11&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-12&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-12&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;-- Choice&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-13&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-13&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  _∪_ &lt;span class=&quot;op&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt; → &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt; → &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-14&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-14&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-15&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-15&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;co&quot;&gt;-- Kleene plus&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-16&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-16&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  _₊  &lt;span class=&quot;op&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt; → &lt;span class=&quot;dt&quot;&gt;RegExp&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Interestingly, they were using Kleene plus instead of the more common
+Kleene star as the base operation. Of course it is not that big a deal
+theoretically, since Kleene star and Kleene plus can be written in terms
+of each other. Still, I wondered why. The paper itself had this
+remark:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note that instead of the Kleene star (&lt;code&gt;_*&lt;/code&gt;) we use plus
+(&lt;code&gt;_+&lt;/code&gt;). This is more convenient for us and does not restrict
+generality, as star is expressible as choice between the empty string
+and plus.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Though this makes it clear that the authors found Kleene plus more
+convenient, I could not figure out why it was more convenient. I tried
+asked around, but could not find anyone who could figure out the reason.
+I also tried contacting the authors, but the mail ids that I found were
+probably obsolete since the paper is a bit old. Anyway, after persisting
+a while, I gave up. A lot later, when I felt I needed a break, I tried
+asking this question in the proofassistants stackexchange. And the
+answers and comments helped me understand the reason. (Should have
+posted the question online, much earlier.) Let me try explaining it in
+my own words.&lt;/p&gt;
+&lt;section class=&quot;level1&quot; id=&quot;background-mcnaughton-yamada-thompson-construction&quot;&gt;
+&lt;h1&gt;Background: McNaughton-Yamada-Thompson construction&lt;/h1&gt;
+&lt;p&gt;The CPP paper builds NFAs corresponding to a given regular expression
+using an algorithm credited to McNaughton, Yamada and Thompson &lt;span class=&quot;citation&quot; data-cites=&quot;a000050mcnaughton a000050thompson&quot;&gt;&lt;a href=&quot;#ref-a000050mcnaughton&quot; role=&quot;doc-biblioref&quot;&gt;[2]&lt;/a&gt;, &lt;a href=&quot;#ref-a000050thompson&quot; role=&quot;doc-biblioref&quot;&gt;[3]&lt;/a&gt;&lt;/span&gt;. There
+are many algorithms to convert regex to finite automaton. The
+McNaughton-Yamada-Thompson algorithm is probably the easiest to
+understand and implement. This algorithm is sometimes also called
+Thompson construction.&lt;/p&gt;
+&lt;p&gt;As I understand it, the original NFA construction algorithm was
+developed by McNaughton and Yamada &lt;span class=&quot;citation&quot; data-cites=&quot;a000050mcnaughton&quot;&gt;&lt;a href=&quot;#ref-a000050mcnaughton&quot; role=&quot;doc-biblioref&quot;&gt;[2]&lt;/a&gt;&lt;/span&gt;, while Ken Thompson made the
+algorithm &lt;span class=&quot;citation&quot; data-cites=&quot;a000050thompson&quot;&gt;&lt;a href=&quot;#ref-a000050thompson&quot; role=&quot;doc-biblioref&quot;&gt;[3]&lt;/a&gt;&lt;/span&gt; which
+allows these NFAs to be run without converting them to DFAs. This is a
+great advantage since NFA to DFA conversion leads to an exponential
+increase in the number of states (state space explosion). Thompson&#x27;s
+algorithm runs an NFA by simulating its execution. A description of
+Thompson&#x27;s NFA simulation algorithm is not necessary for this blog post,
+so I am skipping that (See &lt;a href=&quot;https://swtch.com/~rsc/regexp/regexp1.html&quot;&gt;this article&lt;/a&gt; for
+more about this).&lt;/p&gt;
+&lt;p&gt;Obviously, it is desirable for automata to have as few states as
+possible. Because more number of states means a need for more storage
+space and more state-transition details to keep track of.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level1&quot; id=&quot;finding-n-for-an-nfa-n&quot;&gt;
+&lt;h1&gt;Finding &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; for
+an NFA &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt;&lt;/h1&gt;
+&lt;p&gt;A NFA consists of a set of states and transitions between those
+states. Some of these states are marked initial or final states. The
+state transitions can happen with or without input.&lt;/p&gt;
+&lt;figure class=&quot;fig-container&quot; id=&quot;f-pre&quot;&gt;
+&lt;img alt=&quot;Schematic diagram of an NFA&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/pre.svg?raw=true&quot; style=&quot;width: 45%;&quot; title=&quot;Schematic diagram of an NFA&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Figure 1
+    &lt;/span&gt;:
+    &lt;span class=&quot;fc-title&quot;&gt;
+      Schematic diagram of an NFA
+    &lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Let&#x27;s have a look at a formal definition for NFAs.&lt;/p&gt;
+&lt;div class=&quot;definition&quot; id=&quot;dfn-nfa-orig&quot;&gt;
+&lt;p&gt;An NFA &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt; may be defined as
+a quintuple &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt; = (&lt;em&gt;Q&lt;/em&gt;, &lt;em&gt;Σ&lt;/em&gt;, &lt;em&gt;δ&lt;/em&gt;, &lt;em&gt;I&lt;/em&gt;, &lt;em&gt;F&lt;/em&gt;)&lt;/span&gt;,
+where&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;Q&lt;/em&gt;&lt;/span&gt;: Finite set of
+states&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;Σ&lt;/em&gt;&lt;/span&gt;: Finite set of input
+symbols&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;δ&lt;/em&gt; : &lt;em&gt;Q&lt;/em&gt; × (&lt;em&gt;Σ&lt;/em&gt; ∪ &lt;em&gt;ε&lt;/em&gt;) → &lt;em&gt;P&lt;/em&gt;(&lt;em&gt;Q&lt;/em&gt;)&lt;/span&gt;:
+Transition function&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;I&lt;/em&gt; ⊆ &lt;em&gt;Q&lt;/em&gt;&lt;/span&gt;: Set of
+initial states&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;F&lt;/em&gt; ⊆ &lt;em&gt;Q&lt;/em&gt;&lt;/span&gt;: Set of
+final states&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Definition 1
+    &lt;/span&gt;
+&lt;span class=&quot;fc-title&quot;&gt;
+      : NFA
+    &lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/div&gt;
+&lt;p&gt;Note that there can be more than one start state in this definition
+of NFAs.&lt;/p&gt;
+&lt;p&gt;Given an NFA as &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt; = (&lt;em&gt;Q&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt;, &lt;em&gt;Σ&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt;, &lt;em&gt;δ&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt;, &lt;em&gt;I&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt;, &lt;em&gt;F&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt;)&lt;/span&gt;
+corresponding to a regex &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;/span&gt;,
+how can we construct an NFA as &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/sub&gt; = (&lt;em&gt;Q&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/sub&gt;, &lt;em&gt;Σ&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/sub&gt;, &lt;em&gt;δ&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/sub&gt;, &lt;em&gt;I&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/sub&gt;, &lt;em&gt;F&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/sub&gt;)&lt;/span&gt;
+corresponding to the regex &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;?&lt;/p&gt;
+&lt;p&gt;One may be tempted to think of a construction where we add
+ε-transitions from each state in &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;F&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt;&lt;/span&gt; to each of
+the states in &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;I&lt;/em&gt;&lt;sub&gt;&lt;em&gt;r&lt;/em&gt;&lt;/sub&gt;&lt;/span&gt; as shown in
+&lt;a href=&quot;#f-post&quot;&gt;Figure 2&lt;/a&gt;.&lt;/p&gt;
+&lt;figure class=&quot;fig-container&quot; id=&quot;f-post&quot;&gt;
+&lt;img alt=&quot;Schematic NFA for an incorrect star operation&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/post.svg?raw=true&quot; style=&quot;width: 60%;&quot; title=&quot;Schematic NFA for an incorrect star operation&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Figure 2
+    &lt;/span&gt;:
+    &lt;span class=&quot;fc-title&quot;&gt;
+      NFA for an incorrect star operation
+    &lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Such a construction is made as a copy of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;A&lt;/em&gt;&lt;/span&gt; with the following
+modifications:&lt;/p&gt;
+&lt;div class=&quot;definition&quot; id=&quot;dfn-nfa-hash&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;Add ε-transitions from each state in &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;F&lt;/em&gt;&lt;/span&gt; to each of the states in &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;I&lt;/em&gt;&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;Make the set of final states of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;A&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; same as the set of
+initial states of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;A&lt;/em&gt;&lt;/span&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;Q&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;Q&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+  Q_{A^*} = Q_A
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;Σ&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;Σ&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+  \Sigma_{A^*} = \Sigma_A
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+  I_{A^*} = I_A
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+  F_{A^*} = I_A
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+&lt;p&gt;&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;δ&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;ε&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;∪&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;∈&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+  \delta_{A^*}(p, \varepsilon) = {p} \cup I_A, p \in F_A
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;δ&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;σ&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;δ&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;σ&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+  \delta_{A^*}(p, \sigma) = \delta_A(p, \sigma)
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Definition 2
+    &lt;/span&gt;:
+    &lt;span class=&quot;fc-title&quot;&gt;
+      A wrong
+      &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+&lt;semantics&gt;
+&lt;msup&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mo&gt;*&lt;/mo&gt;
+&lt;/msup&gt;
+&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N^*&lt;/annotation&gt;
+&lt;/semantics&gt;
+&lt;/math&gt;
+      construction
+    &lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/p&gt;&lt;/div&gt;
+&lt;p&gt;For example, consider an NFA &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/span&gt; shown below
+&lt;a href=&quot;#f-n1&quot;&gt;Figure
+3&lt;/a&gt;. It corresponds to the regex &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;1&lt;/sub&gt; = &lt;em&gt;a&lt;/em&gt;&lt;/span&gt;.&lt;/p&gt;
+&lt;figure class=&quot;fig-container&quot; id=&quot;f-n1&quot;&gt;
+&lt;img alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n1-orig.svg?raw=true&quot; style=&quot;width:55%&quot; title=&quot;Example dervation tree&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Figure 3
+    &lt;/span&gt;:
+    &lt;span class=&quot;fc-title&quot;&gt;
+&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+&lt;semantics&gt;
+&lt;msub&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mn&gt;1&lt;/mn&gt;
+&lt;/msub&gt;
+&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_1&lt;/annotation&gt;
+&lt;/semantics&gt;
+&lt;/math&gt;
+&lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Constructing an NFA using construction from
+&lt;a href=&quot;#dfn-nfa-hash&quot;&gt;Definition 1&lt;/a&gt; yields the automaton &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; shown in
+&lt;a href=&quot;#f-n1-hash&quot;&gt;Figure 4&lt;/a&gt;.&lt;/p&gt;
+&lt;figure class=&quot;fig-container&quot; id=&quot;f-n1-hash&quot;&gt;
+&lt;img alt=&quot;Star NFA for NFA N1&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n1-hash.svg?raw=true&quot; style=&quot;width:55%;&quot; title=&quot;Star NFA for NFA N1&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Figure 4
+    &lt;/span&gt;:
+    &lt;span class=&quot;fc-title&quot;&gt;
+&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+&lt;semantics&gt;
+&lt;msubsup&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mn&gt;1&lt;/mn&gt;
+&lt;mo&gt;*&lt;/mo&gt;
+&lt;/msubsup&gt;
+&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_1^*&lt;/annotation&gt;
+&lt;/semantics&gt;
+&lt;/math&gt;
+&lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Though this automaton really does correspond to &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;, this is
+just a coincidence and does not mean that definition the construction in
+&lt;a href=&quot;#dfn-nfa-hash&quot;&gt; Definition 1&lt;/a&gt; is a correct way to derive
+&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; for a given
+&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt;. Let us consider NFAs
+corresponding to a few more regexes to illustrate this.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level1&quot; id=&quot;a-few-incorrect-n-nfas&quot;&gt;
+&lt;h1&gt;A few incorrect &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; NFAs&lt;/h1&gt;
+&lt;p&gt;Let us have a look at the NFAs corresponding to the following
+regexes:&lt;/p&gt;
+&lt;div class=&quot;table&quot; id=&quot;tab-regex&quot;&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&quot;header&quot;&gt;
+&lt;th&gt;Regex&lt;/th&gt;
+&lt;th&gt;NFA&lt;/th&gt;
+&lt;th&gt;Language&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt; = (&lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt;) * &lt;em&gt;a&lt;/em&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;L&lt;/em&gt;(&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;)&lt;/span&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;3&lt;/sub&gt; = (&lt;em&gt;c&lt;/em&gt; * &lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt;) * &lt;em&gt;c&lt;/em&gt; * &lt;em&gt;a&lt;/em&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;3&lt;/sub&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;L&lt;/em&gt;(&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;3&lt;/sub&gt;)&lt;/span&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;4&lt;/sub&gt; = (&lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt;) * &lt;em&gt;a&lt;/em&gt;&lt;em&gt;c&lt;/em&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;4&lt;/sub&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;L&lt;/em&gt;(&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;4&lt;/sub&gt;)&lt;/span&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;caption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+        Table 1
+      &lt;/span&gt;:
+      &lt;span class=&quot;fc-title&quot;&gt;
+        Example regular expressions
+      &lt;/span&gt;
+&lt;/caption&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;An NFA recognizing &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;L&lt;/em&gt;(&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;)&lt;/span&gt; could look
+like this:&lt;/p&gt;
+&lt;figure class=&quot;fig-container&quot; id=&quot;f-n2&quot;&gt;
+&lt;img alt=&quot;NFA for regex r2&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n2-orig.svg?raw=true&quot; style=&quot;width: 50%;&quot; title=&quot;NFA for regex r2&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Figure 5
+    &lt;/span&gt;:
+    &lt;span class=&quot;fc-title&quot;&gt;
+&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+&lt;semantics&gt;
+&lt;msub&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mn&gt;2&lt;/mn&gt;
+&lt;/msub&gt;
+&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_1&lt;/annotation&gt;
+&lt;/semantics&gt;
+&lt;/math&gt;
+&lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;The corresponding NFA, say
+ &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;msubsup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;#&lt;/mi&gt;&lt;/msubsup&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_2^{\#}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;,
+that is derived via &lt;a href=&quot;#dfn-nfa-hash&quot;&gt;Definition 2&lt;/a&gt; would
+be:&lt;/p&gt;
+&lt;figure class=&quot;fig-container&quot; id=&quot;f-n2-hash&quot;&gt;
+&lt;img alt=&quot;Star attempt for N2&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n2-hash.svg?raw=true&quot; style=&quot;width: 60%;&quot; title=&quot;Star attempt for N2&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Figure 6
+    &lt;/span&gt;:
+    &lt;span class=&quot;fc-title&quot;&gt;
+&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+&lt;semantics&gt;
+&lt;msubsup&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mn&gt;2&lt;/mn&gt;
+&lt;mi&gt;#&lt;/mi&gt;
+&lt;/msubsup&gt;
+&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_2^{\#}&lt;/annotation&gt;
+&lt;/semantics&gt;
+&lt;/math&gt;
+&lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Since &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/span&gt;
+corresponds to the regex &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt; = (&lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt;)&lt;sup&gt;*&lt;/sup&gt;&lt;em&gt;a&lt;/em&gt;&lt;/span&gt;,
+we want
+ &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;msubsup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;#&lt;/mi&gt;&lt;/msubsup&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_2^{\#}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+to recognize the language of &lt;span class=&quot;math inline&quot;&gt;((&lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt;)&lt;sup&gt;*&lt;/sup&gt;&lt;em&gt;a&lt;/em&gt;)&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;.
+Yet, it is obvious that
+ &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;msubsup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;#&lt;/mi&gt;&lt;/msubsup&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_2^{\#}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+accepts the word &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt; ∉ &lt;em&gt;L&lt;/em&gt;(&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Similarly,
+ &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;msubsup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mi&gt;#&lt;/mi&gt;&lt;/msubsup&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_3^{\#}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+(&lt;a href=&quot;#f-n3&quot;&gt;Figure 8b&lt;/a&gt;) accepts the word &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;c&lt;/em&gt;&lt;em&gt;c&lt;/em&gt; ∉ &lt;em&gt;L&lt;/em&gt;(&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;3&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;div class=&quot;fig-container&quot;&gt;
+&lt;figure id=&quot;f-n3&quot;&gt;
+&lt;div&gt;
+&lt;div&gt;
+&lt;img alt=&quot;NFA for r3&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n3-orig.svg?raw=true&quot; style=&quot;width:55%;&quot; title=&quot;NFA for r3&quot;/&gt;
+&lt;/div&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+          (a)
+        &lt;/span&gt;:
+        &lt;span class=&quot;fc-title&quot;&gt;
+&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+&lt;semantics&gt;
+&lt;msub&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mn&gt;3&lt;/mn&gt;
+&lt;/msub&gt;
+&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_3&lt;/annotation&gt;
+&lt;/semantics&gt;
+&lt;/math&gt;
+      (Original NFA)
+        &lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;
+&lt;img alt=&quot;Star attempt for N3&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n3-hash.svg?raw=true&quot; style=&quot;width:60%;&quot; title=&quot;Star attempt for N3&quot;/&gt;
+&lt;/div&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+          (b)
+        &lt;/span&gt;:
+        &lt;span class=&quot;fc-title&quot;&gt;
+&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+&lt;semantics&gt;
+&lt;msubsup&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mn&gt;3&lt;/mn&gt;
+&lt;mi&gt;#&lt;/mi&gt;
+&lt;/msubsup&gt;
+&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_3^{\#}&lt;/annotation&gt;
+&lt;/semantics&gt;
+&lt;/math&gt;
+          (Star attempt)
+        &lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/div&gt;
+&lt;/figure&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Figure 8
+    &lt;/span&gt;:
+    &lt;span class=&quot;fc-title&quot;&gt;
+      NFAs based on
+      &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+&lt;semantics&gt;
+&lt;msub&gt;
+&lt;mi&gt;r&lt;/mi&gt;
+&lt;mn&gt;3&lt;/mn&gt;
+&lt;/msub&gt;
+&lt;annotation encoding=&quot;application/x-tex&quot;&gt;r_3&lt;/annotation&gt;
+&lt;/semantics&gt;
+&lt;/math&gt;
+&lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/div&gt;
+&lt;p&gt;Likewise,
+ &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;msubsup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mi&gt;#&lt;/mi&gt;&lt;/msubsup&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_4^{\#}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+(&lt;a href=&quot;#f-n4&quot;&gt;Figure 9b&lt;/a&gt;) accepts the word &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt; ∉ &lt;em&gt;L&lt;/em&gt;(&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;4&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;div class=&quot;fig-container&quot;&gt;
+&lt;figure id=&quot;f-n4&quot;&gt;
+&lt;div&gt;
+&lt;div&gt;
+&lt;img alt=&quot;NFA for r4&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n4-orig.svg?raw=true&quot; style=&quot;width:80%;&quot; title=&quot;NFA for r4&quot;/&gt;
+&lt;/div&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+          (a)
+        &lt;/span&gt;:
+        &lt;span class=&quot;fc-title&quot;&gt;
+&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+&lt;semantics&gt;
+&lt;msub&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mn&gt;4&lt;/mn&gt;
+&lt;/msub&gt;
+&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_4&lt;/annotation&gt;
+&lt;/semantics&gt;
+&lt;/math&gt;
+      (Original NFA)
+        &lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;
+&lt;img alt=&quot;Star attempt for N4&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n4-hash.svg?raw=true&quot; style=&quot;width:85%;&quot; title=&quot;Star attempt for N4&quot;/&gt;
+&lt;/div&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+          (b)
+        &lt;/span&gt;:
+        &lt;span class=&quot;fc-title&quot;&gt;
+&lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+&lt;semantics&gt;
+&lt;msubsup&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mn&gt;4&lt;/mn&gt;
+&lt;mi&gt;#&lt;/mi&gt;
+&lt;/msubsup&gt;
+&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_4^{\#}&lt;/annotation&gt;
+&lt;/semantics&gt;
+&lt;/math&gt;
+          (Star attempt)
+    &lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/div&gt;
+&lt;/figure&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Figure 9
+    &lt;/span&gt;:
+    &lt;span class=&quot;fc-title&quot;&gt;
+      NFAs based on
+      &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+&lt;semantics&gt;
+&lt;msub&gt;
+&lt;mi&gt;r&lt;/mi&gt;
+&lt;mn&gt;4&lt;/mn&gt;
+&lt;/msub&gt;
+&lt;annotation encoding=&quot;application/x-tex&quot;&gt;r_4&lt;/annotation&gt;
+&lt;/semantics&gt;
+&lt;/math&gt;
+&lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/div&gt;
+&lt;p&gt;In fact, the regex corresponding to
+ &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;msubsup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mi&gt;#&lt;/mi&gt;&lt;/msubsup&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_3^{\#}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+is &lt;span class=&quot;math inline&quot;&gt;(&lt;em&gt;c&lt;/em&gt;|&lt;em&gt;a&lt;/em&gt;(&lt;em&gt;b&lt;/em&gt;|&lt;em&gt;ε&lt;/em&gt;))&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;
+and the one for
+ &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;msubsup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mi&gt;#&lt;/mi&gt;&lt;/msubsup&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_4^{\#}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+is &lt;span class=&quot;math inline&quot;&gt;((&lt;em&gt;a&lt;/em&gt;&lt;em&gt;b&lt;/em&gt;)|(&lt;em&gt;a&lt;/em&gt;&lt;em&gt;c&lt;/em&gt;))&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;.
+Clearly, &lt;a href=&quot;#dfn-nfa-hash&quot;&gt;Definition 2&lt;/a&gt; is not a correct way
+to construct &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;.
+This is the construction that it suggests produces wrong results. At
+least in cases where there is a transition to an initial state, like in
+the examples of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/span&gt;,
+&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;3&lt;/sub&gt;&lt;/span&gt; and &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;4&lt;/sub&gt;&lt;/span&gt;. It happened to
+produce a correct result in the case of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/span&gt; &lt;em&gt;since it had no
+transition going back to initial state&lt;/em&gt;.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level1&quot; id=&quot;a-correct-way&quot;&gt;
+&lt;h1&gt;A correct way&lt;/h1&gt;
+&lt;p&gt;A robust way to produce &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; corresponding to a
+given &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt; is by adding an
+additional state that is made to be the sole initial and final state as
+described below.&lt;/p&gt;
+&lt;div class=&quot;definition&quot; id=&quot;dfn-nfa-star&quot;&gt;
+&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;Q&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;false&quot;&gt;{&lt;/mo&gt;&lt;mi&gt;𝟙&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;false&quot;&gt;}&lt;/mo&gt;&lt;mo&gt;∪&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;Q&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+  Q_{A^*} = \{𝟙\} \cup Q_A
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;Σ&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;Σ&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+  \Sigma_{A^*} = \Sigma_A
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;false&quot;&gt;{&lt;/mo&gt;&lt;mi&gt;𝟙&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;false&quot;&gt;}&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+  I_{A^*} = \{𝟙\}
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;false&quot;&gt;{&lt;/mo&gt;&lt;mi&gt;𝟙&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;false&quot;&gt;}&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+  F_{A^*} = \{𝟙\}
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+&lt;p&gt;&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;δ&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;𝟙&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;ε&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+  \delta_{A^*}(𝟙, \varepsilon) = I_A
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;δ&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;q&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;ε&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;I&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;q&lt;/mi&gt;&lt;mo&gt;∈&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+  \delta_{A^*}(q, \varepsilon)           = I_A, q \in F_A
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;δ&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;/msup&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;σ&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;δ&lt;/mi&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;mo form=&quot;prefix&quot; stretchy=&quot;true&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;σ&lt;/mi&gt;&lt;mo form=&quot;postfix&quot; stretchy=&quot;true&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;
+  \delta_{A^*}(p, \sigma)                = \delta_A(p, \sigma)
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Definition 3
+    &lt;/span&gt;:
+    &lt;span class=&quot;fc-title&quot;&gt;
+      A correct
+      &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+&lt;semantics&gt;
+&lt;msup&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mo&gt;*&lt;/mo&gt;
+&lt;/msup&gt;
+&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N^*&lt;/annotation&gt;
+&lt;/semantics&gt;
+&lt;/math&gt;
+      construction
+    &lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/p&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; NFAs made
+using the construction shown in
+&lt;a href=&quot;#dfn-nfa-star&quot;&gt;Definition 3&lt;/a&gt;, that correspond to the NFAs
+&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/span&gt;, &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/span&gt;, &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;3&lt;/sub&gt;&lt;/span&gt; and &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;4&lt;/sub&gt;&lt;/span&gt;, are shown in
+&lt;a href=&quot;#n-all&quot;&gt;Figure 10&lt;/a&gt;. Note that the number of states in the
+resultant NFA need not be minimal when using this construction. I
+suppose that is a cost we pay for having generality while maintaining
+correctness and simplicity. For example, &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; derived
+using &lt;a href=&quot;#dfn-nfa-star&quot;&gt;Definition 3&lt;/a&gt; has more number of states
+than the version in &lt;a href=&quot;#f-n1-hash&quot;&gt;Figure
+4&lt;/a&gt;, though both recognize the same language. This is a trade off that
+was chosen for having a general solution.&lt;/p&gt;
+&lt;figure class=&quot;fig-container&quot; id=&quot;n-all&quot;&gt;
+&lt;figure id=&quot;f-n1-c&quot;&gt;
+&lt;img alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n1-star.svg?raw=true&quot; style=&quot;width:100%; padding-bottom: 2%&quot; title=&quot;Example dervation tree&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+        (a)
+      &lt;/span&gt;:
+      &lt;span class=&quot;fc-title&quot;&gt;
+&lt;math&gt;
+&lt;msup&gt;
+&lt;msub&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mn&gt;1&lt;/mn&gt;
+&lt;/msub&gt;
+&lt;mo&gt;*&lt;/mo&gt;
+&lt;/msup&gt;
+&lt;/math&gt;
+&lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure id=&quot;f-n2-c&quot;&gt;
+&lt;img alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n2-star.svg?raw=true&quot; style=&quot;width:100%; padding-bottom: 2%&quot; title=&quot;Example dervation tree&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+        (b)
+      &lt;/span&gt;:
+      &lt;span class=&quot;fc-title&quot;&gt;
+&lt;math&gt;
+&lt;msup&gt;
+&lt;msub&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mn&gt;2&lt;/mn&gt;
+&lt;/msub&gt;
+&lt;mo&gt;*&lt;/mo&gt;
+&lt;/msup&gt;
+&lt;/math&gt;
+&lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure id=&quot;f-n3-c&quot;&gt;
+&lt;img alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n3-star.svg?raw=true&quot; style=&quot;width:100%; padding-bottom: 2%&quot; title=&quot;Example dervation tree&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+        (c)
+      &lt;/span&gt;:
+      &lt;span class=&quot;fc-title&quot;&gt;
+&lt;math&gt;
+&lt;msup&gt;
+&lt;msub&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mn&gt;3&lt;/mn&gt;
+&lt;/msub&gt;
+&lt;mo&gt;*&lt;/mo&gt;
+&lt;/msup&gt;
+&lt;/math&gt;
+&lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure id=&quot;f-n4-c&quot;&gt;
+&lt;img alt=&quot;Example derivation tree&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n4-star.svg?raw=true&quot; style=&quot;width:100%; padding-bottom: 2%&quot; title=&quot;Example dervation tree&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+        (d)
+      &lt;/span&gt;:
+      &lt;span class=&quot;fc-title&quot;&gt;
+&lt;math&gt;
+&lt;msup&gt;
+&lt;msub&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mn&gt;4&lt;/mn&gt;
+&lt;/msub&gt;
+&lt;mo&gt;*&lt;/mo&gt;
+&lt;/msup&gt;
+&lt;/math&gt;
+&lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Figure 10
+    &lt;/span&gt;:
+    &lt;span class=&quot;fc-title&quot;&gt;
+      Correct &#x27;star-NFA&#x27; corresponding to regexes in Table
+    &lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Consider the NFA &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; in
+&lt;a href=&quot;#n-all&quot;&gt;Figure 10&lt;/a&gt; which is the &#x27;starred&#x27;-form of the NFA
+&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/span&gt; from
+&lt;a href=&quot;#f-n2&quot;&gt;Figure 5&lt;/a&gt;, which in turn corresponds to the regex
+&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/span&gt; at
+&lt;a href=&quot;#tab-regex&quot;&gt;Table 1&lt;/a&gt;. We can partition &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; into two
+parts: one corresponding &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;ε&lt;/em&gt;&lt;/span&gt; and
+the other corresponding to &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/span&gt;.&lt;/p&gt;
+&lt;figure class=&quot;fig-container&quot; id=&quot;n2-star-mrk&quot;&gt;
+&lt;img alt=&quot;Parts of N2&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/n2-star-mrk.svg?raw=true&quot; style=&quot;width: 90%;&quot; title=&quot;Parts of N2&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Figure 11
+    &lt;/span&gt;:
+    &lt;span class=&quot;fc-title&quot;&gt;
+      Decomposition of
+      &lt;math display=&quot;inline&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+&lt;semantics&gt;
+&lt;msub&gt;
+&lt;mi&gt;N&lt;/mi&gt;
+&lt;mn&gt;2&lt;/mn&gt;
+&lt;/msub&gt;
+&lt;annotation encoding=&quot;application/x-tex&quot;&gt;N_2&lt;/annotation&gt;
+&lt;/semantics&gt;
+&lt;/math&gt;
+&lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;ie, the NFA made using construction in
+&lt;a href=&quot;#dfn-nfa-star&quot;&gt; Definition
+3&lt;/a&gt; essentially corresponds to &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;ε&lt;/em&gt;|&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt;.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level1&quot; id=&quot;nfa-for-n&quot;&gt;
+&lt;h1&gt;NFA for &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt;&lt;/h1&gt;
+&lt;p&gt;When compared to &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;, adjustments needed to
+make the &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt; for a
+given NFA &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt; is much simpler.
+We just need to add &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;ε&lt;/em&gt;&lt;/span&gt;-transitions from each of the final
+states of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt; to each of its
+initial states as shown in &lt;a href=&quot;#plus&quot;&gt;Figure 11&lt;/a&gt; below.&lt;/p&gt;
+&lt;figure class=&quot;fig-container&quot; id=&quot;plus&quot;&gt;
+&lt;img alt=&quot;Plus operation on an NFA&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-050/plus.svg?raw=true&quot; style=&quot;width: 60%;&quot; title=&quot;Plus operation on an NFA&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Figure 12
+    &lt;/span&gt;:
+    &lt;span class=&quot;fc-title&quot;&gt;
+      Plus operation on an NFA
+    &lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Notice that there is no need to have any extra states. The number of
+states needed for &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt; is exactly the same as
+that of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt;.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level1&quot; id=&quot;conclusion&quot;&gt;
+&lt;h1&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;In general, given a regex &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;r&lt;/em&gt;&lt;/span&gt;
+whose NFA is &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt;, the NFA for
+&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt; would need at
+least 1 more state than &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt;. On
+the other hand, the NFA for &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt; doesn&#x27;t need any
+additional states. And since the CPP paper already creates an NFA for
+&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;ε&lt;/em&gt;&lt;/span&gt;, it is more convenient to
+use &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;ε&lt;/em&gt;|&lt;em&gt;r&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt;
+instead of a separate star operation. This can lead to lesser number of
+states in the case of large NFAs.&lt;/p&gt;
+&lt;p&gt;TL;DR: Initital state of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;/span&gt;
+cannot be final state of of &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;*&lt;/sup&gt;&lt;/span&gt;. A new state is
+needed. This results in what is essentially &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;ε&lt;/em&gt;|&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt;. Might as
+well just use &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;N&lt;/em&gt;&lt;sup&gt;+&lt;/sup&gt;&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Acknowledgements&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Li-Yao Xia: This post was triggered thanks to their answer and
+comments on a &lt;a href=&quot;https://proofassistants.stackexchange.com/questions/4642/benefit-of-having-r-as-regex-type-constructor&quot;&gt;question&lt;/a&gt;
+that I had posted at proof assistants stackexchange&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.jflap.org&quot;&gt;JFLAP&lt;/a&gt;: Just to be sure, I tried
+all the automata and regex mention in this post on JFLAP. It&#x27;s a great
+tool, but it would have been better if there was a way to script
+it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;(This post has a lot of hand-written HTML. Please do tell me if you
+spot errors.)&lt;/p&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level1&quot; id=&quot;references&quot;&gt;
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;div class=&quot;references csl-bib-body&quot; data-entry-spacing=&quot;0&quot; id=&quot;refs&quot; role=&quot;list&quot;&gt;
+&lt;div class=&quot;csl-entry&quot; id=&quot;ref-a000050_agda&quot; role=&quot;listitem&quot;&gt;
+&lt;div class=&quot;csl-left-margin&quot;&gt;[1] &lt;/div&gt;&lt;div class=&quot;csl-right-inline&quot;&gt;D.
+Firsov and T. Uustalu, &lt;span&gt;“Certified parsing of regular
+languages,”&lt;/span&gt; in &lt;em&gt;International conference on certified programs
+and proofs&lt;/em&gt;, Springer, 2013, pp. 98–113. Available: &lt;a href=&quot;https://cs.ioc.ee/~tarmo/papers/firsov-uustalu-cpp13.pdf&quot;&gt;https://cs.ioc.ee/~tarmo/papers/firsov-uustalu-cpp13.pdf&lt;/a&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;csl-entry&quot; id=&quot;ref-a000050mcnaughton&quot; role=&quot;listitem&quot;&gt;
+&lt;div class=&quot;csl-left-margin&quot;&gt;[2] &lt;/div&gt;&lt;div class=&quot;csl-right-inline&quot;&gt;R.
+McNaughton and H. Yamada, &lt;span&gt;“Regular expressions and state graphs
+for automata,”&lt;/span&gt; &lt;em&gt;IRE transactions on Electronic Computers&lt;/em&gt;,
+no. 1, pp. 39–47, 1960.&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;csl-entry&quot; id=&quot;ref-a000050thompson&quot; role=&quot;listitem&quot;&gt;
+&lt;div class=&quot;csl-left-margin&quot;&gt;[3] &lt;/div&gt;&lt;div class=&quot;csl-right-inline&quot;&gt;K.
+Thompson, &lt;span&gt;“Programming techniques: Regular expression search
+algorithm,”&lt;/span&gt; &lt;em&gt;Commun. ACM&lt;/em&gt;, vol. 11, no. 6, pp. 419–422,
+Jun. 1968, doi: &lt;a href=&quot;https://doi.org/10.1145/363347.363387&quot;&gt;10.1145/363347.363387&lt;/a&gt;.&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+      </description>
+      <pubDate>
+        Sat, 04 Jul 2026 00:00:00 GMT
+      </pubDate>
+      <guid>
+        https://ju-sh.github.io/blog/nfa-plus.html
+      </guid>
+      <category>
+        misc
       </category>
     </item>
   </channel>

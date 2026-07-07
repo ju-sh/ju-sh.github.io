@@ -73,6 +73,10 @@ img {
     line-height: 1.7;
 }
 
+.ruby-container {
+    text-align: center;
+}
+
 /* .fig-container { */
 /*   border-radius: 8px; */
 /*   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.51); */

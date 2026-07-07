@@ -1,2 +1,2 @@
+2026-07-07T00:00:00+00:00	Making a debian package | https://ju-sh.github.io/blog/debian-elisp-packaging.html
 2026-07-04T00:00:00+00:00	NFA plus vs star | https://ju-sh.github.io/blog/nfa-plus.html
-2026-06-22T00:00:00+00:00	Making a debian package (Draft) | https://ju-sh.github.io/blog/debian-elisp-packaging.html
