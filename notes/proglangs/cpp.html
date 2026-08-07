@@ -34,18 +34,17 @@
 <main id="content-container">
 <p><a
 href="https://github.com/yuchdev/CppBooks">https://github.com/yuchdev/CppBooks</a></p>
-<section id="general" class="level2">
-<h2>General</h2>
-</section>
-<section id="regex-c11" class="level2">
-<h2><code>regex</code> (C++11)</h2>
+<section id="raii" class="level2">
+<h2>RAII</h2>
+<p>According to chatgpt:</p>
 <ul>
-<li><p>Available as a standard library since C++11.</p></li>
-<li><p><a
-href="https://en.cppreference.com/w/cpp/regex">https://en.cppreference.com/w/cpp/regex</a></p></li>
-<li><p>Type of regexes: <code>std::regex</code></p></li>
-<li><p>Find match in string for a regex:
-<code>std::regex_search(str, rgx)</code></p></li>
+<li><code>new</code> / <code>delete</code> →
+<code>std::unique_ptr</code></li>
+<li><code>malloc()</code> / <code>free()</code> → RAII wrappers</li>
+<li><code>lock()</code> / <code>unlock()</code> →
+<code>lock_guard</code></li>
+<li><code>open()</code> / <code>close()</code> → file wrapper
+classes</li>
 </ul>
 </section>
 <section id="auto-variables" class="level2">
@@ -66,103 +65,125 @@ href="https://stackoverflow.com/questions/7576953/c-auto-keyword-why-is-it-magic
 href="https://learn.microsoft.com/en-us/cpp/cpp/auto-cpp?view=msvc-170">https://learn.microsoft.com/en-us/cpp/cpp/auto-cpp?view=msvc-170</a></li>
 </ul>
 </section>
-<section id="vector" class="level2">
-<h2><code>vector</code></h2>
+<section id="noexcept" class="level2">
+<h2><span class="todo TODO">TODO</span> <code>noexcept</code></h2>
 <ul>
-<li>Default value of elements of a <code>vector&lt;T&gt;</code> is
-<code>0</code></li>
+<li>Two variants:
+<ul>
+<li>An operator</li>
+<li>Specifier in a function template ??</li>
+</ul></li>
+<li>Operator: 'returns <code>true</code> if if an expression is declared
+to not throw any exceptions.'
+<ul>
+<li><a
+href="https://en.cppreference.com/cpp/language/noexcept">https://en.cppreference.com/cpp/language/noexcept</a></li>
+</ul></li>
+<li>Specifier:
+<ul>
+<li><code>void no_throw() noexcept;</code></li>
+</ul></li>
+<li>Checked at compile-time</li>
+<li><code>noexcept my-expr</code> ???</li>
 </ul>
+<p>Both of these are effectively the same:</p>
 <div class="sourceCode" id="cb1"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> v1 <span class="op">=</span> <span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">};</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> v1<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span>  <span class="co">// 1</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> v2<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> v2<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span>  <span class="co">// 0</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;</span> v3<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> v3<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span>  <span class="co">// 0</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> g<span class="op">()</span> <span class="kw">noexcept</span><span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> g<span class="op">();</span></span></code></pre></div>
 </section>
-<section id="tuple" class="level2">
-<h2><code>tuple</code></h2>
-<p><a
-href="https://en.cppreference.com/w/cpp/utility/tuple">https://en.cppreference.com/w/cpp/utility/tuple</a></p>
-<p>An example adapted from cppreference:</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;tuple&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>tuple<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">char</span><span class="op">,</span> <span class="bu">std::</span>string<span class="op">&gt;</span> ics<span class="op">;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    ics <span class="op">=</span> <span class="op">{</span><span class="dv">5</span><span class="op">,</span> <span class="ch">&#39;a&#39;</span><span class="op">,</span> <span class="st">&quot;hello&quot;</span><span class="op">};</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;ics[0]: &quot;</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">0</span><span class="op">&gt;(</span>ics<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;ics[1]: &quot;</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">1</span><span class="op">&gt;(</span>ics<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;ics[2]: &quot;</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">2</span><span class="op">&gt;(</span>ics<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Getting values in a tuple to vars.</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Types auto-inferred due to the &#39;auto&#39; use.</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// The is a C++17 feature named &#39;structured binding&#39;.</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">// GCC (&gt;=7 only) needs -std=c++17</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> <span class="op">[</span>ival<span class="op">,</span> cval<span class="op">,</span> sval<span class="op">]</span> <span class="op">=</span> ics<span class="op">;</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;ival: &quot;</span> <span class="op">&lt;&lt;</span> ival <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;cval: &quot;</span> <span class="op">&lt;&lt;</span> cval <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;sval: &quot;</span> <span class="op">&lt;&lt;</span> sval <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Could also be done with std::tie for tuple, but is more verbose.</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> ival2<span class="op">;</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> cval2<span class="op">;</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>string sval2<span class="op">;</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>tie<span class="op">(</span>ival2<span class="op">,</span> cval2<span class="op">,</span> sval2<span class="op">)</span> <span class="op">=</span> ics<span class="op">;</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;ival2: &quot;</span> <span class="op">&lt;&lt;</span> ival2 <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;cval2: &quot;</span> <span class="op">&lt;&lt;</span> cval2 <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;sval2: &quot;</span> <span class="op">&lt;&lt;</span> sval2 <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co">ics[0]: 5</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="co">ics[1]: a</span></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="co">ics[2]: hello</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co">ival: 5</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co">cval: a</span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co">sval: hello</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co">ival2: 5</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="co">cval2: a</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="co">sval2: hello</span></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span></code></pre></div>
-<p>Similar:</p>
+<section id="mutable" class="level2">
+<h2><span class="todo TODO">TODO</span> <code>mutable</code></h2>
 <ul>
-<li><code>std::pair</code>: <a
-href="https://en.cppreference.com/w/cpp/utility/pair">https://en.cppreference.com/w/cpp/utility/pair</a></li>
+<li>Allow variables passed by value to be mutable ??</li>
 </ul>
-<section id="structured-binding-c17" class="level3">
-<h3>Structured binding (C++17)</h3>
-<p>Allows the constitutent values of a compound type to be assigned to
-variables.</p>
-<p>See:</p>
+</section>
+<section id="lambda-functions" class="level2">
+<h2><span class="todo TODO">TODO</span> Lambda functions</h2>
+<p>Format:</p>
+<pre><code>[capture](parameters) specifiers -&gt; return_type {
+    // function body
+};
+</code></pre>
 <ul>
-<li><a
-href="https://alandefreitas.github.io/moderncpp/basic-syntax/basic-data-types/structured-binding/">https://alandefreitas.github.io/moderncpp/basic-syntax/basic-data-types/structured-binding/</a></li>
-<li><a
-href="https://devblogs.microsoft.com/oldnewthing/20201014-00/?p=104367">https://devblogs.microsoft.com/oldnewthing/20201014-00/?p=104367</a></li>
-<li><a
-href="https://gcc.gnu.org/projects/cxx-status.html">https://gcc.gnu.org/projects/cxx-status.html</a></li>
+<li>Specifiers could be like
+<ul>
+<li>noexcept</li>
+<li>mutable</li>
+<li>constexpr</li>
+</ul></li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li><code>auto f = [] {};</code>
+<ul>
+<li>Empty function</li>
+</ul></li>
+<li><code>auto hello = [] { std::cout &lt;&lt; "Hello\n"; };</code>
+<ul>
+<li>Return type auto deduced by compiler to be <code>void</code></li>
+</ul></li>
+<li><code>auto add = [](int a, int b) { return a + b; };</code>
+<ul>
+<li>Return type auto deduced by compiler to be <code>int</code></li>
+</ul></li>
+<li><code>auto divide = [](int a, int b) -&gt; double { return static_cast&lt;double&gt;(a) / b;} ;</code>
+<ul>
+<li>Return type explicitly given (compiler can auto deduce correctly in
+this case though)</li>
+</ul></li>
+</ul>
+<section id="capture-variables" class="level3">
+<h3>Capture variables</h3>
+<ul>
+<li>Variables from surrounding scope</li>
+<li>Types of capture variables are not mentioned since compiler already
+knows about it. Because they are pre-existing names.</li>
+<li>A lambda, together with its capture variables = closure of the
+lambda</li>
+<li>Capture variables get 'stored' inside the lambda object, but
+arguments are just passed to the lambda</li>
+<li>Capture variables are useful to 'remember' some variables</li>
+<li>Syntax:
+<ul>
+<li><code>[=]</code>: capture everything (by value)</li>
+<li><code>[*]</code>: capture everything (by reference)</li>
+<li><code>[=, &amp;x]</code>: capture all by value, <code>x</code> by
+reference</li>
+<li><code>[&amp;, x]</code>: capture everything by reference,
+<code>x</code> by value</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="static_cast" class="level2">
+<h2><span class="todo TODO">TODO</span> <code>static_cast</code></h2>
+</section>
+<section id="value-categories" class="level2">
+<h2>Value categories</h2>
+<p><a
+href="https://en.cppreference.com/cpp/language/value_category">https://en.cppreference.com/cpp/language/value_category</a></p>
+<section id="primary-categories" class="level3">
+<h3>Primary categories</h3>
+<p>Every expression has a primary value category associated with it</p>
+<ul>
+<li>prvalue: pure rvalue</li>
+<li>xvalue: eXpiring value</li>
+<li>lvalue: glvalue that is not an xvalue</li>
+</ul>
+</section>
+<section id="mixed-categories" class="level3">
+<h3>Mixed categories</h3>
+<ul>
+<li>rvalue: glvalue that is not an lvalue</li>
+<li>glvalue: generalized lvalue</li>
 </ul>
 </section>
 </section>
 <section id="template-meta-programming-tmp" class="level2">
 <h2>Template meta-programming (TMP)</h2>
-<p>An example from the internet:</p>
+<p>An example from the internet. This is supposed to take a day to
+compile on a dual-core processor with 1GB RAM: <a
+href="https://cpptruths.blogspot.com/2005/11/c-templates-are-turing-complete.html">https://cpptruths.blogspot.com/2005/11/c-templates-are-turing-complete.html</a></p>
 <div class="sourceCode" id="cb3"><pre
 class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="dt">int</span> Depth<span class="op">,</span> <span class="dt">int</span> A<span class="op">,</span> <span class="kw">typename</span> B<span class="op">&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> K17 <span class="op">{</span></span>
@@ -310,11 +331,393 @@ href="https://en.cppreference.com/w/cpp/language/constraints">https://en.cpprefe
 </ul>
 </section>
 </section>
+<section id="structured-binding-c17" class="level2">
+<h2>Structured binding (C++17)</h2>
+<p>Allows the constitutent values of a compound type to be assigned to
+variables.</p>
+<p>See:</p>
+<ul>
+<li><a
+href="https://alandefreitas.github.io/moderncpp/basic-syntax/basic-data-types/structured-binding/">https://alandefreitas.github.io/moderncpp/basic-syntax/basic-data-types/structured-binding/</a></li>
+<li><a
+href="https://devblogs.microsoft.com/oldnewthing/20201014-00/?p=104367">https://devblogs.microsoft.com/oldnewthing/20201014-00/?p=104367</a></li>
+<li><a
+href="https://gcc.gnu.org/projects/cxx-status.html">https://gcc.gnu.org/projects/cxx-status.html</a></li>
+</ul>
+</section>
+<section id="unnamed-function-argso" class="level2">
+<h2>Unnamed function argso</h2>
+<ul>
+<li>This is allowed in CPP.</li>
+<li>But the function parameters cannot be used whiting the function
+body</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> foo<span class="op">(</span><span class="dt">int</span><span class="op">,</span> <span class="dt">double</span><span class="op">)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// The int and double cannot be used in body</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// since they are unnamed.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Another example from Boost: <a
+href="https://www.boost.org/doc/libs/latest/doc/html/proto/users_guide.html#boost_proto.users_guide.getting_started.hello_calculator.constructing_expression_trees">https://www.boost.org/doc/libs/latest/doc/html/proto/users_guide.html#boost_proto.users_guide.getting_started.hello_calculator.constructing_expression_trees</a></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="dt">int</span> I<span class="op">&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> <span class="kw">operator</span><span class="op">()(</span>proto<span class="op">::</span>tag<span class="op">::</span>terminal<span class="op">,</span> placeholder<span class="op">&lt;</span>I<span class="op">&gt;)</span> <span class="at">const</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">this</span><span class="op">-&gt;</span>args<span class="op">[</span>I<span class="op">];</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>  </span></code></pre></div>
+</section>
+<section id="ref-qualifier" class="level2">
+<h2>'ref-qualifier'</h2>
+<ul>
+<li><code>&amp;</code> or <code>&amp;&amp;</code> qualifies whether this
+must refer to an lvalue or rvalue.
+<ul>
+<li><code>&amp;</code>: lvalue</li>
+<li><code>&amp;&amp;</code>: rvalue</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Only lvalues can call</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Foo <span class="op">{</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> hello<span class="op">()</span> <span class="op">&amp;</span> <span class="op">{</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;lvalue</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Works fine.</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    Foo obj<span class="op">;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    obj<span class="op">.</span>hello<span class="op">();</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Error because of the &#39;&amp;&#39; in function delcaration</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    Foo<span class="op">{}.</span>hello<span class="op">();</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Another one:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Only rvalues (temporary values) can call</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Bar <span class="op">{</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> hello<span class="op">()</span> <span class="op">&amp;&amp;</span> <span class="op">{</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;rvalue</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Error because of the &#39;&amp;&amp;&#39; in function delcaration</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    Bar obj<span class="op">;</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    obj<span class="op">.</span>hello<span class="op">();</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Works fine.</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    Bar<span class="op">{}.</span>hello<span class="op">();</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>With both versions via function overloading:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Foo <span class="op">{</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> hello<span class="op">()</span> <span class="op">&amp;</span> <span class="op">{</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;lvalue</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> hello<span class="op">()</span> <span class="op">&amp;&amp;</span> <span class="op">{</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;rvalue</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    Foo obj<span class="op">;</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    obj<span class="op">.</span>hello<span class="op">();</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    Foo<span class="op">{}.</span>hello<span class="op">();</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="copy-constructor" class="level2">
+<h2>copy constructor</h2>
+<ul>
+<li><p>Constructor that makes the object as a copy of a pre-existing
+object</p></li>
+<li><p>If not explicitly defined, compiler tries to generate one, by
+copying attributes.</p></li>
+<li><p>Different from copy assignment</p>
+<ul>
+<li>Operands of a copy assignment are both pre-existing objects</li>
+<li>In Copy constructor, one operand is newly being created</li>
+</ul></li>
+<li><p>Copy constructor can be disabled by deleting it.</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Lock <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    Lock<span class="op">(</span><span class="at">const</span> Lock<span class="op">&amp;)</span> <span class="op">=</span> <span class="kw">delete</span><span class="op">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div></li>
+</ul>
+</section>
+<section id="operator" class="level2">
+<h2><code>operator()</code></h2>
+<ul>
+<li>Allows the object to be called as a function</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Twice <span class="op">{</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> <span class="kw">operator</span><span class="op">()(</span><span class="dt">int</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">2</span><span class="op">*</span>a<span class="op">;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    Twice obj<span class="op">;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout<span class="op">&lt;&lt;</span> obj<span class="op">(</span><span class="dv">5</span><span class="op">)</span> <span class="op">&lt;&lt;</span><span class="bu">std::</span>endl<span class="op">;</span>  <span class="co">/* 10 */</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="stdlib" class="level2">
+<h2>stdlib</h2>
+<section id="regex-c11" class="level3">
+<h3><code>regex</code> (C++11)</h3>
+<ul>
+<li><p>Available as a standard library since C++11.</p></li>
+<li><p><a
+href="https://en.cppreference.com/w/cpp/regex">https://en.cppreference.com/w/cpp/regex</a></p></li>
+<li><p>Type of regexes: <code>std::regex</code></p></li>
+<li><p>Find match in string for a regex:
+<code>std::regex_search(str, rgx)</code></p></li>
+</ul>
+</section>
+<section id="vector" class="level3">
+<h3><code>vector</code></h3>
+<ul>
+<li>Default value of elements of a <code>vector&lt;T&gt;</code> is
+<code>0</code></li>
+</ul>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> v1 <span class="op">=</span> <span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">};</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> v1<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span>  <span class="co">// 1</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> v2<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> v2<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span>  <span class="co">// 0</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;</span> v3<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> v3<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span>  <span class="co">// 0</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="tuple" class="level3">
+<h3><code>tuple</code></h3>
+<p><a
+href="https://en.cppreference.com/w/cpp/utility/tuple">https://en.cppreference.com/w/cpp/utility/tuple</a></p>
+<p>An example adapted from cppreference:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include</span><span class="im">&lt;tuple&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>tuple<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">char</span><span class="op">,</span> <span class="bu">std::</span>string<span class="op">&gt;</span> ics<span class="op">;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    ics <span class="op">=</span> <span class="op">{</span><span class="dv">5</span><span class="op">,</span> <span class="ch">&#39;a&#39;</span><span class="op">,</span> <span class="st">&quot;hello&quot;</span><span class="op">};</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;ics[0]: &quot;</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">0</span><span class="op">&gt;(</span>ics<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;ics[1]: &quot;</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">1</span><span class="op">&gt;(</span>ics<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;ics[2]: &quot;</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">2</span><span class="op">&gt;(</span>ics<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Getting values in a tuple to vars.</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Types auto-inferred due to the &#39;auto&#39; use.</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// The is a C++17 feature named &#39;structured binding&#39;.</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">// GCC (&gt;=7 only) needs -std=c++17</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> <span class="op">[</span>ival<span class="op">,</span> cval<span class="op">,</span> sval<span class="op">]</span> <span class="op">=</span> ics<span class="op">;</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;ival: &quot;</span> <span class="op">&lt;&lt;</span> ival <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;cval: &quot;</span> <span class="op">&lt;&lt;</span> cval <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;sval: &quot;</span> <span class="op">&lt;&lt;</span> sval <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Could also be done with std::tie for tuple, but is more verbose.</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> ival2<span class="op">;</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> cval2<span class="op">;</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>string sval2<span class="op">;</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>tie<span class="op">(</span>ival2<span class="op">,</span> cval2<span class="op">,</span> sval2<span class="op">)</span> <span class="op">=</span> ics<span class="op">;</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;ival2: &quot;</span> <span class="op">&lt;&lt;</span> ival2 <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;cval2: &quot;</span> <span class="op">&lt;&lt;</span> cval2 <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;sval2: &quot;</span> <span class="op">&lt;&lt;</span> sval2 <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="co">ics[0]: 5</span></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="co">ics[1]: a</span></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a><span class="co">ics[2]: hello</span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a><span class="co">ival: 5</span></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="co">cval: a</span></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a><span class="co">sval: hello</span></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a><span class="co">ival2: 5</span></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="co">cval2: a</span></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a><span class="co">sval2: hello</span></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span></code></pre></div>
+<p>Similar:</p>
+<ul>
+<li><code>std::pair</code>: <a
+href="https://en.cppreference.com/w/cpp/utility/pair">https://en.cppreference.com/w/cpp/utility/pair</a></li>
+</ul>
+</section>
+<section id="type_traits" class="level3">
+<h3><code>type_traits</code></h3>
+<p><a
+href="https://en.cppreference.com/cpp/header/type_traits">https://en.cppreference.com/cpp/header/type_traits</a></p>
+<p>Ask questions about type of values at compile time. Useful for
+TMP.</p>
+<ul>
+<li><code>is_copy_constructible_v</code>: check if copy constructor can
+be used on a type
+<ul>
+<li><code>static_assert(std::is_copy_constructible_v&lt;T&gt;, "Needs copying");</code></li>
+</ul></li>
+<li><code>is_trivially_copy_constructible_v</code>:</li>
+<li><code>is_nothrow_copy_constructible_v</code>:</li>
+</ul>
+<p>See:</p>
+<ul>
+<li><a
+href="https://en.cppreference.com/cpp/types/is_copy_constructible">https://en.cppreference.com/cpp/types/is_copy_constructible</a></li>
+<li><a
+href="https://en.cppreference.com/cpp/language/static_assert">https://en.cppreference.com/cpp/language/static_assert</a></li>
+</ul>
+</section>
+</section>
 <section id="miscellaneous" class="level2">
 <h2>Miscellaneous</h2>
 <ul>
 <li><code>__FUNCTION__</code> (non-standard): macro giving name of
 current function in gcc</li>
+<li>'cv-qualified <code>void</code>': I guess use of either
+<code>const</code> or <code>volatile</code> qualifier ??</li>
+</ul>
+</section>
+<section id="smart-pointers" class="level2">
+<h2>Smart pointers</h2>
+<p><a
+href="https://en.cppreference.com/cpp/memory#Smart_pointers">https://en.cppreference.com/cpp/memory#Smart_pointers</a></p>
+<ul>
+<li>'smart' because it knows when memory pointed to by it can be
+deallocated</li>
+<li>No need of explicit <code>delete</code></li>
+</ul>
+<p>See:</p>
+<ul>
+<li><a
+href="https://ootips.org/yonat/4dev/smart-pointers.html">https://ootips.org/yonat/4dev/smart-pointers.html</a></li>
+<li><a
+href="https://shubham0204.github.io/blogpost/programming/cpp-smart-pointers">https://shubham0204.github.io/blogpost/programming/cpp-smart-pointers</a></li>
+</ul>
+<section id="unique_ptr" class="level3">
+<h3><code>unique_ptr</code></h3>
+<p><a
+href="https://en.cppreference.com/cpp/memory/unique_ptr">https://en.cppreference.com/cpp/memory/unique_ptr</a></p>
+<ul>
+<li>Unique ownership</li>
+<li>'owns and manages another object via a pointer'</li>
+</ul>
+<p>Note: <code>auto_ptr</code> is apparently something old which should
+no longer be used.</p>
+</section>
+<section id="more" class="level3">
+<h3>More</h3>
+<ul>
+<li><code>shared_ptr</code></li>
+<li><code>weak_ptr</code></li>
+</ul>
+</section>
+</section>
+<section id="memory-management" class="level2">
+<h2>Memory management</h2>
+<p>Single object</p>
+<ul>
+<li>new</li>
+<li>delete:</li>
+</ul>
+<p>Array of objects:</p>
+<ul>
+<li>new[]</li>
+<li>delete[]</li>
+</ul>
+</section>
+<section id="type-aliases" class="level2">
+<h2>Type aliases</h2>
+<p>Can be made with <code>using</code></p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> IntRef <span class="op">=</span> <span class="dt">int</span><span class="op">&amp;;</span></span></code></pre></div>
+</section>
+<section id="style-and-conventions" class="level2">
+<h2>Style and conventions</h2>
+<section id="position-of-and" class="level3">
+<h3>Position of <code>&amp;</code> and <code>*</code></h3>
+<ul>
+<li>int&amp; b; ✓</li>
+<li>int &amp;b; ✗</li>
+</ul>
+<p>This is the style followed by gcc.</p>
+<ul>
+<li><code>&amp;</code> and <code>*</code> written 'as part of' type</li>
+<li>Only one variable per declaration</li>
+</ul>
+<p>–</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span><span class="op">*</span> a<span class="op">,</span> b<span class="op">;</span></span></code></pre></div>
+<p>means <em>only <code>a</code> is a pointer</em>, <code>b</code> is
+just an ~int. This is why some people prefer to write</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> <span class="op">*</span>a<span class="op">,</span> b<span class="op">;</span></span></code></pre></div>
+<p>Instead, we can restrict number of variables per declaration to
+one:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> <span class="op">*</span>a<span class="op">;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> b<span class="op">;</span></span></code></pre></div>
+</section>
+<section id="general" class="level3">
+<h3>General</h3>
+<ul>
+<li>Indentation level
+<ul>
+<li>Professional styles say 2 spaces per level</li>
+<li>4 spaces should be cool for hobbyists</li>
+</ul></li>
+<li>Style guides
+<ul>
+<li>Google style guide</li>
+<li>LLVM</li>
+</ul></li>
+<li>NQ: is using auto as return type indiscriminately bad?</li>
+</ul>
+</section>
+<section id="linters" class="level3">
+<h3>Linters</h3>
+<ul>
+<li>clang-format
+<ul>
+<li><p><code>clang-format --style=Google</code></p></li>
+<li><p><code>clang-format --style=LLVM</code></p></li>
+<li><p>Config:</p>
+<pre><code>IndentWidth: 4
+UseTab: Never
+</code></pre></li>
+<li><p>Make a fresh user-level config with:
+<code>clang-format -style=Google -dump-config &gt; ~/.clang-format</code></p></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="constexpr" class="level2">
+<h2><code>constexpr</code></h2>
+<ul>
+<li>Indicate that a value can be evaluated at compile-time</li>
 </ul>
 </section>
 </main>

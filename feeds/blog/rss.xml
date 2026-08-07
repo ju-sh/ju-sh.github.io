@@ -19,6 +19,334 @@
     <atom:link href="https://ju-sh.github.io/blog/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>
+        Offline Malayalam speech-to-text
+      </title>
+      <link>
+        https://ju-sh.github.io/blog/asr-mal.html
+      </link>
+      <description>
+        
+&lt;div&gt;
+  &lt;div&gt;
+    Experience of getting a Malayalam speech-to-text flow to work
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;main id=&quot;content-container&quot;&gt;
+&lt;p&gt;A group named &lt;a href=&quot;https://ai4bharat.iitm.ac.in/&quot;&gt;AI4Bharat&lt;/a&gt;
+at IIT Madras has made &lt;a href=&quot;https://ai4bharat.iitm.ac.in/areas/model/ASR/IndicConformer/&quot;&gt;IndicConformer&lt;/a&gt;,
+a set of models for automatic speech recognition (ASR) tailored towards
+Indian languages. I had been on the look out for a practically usable
+ASR for Malayalam. And the one from Indicconformer is quite nice. But
+the thing is, the instructions to set it up has become outdated. I guess
+the students who worked on it has moved on.&lt;/p&gt;
+&lt;p&gt;I could get it to work after trying out a few suggestions from google
+gemini. Here, I describe what worked.&lt;/p&gt;
+&lt;section class=&quot;level1&quot; id=&quot;setup&quot;&gt;
+&lt;h1&gt;Setup&lt;/h1&gt;
+&lt;section class=&quot;level2&quot; id=&quot;the-model&quot;&gt;
+&lt;h2&gt;The model&lt;/h2&gt;
+&lt;p&gt;The Indicconformer model for Malayalam ASR is made using a set of
+libraries from Nvidia called &lt;a href=&quot;https://www.nvidia.com/en-in/ai-data-science/products/nemo/&quot;&gt;NeMo&lt;/a&gt;.
+Download the model from &lt;a href=&quot;https://huggingface.co/collections/ai4bharat/indicconformer&quot;&gt;here&lt;/a&gt;.
+Since I am trying Malayalam, I am going with &lt;a href=&quot;https://huggingface.co/ai4bharat/indicconformer_stt_ml_hybrid_ctc_rnnt_large&quot;&gt;&lt;code class=&quot;verbatim&quot;&gt;indicconformer_stt_ml_hybrid_ctc_rnnt_large&lt;/code&gt;&lt;/a&gt;.
+Just keep this model in a convenient location. We will be using this
+after everything else is set up.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level2&quot; id=&quot;the-repo&quot;&gt;
+&lt;h2&gt;The repo&lt;/h2&gt;
+&lt;p&gt;Once we have the model, we need a pipeline that can make use of it.
+Folks behind IndicConformerASR have made a repo in &lt;a href=&quot;https://github.com/AI4Bharat/IndicConformerASR&quot;&gt;here&lt;/a&gt; with the
+required material. We can use that.&lt;/p&gt;
+&lt;p&gt;I am on Debian 13, where the python version is 3.13.5. But the repo
+setup won&#x27;t work with newer python. So I used pyenv to get hold of the
+older python 3.10.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb1&quot;&gt;&lt;pre class=&quot;sourceCode bash&quot;&gt;&lt;code class=&quot;sourceCode bash&quot;&gt;&lt;span id=&quot;cb1-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# export PYENV_ROOT=&quot;$HOME/.pyenv&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;ex&quot;&gt;pyenv&lt;/span&gt; install 3.10.16&lt;/span&gt;
+&lt;span id=&quot;cb1-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;bu&quot;&gt;eval&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;ex&quot;&gt;pyenv&lt;/span&gt; init &lt;span class=&quot;at&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-5&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# Change python for current shell session&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb1-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb1-6&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;ex&quot;&gt;pyenv&lt;/span&gt; shell 3.10.16&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To avoid clutter, we can use a virtual environment:&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb2&quot;&gt;&lt;pre class=&quot;sourceCode bash&quot;&gt;&lt;code class=&quot;sourceCode bash&quot;&gt;&lt;span id=&quot;cb2-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;ex&quot;&gt;python3&lt;/span&gt; &lt;span class=&quot;at&quot;&gt;-m&lt;/span&gt; venv nemo&lt;/span&gt;
+&lt;span id=&quot;cb2-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb2-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;bu&quot;&gt;source&lt;/span&gt; nemo/bin/activate&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and start off by installing a few packages:&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb3&quot;&gt;&lt;pre class=&quot;sourceCode bash&quot;&gt;&lt;code class=&quot;sourceCode bash&quot;&gt;&lt;span id=&quot;cb3-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;ex&quot;&gt;pip3&lt;/span&gt; install torch torchvision torchaudio&lt;/span&gt;
+&lt;span id=&quot;cb3-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;ex&quot;&gt;pip3&lt;/span&gt; install packaging&lt;/span&gt;
+&lt;span id=&quot;cb3-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb3-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;ex&quot;&gt;pip3&lt;/span&gt; install huggingface_hub==0.23.2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now clone the repo and do the rest of the commands mentioned in the
+project&#x27;s &lt;a href=&quot;https://ai4bharat.iitm.ac.in/areas/model/ASR/IndicConformer/&quot;&gt;website&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb4&quot;&gt;&lt;pre class=&quot;sourceCode bash&quot;&gt;&lt;code class=&quot;sourceCode bash&quot;&gt;&lt;span id=&quot;cb4-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# Commit: 8dce88cf8e94963e2033c3137f7b9993b51db88a (on branch &#x27;nemo-v2&#x27;)&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb4-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;fu&quot;&gt;git&lt;/span&gt; clone https://github.com/AI4Bharat/NeMo.git&lt;/span&gt;
+&lt;span id=&quot;cb4-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;bu&quot;&gt;cd&lt;/span&gt; NeMo&lt;/span&gt;
+&lt;span id=&quot;cb4-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb4-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;fu&quot;&gt;bash&lt;/span&gt; reinstall.sh&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This might take a while to finish.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level2&quot; id=&quot;tweaks&quot;&gt;
+&lt;h2&gt;Tweaks&lt;/h2&gt;
+&lt;p&gt;Now we make a few small tweaks to make the code from the repo
+work.&lt;/p&gt;
+&lt;section class=&quot;level3&quot; id=&quot;neptunelogger&quot;&gt;
+&lt;h3&gt;NeptuneLogger&lt;/h3&gt;
+&lt;p&gt;Apparently, newer pytorch don&#x27;t expose the name
+&lt;code&gt;NeptuneLogger&lt;/code&gt; from a module that this repo expects. So got
+to edit this file: &lt;code class=&quot;verbatim&quot;&gt;nemo/utils/exp_manager.py&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb5&quot;&gt;&lt;pre class=&quot;sourceCode python&quot;&gt;&lt;code class=&quot;sourceCode python&quot;&gt;&lt;span id=&quot;cb5-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# Change this:&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb5-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# from pytorch_lightning.loggers import MLFlowLogger, NeptuneLogger, TensorBoardLogger, WandbLogger&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb5-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;#&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb5-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# To this:&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb5-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb5-5&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;im&quot;&gt;from&lt;/span&gt; pytorch_lightning.loggers &lt;span class=&quot;im&quot;&gt;import&lt;/span&gt; MLFlowLogger, TensorBoardLogger, WandbLogger&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Without this, we will get an error like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ImportError: cannot import name &#x27;NeptuneLogger&#x27; from &#x27;pytorch_lightning.loggers&#x27; (nemo/lib/python3.10/site-packages/pytorch_lightning/loggers/__init__.py)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level3&quot; id=&quot;packages&quot;&gt;
+&lt;h3&gt;Packages&lt;/h3&gt;
+&lt;p&gt;Run this command to get the right set of package versions. (Output of
+&lt;code&gt;pip freeze&lt;/code&gt; is mentioned in &lt;a href=&quot;https://github.com/AI4Bharat/IndicConformerASR/issues/27&quot;&gt;this&lt;/a&gt;
+github issue.)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pip install &quot;datasets&amp;gt;=2.19.0,&amp;lt;3.0.0&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And we are done tweaking, and the installation procedure is
+complete.&lt;/p&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level1&quot; id=&quot;interface&quot;&gt;
+&lt;h1&gt;Interface&lt;/h1&gt;
+&lt;p&gt;Now that we have got the model ready to be run, we need an interface
+to use it. I figured a client-server setup would be good. With the
+server having the model loaded and ready to go, and the client asking it
+to transcribe audio whenever needed.&lt;/p&gt;
+&lt;p&gt;Gemini suggested fastapi and uvicorn. And I adapted it. It kind of
+looks as shown in &lt;a href=&quot;#f-interface&quot;&gt;Figure 1&lt;/a&gt;.&lt;/p&gt;
+&lt;figure class=&quot;fig-container&quot; id=&quot;f-interface&quot;&gt;
+&lt;img alt=&quot;Interface architecture. A client-server architecture&quot; src=&quot;https://github.com/ju-sh/blog-imgs/blob/master/a_000-052/interface.svg?raw=true&quot; style=&quot;width: 100%;&quot; title=&quot;Interface architecture&quot;/&gt;
+&lt;figcaption&gt;
+&lt;span class=&quot;fc-pre&quot;&gt;
+      Figure 1
+    &lt;/span&gt;:
+    &lt;span class=&quot;fc-title&quot;&gt;
+      Schematic of the interface architecture
+    &lt;/span&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Steps involved:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The user speaks&lt;/li&gt;
+&lt;li&gt;ffmpeg records it into a &lt;code class=&quot;verbatim&quot;&gt;wav&lt;/code&gt; file
+(NeMo expects 16KHz mono audio)&lt;/li&gt;
+&lt;li&gt;Client hits the &lt;code class=&quot;verbatim&quot;&gt;/transcribe&lt;/code&gt; end point
+on the server&lt;/li&gt;
+&lt;li&gt;Server transcribes audio to text and appends it to a pre-determined
+text file&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We need a few additional packages for the server:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pip install fastapi uvicorn
+&lt;/code&gt;&lt;/pre&gt;
+&lt;section class=&quot;level2&quot; id=&quot;server&quot;&gt;
+&lt;h2&gt;Server&lt;/h2&gt;
+&lt;p&gt;The server will load the model and keep it ready to service requests
+for transcription. It takes a while for the model to be loaded and the
+latency would be too much if we are to load the model from scratch each
+time.&lt;/p&gt;
+&lt;p&gt;Now for the python. Server looks like this:&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb9&quot;&gt;&lt;pre class=&quot;sourceCode python&quot;&gt;&lt;code class=&quot;sourceCode python&quot;&gt;&lt;span id=&quot;cb9-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;im&quot;&gt;from&lt;/span&gt; contextlib &lt;span class=&quot;im&quot;&gt;import&lt;/span&gt; asynccontextmanager&lt;/span&gt;
+&lt;span id=&quot;cb9-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;im&quot;&gt;from&lt;/span&gt; fastapi &lt;span class=&quot;im&quot;&gt;import&lt;/span&gt; FastAPI, File, UploadFile, HTTPException&lt;/span&gt;
+&lt;span id=&quot;cb9-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;im&quot;&gt;import&lt;/span&gt; torch&lt;/span&gt;
+&lt;span id=&quot;cb9-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;im&quot;&gt;import&lt;/span&gt; nemo.collections.asr &lt;span class=&quot;im&quot;&gt;as&lt;/span&gt; nemo_asr&lt;/span&gt;
+&lt;span id=&quot;cb9-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-5&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-6&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;AUDIO_FILE_PATH &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&quot;out-stt-mal.wav&quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-7&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;MODEL_PATH &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&quot;/media/famubu/f9b396f5-5f46-465a-a1ee-5b008f58d5f9/data/Soft/ai-models/indicconformer_stt_ml_hybrid_rnnt_large.nemo&quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-8&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;asr_model &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;va&quot;&gt;None&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-9&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-10&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# Lifespan context manager: loads model once on server start&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-11&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;at&quot;&gt;@asynccontextmanager&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-12&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-12&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;cf&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;def&lt;/span&gt; lifespan(app: FastAPI):&lt;/span&gt;
+&lt;span id=&quot;cb9-13&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-13&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;kw&quot;&gt;global&lt;/span&gt; asr_model&lt;/span&gt;
+&lt;span id=&quot;cb9-14&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-14&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;bu&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;Loading IndicConformer model into memory...&quot;&lt;/span&gt;)&lt;/span&gt;
+&lt;span id=&quot;cb9-15&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-15&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    device &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; torch.device(&lt;span class=&quot;st&quot;&gt;&quot;cuda&quot;&lt;/span&gt; &lt;span class=&quot;cf&quot;&gt;if&lt;/span&gt; torch.cuda.is_available() &lt;span class=&quot;cf&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&quot;cpu&quot;&lt;/span&gt;)&lt;/span&gt;
+&lt;span id=&quot;cb9-16&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-16&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-17&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-17&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;co&quot;&gt;# Load model and configure for fast CTC decoding&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-18&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-18&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    asr_model &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; nemo_asr.models.EncDecCTCModelBPE.restore_from(restore_path&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;MODEL_PATH)&lt;/span&gt;
+&lt;span id=&quot;cb9-19&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-19&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    asr_model.change_decoding_strategy(decoder_type&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;ctc&quot;&lt;/span&gt;)&lt;/span&gt;
+&lt;span id=&quot;cb9-20&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-20&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    asr_model.&lt;span class=&quot;bu&quot;&gt;eval&lt;/span&gt;()&lt;/span&gt;
+&lt;span id=&quot;cb9-21&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-21&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    asr_model.freeze()&lt;/span&gt;
+&lt;span id=&quot;cb9-22&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-22&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    asr_model &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; asr_model.to(device)&lt;/span&gt;
+&lt;span id=&quot;cb9-23&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-23&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-24&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-24&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;bu&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;ss&quot;&gt;f&quot;✅ Model successfully loaded on &lt;/span&gt;&lt;span class=&quot;sc&quot;&gt;{&lt;/span&gt;device&lt;span class=&quot;sc&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;!&quot;&lt;/span&gt;)&lt;/span&gt;
+&lt;span id=&quot;cb9-25&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-25&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;yield&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-26&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-26&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;bu&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;Shutting down STT server...&quot;&lt;/span&gt;)&lt;/span&gt;
+&lt;span id=&quot;cb9-27&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-27&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-28&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-28&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;app &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; FastAPI(title&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;Malayalam STT Fast API Server&quot;&lt;/span&gt;, lifespan&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;lifespan)&lt;/span&gt;
+&lt;span id=&quot;cb9-29&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-29&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-30&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-30&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;at&quot;&gt;@app.post&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&quot;/transcribe&quot;&lt;/span&gt;)&lt;/span&gt;
+&lt;span id=&quot;cb9-31&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-31&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;cf&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;def&lt;/span&gt; transcribe_audio():&lt;/span&gt;
+&lt;span id=&quot;cb9-32&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-32&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    transcriptions &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; asr_model.transcribe([AUDIO_FILE_PATH], batch_size&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, language_id&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;ml&quot;&lt;/span&gt;)&lt;/span&gt;
+&lt;span id=&quot;cb9-33&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-33&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    text &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; transcriptions[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;] &lt;span class=&quot;cf&quot;&gt;if&lt;/span&gt; transcriptions &lt;span class=&quot;cf&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-34&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-34&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;bu&quot;&gt;isinstance&lt;/span&gt;(text, &lt;span class=&quot;bu&quot;&gt;list&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;bu&quot;&gt;len&lt;/span&gt;(text) &lt;span class=&quot;op&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;:&lt;/span&gt;
+&lt;span id=&quot;cb9-35&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-35&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;        text &lt;span class=&quot;op&quot;&gt;=&lt;/span&gt; text[&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;]&lt;/span&gt;
+&lt;span id=&quot;cb9-36&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-36&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-37&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-37&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;cf&quot;&gt;return&lt;/span&gt; {&lt;span class=&quot;st&quot;&gt;&quot;text&quot;&lt;/span&gt;: text}&lt;/span&gt;
+&lt;span id=&quot;cb9-38&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-38&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb9-39&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-39&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;cf&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;va&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;op&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&quot;__main__&quot;&lt;/span&gt;:&lt;/span&gt;
+&lt;span id=&quot;cb9-40&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-40&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;im&quot;&gt;import&lt;/span&gt; uvicorn&lt;/span&gt;
+&lt;span id=&quot;cb9-41&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb9-41&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;    uvicorn.run(app, host&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;, port&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;8000&lt;/span&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We need the &#x27;patch&#x27; for numpy in the beginning of the above script to
+avoid this error:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;AttributeError: `np.sctypes` was removed in the NumPy 2.0 release. Access dtypes explicitly instead.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This server can be started with:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;python3 -m uvicorn server:app --host 127.0.0.1 --port 8000 &amp;lt; /dev/null
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level2&quot; id=&quot;client&quot;&gt;
+&lt;h2&gt;Client&lt;/h2&gt;
+&lt;p&gt;The client would accept the audio input from the user, produce a
+recording of it as a 16KHz mono wav file, and request the server to
+transcribe it. The resultant text from the server is appended to a
+pre-determined file.&lt;/p&gt;
+&lt;p&gt;I made it as a simple bash script:&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot; id=&quot;cb12&quot;&gt;&lt;pre class=&quot;sourceCode bash&quot;&gt;&lt;code class=&quot;sourceCode bash&quot;&gt;&lt;span id=&quot;cb12-1&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-1&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;#!/bin/bash&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-2&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-2&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-3&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-3&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# File name: client.sh&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-4&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-4&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-5&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-5&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;va&quot;&gt;WAV_OUT&lt;/span&gt;&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;out.wav&quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-6&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-6&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;va&quot;&gt;TXT_OUT&lt;/span&gt;&lt;span class=&quot;op&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;out.txt&quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-7&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-7&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-8&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-8&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;fu&quot;&gt; record&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;{&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-9&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-9&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;bu&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&quot;Recording...&quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-10&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-10&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;ex&quot;&gt;ffmpeg&lt;/span&gt; &lt;span class=&quot;at&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;at&quot;&gt;-f&lt;/span&gt; pulse &lt;span class=&quot;at&quot;&gt;-i&lt;/span&gt; default &lt;span class=&quot;at&quot;&gt;-ac&lt;/span&gt; 1 &lt;span class=&quot;at&quot;&gt;-ar&lt;/span&gt; 16000 &lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;$WAV_OUT&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-11&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-11&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;bu&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&quot;✅ Recording complete.&quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-12&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-12&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;}&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-13&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-13&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-14&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-14&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;fu&quot;&gt; transcribe&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;{&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-15&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-15&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;bu&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&quot;Transcribing...&quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-16&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-16&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;ex&quot;&gt;curl&lt;/span&gt; &lt;span class=&quot;at&quot;&gt;-X&lt;/span&gt; POST &lt;span class=&quot;st&quot;&gt;&quot;http://127.0.0.1:8000/transcribe&quot;&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;ex&quot;&gt;jq&lt;/span&gt; &lt;span class=&quot;at&quot;&gt;-r&lt;/span&gt; .text &lt;span class=&quot;op&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;va&quot;&gt;$TXT_OUT&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-17&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-17&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;bu&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&quot;✅ Transcribing complete.&quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-18&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-18&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kw&quot;&gt;}&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-19&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-19&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-20&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-20&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;co&quot;&gt;# &lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-21&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-21&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-22&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-22&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;ex&quot;&gt;record&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&quot;cb12-23&quot;&gt;&lt;a aria-hidden=&quot;true&quot; href=&quot;#cb12-23&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;ex&quot;&gt;transcribe&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Each time we need speech transcribed, we can run the client with:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash client.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will initiate a recording. Send a &lt;code&gt;Ctrl-C&lt;/code&gt; when we
+are done speaking so that the client can send the recording to the
+server. Of course, the server has to be active before the client can be
+run successfully.&lt;/p&gt;
+&lt;p&gt;If we already have a recording at &lt;code&gt;out.wav&lt;/code&gt;, we can
+manually send a POST request to server to transcribe it. Like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl -X POST &quot;http://127.0.0.1:8000/transcribe&quot; | jq -r .text
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/section&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level1&quot; id=&quot;example-run&quot;&gt;
+&lt;h1&gt;Example run&lt;/h1&gt;
+&lt;p&gt;We got everything ready. Let us try the ASR.&lt;/p&gt;
+&lt;p&gt;First we start the server:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;python3 -m uvicorn server:app --host 127.0.0.1 --port 8000 &amp;lt; /dev/null
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once the server is up, we initiate a speech-to-text request:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash client.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It will make a recording at &lt;code&gt;out.wav&lt;/code&gt; and then append the
+text to &lt;code&gt;out.txt&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;This is what I spoke to try it out:&lt;/p&gt;
+&lt;blockquote style=&quot;font-size: 1.75em;&quot;&gt;
+&lt;p&gt;ഈ സംവിധാനം പ്രവർത്തനക്ഷമമാണെന്ന് ഞാൻ പ്രതീക്ഷിക്കുന്നു&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;That&#x27;s it. Enjoy!&lt;/p&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level1&quot; id=&quot;conclusion&quot;&gt;
+&lt;h1&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;The model does ASR quite well if we speak formal Malayalam. But
+accuracy drops drastically if we try colloquial Malayalam of any region.
+But this is definitely the best Malayalam ASR that I have come across so
+far and am happy with it. It can even transcribe place names, like
+കോഴിക്കോട്. Hope you too can try it out and that Indicconformer folks
+would keep updating their repos.&lt;/p&gt;
+&lt;p&gt;Thanks to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Team at AI4Bharat who worked on IndicConformer&lt;/li&gt;
+&lt;li&gt;Google Gemini&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level1&quot; id=&quot;versions&quot;&gt;
+&lt;h1&gt;Versions&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/AI4Bharat/NeMo.git&quot;&gt;https://github.com/AI4Bharat/NeMo.git&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;Commit: &lt;code class=&quot;verbatim&quot;&gt;8dce88cf8e94963e2033c3137f7b9993b51db88a&lt;/code&gt; (on
+branch &lt;code class=&quot;verbatim&quot;&gt;nemo-v2&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://huggingface.co/ai4bharat/indicconformer_stt_ml_hybrid_ctc_rnnt_large&quot;&gt;&lt;code class=&quot;verbatim&quot;&gt;indicconformer_stt_ml_hybrid_ctc_rnnt_large&lt;/code&gt;&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;Commit: &lt;code class=&quot;verbatim&quot;&gt;e96d81e42e5fe73f282b0322d422a48b461a4ca6&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;verbatim&quot;&gt;python 3.10.16&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;verbatim&quot;&gt;ffmpeg v7.1.4&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;verbatim&quot;&gt;curl v8.14.1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;verbatim&quot;&gt;jq v1.7&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/section&gt;
+&lt;section class=&quot;level1&quot; id=&quot;addendum-ctc-vs-rnn-t-decoding&quot;&gt;
+&lt;h1&gt;Addendum: CTC vs RNN-T decoding&lt;/h1&gt;
+&lt;p&gt;Both are algorithms used for ASR. NeMo models can have both, like in
+the case of the &lt;code class=&quot;verbatim&quot;&gt;Indicconformer_Stt_Ml_Hybrid_Rnnt_Large&lt;/code&gt; model
+that we used. CTC is said to be lighter, so I went with CTC
+decoding.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&quot;header&quot;&gt;
+&lt;th&gt;CTC&lt;/th&gt;
+&lt;th&gt;RNN-T&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td&gt;Connectionist Temporal Classification&lt;/td&gt;
+&lt;td&gt;Recurrent Neural Network Transducer&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td&gt;Faster and lighter&lt;/td&gt;
+&lt;td&gt;Slower and heavier&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td&gt;Bit less accurate&lt;/td&gt;
+&lt;td&gt;More accurate&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td&gt;Smaller model&lt;/td&gt;
+&lt;td&gt;Larger model&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td&gt;Does not rely on past output&lt;/td&gt;
+&lt;td&gt;Considers previous output too&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;It would be nice to have the model as onnx files too, since they even
+more lightweight. But couldn&#x27;t find any corresponding to the
+Indicconformer models online.&lt;/p&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+      </description>
+      <pubDate>
+        Fri, 07 Aug 2026 00:00:00 GMT
+      </pubDate>
+      <guid>
+        https://ju-sh.github.io/blog/asr-mal.html
+      </guid>
+      <category>
+        ai
+      </category>
+    </item>
+    <item>
+      <title>
         Making a debian package
       </title>
       <link>
@@ -735,20 +1063,20 @@ people, including non-DDs, can make comments to provide feedback. It is
 like a staging area for debian packages.&lt;/p&gt;
 &lt;p&gt;Our package can be &lt;a href=&quot;https://www.debian.org/doc/manuals/maint-guide/upload.en.html&quot;&gt;uploaded&lt;/a&gt;
 to &lt;code class=&quot;verbatim&quot;&gt;mentors.debian.net&lt;/code&gt; with:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ # Can use --force if reuploading without version change
-$ dput mentors speed-type_1.7-1_amd64.changes
+&lt;pre&gt;&lt;code&gt;$ # Can use `dput --force` if re-uploading without version change
+$ dput mentors emacs-speed-type_1.7-1_amd64.changes
 
 Checking signature on .changes
-gpg: /home/usesr/speed-type/speed-type_1.7-1_amd64.changes: Valid signature from 26AF96E2D752882F
+gpg: /home/user/speed-type/emacs-speed-type_1.7-1_amd64.changes: Valid signature from 26AF96E2D752882F
 Checking signature on .dsc
-gpg: /home/user/speed-type/speed-type_1.7-1.dsc: Valid signature from 26AF96E2D752882F
+gpg: /home/user/speed-type/emacs-speed-type_1.7-1.dsc: Valid signature from 26AF96E2D752882F
 Uploading to mentors (via https to mentors.debian.net):
-  Uploading speed-type_1.7-1.dsc: done.
-  Uploading speed-type_1.7.orig.tar.xz: done.
-  Uploading speed-type_1.7-1.debian.tar.xz: done.
+  Uploading emacs-speed-type_1.7-1.dsc: done.
+  Uploading emacs-speed-type_1.7.orig.tar.xz: done.
+  Uploading emacs-speed-type_1.7-1.debian.tar.xz: done.
   Uploading elpa-speed-type_1.7-1_all.deb: done.
-  Uploading speed-type_1.7-1_amd64.buildinfo: done.
-  Uploading speed-type_1.7-1_amd64.changes: done.
+  Uploading emacs-speed-type_1.7-1_amd64.buildinfo: done.
+  Uploading emacs-speed-type_1.7-1_amd64.changes: done.
 Successfully uploaded packages.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;You should get an acknowledgement mail from &lt;code class=&quot;verbatim&quot;&gt;mentors.debian.net&lt;/code&gt; after a few minutes, and the

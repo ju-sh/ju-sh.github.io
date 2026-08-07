@@ -33,23 +33,25 @@
 
 <main id="content-container">
 <ul>
-<li>Boolean negation: <code>not p</code> or <code>! p</code> ??</li>
-<li><code>p and q</code>: <code>p</code> and <code>q</code> should be
-true, but both need not end at same time</li>
-<li><code>p intersect q</code>: Concurrent and
+<li><p>Boolean negation: <code>not p</code> or <code>! p</code>
+??</p></li>
+<li><p><code>p and q</code>: <code>p</code> and <code>q</code> should be
+true, but both need not end at same time</p></li>
+<li><p><code>p intersect q</code>: Concurrent and</p>
 <ul>
 <li>also <code>p &amp;&amp; q</code> ??</li>
 </ul></li>
-<li><code>p ##N q</code>: check if p holds, then check if q holds
-<code>N</code> cycles later
+<li><p><code>p ##N q</code>: check if p holds, then check if q holds
+<code>N</code> cycles later</p>
 <ul>
 <li>Eg: <code>p ##2 q</code></li>
 </ul></li>
-<li><code>p [*N]</code>: <code>p</code> is repeated <code>N</code> times
+<li><p><code>p [*N]</code>: <code>p</code> is repeated <code>N</code>
+times</p>
 <ul>
 <li>Eg: <code>p [*3]</code></li>
 </ul></li>
-<li>Implication:
+<li><p>Implication:</p>
 <ul>
 <li>Overlapping <code>(p |-&gt; q)</code>
 <ul>
@@ -63,7 +65,45 @@ true, but both need not end at same time</li>
 <li>Equivalent to something like <code>p ##1 (true |-&gt; q)</code></li>
 </ul></li>
 </ul></li>
+<li><p><code>$stable(sig_var)</code>: true if <code>sig_var</code> value
+didn't change</p>
+<ul>
+<li>ie, it has the same value as it had in the previous clock cycle</li>
+</ul></li>
+<li><p><code>$changed(sig)</code>: opposite of
+<code>$stable</code></p></li>
+<li><p><code>disable iff</code>: disable enforcing a property if a
+condition is met</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>property fifofull<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">@(</span><span class="kw">posedge</span> clk<span class="op">)</span> <span class="kw">disable</span> iff<span class="op">(</span>reset<span class="op">)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    fifo_full <span class="op">&amp;&amp;</span> wr_en <span class="op">&amp;&amp;</span> <span class="op">!</span>rd_en <span class="op">|=&gt;</span>  <span class="dt">$stable</span><span class="op">(</span>fifo_wr_ptr<span class="op">)</span> <span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span> property</span></code></pre></div></li>
+<li><p>Display a message if assertion failed:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">fifofull_assert:</span> assert property<span class="op">(</span>fifofull<span class="op">)</span> <span class="kw">else</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">$display</span><span class="op">(</span><span class="st">&quot;fifofull assertion failed&quot;</span><span class="op">);</span></span></code></pre></div>
+<ul>
+<li>Source: <a
+href="https://verificationacademy.com/forums/t/fifo-module-assertion/47471">https://verificationacademy.com/forums/t/fifo-module-assertion/47471</a></li>
+</ul></li>
+<li><p>onehot: only one bit is high</p></li>
+<li><p>onehot0: only one bit is low</p></li>
+<li><p><code>$rose(sig_var)</code>: true if <code>sig_var</code> has
+made a 0 to 1 transition</p></li>
+<li><p><code>$fell(sig)</code>: true if <code>sig</code> made a 1 to 0
+transition</p></li>
+<li><p>$countbits(signal, 1): count matching bits</p></li>
+<li><p>sig throughout operation: <code>sig</code> true throughout
+operation</p></li>
 </ul>
+<section id="temporal-operators" class="level2">
+<h2>Temporal operators</h2>
+<ul>
+<li>s<sub>eventually</sub></li>
+<li>until</li>
+</ul>
+</section>
 <section id="terms" class="level2">
 <h2>Terms</h2>
 <ul>
@@ -73,6 +113,17 @@ true, but both need not end at same time</li>
 <ul>
 <li>Something that is only occassionally true</li>
 <li>Kind of like coverage in tests</li>
+</ul></li>
+</ul>
+</section>
+<section id="examples" class="level2">
+<h2>Examples</h2>
+<ul>
+<li>Request must be followed by grant
+<ul>
+<li>req |=&gt; grant: grant given on the very next cycle</li>
+<li>req |=&gt; s<sub>eventually</sub> grant: LTL would be like □(req →
+◇grant)</li>
 </ul></li>
 </ul>
 </section>

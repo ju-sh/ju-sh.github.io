@@ -1,2 +1,3 @@
+2026-08-07T00:00:00+00:00	Offline Malayalam speech-to-text | https://ju-sh.github.io/blog/asr-mal.html
 2026-07-07T00:00:00+00:00	Making a debian package | https://ju-sh.github.io/blog/debian-elisp-packaging.html
 2026-07-04T00:00:00+00:00	NFA plus vs star | https://ju-sh.github.io/blog/nfa-plus.html

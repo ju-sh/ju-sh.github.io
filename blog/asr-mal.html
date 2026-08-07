@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="keywords" content="ai" />
+  <title>Offline Malayalam speech-to-text</title>
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
+</head>
+<body>
+
+
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
+
+<header id="title-block-header">
+      <h1 class="title">Offline Malayalam speech-to-text</h1>
+    </header>
+
+<ul>
+    <li>Date created: 07-Aug-2026</li>
+    </ul>
+
+<div class="keywords-bar">
+  <p>
+    Tags: / 
+    <code class="keyword-item">
+      <a href="https://ju-sh.github.io/blog/tags.html#ai">ai</a>
+    </code> /
+  <p>
+</div>
+
+
+<div id="description">
+Experience of getting a Malayalam speech-to-text flow to work.
+</div>
+
+<hr/>
+
+<main id="content-container">
+<p>A group named <a href="https://ai4bharat.iitm.ac.in/">AI4Bharat</a>
+at IIT Madras has made <a
+href="https://ai4bharat.iitm.ac.in/areas/model/ASR/IndicConformer/">IndicConformer</a>,
+a set of models for automatic speech recognition (ASR) tailored towards
+Indian languages. I had been on the look out for a practically usable
+ASR for Malayalam. And the one from Indicconformer is quite nice. But
+the thing is, the instructions to set it up has become outdated. I guess
+the students who worked on it has moved on.</p>
+<p>I could get it to work after trying out a few suggestions from google
+gemini. Here, I describe what worked.</p>
+<section id="setup" class="level1">
+<h1>Setup</h1>
+<section id="the-model" class="level2">
+<h2>The model</h2>
+<p>The Indicconformer model for Malayalam ASR is made using a set of
+libraries from Nvidia called <a
+href="https://www.nvidia.com/en-in/ai-data-science/products/nemo/">NeMo</a>.
+Download the model from <a
+href="https://huggingface.co/collections/ai4bharat/indicconformer">here</a>.
+Since I am trying Malayalam, I am going with <a
+href="https://huggingface.co/ai4bharat/indicconformer_stt_ml_hybrid_ctc_rnnt_large"><code
+class="verbatim">indicconformer_stt_ml_hybrid_ctc_rnnt_large</code></a>.
+Just keep this model in a convenient location. We will be using this
+after everything else is set up.</p>
+</section>
+<section id="the-repo" class="level2">
+<h2>The repo</h2>
+<p>Once we have the model, we need a pipeline that can make use of it.
+Folks behind IndicConformerASR have made a repo in <a
+href="https://github.com/AI4Bharat/IndicConformerASR">here</a> with the
+required material. We can use that.</p>
+<p>I am on Debian 13, where the python version is 3.13.5. But the repo
+setup won't work with newer python. So I used pyenv to get hold of the
+older python 3.10.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># export PYENV_ROOT=&quot;$HOME/.pyenv</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pyenv</span> install 3.10.16</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">pyenv</span> init <span class="at">-</span><span class="va">)</span><span class="st">&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Change python for current shell session</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">pyenv</span> shell 3.10.16</span></code></pre></div>
+<p>To avoid clutter, we can use a virtual environment:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv nemo</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> nemo/bin/activate</span></code></pre></div>
+<p>and start off by installing a few packages:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip3</span> install torch torchvision torchaudio</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip3</span> install packaging</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pip3</span> install huggingface_hub==0.23.2</span></code></pre></div>
+<p>Now clone the repo and do the rest of the commands mentioned in the
+project's <a
+href="https://ai4bharat.iitm.ac.in/areas/model/ASR/IndicConformer/">website</a>.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Commit: 8dce88cf8e94963e2033c3137f7b9993b51db88a (on branch &#39;nemo-v2&#39;)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/AI4Bharat/NeMo.git</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> NeMo</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> reinstall.sh</span></code></pre></div>
+<p>This might take a while to finish.</p>
+</section>
+<section id="tweaks" class="level2">
+<h2>Tweaks</h2>
+<p>Now we make a few small tweaks to make the code from the repo
+work.</p>
+<section id="neptunelogger" class="level3">
+<h3>NeptuneLogger</h3>
+<p>Apparently, newer pytorch don't expose the name
+<code>NeptuneLogger</code> from a module that this repo expects. So got
+to edit this file: <code
+class="verbatim">nemo/utils/exp_manager.py</code></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Change this:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># from pytorch_lightning.loggers import MLFlowLogger, NeptuneLogger, TensorBoardLogger, WandbLogger</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># To this:</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pytorch_lightning.loggers <span class="im">import</span> MLFlowLogger, TensorBoardLogger, WandbLogger</span></code></pre></div>
+<p>Without this, we will get an error like this:</p>
+<pre><code>ImportError: cannot import name &#39;NeptuneLogger&#39; from &#39;pytorch_lightning.loggers&#39; (nemo/lib/python3.10/site-packages/pytorch_lightning/loggers/__init__.py)
+</code></pre>
+</section>
+<section id="packages" class="level3">
+<h3>Packages</h3>
+<p>Run this command to get the right set of package versions. (Output of
+<code>pip freeze</code> is mentioned in <a
+href="https://github.com/AI4Bharat/IndicConformerASR/issues/27">this</a>
+github issue.)</p>
+<pre><code>pip install &quot;datasets&gt;=2.19.0,&lt;3.0.0&quot;
+</code></pre>
+<p>And we are done tweaking, and the installation procedure is
+complete.</p>
+</section>
+</section>
+</section>
+<section id="interface" class="level1">
+<h1>Interface</h1>
+<p>Now that we have got the model ready to be run, we need an interface
+to use it. I figured a client-server setup would be good. With the
+server having the model loaded and ready to go, and the client asking it
+to transcribe audio whenever needed.</p>
+<p>Gemini suggested fastapi and uvicorn. And I adapted it. It kind of
+looks as shown in <a href="#f-interface">Figure 1</a>.</p>
+<figure id="f-interface" class="fig-container">
+  <img
+    src="https://github.com/ju-sh/blog-imgs/blob/master/a_000-052/interface.svg?raw=true"
+    title="Interface architecture"
+    alt="Interface architecture. A client-server architecture"
+    style="width: 100%;" />
+  <figcaption>
+    <span class="fc-pre">
+      Figure 1
+    </span>:
+    <span class="fc-title">
+      Schematic of the interface architecture
+    </span>
+  </figcaption>
+</figure>
+
+<p>Steps involved:</p>
+<ol>
+<li>The user speaks</li>
+<li>ffmpeg records it into a <code class="verbatim">wav</code> file
+(NeMo expects 16KHz mono audio)</li>
+<li>Client hits the <code class="verbatim">/transcribe</code> end point
+on the server</li>
+<li>Server transcribes audio to text and appends it to a pre-determined
+text file</li>
+</ol>
+<p>We need a few additional packages for the server:</p>
+<pre><code>pip install fastapi uvicorn
+</code></pre>
+<section id="server" class="level2">
+<h2>Server</h2>
+<p>The server will load the model and keep it ready to service requests
+for transcription. It takes a while for the model to be loaded and the
+latency would be too much if we are to load the model from scratch each
+time.</p>
+<p>Now for the python. Server looks like this:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> contextlib <span class="im">import</span> asynccontextmanager</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastapi <span class="im">import</span> FastAPI, File, UploadFile, HTTPException</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nemo.collections.asr <span class="im">as</span> nemo_asr</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>AUDIO_FILE_PATH <span class="op">=</span> <span class="st">&quot;out-stt-mal.wav&quot;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>MODEL_PATH <span class="op">=</span> <span class="st">&quot;/media/famubu/f9b396f5-5f46-465a-a1ee-5b008f58d5f9/data/Soft/ai-models/indicconformer_stt_ml_hybrid_rnnt_large.nemo&quot;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>asr_model <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Lifespan context manager: loads model once on server start</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="at">@asynccontextmanager</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="cf">async</span> <span class="kw">def</span> lifespan(app: FastAPI):</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> asr_model</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Loading IndicConformer model into memory...&quot;</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    device <span class="op">=</span> torch.device(<span class="st">&quot;cuda&quot;</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">&quot;cpu&quot;</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Load model and configure for fast CTC decoding</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    asr_model <span class="op">=</span> nemo_asr.models.EncDecCTCModelBPE.restore_from(restore_path<span class="op">=</span>MODEL_PATH)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    asr_model.change_decoding_strategy(decoder_type<span class="op">=</span><span class="st">&quot;ctc&quot;</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    asr_model.<span class="bu">eval</span>()</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    asr_model.freeze()</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    asr_model <span class="op">=</span> asr_model.to(device)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;✅ Model successfully loaded on </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss">!&quot;</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Shutting down STT server...&quot;</span>)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> FastAPI(title<span class="op">=</span><span class="st">&quot;Malayalam STT Fast API Server&quot;</span>, lifespan<span class="op">=</span>lifespan)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="at">@app.post</span>(<span class="st">&quot;/transcribe&quot;</span>)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="cf">async</span> <span class="kw">def</span> transcribe_audio():</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    transcriptions <span class="op">=</span> asr_model.transcribe([AUDIO_FILE_PATH], batch_size<span class="op">=</span><span class="dv">1</span>, language_id<span class="op">=</span><span class="st">&quot;ml&quot;</span>)</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> transcriptions[<span class="dv">0</span>] <span class="cf">if</span> transcriptions <span class="cf">else</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(text, <span class="bu">list</span>) <span class="kw">and</span> <span class="bu">len</span>(text) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>        text <span class="op">=</span> text[<span class="dv">0</span>]</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">&quot;text&quot;</span>: text}</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> uvicorn</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    uvicorn.run(app, host<span class="op">=</span><span class="st">&quot;127.0.0.1&quot;</span>, port<span class="op">=</span><span class="dv">8000</span>)</span></code></pre></div>
+<p>We need the 'patch' for numpy in the beginning of the above script to
+avoid this error:</p>
+<pre><code>AttributeError: `np.sctypes` was removed in the NumPy 2.0 release. Access dtypes explicitly instead.
+</code></pre>
+<p>This server can be started with:</p>
+<pre><code>python3 -m uvicorn server:app --host 127.0.0.1 --port 8000 &lt; /dev/null
+</code></pre>
+</section>
+<section id="client" class="level2">
+<h2>Client</h2>
+<p>The client would accept the audio input from the user, produce a
+recording of it as a 16KHz mono wav file, and request the server to
+transcribe it. The resultant text from the server is appended to a
+pre-determined file.</p>
+<p>I made it as a simple bash script:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># File name: client.sh</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="va">WAV_OUT</span><span class="op">=</span><span class="st">&quot;out.wav&quot;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="va">TXT_OUT</span><span class="op">=</span><span class="st">&quot;out.txt&quot;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> record</span> <span class="kw">{</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;Recording...&quot;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">ffmpeg</span> <span class="at">-y</span> <span class="at">-f</span> pulse <span class="at">-i</span> default <span class="at">-ac</span> 1 <span class="at">-ar</span> 16000 <span class="st">&quot;</span><span class="va">$WAV_OUT</span><span class="st">&quot;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;✅ Recording complete.&quot;</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> transcribe</span> <span class="kw">{</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;Transcribing...&quot;</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="ex">curl</span> <span class="at">-X</span> POST <span class="st">&quot;http://127.0.0.1:8000/transcribe&quot;</span> <span class="kw">|</span> <span class="ex">jq</span> <span class="at">-r</span> .text <span class="op">&gt;&gt;</span> <span class="st">&quot;</span><span class="va">$TXT_OUT</span><span class="st">&quot;</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;✅ Transcribing complete.&quot;</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="ex">record</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="ex">transcribe</span></span></code></pre></div>
+<p>Each time we need speech transcribed, we can run the client with:</p>
+<pre><code>bash client.sh
+</code></pre>
+<p>This will initiate a recording. Send a <code>Ctrl-C</code> when we
+are done speaking so that the client can send the recording to the
+server. Of course, the server has to be active before the client can be
+run successfully.</p>
+<p>If we already have a recording at <code>out.wav</code>, we can
+manually send a POST request to server to transcribe it. Like this:</p>
+<pre><code>curl -X POST &quot;http://127.0.0.1:8000/transcribe&quot; | jq -r .text
+</code></pre>
+</section>
+</section>
+<section id="example-run" class="level1">
+<h1>Example run</h1>
+<p>We got everything ready. Let us try the ASR.</p>
+<p>First we start the server:</p>
+<pre><code>python3 -m uvicorn server:app --host 127.0.0.1 --port 8000 &lt; /dev/null
+</code></pre>
+<p>Once the server is up, we initiate a speech-to-text request:</p>
+<pre><code>bash client.sh
+</code></pre>
+<p>It will make a recording at <code>out.wav</code> and then append the
+text to <code>out.txt</code>.</p>
+<p>This is what I spoke to try it out:</p>
+<blockquote style="font-size: 1.75em;">
+<p>ഈ സംവിധാനം പ്രവർത്തനക്ഷമമാണെന്ന് ഞാൻ പ്രതീക്ഷിക്കുന്നു</p>
+</blockquote>
+
+<p>That's it. Enjoy!</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>The model does ASR quite well if we speak formal Malayalam. But
+accuracy drops drastically if we try colloquial Malayalam of any region.
+But this is definitely the best Malayalam ASR that I have come across so
+far and am happy with it. It can even transcribe place names, like
+കോഴിക്കോട്. Hope you too can try it out and that Indicconformer folks
+would keep updating their repos.</p>
+<p>Thanks to:</p>
+<ul>
+<li>Team at AI4Bharat who worked on IndicConformer</li>
+<li>Google Gemini</li>
+</ul>
+</section>
+<section id="versions" class="level1">
+<h1>Versions</h1>
+<ul>
+<li><a
+href="https://github.com/AI4Bharat/NeMo.git">https://github.com/AI4Bharat/NeMo.git</a>
+<ul>
+<li>Commit: <code
+class="verbatim">8dce88cf8e94963e2033c3137f7b9993b51db88a</code> (on
+branch <code class="verbatim">nemo-v2</code>)</li>
+</ul></li>
+<li><a
+href="https://huggingface.co/ai4bharat/indicconformer_stt_ml_hybrid_ctc_rnnt_large"><code
+class="verbatim">indicconformer_stt_ml_hybrid_ctc_rnnt_large</code></a>
+<ul>
+<li>Commit: <code
+class="verbatim">e96d81e42e5fe73f282b0322d422a48b461a4ca6</code></li>
+</ul></li>
+<li><code class="verbatim">python 3.10.16</code></li>
+<li><code class="verbatim">ffmpeg v7.1.4</code></li>
+<li><code class="verbatim">curl v8.14.1</code></li>
+<li><code class="verbatim">jq v1.7</code></li>
+</ul>
+</section>
+<section id="addendum-ctc-vs-rnn-t-decoding" class="level1">
+<h1>Addendum: CTC vs RNN-T decoding</h1>
+<p>Both are algorithms used for ASR. NeMo models can have both, like in
+the case of the <code
+class="verbatim">Indicconformer_Stt_Ml_Hybrid_Rnnt_Large</code> model
+that we used. CTC is said to be lighter, so I went with CTC
+decoding.</p>
+<table>
+<thead>
+<tr class="header">
+<th>CTC</th>
+<th>RNN-T</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Connectionist Temporal Classification</td>
+<td>Recurrent Neural Network Transducer</td>
+</tr>
+<tr class="even">
+<td>Faster and lighter</td>
+<td>Slower and heavier</td>
+</tr>
+<tr class="odd">
+<td>Bit less accurate</td>
+<td>More accurate</td>
+</tr>
+<tr class="even">
+<td>Smaller model</td>
+<td>Larger model</td>
+</tr>
+<tr class="odd">
+<td>Does not rely on past output</td>
+<td>Considers previous output too</td>
+</tr>
+</tbody>
+</table>
+<p>It would be nice to have the model as onnx files too, since they even
+more lightweight. But couldn't find any corresponding to the
+Indicconformer models online.</p>
+</section>
+</main>
+</body>
+</html>

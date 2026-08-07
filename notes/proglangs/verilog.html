@@ -790,6 +790,74 @@ class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb12-1"><a
 `endif
 </code></pre>
 </section>
+<section id="linters" class="level2">
+<h2>Linters</h2>
+<section id="svlint" class="level3">
+<h3>svlint</h3>
+<p><a
+href="https://github.com/dalance/svlint">https://github.com/dalance/svlint</a></p>
+<ul>
+<li>Configuration file: <code class="verbatim">.svlint.toml</code></li>
+<li>Get a template config file:
+<code>svlint --example &gt; .svlint.toml</code></li>
+<li>Newer svlint may change names of variables in config file. Can use:
+<code>svlint --update .svlint.toml &gt; new.toml</code></li>
+</ul>
+</section>
+<section id="verible" class="level3">
+<h3>Verible</h3>
+<p><a
+href="https://github.com/chipsalliance/verible/tree/master/verible/verilog/tools/lint">https://github.com/chipsalliance/verible/tree/master/verible/verilog/tools/lint</a></p>
+<p>For ignoring a linter error, use:
+<code>// verilog_lint: waive rule-name</code> before that line.</p>
+<pre><code>$ verible-verilog-lint tb/*
+
+tb/ifc.sv:18:1-2: Remove trailing spaces. [Style: trailing-spaces] [no-trailing-spaces]
+tb/ifc.sv:33:31: Remove trailing spaces. [Style: trailing-spaces] [no-trailing-spaces]
+tb/scoreboard.sv:26:87: Remove trailing spaces. [Style: trailing-spaces] [no-trailing-spaces]
+tb/scoreboard.sv:30:101-119: Line length exceeds max: 100; is: 119 [Style: line-length] [line-length]
+tb/scoreboard.sv:30:119: Remove trailing spaces. [Style: trailing-spaces] [no-trailing-spaces]
+tb/top.sv:31:15: Remove trailing spaces. [Style: trailing-spaces] [no-trailing-spaces]
+</code></pre>
+<p>Autofix: verible linter can try to auto-fix errors:</p>
+<ul>
+<li><p><code>--autofix_output_file</code> path for writing diff. Patch
+is written to <code>stdout</code> if not given</p></li>
+<li><p>Eg: <code>--autofix=inplace-interactive</code></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>no</td>
+<td>No fix is is shown/applied.</td>
+</tr>
+<tr class="even">
+<td>patch-interactive</td>
+<td>Interactive choice of fixes that are written as unified diff to
+–autofix<sub>outputfile</sub>.</td>
+</tr>
+<tr class="odd">
+<td>inplace-interactive</td>
+<td>Interactive choice of fixes that are applied to the original file in
+place. (modifies input)</td>
+</tr>
+<tr class="even">
+<td>patch</td>
+<td>All available fixes are written as unified diff.</td>
+</tr>
+<tr class="odd">
+<td>inplace</td>
+<td>All available fixes are applied to the original file in place.
+(modifies input)</td>
+</tr>
+<tr class="even">
+<td>generate-waiver</td>
+<td>Generates a waiver rule for each violation, as a temporary fix.</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+</section>
+</section>
 </section>
 </main>
 </body>

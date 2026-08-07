@@ -822,20 +822,20 @@ like a staging area for debian packages.</p>
 <p>Our package can be <a
 href="https://www.debian.org/doc/manuals/maint-guide/upload.en.html">uploaded</a>
 to <code class="verbatim">mentors.debian.net</code> with:</p>
-<pre><code>$ # Can use --force if reuploading without version change
-$ dput mentors speed-type_1.7-1_amd64.changes
+<pre><code>$ # Can use `dput --force` if re-uploading without version change
+$ dput mentors emacs-speed-type_1.7-1_amd64.changes
 
 Checking signature on .changes
-gpg: /home/usesr/speed-type/speed-type_1.7-1_amd64.changes: Valid signature from 26AF96E2D752882F
+gpg: /home/user/speed-type/emacs-speed-type_1.7-1_amd64.changes: Valid signature from 26AF96E2D752882F
 Checking signature on .dsc
-gpg: /home/user/speed-type/speed-type_1.7-1.dsc: Valid signature from 26AF96E2D752882F
+gpg: /home/user/speed-type/emacs-speed-type_1.7-1.dsc: Valid signature from 26AF96E2D752882F
 Uploading to mentors (via https to mentors.debian.net):
-  Uploading speed-type_1.7-1.dsc: done.
-  Uploading speed-type_1.7.orig.tar.xz: done.
-  Uploading speed-type_1.7-1.debian.tar.xz: done.
+  Uploading emacs-speed-type_1.7-1.dsc: done.
+  Uploading emacs-speed-type_1.7.orig.tar.xz: done.
+  Uploading emacs-speed-type_1.7-1.debian.tar.xz: done.
   Uploading elpa-speed-type_1.7-1_all.deb: done.
-  Uploading speed-type_1.7-1_amd64.buildinfo: done.
-  Uploading speed-type_1.7-1_amd64.changes: done.
+  Uploading emacs-speed-type_1.7-1_amd64.buildinfo: done.
+  Uploading emacs-speed-type_1.7-1_amd64.changes: done.
 Successfully uploaded packages.
 </code></pre>
 <p>You should get an acknowledgement mail from <code
