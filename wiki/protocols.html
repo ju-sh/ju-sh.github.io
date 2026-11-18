@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>protocols</title>
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
+</head>
+<body>
+
+
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
+
+<header id="title-block-header">
+      <h1 class="title">protocols</h1>
+    </header>
+
+<ul>
+    <li>Date created: 26-Aug-2026</li>
+    </ul>
+
+
+
+
+<hr/>
+
+<main id="content-container">
+<section id="pcie" class="level1">
+<h1>PCIe</h1>
+<p>Peripheral Component Internconnect express</p>
+<ol>
+<li>Application layer</li>
+<li>Transaction layer: TLP packets</li>
+<li>Data-link layer: DLLP packets</li>
+<li>Physical layer
+<ul>
+<li>Logical sub-block</li>
+<li>Electrical sub-block</li>
+</ul></li>
+</ol>
+<p>—</p>
+<p>States:</p>
+<ul>
+<li>D1, D2, D3hot</li>
+<li>L0: Active</li>
+<li>L1: Inactive (low-power)</li>
+</ul>
+</section>
+<section id="apb" class="level1">
+<h1>APB</h1>
+<p>APB3: <a
+href="https://web.eecs.umich.edu/~prabal/teaching/eecs373-f12/readings/ARM_AMBA3_APB.pdf">https://web.eecs.umich.edu/~prabal/teaching/eecs373-f12/readings/ARM_AMBA3_APB.pdf</a></p>
+<p>Features:</p>
+<ul>
+<li>No pipelining</li>
+<li>Involves a master</li>
+</ul>
+<p>Signals:</p>
+<ul>
+<li>PCLK: clock</li>
+<li>PRESETn: async reset (active low)</li>
+<li>PADDR: Address</li>
+<li>PSELx: Select. Choose a slave peripheral</li>
+<li>PENABLE: Indicate non-first cycles of an APB transfer (ie, after
+setup phase)</li>
+<li>PWRITE: High for write, low for read</li>
+<li>PWDATA: Data to write</li>
+<li>PRDATA: Data being read</li>
+<li>PREADY: Slave can turn this low if it needs more time</li>
+<li>PSLVERR: APB transfer error</li>
+</ul>
+</section>
+<section id="uart" class="level1">
+<h1>UART</h1>
+<p>No clock, so baud rate has to be previously agreed upon.</p>
+<ul>
+<li>TX: Transmit</li>
+<li>RX: Receive</li>
+<li>Ground</li>
+</ul>
+</section>
+<section id="spi" class="level1">
+<h1>SPI</h1>
+</section>
+</main>
+</body>
+</html>

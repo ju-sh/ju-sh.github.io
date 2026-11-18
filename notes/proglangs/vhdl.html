@@ -42,9 +42,64 @@
 </ul></li>
 <li>Named after the US DoD project that created it: VHSIC program</li>
 </ul>
-<section id="comments" class="level2">
-<h2>Comments</h2>
-<p>Part of a line that comes after a <code>--</code>.</p>
+<section id="vhdl-1" class="level1">
+<h1>VHDL</h1>
+<section id="general" class="level2">
+<h2>General</h2>
+<ul>
+<li>Comments: Part of a line that comes after a <code>--</code>.</li>
+<li>Import other vhdl files: <code>use</code> (like <code>import</code>
+in systemverilog)</li>
+</ul>
+</section>
+<section id="vhdl-vs-verilog" class="level2">
+<h2>VHDL vs verilog</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Verilog</th>
+<th>VHDL</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>posedge</td>
+<td>rising<sub>edge</sub>(clk)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>negedge</td>
+<td>falling<sub>edge</sub>(clk) ??</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>wire</td>
+<td>variable</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>=</td>
+<td>:=</td>
+<td>Blocking assignment</td>
+</tr>
+<tr class="odd">
+<td>&lt;=</td>
+<td>&lt;=</td>
+<td>Non-blocking assignment</td>
+</tr>
+<tr class="even">
+<td>vec[0]</td>
+<td>vec(0)</td>
+<td>Vector indexing</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="reserved-words" class="level2">
 <h2>Reserved words</h2>
@@ -451,6 +506,18 @@ class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb12-1"><a href=
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">end parity;</span></span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="cf">end refpack;</span></span></code></pre></div>
+</section>
+<section id="assignments" class="level2">
+<h2>Assignments</h2>
+<ul>
+<li><code>'0</code> sets all bits to <code>0</code>
+<ul>
+<li>From VHDL-2008 onwards, is equivalent to
+<code>(others =&gt; '0)</code></li>
+</ul></li>
+<li><code>others</code> syntax still useful for partial assignments like
+<code>status &lt;= (7 =&gt; '1', others =&gt; '0');</code></li>
+</ul>
 </section>
 <section id="case-switch-statement" class="level2">
 <h2>case ('switch') statement</h2>
@@ -1186,7 +1253,7 @@ href="https://github.com/m-kru/go-hdl">https://github.com/m-kru/go-hdl</a></li>
 </section>
 <section id="glossary" class="level2">
 <h2>Glossary</h2>
-<section id="general" class="level3">
+<section id="general-1" class="level3">
 <h3>General</h3>
 <dl>
 <dt>ASIC</dt>
@@ -1234,6 +1301,30 @@ in which order will the process blocks be run?
 <li>In the case of simulation, it's implementation defined.</li>
 </ul></li>
 </ul>
+</section>
+</section>
+<section id="uvvm" class="level1">
+<h1>UVVM</h1>
+<p><a
+href="https://emlogic.no/vhdl-conventions/">https://emlogic.no/vhdl-conventions/</a></p>
+<section id="terms-1" class="level2">
+<h2>Terms</h2>
+<ul>
+<li>pif: processor interface</li>
+</ul>
+</section>
+<section id="variable-naming-conventions" class="level2">
+<h2>Variable naming conventions</h2>
+<ul>
+<li>GC_ (prefix): generic constant</li>
+<li>C_ (prefix): constant</li>
+<li>s_: signal</li>
+<li>v_: variable</li>
+<li>a: auxiliary register</li>
+<li>wo: write only</li>
+<li>ro: read only</li>
+</ul>
+</section>
 </section>
 </main>
 </body>

@@ -355,7 +355,6 @@ href="https://en.wikipedia.org/wiki/Stub_Series_Terminated_Logic">https://en.wik
 <li><a
 href="https://vhdlwhiz.com/terminology/setup-and-hold-time/">https://vhdlwhiz.com/terminology/setup-and-hold-time/</a></li>
 </ul></li>
-<li>DRC (Design Rule Check)</li>
 <li>How to undo soldering</li>
 <li>IO pin planning (vivado)</li>
 <li>Clock analysis (vivado)</li>
@@ -817,6 +816,50 @@ only one execution unit)</li>
 href="https://www.ibm.com/blog/fpga-vs-gpu/">https://www.ibm.com/blog/fpga-vs-gpu/</a></li>
 <li><a
 href="https://blog.purestorage.com/purely-educational/gpus-vs-fpgas-whats-the-difference/">https://blog.purestorage.com/purely-educational/gpus-vs-fpgas-whats-the-difference/</a></li>
+</ul></li>
+</ul>
+</section>
+<section id="physical-design-process" class="level2">
+<h2>Physical design process</h2>
+<ul>
+<li>LSB: Layout Signed-off to Base
+<ul>
+<li>Design has been fixed</li>
+<li>Base layers can be made now</li>
+<li>Metal layers can still change</li>
+</ul></li>
+<li>LSC: Layout Signed-off to Metal/Complete
+<ul>
+<li>Metal layers have also been fixed,</li>
+<li>Final physical design verification can now begin</li>
+</ul></li>
+<li>LSD: Layout Signed-off to Tapeout/Delivery
+<ul>
+<li>Final physical design verification passed</li>
+<li>Everything has been fixed</li>
+<li>Produce final GDSII file</li>
+</ul></li>
+<li>Tapeout
+<ul>
+<li>Send design to fab</li>
+<li>Sign NDA with fab, etc</li>
+</ul></li>
+</ul>
+</section>
+<section id="drclvs" class="level2">
+<h2>DRC/LVS</h2>
+<p>For physical design verification</p>
+<ul>
+<li>Design Rule Check (DRC)
+<ul>
+<li>Can the design be made as per the fab contraints?</li>
+<li>Are the components too closely spaced? If so, need redesign</li>
+</ul></li>
+<li>Layout vs Schematic (LVS)
+<ul>
+<li>Extract netlist from final layout, compares it with netlist of
+original design</li>
+<li>See if the connections match</li>
 </ul></li>
 </ul>
 </section>

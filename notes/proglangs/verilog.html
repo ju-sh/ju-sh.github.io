@@ -781,6 +781,104 @@ clock</p>
 class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>clocking drv_cb <span class="op">@(</span><span class="kw">posedge</span> clk<span class="op">);</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">output</span> a<span class="op">,</span> b<span class="op">,</span> cin<span class="op">;</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>endclocking</span></code></pre></div>
+<section id="signal-skewing" class="level3">
+<h3>Signal skewing</h3>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>clocking cb <span class="op">@(</span><span class="kw">posedge</span> clk<span class="op">);</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">default</span> <span class="dt">input</span> <span class="bn">#1</span>step <span class="dt">output</span> <span class="bn">#1</span>ns<span class="op">;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">output</span> rst_n<span class="op">;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">output</span> wr_en<span class="op">,</span> wdata<span class="op">;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">output</span> rd_en<span class="op">;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">input</span>  full<span class="op">,</span> empty<span class="op">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">input</span>  rdata<span class="op">;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>endclocking</span></code></pre></div>
+<ul>
+<li>#1step means exactly the moment before the clock changes
+<ul>
+<li>Deals with the 'pre-poned region'</li>
+<li>Usually only used for the input. ie, before</li>
+<li>Smallest simulation precision
+<ul>
+<li>Would be 1ps if timescale 1ns/1ps</li>
+</ul></li>
+</ul></li>
+<li>#1ns means exactly 1ns before/after the clock changes</li>
+</ul>
+<p>From gemini:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th><code class="verbatim">#1ns</code></th>
+<th><code class="verbatim">#1step</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Meaning</strong></td>
+<td>Look back 1 nanosecond in simulation time.</td>
+<td>Look back to the exact moment <em>just before</em> the clock
+edge.</td>
+</tr>
+<tr class="even">
+<td><strong>Timescale dependent?</strong></td>
+<td><strong>Yes</strong> (Requires precise timescale definitions like =
+`timescale 1ns/1ps =).</td>
+<td><strong>No</strong> (Independent of timescale).</td>
+</tr>
+<tr class="odd">
+<td><strong>Use case</strong></td>
+<td>Modeling real physical delays.</td>
+<td>Testbench sampling to avoid race conditions.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="simulation-semantics" class="level2">
+<h2>Simulation semantics</h2>
+<p>A time slot in systemverilog simulations are divided into 17 ordered
+regions.</p>
+<ul>
+<li>9 regions: for systemverilog execution</li>
+<li>8 regions: for PLI</li>
+</ul>
+<p>Allows for predictable semantics.</p>
+<p>See: <a
+href="https://verificationguide.com/systemverilog/systemverilog-scheduling-semantics/">https://verificationguide.com/systemverilog/systemverilog-scheduling-semantics/</a></p>
+<ul>
+<li>Preponed
+<ul>
+<li>Signal values for assertions are sampled</li>
+<li>Executed once per time slot</li>
+<li>Done right at the beginning of a time slot</li>
+</ul></li>
+<li>[Pre-active]</li>
+<li>Active
+<ul>
+<li>Execute $display, $finish commands</li>
+<li>Flip flop change state ??</li>
+</ul></li>
+<li>Observed
+<ul>
+<li>Assertions get evaluated</li>
+</ul></li>
+<li>Reactive</li>
+<li>Postponed</li>
+</ul>
+</section>
+<section id="pli" class="level2">
+<h2>PLI</h2>
+<ul>
+<li>Programming Language Interface</li>
+<li>Mechanism built into verilog</li>
+<li>Allows external C/C++ tools access info for a running
+simulation</li>
+<li>DPI: Modern version of PLI for systemverilog ??
+<ul>
+<li>Direct Programming Interface</li>
+</ul></li>
+</ul>
 </section>
 <section id="macros-1" class="level2">
 <h2>Macros</h2>

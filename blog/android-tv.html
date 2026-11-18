@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="keywords" content="android" />
+  <title>Cleaning up an Android TV</title>
+  <link rel="stylesheet" type="text/css" href="https://ju-sh.github.io/static/css/main.css" />
+</head>
+<body>
+
+
+<nav id="navbar">
+  <a href="https://ju-sh.github.io">Home</a>
+   | 
+  <a href="https://ju-sh.github.io/blog/index.html">Blog</a>
+   | 
+  <a href="https://ju-sh.github.io/wiki/index.html">Wiki</a>
+   | 
+  <a href="https://ju-sh.github.io/about.html">About</a>
+</nav>
+
+<header id="title-block-header">
+      <h1 class="title">Cleaning up an Android TV</h1>
+    </header>
+
+<ul>
+    <li>Date created: 10-Sep-2026</li>
+    </ul>
+
+<div class="keywords-bar">
+  <p>
+    Tags: / 
+    <code class="keyword-item">
+      <a href="https://ju-sh.github.io/blog/tags.html#android">android</a>
+    </code> /
+  <p>
+</div>
+
+
+<div id="description">
+First steps towards de-bloating an android TV.
+</div>
+
+<hr/>
+
+<main id="content-container">
+<p>I recently got temporary access to an old Redmi TV running Android.
+YouTube was too annoying with ads, so I set off to make it more
+friendly. Started off with taking <a
+href="https://github.com/yuliskov/SmartTube">SmartTube</a> out for a
+spin, then went a bit more in the direction of cleaning up the TV.</p>
+<p>I tried to minimize apps with ads, telemetry, unnecessary internet
+access, etc. Open source apps are generally better from the perspective
+than those available in the default Play store.</p>
+<section id="expectations-from-tv" class="level1">
+<h1>Expectations from TV</h1>
+<p>When compared to normal TVs, 'smart'-TVs should be an upgrade, but it
+often feels like a downgrade. Devices marketed as 'smart' are often
+smart more in the <a
+href="https://www.youtube.com/watch?v=6IFVTcM28KA">favour of targeted
+ads</a> than in the improvement of user experience.</p>
+<p>Anyway, I wanted the android TV to be at least as useful as a normal
+TV. I targeted the following:</p>
+<ul>
+<li>Play local video files</li>
+<li>Youtube without ads</li>
+<li>Connect to the internet only if it needs to.
+<ul>
+<li>No need to pull a different wallpaper every 10 minutes</li>
+<li>Disable telemetry</li>
+<li>Since google apps have in-built telemetry-like stuff, avoid google
+apps as much as possible</li>
+</ul></li>
+<li>Remove adware and unwanted apps</li>
+<li>Install desired apps
+<ul>
+<li>App manager</li>
+<li>File manager</li>
+<li>File sharing:</li>
+<li>Media player</li>
+</ul></li>
+</ul>
+</section>
+<section id="preparation" class="level1">
+<h1>Preparation</h1>
+<p>Before we can begin modifying the software in the TV effectively, we
+need to enable developer mode and set up a way for the <code
+class="verbatim">adb</code> tool to communicate with the OS in the
+TV.</p>
+<p>Overall, the steps involved would be something like this:</p>
+<ol>
+<li>Enable developer mode</li>
+<li>Enable USB debugging</li>
+<li>Connect to TV from computer:
+<code>adb connect &lt;ip-addr-of-tv&gt;</code></li>
+<li>Install apk file: <code>adb install &lt;apk-name&gt;</code></li>
+<li>Disable USB debugging</li>
+<li>Disable developer mode</li>
+</ol>
+<p>Now that we have an idea of what to do, let's get on with it!</p>
+</section>
+<section id="connect-to-tv" class="level1">
+<h1>Connect to TV</h1>
+<p>We can connect to the TV from a laptop with <code
+class="verbatim">adb</code> installed in it. Ensure that both the laptop
+and the TV are connected to the same WiFi network.</p>
+<p>First, find out the IP address of the TV. This will be visible in the
+settings. Suppose the IP address of the TV is <code
+class="verbatim">192.168.29.101</code>.</p>
+<p>We can connect to the TV from the laptop with:</p>
+<pre><code>adb connect 192.168.29.101
+* daemon not running; starting now at tcp:5037
+* daemon started successfully
+failed to authenticate to 192.168.29.101:5555
+</code></pre>
+<p>This will make the TV to prompt to you to accept the connection. Upon
+allowing this connection, we can install / uninstall / enable / disable
+the apps installed in the TV. Just like in the <a
+href="./redmi-bloatware-removal.html">case of an android phone</a>.</p>
+<pre><code>$ adb connect 192.168.29.101
+already connected to 192.168.29.101:5555
+
+$ adb devices
+List of devices attached
+192.168.29.101:5555     device
+</code></pre>
+</section>
+<section id="uninstall-or-disable-unwanted-apps" class="level1">
+<h1>Uninstall or disable unwanted apps</h1>
+<p>The TV came pre-loaded with apps like Netflix, JioCinema, etc. Some
+of these apps could not be deleted without <code
+class="verbatim">adb</code>. I got rid of them since the users of the TV
+were not using them.</p>
+<p>Disabled most apps instead of uninstalling, in case they are needed
+again.</p>
+<p>Some of these apps were removable from the interface without any need
+for <code class="verbatim">adb</code>. Eg: JioCinema</p>
+<p>Anyway, I dropped in to the adb shell with:</p>
+<pre><code>adb shell
+</code></pre>
+<p>and disabled the apps with:</p>
+<pre><code># PatchWall: Redmi launcher
+pm disable-user com.mitv.tvhome.atv
+pm disable-user com.mitv.tvhome.mitvplus
+pm disable-user com.mitv.tvhome.michannel
+
+# Netflix
+pm disable-user com.netflix.ninja
+
+# Amazon alexa
+pm disable-user com.xiaomi.amazon.alexa
+
+# Amazon prime
+pm disable-user com.amazon.amazonvideo.livingroom
+
+# Mi Wallpaper
+pm disable-user com.mitv.dream
+
+# Ads and stuff
+pm disable-user com.xm.webcontent
+pm disable-user com.google.android.tvrecommendations
+pm disable-user com.google.android.partnersetup
+pm disable-user com.google.android.feedback
+pm disable-user com.xiaomi.statistic
+
+# Xiaomi updates
+pm disable-user com.xiaomi.mitv.updateservice
+
+# Youtube Music
+pm disable-user com.google.android.youtube.tvmusic
+
+# Google Play Movies and TV
+pm disable-user com.google.android.videos
+
+# Xiaomi default music player
+pm disable-user com.xiaomi.mimusic2
+
+# Disable wallapers getting downloaded
+pm disable-user com.google.android.backdrop
+
+# Analytics
+pm uninstall --user 0 com.miui.tv.analytics
+pm disable-user com.xiaomi.tvqs.overseas
+
+# Google Play store
+pm disable-user com.android.vending
+
+# Google Play services (if you dare)
+pm disable-user com.google.android.gms
+
+# Facilitates default 3rd party apps
+pm disable-user android.autoinstalls.config.xiaomi.amelie
+</code></pre>
+<p>Let me draw attention to a few aspects here:</p>
+<ul>
+<li>I don't need google play store, as I'm using only FOSS apps.</li>
+<li>I guess it's okay to also disable google play services if you don't
+use any app relying on it. Disabling it would likely lead to a reduction
+in RAM usage. Don't disable if you use an app like Netflix.</li>
+<li>I'm not disabling the default android launcher at this point, as I
+haven't installed a replacement yet.</li>
+</ul>
+<p>I found this to be a useful resource in fixing the list of apps that
+can be uninstalled safely: <a
+href="https://cleanyourtv.tools/tvs/redmi/mitv-mooq3/">https://cleanyourtv.tools/tvs/redmi/mitv-mooq3/</a></p>
+</section>
+<section id="apps-to-install" class="level1">
+<h1>Apps to install</h1>
+<p>When deciding on the apps to be installed, I figured that an ideal
+app would have the following properties.</p>
+<ul>
+<li>Open source</li>
+<li>Actively maintained</li>
+<li>Large user base</li>
+<li>Light weight</li>
+<li>UI primarily meant for TV</li>
+<li>No 'pay-to-unlock' features</li>
+<li>Available on F-droid, or at least izzydroid</li>
+<li>Not vibe-coded</li>
+<li>No internet connections unless explicitly approved</li>
+<li>No ads or telemetry</li>
+</ul>
+<p>Most of the time, I used the entries in this list to find apps: <a
+href="https://github.com/Generator/Awesome-Android-TV-FOSS-Apps">https://github.com/Generator/Awesome-Android-TV-FOSS-Apps</a></p>
+<section id="app-store" class="level2">
+<h2>App store</h2>
+<p>An app to manage other apps installed on the TV would be very
+convenient. With such an app store, we can installa and update apps
+easily. This obviates any need for going through the hassle of figuring
+out the right apk, manually downloading it, and installing them via
+<code class="verbatim">adb</code>.</p>
+<p>F-droid is great. But there seem to so few apps in the main repo that
+are primarily for TV. Still, F-droid compatible repos like those in <a
+href="https://apt.izzysoft.de/fdroid/">izzydroid</a> have lot more. I
+would still prioritize the main F-droid app though.</p>
+<p>There seem to be many other ways like <a
+href="https://obtainium.imranr.dev/ ">Obtainium</a> (install directly
+from release page of apps) and <a
+href="https://www.aftvnews.com/downloader/">Downloader</a> (use a
+numeric code to download apps, but is not FOSS). But F-droid and
+Izzydroid were sufficient for me and I didn't explore those options.</p>
+<p>I went with <a href="https://github.com/mlm-games/flicky">Flicky</a>,
+an F-droid client that is primarily meant for android TV. It has many
+repos enabled by default, I disabled everything other than the main
+F-droid and izzydroid.</p>
+<p>For the app store, we perform the installation manually via an apk
+file. Our TV has a 32-bit chip, so went with <code
+class="verbatim">armeabi-v7a</code> variant of apk files.</p>
+<pre><code>adb install flicky-4.6.1-armeabi-v7a.apk
+</code></pre>
+</section>
+<section id="replace-default-launcher" class="level2">
+<h2>Replace default launcher</h2>
+<p>The default launcher is essentially a means to serve users with
+advertisements. This is true in the case of Redmi's PatchWall and
+google's launcher. We needed something ad-free and lightweight. But
+before we disable the default launcher, we got to be sure that we got a
+working replacement in-place.</p>
+<p>I replaced the default launcher with <a
+href="https://github.com/leanbitlab-org/LtvLauncher">LTvLauncher</a>, a
+second-generation fork of <a
+href="https://gitlab.com/flauncher/flauncher">FLauncher</a>. We got to
+enable some stuff in the settings for the remote buttons to work
+properly. Apparently, android doesn't provide a means to override its
+inclination to stick to the default launcher. Without a bit of
+adjustment, home button on the TV remote will go back to the default
+launcher. Many launchers, LTvLauncher among them, adapt the
+accessibility features of android to work around this.</p>
+<p>Once I got the desired launcher installed, I disabled the default
+google launcher.</p>
+<pre><code>pm disable-user com.google.android.tvlauncher
+</code></pre>
+<p>A few other launchers worth exploring:</p>
+<ul>
+<li><a
+href="https://github.com/leanbitlab-org/LtvLauncher">https://github.com/leanbitlab-org/LtvLauncher</a></li>
+<li><a
+href="https://github.com/osrosal/flauncher">https://github.com/osrosal/flauncher</a></li>
+<li><a
+href="https://github.com/meddouribadis/arclauncher">https://github.com/meddouribadis/arclauncher</a></li>
+<li><a
+href="https://github.com/HoangTran0410/tv-remote">https://github.com/HoangTran0410/tv-remote</a></li>
+</ul>
+<p>Fun fact: I initially used <a
+href="https://github.com/spocky/miproja1">Projectivity launcher</a>,
+figuring it was FOSS. But it isn't. It has a public repo, but its
+contents are not the app's source code. Came across a few other popular
+apps like this.</p>
+</section>
+<section id="key-mapper" class="level2">
+<h2>Key mapper</h2>
+<p>The TV remote had a few buttons with labels like Netflix and Amazon
+Prime. We are not using any of those apps, so we could use those buttons
+for other actions. For this, we need an app that will let us 'assign'
+buttons to specific actions.</p>
+<p>I went with <a
+href="https://github.com/keymapperorg/KeyMapper">KeyMapper</a>,
+available from the main F-droid repo itself.</p>
+</section>
+<section id="media-player" class="level2">
+<h2>Media player</h2>
+<p>We wanted an app that can play video and audio files present in
+internal/local storage. Till now, the TV was being used only as a means
+to run youtube (with ads) on a bigger screen than phone. Preferred a
+lightweight app which still supported the wide variety of file formats
+related to multimedia. Finally went with <a
+href="https://f-droid.org/en/packages/org.videolan.vlc/">VLC</a>.</p>
+<p>The following media players sounded nice too:</p>
+<ul>
+<li><a
+href="https://github.com/xbmc/xbmc">https://github.com/xbmc/xbmc</a></li>
+<li><a href="https://kodi.tv/about/">https://kodi.tv/about/</a></li>
+<li><a
+href="https://github.com/nova-video-player/aos-AVP">https://github.com/nova-video-player/aos-AVP</a></li>
+</ul>
+</section>
+<section id="file-manager" class="level2">
+<h2>File manager</h2>
+<p>All we needed was a simple app that will let us do basic file
+operations like copy, paste, move, rename, etc. Settled on <a
+href="https://github.com/mlm-games/Fluffy/">Fluffy</a>. Seems to work
+well, but I had been having trouble deleting files and creating folders
+with v4.5.1. Hopefully we'll soon figure out what's going wrong
+there.</p>
+</section>
+<section id="transferring-files" class="level2">
+<h2>Transferring files</h2>
+<p>We need an easy way to move files in and out of the TV. <a
+href="https://f-droid.org/en/packages/org.localsend.localsend_app/">LocalSend</a>
+sounded like a good option, particularly if you already use it on other
+platforms. It lets us share files between phones, computers or TVs as
+long as all are on the same WiFi network and got LocalSend
+installed.</p>
+</section>
+<section id="smarttube" class="level2">
+<h2>Smarttube</h2>
+<p>A YouTube replacement app is what got me started on cleaning up the
+TV and that was one of the first things that I installed after the
+initial setup.</p>
+<p>I used the F-droid build of smarttube via Flicky. There was a
+difference in size of apk for the same version (v32.71) of SmartTube
+when downloaded from github releases when compared to that from
+F-droid.</p>
+<ul>
+<li>F-droid (arm64-v8a | armeabi-v7a | x86): 50 MB</li>
+<li>Github release
+<ul>
+<li>arm64-v8a: 25.5 MB</li>
+<li>armeabi-v7a: 24.3 MB</li>
+<li>universal: 33.8 MB</li>
+<li>x86: 27.1 MB</li>
+</ul></li>
+</ul>
+<p>The F-droid apk is almost double the size. I figure this difference
+is because the F-droid version can be used to install on more
+architectures. Although I wonder why the 'universal' apk from the github
+release is smaller in that case..</p>
+</section>
+<section id="hardware-stats-viewer" class="level2">
+<h2>Hardware stats viewer</h2>
+<p>We wanted to have something like Linux's <code
+class="verbatim">htop</code> in android TV to view the RAM and CPU
+usage. <a href="https://github.com/kamgurgul/cpu-info">CPU info</a> was
+the closest one that I could find. It feels lightweight and nice.</p>
+</section>
+</section>
+<section id="further-steps" class="level1">
+<h1>Further steps</h1>
+<p>The apps mentioned earlier seems to be sufficient for our use case,
+but there is always room for improvement. The following would be cool as
+well.</p>
+<ul>
+<li>Keyboard: Currently using gboard, but a keyboard with extra features
+like 'select-all' would have been nice. Like how it is possible with <a
+href="https://github.com/heliborg/heliboard">heliboard</a> on phones. I
+suppose asking for multiple languages would be too much for a UI on
+TV.</li>
+<li>Offline speech-to-text: Typing text is a bother using a D-pad on a
+remote. Use of google's voice assistant means reliance on play services
+which we wish to avoid. Perhaps <a
+href="https://github.com/ElishaAz/Sayboard">sayboard</a> is a possible
+alternative. Since it doesn't have keys to press in case corrections are
+needed, it would be best if there a quick way like a button press to
+switch to a full keyboard.</li>
+<li>Web browser: A simple browser to view websites would be nice. I
+figured it wouldn't be too difficult since webview is already there in
+Android, but I couldn't find any that is actively maintained.</li>
+<li><a href="https://github.com/iptv-org/iptv">IPTV</a>: TV channels via
+internet. Uses data in m3u files. In fact, VLC can be used to view IPTV
+channels.</li>
+<li>Gallery app: We don't need a gallery app yet, but would be good to
+replace the default one.</li>
+<li>Ad blocking: Would be great to block specific domains globally or
+app-wise. <a href="https://github.com/M66B/NetGuard">Netguard</a> and <a
+href="https://github.com/t895/DNSNet">DNSNet</a> might be of help.</li>
+<li>See if anything interesting can be done with one of the actively
+maintained forks of shizuku <a
+href="https://github.com/rushiranpise/Shizuku-Next">¹</a> <a
+href="https://github.com/thejaustin/ShizukuPlus">²</a>.</li>
+</ul>
+</section>
+<section id="related" class="level1">
+<h1>Related</h1>
+<ul>
+<li><a
+href="https://github.com/Generator/Awesome-Android-TV-FOSS-Apps">https://github.com/Generator/Awesome-Android-TV-FOSS-Apps</a></li>
+<li><a
+href="https://cleanyourtv.tools/tvs/redmi/mitv-mooq3/">https://cleanyourtv.tools/tvs/redmi/mitv-mooq3/</a></li>
+<li><a
+href="https://github.com/Gathin23/cleanyourtv">https://github.com/Gathin23/cleanyourtv</a></li>
+</ul>
+</section>
+</main>
+</body>
+</html>
